@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clubly — Facilities</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/facility.css">
+<link rel="stylesheet" href="css/trainer.css">
+<style>
+:root{--clubly-dark:#0d1b2a;--clubly-accent:#e85d2f;--clubly-teal:#2ec4b6;--clubly-gold:#d4a843;--header-h:64px;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--muted:#64748b;--border:#e2e8f0;}
+[data-theme="dark"]{--bg:#0a1628;--card-bg:#0f1f35;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .25s,color .25s;}
+.clubly-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--clubly-dark);display:flex;align-items:center;padding:0 40px;z-index:2000;box-shadow:0 2px 24px rgba(0,0,0,.45);transition:all .3s;}
+.clubly-header.scrolled{background:rgba(13,27,42,.97);backdrop-filter:blur(12px);}
+.header-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;}
+.logo-icon{font-size:28px;color:var(--clubly-accent);}
+.logo-text{font-size:1.5rem;font-weight:900;color:#fff;}
+.logo-text span{color:var(--clubly-accent);}
+.header-nav{display:flex;gap:4px;flex:1;justify-content:center;padding:0 20px;}
+.header-nav a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;padding:7px 14px;border-radius:6px;transition:all .2s;white-space:nowrap;}
+.header-nav a:hover,.header-nav a.active{color:#fff;background:rgba(255,255,255,.1);}
+.header-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn-theme{background:rgba(255,255,255,.1);color:#fff;border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:background .2s;}
+.btn-signin{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:8px 22px;border-radius:50px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;}
+.btn-join{background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;border:none;padding:9px 24px;border-radius:50px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;}
+.btn-join:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,93,47,.5);}
+.container-cl{max-width:1200px;margin:0 auto;padding:0 24px;}
+.section-label{display:inline-flex;align-items:center;gap:6px;background:rgba(232,93,47,.1);color:var(--clubly-accent);padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;}
+.section-title{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:var(--text);line-height:1.2;margin-bottom:12px;}
+.section-sub{color:var(--muted);font-size:.95rem;max-width:520px;line-height:1.7;}
+.card-cl{background:var(--card-bg);border-radius:16px;border:1px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.06);overflow:hidden;transition:transform .25s,box-shadow .25s;}
+.card-cl:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.12);}
+.facility-card{padding:24px;}
+.facility-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px;}
+.facility-name{font-size:1rem;font-weight:800;color:var(--text);margin-bottom:6px;}
+.facility-desc{font-size:.82rem;color:var(--muted);line-height:1.6;}
+.facility-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.clubly-footer{background:var(--clubly-dark);color:rgba(255,255,255,.65);}
+.footer-inner{display:flex;gap:60px;padding:50px 40px 30px;flex-wrap:wrap;}
+.footer-col h5{color:#fff;font-weight:700;margin-bottom:14px;}
+.footer-links{list-style:none;padding:0;}
+.footer-links li{margin-bottom:8px;}
+.footer-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.88rem;transition:color .2s;}
+.footer-links a:hover{color:var(--clubly-accent);}
+.footer-contact{font-size:.85rem;line-height:2.2;}
+.footer-contact i{color:var(--clubly-teal);margin-right:8px;}
+.footer-socials{display:flex;gap:14px;margin-top:12px;}
+.footer-socials a{color:rgba(255,255,255,.55);font-size:20px;transition:color .2s,transform .2s;text-decoration:none;}
+.footer-socials a:hover{color:var(--clubly-accent);transform:translateY(-2px);}
+.footer-bottom{text-align:center;padding:16px;border-top:1px solid rgba(255,255,255,.07);font-size:.82rem;color:rgba(255,255,255,.35);}
+.back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--clubly-accent);color:#fff;border:none;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;z-index:1500;opacity:0;transform:translateY(20px);transition:all .3s;box-shadow:0 4px 16px rgba(232,93,47,.4);}
+.back-top.show{opacity:1;transform:translateY(0);}
+.modal-content-cl{background:var(--card-bg);color:var(--text);border-radius:20px;border:1px solid var(--border);overflow:hidden;}
+.modal-tabs{display:flex;border-bottom:2px solid var(--border);}
+.modal-tab{flex:1;padding:16px;text-align:center;font-weight:700;cursor:pointer;color:var(--muted);transition:all .2s;border:none;background:none;font-family:inherit;font-size:.9rem;}
+.modal-tab.active{color:var(--clubly-accent);border-bottom:2px solid var(--clubly-accent);margin-bottom:-2px;}
+.modal-form{padding:28px;}
+.form-label-cl{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block;}
+.form-input-cl{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:inherit;font-size:.9rem;outline:none;margin-bottom:14px;transition:border-color .2s;}
+.form-input-cl:focus{border-color:var(--clubly-accent);}
+.btn-form-submit{width:100%;background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;border:none;padding:13px;border-radius:50px;font-weight:900;font-size:.95rem;cursor:pointer;transition:all .2s;font-family:inherit;}
+.divider-or{text-align:center;color:var(--muted);font-size:.8rem;margin:14px 0;position:relative;}
+.divider-or::before,.divider-or::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);}
+.divider-or::before{left:0;}.divider-or::after{right:0;}
+.role-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
+.role-option{border:2px solid var(--border);border-radius:13px;padding:11px 6px;text-align:center;cursor:pointer;transition:all .22s;background:#f8fafc;}
+.role-option .role-icon{font-size:21px;margin-bottom:4px;display:block;}
+.role-option span{display:block;font-size:10.5px;font-weight:700;color:var(--muted);}
+.role-option.active{border-color:var(--clubly-accent);background:rgba(232,93,47,.06);}
+.role-option.active span{color:var(--clubly-accent);}
+@media(max-width:768px){.header-nav{display:none;}.clubly-header{padding:0 16px;}.footer-inner{gap:30px;padding:30px 20px;}}
+
+</style>
+</head>
+<body>
+<header class="clubly-header" id="mainHeader">
+  <a class="header-logo" href="index.html"><i class="bi bi-lightning-charge-fill logo-icon"></i><span class="logo-text">Cl<span>u</span>bly</span></a>
+  <nav class="header-nav">
+    <a href="index.html">Home</a>
+    <a href="activities.html">Activities</a>
+    <a href="facilities.html" class="active">Facilities</a>
+    <a href="trainers.html">Trainers</a>
+    <a href="plans.html">Membership Plans</a>
+    <a href="about.html">About Us</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
+    <button class="btn-signin" onclick="openModal('signin')">Sign In</button>
+    <a href="plans.html" class="btn-join">Join Now <i class="bi bi-arrow-right ms-1"></i></a>
+  </div>
+</header>
+
+
+        <!---------------------------------Our facilies-------------------------->
+ <div class="container " style="margin-top: 90px;">
+    <!-- Title -->
+    <div class="text-center mb-4">
+      <h2 class="display-3 fw-bold mb-3 header-title">Our Facilities</h2>
+      <p class="text-muted" style="font-size: 18px;">Discover our world-class facilities designed to enhance your experience and meet all your recreational needs.</p>
+    </div>
+
+
+
+  <!-- Filters Bar -->
+  <div class="filters-bar mb-4">
+    <div class="filter-search-wrap">
+      <i class="bi bi-search filter-search-icon"></i>
+      <input type="text" id="searchInput" class="filter-search-input" placeholder="Search by name or description…">
+    </div>
+    <select id="categoryFilter" class="filter-select">
+      <option value="">All Categories</option>
+    </select>
+    <select id="capacityFilter" class="filter-select">
+      <option value="">Any Capacity</option>
+      <option value="small">Small (&lt;50)</option>
+      <option value="medium">Medium (50–100)</option>
+      <option value="large">Large (&gt;100)</option>
+    </select>
+    <button class="filter-clear-btn" onclick="clearFacilityFilters()">
+      <i class="bi bi-x-circle me-1"></i>Clear
+    </button>
+  </div>
+
+  <div id="error-msg" class="text-danger text-center mb-3"></div>
+  <div id="categories-container"></div>
+</div>
+
+
+<footer class="clubly-footer text-light pt-5 pb-3">
+  <div class="footer-inner">
+    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+    <div class="footer-col"><h5>Explore</h5><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="activities.html">Activities</a></li><li><a href="facilities.html">Facilities</a></li><li><a href="trainers.html">Trainers</a></li><li><a href="plans.html">Membership Plans</a></li><li><a href="about.html">About Us</a></li></ul></div>
+    <div class="footer-col"><h5>Help</h5><ul class="footer-links"><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="plans.html">Join Now</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
+  </div>
+  <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+</footer>
+
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
+
+<!-- AUTH MODAL (v3) -->
+<div class="modal fade" id="authModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:500px;">
+    <div class="modal-content" style="border-radius:24px;border:none;overflow:hidden;background:#f0f4f8;">
+      <div style="position:absolute;top:12px;right:14px;z-index:20;">
+        <button type="button" data-bs-dismiss="modal" style="background:rgba(0,0,0,.07);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#64748b;">✕</button>
+      </div>
+
+      <!-- AUTH INNER PAGES -->
+      <div style="padding:0;">
+
+        <!-- SIGN IN PAGE -->
+        <div id="authLoginPage" class="auth-inner-page" style="padding:30px 30px 24px;">
+          <div style="text-align:center;margin-bottom:20px;">
+            <div style="width:58px;height:58px;background:linear-gradient(135deg,#00d4aa,#00a896);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(0,212,170,0.22);">🏋️</div>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Welcome back 👋</h2>
+            <p style="color:#64748b;font-size:12.5px;">Select your role and enter your credentials</p>
+          </div>
+
+          <!-- Role Selector -->
+          <div class="auth-role-selector" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;">
+            <div class="auth-role-opt active" data-role="admin" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">👑</span><span style="font-size:10px;font-weight:700;color:#64748b;">Admin</span>
+            </div>
+            <div class="auth-role-opt" data-role="trainer" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🏆</span><span style="font-size:10px;font-weight:700;color:#64748b;">Trainer</span>
+            </div>
+            <div class="auth-role-opt" data-role="member" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🎯</span><span style="font-size:10px;font-weight:700;color:#64748b;">Member</span>
+            </div>
+            <div class="auth-role-opt" data-role="guest" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🌟</span><span style="font-size:10px;font-weight:700;color:#64748b;">Guest</span>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+            <input type="email" id="siEmail" placeholder="example@club.com"
+              oninput="authValidateEmail('siEmail','siEmailErr')" onblur="authValidateEmail('siEmail','siEmailErr')"
+              style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+            <div id="siEmailErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+          </div>
+
+          <!-- Password -->
+          <div style="margin-bottom:6px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Password</label>
+            <div style="position:relative;">
+              <input type="password" id="siPassword" placeholder="••••••••"
+                oninput="authValidateRequired('siPassword','siPassErr','Password is required')"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 42px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <button type="button" onclick="authToggleEye('siPassword',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div id="siPassErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+          </div>
+
+          <div style="text-align:right;margin-bottom:14px;">
+            <a href="#" style="font-size:11.5px;color:#00a896;font-weight:600;text-decoration:none;">Forgot password?</a>
+          </div>
+
+          <button id="signinBtn" data-label="Sign In" onclick="authHandleLogin()"
+            style="width:100%;background:linear-gradient(135deg,#00d4aa,#00a896);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:2px;">
+            Sign In
+          </button>
+
+          <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:12px;margin:13px 0;">
+            <div style="flex:1;height:1px;background:#e2e8f0;"></div>or<div style="flex:1;height:1px;background:#e2e8f0;"></div>
+          </div>
+          <div style="text-align:center;font-size:12.5px;color:#64748b;">
+            Don't have an account? <a onclick="authShowPage('authSignupPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Register as Guest</a>
+          </div>
+        </div>
+
+        <!-- SIGN UP PAGE -->
+        <div id="authSignupPage" class="auth-inner-page" style="display:none;padding:24px 30px 24px;">
+          <div style="text-align:center;margin-bottom:18px;">
+            <div style="width:58px;height:58px;background:linear-gradient(135deg,#f59e0b,#b45309);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(245,158,11,0.22);">🌟</div>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Create an Account</h2>
+            <p style="color:#64748b;font-size:12px;">Guest Registration · Your request will be reviewed</p>
+          </div>
+
+          <!-- Name row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">First Name</label>
+              <input type="text" id="suFirst" placeholder="John"
+                oninput="authValidateMinLen('suFirst','suFirstErr','First name',2)"
+                onblur="authValidateMinLen('suFirst','suFirstErr','First name',2)"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <div id="suFirstErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Last Name</label>
+              <input type="text" id="suLast" placeholder="Doe"
+                oninput="authValidateMinLen('suLast','suLastErr','Last name',2)"
+                onblur="authValidateMinLen('suLast','suLastErr','Last name',2)"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <div id="suLastErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            </div>
+          </div>
+
+          <!-- National ID -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">National ID</label>
+            <div style="position:relative;">
+              <input type="text" id="suNID" placeholder="14-digit Egyptian National ID" maxlength="14"
+                oninput="authParseNationalId(this.value)"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 40px 10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <span id="nidStatus" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:15px;"></span>
+            </div>
+            <div id="suNIDErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            <div id="nidPills" style="display:none;gap:7px;flex-wrap:wrap;margin-top:6px;">
+              <span id="pillBirth" style="display:inline-flex;align-items:center;background:rgba(0,212,170,0.09);border:1px solid rgba(0,212,170,0.22);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;color:#00a896;">📅 —</span>
+              <span id="pillGender" style="display:inline-flex;align-items:center;background:rgba(0,212,170,0.09);border:1px solid rgba(0,212,170,0.22);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;color:#00a896;">⚧ —</span>
+            </div>
+          </div>
+
+          <!-- Birth & Gender auto -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Date of Birth <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
+              <input type="text" id="suBirth" placeholder="From National ID" readonly
+                style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Gender <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
+              <input type="text" id="suGender" placeholder="From National ID" readonly
+                style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+            <input type="email" id="suEmail" placeholder="example@gmail.com"
+              oninput="authValidateEmail('suEmail','suEmailErr')" onblur="authValidateEmail('suEmail','suEmailErr')"
+              style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+            <div id="suEmailErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+          </div>
+
+          <!-- Phone -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Phone Number</label>
+            <input type="tel" id="suPhone" placeholder="01xxxxxxxxx"
+              oninput="authValidatePhone('suPhone','suPhoneErr')" onblur="authValidatePhone('suPhone','suPhoneErr')"
+              style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+            <div id="suPhoneErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+          </div>
+
+          <!-- Password + Strength -->
+          <div style="margin-bottom:6px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Password</label>
+            <div style="position:relative;">
+              <input type="password" id="suPassword" placeholder="Min. 6 characters"
+                oninput="authValidatePassword('suPassword','suPassErr'); authCheckStrength('suPassword')"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 40px 10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <button type="button" onclick="authToggleEye('suPassword',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div id="suPassErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            <!-- Strength bars -->
+            <div id="suStrengthWrap" style="display:none;margin-top:6px;">
+              <div style="display:flex;gap:4px;">
+                <div id="asb1" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+                <div id="asb2" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+                <div id="asb3" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+                <div id="asb4" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+              </div>
+              <div id="suStrengthLabel" style="font-size:11px;font-weight:600;color:#64748b;margin-top:3px;">Weak</div>
+            </div>
+          </div>
+
+          <button id="signupBtn" data-label="Create Account" onclick="authHandleSignup()"
+            style="width:100%;background:linear-gradient(135deg,#f59e0b,#b45309);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:12px;">
+            Create Account
+          </button>
+
+          <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:12px;margin:13px 0;">
+            <div style="flex:1;height:1px;background:#e2e8f0;"></div>or<div style="flex:1;height:1px;background:#e2e8f0;"></div>
+          </div>
+          <div style="text-align:center;font-size:12.5px;color:#64748b;">
+            Already have an account? <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Sign In</a>
+          </div>
+        </div>
+
+      </div><!-- end AUTH INNER PAGES -->
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/facility.js"></script>
+<script>
+
+
+let dark=false;
+document.getElementById('themeBtn').addEventListener('click',()=>{dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('themeBtn').innerHTML=dark?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';});
+window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
+
+
+
+
+// ── Modal ────────────────────────────────────────────
+const API_BASE = 'https://localhost:7001/api/auth';
+let authModalInstance;
+function openModal(page){
+  if(!authModalInstance) authModalInstance=new bootstrap.Modal(document.getElementById('authModal'));
+  authShowPage(page==='register'?'authSignupPage':'authLoginPage');
+  authModalInstance.show();
+}
+
+// ── Page Switch ──────────────────────────────────────
+function authShowPage(id){
+  document.querySelectorAll('.auth-inner-page').forEach(p=>p.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+// ── Role Select ──────────────────────────────────────
+let authSelectedRole='admin';
+function authSelectRole(el){
+  document.querySelectorAll('.auth-role-opt').forEach(r=>{
+    r.style.border='2px solid #e2e8f0';
+    r.style.background='#f8fafc';
+    r.querySelector('span:last-child').style.color='#64748b';
+  });
+  const roleColors={admin:'#ff6b35',trainer:'#00d4aa',member:'#7c5cfc',guest:'#f59e0b'};
+  const role=el.dataset.role;
+  el.style.border=`2px solid ${roleColors[role]}`;
+  el.style.background=`rgba(${role==='admin'?'255,107,53':role==='trainer'?'0,212,170':role==='member'?'124,92,252':'245,158,11'},.06)`;
+  el.querySelector('span:last-child').style.color=roleColors[role];
+  authSelectedRole=role;
+}
+// init admin active styling
+document.addEventListener('DOMContentLoaded',()=>{
+  const adminEl=document.querySelector('.auth-role-opt[data-role="admin"]');
+  if(adminEl) authSelectRole(adminEl);
+});
+
+// ── Toast ────────────────────────────────────────────
+function authShowNotif(msg,type='success'){
+  const n=document.getElementById('authNotif');
+  n.textContent=(type==='success'?'✓  ':'✕  ')+msg;
+  n.style.background=type==='success'?'#00a896':'#e53e3e';
+  n.style.opacity='1';n.style.transform='translateY(0)';
+  setTimeout(()=>{n.style.opacity='0';n.style.transform='translateY(8px)';},3200);
+}
+
+// ── Field State ──────────────────────────────────────
+function authSetField(inputId,errId,isValid,errMsg){
+  const inp=document.getElementById(inputId);
+  const err=document.getElementById(errId);
+  inp.style.borderColor=isValid?'#00d4aa':'#e53e3e';
+  inp.style.background=isValid?'#f6fdfb':'#fff8f8';
+  if(!isValid&&errMsg){err.textContent='⚠ '+errMsg;err.style.display='block';}
+  else{err.style.display='none';}
+  return isValid;
+}
+
+// ── Validators ───────────────────────────────────────
+function authValidateEmail(iId,eId){
+  const v=document.getElementById(iId).value.trim();
+  if(!v) return authSetField(iId,eId,false,'Email is required');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return authSetField(iId,eId,false,'Enter a valid email');
+  return authSetField(iId,eId,true);
+}
+function authValidateRequired(iId,eId,msg){
+  const v=document.getElementById(iId).value;
+  if(!v) return authSetField(iId,eId,false,msg);
+  return authSetField(iId,eId,true);
+}
+function authValidateMinLen(iId,eId,label,min){
+  const v=document.getElementById(iId).value.trim();
+  if(!v) return authSetField(iId,eId,false,label+' is required');
+  if(v.length<min) return authSetField(iId,eId,false,label+' must be at least '+min+' characters');
+  return authSetField(iId,eId,true);
+}
+function authValidatePhone(iId,eId){
+  const v=document.getElementById(iId).value.trim();
+  if(!v) return authSetField(iId,eId,false,'Phone number is required');
+  if(!/^0\d{9,10}$/.test(v)) return authSetField(iId,eId,false,'Enter a valid number (e.g. 01012345678)');
+  return authSetField(iId,eId,true);
+}
+function authValidatePassword(iId,eId){
+  const v=document.getElementById(iId).value;
+  if(!v) return authSetField(iId,eId,false,'Password is required');
+  if(v.length<6) return authSetField(iId,eId,false,'Password must be at least 6 characters');
+  return authSetField(iId,eId,true);
+}
+
+// ── Eye Toggle ───────────────────────────────────────
+const EYE_OPEN=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const EYE_CLOSE=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+function authToggleEye(iId,btn){
+  const inp=document.getElementById(iId);
+  const show=inp.type==='password';
+  inp.type=show?'text':'password';
+  btn.innerHTML=show?EYE_CLOSE:EYE_OPEN;
+}
+
+// ── Password Strength ────────────────────────────────
+function authCheckStrength(id){
+  const val=document.getElementById(id).value;
+  const wrap=document.getElementById('suStrengthWrap');
+  const lbl=document.getElementById('suStrengthLabel');
+  if(!val){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  let score=0;
+  if(val.length>=6)score++;
+  if(val.length>=10)score++;
+  if(/[A-Z]/.test(val)&&/[a-z]/.test(val))score++;
+  if(/[0-9]/.test(val)&&/[^A-Za-z0-9]/.test(val))score++;
+  const levels=[{color:'#e53e3e',label:'Weak'},{color:'#f59e0b',label:'Fair'},{color:'#00d4aa',label:'Good'},{color:'#00a896',label:'Strong'}];
+  const lvl=levels[score-1]||levels[0];
+  ['asb1','asb2','asb3','asb4'].forEach((bid,i)=>{document.getElementById(bid).style.background=i<score?lvl.color:'#e2e8f0';});
+  lbl.textContent=lvl.label;lbl.style.color=lvl.color;
+}
+
+// ── National ID Parser ───────────────────────────────
+function authParseNationalId(val){
+  const statusEl=document.getElementById('nidStatus');
+  const birthEl=document.getElementById('suBirth');
+  const genderEl=document.getElementById('suGender');
+  const pillsEl=document.getElementById('nidPills');
+  const errEl=document.getElementById('suNIDErr');
+  const nidInput=document.getElementById('suNID');
+  birthEl.value='';genderEl.value='';
+  pillsEl.style.display='none';
+  if(!val){statusEl.textContent='';errEl.style.display='none';nidInput.style.borderColor='#e2e8f0';return;}
+  if(!/^\d+$/.test(val)){statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'National ID must contain digits only');}
+  if(val.length<14){statusEl.textContent='⏳';nidInput.style.borderColor='#e2e8f0';errEl.style.display='none';return;}
+  const c=val[0];let century;
+  if(c==='2')century='19';
+  else if(c==='3')century='20';
+  else{statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'First digit must be 2 or 3');}
+  const yy=val.substring(1,3),mm=val.substring(3,5),dd=val.substring(5,7);
+  const mo=parseInt(mm),dy=parseInt(dd);
+  if(mo<1||mo>12||dy<1||dy>31){statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'Invalid date in National ID');}
+  const seq=parseInt(val.substring(11,14));
+  const gender=seq%2!==0?'Male':'Female';
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const birth=`${String(dy).padStart(2,'0')} ${months[mo-1]} ${century}${yy}`;
+  birthEl.value=birth;genderEl.value=gender;
+  document.getElementById('pillBirth').textContent=`📅 ${birth}`;
+  document.getElementById('pillGender').textContent=`${gender==='Male'?'♂':'♀'} ${gender}`;
+  pillsEl.style.display='flex';
+  statusEl.textContent='✅';
+  authSetField('suNID','suNIDErr',true);
+}
+
+// ── Login ────────────────────────────────────────────
+async function authHandleLogin(){
+  const emailOk=authValidateEmail('siEmail','siEmailErr');
+  const passOk=authValidateRequired('siPassword','siPassErr','Password is required');
+  if(!emailOk||!passOk) return authShowNotif('Please fix the errors above','error');
+  const btn=document.getElementById('signinBtn');
+  btn.disabled=true;btn.textContent='Please wait…';
+  try{
+    const res=await fetch(`${API_BASE}/signin`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:document.getElementById('siEmail').value.trim(),password:document.getElementById('siPassword').value,role:authSelectedRole.charAt(0).toUpperCase()+authSelectedRole.slice(1)})});
+    const json=await res.json();
+    if(!res.ok||!json.success){authShowNotif(json.errors?.[0]??json.message,'error');return;}
+    const{token,role,fullName,dashboardUrl}=json.data;
+    localStorage.setItem('token',token);localStorage.setItem('role',role);localStorage.setItem('fullName',fullName);
+    authShowNotif(`Welcome back, ${fullName}!`);
+    setTimeout(()=>{window.location.href=dashboardUrl;},1000);
+  }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
+  finally{btn.disabled=false;btn.textContent='Sign In';}
+}
+
+// ── Signup ───────────────────────────────────────────
+async function authHandleSignup(){
+  const firstOk=authValidateMinLen('suFirst','suFirstErr','First name',2);
+  const lastOk=authValidateMinLen('suLast','suLastErr','Last name',2);
+  const emailOk=authValidateEmail('suEmail','suEmailErr');
+  const phoneOk=authValidatePhone('suPhone','suPhoneErr');
+  const passOk=authValidatePassword('suPassword','suPassErr');
+  const nid=document.getElementById('suNID').value.trim();
+  const birth=document.getElementById('suBirth').value;
+  const gender=document.getElementById('suGender').value;
+  let nidOk=true;
+  if(!nid||!/^\d{14}$/.test(nid)){authSetField('suNID','suNIDErr',false,'National ID must be exactly 14 digits');nidOk=false;}
+  else if(!birth||!gender){authSetField('suNID','suNIDErr',false,'Could not parse ID — check the number');nidOk=false;}
+  if(!firstOk||!lastOk||!nidOk||!emailOk||!phoneOk||!passOk) return authShowNotif('Please fix the errors above','error');
+  const btn=document.getElementById('signupBtn');
+  btn.disabled=true;btn.textContent='Please wait…';
+  try{
+    const res=await fetch(`${API_BASE}/signup`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({firstName:document.getElementById('suFirst').value.trim(),lastName:document.getElementById('suLast').value.trim(),nationalId:nid,birthDate:birth,gender,email:document.getElementById('suEmail').value.trim(),phone:document.getElementById('suPhone').value.trim(),password:document.getElementById('suPassword').value})});
+    const json=await res.json();
+    if(!res.ok||!json.success){authShowNotif(json.errors?.[0]??json.message,'error');return;}
+    authShowNotif('Account created! Awaiting admin approval ✅');
+    setTimeout(()=>authShowPage('authLoginPage'),1800);
+  }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
+  finally{btn.disabled=false;btn.textContent='Create Account';}
+}
+
+</script>
+</body>
+</html>
