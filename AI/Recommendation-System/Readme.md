@@ -11,7 +11,6 @@
 - [Dataset](#dataset)
 - [Models](#models)
 - [API Endpoints](#api-endpoints)
-- [Chatbot](#chatbot)
 - [UI](#ui)
 - [Installation](#installation)
 - [Project Structure](#project-structure)
@@ -40,15 +39,14 @@ The system takes into account:
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                     Frontend (HTML/JS)                   │
-│              Recommendation UI  +  Coach AI Widget       │
+│                   Recommendation UI                      │
 └────────────────────────┬────────────────────────────────┘
                          │ HTTP (REST API)
 ┌────────────────────────▼────────────────────────────────┐
 │                   Flask API (app.py)                     │
 │                                                          │
-│   /recommend  ──►  Content-Based Model (XGBoost)        │
-│   /recommend/hybrid ──► Hybrid Model (XGBoost + SVD)    │
-│   /sports-chat ──►  Coach AI Chatbot (Groq / LLaMA)     │
+│   /recommend        ──►  Content-Based Model (XGBoost)  │
+│   /recommend/hybrid ──►  Hybrid Model (XGBoost + SVD)   │
 └──────────┬──────────────────────┬───────────────────────┘
            │                      │
 ┌──────────▼──────────┐  ┌────────▼──────────────────────┐
@@ -242,29 +240,8 @@ Hybrid recommendation — requires `user_id` from training data.
 ### `GET /sports`
 Returns all 44 available sports.
 
-### `POST /sports-chat`
-AI chatbot for sports questions.
-
-**Request:** `{ "message": "...", "session_id": "..." }`
-
-**Response:** `{ "reply": "...", "session_id": "..." }`
-
 ### `GET /health`
 API health check.
-
----
-
-## Chatbot
-
-The project includes **Coach AI** — a sports assistant chatbot powered by **Groq API (LLaMA 3.3 70B)**.
-
-- Answers any question about the 44 supported sports
-- Explains exercises, nutrition, injuries, training programs
-- Responds in the same language as the question (Arabic / English)
-- Maintains conversation context per session (last 20 messages)
-- Declines questions outside sports and health scope
-
-**Configuration:** Set `GROQ_API_KEY` in `.env` file.
 
 ---
 
@@ -275,11 +252,6 @@ The project includes **Coach AI** — a sports assistant chatbot powered by **Gr
 - Toggle buttons for fitness level, activity, goal, personality
 - Real-time results with confidence bars and medal ranking
 - Sport detail panel with calories, difficulty, environment, budget info
-
-### Coach AI Widget (`coach_widget.html`)
-- Floating chat button embedded in any page
-- Suggested quick questions
-- Full chat history per session
 
 ---
 
@@ -299,28 +271,15 @@ cd sports-recommendation
 # 2. Install dependencies
 pip install -r requirements.txt
 
-# 3. Set up environment variables
-cp .env.example .env
-# Edit .env and add your GROQ_API_KEY
-
-# 4. Train the models (run the notebook first)
+# 3. Train the models (run the notebook first)
 jupyter notebook sports_recommendation.ipynb
 
-# 5. Run the API
+# 4. Run the API
 python app.py
 
-# 6. Open the UI
+# 5. Open the UI
 # http://localhost:5000/recommend-ui
-# http://localhost:5000/chat
 ```
-
-### Environment Variables
-
-```env
-GROQ_API_KEY=your_groq_api_key_here
-```
-
-Get a free API key at [console.groq.com](https://console.groq.com)
 
 ---
 
@@ -329,19 +288,16 @@ Get a free API key at [console.groq.com](https://console.groq.com)
 ```
 sports-recommendation/
 │
-├── 📓 sports_recommendation.ipynb   # Full ML pipeline notebook
+├── 📓 sports_recommendation.ipynb      # Full ML pipeline notebook
 │
-├── 🐍 app.py                        # Main Flask API (with ML models)
-├── 🐍 recommend_app.py              # Recommendation API (mock, no ML needed)
-├── 🐍 chatbot_app.py                # Standalone chatbot API
-├── 🐍 sports_chatbot.py             # Chatbot Flask blueprint
+├── 🐍 app.py                           # Main Flask API
+├── 🐍 recommend_app.py                 # Recommendation API (mock, no ML needed)
 │
-├── 🌐 recommendation.html           # Recommendation UI
-├── 🌐 coach_widget.html             # Chatbot widget
+├── 🌐 recommendation.html              # Recommendation UI
 │
 ├── 📊 sports_recommendation_clean.csv  # Cleaned dataset (12,000 rows)
 │
-├── 📁 models/                       # Saved ML models (after training)
+├── 📁 models/                          # Saved ML models (after training)
 │   ├── xgb_content_based.pkl
 │   ├── scaler.pkl
 │   ├── label_encoder_sport.pkl
@@ -353,8 +309,6 @@ sports-recommendation/
 │   └── feature_cols.csv
 │
 ├── 📄 requirements.txt
-├── 📄 .env.example
-├── 📄 .gitignore
 └── 📄 README.md
 ```
 
@@ -366,12 +320,10 @@ sports-recommendation/
 |---|---|
 | **ML Models** | XGBoost, Scikit-learn (SVD, KNN, StandardScaler, LabelEncoder) |
 | **Backend** | Python, Flask, Flask-CORS |
-| **AI Chatbot** | Groq API, LLaMA 3.3 70B |
 | **Frontend** | HTML5, CSS3, Vanilla JavaScript |
 | **Fonts** | Tajawal (Arabic), Bebas Neue |
 | **Data** | Pandas, NumPy |
 | **Notebook** | Jupyter |
-| **Environment** | python-dotenv |
 | **Version Control** | Git, GitHub |
 
 ---
