@@ -1,0 +1,977 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\noraa\\Downloads\\Graduation Project\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260304183414_bookingfacility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260304183414_bookingfacility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183117_Booking1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260304183117_Booking1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\service\\class\\facilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\facilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\service\\interfaces\\ifacilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\ifacilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\repository\\class\\facilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\facilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\repository\\interface\\iactivitygrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\iactivitygrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\model\\facility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\controllers\\facilitybookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\facilitybookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\repository\\interface\\ifacilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\ifacilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\model\\facilitybooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facilitybooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\updatefacilitybookingstatusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updatefacilitybookingstatusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\createfacilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createfacilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\facilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\facilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\repository\\class\\facilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\facilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\controllers\\facilityschedulescontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\facilityschedulescontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\service\\class\\facilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\facilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\service\\interfaces\\ifacilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\ifacilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\repository\\interface\\ifacilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\ifacilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\updatefacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updatefacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\createfacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createfacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\createtimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createtimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\timeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\timeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\facilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\facilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\model\\facilitytimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facilitytimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\model\\facilityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facilityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204420_add2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260225204420_add2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225203952_Amin1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260225203952_Amin1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260225185853_updateadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225185853_updateadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\createadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\service\\class\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\admindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\admindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\updateadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updateadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\announcementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\announcementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\updateannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updateannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\createannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\controllers\\announcementscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\announcementscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\model\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\model\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260225012701_updateannauncmen3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225012701_updateannauncmen3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\model\\announcement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\announcement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\service\\class\\announcementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\announcementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\repository\\interface\\iannouncementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\iannouncementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\service\\interfaces\\iannouncementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\iannouncementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\creatememberdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\creatememberdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\createtrainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createtrainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\traineroptiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\traineroptiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\trainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\trainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\dto\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260221210408_v4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260221210408_v4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260225005818_updateannauncment2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225005818_updateannauncment2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260225004337_updateannauncment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225004337_updateannauncment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260225210255_add6.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225210255_add6.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260225204910_add3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225204910_add3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\graduation project\\migrations\\20260303231407_facilityscehedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260303231407_facilityscehedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20260304183414_Bookingfacility.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183414_Bookingfacility.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260304183414_Bookingfacility.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183414_Bookingfacility.cs",
+              "RelativeToolTip": "Migrations\\20260304183414_Bookingfacility.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T18:34:14.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20260304183117_Booking1.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260304183117_Booking1.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
+              "RelativeToolTip": "Migrations\\20260304183117_Booking1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T18:31:17.916Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FacilityBookingService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\FacilityBookingService.cs",
+              "RelativeDocumentMoniker": "Service\\Class\\FacilityBookingService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\FacilityBookingService.cs",
+              "RelativeToolTip": "Service\\Class\\FacilityBookingService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:05:43.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IFacilityBookingService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Interfaces\\IFacilityBookingService.cs",
+              "RelativeDocumentMoniker": "Service\\Interfaces\\IFacilityBookingService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Interfaces\\IFacilityBookingService.cs",
+              "RelativeToolTip": "Service\\Interfaces\\IFacilityBookingService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:05:29.394Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAwDkAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-21T21:00:41.745Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FacilityBookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\Class\\FacilityBookingRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Class\\FacilityBookingRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\Class\\FacilityBookingRepository.cs",
+              "RelativeToolTip": "Repository\\Class\\FacilityBookingRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:04:32.769Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAAAH0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:57:13.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IActivityGroupRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IActivityGroupRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\interface\\IActivityGroupRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IActivityGroupRepository.cs",
+              "RelativeToolTip": "Repository\\interface\\IActivityGroupRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:07:55.36Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Facility.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Facility.cs",
+              "RelativeDocumentMoniker": "Model\\Facility.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Facility.cs",
+              "RelativeToolTip": "Model\\Facility.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAkwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T22:59:52.165Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "FacilityBookingsController.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\FacilityBookingsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FacilityBookingsController.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\FacilityBookingsController.cs",
+              "RelativeToolTip": "Controllers\\FacilityBookingsController.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAADIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:06:21.503Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IFacilityBookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IFacilityBookingRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\interface\\IFacilityBookingRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IFacilityBookingRepository.cs",
+              "RelativeToolTip": "Repository\\interface\\IFacilityBookingRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:02:38.391Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "UpdateFacilityBookingStatusDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateFacilityBookingStatusDto.cs",
+              "RelativeDocumentMoniker": "DTO\\UpdateFacilityBookingStatusDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateFacilityBookingStatusDto.cs",
+              "RelativeToolTip": "DTO\\UpdateFacilityBookingStatusDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:01:24.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CreateFacilityBookingDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateFacilityBookingDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateFacilityBookingDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateFacilityBookingDto.cs",
+              "RelativeToolTip": "DTO\\CreateFacilityBookingDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:01:13.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "FacilityBookingDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\FacilityBookingDto.cs",
+              "RelativeDocumentMoniker": "DTO\\FacilityBookingDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\FacilityBookingDto.cs",
+              "RelativeToolTip": "DTO\\FacilityBookingDto.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAYwAsAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:00:57.769Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FacilityBooking.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\FacilityBooking.cs",
+              "RelativeDocumentMoniker": "Model\\FacilityBooking.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\FacilityBooking.cs",
+              "RelativeToolTip": "Model\\FacilityBooking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T00:50:33.655Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "20260303231407_facilityscehedule.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260303231407_facilityscehedule.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260303231407_facilityscehedule.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260303231407_facilityscehedule.cs",
+              "RelativeToolTip": "Migrations\\20260303231407_facilityscehedule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:14:07.382Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "FacilitySchedulesController .cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\FacilitySchedulesController .cs",
+              "RelativeDocumentMoniker": "Controllers\\FacilitySchedulesController .cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\FacilitySchedulesController .cs",
+              "RelativeToolTip": "Controllers\\FacilitySchedulesController .cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAiwC4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:10:26.21Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FacilityScheduleService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\FacilityScheduleService.cs",
+              "RelativeDocumentMoniker": "Service\\Class\\FacilityScheduleService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\FacilityScheduleService.cs",
+              "RelativeToolTip": "Service\\Class\\FacilityScheduleService.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAAAFgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:09:43.197Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IFacilityScheduleService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Interfaces\\IFacilityScheduleService.cs",
+              "RelativeDocumentMoniker": "Service\\Interfaces\\IFacilityScheduleService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Interfaces\\IFacilityScheduleService.cs",
+              "RelativeToolTip": "Service\\Interfaces\\IFacilityScheduleService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:09:19.58Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FacilityScheduleRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\Class\\FacilityScheduleRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Class\\FacilityScheduleRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\Class\\FacilityScheduleRepository.cs",
+              "RelativeToolTip": "Repository\\Class\\FacilityScheduleRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:08:23.519Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "IFacilityScheduleRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IFacilityScheduleRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\interface\\IFacilityScheduleRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IFacilityScheduleRepository.cs",
+              "RelativeToolTip": "Repository\\interface\\IFacilityScheduleRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:07:39.492Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "UpdateFacilityScheduleDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateFacilityScheduleDto.cs",
+              "RelativeDocumentMoniker": "DTO\\UpdateFacilityScheduleDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateFacilityScheduleDto.cs",
+              "RelativeToolTip": "DTO\\UpdateFacilityScheduleDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:07:13.792Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "CreateFacilityScheduleDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateFacilityScheduleDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateFacilityScheduleDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateFacilityScheduleDto.cs",
+              "RelativeToolTip": "DTO\\CreateFacilityScheduleDto.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBIAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:05:15.397Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "CreateTimeSlotDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateTimeSlotDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateTimeSlotDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateTimeSlotDto.cs",
+              "RelativeToolTip": "DTO\\CreateTimeSlotDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:03:19.609Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "TimeSlotDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\TimeSlotDto.cs",
+              "RelativeDocumentMoniker": "DTO\\TimeSlotDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\TimeSlotDto.cs",
+              "RelativeToolTip": "DTO\\TimeSlotDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:01:28.193Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "FacilityScheduleDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\FacilityScheduleDto.cs",
+              "RelativeDocumentMoniker": "DTO\\FacilityScheduleDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\FacilityScheduleDto.cs",
+              "RelativeToolTip": "DTO\\FacilityScheduleDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:00:49.394Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "FacilityTimeSlot.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\FacilityTimeSlot.cs",
+              "RelativeDocumentMoniker": "Model\\FacilityTimeSlot.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\FacilityTimeSlot.cs",
+              "RelativeToolTip": "Model\\FacilityTimeSlot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T22:59:30.446Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "FacilitySchedule.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\FacilitySchedule.cs",
+              "RelativeDocumentMoniker": "Model\\FacilitySchedule.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\FacilitySchedule.cs",
+              "RelativeToolTip": "Model\\FacilitySchedule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T22:58:31.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "20260225210255_add6.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225210255_add6.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225210255_add6.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225210255_add6.cs",
+              "RelativeToolTip": "Migrations\\20260225210255_add6.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T21:02:56.141Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "20260225204910_add3.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204910_add3.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225204910_add3.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204910_add3.cs",
+              "RelativeToolTip": "Migrations\\20260225204910_add3.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T20:49:10.225Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "20260225204420_add2.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204420_add2.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225204420_add2.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204420_add2.cs",
+              "RelativeToolTip": "Migrations\\20260225204420_add2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T20:44:20.317Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "20260225203952_Amin1.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225203952_Amin1.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
+              "RelativeToolTip": "Migrations\\20260225203952_Amin1.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T20:39:52.706Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "20260225185853_updateadmin.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225185853_updateadmin.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225185853_updateadmin.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225185853_updateadmin.cs",
+              "RelativeToolTip": "Migrations\\20260225185853_updateadmin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:58:54.175Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "AdminService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\AdminService.cs",
+              "RelativeDocumentMoniker": "Service\\Class\\AdminService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\AdminService.cs",
+              "RelativeToolTip": "Service\\Class\\AdminService.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAAIUAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:54:30.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "AdminDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\AdminDto.cs",
+              "RelativeDocumentMoniker": "DTO\\AdminDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\AdminDto.cs",
+              "RelativeToolTip": "DTO\\AdminDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:52:24.588Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "UpdateAdminDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateAdminDto.cs",
+              "RelativeDocumentMoniker": "DTO\\UpdateAdminDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateAdminDto.cs",
+              "RelativeToolTip": "DTO\\UpdateAdminDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:52:09.183Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "CreateAdminDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateAdminDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateAdminDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateAdminDto.cs",
+              "RelativeToolTip": "DTO\\CreateAdminDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:51:29.434Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Trainer.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Trainer.cs",
+              "RelativeDocumentMoniker": "Model\\Trainer.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Trainer.cs",
+              "RelativeToolTip": "Model\\Trainer.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwBkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:46:27.284Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Admin.cs",
+              "RelativeDocumentMoniker": "Model\\Admin.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Admin.cs",
+              "RelativeToolTip": "Model\\Admin.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:46:16.182Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "20260225012701_updateannauncmen3.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225012701_updateannauncmen3.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225012701_updateannauncmen3.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225012701_updateannauncmen3.cs",
+              "RelativeToolTip": "Migrations\\20260225012701_updateannauncmen3.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T01:27:01.718Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "20260225005818_updateannauncment2.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225005818_updateannauncment2.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225005818_updateannauncment2.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225005818_updateannauncment2.cs",
+              "RelativeToolTip": "Migrations\\20260225005818_updateannauncment2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:58:18.917Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "20260225004337_updateannauncment.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225004337_updateannauncment.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225004337_updateannauncment.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225004337_updateannauncment.cs",
+              "RelativeToolTip": "Migrations\\20260225004337_updateannauncment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:43:37.965Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "AnnouncementsController.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\AnnouncementsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AnnouncementsController.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\AnnouncementsController.cs",
+              "RelativeToolTip": "Controllers\\AnnouncementsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:42:50.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "UpdateAnnouncementDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateAnnouncementDto.cs",
+              "RelativeDocumentMoniker": "DTO\\UpdateAnnouncementDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\UpdateAnnouncementDto.cs",
+              "RelativeToolTip": "DTO\\UpdateAnnouncementDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:42:37.208Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "AnnouncementService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\AnnouncementService.cs",
+              "RelativeDocumentMoniker": "Service\\Class\\AnnouncementService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Class\\AnnouncementService.cs",
+              "RelativeToolTip": "Service\\Class\\AnnouncementService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:40:36.189Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "IAnnouncementService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Interfaces\\IAnnouncementService.cs",
+              "RelativeDocumentMoniker": "Service\\Interfaces\\IAnnouncementService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Service\\Interfaces\\IAnnouncementService.cs",
+              "RelativeToolTip": "Service\\Interfaces\\IAnnouncementService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:40:31.522Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "IAnnouncementRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IAnnouncementRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\interface\\IAnnouncementRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Repository\\interface\\IAnnouncementRepository.cs",
+              "RelativeToolTip": "Repository\\interface\\IAnnouncementRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:40:25.88Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "CreateAnnouncementDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateAnnouncementDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateAnnouncementDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateAnnouncementDto.cs",
+              "RelativeToolTip": "DTO\\CreateAnnouncementDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:39:31.473Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Announcement.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Announcement.cs",
+              "RelativeDocumentMoniker": "Model\\Announcement.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Model\\Announcement.cs",
+              "RelativeToolTip": "Model\\Announcement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:39:01.735Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "AnnouncementDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\AnnouncementDto.cs",
+              "RelativeDocumentMoniker": "DTO\\AnnouncementDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\AnnouncementDto.cs",
+              "RelativeToolTip": "DTO\\AnnouncementDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T00:38:51.006Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "CreateMemberDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateMemberDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateMemberDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateMemberDto.cs",
+              "RelativeToolTip": "DTO\\CreateMemberDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAYwAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T18:46:40.053Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "CreateTrainerDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateTrainerDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateTrainerDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\CreateTrainerDto.cs",
+              "RelativeToolTip": "DTO\\CreateTrainerDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T18:40:02.143Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "TrainersController.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\TrainersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TrainersController.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Controllers\\TrainersController.cs",
+              "RelativeToolTip": "Controllers\\TrainersController.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAA+wEEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T18:34:11.917Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "TrainerOptionDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\TrainerOptionDto.cs",
+              "RelativeDocumentMoniker": "DTO\\TrainerOptionDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\TrainerOptionDto.cs",
+              "RelativeToolTip": "DTO\\TrainerOptionDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T00:20:21.945Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "TrainerDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\TrainerDto.cs",
+              "RelativeDocumentMoniker": "DTO\\TrainerDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\TrainerDto.cs",
+              "RelativeToolTip": "DTO\\TrainerDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAQAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T00:20:04.1Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "AuthDTOs.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\AuthDTOs.cs",
+              "RelativeDocumentMoniker": "DTO\\AuthDTOs.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\DTO\\AuthDTOs.cs",
+              "RelativeToolTip": "DTO\\AuthDTOs.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAA/wEQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-21T21:10:11.071Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "20260221210408_v4.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260221210408_v4.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260221210408_v4.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260221210408_v4.cs",
+              "RelativeToolTip": "Migrations\\20260221210408_v4.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-21T21:04:08.956Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "..\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "..\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAGQAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-21T21:00:16.017Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "Models.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
+              "RelativeDocumentMoniker": "..\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
+              "RelativeToolTip": "..\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-21T21:00:07.49Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "AuthDTOs.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
+              "RelativeDocumentMoniker": "..\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
+              "RelativeToolTip": "..\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-21T20:59:55.623Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

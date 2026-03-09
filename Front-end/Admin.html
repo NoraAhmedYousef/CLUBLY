@@ -1150,6 +1150,11 @@ body {
                     <option value="">Select facility…</option>
                   </select>
                 </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Date <span class="text-danger">*</span></label>
+<input type="date" id="schedAddDate" class="form-control" required onchange="autoFillDay('schedAddDate','schedAddDay')">
+                </div>
                 <div class="col-md-6">
                   <label class="form-label fw-semibold">Day <span class="text-danger">*</span></label>
                   <select id="schedAddDay" class="form-select" required>
@@ -1157,10 +1162,6 @@ body {
                     <option>Sunday</option><option>Monday</option><option>Tuesday</option>
                     <option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option>
                   </select>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label fw-semibold">Date <span class="text-danger">*</span></label>
-                  <input type="date" id="schedAddDate" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label fw-semibold">Status</label>
@@ -1208,17 +1209,18 @@ body {
                     <option value="">Select facility…</option>
                   </select>
                 </div>
+             
                 <div class="col-md-6">
+                  <label class="form-label fw-semibold">Date</label>
+<input type="date" id="schedEditDate" class="form-control" required onchange="autoFillDay('schedEditDate','schedEditDay')">
+                </div>
+                   <div class="col-md-6">
                   <label class="form-label fw-semibold">Day</label>
                   <select id="schedEditDay" class="form-select" required>
                     <option value="">Select day…</option>
                     <option>Sunday</option><option>Monday</option><option>Tuesday</option>
                     <option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option>
                   </select>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label fw-semibold">Date</label>
-                  <input type="date" id="schedEditDate" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label fw-semibold">Status</label>
@@ -1259,6 +1261,7 @@ body {
         <div class="row g-2 align-items-center controls">
           <div class="col-auto"><input id="searchInput_a" class="form-control" placeholder="Search by name or description..."/></div>
           <div class="col-auto"><select id="facilityFilter_a" class="form-select"><option value="">All Facilities</option></select></div>
+          
           <div class="col-auto"><select id="statusFilter_a" class="form-select"><option value="">All Status</option><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
           <div class="col-auto"><select id="sortBy_a" class="form-select"><option value="name_asc">Name ↑</option><option value="name_desc">Name ↓</option><option value="price_asc">Price ↑</option><option value="price_desc">Price ↓</option></select></div>
           <div class="col-auto"><select id="pageSize_a" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div>
@@ -1334,8 +1337,19 @@ body {
       <div class="clubly-card p-0">
         <div class="table-scroll">
           <table class="table table-hover align-middle mb-0">
-            <thead class="table-light"><tr><th class="sortable" data-field="name">Name</th><th class="sortable" data-field="activity">Activity</th><th class="sortable" data-field="facility">Facility</th><th class="sortable text-center" data-field="capacity">Capacity</th><th class="sortable text-center" data-field="duration">Duration</th><th class="sortable text-center" data-field="day">Day</th><th class="sortable text-center" data-field="start">Time</th><th class="text-center">Actions</th></tr></thead>
-            <tbody id="groupsTbody"><tr><td colspan="8" class="text-center py-4 text-muted">Loading...</td></tr></tbody>
+<thead class="table-light">
+  <tr>
+    <th class="sortable" data-field="name">Name</th>
+    <th class="sortable" data-field="activity">Activity</th>
+    <th class="sortable" data-field="facility">Facility</th>
+    <th class="text-center">Trainer</th>
+    <th class="sortable text-center" data-field="capacity">Capacity</th>
+    <th class="sortable text-center" data-field="duration">Duration</th>
+    <th class="sortable text-center" data-field="day">Day</th>
+    <th class="sortable text-center" data-field="start">Time</th>
+    <th class="text-center">Actions</th>
+  </tr>
+</thead>            <tbody id="groupsTbody"><tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="d-flex justify-content-between align-items-center p-3 border-top">
@@ -1356,6 +1370,12 @@ body {
                 <div class="col-md-3"><label class="form-label">Group Code</label><input id="addCode_g" name="code" class="form-control"/></div>
                 <div class="col-md-6"><label class="form-label">Activity</label><select id="addActivity_g" class="form-select" required><option value="">Loading activities...</option></select></div>
                 <div class="col-md-6"><label class="form-label">Facility (auto)</label><input id="addFacilityName_g" class="form-control" readonly/></div>
+                <div class="col-md-6">
+    <label class="form-label">Trainer</label>
+    <select id="addTrainer_g" class="form-select">
+        <option value="">Select activity first</option>
+    </select>
+</div>
                 <div class="col-md-4"><label class="form-label">Duration</label><select id="addDuration_g" class="form-select" required><option value="">Select Duration</option><option>One Month</option><option>Two Months</option><option>Three Months</option><option>Four Months</option><option>Five Months</option><option>Half Year</option><option>Year</option></select></div>
                 <div class="col-md-4"><label class="form-label">Day</label><select id="addDay_g" class="form-select" required><option value="">Select day</option><option>Saturday</option><option>Sunday</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
                 <div class="col-md-4"><label class="form-label">Start Time</label><input id="addStart_g" type="time" class="form-control" required/></div>
@@ -1380,6 +1400,12 @@ body {
                 <div class="col-md-3"><label class="form-label">Group Code</label><input id="editCode_g" name="code" class="form-control"/></div>
                 <div class="col-md-6"><label class="form-label">Activity</label><select id="editActivity_g" class="form-select" required><option value="">Loading activities...</option></select></div>
                 <div class="col-md-6"><label class="form-label">Facility (auto)</label><input id="editFacilityName_g" class="form-control" readonly/></div>
+                <div class="col-md-6">
+    <label class="form-label">Trainer</label>
+    <select id="editTrainer_g" class="form-select">
+        <option value="">Select activity first</option>
+    </select>
+</div>
                 <div class="col-md-4"><label class="form-label">Duration</label><select id="editDuration_g" class="form-select" required><option value="">Select Duration</option><option>One Month</option><option>Two Months</option><option>Three Months</option><option>Four Months</option><option>Five Months</option><option>Half Year</option><option>Year</option></select></div>
                 <div class="col-md-4"><label class="form-label">Day</label><select id="editDay_g" class="form-select" required><option value="">Select day</option><option>Saturday</option><option>Sunday</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
                 <div class="col-md-4"><label class="form-label">Start Time</label><input id="editStart_g" type="time" class="form-control" required/></div>
@@ -2045,6 +2071,13 @@ function populateSchedFacilityFilter() {
     if (el) el.innerHTML = '<option value="">Select facility…</option>' + facOpts;
   });
 }
+function autoFillDay(dateId, dayId) {
+    const val = document.getElementById(dateId).value;
+    if (!val) return;
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const day = days[new Date(val).getDay()];
+    document.getElementById(dayId).value = day;
+}
 
 // ── Render table ────────────────────────────────────────────────────────────
 function renderScheduleTable() {
@@ -2164,8 +2197,10 @@ async function saveSchedule() {
     errEl.textContent = 'Please add at least one time slot with start and end time.';
     errEl.style.display = 'block'; return;
   }
-  const badSlot = slots.find(s => s.endTime <= s.startTime);
-  if (badSlot) {
+const badSlot = slots.find(s => {
+  if (s.endTime > s.startTime) return false;
+  return true;
+});  if (badSlot) {
     errEl.textContent = `End time must be after start time (${badSlot.startTime}).`;
     errEl.style.display = 'block'; return;
   }
@@ -2243,11 +2278,11 @@ async function updateSchedule() {
     errEl.textContent = 'Please add at least one time slot with start and end time.';
     errEl.style.display = 'block'; return;
   }
-  const badSlot = slots.find(s => s.endTime <= s.startTime);
-  if (badSlot) {
-    errEl.textContent = `End time must be after start time (${badSlot.startTime}).`;
-    errEl.style.display = 'block'; return;
-  }
+ const badSlot = slots.find(s => s.startTime === s.endTime);
+if (badSlot) {
+  errEl.textContent = `Start and end time cannot be the same (${badSlot.startTime}).`;
+  errEl.style.display = 'block'; return;
+}
   errEl.style.display = 'none';
 
   const payload = {
@@ -2329,10 +2364,51 @@ function showToastG(msg,type='success'){showToastIn('toastContainer_g',msg,type)
 async function loadActivitiesForGroups(){try{const res=await fetch(activitiesForGroupApi);if(!res.ok)throw new Error();activitiesForGroup=await res.json();['addActivity_g','editActivity_g','filterActivity_g'].forEach(id=>{const sel=document.getElementById(id);if(!sel)return;sel.innerHTML=`<option value="">${id.startsWith('filter')?'All Activities':'Select activity'}</option>`;activitiesForGroup.forEach(a=>{const o=document.createElement('option');o.value=a.id??a.Id;o.textContent=a.name??a.Name;if(a.facilityName)o.dataset.facilityName=a.facilityName;sel.appendChild(o);});});}catch(e){showToastG('Failed to load activities','error');}}
 async function loadGroups(){const tbody=document.getElementById('groupsTbody');tbody.innerHTML='<tr><td colspan="8" class="text-center py-4 text-muted">Loading...</td></tr>';try{const res=await fetch(groupsApi);if(!res.ok)throw new Error();groupsCache=await res.json();currentPageG=1;applyGroupFilters();}catch(e){tbody.innerHTML='<tr><td colspan="8" class="text-center text-danger py-4">Failed to load groups</td></tr>';showToastG('Failed','error');}}
 function applyGroupFilters(){const q=(document.getElementById('searchInput_g')?.value||'').trim().toLowerCase();const act=document.getElementById('filterActivity_g')?.value||'';const day=document.getElementById('filterDay_g')?.value||'';pageSizeG=parseInt(document.getElementById('pageSize_g')?.value||'10');filteredGroups=groupsCache.filter(g=>{const name=(g.name||'').toLowerCase();const actId=g.activityId||(g.activity?.id);const dayVal=g.day||'';return(!q||name.includes(q))&&(!act||String(actId)===String(act))&&(!day||dayVal===day);});renderGroupTable();}
-function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="8" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',duration=g.duration||'',day=g.day||'',start2=g.startTime||'',end2=g.endTime||'',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||'');const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(duration)}</td><td class="text-center">${escapeHtml(day)}</td><td class="text-center">${escapeHtml(start2)}${start2&&end2?' - ':''}${escapeHtml(end2)}</td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-g" data-id="${id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-g" data-id="${id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_g').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_g',currentPageG,totalPages,p=>{currentPageG=p;renderGroupTable();});attachGroupEvents();}
-function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editDuration_g').value=g.duration||'';document.getElementById('editDay_g').value=g.day||'';document.getElementById('editStart_g').value=g.startTime||'';document.getElementById('editEnd_g').value=g.endTime||'';document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
-document.getElementById('addActivity_g')?.addEventListener('change',function(){const opt=this.selectedOptions[0];document.getElementById('addFacilityName_g').value=opt?.dataset?.facilityName||'';});
-document.getElementById('editActivity_g')?.addEventListener('change',function(){const opt=this.selectedOptions[0];document.getElementById('editFacilityName_g').value=opt?.dataset?.facilityName||'';});
+function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',duration=g.duration||'',day=g.day||'',start2=g.startTime||'',end2=g.endTime||'',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||''),trainerName=(g.trainerName||'—');const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(duration)}</td><td class="text-center">${escapeHtml(day)}</td><td class="text-center">${escapeHtml(start2)}${start2&&end2?' - ':''}${escapeHtml(end2)}</td><td class="text-center">${escapeHtml(trainerName)}</td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-g" data-id="${id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-g" data-id="${id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_g').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_g',currentPageG,totalPages,p=>{currentPageG=p;renderGroupTable();});attachGroupEvents();}function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editDuration_g').value=g.duration||'';document.getElementById('editDay_g').value=g.day||'';document.getElementById('editStart_g').value=g.startTime||'';document.getElementById('editEnd_g').value=g.endTime||'';document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
+document.getElementById('addActivity_g')?.addEventListener('change', async function() {
+    const opt = this.selectedOptions[0];
+    document.getElementById('addFacilityName_g').value = opt?.dataset?.facilityName || '';
+    
+    const activityId = this.value;
+    const trainerSel = document.getElementById('addTrainer_g');
+    trainerSel.innerHTML = '<option value="">Loading...</option>';
+    
+    if (!activityId) {
+        trainerSel.innerHTML = '<option value="">Select activity first</option>';
+        return;
+    }
+    try {
+        const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${activityId}`);
+        const trainers = await res.json();
+        trainerSel.innerHTML = '<option value="">Select trainer (optional)</option>' +
+            trainers.map(t => `<option value="${t.id}">${escapeHtml(t.fullName)}</option>`).join('');
+    } catch(e) {
+        trainerSel.innerHTML = '<option value="">No trainers found</option>';
+    }
+});
+
+// Edit Modal
+document.getElementById('editActivity_g')?.addEventListener('change', async function() {
+    const opt = this.selectedOptions[0];
+    document.getElementById('editFacilityName_g').value = opt?.dataset?.facilityName || '';
+    
+    const activityId = this.value;
+    const trainerSel = document.getElementById('editTrainer_g');
+    trainerSel.innerHTML = '<option value="">Loading...</option>';
+    
+    if (!activityId) {
+        trainerSel.innerHTML = '<option value="">Select activity first</option>';
+        return;
+    }
+    try {
+        const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${activityId}`);
+        const trainers = await res.json();
+        trainerSel.innerHTML = '<option value="">Select trainer (optional)</option>' +
+            trainers.map(t => `<option value="${t.id}">${escapeHtml(t.fullName)}</option>`).join('');
+    } catch(e) {
+        trainerSel.innerHTML = '<option value="">No trainers found</option>';
+    }
+});
 document.getElementById('addSaveBtn_g').onclick=async()=>{const f={name:document.getElementById('addName_g'),capacity:document.getElementById('addCapacity_g'),code:document.getElementById('addCode_g'),activity:document.getElementById('addActivity_g'),duration:document.getElementById('addDuration_g'),day:document.getElementById('addDay_g'),start:document.getElementById('addStart_g'),end:document.getElementById('addEnd_g')};let valid=true;if(!f.name.value.trim()||f.name.value.length<3){showFieldError(f.name,'Name ≥ 3 chars');valid=false;}if(!f.capacity.value||parseInt(f.capacity.value)<1){showFieldError(f.capacity,'Capacity ≥ 1');valid=false;}if(!f.activity.value){showFieldError(f.activity,'Select activity');valid=false;}if(!f.duration.value){showFieldError(f.duration,'Select duration');valid=false;}if(!f.day.value){showFieldError(f.day,'Select day');valid=false;}if(!f.start.value){showFieldError(f.start,'Start time required');valid=false;}if(!f.end.value){showFieldError(f.end,'End time required');valid=false;}if(!valid)return;try{const res=await fetch(groupsApi,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({Name:f.name.value.trim(),Capacity:+f.capacity.value,Code:f.code.value.trim()||null,ActivityId:+f.activity.value,Duration:f.duration.value,Day:f.day.value,StartTime:f.start.value,EndTime:f.end.value})});if(!res.ok)throw new Error();bootstrap.Modal.getInstance(document.getElementById('addModal_g')).hide();showToastG('Added');await loadGroups();}catch(e){showToastG('Add failed','error');}};
 document.getElementById('editSaveBtn_g').onclick=async()=>{const id=document.getElementById('editId_g').value;const name=document.getElementById('editName_g').value.trim();if(!name)return;try{const res=await fetch(`${groupsApi}/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({Name:name,Capacity:+document.getElementById('editCapacity_g').value,Code:document.getElementById('editCode_g').value.trim()||null,ActivityId:+document.getElementById('editActivity_g').value,Duration:document.getElementById('editDuration_g').value,Day:document.getElementById('editDay_g').value,StartTime:document.getElementById('editStart_g').value,EndTime:document.getElementById('editEnd_g').value})});if(!res.ok)throw new Error();bootstrap.Modal.getInstance(document.getElementById('editModal_g')).hide();showToastG('Updated');await loadGroups();}catch(e){showToastG('Edit failed','error');}};
 ['searchInput_g','filterActivity_g','filterDay_g'].forEach(id=>document.getElementById(id)?.addEventListener('input',()=>{currentPageG=1;applyGroupFilters();}));
