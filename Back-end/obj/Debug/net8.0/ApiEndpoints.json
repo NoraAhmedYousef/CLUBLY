@@ -1381,6 +1381,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SignUp.Controllers.TrainersController",
+    "Method": "GetByActivity",
+    "RelativePath": "api/Trainers/byActivity/{activityId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "activityId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SignUp.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",

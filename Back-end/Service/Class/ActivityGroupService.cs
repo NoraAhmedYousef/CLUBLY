@@ -30,7 +30,9 @@ namespace SignUp.Service.Class
                 ActivityId = g.ActivityId,
                 ActivityName = g.Activity?.Name,
                 FacilityName = g.Activity?.Facility?.Name,
-                Duration=g.Duration,
+                TrainerId = g.TrainerId,
+                TrainerName = g.Trainer?.FullName,
+                Duration =g.Duration,
                 Day = g.Day,
                 StartTime = g.StartTime.ToString(@"hh\:mm"),
                 EndTime = g.EndTime.ToString(@"hh\:mm"),
@@ -51,6 +53,8 @@ namespace SignUp.Service.Class
                 ActivityId = g.ActivityId,
                 ActivityName = g.Activity?.Name,
                 FacilityName = g.Activity?.Facility?.Name,
+                TrainerId = g.TrainerId,
+                TrainerName = g.Trainer?.FullName,
                 Duration = g.Duration,
                 Day = g.Day,
                 StartTime = g.StartTime.ToString(@"hh\:mm"),
@@ -67,6 +71,7 @@ namespace SignUp.Service.Class
                 Capacity = dto.Capacity,
                 Code = dto.Code,
                 ActivityId = dto.ActivityId,
+                TrainerId = dto.TrainerId,
                 Duration = dto.Duration,
                 Day = dto.Day,
                 StartTime = TimeSpan.Parse(dto.StartTime),
@@ -86,6 +91,8 @@ namespace SignUp.Service.Class
             if (dto.Capacity.HasValue) group.Capacity = dto.Capacity.Value;
             if (!string.IsNullOrEmpty(dto.Code)) group.Code = dto.Code;
             if (dto.ActivityId.HasValue) group.ActivityId = dto.ActivityId.Value;
+            if (dto.TrainerId.HasValue) group.TrainerId = dto.TrainerId.Value;
+            if (dto.TrainerId == 0) group.TrainerId = null;
             if (!string.IsNullOrEmpty(dto.Duration)) group.Duration = dto.Duration;
             if (!string.IsNullOrEmpty(dto.Day)) group.Day = dto.Day;
             if (!string.IsNullOrEmpty(dto.StartTime)) group.StartTime = TimeSpan.Parse(dto.StartTime);
@@ -113,6 +120,8 @@ namespace SignUp.Service.Class
                 ActivityId = g.ActivityId,
                 ActivityName = g.Activity?.Name,
                 FacilityName = g.Activity?.Facility?.Name,
+                TrainerId = g.TrainerId,
+                TrainerName = g.Trainer?.FullName,
                 Duration = g.Duration,
                 Day = g.Day,
                 StartTime = g.StartTime.ToString(@"hh\:mm"),

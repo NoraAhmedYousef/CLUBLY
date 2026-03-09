@@ -201,6 +201,15 @@ namespace SignUp.Service.Class
             await _repo.DeleteAsync(t);
             return true;
         }
+        public async Task<List<TrainerDto>> GetByActivityIdAsync(int activityId)
+        {
+            var trainers = await _repo.GetByActivityIdAsync(activityId);
+            return trainers.Select(t => new TrainerDto
+            {
+                Id = t.Id,
+                FullName = t.FullName
+            }).ToList();
+        }
     }
 }
 

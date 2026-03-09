@@ -10,7 +10,8 @@
         public int ActivityId { get; set; }
         public Activity Activity { get; set; }
 
-       
+        public int? TrainerId { get; set; }
+        public Trainer? Trainer { get; set; }
 
         public string Day { get; set; }
         public TimeSpan StartTime { get; set; }

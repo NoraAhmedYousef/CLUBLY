@@ -10,6 +10,8 @@ namespace SignUp.Repository.Interfaces
         Task<Trainer> CreateAsync(Trainer trainer);
         Task UpdateAsync(Trainer trainer);
         Task DeleteAsync(Trainer trainer);
+        Task<List<Trainer>> GetByActivityIdAsync(int activityId);
+
 
     }
 }

@@ -59,25 +59,10 @@ namespace Clubly.Service.Class
 
         public async Task<bool> UpdateAsync(int id, UpdateFacilityScheduleDto dto)
         {
-            var schedule = await _repo.GetByIdAsync(id);
-            if (schedule is null) return false;
+            var existing = await _repo.GetByIdAsync(id);
+            if (existing is null) return false;
 
-            if (dto.FacilityId.HasValue) schedule.FacilityId = dto.FacilityId.Value;
-            if (dto.Day is not null) schedule.Day = dto.Day;
-            if (dto.Date.HasValue) schedule.Date = dto.Date.Value;
-            if (dto.Status is not null) schedule.Status = dto.Status;
-
-            if (dto.TimeSlots is not null)
-            {
-                schedule.TimeSlots.Clear();
-                schedule.TimeSlots = dto.TimeSlots.Select(t => new FacilityTimeSlot
-                {
-                    StartTime = t.StartTime,
-                    EndTime = t.EndTime
-                }).ToList();
-            }
-
-            await _repo.UpdateAsync(schedule);
+            await _repo.UpdateAsync(id, dto);
             return true;
         }
 

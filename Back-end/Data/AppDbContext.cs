@@ -5,6 +5,7 @@ using SignUp.Model;
 namespace SignUp.Data
 {
     using Microsoft.EntityFrameworkCore;
+    using System.Reflection.Emit;
 
     public class AppDbContext : DbContext
     {
@@ -62,6 +63,11 @@ namespace SignUp.Data
                 .WithMany()
                 .HasForeignKey(a => a.ActivityId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<FacilitySchedule>()
+    .HasMany(s => s.TimeSlots)
+    .WithOne(t => t.Schedule)
+    .HasForeignKey(t => t.FacilityScheduleId)
+    .OnDelete(DeleteBehavior.Cascade);
         }
     }
-}
+    }

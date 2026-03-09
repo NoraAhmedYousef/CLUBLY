@@ -34,6 +34,12 @@ namespace SignUp.Repository.Class
             _context.Trainers.Remove(trainer);
             await _context.SaveChangesAsync();
         }
-
+        public async Task<List<Trainer>> GetByActivityIdAsync(int activityId)
+        {
+            return await _context.Trainers
+                .Include(t => t.Activities)
+                .Where(t => t.Activities.Any(a => a.Id == activityId))
+                .ToListAsync();
+        }
     }
 }

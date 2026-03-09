@@ -1,4 +1,5 @@
-﻿using Clubly.Model;
+﻿using Clubly.DTO;
+using Clubly.Model;
 
 namespace Clubly.Repository.Interfaces
 {
@@ -7,7 +8,7 @@ namespace Clubly.Repository.Interfaces
         Task<List<FacilitySchedule>> GetAllAsync();
         Task<FacilitySchedule?> GetByIdAsync(int id);
         Task<FacilitySchedule> CreateAsync(FacilitySchedule schedule);
-        Task UpdateAsync(FacilitySchedule schedule);
+        Task UpdateAsync(int id, UpdateFacilityScheduleDto dto);
         Task DeleteAsync(int id);
     }
 }

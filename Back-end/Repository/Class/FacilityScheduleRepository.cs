@@ -1,4 +1,5 @@
-﻿using Clubly.Model;
+﻿using Clubly.DTO;
+using Clubly.Model;
 using Clubly.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using SignUp.Data;
@@ -31,9 +32,30 @@ namespace Clubly.Repository.Class
             return schedule;
         }
 
-        public async Task UpdateAsync(FacilitySchedule schedule)
+        public async Task UpdateAsync(int id, UpdateFacilityScheduleDto dto)
         {
-            _db.FacilitySchedules.Update(schedule);
+            var existing = await _db.FacilitySchedules
+                                    .Include(s => s.TimeSlots)
+                                    .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (existing is null) return;
+
+            if (dto.FacilityId.HasValue) existing.FacilityId = dto.FacilityId.Value;
+            if (dto.Day is not null) existing.Day = dto.Day;
+            if (dto.Date.HasValue) existing.Date = dto.Date.Value;
+            if (dto.Status is not null) existing.Status = dto.Status;
+
+            if (dto.TimeSlots is not null)
+            {
+                _db.FacilityTimeSlots.RemoveRange(existing.TimeSlots);
+                existing.TimeSlots = dto.TimeSlots.Select(t => new FacilityTimeSlot
+                {
+                    StartTime = t.StartTime,
+                    EndTime = t.EndTime,
+                    FacilityScheduleId = existing.Id
+                }).ToList();
+            }
+
             await _db.SaveChangesAsync();
         }
 

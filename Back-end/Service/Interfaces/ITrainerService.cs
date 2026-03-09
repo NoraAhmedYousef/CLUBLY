@@ -10,5 +10,8 @@ namespace SignUp.Service.Interfaces
         Task<TrainerDto> CreateAsync(CreateTrainerDto dto);
         Task<bool> UpdateAsync(int id, UpdateTrainerDto dto);
         Task<bool> DeleteAsync(int id);
+        Task<List<TrainerDto>> GetByActivityIdAsync(int activityId);
+
+
     }
 }

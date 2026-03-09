@@ -2111,6 +2111,29 @@
         }
       }
     },
+    "/api/Trainers/byActivity/{activityId}": {
+      "get": {
+        "tags": [
+          "Trainers"
+        ],
+        "parameters": [
+          {
+            "name": "activityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -2211,6 +2234,11 @@
           "activityId": {
             "type": "integer",
             "format": "int32"
+          },
+          "trainerId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "duration": {
             "type": "string",
@@ -2423,6 +2451,11 @@
             "nullable": true
           },
           "activityId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "trainerId": {
             "type": "integer",
             "format": "int32",
             "nullable": true

@@ -4553,11 +4553,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Clubly.csproj",
+      "projectUniqueName": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Clubly.csproj",
       "projectName": "Clubly",
-      "projectPath": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Clubly.csproj",
+      "projectPath": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Clubly.csproj",
       "packagesPath": "C:\\Users\\noraa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\noraa\\Downloads\\Graduation Project\\obj\\",
+      "outputPath": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

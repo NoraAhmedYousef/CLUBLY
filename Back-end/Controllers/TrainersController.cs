@@ -60,6 +60,12 @@ namespace SignUp.Controllers
             var activities = await _activityService.GetAllForDash();
             return Ok(activities);
         }
-
+       
+        [HttpGet("byActivity/{activityId}")]
+        public async Task<IActionResult> GetByActivity(int activityId)
+        {
+            var trainers = await _service.GetByActivityIdAsync(activityId);
+            return Ok(trainers);
+        }
     }
 }
