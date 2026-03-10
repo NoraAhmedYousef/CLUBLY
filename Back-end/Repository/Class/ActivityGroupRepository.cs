@@ -11,10 +11,18 @@ namespace SignUp.Repository.Class
         public ActivityGroupRepository(AppDbContext context) => _context = context;
 
         public async Task<List<ActivityGroup>> GetAllAsync()
-            => await _context.ActivityGroups.Include(a => a.Activity).ThenInclude(f => f.Facility).ToListAsync();
+            => await _context.ActivityGroups
+                .Include(g => g.Trainer)
+                .Include(g => g.Activity).ThenInclude(a => a.Facility)
+                .Include(g => g.TimeSlots)
+                .ToListAsync();
 
         public async Task<ActivityGroup?> GetByIdAsync(int id)
-            => await _context.ActivityGroups.Include(a => a.Activity).ThenInclude(f => f.Facility).FirstOrDefaultAsync(x => x.Id == id);
+            => await _context.ActivityGroups
+                .Include(g => g.Trainer)
+                .Include(g => g.Activity).ThenInclude(a => a.Facility)
+                .Include(g => g.TimeSlots)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<ActivityGroup> CreateAsync(ActivityGroup group)
         {
@@ -39,13 +47,13 @@ namespace SignUp.Repository.Class
             await _context.SaveChangesAsync();
             return true;
         }
+
         public async Task<List<ActivityGroup>> GetByActivityIdAsync(int activityId)
-        {
-            return await _context.ActivityGroups
+            => await _context.ActivityGroups
                 .Where(g => g.ActivityId == activityId)
-                .Include(g => g.Activity)
-                    .ThenInclude(a => a.Facility)
+                .Include(g => g.Trainer)
+                .Include(g => g.Activity).ThenInclude(a => a.Facility)
+                .Include(g => g.TimeSlots)
                 .ToListAsync();
-        }
     }
 }

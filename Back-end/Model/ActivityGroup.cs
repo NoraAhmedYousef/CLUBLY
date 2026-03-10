@@ -1,4 +1,6 @@
-﻿namespace SignUp.Model
+﻿using Clubly.Model;
+
+namespace SignUp.Model
 {
     public class ActivityGroup
     {
@@ -14,10 +16,11 @@
         public Trainer? Trainer { get; set; }
 
         public string Day { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
+    
         public string  Duration{ get; set; }
         public string Status { get; set; } = "Active";
+        public ICollection<ActivityGroupTimeSlot> TimeSlots { get; set; } = new List<ActivityGroupTimeSlot>();
+
 
     }
 }

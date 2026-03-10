@@ -1,173 +1,197 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\",
+  "WorkspaceRootPath": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260310200610_activitytimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260310200610_activitytimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\class\\trainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\trainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\activityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\activityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\class\\trainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\trainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\interfaces\\itrainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\itrainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\interface\\itrainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\itrainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\controllers\\activitygroupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\activitygroupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\class\\activitygroupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\activitygroupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\activitygroupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\updateactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updateactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\createactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\activitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\activitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\activitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\activitygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\activitytimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\activitytimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\updateactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updateactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createactivitygroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\activitygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\activitygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260308213030_forginslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20260308213030_forginslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\activitygrouptimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\activitygrouptimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createactivitytimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createactivitytimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\class\\activitygrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\activitygrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\facilitytimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\facilitytimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facilitytimeslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\class\\facilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\facilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\facilityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facilityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\class\\facilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\facilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\facilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\interface\\ifacilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\ifacilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\updatefacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updatefacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\updatefacilitybookingstatusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updatefacilitybookingstatusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\class\\facilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\facilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\trainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\trainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\timeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\timeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\timeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260304183414_bookingfacility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createtimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createtimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\creatememberdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\creatememberdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createfacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createfacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\interface\\itrainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\itrainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\interfaces\\itrainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\itrainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\class\\trainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\trainerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\trainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\trainerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\trainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\activitygroupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\activitygroupscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\class\\facilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\facilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\interface\\ifacilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\ifacilityschedulerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\updatefacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updatefacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\updatefacilitybookingstatusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updatefacilitybookingstatusdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\class\\facilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\facilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\trainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\trainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260304183414_bookingfacility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260304183414_bookingfacility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183117_Booking1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\class\\facilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\facilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\facilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\interfaces\\ifacilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\interfaces\\ifacilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\ifacilitybookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\interface\\iactivitygrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\interface\\iactivitygrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\iactivitygrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\facility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\facility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\controllers\\facilitybookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\facilitybookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\facilitybookingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\interface\\ifacilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\interface\\ifacilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\ifacilitybookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\facilitybooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\facilitybooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facilitybooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\createfacilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createfacilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createfacilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\facilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\facilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\facilitybookingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\controllers\\facilityschedulescontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\facilityschedulescontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\facilityschedulescontroller .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\interfaces\\ifacilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\interfaces\\ifacilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\ifacilityscheduleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\createfacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createfacilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\createtimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createtimeslotdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\facilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\facilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\facilityscheduledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\facilityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\facilityschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204420_add2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -176,79 +200,75 @@
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225203952_Amin1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260225185853_updateadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260225185853_updateadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225185853_updateadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\createadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\class\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\admindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\admindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\admindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\updateadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\updateadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updateadmindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\announcementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\announcementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\announcementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\updateannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\updateannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\updateannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\createannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createannouncementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\controllers\\announcementscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\announcementscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\announcementscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260225012701_updateannauncmen3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260225012701_updateannauncmen3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225012701_updateannauncmen3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\model\\announcement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\announcement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\announcement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\class\\announcementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\announcementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\announcementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\repository\\interface\\iannouncementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\interface\\iannouncementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\iannouncementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\service\\interfaces\\iannouncementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\interfaces\\iannouncementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\iannouncementservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\creatememberdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\creatememberdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\createtrainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\createtrainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\createtrainerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\traineroptiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\traineroptiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\traineroptiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\dto\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -261,36 +281,40 @@
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260221210408_v4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260221210408_v4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260221210408_v4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260225005818_updateannauncment2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260225005818_updateannauncment2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225005818_updateannauncment2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260225004337_updateannauncment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260225004337_updateannauncment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225004337_updateannauncment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260225210255_add6.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260225210255_add6.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225210255_add6.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260225204910_add3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260225204910_add3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260225204910_add3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260303231407_facilityscehedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260303231407_facilityscehedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260303231407_facilityscehedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260306013012_addtrainertoactivitygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260306013012_addtrainertoactivitygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260306013012_addtrainertoactivitygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\back-end\\migrations\\20260306220829_b1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260306220829_b1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260306220829_b1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260308213030_forginslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:migrations\\20260308213030_forginslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -300,108 +324,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20260310200610_activitytimeslot.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260310200610_activitytimeslot.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260310200610_activitytimeslot.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260310200610_activitytimeslot.cs",
+              "RelativeToolTip": "Migrations\\20260310200610_activitytimeslot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T20:06:11.087Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TrainerService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\TrainerService.cs",
-              "RelativeDocumentMoniker": "Service\\Class\\TrainerService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\TrainerService.cs",
-              "RelativeToolTip": "Service\\Class\\TrainerService.cs",
-              "ViewState": "AgIAAKUAAAAAAAAAAAAAANMAAAAJAAAAAAAAAA==",
+              "Title": "ActivityService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\ActivityService.cs",
+              "RelativeDocumentMoniker": "Service\\Class\\ActivityService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\ActivityService.cs",
+              "RelativeToolTip": "Service\\Class\\ActivityService.cs",
+              "ViewState": "AgIAAJcAAAAAAAAAAAAAALMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-08T23:34:09.643Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ITrainerRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\ITrainerRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\interface\\ITrainerRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\ITrainerRepository.cs",
-              "RelativeToolTip": "Repository\\interface\\ITrainerRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-08T23:33:50.894Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ITrainerService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\ITrainerService.cs",
-              "RelativeDocumentMoniker": "Service\\Interfaces\\ITrainerService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\ITrainerService.cs",
-              "RelativeToolTip": "Service\\Interfaces\\ITrainerService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-08T23:32:59.053Z",
+              "WhenOpened": "2026-03-10T20:05:09.446Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "TrainerRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\Class\\TrainerRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Class\\TrainerRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\Class\\TrainerRepository.cs",
-              "RelativeToolTip": "Repository\\Class\\TrainerRepository.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAmwCYAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-08T22:23:01.848Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UpdateActivityGroupDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateActivityGroupDto.cs",
-              "RelativeDocumentMoniker": "DTO\\UpdateActivityGroupDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateActivityGroupDto.cs",
-              "RelativeToolTip": "DTO\\UpdateActivityGroupDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-06T01:26:55.08Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TrainersController.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\TrainersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\TrainersController.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\TrainersController.cs",
-              "RelativeToolTip": "Controllers\\TrainersController.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAqwD4AAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-24T18:34:11.917Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CreateActivityGroupDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateActivityGroupDto.cs",
-              "RelativeDocumentMoniker": "DTO\\CreateActivityGroupDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateActivityGroupDto.cs",
-              "RelativeToolTip": "DTO\\CreateActivityGroupDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-06T01:23:46.405Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "ActivityGroupService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\ActivityGroupService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\ActivityGroupService.cs",
               "RelativeDocumentMoniker": "Service\\Class\\ActivityGroupService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\ActivityGroupService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\ActivityGroupService.cs",
               "RelativeToolTip": "Service\\Class\\ActivityGroupService.cs",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAswIYAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHAAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T01:24:11.39Z",
               "EditorCaption": ""
@@ -409,114 +368,153 @@
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "ActivityGroupsController.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\ActivityGroupsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ActivityGroupsController.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\ActivityGroupsController.cs",
-              "RelativeToolTip": "Controllers\\ActivityGroupsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA0AAAAAAAAAA==",
+              "Title": "CreateActivityGroupDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateActivityGroupDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateActivityGroupDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateActivityGroupDto.cs",
+              "RelativeToolTip": "DTO\\CreateActivityGroupDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-06T01:25:17.387Z",
+              "WhenOpened": "2026-03-06T01:23:46.405Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Trainer.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Trainer.cs",
-              "RelativeDocumentMoniker": "Model\\Trainer.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Trainer.cs",
-              "RelativeToolTip": "Model\\Trainer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAXAAAAAAAAAA==",
+              "Title": "UpdateActivityGroupDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateActivityGroupDto.cs",
+              "RelativeDocumentMoniker": "DTO\\UpdateActivityGroupDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateActivityGroupDto.cs",
+              "RelativeToolTip": "DTO\\UpdateActivityGroupDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-25T18:46:27.284Z",
+              "WhenOpened": "2026-03-06T01:26:55.08Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ActivityGroupDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\ActivityGroupDto.cs",
-              "RelativeDocumentMoniker": "DTO\\ActivityGroupDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\ActivityGroupDto.cs",
-              "RelativeToolTip": "DTO\\ActivityGroupDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-06T01:26:39.074Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 7,
               "Title": "ActivityGroup.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\ActivityGroup.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\ActivityGroup.cs",
               "RelativeDocumentMoniker": "Model\\ActivityGroup.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\ActivityGroup.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\ActivityGroup.cs",
               "RelativeToolTip": "Model\\ActivityGroup.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T01:23:17.451Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "20260308213030_forginslot.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260308213030_forginslot.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260308213030_forginslot.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260308213030_forginslot.cs",
-              "RelativeToolTip": "Migrations\\20260308213030_forginslot.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ActivityGroupDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\ActivityGroupDto.cs",
+              "RelativeDocumentMoniker": "DTO\\ActivityGroupDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\ActivityGroupDto.cs",
+              "RelativeToolTip": "DTO\\ActivityGroupDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-08T21:30:30.241Z",
+              "WhenOpened": "2026-03-06T01:26:39.074Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 4,
+              "Title": "ActivityTimeSlotDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\ActivityTimeSlotDto.cs",
+              "RelativeDocumentMoniker": "DTO\\ActivityTimeSlotDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\ActivityTimeSlotDto.cs",
+              "RelativeToolTip": "DTO\\ActivityTimeSlotDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T19:47:23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ActivityGroupTimeSlot.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\ActivityGroupTimeSlot.cs",
+              "RelativeDocumentMoniker": "Model\\ActivityGroupTimeSlot.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\ActivityGroupTimeSlot.cs",
+              "RelativeToolTip": "Model\\ActivityGroupTimeSlot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T19:35:31.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CreateActivityTimeSlotDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateActivityTimeSlotDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateActivityTimeSlotDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateActivityTimeSlotDto.cs",
+              "RelativeToolTip": "DTO\\CreateActivityTimeSlotDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T19:47:47.937Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ActivityGroupRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\ActivityGroupRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Class\\ActivityGroupRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\ActivityGroupRepository.cs",
+              "RelativeToolTip": "Repository\\Class\\ActivityGroupRepository.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAcwDkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-10T19:28:36.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Data\\AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Data\\AppDbContext.cs",
               "RelativeToolTip": "Data\\AppDbContext.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAcwC8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAA5wCQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-21T21:00:41.745Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 12,
               "Title": "FacilityTimeSlot.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\FacilityTimeSlot.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\FacilityTimeSlot.cs",
               "RelativeDocumentMoniker": "Model\\FacilityTimeSlot.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\FacilityTimeSlot.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\FacilityTimeSlot.cs",
               "RelativeToolTip": "Model\\FacilityTimeSlot.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-03T22:59:30.446Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "FacilityScheduleRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\Class\\FacilityScheduleRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Class\\FacilityScheduleRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\Class\\FacilityScheduleRepository.cs",
-              "RelativeToolTip": "Repository\\Class\\FacilityScheduleRepository.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "FacilitySchedule.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\FacilitySchedule.cs",
+              "RelativeDocumentMoniker": "Model\\FacilitySchedule.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\FacilitySchedule.cs",
+              "RelativeToolTip": "Model\\FacilitySchedule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T23:08:23.519Z",
+              "WhenOpened": "2026-03-03T22:58:31.565Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 14,
               "Title": "FacilityScheduleService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\FacilityScheduleService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\FacilityScheduleService.cs",
               "RelativeDocumentMoniker": "Service\\Class\\FacilityScheduleService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\FacilityScheduleService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\FacilityScheduleService.cs",
               "RelativeToolTip": "Service\\Class\\FacilityScheduleService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -525,76 +523,232 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "IFacilityScheduleRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IFacilityScheduleRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\interface\\IFacilityScheduleRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IFacilityScheduleRepository.cs",
-              "RelativeToolTip": "Repository\\interface\\IFacilityScheduleRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 15,
+              "Title": "TimeSlotDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\TimeSlotDto.cs",
+              "RelativeDocumentMoniker": "DTO\\TimeSlotDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\TimeSlotDto.cs",
+              "RelativeToolTip": "DTO\\TimeSlotDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T23:07:39.492Z",
+              "WhenOpened": "2026-03-03T23:01:28.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CreateTimeSlotDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateTimeSlotDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateTimeSlotDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateTimeSlotDto.cs",
+              "RelativeToolTip": "DTO\\CreateTimeSlotDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:03:19.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CreateMemberDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateMemberDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateMemberDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateMemberDto.cs",
+              "RelativeToolTip": "DTO\\CreateMemberDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAYwAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-24T18:46:40.053Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 18,
-              "Title": "UpdateFacilityScheduleDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateFacilityScheduleDto.cs",
-              "RelativeDocumentMoniker": "DTO\\UpdateFacilityScheduleDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateFacilityScheduleDto.cs",
-              "RelativeToolTip": "DTO\\UpdateFacilityScheduleDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Title": "CreateFacilityScheduleDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateFacilityScheduleDto.cs",
+              "RelativeDocumentMoniker": "DTO\\CreateFacilityScheduleDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateFacilityScheduleDto.cs",
+              "RelativeToolTip": "DTO\\CreateFacilityScheduleDto.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T23:07:13.792Z",
+              "WhenOpened": "2026-03-03T23:05:15.397Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 19,
-              "Title": "UpdateFacilityBookingStatusDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateFacilityBookingStatusDto.cs",
-              "RelativeDocumentMoniker": "DTO\\UpdateFacilityBookingStatusDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateFacilityBookingStatusDto.cs",
-              "RelativeToolTip": "DTO\\UpdateFacilityBookingStatusDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Title": "TrainersController.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\TrainersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TrainersController.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\TrainersController.cs",
+              "RelativeToolTip": "Controllers\\TrainersController.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAowEcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-04T01:01:24.762Z",
+              "WhenOpened": "2026-02-24T18:34:11.917Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "FacilityBookingRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\Class\\FacilityBookingRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Class\\FacilityBookingRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\Class\\FacilityBookingRepository.cs",
-              "RelativeToolTip": "Repository\\Class\\FacilityBookingRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 22,
+              "Title": "TrainerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\TrainerRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Class\\TrainerRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\TrainerRepository.cs",
+              "RelativeToolTip": "Repository\\Class\\TrainerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-04T01:04:32.769Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-08T22:23:01.848Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 21,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-06T22:08:02.407Z",
-              "EditorCaption": ""
+              "Title": "ITrainerService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\ITrainerService.cs",
+              "RelativeDocumentMoniker": "Service\\Interfaces\\ITrainerService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\ITrainerService.cs",
+              "RelativeToolTip": "Service\\Interfaces\\ITrainerService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-08T23:32:59.053Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 20,
+              "Title": "ITrainerRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\ITrainerRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\interface\\ITrainerRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\ITrainerRepository.cs",
+              "RelativeToolTip": "Repository\\interface\\ITrainerRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-08T23:33:50.894Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "TrainerService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\TrainerService.cs",
+              "RelativeDocumentMoniker": "Service\\Class\\TrainerService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\TrainerService.cs",
+              "RelativeToolTip": "Service\\Class\\TrainerService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-08T23:34:09.643Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ActivityGroupsController.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\ActivityGroupsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ActivityGroupsController.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\ActivityGroupsController.cs",
+              "RelativeToolTip": "Controllers\\ActivityGroupsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T01:25:17.387Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Trainer.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Trainer.cs",
+              "RelativeDocumentMoniker": "Model\\Trainer.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Trainer.cs",
+              "RelativeToolTip": "Model\\Trainer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T18:46:27.284Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 79,
+              "Title": "20260308213030_forginslot.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260308213030_forginslot.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260308213030_forginslot.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260308213030_forginslot.cs",
+              "RelativeToolTip": "Migrations\\20260308213030_forginslot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-08T21:30:30.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "FacilityScheduleRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\FacilityScheduleRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Class\\FacilityScheduleRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\FacilityScheduleRepository.cs",
+              "RelativeToolTip": "Repository\\Class\\FacilityScheduleRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:08:23.519Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "IFacilityScheduleRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IFacilityScheduleRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\interface\\IFacilityScheduleRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IFacilityScheduleRepository.cs",
+              "RelativeToolTip": "Repository\\interface\\IFacilityScheduleRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:07:39.492Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "UpdateFacilityScheduleDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateFacilityScheduleDto.cs",
+              "RelativeDocumentMoniker": "DTO\\UpdateFacilityScheduleDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateFacilityScheduleDto.cs",
+              "RelativeToolTip": "DTO\\UpdateFacilityScheduleDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-03T23:07:13.792Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "UpdateFacilityBookingStatusDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateFacilityBookingStatusDto.cs",
+              "RelativeDocumentMoniker": "DTO\\UpdateFacilityBookingStatusDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateFacilityBookingStatusDto.cs",
+              "RelativeToolTip": "DTO\\UpdateFacilityBookingStatusDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:01:24.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "FacilityBookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\FacilityBookingRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Class\\FacilityBookingRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\FacilityBookingRepository.cs",
+              "RelativeToolTip": "Repository\\Class\\FacilityBookingRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:04:32.769Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-06T22:08:02.407Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 77,
               "Title": "20260306013012_AddTrainerToActivityGroup.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260306013012_AddTrainerToActivityGroup.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260306013012_AddTrainerToActivityGroup.cs",
               "RelativeDocumentMoniker": "Migrations\\20260306013012_AddTrainerToActivityGroup.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260306013012_AddTrainerToActivityGroup.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260306013012_AddTrainerToActivityGroup.cs",
               "RelativeToolTip": "Migrations\\20260306013012_AddTrainerToActivityGroup.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -602,11 +756,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 78,
               "Title": "20260306220829_b1.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260306220829_b1.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260306220829_b1.cs",
               "RelativeDocumentMoniker": "Migrations\\20260306220829_b1.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260306220829_b1.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260306220829_b1.cs",
               "RelativeToolTip": "Migrations\\20260306220829_b1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -614,11 +768,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 33,
               "Title": "20260304183414_Bookingfacility.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260304183414_Bookingfacility.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260304183414_Bookingfacility.cs",
               "RelativeDocumentMoniker": "Migrations\\20260304183414_Bookingfacility.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260304183414_Bookingfacility.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260304183414_Bookingfacility.cs",
               "RelativeToolTip": "Migrations\\20260304183414_Bookingfacility.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -626,11 +780,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 36,
               "Title": "IFacilityBookingService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\IFacilityBookingService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\IFacilityBookingService.cs",
               "RelativeDocumentMoniker": "Service\\Interfaces\\IFacilityBookingService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\IFacilityBookingService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\IFacilityBookingService.cs",
               "RelativeToolTip": "Service\\Interfaces\\IFacilityBookingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -638,23 +792,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "TimeSlotDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\TimeSlotDto.cs",
-              "RelativeDocumentMoniker": "DTO\\TimeSlotDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\TimeSlotDto.cs",
-              "RelativeToolTip": "DTO\\TimeSlotDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T23:01:28.193Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 32,
               "Title": "TrainerDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\TrainerDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\TrainerDto.cs",
               "RelativeDocumentMoniker": "DTO\\TrainerDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\TrainerDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\TrainerDto.cs",
               "RelativeToolTip": "DTO\\TrainerDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -662,11 +804,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 35,
               "Title": "FacilityBookingService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\FacilityBookingService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\FacilityBookingService.cs",
               "RelativeDocumentMoniker": "Service\\Class\\FacilityBookingService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\FacilityBookingService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\FacilityBookingService.cs",
               "RelativeToolTip": "Service\\Class\\FacilityBookingService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -674,23 +816,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 34,
               "Title": "20260304183117_Booking1.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
-              "RelativeToolTip": "..\\..\\..\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\Graduation Project\\Migrations\\20260304183117_Booking1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-04T18:31:17.916Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 38,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Program.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Program.cs",
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAHYAAAAAAAAAAAAAAH0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -698,11 +840,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 37,
               "Title": "IActivityGroupRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IActivityGroupRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IActivityGroupRepository.cs",
               "RelativeDocumentMoniker": "Repository\\interface\\IActivityGroupRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IActivityGroupRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IActivityGroupRepository.cs",
               "RelativeToolTip": "Repository\\interface\\IActivityGroupRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -710,11 +852,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 39,
               "Title": "Facility.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Facility.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Facility.cs",
               "RelativeDocumentMoniker": "Model\\Facility.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Facility.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Facility.cs",
               "RelativeToolTip": "Model\\Facility.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAkwB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -722,11 +864,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 40,
               "Title": "FacilityBookingsController.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\FacilityBookingsController.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilityBookingsController.cs",
               "RelativeDocumentMoniker": "Controllers\\FacilityBookingsController.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\FacilityBookingsController.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilityBookingsController.cs",
               "RelativeToolTip": "Controllers\\FacilityBookingsController.cs",
               "ViewState": "AgIAACAAAAAAAAAAAAAAADIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -734,11 +876,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 41,
               "Title": "IFacilityBookingRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IFacilityBookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IFacilityBookingRepository.cs",
               "RelativeDocumentMoniker": "Repository\\interface\\IFacilityBookingRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IFacilityBookingRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IFacilityBookingRepository.cs",
               "RelativeToolTip": "Repository\\interface\\IFacilityBookingRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -746,11 +888,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 43,
               "Title": "CreateFacilityBookingDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateFacilityBookingDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateFacilityBookingDto.cs",
               "RelativeDocumentMoniker": "DTO\\CreateFacilityBookingDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateFacilityBookingDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateFacilityBookingDto.cs",
               "RelativeToolTip": "DTO\\CreateFacilityBookingDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -758,11 +900,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 44,
               "Title": "FacilityBookingDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\FacilityBookingDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\FacilityBookingDto.cs",
               "RelativeDocumentMoniker": "DTO\\FacilityBookingDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\FacilityBookingDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\FacilityBookingDto.cs",
               "RelativeToolTip": "DTO\\FacilityBookingDto.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAYwAsAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -770,11 +912,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 42,
               "Title": "FacilityBooking.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\FacilityBooking.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\FacilityBooking.cs",
               "RelativeDocumentMoniker": "Model\\FacilityBooking.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\FacilityBooking.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\FacilityBooking.cs",
               "RelativeToolTip": "Model\\FacilityBooking.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -782,11 +924,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 76,
               "Title": "20260303231407_facilityscehedule.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260303231407_facilityscehedule.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260303231407_facilityscehedule.cs",
               "RelativeDocumentMoniker": "Migrations\\20260303231407_facilityscehedule.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260303231407_facilityscehedule.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260303231407_facilityscehedule.cs",
               "RelativeToolTip": "Migrations\\20260303231407_facilityscehedule.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -794,11 +936,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 45,
               "Title": "FacilitySchedulesController .cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\FacilitySchedulesController .cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilitySchedulesController .cs",
               "RelativeDocumentMoniker": "Controllers\\FacilitySchedulesController .cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\FacilitySchedulesController .cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilitySchedulesController .cs",
               "RelativeToolTip": "Controllers\\FacilitySchedulesController .cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAiwC4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -806,11 +948,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 46,
               "Title": "IFacilityScheduleService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\IFacilityScheduleService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\IFacilityScheduleService.cs",
               "RelativeDocumentMoniker": "Service\\Interfaces\\IFacilityScheduleService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\IFacilityScheduleService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\IFacilityScheduleService.cs",
               "RelativeToolTip": "Service\\Interfaces\\IFacilityScheduleService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -818,35 +960,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "CreateFacilityScheduleDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateFacilityScheduleDto.cs",
-              "RelativeDocumentMoniker": "DTO\\CreateFacilityScheduleDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateFacilityScheduleDto.cs",
-              "RelativeToolTip": "DTO\\CreateFacilityScheduleDto.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBIAAABHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T23:05:15.397Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 39,
-              "Title": "CreateTimeSlotDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateTimeSlotDto.cs",
-              "RelativeDocumentMoniker": "DTO\\CreateTimeSlotDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateTimeSlotDto.cs",
-              "RelativeToolTip": "DTO\\CreateTimeSlotDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T23:03:19.609Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 47,
               "Title": "FacilityScheduleDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\FacilityScheduleDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\FacilityScheduleDto.cs",
               "RelativeDocumentMoniker": "DTO\\FacilityScheduleDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\FacilityScheduleDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\FacilityScheduleDto.cs",
               "RelativeToolTip": "DTO\\FacilityScheduleDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -854,23 +972,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
-              "Title": "FacilitySchedule.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\FacilitySchedule.cs",
-              "RelativeDocumentMoniker": "Model\\FacilitySchedule.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\FacilitySchedule.cs",
-              "RelativeToolTip": "Model\\FacilitySchedule.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T22:58:31.565Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 74,
               "Title": "20260225210255_add6.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225210255_add6.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225210255_add6.cs",
               "RelativeDocumentMoniker": "Migrations\\20260225210255_add6.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225210255_add6.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225210255_add6.cs",
               "RelativeToolTip": "Migrations\\20260225210255_add6.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -878,11 +984,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 75,
               "Title": "20260225204910_add3.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225204910_add3.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225204910_add3.cs",
               "RelativeDocumentMoniker": "Migrations\\20260225204910_add3.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225204910_add3.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225204910_add3.cs",
               "RelativeToolTip": "Migrations\\20260225204910_add3.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -890,34 +996,34 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 48,
               "Title": "20260225204420_add2.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204420_add2.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\Graduation Project\\Migrations\\20260225204420_add2.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\Graduation Project\\Migrations\\20260225204420_add2.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225204420_add2.cs",
-              "RelativeToolTip": "..\\..\\..\\Graduation Project\\Migrations\\20260225204420_add2.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\Graduation Project\\Migrations\\20260225204420_add2.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-25T20:44:20.317Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 49,
               "Title": "20260225203952_Amin1.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
-              "RelativeToolTip": "..\\..\\..\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\Graduation Project\\Migrations\\20260225203952_Amin1.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-25T20:39:52.706Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 50,
               "Title": "20260225185853_updateadmin.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225185853_updateadmin.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225185853_updateadmin.cs",
               "RelativeDocumentMoniker": "Migrations\\20260225185853_updateadmin.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225185853_updateadmin.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225185853_updateadmin.cs",
               "RelativeToolTip": "Migrations\\20260225185853_updateadmin.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -925,11 +1031,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 52,
               "Title": "AdminService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\AdminService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\AdminService.cs",
               "RelativeDocumentMoniker": "Service\\Class\\AdminService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\AdminService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\AdminService.cs",
               "RelativeToolTip": "Service\\Class\\AdminService.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAAAIUAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -937,11 +1043,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 53,
               "Title": "AdminDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\AdminDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\AdminDto.cs",
               "RelativeDocumentMoniker": "DTO\\AdminDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\AdminDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\AdminDto.cs",
               "RelativeToolTip": "DTO\\AdminDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -949,11 +1055,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 54,
               "Title": "UpdateAdminDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateAdminDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateAdminDto.cs",
               "RelativeDocumentMoniker": "DTO\\UpdateAdminDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateAdminDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateAdminDto.cs",
               "RelativeToolTip": "DTO\\UpdateAdminDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -961,11 +1067,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 51,
               "Title": "CreateAdminDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateAdminDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateAdminDto.cs",
               "RelativeDocumentMoniker": "DTO\\CreateAdminDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateAdminDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateAdminDto.cs",
               "RelativeToolTip": "DTO\\CreateAdminDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -973,11 +1079,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 59,
               "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Admin.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Admin.cs",
               "RelativeDocumentMoniker": "Model\\Admin.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Admin.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Admin.cs",
               "RelativeToolTip": "Model\\Admin.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAAwBYAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -985,11 +1091,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 60,
               "Title": "20260225012701_updateannauncmen3.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225012701_updateannauncmen3.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225012701_updateannauncmen3.cs",
               "RelativeDocumentMoniker": "Migrations\\20260225012701_updateannauncmen3.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225012701_updateannauncmen3.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225012701_updateannauncmen3.cs",
               "RelativeToolTip": "Migrations\\20260225012701_updateannauncmen3.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -997,11 +1103,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 72,
               "Title": "20260225005818_updateannauncment2.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225005818_updateannauncment2.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225005818_updateannauncment2.cs",
               "RelativeDocumentMoniker": "Migrations\\20260225005818_updateannauncment2.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225005818_updateannauncment2.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225005818_updateannauncment2.cs",
               "RelativeToolTip": "Migrations\\20260225005818_updateannauncment2.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1009,11 +1115,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 73,
               "Title": "20260225004337_updateannauncment.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225004337_updateannauncment.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225004337_updateannauncment.cs",
               "RelativeDocumentMoniker": "Migrations\\20260225004337_updateannauncment.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260225004337_updateannauncment.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260225004337_updateannauncment.cs",
               "RelativeToolTip": "Migrations\\20260225004337_updateannauncment.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1021,11 +1127,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 58,
               "Title": "AnnouncementsController.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\AnnouncementsController.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\AnnouncementsController.cs",
               "RelativeDocumentMoniker": "Controllers\\AnnouncementsController.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Controllers\\AnnouncementsController.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\AnnouncementsController.cs",
               "RelativeToolTip": "Controllers\\AnnouncementsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1033,11 +1139,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 56,
               "Title": "UpdateAnnouncementDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateAnnouncementDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateAnnouncementDto.cs",
               "RelativeDocumentMoniker": "DTO\\UpdateAnnouncementDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\UpdateAnnouncementDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\UpdateAnnouncementDto.cs",
               "RelativeToolTip": "DTO\\UpdateAnnouncementDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1045,11 +1151,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 62,
               "Title": "AnnouncementService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\AnnouncementService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\AnnouncementService.cs",
               "RelativeDocumentMoniker": "Service\\Class\\AnnouncementService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Class\\AnnouncementService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\AnnouncementService.cs",
               "RelativeToolTip": "Service\\Class\\AnnouncementService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1057,11 +1163,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 64,
               "Title": "IAnnouncementService.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\IAnnouncementService.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\IAnnouncementService.cs",
               "RelativeDocumentMoniker": "Service\\Interfaces\\IAnnouncementService.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Service\\Interfaces\\IAnnouncementService.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\IAnnouncementService.cs",
               "RelativeToolTip": "Service\\Interfaces\\IAnnouncementService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1069,11 +1175,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 63,
               "Title": "IAnnouncementRepository.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IAnnouncementRepository.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IAnnouncementRepository.cs",
               "RelativeDocumentMoniker": "Repository\\interface\\IAnnouncementRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Repository\\interface\\IAnnouncementRepository.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\IAnnouncementRepository.cs",
               "RelativeToolTip": "Repository\\interface\\IAnnouncementRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1081,11 +1187,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 57,
               "Title": "CreateAnnouncementDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateAnnouncementDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateAnnouncementDto.cs",
               "RelativeDocumentMoniker": "DTO\\CreateAnnouncementDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateAnnouncementDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateAnnouncementDto.cs",
               "RelativeToolTip": "DTO\\CreateAnnouncementDto.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1093,11 +1199,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 61,
               "Title": "Announcement.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Announcement.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Announcement.cs",
               "RelativeDocumentMoniker": "Model\\Announcement.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Model\\Announcement.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Announcement.cs",
               "RelativeToolTip": "Model\\Announcement.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1105,11 +1211,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 55,
               "Title": "AnnouncementDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\AnnouncementDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\AnnouncementDto.cs",
               "RelativeDocumentMoniker": "DTO\\AnnouncementDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\AnnouncementDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\AnnouncementDto.cs",
               "RelativeToolTip": "DTO\\AnnouncementDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1117,23 +1223,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
-              "Title": "CreateMemberDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateMemberDto.cs",
-              "RelativeDocumentMoniker": "DTO\\CreateMemberDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateMemberDto.cs",
-              "RelativeToolTip": "DTO\\CreateMemberDto.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAYwAQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-24T18:46:40.053Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 65,
               "Title": "CreateTrainerDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateTrainerDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateTrainerDto.cs",
               "RelativeDocumentMoniker": "DTO\\CreateTrainerDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\CreateTrainerDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\CreateTrainerDto.cs",
               "RelativeToolTip": "DTO\\CreateTrainerDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1141,11 +1235,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 66,
               "Title": "TrainerOptionDto.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\TrainerOptionDto.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\TrainerOptionDto.cs",
               "RelativeDocumentMoniker": "DTO\\TrainerOptionDto.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\TrainerOptionDto.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\TrainerOptionDto.cs",
               "RelativeToolTip": "DTO\\TrainerOptionDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1153,11 +1247,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 67,
               "Title": "AuthDTOs.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\AuthDTOs.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\AuthDTOs.cs",
               "RelativeDocumentMoniker": "DTO\\AuthDTOs.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\DTO\\AuthDTOs.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\AuthDTOs.cs",
               "RelativeToolTip": "DTO\\AuthDTOs.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAA/wEQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1165,11 +1259,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 71,
               "Title": "20260221210408_v4.cs",
-              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260221210408_v4.cs",
+              "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260221210408_v4.cs",
               "RelativeDocumentMoniker": "Migrations\\20260221210408_v4.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\Back-end\\Migrations\\20260221210408_v4.cs",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260221210408_v4.cs",
               "RelativeToolTip": "Migrations\\20260221210408_v4.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -1177,36 +1271,36 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 68,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Data\\AppDbContext.cs",
               "ViewState": "AgIAAFQAAAAAAAAAAAAAAGQAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-21T21:00:16.017Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 69,
               "Title": "Models.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
-              "RelativeToolTip": "..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\Models\\Models.cs",
               "ViewState": "AgIAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-21T21:00:07.49Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 70,
               "Title": "AuthDTOs.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
-              "RelativeToolTip": "..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\ClubAuth_Backend\\ClubManagementAPI\\DTOs\\AuthDTOs.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-21T20:59:55.623Z"

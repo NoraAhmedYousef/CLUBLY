@@ -167,20 +167,17 @@ namespace SignUp.Service.Class
                     .OrderBy(t => t.FullName)
                     .ToList(),
                 Groups = activity.ActivityGroups
-                    .Select(g => new GroupOptionDto
-                    {
-                        Id = g.Id,
-                        Name = g.Name,
-                        Code = g.Code,
-                        Capacity = g.Capacity,
-                        Day = g.Day,
-                        StartTime = g.StartTime,
-                        EndTime = g.EndTime,
-                        Duration = g.Duration
-                    })
-                    .OrderBy(g => g.Day)
-                    .ThenBy(g => g.StartTime)
-                    .ToList()
+    .Select(g => new GroupOptionDto
+    {
+        Id = g.Id,
+        Name = g.Name,
+        Code = g.Code,
+        Capacity = g.Capacity,
+        Day = g.Day,
+        Duration = g.Duration
+    })
+    .OrderBy(g => g.Day)
+    .ToList()
             };
         }
 

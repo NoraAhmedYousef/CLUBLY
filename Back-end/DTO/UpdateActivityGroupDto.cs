@@ -1,4 +1,6 @@
-﻿namespace SignUp.DTO
+﻿using Clubly.DTO;
+
+namespace SignUp.DTO
 {
     public class UpdateActivityGroupDto
     {
@@ -7,12 +9,9 @@
         public string? Code { get; set; }
         public int? ActivityId { get; set; }
         public int? TrainerId { get; set; }
-
         public string? Duration { get; set; }
-
-        public string? Day { get; set; } 
-        public string? StartTime { get; set; }
-        public string? EndTime { get; set; }
+        public string? Day { get; set; }
         public string? Status { get; set; } = "Active";
+        public List<CreateActivityTimeSlotDto>? TimeSlots { get; set; }
     }
 }

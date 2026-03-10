@@ -2248,15 +2248,32 @@
             "type": "string",
             "nullable": true
           },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeSlots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateActivityTimeSlotDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateActivityTimeSlotDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "nullable": true
+          },
           "startTime": {
             "type": "string",
             "nullable": true
           },
           "endTime": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
             "type": "string",
             "nullable": true
           }
@@ -2468,16 +2485,15 @@
             "type": "string",
             "nullable": true
           },
-          "startTime": {
-            "type": "string",
-            "nullable": true
-          },
-          "endTime": {
-            "type": "string",
-            "nullable": true
-          },
           "status": {
             "type": "string",
+            "nullable": true
+          },
+          "timeSlots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateActivityTimeSlotDto"
+            },
             "nullable": true
           }
         },

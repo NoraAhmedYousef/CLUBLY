@@ -27,6 +27,8 @@ namespace SignUp.Data
         public DbSet<FacilitySchedule> FacilitySchedules { get; set; }
         public DbSet<FacilityTimeSlot> FacilityTimeSlots { get; set; }
         public DbSet<FacilityBooking> FacilityBookings { get; set; }
+        public DbSet<ActivityGroupTimeSlot> ActivityGroupTimeSlots { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
