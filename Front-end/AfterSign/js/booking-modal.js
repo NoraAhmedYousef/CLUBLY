@@ -219,69 +219,42 @@ window.openBookingModal = function (type, id, name, slotPrice = 0) {
   }
 
   /* ── Activity ──────────────────────────────────────────────────────────── */
-  function activityForm() {
-    const trainers = window._allTrainersData || window._trainersData || [];
-    const tOpts = trainers.map(t =>
-      `<option value="${t.Id||t.id}">${t.FullName||t.fullName||'Trainer'}</option>`).join('');
+function activityForm() {
+  return `
+  <div class="bp-grid">
+    <div class="bp-field">
+      <label class="bp-label">Activity</label>
+      <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
+    </div>
+    <div class="bp-field">
+      <label class="bp-label">Number of Participants</label>
+      <div class="bp-number-wrap">
+        <input type="number" class="bp-input" id="bpParticipants" value="1" min="1" max="200" style="padding-right:36px;">
+        <div class="bp-number-arrows">
+          <button class="bp-arr" onclick="bpAdj('bpParticipants',1)">▲</button>
+          <button class="bp-arr" onclick="bpAdj('bpParticipants',-1)">▼</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bp-grid bp-grid-1">
+    <div class="bp-field">
+      <label class="bp-label">Select Date</label>
+      <input type="date" class="bp-input" id="bpDate" min="${todayStr()}">
+    </div>
+  </div>
+  <input type="hidden" id="bpTime" value="">
+  <input type="hidden" id="bpEndTime" value="">
+  <div class="bp-grid bp-grid-1" id="bpEndDateWrap" style="display:none;">
+    <div class="bp-field">
+      <label class="bp-label">End Date</label>
+      <input type="date" class="bp-input" id="bpEndDate" readonly
+        style="background:var(--bg,#f0f4f8);color:var(--muted,#64748b);cursor:not-allowed;pointer-events:none;">
+    </div>
+  </div>`;
 
-    return `
-    <div class="bp-grid">
-      <div class="bp-field">
-        <label class="bp-label">Activity</label>
-        <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
-      </div>
-      <div class="bp-field">
-        <label class="bp-label">Select a Trainer</label>
-        <div class="bp-select-wrap">
-          <select class="bp-select" id="bpTrainer">
-            <option value="">Select a trainer</option>
-            ${tOpts || '<option value="">No trainers</option>'}
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="bp-grid">
-      <div class="bp-field">
-        <label class="bp-label">Select a Group</label>
-        <div class="bp-select-wrap">
-          <select class="bp-select" id="bpGroup">
-            <option value="">Select a group</option>
-            <option value="morning">Morning Group</option>
-            <option value="evening">Evening Group</option>
-            <option value="weekend">Weekend Group</option>
-          </select>
-        </div>
-      </div>
-      <div class="bp-field">
-        <label class="bp-label">Time</label>
-        <input type="time" class="bp-input" id="bpTime">
-      </div>
-    </div>
-    <div class="bp-grid">
-      <div class="bp-field">
-        <label class="bp-label">Date</label>
-        <input type="date" class="bp-input" id="bpDate" min="${todayStr()}">
-      </div>
-      <div class="bp-field">
-        <label class="bp-label">Duration (minutes)</label>
-        <input type="number" class="bp-input" id="bpDuration"
-               placeholder="e.g. 60" min="15" step="15">
-      </div>
-    </div>
-    <div class="bp-grid bp-grid-1">
-      <div class="bp-field">
-        <label class="bp-label">Number of Participants</label>
-        <div class="bp-number-wrap">
-          <input type="number" class="bp-input" id="bpParticipants" value="1" min="1" max="200"
-                 style="padding-right:36px;">
-          <div class="bp-number-arrows">
-            <button class="bp-arr" onclick="bpAdj('bpParticipants',1)">▲</button>
-            <button class="bp-arr" onclick="bpAdj('bpParticipants',-1)">▼</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }
+}
+  
 
   /* ── Facility ──────────────────────────────────────────────────────────── */
   function facilityForm() {
@@ -377,14 +350,15 @@ window.openBookingModal = function (type, id, name, slotPrice = 0) {
   window.bpStep1Next = function () {
     const date = v('bpDate');
     const time = v('bpTime');
-    if (!date) { showErr('Please select a date.'); return; }
-    if (!time) { showErr('Please select a time.'); return; }
+   if (!date) { showErr('Please select a date.'); return; }
+if (_ctx.type !== 'activity' && !time) { showErr('Please select a time.'); return; }
 
-    const isFacility = _ctx.type === 'facility';
-    const dur     = isFacility ? '' : v('bpDuration');
-    const endTime = isFacility ? v('bpEndTime') : '';
+const isFacility = _ctx.type === 'facility';
+const isActivity = _ctx.type === 'activity';
+const dur     = (isFacility || isActivity) ? '' : v('bpDuration');
+const endTime = isFacility ? v('bpEndTime') : '';
 
-    if (!isFacility && !dur) { showErr('Please select a duration.'); return; }
+if (!isFacility && !isActivity && !dur) { showErr('Please select a duration.'); return; }
 
     const base = { activity:150, facility:200, trainer:300 };
     // For facility, calculate mins from start→end; fallback 60
@@ -405,9 +379,9 @@ window.openBookingModal = function (type, id, name, slotPrice = 0) {
       trainer:     v('bpTrainer')     || '',
       group:       v('bpGroup')       || '',
       sessionType: v('bpSessionType') || '',
-price: _ctx.type === 'facility'
+price: (_ctx.slotPrice || 0) > 0
   ? (_ctx.slotPrice || 0) * pax
-  : (base[_ctx.type] || 150) * (mins / 60) * pax,    };
+  : (base[_ctx.type] || 150) * (mins / 60) * pax,   };
     renderPayment();
   };
 
@@ -423,13 +397,18 @@ price: _ctx.type === 'facility'
     const typeLabel = { activity:'Activity', facility:'Facility', trainer:'Trainer' };
     const durLabel  = fmtDur(_formData.duration);
 
-    const rows = [
-      [typeLabel[_formData.type]||'Item', _formData.name],
-      ['Date',         fmtDate(_formData.date)],
-      ['Time',         fmtTime(_formData.time)],
-      ['End Time',     _formData.endTime ? fmtTime(_formData.endTime) : fmtDur(_formData.duration)],
-['Participants', _formData.participants],
-...(_ctx.slotPrice > 0 ? [['Price per person', `${_ctx.slotPrice} EGP`]] : []),    ];
+  const endDateEl = document.getElementById('bpEndDate');
+const endDateVal = endDateEl ? endDateEl.value : '';
+
+const rows = [
+  [typeLabel[_formData.type]||'Item', _formData.name],
+  ['Date',         fmtDate(_formData.date)],
+  ...(_formData.type !== 'activity' ? [['Time', fmtTime(_formData.time)]] : []),
+  ...(_formData.type !== 'activity' ? [['End Time', _formData.endTime ? fmtTime(_formData.endTime) : fmtDur(_formData.duration)]] : []),
+  ...(endDateVal ? [['End Date', fmtDate(endDateVal)]] : []),
+  ['Participants', _formData.participants],
+  ...(_ctx.slotPrice > 0 ? [['Price per person', `${_ctx.slotPrice} EGP`]] : []),
+];
     if (_formData.trainer && _formData.trainer !== '')
       rows.push(['Trainer', trainerName(_formData.trainer)]);
     if (_formData.sessionType)

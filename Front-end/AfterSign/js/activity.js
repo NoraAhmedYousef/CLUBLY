@@ -172,11 +172,196 @@ function clearActivityFilters() {
   applyActivityFilters();
 }
 
-// ── Book ─────────────────────────────────────────────────────────────────────
 function handleBookActivity(id) {
   const act  = (window._allActivities || []).find(a => (a.Id || a.id) == id);
   const name = act ? (act.Name || act.name || 'Activity') : 'Activity';
-  openBookingModal('activity', id, name);
+  openActivityGroupPicker(id, name);
+}
+
+async function openActivityGroupPicker(activityId, activityName) {
+  // Set modal title
+  document.getElementById('actPickerTitle').textContent = activityName;
+  document.getElementById('actPickerBody').innerHTML = `
+    <div class="text-center py-4">
+      <div class="spinner-border spinner-border-sm" style="color:#e85d2f"></div>
+      <p class="mt-2 small text-muted">Loading groups…</p>
+    </div>`;
+
+  const confirmBtn = document.getElementById('actPickerConfirm');
+  confirmBtn.style.opacity = '.4';
+  confirmBtn.style.pointerEvents = 'none';
+  document.getElementById('actPickerSelected').textContent = '';
+
+  window._actPickerChoice = null;
+  window._actPickerActivityName = activityName;
+
+  new bootstrap.Modal(document.getElementById('actPickerModal')).show();
+
+  try {
+const res  = await fetch('https://localhost:7132/api/ActivityGroups');
+    const all  = res.ok ? await res.json() : [];
+
+  const groups = all.filter(g => {
+  const aid    = g.activityId || g.ActivityId;
+  const status = (g.status || g.Status || '').toLowerCase();
+  return String(aid) === String(activityId) && status === 'active';
+});
+
+    if (!groups.length) {
+      document.getElementById('actPickerBody').innerHTML = `
+        <div class="text-center py-5">
+          <i class="bi bi-calendar-x" style="font-size:2.5rem;color:#94a3b8"></i>
+          <p class="mt-3 text-muted">No available groups for this activity right now.</p>
+        </div>`;
+      return;
+    }
+
+    let html = '';
+    groups.forEach(g => {
+      const gid      = g.id || g.Id;
+      const gname    = g.name || g.Name || '';
+      const trainer  = g.trainerName || g.TrainerName || '';
+      const price    = g.price ?? g.Price ?? 0;
+      const capacity = g.capacity || g.Capacity || '';
+      const slots    = g.timeSlots || g.TimeSlots || [];
+
+    // حساب أول وآخر تاريخ
+const dates = slots.map(sl => sl.date || sl.Date || '').filter(Boolean).sort();
+const fromDate = dates[0] || '';
+const toDate   = dates[dates.length - 1] || '';
+const dateRange = fromDate === toDate
+  ? fromDate
+  : `${fromDate} → ${toDate}`;
+
+const btnId = `actgrp_${gid}`;
+html += `
+<button class="act-slot-btn" id="${btnId}"
+onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${fromDate}','','',${price},'${encodeURIComponent(trainer)}',${g.durationDays||0})"  style="width:100%;text-align:left;border:2px solid var(--border,#e2e8f0);background:var(--bg,#f0f4f8);border-radius:14px;padding:14px 16px;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .18s;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+    <span style="font-size:.95rem;font-weight:900;color:var(--text,#1a202c);">${gname}</span>
+    ${price > 0
+      ? `<span style="font-size:.82rem;font-weight:800;color:#fff;background:#2ec4b6;padding:3px 12px;border-radius:20px;">${price} EGP</span>`
+      : `<span style="font-size:.78rem;color:#94a3b8;font-weight:700;">Free</span>`}
+  </div>
+  <div style="font-size:.78rem;color:var(--muted,#64748b);display:flex;flex-wrap:wrap;gap:10px;">
+    ${trainer ? `<span><i class="bi bi-person-fill" style="color:#e85d2f"></i> ${trainer}</span>` : ''}
+    ${capacity ? `<span><i class="bi bi-people-fill" style="color:#2ec4b6"></i> Capacity: ${capacity}</span>` : ''}
+${g.durationDays ? `<span><i class="bi bi-hourglass-split" style="color:#7c3aed"></i> ${g.durationDays} days</span>` : ''}
+  </div>
+  ${slots.length ? `
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
+    ${slots.map(sl => {
+      const date  = (sl.date  || sl.Date  || '').split('T')[0];
+      const start = (sl.startTime || sl.StartTime || '').substring(0, 5);
+      const end   = (sl.endTime   || sl.EndTime   || '').substring(0, 5);
+const dayName = date ? new Date(date + 'T00:00:00').toLocaleDateString('en-GB', {weekday:'long'}) : '';
+const day = sl.day || sl.Day || '';
+return `<span style="font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px;background:rgba(232,93,47,.08);color:#e85d2f;border:1px solid rgba(232,93,47,.2);">
+  <i class="bi bi-clock" style="font-size:.65rem"></i> ${day ? day+' · ' : ''} ${start} → ${end}
+</span>`;
+    }).join('')}
+  </div>` : ''}
+</button>`;  
+
+    });
+
+    document.getElementById('actPickerBody').innerHTML = html;
+
+  } catch(e) {
+    document.getElementById('actPickerBody').innerHTML = `
+      <div class="text-center py-4 text-danger">
+        <i class="bi bi-exclamation-triangle me-1"></i>Failed to load groups.
+      </div>`;
+  }
+}
+
+function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime, price, trainer, durationDays) {
+    document.querySelectorAll('.act-slot-btn').forEach(btn => {
+    btn.style.borderColor = 'var(--border,#e2e8f0)';
+    btn.style.background  = 'var(--bg,#f0f4f8)';
+    btn.style.color       = 'var(--text,#1a202c)';
+    btn.style.boxShadow   = '';
+  });
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.style.borderColor = '#e85d2f';
+    btn.style.background  = 'rgba(232,93,47,.08)';
+    btn.style.color       = '#e85d2f';
+    btn.style.boxShadow   = '0 0 0 3px rgba(232,93,47,.15)';
+  }
+window._actPickerChoice = { groupId, groupName, date, startTime, endTime, price, trainer, durationDays };
+  document.getElementById('actPickerSelected').innerHTML =
+    `<i class="bi bi-check-circle-fill" style="color:#2ec4b6"></i> <strong>${groupName}</strong> &nbsp; ${date} &nbsp; ${startTime} → ${endTime}`;
+
+  const confirmBtn = document.getElementById('actPickerConfirm');
+  confirmBtn.style.opacity = '1';
+  confirmBtn.style.pointerEvents = 'auto';
+}
+
+function actPickerConfirm() {
+  if (!window._actPickerChoice) return;
+  bootstrap.Modal.getInstance(document.getElementById('actPickerModal')).hide();
+
+  const c = window._actPickerChoice;
+  openBookingModal('activity', c.groupId, window._actPickerActivityName, c.price);
+
+ setTimeout(() => {
+    const c = window._actPickerChoice;
+    const dateEl = document.getElementById('bpDate');
+    const timeEl = document.getElementById('bpTime');
+    const endEl  = document.getElementById('bpEndTime');
+
+    // default date = today
+    const today = new Date().toISOString().split('T')[0];
+    if (dateEl) dateEl.value = today;
+    if (timeEl) timeEl.value = c.startTime || '';
+    if (endEl)  endEl.value  = c.endTime   || '';
+
+    // إضافة end date field إذا في durationDays
+    if (c.durationDays) {
+      const endDate = new Date();
+      endDate.setDate(endDate.getDate() + c.durationDays);
+      const endDateStr = endDate.toISOString().split('T')[0];
+      // ابحث عن حقل End Time وضيف بعده End Date
+      const endField = endEl?.closest('.bp-field');
+  const endDateEl = document.getElementById('bpEndDate');
+const endDateWrap = document.getElementById('bpEndDateWrap');
+if (endDateEl && endDateWrap) {
+  endDateEl.value = endDateStr;
+  endDateWrap.style.display = '';
+  // إضافة الـ badge
+  const parent = endDateEl.closest('.bp-field');
+  if (parent && !parent.querySelector('.slot-lock-badge')) {
+    const badge = document.createElement('div');
+    badge.className = 'slot-lock-badge';
+    badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> Calculated from duration (${c.durationDays} days)`;
+    badge.style.cssText = 'font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;display:flex;align-items:center;gap:3px;';
+    parent.appendChild(badge);
+  }
+
+      }
+    }
+
+    [dateEl, timeEl, endEl].forEach(el => {
+      if (!el) return;
+      el.setAttribute('readonly', true);
+      el.style.background = 'var(--bg,#f0f4f8)';
+      el.style.color      = 'var(--muted,#64748b)';
+      el.style.cursor     = 'not-allowed';
+      el.style.pointerEvents = 'none';
+      const parent = el.closest('.bp-field');
+      if (parent && !parent.querySelector('.slot-lock-badge')) {
+        const badge = document.createElement('div');
+        badge.className = 'slot-lock-badge';
+        badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> Fixed from group`;
+        badge.style.cssText = 'font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;display:flex;align-items:center;gap:3px;';
+        parent.appendChild(badge);
+      }
+    });
+
+    const paxEl = document.getElementById('bpParticipants');
+    if (paxEl) { paxEl.removeAttribute('disabled'); paxEl.focus(); }
+  }, 380);
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

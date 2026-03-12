@@ -578,6 +578,27 @@ async function authHandleSignup(){
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/booking-modal.js"></script>
 <script src="js/activity.js"></script>
-
+<!-- Activity Group Picker Modal -->
+<div class="modal fade" id="actPickerModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:540px">
+    <div class="modal-content" style="border-radius:20px;border:none;">
+      <div class="modal-header" style="background:linear-gradient(135deg,#0d1b2a,#1a2f4a);border-radius:20px 20px 0 0;padding:20px 24px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.5);">Choose a Time Slot</div>
+          <div id="actPickerTitle" style="color:#fff;font-size:1.05rem;font-weight:900;"></div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="actPickerBody" style="max-height:60vh;overflow-y:auto;padding:20px;"></div>
+      <div class="modal-footer" style="border-top:1px solid #e2e8f0;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div id="actPickerSelected" style="font-size:.82rem;font-weight:700;color:#1a2332;flex:1;"></div>
+        <button id="actPickerConfirm" onclick="actPickerConfirm()"
+          style="background:linear-gradient(135deg,#e85d2f,#c0392b);color:#fff;border:none;border-radius:50px;padding:10px 28px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;opacity:.4;pointer-events:none;">
+          ✔ Confirm Slot
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
