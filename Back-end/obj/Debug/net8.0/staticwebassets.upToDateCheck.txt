@@ -2,7 +2,6 @@ wwwroot\Uploads\Activities\2bfbdd7a-b579-41cf-aaa5-9eba081f1592.png
 wwwroot\Uploads\Activities\30279e39-6ebf-40c6-a700-40ceff0169df.png
 wwwroot\Uploads\Activities\4a2599b6-6d5e-4e8c-8a67-b397c71fbaa2.png
 wwwroot\Uploads\Activities\4efbc22f-9fd3-459d-a9c2-5f86ebbd4af2.png
-wwwroot\Uploads\Activities\59884451-d001-42f1-992b-b2efe52815cd.png
 wwwroot\Uploads\Activities\87386779-4ce2-49fb-a5f0-267c5891cffa.png
 wwwroot\Uploads\Activities\c80b2268-419f-46db-9d00-2ef72b2aeaf0.png
 wwwroot\Uploads\Announcements\1c204f42-52fc-4574-b338-8ff91802647e.png

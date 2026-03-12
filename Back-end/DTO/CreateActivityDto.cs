@@ -9,8 +9,7 @@ namespace SignUp.DTO
 
         public string? Description { get; set; }
 
-        [Range(1, 100000)]
-        public decimal Price { get; set; }
+       
 
         [Required]
         public int FacilityId { get; set; }

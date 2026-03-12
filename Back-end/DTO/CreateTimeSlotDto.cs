@@ -6,5 +6,7 @@ namespace Clubly.DTO
     {
         [Required] public TimeOnly StartTime { get; set; }
         [Required] public TimeOnly EndTime { get; set; }
+        public decimal Price { get; set; }
+
     }
 }

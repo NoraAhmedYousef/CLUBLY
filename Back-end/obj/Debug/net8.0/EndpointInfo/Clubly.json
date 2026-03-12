@@ -36,12 +36,6 @@
                   "Description": {
                     "type": "string"
                   },
-                  "Price": {
-                    "maximum": 100000,
-                    "minimum": 1,
-                    "type": "number",
-                    "format": "double"
-                  },
                   "FacilityId": {
                     "type": "integer",
                     "format": "int32"
@@ -60,9 +54,6 @@
                   "style": "form"
                 },
                 "Description": {
-                  "style": "form"
-                },
-                "Price": {
                   "style": "form"
                 },
                 "FacilityId": {
@@ -134,10 +125,6 @@
                   "Description": {
                     "type": "string"
                   },
-                  "Price": {
-                    "type": "number",
-                    "format": "double"
-                  },
                   "FacilityId": {
                     "type": "integer",
                     "format": "int32"
@@ -156,9 +143,6 @@
                   "style": "form"
                 },
                 "Description": {
-                  "style": "form"
-                },
-                "Price": {
                   "style": "form"
                 },
                 "FacilityId": {
@@ -2240,13 +2224,9 @@
             "format": "int32",
             "nullable": true
           },
-          "duration": {
-            "type": "string",
-            "nullable": true
-          },
-          "day": {
-            "type": "string",
-            "nullable": true
+          "price": {
+            "type": "number",
+            "format": "double"
           },
           "status": {
             "type": "string",
@@ -2274,6 +2254,10 @@
             "nullable": true
           },
           "endTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "day": {
             "type": "string",
             "nullable": true
           }
@@ -2447,6 +2431,10 @@
           "endTime": {
             "type": "string",
             "format": "time"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -2477,14 +2465,6 @@
             "format": "int32",
             "nullable": true
           },
-          "duration": {
-            "type": "string",
-            "nullable": true
-          },
-          "day": {
-            "type": "string",
-            "nullable": true
-          },
           "status": {
             "type": "string",
             "nullable": true
@@ -2494,6 +2474,11 @@
             "items": {
               "$ref": "#/components/schemas/CreateActivityTimeSlotDto"
             },
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
             "nullable": true
           }
         },

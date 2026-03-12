@@ -52,6 +52,7 @@ namespace Clubly.Repository.Class
                 {
                     StartTime = t.StartTime,
                     EndTime = t.EndTime,
+                    Price = t.Price,        
                     FacilityScheduleId = existing.Id
                 }).ToList();
             }

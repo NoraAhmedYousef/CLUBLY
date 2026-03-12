@@ -59,7 +59,6 @@ namespace SignUp.Service.Class
                 Id = a.Id,
                 Name = a.Name,
                 Description = a.Description,
-                Price = a.Price,
                 FacilityId = a.FacilityId,
                 FacilityName = a.Facility?.Name ?? "Not assigned",
                 Status = a.Status,
@@ -77,7 +76,6 @@ namespace SignUp.Service.Class
                 Id = a.Id,
                 Name = a.Name,
                 Description = a.Description,
-                Price = a.Price,
                 FacilityId = a.FacilityId,
                 FacilityName = a.Facility?.Name ?? "Not assigned",
                 Status = a.Status,
@@ -93,7 +91,6 @@ namespace SignUp.Service.Class
             {
                 Name = dto.Name,
                 Description = dto.Description,
-                Price = dto.Price,
                 FacilityId = dto.FacilityId,
                 Status = dto.Status,
                 ImageUrl = imageUrl
@@ -109,7 +106,6 @@ namespace SignUp.Service.Class
 
             if (dto.Name != null) activity.Name = dto.Name;
             if (dto.Description != null) activity.Description = dto.Description;
-            if (dto.Price.HasValue) activity.Price = dto.Price.Value;
             if (dto.FacilityId.HasValue) activity.FacilityId = dto.FacilityId.Value;
             if (dto.Status != null) activity.Status = dto.Status;
 
@@ -151,7 +147,6 @@ namespace SignUp.Service.Class
             {
                 ActivityId = activity.Id,
                 ActivityName = activity.Name,
-                Price = activity.Price,
                 ImageUrl = activity.ImageUrl,
                 Trainers = activity.Trainers
                     .Where(t => t.IsActive)
@@ -173,8 +168,7 @@ namespace SignUp.Service.Class
         Name = g.Name,
         Code = g.Code,
         Capacity = g.Capacity,
-        Day = g.Day,
-        Duration = g.Duration
+      
     })
     .OrderBy(g => g.Day)
     .ToList()

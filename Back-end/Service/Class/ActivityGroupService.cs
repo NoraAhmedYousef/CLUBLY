@@ -1,7 +1,5 @@
 ﻿using Clubly.DTO;
 using Clubly.Model;
-using Microsoft.EntityFrameworkCore;
-using SignUp.Data;
 using SignUp.DTO;
 using SignUp.Model;
 using SignUp.Repository.Interfaces;
@@ -42,14 +40,14 @@ namespace SignUp.Service.Class
                 Code = dto.Code,
                 ActivityId = dto.ActivityId,
                 TrainerId = dto.TrainerId,
-                Duration = dto.Duration,
-                Day = dto.Day,
+                Price = dto.Price,
                 Status = dto.Status ?? "Active",
                 TimeSlots = dto.TimeSlots.Select(s => new ActivityGroupTimeSlot
                 {
                     Date = DateOnly.Parse(s.Date),
                     StartTime = TimeSpan.Parse(s.StartTime),
-                    EndTime = TimeSpan.Parse(s.EndTime)
+                    EndTime = TimeSpan.Parse(s.EndTime),
+                     Day = s.Day
                 }).ToList()
             };
             await _repo.CreateAsync(group);
@@ -67,8 +65,9 @@ namespace SignUp.Service.Class
             if (dto.ActivityId.HasValue) group.ActivityId = dto.ActivityId.Value;
             if (dto.TrainerId.HasValue) group.TrainerId = dto.TrainerId.Value;
             if (dto.TrainerId == 0) group.TrainerId = null;
-            if (!string.IsNullOrEmpty(dto.Duration)) group.Duration = dto.Duration;
-            if (!string.IsNullOrEmpty(dto.Day)) group.Day = dto.Day;
+        
+            if (dto.Price.HasValue) group.Price = dto.Price.Value;
+
             if (dto.Status != null) group.Status = dto.Status;
 
             if (dto.TimeSlots != null)
@@ -79,7 +78,9 @@ namespace SignUp.Service.Class
                     ActivityGroupId = id,
                     Date = DateOnly.Parse(s.Date),
                     StartTime = TimeSpan.Parse(s.StartTime),
-                    EndTime = TimeSpan.Parse(s.EndTime)
+                    EndTime = TimeSpan.Parse(s.EndTime),
+                    Day = s.Day
+
                 }).ToList();
             }
 
@@ -109,8 +110,8 @@ namespace SignUp.Service.Class
             FacilityName = g.Activity?.Facility?.Name,
             TrainerId = g.TrainerId,
             TrainerName = g.Trainer?.FullName,
-            Duration = g.Duration,
-            Day = g.Day,
+          
+            Price = g.Price,
             Status = g.Status,
             TimeSlots = g.TimeSlots.Select(s => new ActivityTimeSlotDto
             {

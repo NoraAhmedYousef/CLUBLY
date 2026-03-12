@@ -24,7 +24,8 @@ namespace Clubly.Service.Class
                             {
                                 Id = t.Id,
                                 StartTime = t.StartTime,
-                                EndTime = t.EndTime
+                                EndTime = t.EndTime,
+                                Price = t.Price
                             }).ToList()
         };
 
@@ -48,7 +49,8 @@ namespace Clubly.Service.Class
                 TimeSlots = dto.TimeSlots.Select(t => new FacilityTimeSlot
                 {
                     StartTime = t.StartTime,
-                    EndTime = t.EndTime
+                    EndTime = t.EndTime,
+                    Price = t.Price
                 }).ToList()
             };
 

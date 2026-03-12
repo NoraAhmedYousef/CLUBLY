@@ -15,11 +15,11 @@ namespace SignUp.Model
         public int? TrainerId { get; set; }
         public Trainer? Trainer { get; set; }
 
-        public string Day { get; set; }
-    
-        public string  Duration{ get; set; }
+        public decimal Price { get; set; }
+
         public string Status { get; set; } = "Active";
         public ICollection<ActivityGroupTimeSlot> TimeSlots { get; set; } = new List<ActivityGroupTimeSlot>();
+
 
 
     }
