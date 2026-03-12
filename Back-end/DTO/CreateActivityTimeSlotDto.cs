@@ -3,9 +3,8 @@
     public class CreateActivityTimeSlotDto
     {
 
-        public string Date { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public string StartTime { get; set; } = string.Empty;
+        public string EndTime { get; set; } = string.Empty;
         public string? Day { get; set; }
     }
 }

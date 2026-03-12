@@ -17,6 +17,7 @@ namespace SignUp.DTO
 
         public string? Day { get; set; } = string.Empty;
         public decimal Price { get; set; }
+        public int? DurationDays { get; set; }
 
         public string? Status { get; set; }
         public List<ActivityTimeSlotDto> TimeSlots { get; set; } = new();

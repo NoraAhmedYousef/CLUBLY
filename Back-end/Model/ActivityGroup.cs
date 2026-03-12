@@ -17,6 +17,8 @@ namespace SignUp.Model
 
         public decimal Price { get; set; }
 
+        public int? DurationDays { get; set; }
+
         public string Status { get; set; } = "Active";
         public ICollection<ActivityGroupTimeSlot> TimeSlots { get; set; } = new List<ActivityGroupTimeSlot>();
 

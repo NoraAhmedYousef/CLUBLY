@@ -41,13 +41,13 @@ namespace SignUp.Service.Class
                 ActivityId = dto.ActivityId,
                 TrainerId = dto.TrainerId,
                 Price = dto.Price,
+                DurationDays = dto.DurationDays,
                 Status = dto.Status ?? "Active",
                 TimeSlots = dto.TimeSlots.Select(s => new ActivityGroupTimeSlot
                 {
-                    Date = DateOnly.Parse(s.Date),
                     StartTime = TimeSpan.Parse(s.StartTime),
                     EndTime = TimeSpan.Parse(s.EndTime),
-                     Day = s.Day
+                    Day = s.Day
                 }).ToList()
             };
             await _repo.CreateAsync(group);
@@ -67,6 +67,8 @@ namespace SignUp.Service.Class
             if (dto.TrainerId == 0) group.TrainerId = null;
         
             if (dto.Price.HasValue) group.Price = dto.Price.Value;
+            if (dto.DurationDays.HasValue) group.DurationDays = dto.DurationDays.Value;
+
 
             if (dto.Status != null) group.Status = dto.Status;
 
@@ -76,7 +78,6 @@ namespace SignUp.Service.Class
                 group.TimeSlots = dto.TimeSlots.Select(s => new ActivityGroupTimeSlot
                 {
                     ActivityGroupId = id,
-                    Date = DateOnly.Parse(s.Date),
                     StartTime = TimeSpan.Parse(s.StartTime),
                     EndTime = TimeSpan.Parse(s.EndTime),
                     Day = s.Day
@@ -112,13 +113,15 @@ namespace SignUp.Service.Class
             TrainerName = g.Trainer?.FullName,
           
             Price = g.Price,
+            DurationDays = g.DurationDays,
             Status = g.Status,
             TimeSlots = g.TimeSlots.Select(s => new ActivityTimeSlotDto
             {
                 Id = s.Id,
-                Date = s.Date.ToString("yyyy-MM-dd"),
                 StartTime = s.StartTime.ToString(@"hh\:mm"),
-                EndTime = s.EndTime.ToString(@"hh\:mm")
+                EndTime = s.EndTime.ToString(@"hh\:mm"),
+                Day = s.Day
+
             }).ToList()
         };
 

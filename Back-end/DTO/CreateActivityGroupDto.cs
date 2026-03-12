@@ -10,6 +10,7 @@ namespace SignUp.DTO
         public int ActivityId { get; set; }
         public int? TrainerId { get; set; }
         public decimal Price { get; set; }
+        public int? DurationDays { get; set; }
 
         public string Status { get; set; } = "Active";
         public List<CreateActivityTimeSlotDto> TimeSlots { get; set; } = new();
