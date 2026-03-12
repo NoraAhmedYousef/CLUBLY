@@ -347,12 +347,11 @@ async function openSchedulePicker(facilityId, facilityName) {
           const slotId = `slot_${s.id || s.Id}_${start.replace(':', '')}`;
           html += `
           <button class="sched-slot-btn" id="${slotId}"
-            onclick="selectScheduleSlot('${slotId}',${s.id||s.Id},${facilityId},'${date}','${day}','${start}','${end}')"
-            style="border:2px solid var(--border,#e2e8f0);background:var(--bg,#f0f4f8);border-radius:12px;padding:9px 16px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;color:var(--text,#1a202c);transition:all .18s;display:inline-flex;align-items:center;gap:6px;">
+onclick="selectScheduleSlot('${slotId}',${s.id||s.Id},${facilityId},'${date}','${day}','${start}','${end}',${sl.price||sl.Price||0})"            style="border:2px solid var(--border,#e2e8f0);background:var(--bg,#f0f4f8);border-radius:12px;padding:9px 16px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;color:var(--text,#1a202c);transition:all .18s;display:inline-flex;align-items:center;gap:6px;">
             <i class="bi bi-clock" style="color:#e85d2f;font-size:.8rem"></i>
             ${start} → ${end}
-            ${day ? `<span style="font-size:.68rem;font-weight:600;color:var(--muted,#64748b)">${day}</span>` : ''}
-          </button>`;
+${day ? `<span style="font-size:.68rem;font-weight:600;color:var(--muted,#64748b)">${day}</span>` : ''}
+${(sl.price||sl.Price||0) > 0 ? `<span style="font-size:.72rem;font-weight:800;color:#2ec4b6;margin-left:4px;">${sl.price||sl.Price} EGP</span>` : `<span style="font-size:.68rem;color:#94a3b8">Free</span>`}          </button>`;
         });
       });
 
@@ -369,8 +368,7 @@ async function openSchedulePicker(facilityId, facilityName) {
   }
 }
 
-function selectScheduleSlot(slotId, scheduleId, facilityId, date, day, startTime, endTime) {
-  document.querySelectorAll('.sched-slot-btn').forEach(btn => {
+function selectScheduleSlot(slotId, scheduleId, facilityId, date, day, startTime, endTime, slotPrice = 0) {  document.querySelectorAll('.sched-slot-btn').forEach(btn => {
     btn.style.borderColor  = 'var(--border,#e2e8f0)';
     btn.style.background   = 'var(--bg,#f0f4f8)';
     btn.style.color        = 'var(--text,#1a202c)';
@@ -383,8 +381,7 @@ function selectScheduleSlot(slotId, scheduleId, facilityId, date, day, startTime
     btn.style.color       = '#e85d2f';
     btn.style.boxShadow   = '0 0 0 3px rgba(232,93,47,.15)';
   }
-  _schedPickerChoice = { scheduleId, facilityId, date, day, startTime, endTime };
-
+_schedPickerChoice = { scheduleId, facilityId, date, day, startTime, endTime, slotPrice };
   document.getElementById('schedPickerSelected').innerHTML =
     `<i class="bi bi-check-circle-fill" style="color:#2ec4b6"></i> <strong>${date}</strong> &nbsp;${startTime} → ${endTime}`;
 
@@ -425,8 +422,7 @@ function schedPickerConfirm() {
   const fac  = (allFacilities || []).find(f => (f.Id || f.id) == _schedPickerChoice.facilityId);
   const name = fac ? (fac.Name || fac.name || 'Facility') : 'Facility';
 
-  openBookingModal('facility', _schedPickerChoice.facilityId, name);
-
+openBookingModal('facility', _schedPickerChoice.facilityId, name, _schedPickerChoice.slotPrice || 0);
   setTimeout(() => {
     const dateEl     = document.getElementById('bpDate');
     const timeEl     = document.getElementById('bpTime');

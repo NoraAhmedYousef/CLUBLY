@@ -157,9 +157,9 @@
   /* ══════════════════════════════════════════════════════════════════════════
      PUBLIC API
   ══════════════════════════════════════════════════════════════════════════ */
-  window.openBookingModal = function (type, id, name) {
-    ensureModal();
-    _ctx = { type, id, name };
+window.openBookingModal = function (type, id, name, slotPrice = 0) {
+  ensureModal();
+  _ctx = { type, id, name, slotPrice };
     _formData = {};
     setHeader(type, name);
     renderStep1();
@@ -405,8 +405,9 @@
       trainer:     v('bpTrainer')     || '',
       group:       v('bpGroup')       || '',
       sessionType: v('bpSessionType') || '',
-      price: (base[_ctx.type] || 150) * (mins / 60) * pax,
-    };
+price: _ctx.type === 'facility'
+  ? (_ctx.slotPrice || 0) * pax
+  : (base[_ctx.type] || 150) * (mins / 60) * pax,    };
     renderPayment();
   };
 
@@ -427,8 +428,8 @@
       ['Date',         fmtDate(_formData.date)],
       ['Time',         fmtTime(_formData.time)],
       ['End Time',     _formData.endTime ? fmtTime(_formData.endTime) : fmtDur(_formData.duration)],
-      ['Participants', _formData.participants],
-    ];
+['Participants', _formData.participants],
+...(_ctx.slotPrice > 0 ? [['Price per person', `${_ctx.slotPrice} EGP`]] : []),    ];
     if (_formData.trainer && _formData.trainer !== '')
       rows.push(['Trainer', trainerName(_formData.trainer)]);
     if (_formData.sessionType)
