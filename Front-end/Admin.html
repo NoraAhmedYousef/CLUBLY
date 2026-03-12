@@ -1120,11 +1120,12 @@ body {
                 <th class="text-center">Date</th>
                 <th class="text-center">Available Slots</th>
                 <th class="text-center">Status</th>
+                <th class="text-center">Price</th>
                 <th class="text-center">Actions</th>
               </tr>
             </thead>
             <tbody id="scheduleTable">
-              <tr><td colspan="6" class="text-center text-muted py-4">Loading schedules…</td></tr>
+              <tr><td colspan="7" class="text-center text-muted py-4">Loading schedules…</td></tr>
             </tbody>
           </table>
         </div>
@@ -1150,11 +1151,6 @@ body {
                     <option value="">Select facility…</option>
                   </select>
                 </div>
-                
-                <div class="col-md-6">
-                  <label class="form-label fw-semibold">Date <span class="text-danger">*</span></label>
-<input type="date" id="schedAddDate" class="form-control" required onchange="autoFillDay('schedAddDate','schedAddDay')">
-                </div>
                 <div class="col-md-6">
                   <label class="form-label fw-semibold">Day <span class="text-danger">*</span></label>
                   <select id="schedAddDay" class="form-select" required>
@@ -1162,6 +1158,10 @@ body {
                     <option>Sunday</option><option>Monday</option><option>Tuesday</option>
                     <option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option>
                   </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Date <span class="text-danger">*</span></label>
+                  <input type="date" id="schedAddDate" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label fw-semibold">Status</label>
@@ -1209,18 +1209,17 @@ body {
                     <option value="">Select facility…</option>
                   </select>
                 </div>
-             
                 <div class="col-md-6">
-                  <label class="form-label fw-semibold">Date</label>
-<input type="date" id="schedEditDate" class="form-control" required onchange="autoFillDay('schedEditDate','schedEditDay')">
-                </div>
-                   <div class="col-md-6">
                   <label class="form-label fw-semibold">Day</label>
                   <select id="schedEditDay" class="form-select" required>
                     <option value="">Select day…</option>
                     <option>Sunday</option><option>Monday</option><option>Tuesday</option>
                     <option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option>
                   </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Date</label>
+                  <input type="date" id="schedEditDate" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label fw-semibold">Status</label>
@@ -1261,7 +1260,6 @@ body {
         <div class="row g-2 align-items-center controls">
           <div class="col-auto"><input id="searchInput_a" class="form-control" placeholder="Search by name or description..."/></div>
           <div class="col-auto"><select id="facilityFilter_a" class="form-select"><option value="">All Facilities</option></select></div>
-          
           <div class="col-auto"><select id="statusFilter_a" class="form-select"><option value="">All Status</option><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
           <div class="col-auto"><select id="sortBy_a" class="form-select"><option value="name_asc">Name ↑</option><option value="name_desc">Name ↓</option><option value="price_asc">Price ↑</option><option value="price_desc">Price ↓</option></select></div>
           <div class="col-auto"><select id="pageSize_a" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div>
@@ -1271,7 +1269,7 @@ body {
       <div class="clubly-card p-0">
         <div class="table-scroll">
           <table class="table table-hover align-middle mb-0">
-            <thead class="table-light"><tr><th>Name</th><th>Description</th><th class="text-center">Price</th><th class="text-center">Facility</th><th class="text-center">Status</th><th class="text-center">Image</th><th class="text-center">Actions</th></tr></thead>
+            <thead class="table-light"><tr><th>Name</th><th>Description</th><th class="text-center">Facility</th><th class="text-center">Status</th><th class="text-center">Image</th><th class="text-center">Actions</th></tr></thead>
             <tbody id="activitiesTable"></tbody>
           </table>
         </div>
@@ -1289,7 +1287,6 @@ body {
             <form id="addActivityForm" enctype="multipart/form-data" autocomplete="off">
               <div class="mb-2"><input name="name" class="form-control" placeholder="Activity name" required/></div>
               <div class="mb-2"><textarea name="description" class="form-control" placeholder="Description"></textarea></div>
-              <div class="mb-2"><input type="number" name="price" class="form-control" placeholder="Price" min="0" step="0.01" required/></div>
               <div class="mb-2"><select name="facilityId" id="addFacilitySelect" class="form-select" required><option value="">Loading facilities...</option></select></div>
               <div class="mb-2"><select name="status" class="form-select"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
               <div class="mb-2"><label class="form-label">Image</label><input type="file" name="image" id="addImageInput_a" class="form-control" accept="image/*"/><img id="addImagePreview_a" class="img-preview" alt="preview"/></div>
@@ -1307,7 +1304,6 @@ body {
               <input type="hidden" name="id"/>
               <div class="mb-2"><input name="name" class="form-control" placeholder="Activity name" required/></div>
               <div class="mb-2"><textarea name="description" class="form-control" placeholder="Description"></textarea></div>
-              <div class="mb-2"><input type="number" name="price" class="form-control" placeholder="Price" min="0" step="0.01" required/></div>
               <div class="mb-2"><select name="facilityId" id="editFacilitySelect" class="form-select" required><option value="">Loading facilities...</option></select></div>
               <div class="mb-2"><select name="status" class="form-select"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
               <div class="mb-2"><label class="form-label">Image</label><input type="file" name="image" id="editImageInput_a" class="form-control" accept="image/*"/><img id="editImagePreview_a" class="img-preview" alt="preview"/></div>
@@ -1337,19 +1333,8 @@ body {
       <div class="clubly-card p-0">
         <div class="table-scroll">
           <table class="table table-hover align-middle mb-0">
-<thead class="table-light">
-  <tr>
-   <th class="sortable" data-field="name">Name</th>
-<th class="sortable" data-field="activity">Activity</th>
-<th class="sortable" data-field="facility" style="color:var(--clubly-accent)">Facility</th>
-<th class="sortable text-center" data-field="trainerName">Trainer</th>
-<th class="sortable text-center" data-field="capacity">Capacity</th>
-<th class="sortable text-center" data-field="duration">Duration</th>
-<th class="sortable text-center" data-field="day">Day</th>
-<th class="text-center">Time Slots</th>
-<th class="text-center">Actions</th>
-  </tr>
-</thead>            <tbody id="groupsTbody"><tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr></tbody>
+<thead class="table-light"><tr><th class="sortable" data-field="name">Name</th><th class="sortable" data-field="activity">Activity</th><th class="sortable" data-field="facility">Facility</th><th class="sortable text-center" data-field="capacity">Capacity</th><th class="sortable text-center" data-field="trainerName">Trainer</th><th class="sortable text-center" data-field="price">Price</th><th class="text-center">Time Slots</th><th class="text-center">Actions</th></tr></thead>
+            <tbody id="groupsTbody"><tr><td colspan="8" class="text-center py-4 text-muted">Loading...</td></tr></tbody>
           </table>
         </div>
         <div class="d-flex justify-content-between align-items-center p-3 border-top">
@@ -1370,101 +1355,121 @@ body {
                 <div class="col-md-3"><label class="form-label">Group Code</label><input id="addCode_g" name="code" class="form-control"/></div>
                 <div class="col-md-6"><label class="form-label">Activity</label><select id="addActivity_g" class="form-select" required><option value="">Loading activities...</option></select></div>
                 <div class="col-md-6"><label class="form-label">Facility (auto)</label><input id="addFacilityName_g" class="form-control" readonly/></div>
-                <div class="col-md-6">
-    <label class="form-label">Trainer</label>
-    <select id="addTrainer_g" class="form-select">
-        <option value="">Select activity first</option>
-    </select>
-</div>
-             <div class="col-md-6">
-  <label class="form-label">Price (EGP)</label>
-  <input id="addPrice_g" type="number" min="0" step="0.01" class="form-control" placeholder="e.g. 500" required/>
-</div>
-<div class="col-12">
-  <label class="form-label fw-bold">Available Time Slots <span class="text-danger">*</span></label>
-  <div id="addSlotsContainer">
-    <div class="slot-row border rounded p-2 mb-2 bg-light">
-      <div class="row g-2 align-items-end">
-        <div class="col-md-3">
-          <label class="form-label small mb-1">Start Date</label>
-          <input type="date" class="form-control form-control-sm slot-start-date" required/>
-        </div>
-        <div class="col-md-2">
-          <label class="form-label small mb-1">Duration (hrs)</label>
-          <input type="number" class="form-control form-control-sm slot-duration-hrs" min="0.5" step="0.5" placeholder="e.g. 2"/>
-        </div>
-        <div class="col-md-2">
-          <label class="form-label small mb-1">Duration (days)</label>
-          <input type="number" class="form-control form-control-sm slot-duration-days" min="1" step="1" placeholder="e.g. 30"/>
-        </div>
-        <div class="col-md-2">
-          <label class="form-label small mb-1">Start Time</label>
-          <input type="time" class="form-control form-control-sm slot-start-time" required/>
-        </div>
-        <div class="col-md-2">
-          <label class="form-label small mb-1">End Time <span class="text-muted">(auto)</span></label>
-          <input type="time" class="form-control form-control-sm slot-end-time" readonly style="background:#f8fafc;"/>
-        </div>
-        <div class="col-md-2">
-          <label class="form-label small mb-1">End Date <span class="text-muted">(auto)</span></label>
-          <input type="date" class="form-control form-control-sm slot-end-date" readonly style="background:#f8fafc;"/>
-        </div>
-        <div class="col-md-2">
-  <label class="form-label small mb-1">Day</label>
-  <select class="form-select form-select-sm slot-day" required>
-    <option value="">Select day</option>
-    <option>Saturday</option><option>Sunday</option><option>Monday</option>
-    <option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option>
+               <div class="col-md-6"><label class="form-label">Trainer</label>
+  <select id="addTrainer_g" class="form-select" disabled>
+    <option value="">Select activity first</option>
   </select>
 </div>
+<div class="col-md-6"><label class="form-label">Price (EGP)</label>
+  <input id="addPrice_g" name="price" type="number" min="0" class="form-control" placeholder="e.g. 500"/>
+</div>
+<div class="col-12">
+  <label class="form-label fw-semibold text-danger">Available Time Slots <span class="text-danger">*</span></label>
+  <div id="slotsContainer_g" class="border rounded-3 p-3">
+    <!-- Slot Template -->
+    <div class="slot-row border rounded-3 p-3 mb-2">
+      <div class="row g-2">
+        <div class="col-md-3"><label class="form-label">Start Date</label>
+          <input type="date" name="startDate" class="form-control"/></div>
+        <div class="col-md-3"><label class="form-label">Duration (hrs)</label>
+          <input type="number" name="durationHrs" class="form-control" placeholder="e.g. 2"/></div>
+        <div class="col-md-3"><label class="form-label">Duration (days)</label>
+          <input type="number" name="durationDays" class="form-control" placeholder="e.g. 30"/></div>
+        <div class="col-md-3"><label class="form-label">Start Time</label>
+          <input type="time" name="startTime" class="form-control"/></div>
+        <div class="col-md-3"><label class="form-label">End Time (auto)</label>
+          <input type="time" name="endTime" class="form-control" readonly/></div>
+        <div class="col-md-3"><label class="form-label">End Date (auto)</label>
+          <input type="date" name="endDate" class="form-control" readonly/></div>
+        <div class="col-md-3"><label class="form-label">Day</label>
+          <select name="day" class="form-select">
+            <option value="">Select day</option>
+            <option>Saturday</option><option>Sunday</option><option>Monday</option>
+            <option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option>
+          </select>
+        </div>
         <div class="col-auto d-flex align-items-end">
-          <button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn"><i class="bi bi-trash3-fill"></i></button>
+          <button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn">
+            <i class="bi bi-trash"></i>
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <button type="button" id="addSlotBtn_g" class="btn btn-outline-primary btn-sm mt-1"><i class="bi bi-plus-circle"></i> Add Time Slot</button>
+  <button type="button" id="addSlotBtn_g" class="btn btn-outline-primary btn-sm mt-2">
+    <i class="bi bi-plus-circle"></i> Add Time Slot
+  </button>
 </div>
+              </div>
             </form>
           </div>
           <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="addSaveBtn_g" class="btn btn-primary">Save Group</button></div>
         </div></div>
       </div>
 
-      <!-- Edit Group Modal -->
-      <div class="modal fade" id="editModal_g" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content rounded-4">
-          <div class="modal-header border-0"><h5 class="modal-title">Edit Activity Group</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-          <div class="modal-body">
-            <form id="editForm_g" novalidate>
-              <input type="hidden" id="editId_g"/>
-              <div class="row g-3">
-                <div class="col-md-6"><label class="form-label">Group Name</label><input id="editName_g" name="name" class="form-control" required/></div>
-                <div class="col-md-3"><label class="form-label">Capacity</label><input id="editCapacity_g" name="capacity" type="number" min="1" class="form-control" required/></div>
-                <div class="col-md-3"><label class="form-label">Group Code</label><input id="editCode_g" name="code" class="form-control"/></div>
-                <div class="col-md-6"><label class="form-label">Activity</label><select id="editActivity_g" class="form-select" required><option value="">Loading activities...</option></select></div>
-                <div class="col-md-6"><label class="form-label">Facility (auto)</label><input id="editFacilityName_g" class="form-control" readonly/></div>
-                <div class="col-md-6">
-    <label class="form-label">Trainer</label>
-    <select id="editTrainer_g" class="form-select">
-        <option value="">Select activity first</option>
-    </select>
-</div>
-              <div class="col-md-6">
-  <label class="form-label">Price (EGP)</label>
-  <input id="editPrice_g" type="number" min="0" step="0.01" class="form-control" placeholder="e.g. 500" required/>
-</div>
-<div class="col-12">
-  <label class="form-label fw-bold">Available Time Slots <span class="text-danger">*</span></label>
-  <div id="editSlotsContainer"></div>
-  <button type="button" id="editSlotBtn_g" class="btn btn-outline-primary btn-sm mt-1"><i class="bi bi-plus-circle"></i> Add Time Slot</button>
-</div>
-              </div>
-            </form>
+     <!-- Edit Group Modal -->
+<div class="modal fade" id="editModal_g" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content rounded-4">
+    <div class="modal-header border-0"><h5 class="modal-title">Edit Activity Group</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <form id="editForm_g" novalidate>
+        <input type="hidden" id="editId_g"/>
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label">Group Name</label><input id="editName_g" name="name" class="form-control" required/></div>
+          <div class="col-md-3"><label class="form-label">Capacity</label><input id="editCapacity_g" name="capacity" type="number" min="1" class="form-control" required/></div>
+          <div class="col-md-3"><label class="form-label">Group Code</label><input id="editCode_g" name="code" class="form-control"/></div>
+          <div class="col-md-6"><label class="form-label">Activity</label><select id="editActivity_g" class="form-select" required><option value="">Loading activities...</option></select></div>
+          <div class="col-md-6"><label class="form-label">Facility (auto)</label><input id="editFacilityName_g" class="form-control" readonly/></div>
+          <div class="col-md-6"><label class="form-label">Trainer</label>
+            <select id="editTrainer_g" class="form-select" disabled>
+              <option value="">Select activity first</option>
+            </select>
           </div>
-          <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="editSaveBtn_g" class="btn btn-warning text-white">Update</button></div>
-        </div></div>
-      </div>
+          <div class="col-md-6"><label class="form-label">Price (EGP)</label>
+            <input id="editPrice_g" name="price" type="number" min="0" class="form-control" placeholder="e.g. 500"/>
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-semibold text-danger">Available Time Slots <span class="text-danger">*</span></label>
+            <div id="editSlotsContainer_g" class="border rounded-3 p-3">
+              <div class="slot-row border rounded-3 p-3 mb-2">
+                <div class="row g-2">
+                  <div class="col-md-3"><label class="form-label">Start Date</label>
+                    <input type="date" name="startDate" class="form-control"/></div>
+                  <div class="col-md-3"><label class="form-label">Duration (hrs)</label>
+                    <input type="number" name="durationHrs" class="form-control" placeholder="e.g. 2"/></div>
+                  <div class="col-md-3"><label class="form-label">Duration (days)</label>
+                    <input type="number" name="durationDays" class="form-control" placeholder="e.g. 30"/></div>
+                  <div class="col-md-3"><label class="form-label">Start Time</label>
+                    <input type="time" name="startTime" class="form-control"/></div>
+                  <div class="col-md-3"><label class="form-label">End Time (auto)</label>
+                    <input type="time" name="endTime" class="form-control" readonly/></div>
+                  <div class="col-md-3"><label class="form-label">End Date (auto)</label>
+                    <input type="date" name="endDate" class="form-control" readonly/></div>
+                  <div class="col-md-3"><label class="form-label">Day</label>
+                    <select name="day" class="form-select">
+                      <option value="">Select day</option>
+                      <option>Saturday</option><option>Sunday</option><option>Monday</option>
+                      <option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option>
+                    </select>
+                  </div>
+                  <div class="col-auto d-flex align-items-end">
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="button" id="editSlotBtn_g" class="btn btn-outline-primary btn-sm mt-2">
+              <i class="bi bi-plus-circle"></i> Add Time Slot
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="editSaveBtn_g" class="btn btn-warning text-white">Update</button></div>
+  </div></div>
+</div>
       <div class="position-fixed bottom-0 end-0 p-3" style="z-index:12000"><div id="toastContainer_g" class="toast-container"></div></div>
     </div>
 
@@ -2096,7 +2101,7 @@ const schedPageSize = 8;
 // ── Load schedules ──────────────────────────────────────────────────────────
 async function loadSchedules() {
   document.getElementById('scheduleTable').innerHTML =
-    '<tr><td colspan="6" class="text-center text-muted py-4"><div class="spinner-border spinner-border-sm me-2"></div>Loading…</td></tr>';
+    '<tr><td colspan="7" class="text-center text-muted py-4"><div class="spinner-border spinner-border-sm me-2"></div>Loading…</td></tr>';
   try {
     const res = await fetch(schedApi);
     schedulesData = res.ok ? await res.json() : [];
@@ -2120,13 +2125,6 @@ function populateSchedFacilityFilter() {
     if (el) el.innerHTML = '<option value="">Select facility…</option>' + facOpts;
   });
 }
-function autoFillDay(dateId, dayId) {
-    const val = document.getElementById(dateId).value;
-    if (!val) return;
-    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const day = days[new Date(val).getDay()];
-    document.getElementById(dayId).value = day;
-}
 
 // ── Render table ────────────────────────────────────────────────────────────
 function renderScheduleTable() {
@@ -2148,7 +2146,7 @@ function renderScheduleTable() {
   const tbody = document.getElementById('scheduleTable');
 
   if (!items.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-5">No schedules found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-5">No schedules found.</td></tr>';
     document.getElementById('schedInfo').textContent = '';
     document.getElementById('schedPagination').innerHTML = '';
     return;
@@ -2163,22 +2161,27 @@ function renderScheduleTable() {
     const slots   = s.timeSlots    || s.TimeSlots     || [];
     const fmtDate = date ? new Date(date).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '—';
     const badgeCls = status === 'Active' ? 'bg-success' : 'bg-danger';
+const slotBadges = slots.length
+  ? slots.map(sl => {
+      const st  = (sl.startTime || sl.StartTime || '').substring(0, 5);
+      const end = (sl.endTime   || sl.EndTime   || '').substring(0, 5);
+      const label = st && end ? `${st} → ${end}` : st || end || '?';
+      return `<span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 me-1 mb-1" style="font-size:.75rem">${escapeHtml(label)}</span>`;
+    }).join('')
+  : '<span class="text-muted small">No slots</span>';
 
-    const slotBadges = slots.length
-      ? slots.map(sl => {
-          const st  = (sl.startTime || sl.StartTime || '').substring(0, 5);
-          const end = (sl.endTime   || sl.EndTime   || '').substring(0, 5);
-          const label = st && end ? `${st} → ${end}` : st || end || '?';
-          return `<span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 me-1 mb-1" style="font-size:.75rem">${escapeHtml(label)}</span>`;
-        }).join('')
-      : '<span class="text-muted small">No slots</span>';
+const prices = [...new Set(slots.map(sl => sl.price || sl.Price || 0))];
+const priceLabel = prices.every(p => p === 0)
+  ? '<span class="text-muted">Free</span>'
+  : prices.filter(p => p > 0).map(p => `${p} EGP`).join(' / ');
 
-    return `<tr>
-      <td><span class="fw-semibold">${escapeHtml(facName)}</span></td>
-      <td class="text-center"><span class="badge bg-secondary rounded-pill px-3">${escapeHtml(day)}</span></td>
-      <td class="text-center">${fmtDate}</td>
-      <td style="max-width:260px">${slotBadges}</td>
-      <td class="text-center"><span class="badge ${badgeCls} rounded-pill px-3">${escapeHtml(status)}</span></td>
+  return `<tr>
+  <td><span class="fw-semibold">${escapeHtml(facName)}</span></td>
+  <td class="text-center"><span class="badge bg-secondary rounded-pill px-3">${escapeHtml(day)}</span></td>
+  <td class="text-center">${fmtDate}</td>
+  <td style="max-width:260px">${slotBadges}</td>
+  <td class="text-center fw-semibold">${priceLabel}</td>
+  <td class="text-center"><span class="badge ${badgeCls} rounded-pill px-3">${escapeHtml(status)}</span></td>
       <td class="text-center">
         <button class="btn btn-link text-primary p-1" onclick="openEditScheduleModal(${id})" title="Edit"><i class="bi bi-pencil-square"></i></button>
         <button class="btn btn-link text-danger p-1" onclick="deleteSchedule(${id})" title="Delete"><i class="bi bi-trash3-fill"></i></button>
@@ -2191,7 +2194,7 @@ function renderScheduleTable() {
 }
 
 // ── Slot rows helpers ────────────────────────────────────────────────────────
-function addSlotRow(mode = 'add', startVal = '', endVal = '') {
+function addSlotRow(mode = 'add', startVal = '', endVal = '', priceVal = '') {
   const containerId = mode === 'edit' ? 'slotsEditContainer' : 'slotsContainer';
   const container   = document.getElementById(containerId);
   const div = document.createElement('div');
@@ -2201,17 +2204,30 @@ function addSlotRow(mode = 'add', startVal = '', endVal = '') {
     <input type="time" class="form-control slot-start" value="${startVal}">
     <span class="input-group-text">End</span>
     <input type="time" class="form-control slot-end" value="${endVal}">
+    <span class="input-group-text">Price</span>
+<input type="number" class="form-control slot-price" placeholder="0" min="0" value="${priceVal !== '' ? priceVal : 0}">
     <button type="button" class="btn btn-outline-danger" onclick="this.closest('.slot-row').remove()">
       <i class="bi bi-trash3"></i>
     </button>`;
   container.appendChild(div);
 }
-
+// Auto day from date
+document.addEventListener('change', function(e) {
+  if (e.target && e.target.matches('#schedAddDate, #schedEditDate')) {
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const val = e.target.value;
+    if (!val) return;
+    const day = days[new Date(val + 'T00:00:00').getDay()];
+    const dayId = e.target.id === 'schedAddDate' ? 'schedAddDay' : 'schedEditDay';
+    document.getElementById(dayId).value = day;
+  }
+});
 function getSlots(containerId) {
   return [...document.getElementById(containerId).querySelectorAll('.slot-row')]
     .map(row => ({
       startTime: row.querySelector('.slot-start')?.value || '',
-      endTime:   row.querySelector('.slot-end')?.value   || ''
+      endTime:   row.querySelector('.slot-end')?.value   || '',
+price:     Number(row.querySelector('.slot-price')?.value ?? 0)
     }))
     .filter(s => s.startTime && s.endTime);
 }
@@ -2246,10 +2262,7 @@ async function saveSchedule() {
     errEl.textContent = 'Please add at least one time slot with start and end time.';
     errEl.style.display = 'block'; return;
   }
-const badSlot = slots.find(s => {
-  if (s.endTime > s.startTime) return false;
-  return true;
-});  if (badSlot) {
+const badSlot = slots.find(s => s.endTime && s.startTime && s.endTime <= s.startTime);  if (badSlot) {
     errEl.textContent = `End time must be after start time (${badSlot.startTime}).`;
     errEl.style.display = 'block'; return;
   }
@@ -2258,10 +2271,11 @@ const badSlot = slots.find(s => {
   const payload = {
     facilityId: parseInt(facilityId),
     day, date, status,
-    timeSlots: slots.map(s => ({
-      startTime: s.startTime + ':00',
-      endTime:   s.endTime   + ':00'
-    }))
+   timeSlots: slots.map(s => ({
+  startTime: s.startTime + ':00',
+  endTime:   s.endTime   + ':00',
+price:     s.price
+}))
   };
 
   try {
@@ -2298,10 +2312,11 @@ async function openEditScheduleModal(id) {
     const slots = s.timeSlots || s.TimeSlots || [];
     if (slots.length) {
       slots.forEach(sl => {
-        const st  = (sl.startTime || sl.StartTime || '').substring(0, 5);
-        const end = (sl.endTime   || sl.EndTime   || '').substring(0, 5);
-        addSlotRow('edit', st, end);
-      });
+  const st    = (sl.startTime || sl.StartTime || '').substring(0, 5);
+  const end   = (sl.endTime   || sl.EndTime   || '').substring(0, 5);
+  const price = sl.price || sl.Price || 0;
+  addSlotRow('edit', st, end, price);
+});
     } else addSlotRow('edit');
 
     document.getElementById('schedEditErr').style.display = 'none';
@@ -2327,21 +2342,21 @@ async function updateSchedule() {
     errEl.textContent = 'Please add at least one time slot with start and end time.';
     errEl.style.display = 'block'; return;
   }
- const badSlot = slots.find(s => s.startTime === s.endTime);
-if (badSlot) {
-  errEl.textContent = `Start and end time cannot be the same (${badSlot.startTime}).`;
-  errEl.style.display = 'block'; return;
-}
+const badSlot = slots.find(s => s.endTime && s.startTime && s.endTime <= s.startTime);  if (badSlot) {
+    errEl.textContent = `End time must be after start time (${badSlot.startTime}).`;
+    errEl.style.display = 'block'; return;
+  }
   errEl.style.display = 'none';
 
   const payload = {
     id: parseInt(id),
     facilityId: parseInt(facilityId),
     day, date, status,
-    timeSlots: slots.map(s => ({
-      startTime: s.startTime + ':00',
-      endTime:   s.endTime   + ':00'
-    }))
+  timeSlots: slots.map(s => ({
+  startTime: s.startTime + ':00',
+  endTime:   s.endTime   + ':00',
+price:     s.price
+}))
   };
 
   try {
@@ -2393,8 +2408,8 @@ async function loadFacilitiesForAct(force=false){if(facilitiesForAct.length>0&&!
 function populateActFacilityOpts(){const opts=facilitiesForAct.map(f=>`<option value="${f.id}">${escapeHtml(f.name)}</option>`).join('');document.getElementById('addFacilitySelect').innerHTML='<option value="">Select facility</option>'+opts;document.getElementById('editFacilitySelect').innerHTML='<option value="">Select facility</option>'+opts;document.getElementById('facilityFilter_a').innerHTML='<option value="">All Facilities</option>'+opts;}
 async function loadActivities(){renderSkeletonRows('activitiesTable',7);currentPageA=1;try{const res=await fetch(actApiUrl);if(!res.ok)throw new Error();activitiesData=await res.json();applyActivityFilters();}catch(e){document.getElementById('activitiesTable').innerHTML='<tr><td colspan="7" class="text-center text-danger">Failed to load</td></tr>';showToastA('Failed','error');}}
 function applyActivityFilters(){const q=document.getElementById('searchInput_a')?.value.trim().toLowerCase()||'';const facF=document.getElementById('facilityFilter_a')?.value||'';const statusF=document.getElementById('statusFilter_a')?.value||'';pageSizeA=parseInt(document.getElementById('pageSize_a')?.value||'10');const sortBy=document.getElementById('sortBy_a')?.value||'name_asc';filteredActivities=activitiesData.filter(a=>(!q||(a.name&&a.name.toLowerCase().includes(q))||(a.description&&a.description.toLowerCase().includes(q)))&&(!facF||String(a.facilityId)===facF)&&(!statusF||a.status===statusF));filteredActivities.sort((a,b)=>{switch(sortBy){case'name_asc':return(a.name||'').localeCompare(b.name||'');case'name_desc':return(b.name||'').localeCompare(a.name||'');case'price_asc':return(Number(a.price)||0)-(Number(b.price)||0);case'price_desc':return(Number(b.price)||0)-(Number(a.price)||0);default:return 0;}});renderActivityPage(currentPageA);}
-function renderActivityPage(page){const tbody=document.getElementById('activitiesTable');tbody.innerHTML='';const total=filteredActivities.length,totalPages=Math.max(1,Math.ceil(total/pageSizeA));if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageA=page;const start=(page-1)*pageSizeA,end=Math.min(start+pageSizeA,total),items=filteredActivities.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="7" class="text-center">No results</td></tr>';}else items.forEach(act=>{const facName=facilitiesForAct.find(f=>f.id===act.facilityId)?.name||'';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(act.name)}</td><td>${escapeHtml(act.description||'')}</td><td class="text-center rtl-fix">${act.price??''}</td><td class="text-center">${escapeHtml(facName)}</td><td class="text-center"><span class="badge bg-secondary">${escapeHtml(act.status||'')}</span></td><td class="text-center">${act.imageUrl?`<img src="${fixUrl(act.imageUrl)}" class="activity-img">`:'<span class="text-muted">No image</span>'}</td><td class="text-center"><button class="btn btn-link text-primary edit-btn-a" data-id="${act.id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-link text-danger delete-btn-a" data-id="${act.id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_a').textContent=`Showing ${total===0?0:start+1}-${end} of ${total}`;makePagination('pagination_a',currentPageA,totalPages,renderActivityPage);attachActivityEvents();}
-function attachActivityEvents(){document.querySelectorAll('#page-activity .edit-btn-a').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${actApiUrl}/${btn.dataset.id}`);const act=await res.json();const form=document.getElementById('editActivityForm');form.id.value=act.id;form.name.value=act.name||'';form.description.value=act.description||'';form.price.value=act.price??'';await loadFacilitiesForAct();form.facilityId.value=act.facilityId||'';form.status.value=act.status||'Active';const prev=document.getElementById('editImagePreview_a');if(act.imageUrl){prev.src=fixUrl(act.imageUrl);prev.style.display='block';}else prev.style.display='none';new bootstrap.Modal(document.getElementById('editActivityModal')).show();}catch(e){showToastA('Failed to load','error');}};});document.querySelectorAll('#page-activity .delete-btn-a').forEach(btn=>{btn.onclick=()=>{Swal.fire({title:'Delete activity?',icon:'warning',showCancelButton:true,confirmButtonText:'Yes, delete'}).then(async r=>{if(r.isConfirmed){try{await fetch(`${actApiUrl}/${btn.dataset.id}`,{method:'DELETE'});showToastA('Deleted');await loadActivities();}catch(e){showToastA('Delete failed','error');}}});};});}
+function renderActivityPage(page){const tbody=document.getElementById('activitiesTable');tbody.innerHTML='';const total=filteredActivities.length,totalPages=Math.max(1,Math.ceil(total/pageSizeA));if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageA=page;const start=(page-1)*pageSizeA,end=Math.min(start+pageSizeA,total),items=filteredActivities.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="7" class="text-center">No results</td></tr>';}else items.forEach(act=>{const facName=facilitiesForAct.find(f=>f.id===act.facilityId)?.name||'';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(act.name)}</td><td>${escapeHtml(act.description||'')}</td><td class="text-center">${escapeHtml(facName)}</td><td class="text-center"><span class="badge bg-secondary">${escapeHtml(act.status||'')}</span></td><td class="text-center">${act.imageUrl?`<img src="${fixUrl(act.imageUrl)}" class="activity-img">`:'<span class="text-muted">No image</span>'}</td><td class="text-center"><button class="btn btn-link text-primary edit-btn-a" data-id="${act.id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-link text-danger delete-btn-a" data-id="${act.id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_a').textContent=`Showing ${total===0?0:start+1}-${end} of ${total}`;makePagination('pagination_a',currentPageA,totalPages,renderActivityPage);attachActivityEvents();}
+function attachActivityEvents(){document.querySelectorAll('#page-activity .edit-btn-a').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${actApiUrl}/${btn.dataset.id}`);const act=await res.json();const form=document.getElementById('editActivityForm');form.id.value=act.id;form.name.value=act.name||'';form.description.value=act.description||'';await loadFacilitiesForAct();form.facilityId.value=act.facilityId||'';form.status.value=act.status||'Active';const prev=document.getElementById('editImagePreview_a');if(act.imageUrl){prev.src=fixUrl(act.imageUrl);prev.style.display='block';}else prev.style.display='none';new bootstrap.Modal(document.getElementById('editActivityModal')).show();}catch(e){showToastA('Failed to load','error');}};});document.querySelectorAll('#page-activity .delete-btn-a').forEach(btn=>{btn.onclick=()=>{Swal.fire({title:'Delete activity?',icon:'warning',showCancelButton:true,confirmButtonText:'Yes, delete'}).then(async r=>{if(r.isConfirmed){try{await fetch(`${actApiUrl}/${btn.dataset.id}`,{method:'DELETE'});showToastA('Deleted');await loadActivities();}catch(e){showToastA('Delete failed','error');}}});};});}
 document.getElementById('openAddModalBtn_a').onclick=async()=>{await loadFacilitiesForAct();document.getElementById('addActivityForm').reset();document.getElementById('addImagePreview_a').style.display='none';new bootstrap.Modal(document.getElementById('addActivityModal')).show();};
 document.getElementById('addImageInput_a').onchange=e=>{const p=document.getElementById('addImagePreview_a');if(e.target.files[0]){p.src=URL.createObjectURL(e.target.files[0]);p.style.display='block';}else p.style.display='none';};
 document.getElementById('editImageInput_a').onchange=e=>{const p=document.getElementById('editImagePreview_a');if(e.target.files[0]){p.src=URL.createObjectURL(e.target.files[0]);p.style.display='block';}else p.style.display='none';};
@@ -2413,172 +2428,196 @@ function showToastG(msg,type='success'){showToastIn('toastContainer_g',msg,type)
 async function loadActivitiesForGroups(){try{const res=await fetch(activitiesForGroupApi);if(!res.ok)throw new Error();activitiesForGroup=await res.json();['addActivity_g','editActivity_g','filterActivity_g'].forEach(id=>{const sel=document.getElementById(id);if(!sel)return;sel.innerHTML=`<option value="">${id.startsWith('filter')?'All Activities':'Select activity'}</option>`;activitiesForGroup.forEach(a=>{const o=document.createElement('option');o.value=a.id??a.Id;o.textContent=a.name??a.Name;if(a.facilityName)o.dataset.facilityName=a.facilityName;sel.appendChild(o);});});}catch(e){showToastG('Failed to load activities','error');}}
 async function loadGroups(){const tbody=document.getElementById('groupsTbody');tbody.innerHTML='<tr><td colspan="8" class="text-center py-4 text-muted">Loading...</td></tr>';try{const res=await fetch(groupsApi);if(!res.ok)throw new Error();groupsCache=await res.json();currentPageG=1;applyGroupFilters();}catch(e){tbody.innerHTML='<tr><td colspan="8" class="text-center text-danger py-4">Failed to load groups</td></tr>';showToastG('Failed','error');}}
 function applyGroupFilters(){const q=(document.getElementById('searchInput_g')?.value||'').trim().toLowerCase();const act=document.getElementById('filterActivity_g')?.value||'';const day=document.getElementById('filterDay_g')?.value||'';pageSizeG=parseInt(document.getElementById('pageSize_g')?.value||'10');filteredGroups=groupsCache.filter(g=>{const name=(g.name||'').toLowerCase();const actId=g.activityId||(g.activity?.id);const dayVal=g.day||'';return(!q||name.includes(q))&&(!act||String(actId)===String(act))&&(!day||dayVal===day);});renderGroupTable();}
-function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',duration=g.duration||'',day=g.day||'',start2=g.startTime||'',end2=g.endTime||'',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||''),trainerName=(g.trainerName||'—');const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${escapeHtml(trainerName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(duration)}</td><td class="text-center">${escapeHtml(day)}</td><td class="text-center">${(g.timeSlots&&g.timeSlots.length)?g.timeSlots.map(s=>`<span class="badge bg-light text-dark border me-1">${s.date} ${s.startTime}-${s.endTime}</span>`).join(''):'—'}</td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-g" data-id="${id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-g" data-id="${id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_g').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_g',currentPageG,totalPages,p=>{currentPageG=p;renderGroupTable();});attachGroupEvents();}
-function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editPrice_g').value=g.price||'';document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editDuration_g').value=g.duration||'';document.getElementById('editDay_g').value=g.day||'';const editContainer=document.getElementById('editSlotsContainer');editContainer.innerHTML='';(g.timeSlots||[]).forEach(s=>{const row=document.createElement(g.timeSlots||[]).forEach(s=>{const row=makeSlotRow({startDate:s.date,startTime:s.startTime,endTime:s.endTime});editContainer.appendChild(row);});
-if(!g.timeSlots||!g.timeSlots.length){editContainer.appendChild(makeSlotRow());}('div');row.className='slot-row d-flex align-items-center gap-2 mb-2';row.innerHTML=`<span class="input-group-text bg-light"><i class="bi bi-clock"></i> Start</span><input type="date" class="form-control slot-date" value="${s.date||''}" required/><input type="time" class="form-control slot-start" value="${s.startTime||''}" required/><span class="input-group-text bg-light">End</span><input type="time" class="form-control slot-end" value="${s.endTime||''}" required/><button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn"><i class="bi bi-trash3-fill"></i></button>`;editContainer.appendChild(row);row.querySelector('.remove-slot-btn').onclick=()=>row.remove();});if(!g.timeSlots||!g.timeSlots.length){const row=document.createElement('div');row.className='slot-row d-flex align-items-center gap-2 mb-2';row.innerHTML='<span class="input-group-text bg-light"><i class="bi bi-clock"></i> Start</span><input type="date" class="form-control slot-date" required/><input type="time" class="form-control slot-start" required/><span class="input-group-text bg-light">End</span><input type="time" class="form-control slot-end" required/><button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn"><i class="bi bi-trash3-fill"></i></button>';editContainer.appendChild(row);row.querySelector('.remove-slot-btn').onclick=()=>row.remove();}document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');const savedTrainerId=g.trainerId||g.TrainerId||null;if(g.activityId){trainerSel.innerHTML='<option value="">Loading...</option>';try{const tr=await fetch(`https://localhost:7132/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainerSel.innerHTML='<option value="">Select trainer (optional)</option>'+trainers.map(t=>`<option value="${t.id}">${escapeHtml(t.fullName)}</option>`).join('');if(savedTrainerId)trainerSel.value=savedTrainerId;}catch(e){trainerSel.innerHTML='<option value="">No trainers found</option>';}}else{trainerSel.innerHTML='<option value="">Select activity first</option>';}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}document.getElementById('addActivity_g')?.addEventListener('change', async function() {
-    const opt = this.selectedOptions[0];
-    document.getElementById('addFacilityName_g').value = opt?.dataset?.facilityName || '';
-    
-    const activityId = this.value;
-    const trainerSel = document.getElementById('addTrainer_g');
-    trainerSel.innerHTML = '<option value="">Loading...</option>';
-    
-    if (!activityId) {
-        trainerSel.innerHTML = '<option value="">Select activity first</option>';
-        return;
-    }
-    try {
-        const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${activityId}`);
-        const trainers = await res.json();
-        trainerSel.innerHTML = '<option value="">Select trainer (optional)</option>' +
-            trainers.map(t => `<option value="${t.id}">${escapeHtml(t.fullName)}</option>`).join('');
-    } catch(e) {
-        trainerSel.innerHTML = '<option value="">No trainers found</option>';
-    }
-});
-
-// Edit Modal
-document.getElementById('editActivity_g')?.addEventListener('change', async function() {
-    const opt = this.selectedOptions[0];
-    document.getElementById('editFacilityName_g').value = opt?.dataset?.facilityName || '';
-    
-    const activityId = this.value;
-    const trainerSel = document.getElementById('editTrainer_g');
-    trainerSel.innerHTML = '<option value="">Loading...</option>';
-    
-    if (!activityId) {
-        trainerSel.innerHTML = '<option value="">Select activity first</option>';
-        return;
-    }
-    try {
-        const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${activityId}`);
-        const trainers = await res.json();
-        trainerSel.innerHTML = '<option value="">Select trainer (optional)</option>' +
-            trainers.map(t => `<option value="${t.id}">${escapeHtml(t.fullName)}</option>`).join('');
-    } catch(e) {
-        trainerSel.innerHTML = '<option value="">No trainers found</option>';
-    }
-});
-function makeSlotRow(data={}){
-  const row=document.createElement('div');
-  row.className='slot-row border rounded p-2 mb-2 bg-light';
-  row.innerHTML=`<div class="row g-2 align-items-end">
-   <div class="col-md-3"><label class="form-label small mb-1">Start Date</label><input type="date" class="form-control form-control-sm slot-start-date" value="${data.startDate||''}" required/></div>
-    <div class="col-md-2"><label class="form-label small mb-1">Day</label><select class="form-select form-select-sm slot-day" required><option value="">Select day</option><option${data.day==='Saturday'?' selected':''}>Saturday</option><option${data.day==='Sunday'?' selected':''}>Sunday</option><option${data.day==='Monday'?' selected':''}>Monday</option><option${data.day==='Tuesday'?' selected':''}>Tuesday</option><option${data.day==='Wednesday'?' selected':''}>Wednesday</option><option${data.day==='Thursday'?' selected':''}>Thursday</option><option${data.day==='Friday'?' selected':''}>Friday</option></select></div>
-    <div class="col-md-2"><label class="form-label small mb-1">Duration (hrs)</label>
-    <input type="number" class="form-control form-control-sm slot-duration-hrs" min="0.5" step="0.5" placeholder="e.g. 2" value="${data.durationHrs||''}"/></div>
-    <div class="col-md-2"><label class="form-label small mb-1">Duration (days)</label><input type="number" class="form-control form-control-sm slot-duration-days" min="1" step="1" placeholder="e.g. 30" value="${data.durationDays||''}"/></div>
-    <div class="col-md-2"><label class="form-label small mb-1">Start Time</label><input type="time" class="form-control form-control-sm slot-start-time" value="${data.startTime||''}" required/></div>
-    <div class="col-md-2"><label class="form-label small mb-1">End Time <span class="text-muted">(auto)</span></label><input type="time" class="form-control form-control-sm slot-end-time" value="${data.endTime||''}" readonly style="background:#f8fafc;"/></div>
-    <div class="col-md-2"><label class="form-label small mb-1">End Date <span class="text-muted">(auto)</span></label><input type="date" class="form-control form-control-sm slot-end-date" value="${data.endDate||''}" readonly style="background:#f8fafc;"/></div>
-    <div class="col-auto d-flex align-items-end"><button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn"><i class="bi bi-trash3-fill"></i></button></div>
+function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="8" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',price=g.price||'',trainerName=g.trainerName||'—',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||'');const slots=g.timeSlots||[];const slotsHtml=slots.length?slots.map(s=>`<div class="small">${s.day||''} ${s.date||''} ${s.startTime||''}${s.endTime?' - '+s.endTime:''}</div>`).join(''):'—';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(trainerName)}</td><td class="text-center">${price} EGP</td><td class="text-center">${slotsHtml}</td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-g" data-id="${id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-g" data-id="${id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_g').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_g',currentPageG,totalPages,p=>{currentPageG=p;renderGroupTable();});attachGroupEvents();}
+function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editPrice_g').value=g.price||'';document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');trainerSel.innerHTML='<option value="">-- No Trainer --</option>';trainerSel.disabled=false;try{const tr=await fetch(`https://localhost:7132/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.fullName;if(t.id===g.trainerId)o.selected=true;trainerSel.appendChild(o);});}catch(e){}const container=document.getElementById('editSlotsContainer_g');container.innerHTML='';const slots=g.timeSlots||g.slots||[];if(slots.length){slots.forEach(s=>addEditSlot(container,s));}else{addEditSlot(container,null);}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
+function addEditSlot(container, data) {
+  const div = document.createElement('div');
+  div.className = 'slot-row border rounded-3 p-3 mb-2';
+  div.innerHTML = `<div class="row g-2">
+    <div class="col-md-3"><label class="form-label">Start Date</label>
+      <input type="date" name="startDate" class="form-control" value="${data?.date||data?.startDate||''}"/></div>
+    <div class="col-md-2"><label class="form-label">Duration (hrs)</label>
+      <input type="number" name="durationHrs" class="form-control" placeholder="e.g. 2" value="${data?.durationHrs||''}"/></div>
+    <div class="col-md-2"><label class="form-label">Duration (days)</label>
+      <input type="number" name="durationDays" class="form-control" placeholder="e.g. 30" value="${data?.durationDays||''}"/></div>
+    <div class="col-md-2"><label class="form-label">Start Time</label>
+      <input type="time" name="startTime" class="form-control" value="${data?.startTime||''}"/></div>
+    <div class="col-md-2"><label class="form-label">End Time (auto)</label>
+      <input type="time" name="endTime" class="form-control" readonly value="${data?.endTime||''}"/></div>
+    <div class="col-md-2"><label class="form-label">End Date (auto)</label>
+      <input type="date" name="endDate" class="form-control" readonly value="${data?.endDate||''}"/></div>
+    <div class="col-md-3"><label class="form-label">Day</label>
+      <select name="day" class="form-select">
+        <option value="">Select day</option>
+        <option ${data?.day==='Saturday'?'selected':''}>Saturday</option>
+        <option ${data?.day==='Sunday'?'selected':''}>Sunday</option>
+        <option ${data?.day==='Monday'?'selected':''}>Monday</option>
+        <option ${data?.day==='Tuesday'?'selected':''}>Tuesday</option>
+        <option ${data?.day==='Wednesday'?'selected':''}>Wednesday</option>
+        <option ${data?.day==='Thursday'?'selected':''}>Thursday</option>
+        <option ${data?.day==='Friday'?'selected':''}>Friday</option>
+      </select>
+    </div>
+    <div class="col-auto d-flex align-items-end">
+      <button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn">
+        <i class="bi bi-trash"></i>
+      </button>
+    </div>
   </div>`;
-
-  // Auto-calc end time from start time + duration hrs
-  function calcEndTime(){
-    const st=row.querySelector('.slot-start-time').value;
-    const hrs=parseFloat(row.querySelector('.slot-duration-hrs').value);
-    if(st&&hrs){
-      const [h,m]=st.split(':').map(Number);
-      const totalMins=h*60+m+Math.round(hrs*60);
-      const eh=Math.floor(totalMins/60)%24;
-      const em=totalMins%60;
-      row.querySelector('.slot-end-time').value=`${String(eh).padStart(2,'0')}:${String(em).padStart(2,'0')}`;
-    }
-  }
-
-  // Auto-calc end date from start date + duration days
-  function calcEndDate(){
-    const sd=row.querySelector('.slot-start-date').value;
-    const days=parseInt(row.querySelector('.slot-duration-days').value);
-    if(sd&&days){
-      const d=new Date(sd);
-      d.setDate(d.getDate()+days);
-      row.querySelector('.slot-end-date').value=d.toISOString().split('T')[0];
-    }
-  }
-
-  row.querySelector('.slot-start-time').addEventListener('change',calcEndTime);
-  row.querySelector('.slot-duration-hrs').addEventListener('input',calcEndTime);
-  row.querySelector('.slot-start-date').addEventListener('change',calcEndDate);
-  row.querySelector('.slot-duration-days').addEventListener('input',calcEndDate);
-  row.querySelector('.remove-slot-btn').onclick=()=>{
-    const rows=row.closest('[id$="SlotsContainer"]').querySelectorAll('.slot-row');
-    if(rows.length>1)row.remove();
-  };
-  return row;
+  div.querySelector('.remove-slot-btn').onclick = () => div.remove();
+  container.appendChild(div);
 }
 
-document.getElementById('addSlotBtn_g')?.addEventListener('click',()=>{
-  document.getElementById('addSlotsContainer').appendChild(makeSlotRow());
-});
-document.getElementById('editSlotBtn_g')?.addEventListener('click',()=>{
-  document.getElementById('editSlotsContainer').appendChild(makeSlotRow());
-});
-
-// Init first row in add modal with events
-document.getElementById('addSlotsContainer')?.querySelectorAll('.slot-row').forEach(row=>{
-  const startTime=row.querySelector('.slot-start-time');
-  const durationHrs=row.querySelector('.slot-duration-hrs');
-  const startDate=row.querySelector('.slot-start-date');
-  const durationDays=row.querySelector('.slot-duration-days');
-  function calcET(){const st=startTime.value;const hrs=parseFloat(durationHrs.value);if(st&&hrs){const[h,m]=st.split(':').map(Number);const t=h*60+m+Math.round(hrs*60);row.querySelector('.slot-end-time').value=`${String(Math.floor(t/60)%24).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;}}
-  function calcED(){const sd=startDate.value;const days=parseInt(durationDays.value);if(sd&&days){const d=new Date(sd);d.setDate(d.getDate()+days);row.querySelector('.slot-end-date').value=d.toISOString().split('T')[0];}}
-  startTime.addEventListener('change',calcET);durationHrs.addEventListener('input',calcET);
-  startDate.addEventListener('change',calcED);durationDays.addEventListener('input',calcED);
-  row.querySelector('.remove-slot-btn').onclick=()=>{const rows=document.querySelectorAll('#addSlotsContainer .slot-row');if(rows.length>1)row.remove();};
-});
-document.getElementById('addSaveBtn_g').onclick=async()=>{
-const f={name:document.getElementById('addName_g'),capacity:document.getElementById('addCapacity_g'),code:document.getElementById('addCode_g'),activity:document.getElementById('addActivity_g'),price:document.getElementById('addPrice_g')};
-  let valid=true;
-  if(!f.name.value.trim()||f.name.value.length<3){showFieldError(f.name,'Name ≥ 3 chars');valid=false;}
-  if(!f.capacity.value||parseInt(f.capacity.value)<1){showFieldError(f.capacity,'Capacity ≥ 1');valid=false;}
-  if(!f.activity.value){showFieldError(f.activity,'Select activity');valid=false;}
-
-  if(!f.price.value||+f.price.value<0){showFieldError(f.price,'Price required');valid=false;}
-  const slots=[];
-  document.querySelectorAll('#addSlotsContainer .slot-row').forEach(row=>{
-    const startDate=row.querySelector('.slot-start-date').value;
-    const endDate=row.querySelector('.slot-end-date').value;
-    const startTime=row.querySelector('.slot-start-time').value;
-    const endTime=row.querySelector('.slot-end-time').value;
-    const day=row.querySelector('.slot-day').value;
-if(startDate&&startTime)slots.push({Date:startDate,StartTime:startTime,EndTime:endTime||startTime,Day:day});
-  });
-  if(!slots.length){showToastG('Add at least one time slot','error');valid=false;}
-  if(!valid)return;
-  try{
-    const res=await fetch(groupsApi,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({Name:f.name.value.trim(),Capacity:+f.capacity.value,Code:f.code.value.trim()||null,ActivityId:+f.activity.value,Price:+f.price.value,TrainerId:document.getElementById('addTrainer_g').value?+document.getElementById('addTrainer_g').value:null,TimeSlots:slots})});
-    if(!res.ok)throw new Error();
-    bootstrap.Modal.getInstance(document.getElementById('addModal_g')).hide();
-    showToastG('Added');await loadGroups();
-  }catch(e){showToastG('Add failed','error');}
+document.getElementById('editSlotBtn_g').onclick = () => {
+  addEditSlot(document.getElementById('editSlotsContainer_g'), null);
 };
-document.getElementById('editSlotBtn_g')?.addEventListener('click',()=>{const container=document.getElementById('editSlotsContainer');const row=document.createElement('div');row.className='slot-row d-flex align-items-center gap-2 mb-2';row.innerHTML='<span class="input-group-text bg-light"><i class="bi bi-clock"></i> Start</span><input type="date" class="form-control slot-date" required/><input type="time" class="form-control slot-start" required/><span class="input-group-text bg-light">End</span><input type="time" class="form-control slot-end" required/><button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn"><i class="bi bi-trash3-fill"></i></button>';container.appendChild(row);row.querySelector('.remove-slot-btn').onclick=()=>row.remove();});
-document.getElementById('editSaveBtn_g').onclick=async()=>{
-  const id=document.getElementById('editId_g').value;
-  const name=document.getElementById('editName_g').value.trim();
-  if(!name)return;
-  const slots=[];
-  document.querySelectorAll('#editSlotsContainer .slot-row').forEach(row=>{
-    const startDate=row.querySelector('.slot-start-date').value;
-    const endDate=row.querySelector('.slot-end-date').value;
-    const startTime=row.querySelector('.slot-start-time').value;
-    const endTime=row.querySelector('.slot-end-time').value;
-    const day=row.querySelector('.slot-day')?.value||'';
-    if(startDate&&startTime)slots.push({Date:startDate,StartTime:startTime,EndTime:endTime||startTime});
-  });
-  try{
-    const res=await fetch(`${groupsApi}/${id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({Name:name,Capacity:+document.getElementById('editCapacity_g').value,Code:document.getElementById('editCode_g').value.trim()||null,ActivityId:+document.getElementById('editActivity_g').value,Price:document.getElementById('editPrice_g').value?+document.getElementById('editPrice_g').value:null,TrainerId:document.getElementById('editTrainer_g').value?+document.getElementById('editTrainer_g').value:null,TimeSlots:slots})});
-    if(!res.ok)throw new Error();
+document.getElementById('editSlotsContainer_g').addEventListener('click',(e)=>{if(e.target.closest('.remove-slot-btn')){const slots=document.querySelectorAll('#editSlotsContainer_g .slot-row');if(slots.length>1)e.target.closest('.slot-row').remove();}});
+document.getElementById('editSlotsContainer_g').addEventListener('change',(e)=>{const row=e.target.closest('.slot-row');if(!row)return;const startTime=row.querySelector('[name="startTime"]').value;const durationHrs=parseFloat(row.querySelector('[name="durationHrs"]').value);const startDate=row.querySelector('[name="startDate"]').value;const durationDays=parseInt(row.querySelector('[name="durationDays"]').value);if(startTime&&durationHrs){const[h,m]=startTime.split(':').map(Number);const total=h*60+m+durationHrs*60;const endH=String(Math.floor(total/60)%24).padStart(2,'0');const endM=String(total%60).padStart(2,'0');row.querySelector('[name="endTime"]').value=`${endH}:${endM}`;}if(startDate&&durationDays){const d=new Date(startDate);d.setDate(d.getDate()+durationDays);row.querySelector('[name="endDate"]').value=d.toISOString().split('T')[0];}});
+document.getElementById('addActivity_g')?.addEventListener('change', async function() {
+  const opt = this.selectedOptions[0];
+  document.getElementById('addFacilityName_g').value = opt?.dataset?.facilityName || '';
+  const actId = this.value;
+  const trainerSel = document.getElementById('addTrainer_g');
+  trainerSel.innerHTML = '<option value="">Loading...</option>';
+  trainerSel.disabled = true;
+  if (!actId) { trainerSel.innerHTML = '<option value="">Select activity first</option>'; return; }
+  try {
+const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${actId}`);
+    const trainers = await res.json();
+    trainerSel.innerHTML = '<option value="">-- No Trainer --</option>';
+    trainers.forEach(t => {
+      const o = document.createElement('option');
+      o.value = t.id;
+      o.textContent = t.fullName;
+      trainerSel.appendChild(o);
+    });
+    trainerSel.disabled = false;
+    if (!window._groupTrainers) window._groupTrainers = {};
+    window._groupTrainers[actId] = trainers;
+  } catch(e) {
+    trainerSel.innerHTML = '<option value="">Failed to load</option>';
+  }
+});document.getElementById('editActivity_g')?.addEventListener('change', async function() {
+  const selOpt = this.selectedOptions[0];
+  document.getElementById('editFacilityName_g').value = selOpt?.dataset?.facilityName || '';
+  const actId = this.value;
+  const trainerSel = document.getElementById('editTrainer_g');
+  trainerSel.innerHTML = '<option value="">Loading...</option>';
+  trainerSel.disabled = true;
+  if (!actId) { trainerSel.innerHTML = '<option value="">Select activity first</option>'; return; }
+  try {
+const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${actId}`);
+    const trainers = await res.json();
+    trainerSel.innerHTML = '<option value="">-- No Trainer --</option>';
+    trainers.forEach(t => {
+      const o = document.createElement('option');
+      o.value = t.id;
+      o.textContent = t.fullName;
+      trainerSel.appendChild(o);
+    });
+    trainerSel.disabled = false;
+    if (!window._groupTrainers) window._groupTrainers = {};
+    window._groupTrainers[actId] = trainers;
+  } catch(e) {
+    trainerSel.innerHTML = '<option value="">Failed to load</option>';
+  }
+});
+document.getElementById('addSaveBtn_g').onclick=async()=>{const f={name:document.getElementById('addName_g'),capacity:document.getElementById('addCapacity_g'),code:document.getElementById('addCode_g'),activity:document.getElementById('addActivity_g')};let valid=true;if(!f.name.value.trim()||f.name.value.length<3){showFieldError(f.name,'Name ≥ 3 chars');valid=false;}if(!f.capacity.value||parseInt(f.capacity.value)<1){showFieldError(f.capacity,'Capacity ≥ 1');valid=false;}if(!f.activity.value){showFieldError(f.activity,'Select activity');valid=false;}if(!valid)return;const slots=Array.from(document.querySelectorAll('#slotsContainer_g .slot-row')).map(row=>({Date:row.querySelector('[name="startDate"]').value,StartTime:row.querySelector('[name="startTime"]').value,EndTime:row.querySelector('[name="endTime"]').value,Day:row.querySelector('[name="day"]').value}));try{const res=await fetch(groupsApi,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({Name:f.name.value.trim(),Capacity:+f.capacity.value,Code:f.code.value.trim()||null,ActivityId:+f.activity.value,TrainerId:+document.getElementById('addTrainer_g').value||null,Price:+document.getElementById('addPrice_g').value||0,Status:'Active',TimeSlots:slots})});if(!res.ok)throw new Error();bootstrap.Modal.getInstance(document.getElementById('addModal_g')).hide();showToastG('Added');await loadGroups();}catch(e){showToastG('Add failed','error');}};
+document.getElementById('editSaveBtn_g').onclick = async () => {
+  const id = document.getElementById('editId_g').value;
+  const name = document.getElementById('editName_g').value.trim();
+  if (!name) return;
+const slots = Array.from(document.querySelectorAll('#editSlotsContainer_g .slot-row')).map(row => ({
+  Date: row.querySelector('[name="startDate"]').value,
+  StartTime: row.querySelector('[name="startTime"]').value,
+  EndTime: row.querySelector('[name="endTime"]').value,
+  Day: row.querySelector('[name="day"]').value
+}));
+  try {
+    const res = await fetch(`${groupsApi}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+  Name: name,
+  Capacity: +document.getElementById('editCapacity_g').value,
+  Code: document.getElementById('editCode_g').value.trim() || null,
+  ActivityId: +document.getElementById('editActivity_g').value,
+  TrainerId: +document.getElementById('editTrainer_g').value || null,
+  Price: +document.getElementById('editPrice_g').value || 0,
+  Status: 'Active',
+  TimeSlots: slots
+})
+    });
+    if (!res.ok) throw new Error();
     bootstrap.Modal.getInstance(document.getElementById('editModal_g')).hide();
-    showToastG('Updated');await loadGroups();
-  }catch(e){showToastG('Edit failed','error');}
+    showToastG('Updated');
+    await loadGroups();
+  } catch(e) { showToastG('Edit failed', 'error'); }
+};['searchInput_g','filterActivity_g','filterDay_g'].forEach(id=>document.getElementById(id)?.addEventListener('input',()=>{currentPageG=1;applyGroupFilters();}));
+
+document.getElementById('editActivity_g').onchange = function() {
+  const selOpt = this.selectedOptions[0];
+  document.getElementById('editFacilityName_g').value = selOpt?.dataset?.facilityName || '';
+  const trainerSel = document.getElementById('editTrainer_g');
+  trainerSel.innerHTML = '<option value="">-- No Trainer --</option>';
+  trainerSel.disabled = true;
+  const actId = this.value;
+  if (actId && window._groupTrainers && window._groupTrainers[actId]) {
+    window._groupTrainers[actId].forEach(t => {
+      const o = document.createElement('option');
+      o.value = t.id;
+      o.textContent = t.name;
+      trainerSel.appendChild(o);
+    });
+    trainerSel.disabled = false;
+  }
 };
-['searchInput_g','filterActivity_g','filterDay_g'].forEach(id=>document.getElementById(id)?.addEventListener('input',()=>{currentPageG=1;applyGroupFilters();}));
 document.getElementById('pageSize_g')?.addEventListener('change',()=>{pageSizeG=+document.getElementById('pageSize_g').value;currentPageG=1;renderGroupTable();});
 document.getElementById('refreshBtn_g')?.addEventListener('click',async()=>{await loadActivitiesForGroups();await loadGroups();showToastG('Refreshed');});
 
+// Add Time Slot
+document.getElementById('addSlotBtn_g').addEventListener('click', () => {
+  const container = document.getElementById('slotsContainer_g');
+  const firstSlot = container.querySelector('.slot-row');
+  const newSlot = firstSlot.cloneNode(true);
+  newSlot.querySelectorAll('input').forEach(i => i.value = '');
+  newSlot.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+  container.appendChild(newSlot);
+});
+
+// Remove Slot
+document.getElementById('slotsContainer_g').addEventListener('click', (e) => {
+  if (e.target.closest('.remove-slot-btn')) {
+    const slots = document.querySelectorAll('#slotsContainer_g .slot-row');
+    if (slots.length > 1) e.target.closest('.slot-row').remove();
+  }
+});
+
+// Auto-calculate End Time from Start Time + Duration (hrs)
+document.getElementById('slotsContainer_g').addEventListener('change', (e) => {
+  const row = e.target.closest('.slot-row');
+  if (!row) return;
+  const startTime = row.querySelector('[name="startTime"]').value;
+  const durationHrs = parseFloat(row.querySelector('[name="durationHrs"]').value);
+  const startDate = row.querySelector('[name="startDate"]').value;
+  const durationDays = parseInt(row.querySelector('[name="durationDays"]').value);
+
+  // Auto End Time
+  if (startTime && durationHrs) {
+    const [h, m] = startTime.split(':').map(Number);
+    const total = h * 60 + m + durationHrs * 60;
+    const endH = String(Math.floor(total / 60) % 24).padStart(2, '0');
+    const endM = String(total % 60).padStart(2, '0');
+    row.querySelector('[name="endTime"]').value = `${endH}:${endM}`;
+  }
+
+  // Auto End Date
+  if (startDate && durationDays) {
+    const d = new Date(startDate);
+    d.setDate(d.getDate() + durationDays);
+    row.querySelector('[name="endDate"]').value = d.toISOString().split('T')[0];
+  }
+});
 // ===================================================
 // ============== MEMBERSHIP MODULE ==================
 // ===================================================
@@ -2995,10 +3034,8 @@ function validateActivityForm(formId) {
   clearFormErrors(form);
   let valid = true;
   const nameEl = form.querySelector('[name="name"]');
-  const priceEl = form.querySelector('[name="price"]');
   const facilityEl = form.querySelector('[name="facilityId"]');
   if (!nameEl.value.trim() || nameEl.value.length < 2) { showFieldError(nameEl, 'Activity name is required (min 2 chars)'); valid = false; }
-  if (!priceEl.value || isNaN(priceEl.value) || +priceEl.value < 0) { showFieldError(priceEl, 'Valid price required (0 or more)'); valid = false; }
   if (!facilityEl.value) { showFieldError(facilityEl, 'Please select a facility'); valid = false; }
   return valid;
 }
