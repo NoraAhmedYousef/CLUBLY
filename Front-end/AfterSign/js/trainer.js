@@ -311,12 +311,22 @@ function clearTrainerFilters() {
 }
 
 // ── Book ──────────────────────────────────────────────────────────────────────
-function handleBookTrainer(id) {
+async function handleBookTrainer(id) {
   const trainer = (window._trainersData || []).find(t => (t.Id || t.id) == id);
   const name    = trainer ? (trainer.FullName || trainer.fullName || 'Trainer') : 'Trainer';
-  openBookingModal('trainer', id, name);
-}
 
+  let trainerGroups = [];
+  try {
+    const res = await fetch('https://localhost:7132/api/ActivityGroups');
+    const all = res.ok ? await res.json() : [];
+    trainerGroups = all.filter(g =>
+      (g.trainerId || g.TrainerId) == id &&
+      (g.status || g.Status || '').toLowerCase() === 'active'
+    );
+  } catch(e) {}
+
+  openBookingModal('trainer', id, name, 0, [], trainerGroups);
+}
 
 function renderStars(r) {
   return [1,2,3,4,5].map(i =>

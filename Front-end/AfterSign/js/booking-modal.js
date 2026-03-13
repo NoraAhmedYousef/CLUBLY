@@ -157,9 +157,9 @@
   /* ══════════════════════════════════════════════════════════════════════════
      PUBLIC API
   ══════════════════════════════════════════════════════════════════════════ */
-window.openBookingModal = function (type, id, name, slotPrice = 0) {
+window.openBookingModal = function (type, id, name, slotPrice = 0, slots = [], trainerGroups = []) {
   ensureModal();
-  _ctx = { type, id, name, slotPrice };
+  _ctx = { type, id, name, slotPrice, slots, trainerGroups };
     _formData = {};
     setHeader(type, name);
     renderStep1();
@@ -291,68 +291,129 @@ function activityForm() {
 
   /* ── Trainer ───────────────────────────────────────────────────────────── */
   function trainerForm() {
-    return `
-    <div class="bp-grid">
-      <div class="bp-field">
-        <label class="bp-label">Trainer</label>
-        <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
-      </div>
-      <div class="bp-field">
-        <label class="bp-label">Session Type</label>
-        <div class="bp-select-wrap">
-          <select class="bp-select" id="bpSessionType">
-            <option value="">Select session type</option>
-            <option value="personal">Personal Training</option>
-            <option value="group">Group Session</option>
-            <option value="online">Online Session</option>
-          </select>
+  const groupOptions = (_ctx.trainerGroups || []).map(g => {
+    const slots = g.timeSlots || [];
+    const slotsData = JSON.stringify(slots.map(s => ({
+      day:   s.day || s.Day || '',
+      start: (s.startTime || '').substring(0, 5),
+      end:   (s.endTime   || '').substring(0, 5)
+    })));
+    return `<option value="${g.id}"
+      data-slots='${slotsData}'
+      data-duration="${g.durationDays || ''}"
+      data-price="${g.price || 0}"
+      data-name="${esc(g.name || '')}">
+      ${g.name}${g.price ? ' — ' + g.price + ' EGP' : ''}
+    </option>`;
+  }).join('');
+
+  return `
+  <div class="bp-grid">
+    <div class="bp-field">
+      <label class="bp-label">Trainer</label>
+      <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
+    </div>
+    <div class="bp-field">
+      <label class="bp-label">Number of Participants</label>
+      <div class="bp-number-wrap">
+        <input type="number" class="bp-input" id="bpParticipants" value="1" min="1" max="20" style="padding-right:36px;">
+        <div class="bp-number-arrows">
+          <button class="bp-arr" onclick="bpAdj('bpParticipants',1)">▲</button>
+          <button class="bp-arr" onclick="bpAdj('bpParticipants',-1)">▼</button>
         </div>
       </div>
     </div>
-    <div class="bp-grid">
-      <div class="bp-field">
-        <label class="bp-label">Date</label>
-        <input type="date" class="bp-input" id="bpDate" min="${todayStr()}">
-      </div>
-      <div class="bp-field">
-        <label class="bp-label">Time</label>
-        <input type="time" class="bp-input" id="bpTime">
+  </div>
+  <div class="bp-grid bp-grid-1">
+    <div class="bp-field">
+      <label class="bp-label">Select Group</label>
+      <div class="bp-select-wrap">
+        <select class="bp-select" id="bpTrainerGroup" onchange="bpTrainerGroupChange()">
+          <option value="">Select a group...</option>
+          ${groupOptions}
+        </select>
       </div>
     </div>
-    <div class="bp-grid">
-      <div class="bp-field">
-        <label class="bp-label">Duration</label>
-        <div class="bp-select-wrap">
-          <select class="bp-select" id="bpDuration">
-            <option value="">Select duration</option>
-            <option value="30">30 minutes</option>
-            <option value="60">1 hour</option>
-            <option value="90">1.5 hours</option>
-            <option value="120">2 hours</option>
-          </select>
-        </div>
+  </div>
+  <div id="bpSlotsDisplay" style="display:none;margin-bottom:12px;">
+    <div style="font-size:.75rem;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">Available Time Slots</div>
+    <div id="bpSlotsInner"></div>
+  </div>
+  <div class="bp-grid">
+    <div class="bp-field">
+      <label class="bp-label">Start Date</label>
+      <input type="date" class="bp-input" id="bpDate" value="${todayStr()}" readonly
+        style="background:#f0f4f8;color:#64748b;cursor:not-allowed;pointer-events:none;">
+      <div style="font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;">
+        <i class="bi bi-lock-fill" style="font-size:.6rem"></i> Today's date
       </div>
-      <div class="bp-field">
-        <label class="bp-label">Number of Participants</label>
-        <div class="bp-number-wrap">
-          <input type="number" class="bp-input" id="bpParticipants" value="1" min="1" max="20"
-                 style="padding-right:36px;">
-          <div class="bp-number-arrows">
-            <button class="bp-arr" onclick="bpAdj('bpParticipants',1)">▲</button>
-            <button class="bp-arr" onclick="bpAdj('bpParticipants',-1)">▼</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
+    </div>
+    <div class="bp-field">
+      <label class="bp-label">End Date</label>
+      <input type="date" class="bp-input" id="bpEndDate" readonly
+        style="background:#f0f4f8;color:#64748b;cursor:not-allowed;pointer-events:none;">
+      <div id="bpEndDateNote" style="font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;"></div>
+    </div>
+  </div>
+ <input type="hidden" id="bpTime" value="">
+  <input type="hidden" id="bpEndTime" value="">
+  <input type="hidden" id="bpDuration" value="">`;
+}
+window.bpTrainerGroupChange = function() {
+  const sel = document.getElementById('bpTrainerGroup');
+  const opt = sel?.selectedOptions[0];
+  if (!opt || !opt.value) return;
+
+  const slots    = JSON.parse(opt.dataset.slots    || '[]');
+  const duration = opt.dataset.duration || '';
+  const price    = opt.dataset.price    || '0';
+  const gname    = opt.dataset.name     || opt.text.split('—')[0].trim();
+
+  // Start/End Time من أول slot
+  const timeEl    = document.getElementById('bpTime');
+  const endTimeEl = document.getElementById('bpEndTime');
+  if (slots.length) {
+    if (timeEl)    timeEl.value    = slots[0].start;
+    if (endTimeEl) endTimeEl.value = slots[0].end;
   }
+
+  // عرض كل الـ slots
+  const slotsDisplay = document.getElementById('bpSlotsDisplay');
+  const slotsInner   = document.getElementById('bpSlotsInner');
+  if (slots.length && slotsDisplay && slotsInner) {
+    slotsInner.innerHTML = slots.map(s => `
+      <span style="display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:700;
+        padding:5px 12px;border-radius:20px;background:rgba(232,93,47,.08);
+        color:#e85d2f;border:1px solid rgba(232,93,47,.2);margin:3px;">
+        ${s.day ? `<span style="background:#64748b;color:#fff;padding:2px 7px;border-radius:10px;font-size:.7rem;">${s.day}</span>` : ''}
+        <i class="bi bi-clock" style="font-size:.65rem"></i> ${s.start} → ${s.end}
+      </span>`).join('');
+    slotsDisplay.style.display = '';
+  }
+
+  // End Date من duration
+  const endDateEl   = document.getElementById('bpEndDate');
+  const endDateNote = document.getElementById('bpEndDateNote');
+  if (endDateEl && duration) {
+    const d = new Date();
+    d.setDate(d.getDate() + parseInt(duration));
+    endDateEl.value = d.toISOString().split('T')[0];
+    if (endDateNote) endDateNote.innerHTML =
+      `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> Calculated from duration (${duration} days)`;
+  }
+
+  _ctx.slotPrice  = parseFloat(price) || 0;
+  _ctx.groupName  = gname;
+  document.getElementById('bpDuration').value = duration;
+};
 
   /* ── Validate & proceed ────────────────────────────────────────────────── */
   window.bpStep1Next = function () {
     const date = v('bpDate');
     const time = v('bpTime');
    if (!date) { showErr('Please select a date.'); return; }
-if (_ctx.type !== 'activity' && !time) { showErr('Please select a time.'); return; }
-
+if (_ctx.type === 'trainer' && !v('bpTrainerGroup')) { showErr('Please select a group.'); return; }
+if (_ctx.type !== 'activity' && _ctx.type !== 'trainer' && !time) { showErr('Please select a time.'); return; }
 const isFacility = _ctx.type === 'facility';
 const isActivity = _ctx.type === 'activity';
 const dur     = (isFacility || isActivity) ? '' : v('bpDuration');
@@ -373,15 +434,19 @@ if (!isFacility && !isActivity && !dur) { showErr('Please select a duration.'); 
     const pax = parseInt(v('bpParticipants') || '1') || 1;
 
     _formData = {
-      type: _ctx.type, id: _ctx.id, name: _ctx.name,
-      date, time, endTime, duration: isFacility ? String(mins) : dur,
-      participants: String(pax),
-      trainer:     v('bpTrainer')     || '',
-      group:       v('bpGroup')       || '',
-      sessionType: v('bpSessionType') || '',
-price: (_ctx.slotPrice || 0) > 0
-  ? (_ctx.slotPrice || 0) * pax
-  : (base[_ctx.type] || 150) * (mins / 60) * pax,   };
+  type: _ctx.type, id: _ctx.id, name: _ctx.name,
+  date, time, endTime, duration: isFacility ? String(mins) : dur,
+  participants: String(pax),
+  trainer:     v('bpTrainer')     || '',
+  group:       v('bpGroup')       || '',
+  sessionType: v('bpSessionType') || '',
+  groupName:   _ctx.groupName     || '',
+  endDate:     document.getElementById('bpEndDate')?.value || '',
+  slots:       _ctx.slots         || [],
+  price: (_ctx.slotPrice || 0) > 0
+    ? (_ctx.slotPrice || 0) * pax
+    : (base[_ctx.type] || 150) * (mins / 60) * pax,
+};
     renderPayment();
   };
 
@@ -400,12 +465,23 @@ price: (_ctx.slotPrice || 0) > 0
   const endDateEl = document.getElementById('bpEndDate');
 const endDateVal = endDateEl ? endDateEl.value : '';
 
+// جيب الـ slots من _ctx عشان تكون محدثة
+const trainerSlots = window.bpTrainerGroupChange
+  ? (JSON.parse(document.getElementById('bpTrainerGroup')
+      ?.selectedOptions[0]?.dataset?.slots || '[]'))
+  : [];
+
 const rows = [
   [typeLabel[_formData.type]||'Item', _formData.name],
-  ['Date',         fmtDate(_formData.date)],
-  ...(_formData.type !== 'activity' ? [['Time', fmtTime(_formData.time)]] : []),
-  ...(_formData.type !== 'activity' ? [['End Time', _formData.endTime ? fmtTime(_formData.endTime) : fmtDur(_formData.duration)]] : []),
-  ...(endDateVal ? [['End Date', fmtDate(endDateVal)]] : []),
+  ...(_formData.groupName ? [['Group', _formData.groupName]] : []),
+  ['Date', fmtDate(_formData.date)],
+  ...(_formData.endDate ? [['End Date', fmtDate(_formData.endDate)]] : []),
+  ...(_formData.type === 'facility'
+    ? [['Time', fmtTime(_formData.time)], ['End Time', fmtTime(_formData.endTime)]]
+    : []),
+  ...(_formData.type === 'trainer' && trainerSlots.length
+    ? trainerSlots.map(s => [s.day ? `Slot (${s.day})` : 'Slot', `${s.start} → ${s.end}`])
+    : []),
   ['Participants', _formData.participants],
   ...(_ctx.slotPrice > 0 ? [['Price per person', `${_ctx.slotPrice} EGP`]] : []),
 ];
