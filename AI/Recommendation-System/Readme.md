@@ -1,6 +1,6 @@
 # 🏆 Sports Recommendation System
 
-> An AI-powered hybrid recommendation engine that suggests the most suitable sports for users based on their personal profile, fitness level, health conditions, and preferences.
+> An AI-powered hybrid recommendation engine that suggests the most suitable sports for users based on their personal profile, fitness level, health conditions, preferences, and skill attributes.
 
 ---
 
@@ -26,11 +26,12 @@ The system takes into account:
 
 - **Demographics** — age, gender, weight, height, BMI
 - **Fitness profile** — fitness level, activity level, weekly hours
-- **Goals** — lose weight, build muscle, reduce stress, have fun, etc.
+- **Goals** — lose weight, build muscle, reduce stress, have fun, compete professionally, etc.
 - **Health conditions** — knee pain, back pain, heart condition, asthma
-- **Preferences** — indoor/outdoor, team/individual, budget
+- **Preferences** — indoor/outdoor, team/individual, contact sports, budget
 - **Personality** — introvert, ambivert, extrovert
 - **Location** — urban, suburban, rural
+- **Skill & aptitude** — risk tolerance, coordination, striking/grappling preference, speed, endurance, competitive level
 
 ---
 
@@ -54,7 +55,8 @@ The system takes into account:
 │  ─────────────────  │  │  ─────────────────────────────│
 │  XGBoost Classifier │  │  SVD Matrix Factorization      │
 │  44 sport classes   │  │  KNN User Similarity           │
-│  Feature Engineering│  │  User-Item Interaction Matrix  │
+│  51 features        │  │  User-Item Interaction Matrix  │
+│  Health Assessment  │  │  Engagement Score              │
 └──────────┬──────────┘  └────────┬──────────────────────┘
            │                      │
            └──────────┬───────────┘
@@ -68,10 +70,11 @@ The system takes into account:
 ### How it Works
 
 1. **User submits their profile** via the UI form or API
-2. **Content-Based model (XGBoost)** predicts a probability score for all 44 sports based on user features
-3. **Collaborative Filtering (SVD + KNN)** finds similar users and aggregates their sport ratings
-4. **Hybrid blending** combines both scores: `final = α × CB_score + (1-α) × CF_score`
-5. **Top-N sports** are returned ranked by final score with confidence percentages
+2. **Health Assessment Layer** evaluates BMI, age, activity level, budget, and health issue — generating smart health-aware features
+3. **Content-Based model (XGBoost)** predicts a probability score for all 44 sports based on 51 engineered user features
+4. **Collaborative Filtering (SVD + KNN)** finds similar users via cosine similarity on SVD latent factors and aggregates their engagement scores
+5. **Hybrid blending** combines both scores: `final = α × CB_score + (1-α) × CF_score`
+6. **Top-N sports** are returned ranked by final score with confidence percentages
 
 ---
 
@@ -79,9 +82,9 @@ The system takes into account:
 
 | Property | Value |
 |---|---|
-| Total Records | 12,000 users |
+| Total Records | 66,000 users |
 | Sports | 44 sports |
-| Features | 25 columns |
+| Features | 34 columns (raw) → 51 input features (after engineering) |
 | Source | Synthetic (custom generated) |
 
 ### Features
@@ -89,14 +92,14 @@ The system takes into account:
 | Column | Type | Description |
 |---|---|---|
 | `user_id` | string | Unique user identifier |
-| `age` | int | User age (8–80) |
+| `age` | int | User age (5–70) |
 | `gender` | string | Male / Female |
 | `weight_kg` | float | Weight in kilograms |
 | `height_cm` | float | Height in centimeters |
 | `bmi` | float | Calculated BMI |
 | `activity_level` | string | Sedentary / Lightly Active / Moderately Active / Very Active |
 | `fitness_level` | string | Beginner / Intermediate / Advanced |
-| `goal` | string | Stay Healthy / Lose Weight / Build Muscle / Improve Endurance / Reduce Stress / Have Fun |
+| `goal` | string | Stay Healthy / Lose Weight / Build Muscle / Improve Endurance / Reduce Stress / Have Fun / Compete Professionally / Social & Meet People |
 | `personality` | string | Introvert / Ambivert / Extrovert |
 | `location` | string | Urban / Suburban / Rural |
 | `hours_available_per_week` | float | Weekly hours available for sport |
@@ -104,13 +107,22 @@ The system takes into account:
 | `health_issue` | string | None / Knee Pain / Back Pain / Heart Condition / Asthma |
 | `prefers_team_sport` | int | 0 or 1 |
 | `prefers_outdoor` | int | 0 or 1 |
+| `prefers_contact_sport` | int | 0–5 scale (preference for contact/combat sports) |
+| `risk_tolerance` | int | 0–5 scale |
+| `competitive_level` | int | 0–5 scale |
+| `coordination_level` | int | 0–5 scale |
+| `striking_preference` | int | 0–5 scale |
+| `grappling_preference` | int | 0–5 scale |
+| `speed_agility` | int | 0–5 scale |
+| `endurance_level` | int | 0–5 scale |
+| `preferred_distance` | int | 0–5 scale |
 | `recommended_sport` | string | Target label (44 classes) |
 | `sport_difficulty` | string | Low / Medium / High |
 | `sport_type` | string | Individual / Team / Both |
 | `sport_environment` | string | Indoor / Outdoor / Both |
 | `sport_budget_level` | string | Low / Medium / High |
 | `calories_burned_per_hour` | int | Estimated calories burned |
-| `user_rating` | float | User rating 1.0–5.0 |
+| `user_rating` | float | User rating 3.5–5.0 |
 | `clicked` | int | Whether user clicked the recommendation |
 | `practiced` | int | Whether user practiced the sport |
 
@@ -127,50 +139,83 @@ The dataset went through **comprehensive cleaning** to fix logical inconsistenci
 - ✅ Team preference aligned with sport type
 - ✅ Budget constraints enforced per sport cost level
 - ✅ Ratings recalculated based on user-sport compatibility
+- ✅ Skill attributes (striking, grappling, endurance, etc.) validated per assigned sport
 
 ---
 
 ## Models
 
-### 1. Content-Based Model — XGBoost
+### 1. Health Assessment Layer
+
+Before any ML prediction, the system runs a health assessment that converts raw inputs into smart numeric scores:
+
+```python
+assess_bmi(bmi)          → (status, goal, score)
+assess_age(age)          → (group, intensity, score)
+assess_activity(level)   → (status, advice, score)
+assess_fitness(level)    → (status, advice, score)
+assess_hours(hours)      → (status, advice, score)
+assess_budget(budget)    → (status, advice, score)
+assess_health_issue(issue) → (avoid_list, prefer_list)
+compute_health_score(row)  → numeric score (0-100)
+```
+
+These derived features (`bmi_score`, `age_score`, `health_score`, `intensity_score`, interaction terms, etc.) are passed alongside the raw features to the ML model, boosting accuracy.
+
+### 2. Content-Based Model — XGBoost (Best Model)
+
+Four models were trained and compared. The best-performing was selected automatically:
+
+| Model | Notes |
+|---|---|
+| XGBoost | Tuned with 700 estimators, depth 12, sample weights |
+| Random Forest | 500 estimators, max depth 25, balanced class weights |
+| Neural Network (MLP) | 4 hidden layers (512→256→128→64), early stopping |
+| Voting Ensemble | Soft voting across all three models |
 
 ```python
 XGBClassifier(
-    n_estimators=200,
-    max_depth=6,
-    learning_rate=0.1,
+    n_estimators=700,
+    max_depth=12,
+    learning_rate=0.03,
+    subsample=0.85,
+    colsample_bytree=0.85,
+    reg_alpha=0.1,
+    reg_lambda=1.0,
     objective='multi:softprob',
     num_class=44
 )
 ```
 
-- Input: 25+ engineered features (one-hot encoded + scaled)
-- Output: Probability distribution over 44 sport classes
-- Preprocessing: StandardScaler for numerical features
+- **Input:** 51 engineered features (one-hot encoded + StandardScaler)
+- **Output:** Probability distribution over 44 sport classes
+- **Evaluation:** 5-Fold Stratified Cross-Validation
 
-### 2. Collaborative Filtering — SVD + KNN
+### 3. Collaborative Filtering — SVD + KNN
 
 ```
-User-Item Matrix (12000 × 44)
+User-Item Matrix (66,000 × 44)  — engagement_score = rating×0.6 + clicked×0.8 + practiced×1.5
          ↓
-   SVD Decomposition
-   (Latent Factors: 50)
+   TruncatedSVD Decomposition
+   (Latent Factors: 15)
          ↓
    KNN (k=10, cosine similarity)
          ↓
-   Weighted Average of Similar Users' Ratings
+   Weighted Average of Similar Users' Engagement Scores
 ```
 
 - Finds the 10 most similar users using cosine similarity on SVD latent factors
-- Aggregates their sport ratings weighted by similarity score
+- Aggregates engagement scores weighted by similarity
+- Falls back to pure Content-Based for new users not in training data
 
-### 3. Hybrid Recommender
+### 4. Hybrid Recommender
 
 ```python
 final_score = alpha * cb_score + (1 - alpha) * cf_score
-# alpha = 0.7 (default — CB weighted more heavily)
+# alpha tuned automatically on test set (default ≈ 0.6)
 ```
 
+- **Alpha tuning:** evaluated at α ∈ {0.3, 0.4, 0.5, 0.6, 0.65, 0.7, 0.8, 0.9, 1.0} using Hit@3
 - Uses CF only when `user_id` exists in training data
 - Falls back to pure Content-Based for new users
 
@@ -178,15 +223,15 @@ final_score = alpha * cb_score + (1 - alpha) * cf_score
 
 ```
 models/
-├── xgb_content_based.pkl      # XGBoost classifier
-├── scaler.pkl                 # StandardScaler
+├── xgb_content_based.pkl      # XGBoost classifier (best content-based model)
+├── scaler.pkl                 # StandardScaler (51 features)
 ├── label_encoder_sport.pkl    # LabelEncoder (44 classes)
 ├── hybrid_recommender.pkl     # Hybrid recommender object
-├── svd_model.pkl              # SVD model
-├── knn_cf_model.pkl           # KNN model
-├── user_item_matrix.csv       # User-item interaction matrix
+├── svd_model.pkl              # TruncatedSVD (15 components)
+├── knn_cf_model.pkl           # KNN (k=10, cosine)
+├── user_item_matrix.csv       # User-item engagement matrix (66000 × 44)
 ├── user_factors.npy           # SVD latent user factors
-└── feature_cols.csv           # Feature column names
+└── feature_cols.csv           # 51 feature column names
 ```
 
 ---
@@ -213,6 +258,15 @@ Content-based recommendation for any user (new or existing).
   "health_issue": "None",
   "prefers_team_sport": 0,
   "prefers_outdoor": 0,
+  "prefers_contact_sport": 2,
+  "risk_tolerance": 2,
+  "competitive_level": 3,
+  "coordination_level": 3,
+  "striking_preference": 1,
+  "grappling_preference": 2,
+  "speed_agility": 3,
+  "endurance_level": 3,
+  "preferred_distance": 2,
   "top_n": 5
 }
 ```
@@ -223,8 +277,8 @@ Content-based recommendation for any user (new or existing).
   "status": "success",
   "recommendations": [
     {"rank": 1, "sport": "Gym",                 "confidence": 0.9991},
-    {"rank": 2, "sport": "Brazilian Jiu-Jitsu", "confidence": 0.0001},
-    {"rank": 3, "sport": "Bodybuilding",        "confidence": 0.0001}
+    {"rank": 2, "sport": "Brazilian Jiu-Jitsu", "confidence": 0.0004},
+    {"rank": 3, "sport": "Bodybuilding",        "confidence": 0.0002}
   ],
   "user_profile": {
     "age": 25, "goal": "Build Muscle", "fitness_level": "Intermediate"
@@ -248,7 +302,7 @@ API health check.
 ## UI
 
 ### Recommendation Page (`recommendation.html`)
-- Compact form with all model inputs
+- Compact form with all model inputs including the 9 new skill/aptitude sliders
 - Toggle buttons for fitness level, activity, goal, personality
 - Real-time results with confidence bars and medal ranking
 - Sport detail panel with calories, difficulty, environment, budget info
@@ -272,7 +326,7 @@ cd sports-recommendation
 pip install -r requirements.txt
 
 # 3. Train the models (run the notebook first)
-jupyter notebook sports_recommendation.ipynb
+jupyter notebook sports_recommendation_96.ipynb
 
 # 4. Run the API
 python app.py
@@ -288,14 +342,14 @@ python app.py
 ```
 sports-recommendation/
 │
-├── 📓 sports_recommendation.ipynb      # Full ML pipeline notebook
+├── 📓 sports_recommendation_96.ipynb   # Full ML pipeline notebook
 │
 ├── 🐍 app.py                           # Main Flask API
 ├── 🐍 recommend_app.py                 # Recommendation API (mock, no ML needed)
 │
 ├── 🌐 recommendation.html              # Recommendation UI
 │
-├── 📊 sports_recommendation_clean.csv  # Cleaned dataset (12,000 rows)
+├── 📊 sports_data_strict_v2.csv        # Cleaned dataset (66,000 rows × 34 cols)
 │
 ├── 📁 models/                          # Saved ML models (after training)
 │   ├── xgb_content_based.pkl
@@ -318,7 +372,7 @@ sports-recommendation/
 
 | Layer | Technology |
 |---|---|
-| **ML Models** | XGBoost, Scikit-learn (SVD, KNN, StandardScaler, LabelEncoder) |
+| **ML Models** | XGBoost, Scikit-learn (TruncatedSVD, KNN, RandomForest, MLP, StandardScaler, LabelEncoder) |
 | **Backend** | Python, Flask, Flask-CORS |
 | **Frontend** | HTML5, CSS3, Vanilla JavaScript |
 | **Fonts** | Tajawal (Arabic), Bebas Neue |
