@@ -694,6 +694,11 @@ body {
       <i class="bi bi-megaphone-fill"></i>
       <span class="link-text">Announcements</span>
     </a>
+    <div class="sidebar-divider"></div>
+<div class="sidebar-section">System</div>
+<a class="sidebar-link" onclick="showPage('admins')" data-label="Admins">
+  <i class="bi bi-shield-lock"></i><span class="link-text">Admins</span>
+</a>
   </aside>
 
   <!-- ===== CONTENT AREA ===== -->
@@ -1611,7 +1616,110 @@ body {
       </div>
       <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer_ann" style="z-index:12000;"></div>
     </div>
+    <!-- =============================== Admins =============================== -->
 
+
+<div class="page" id="page-admins">
+<div class="page-header">
+        <div><h2 class="fw-bold m-0">Admins</h2><small class="text-muted">Manage Admins — Create / Update / Delete</small></div>
+    <button class="btn btn-primary rounded-pill px-4" onclick="new bootstrap.Modal(document.getElementById('addAdminModal')).show()">
+      <i class="bi bi-plus-lg"></i> Add Admin
+    </button>
+    
+  </div>
+<div class="clubly-card p-3 mb-3">
+  <div class="row g-2 align-items-center controls">
+    <div class="col-auto"><input id="searchInput_adm" class="form-control" placeholder="Search by name or email..."></div>
+    <div class="col-auto"><select id="genderFilter_adm" class="form-select"><option value="">Any gender</option><option value="Male">Male</option><option value="Female">Female</option></select></div>
+    <div class="col-auto ms-auto"><button class="btn btn-outline-primary" onclick="loadAdmins()"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
+  </div>
+</div>
+  <!-- Table -->
+<div class="clubly-card p-0 mt-3">
+    <table class="table table-hover align-middle mb-0" id="adminsTable">
+<thead class="table-light"><tr>
+        <th>Image</th><th>Name</th><th>Email</th><th>Phone</th>
+        <th>National ID</th><th>Gender</th><th>Birth Date</th><th>Actions</th>
+      </tr></thead>
+      <tbody id="adminsTbody"><tr><td colspan="8" class="text-center py-4">Loading…</td></tr></tbody>
+    </table>
+  </div>
+
+  <!-- Add Modal -->
+  <div class="modal fade" id="addAdminModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">      <div class="modal-content-cl modal-content">
+        <div class="modal-header-cl modal-header">
+          <h5 class="modal-title">Add Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="addAdminForm" class="row g-3">
+            <div class="col-md-6"><input name="FullName" id="addFullName_a" class="form-control" placeholder="Full Name" required></div>
+            <div class="col-md-6"><input name="Email" id="addEmail_a" class="form-control" type="email" placeholder="Email" required></div>
+            <div class="col-md-6"><input name="Phone" id="addPhone_a" class="form-control" placeholder="Phone Number" required></div>
+            <div class="col-md-6"><input name="Password" id="addPassword_a" class="form-control" type="password" placeholder="Password" required></div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <input name="NationalId" id="addNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14"
+                  oninput="autoFillAdminNID('add')">
+                <span class="input-group-text" title="Auto-fills birthday & gender"><i class="bi bi-magic text-primary"></i></span>
+              </div>
+            </div>
+            <div class="col-md-3"><select name="Gender" id="addGender_a" class="form-select"><option value="">Gender</option><option>Male</option><option>Female</option></select></div>
+            <div class="col-md-3"><input name="BirthDate" id="addBirthDate_a" class="form-control" type="date" placeholder="Birth Date" readonly></div>
+            <div class="col-12">
+              <label class="form-label">Profile Image</label>
+              <input type="file" id="addImage_a" class="form-control" accept="image/*" onchange="previewImg(this,'addImagePreview_a')">
+              <img id="addImagePreview_a" src="" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:50%;margin-top:8px;">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" onclick="saveAdmin()">Add Admin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editAdminModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">      <div class="modal-content-cl modal-content">
+        <div class="modal-header-cl modal-header">
+          <h5 class="modal-title">Edit Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editAdminForm" class="row g-3">
+            <input type="hidden" name="id" id="editId_a">
+            <div class="col-md-6"><input name="FullName" id="editFullName_a" class="form-control" placeholder="Full Name" required></div>
+            <div class="col-md-6"><input name="Email" id="editEmail_a" class="form-control" type="email" placeholder="Email" required></div>
+            <div class="col-md-6"><input name="Phone" id="editPhone_a" class="form-control" placeholder="Phone Number"></div>
+            <div class="col-md-6"><input name="Password" id="editPassword_a" class="form-control" type="password" placeholder="New Password (leave blank to keep)"></div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <input name="NationalId" id="editNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14"
+                  oninput="autoFillAdminNID('edit')">
+                <span class="input-group-text"><i class="bi bi-magic text-primary"></i></span>
+              </div>
+            </div>
+            <div class="col-md-3"><select name="Gender" id="editGender_a" class="form-select"><option value="">Gender</option><option>Male</option><option>Female</option></select></div>
+            <div class="col-md-3"><input name="BirthDate" id="editBirthDate_a" class="form-control" type="date" readonly></div>
+            <div class="col-12">
+              <label class="form-label">Profile Image</label>
+              <input type="file" id="editImage_a" class="form-control" accept="image/*" onchange="previewImg(this,'editImagePreview_a')">
+              <img id="editImagePreview_a" src="" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:50%;margin-top:8px;">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" onclick="updateAdmin()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   </main>
 </div>
 
@@ -1662,7 +1770,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
-const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement'];
+const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins'];
 
 function showPage(name) {
   pages.forEach(p => {
@@ -1746,7 +1854,11 @@ function extractFromNationalId(nid) {
 function showFieldError(el, msg) { el.classList.add('is-invalid'); let fb=el.parentElement.querySelector('.invalid-feedback'); if(!fb){fb=document.createElement('div');fb.className='invalid-feedback';el.parentElement.appendChild(fb);} fb.textContent=msg; }
 function clearFieldError(el) { el.classList.remove('is-invalid'); const fb=el.parentElement.querySelector('.invalid-feedback'); if(fb) fb.remove(); }
 function clearFormErrors(form) { form.querySelectorAll('.is-invalid').forEach(e=>e.classList.remove('is-invalid')); form.querySelectorAll('.invalid-feedback').forEach(e=>e.remove()); }
-
+function previewImg(input, previewId) {
+  const prev = document.getElementById(previewId);
+  if (input.files[0]) { prev.src = URL.createObjectURL(input.files[0]); prev.style.display = 'block'; }
+  else prev.style.display = 'none';
+}
 function makePagination(ulId, currentPage, totalPages, renderFn) {
   const ul = document.getElementById(ulId); if(!ul) return;
   ul.innerHTML = '';
@@ -2645,6 +2757,126 @@ wireDrag('editDrag_ann','editImage_ann','editPreview_ann');
 document.getElementById('refreshBtn_ann')?.addEventListener('click',loadAnnouncements);
 
 // ===================================================
+// ============== Admins MODULE ===============
+// ===================================================
+
+const adminsApi = 'https://localhost:7132/api/Admin';
+let _admins = [];
+
+function autoFillAdminNID(mode) {
+  const nid = document.getElementById(`${mode === 'add' ? 'add' : 'edit'}NationalId_a`).value;
+  if (nid.length === 14) {
+    const info = extractFromNationalId(nid);
+    document.getElementById(`${mode === 'add' ? 'add' : 'edit'}Gender_a`).value = info.gender;
+    document.getElementById(`${mode === 'add' ? 'add' : 'edit'}BirthDate_a`).value = info.birthDate;
+  }
+}
+
+['searchInput_adm','genderFilter_adm'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input', renderAdmins);
+});
+
+
+async function loadAdmins() {
+  try {
+    const res = await fetch(adminsApi);
+    _admins = res.ok ? await res.json() : [];
+    renderAdmins();
+  } catch { document.getElementById('adminsTbody').innerHTML = '<tr><td colspan="8" class="text-center text-danger">Failed to load</td></tr>'; }
+}
+
+function renderAdmins() {
+  const q = document.getElementById('searchInput_adm')?.value.trim().toLowerCase() || '';
+  const gender = document.getElementById('genderFilter_adm')?.value || '';
+
+  let list = _admins.filter(a =>
+    (!q || (a.fullName||'').toLowerCase().includes(q) || (a.email||'').toLowerCase().includes(q)) &&
+    (!gender || a.gender === gender)
+  );
+
+  const tbody = document.getElementById('adminsTbody');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-muted">No admins found.</td></tr>'; return; }
+  tbody.innerHTML = list.map(a => `
+    <tr>
+      <td><img src="${a.imageUrl || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(a.fullName || 'A')}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;"></td>
+      <td>${a.fullName || ''}</td>
+      <td>${a.email || ''}</td>
+      <td>${a.phone || ''}</td>
+      <td>${a.nationalId || ''}</td>
+      <td>${a.gender || ''}</td>
+<td>${a.dateOfBirth ? a.dateOfBirth.split('T')[0] : '—'}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditAdmin(${a.id})"><i class="bi bi-pencil"></i></button>
+        <button class="btn btn-sm btn-outline-danger" onclick="deleteAdmin(${a.id})"><i class="bi bi-trash"></i></button>
+      </td>
+    </tr>`).join('');
+}
+
+async function saveAdmin() {
+  const form = document.getElementById('addAdminForm');
+  const fd = new FormData();
+  fd.append('FullName', form.FullName.value);
+  fd.append('Email', form.Email.value);
+  fd.append('Phone', form.Phone.value);
+  fd.append('Password', form.Password.value);
+  fd.append('NationalId', form.NationalId.value);
+  fd.append('Gender', form.Gender.value);
+fd.append('DateOfBirth', document.getElementById('addBirthDate_a').value);
+  const img = document.getElementById('addImage_a').files[0];
+  if (img) fd.append('Image', img);
+  try {
+    const res = await fetch(adminsApi, { method: 'POST', body: fd });
+    if (!res.ok) throw new Error();
+    bootstrap.Modal.getInstance(document.getElementById('addAdminModal')).hide();
+    showToast('Admin added!', 'success');
+    loadAdmins();
+  } catch { showToast('Failed to add admin', 'error'); }
+}
+
+async function openEditAdmin(id) {
+  const a = _admins.find(x => x.id === id);
+  if (!a) return;
+  document.getElementById('editId_a').value = a.id;
+  document.getElementById('editFullName_a').value = a.fullName || '';
+  document.getElementById('editEmail_a').value = a.email || '';
+  document.getElementById('editPhone_a').value = a.phone || '';
+  document.getElementById('editNationalId_a').value = a.nationalId || '';
+  document.getElementById('editGender_a').value = a.gender || '';
+document.getElementById('editBirthDate_a').value = a.dateOfBirth ? a.dateOfBirth.split('T')[0] : ''; const prev = document.getElementById('editImagePreview_a');
+  if (a.imageUrl) { prev.src = a.imageUrl; prev.style.display = 'block'; } else prev.style.display = 'none';
+  new bootstrap.Modal(document.getElementById('editAdminModal')).show();
+}
+
+async function updateAdmin() {
+  const id = document.getElementById('editId_a').value;
+  const form = document.getElementById('editAdminForm');
+  const fd = new FormData();
+  fd.append('FullName', form.FullName.value);
+  fd.append('Email', form.Email.value);
+  fd.append('Phone', form.Phone.value);
+  if (form.Password.value) fd.append('Password', form.Password.value);
+  fd.append('NationalId', form.NationalId.value);
+  fd.append('Gender', form.Gender.value);
+fd.append('DateOfBirth', document.getElementById('editBirthDate_a').value);  const img = document.getElementById('editImage_a').files[0];
+  if (img) fd.append('Image', img);
+  try {
+    const res = await fetch(`${adminsApi}/${id}`, { method: 'PUT', body: fd });
+    if (!res.ok) throw new Error();
+    bootstrap.Modal.getInstance(document.getElementById('editAdminModal')).hide();
+    showToast('Admin updated!', 'success');
+    loadAdmins();
+  } catch { showToast('Failed to update admin', 'error'); }
+}
+
+async function deleteAdmin(id) {
+  if (!confirm('Delete this admin?')) return;
+  try {
+    await fetch(`${adminsApi}/${id}`, { method: 'DELETE' });
+    showToast('Admin deleted', 'success');
+    loadAdmins();
+  } catch { showToast('Failed to delete', 'error'); }
+}
+// ===================================================
 // INIT — load all data on start
 // ===================================================
 window.addEventListener('DOMContentLoaded', async () => {
@@ -2668,6 +2900,8 @@ window.showPage = function(name) {
   if (name === 'group') { loadActivitiesForGroups(); loadGroups(); }
   if (name === 'membership') fetchMemberships();
   if (name === 'announcement') loadAnnouncements();
+  if (name === 'admins') loadAdmins();
+
 };
 
 // ===================================================
