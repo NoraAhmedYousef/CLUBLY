@@ -1,6 +1,6 @@
 # 🏅 Sports Recommendation Dataset
 
-> A synthetic dataset of **12,000 users** designed for training and evaluating sports recommendation systems. Each record maps a user's demographic profile, fitness level, health conditions, and personal preferences to a recommended sport from a catalog of **44 sports**.
+> A synthetic dataset of **66,000 users** designed for training and evaluating sports recommendation systems. Each record maps a user's demographic profile, fitness level, health conditions, personal preferences, and skill attributes to a recommended sport from a catalog of **44 sports**.
 
 ---
 
@@ -22,11 +22,11 @@
 
 | Property | Value |
 |---|---|
-| **Total Records** | 12,000 |
-| **Total Features** | 25 columns |
+| **Total Records** | 66,000 |
+| **Total Features** | 34 columns |
 | **Target Classes** | 44 sports |
 | **File Format** | CSV |
-| **File Name** | `sports_recommendation_clean.csv` |
+| **File Name** | `sports_data_strict_v2.csv` |
 | **Language** | English |
 | **Source** | Synthetically generated |
 
@@ -38,14 +38,14 @@ The dataset was carefully designed to reflect **realistic demographic distributi
 
 | Feature | Distribution |
 |---|---|
-| **Age Range** | 8 – 80 years |
-| **Gender** | ~50% Male / ~50% Female |
-| **Fitness Levels** | Beginner 40% / Intermediate 40% / Advanced 20% |
-| **Activity Levels** | Sedentary 20% / Lightly Active 25% / Moderately Active 35% / Very Active 20% |
-| **Health Issues** | None ~70% / Knee Pain ~10% / Back Pain ~8% / Asthma ~7% / Heart Condition ~5% |
-| **Goals** | Stay Healthy / Lose Weight / Build Muscle / Improve Endurance / Reduce Stress / Have Fun |
-| **Locations** | Urban ~50% / Suburban ~30% / Rural ~20% |
-| **User Ratings** | 1.0 – 5.0 (mean ≈ 3.8) |
+| **Age Range** | 5 – 70 years |
+| **Gender** | ~50% Female / ~50% Male |
+| **Fitness Levels** | Beginner 22% / Intermediate 40% / Advanced 38% |
+| **Activity Levels** | Sedentary 6% / Lightly Active 14% / Moderately Active 37% / Very Active 43% |
+| **Health Issues** | None ~81% / Knee Pain ~8% / Back Pain ~6% / Heart Condition ~3% / Asthma ~2% |
+| **Goals** | Have Fun / Compete Professionally / Build Muscle / Improve Endurance / Social & Meet People / Reduce Stress / Stay Healthy / Lose Weight |
+| **Locations** | Urban ~34% / Suburban ~33% / Rural ~33% |
+| **User Ratings** | 3.5 – 5.0 (mean ≈ 4.25) |
 
 ---
 
@@ -55,8 +55,8 @@ The dataset was carefully designed to reflect **realistic demographic distributi
 
 | Column | Type | Values | Description |
 |---|---|---|---|
-| `user_id` | string | U00001 – U12000 | Unique user identifier |
-| `age` | int | 8 – 80 | User age in years |
+| `user_id` | string | U00000 – U65999 | Unique user identifier |
+| `age` | int | 5 – 70 | User age in years |
 | `gender` | string | Male, Female | Biological gender |
 | `weight_kg` | float | 23.0 – 100.0 | Weight in kilograms |
 | `height_cm` | float | 122.0 – 200.0 | Height in centimeters |
@@ -81,11 +81,29 @@ The dataset was carefully designed to reflect **realistic demographic distributi
 
 | Column | Type | Values | Description |
 |---|---|---|---|
-| `goal` | string | Stay Healthy, Lose Weight, Build Muscle, Improve Endurance, Reduce Stress, Have Fun | Primary fitness goal |
+| `goal` | string | Stay Healthy, Lose Weight, Build Muscle, Improve Endurance, Reduce Stress, Have Fun, Compete Professionally, Social / Meet People | Primary fitness goal |
 | `personality` | string | Introvert, Ambivert, Extrovert | Social personality type |
 | `location` | string | Urban, Suburban, Rural | Residential area type |
 | `prefers_team_sport` | int | 0, 1 | Whether user prefers team sports |
 | `prefers_outdoor` | int | 0, 1 | Whether user prefers outdoor sports |
+| `prefers_contact_sport` | int | 0 – 5 | Preference for contact/combat sports (0 = none, 5 = very high) |
+
+---
+
+### 🧠 Skill & Aptitude Attributes
+
+| Column | Type | Values | Description |
+|---|---|---|---|
+| `risk_tolerance` | int | 0 – 5 | Willingness to engage in risky or extreme activities |
+| `competitive_level` | int | 0 – 5 | Desire to compete at a structured or professional level |
+| `coordination_level` | int | 0 – 5 | Physical coordination and motor skill ability |
+| `striking_preference` | int | 0 – 5 | Preference for striking-based combat sports (boxing, karate, etc.) |
+| `grappling_preference` | int | 0 – 5 | Preference for grappling-based sports (judo, wrestling, BJJ, etc.) |
+| `speed_agility` | int | 0 – 5 | Speed and agility level |
+| `endurance_level` | int | 0 – 5 | Cardiovascular and stamina endurance |
+| `preferred_distance` | int | 0 – 5 | Preference for long-distance or endurance-type sports |
+
+> **Note:** All skill attributes use a 0–5 ordinal scale (0 = lowest, 5 = highest).
 
 ---
 
@@ -106,7 +124,7 @@ The dataset was carefully designed to reflect **realistic demographic distributi
 | `sport_type` | string | Individual, Team, Both | Whether sport is solo, team-based, or flexible |
 | `sport_environment` | string | Indoor, Outdoor, Both | Where the sport is typically practiced |
 | `sport_budget_level` | string | Low, Medium, High | Estimated monthly cost category |
-| `calories_burned_per_hour` | int | 60 – 700 | Estimated calories burned per hour |
+| `calories_burned_per_hour` | int | 80 – 750 | Estimated calories burned per hour |
 
 ---
 
@@ -114,7 +132,7 @@ The dataset was carefully designed to reflect **realistic demographic distributi
 
 | Column | Type | Values | Description |
 |---|---|---|---|
-| `user_rating` | float | 1.0 – 5.0 | User rating for the recommended sport |
+| `user_rating` | float | 3.5 – 5.0 | User rating for the recommended sport |
 | `clicked` | int | 0, 1 | Whether user clicked / showed interest (1 if rating ≥ 3.0) |
 | `practiced` | int | 0, 1 | Whether user practiced the sport (1 if rating ≥ 4.0) |
 
@@ -142,20 +160,25 @@ Bungee Jumping, Kids Martial Arts
 | Sport | Difficulty | Type | Environment | Budget | Cal/hr |
 |---|---|---|---|---|---|
 | Gym | Medium | Individual | Indoor | Medium | 400 |
-| Swimming | Medium | Individual | Both | Medium | 500 |
-| CrossFit | High | Both | Indoor | High | 700 |
-| Triathlon | High | Individual | Outdoor | High | 700 |
-| Marathon Running | High | Individual | Outdoor | Low | 650 |
+| Swimming | Medium | Individual | Indoor | Medium | 500 |
+| CrossFit | High | Individual | Indoor | High | 700 |
+| Triathlon | High | Individual | Outdoor | High | 750 |
+| Marathon Running | High | Individual | Outdoor | Low | 700 |
 | Football | High | Team | Outdoor | Low | 600 |
-| Boxing | High | Individual | Indoor | Medium | 600 |
-| Yoga | Low | Individual | Indoor | Low | 200 |
-| Chess | Low | Individual | Indoor | Low | 80 |
-| eSports | Low | Both | Indoor | Low | 60 |
-| Badminton | Low | Individual | Indoor | Low | 420 |
-| Volleyball | Medium | Team | Both | Low | 380 |
-| Basketball | High | Team | Indoor | Low | 550 |
-| Climbing | High | Individual | Both | Medium | 550 |
-| Bodybuilding | High | Individual | Indoor | Medium | 450 |
+| Boxing | High | Individual | Indoor | Medium | 650 |
+| Yoga | Low | Individual | Indoor | Low | 250 |
+| Chess | Low | Individual | Indoor | Low | 100 |
+| eSports | Low | Team | Indoor | Low | 80 |
+| Badminton | Medium | Individual | Indoor | Low | 480 |
+| Volleyball | Medium | Team | Both | Low | 450 |
+| Basketball | High | Team | Outdoor | Low | 550 |
+| Climbing | High | Individual | Outdoor | High | 550 |
+| Bodybuilding | High | Individual | Indoor | Medium | 380 |
+| Kick-boxing | High | Individual | Indoor | Medium | 680 |
+| Multi Martial Arts | High | Individual | Indoor | Medium | 700 |
+| Squash | High | Individual | Indoor | Medium | 700 |
+| American Football | High | Team | Outdoor | High | 620 |
+| Handball | High | Team | Indoor | Low | 580 |
 
 *Full reference available in dataset.*
 
@@ -163,10 +186,10 @@ Bungee Jumping, Kids Martial Arts
 
 ## Data Cleaning
 
-The raw dataset went through **19 validation checks** and **comprehensive cleaning** to remove all logical inconsistencies:
+The raw dataset went through comprehensive validation checks and cleaning to remove all logical inconsistencies:
 
 ### Age-Related Rules
-| Rule | Records Fixed |
+| Rule | Status |
 |---|---|
 | Kids < 14 assigned dangerous sports (wrestling, boxing, parkour, etc.) | ✅ Fixed |
 | Kids < 10 assigned High difficulty sports | ✅ Fixed |
@@ -204,7 +227,7 @@ The raw dataset went through **19 validation checks** and **comprehensive cleani
 ### Goal Alignment
 | Rule | Status |
 |---|---|
-| Lose Weight + sport burning < 150 cal/hr | ✅ Fixed |
+| Lose Weight + sport burning < 300 cal/hr | ✅ Fixed |
 | Build Muscle + non-muscle sport (Chess, eSports, Billiards) | ✅ Fixed |
 
 ### Other
@@ -214,8 +237,6 @@ The raw dataset went through **19 validation checks** and **comprehensive cleani
 | Budget < $30 assigned High-budget sports | ✅ Fixed |
 | < 2 hrs/week assigned time-heavy sports (Triathlon, Marathon, CrossFit) | ✅ Fixed |
 | Ratings recalculated based on user-sport compatibility | ✅ Fixed |
-
-**Final validation: Zero inconsistencies across all 19 checks.**
 
 ---
 
@@ -245,6 +266,11 @@ IF goal = Build Muscle         → sport ∈ muscle-building category
 
 IF activity_level = Sedentary  → fitness_level ≠ Advanced
 IF activity_level = Very Active → fitness_level ≠ Beginner
+
+IF risk_tolerance = 0          → No extreme/high-risk sports (Bungee Jumping, Parkour, etc.)
+IF striking_preference > 3     → Prioritize striking sports (Boxing, Karate, Kick-boxing, etc.)
+IF grappling_preference > 3    → Prioritize grappling sports (Judo, BJJ, Wrestling, etc.)
+IF endurance_level < 2         → No long-distance sports (Marathon, Triathlon)
 ```
 
 ---
@@ -252,9 +278,15 @@ IF activity_level = Very Active → fitness_level ≠ Beginner
 ## Sample Record
 
 ```csv
-user_id,age,gender,weight_kg,height_cm,bmi,activity_level,fitness_level,goal,personality,location,hours_available_per_week,monthly_budget_usd,health_issue,prefers_team_sport,prefers_outdoor,recommended_sport,sport_difficulty,sport_type,sport_environment,sport_budget_level,calories_burned_per_hour,user_rating,clicked,practiced
+age,gender,weight_kg,height_cm,bmi,activity_level,fitness_level,goal,personality,location,
+hours_available_per_week,monthly_budget_usd,health_issue,prefers_team_sport,prefers_outdoor,
+prefers_contact_sport,risk_tolerance,competitive_level,coordination_level,striking_preference,
+grappling_preference,speed_agility,endurance_level,preferred_distance,recommended_sport,
+sport_difficulty,sport_type,sport_environment,sport_budget_level,calories_burned_per_hour,
+user_id,user_rating,clicked,practiced
 
-U00042,25,Male,75.0,178.0,23.7,Moderately Active,Intermediate,Build Muscle,Introvert,Urban,6.0,80.0,None,0,0,Gym,Medium,Individual,Indoor,Medium,400,4.5,1,1
+25,Male,75.0,178.0,23.7,Moderately Active,Intermediate,Build Muscle,Introvert,Urban,
+6.0,80.0,,0,0,2,2,3,3,1,2,3,2,1,Gym,Medium,Individual,Indoor,Medium,400,U00042,4.5,1,1
 ```
 
 ---
@@ -266,8 +298,8 @@ U00042,25,Male,75.0,178.0,23.7,Moderately Active,Intermediate,Build Muscle,Intro
 ```python
 import pandas as pd
 
-df = pd.read_csv('sports_recommendation_clean.csv')
-print(df.shape)        # (12000, 25)
+df = pd.read_csv('sports_data_strict_v2.csv', low_memory=False)
+print(df.shape)        # (66000, 34)
 print(df.dtypes)
 print(df['recommended_sport'].nunique())  # 44
 ```
@@ -294,7 +326,7 @@ user_item = df.pivot_table(
     values='user_rating',
     fill_value=0
 )
-print(user_item.shape)  # (12000, 44)
+print(user_item.shape)  # (66000, 44)
 ```
 
 ---
@@ -304,7 +336,7 @@ print(user_item.shape)  # (12000, 44)
 If you use this dataset in your research or project, please cite:
 
 ```
-Sports Recommendation Dataset (2025)
+Sports Recommendation Dataset v2 (2025)
 Synthetically generated for graduation project purposes.
-Features: 12,000 users × 44 sports × 25 attributes
+Features: 66,000 users × 44 sports × 34 attributes
 ```
