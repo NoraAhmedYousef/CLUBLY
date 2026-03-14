@@ -1,0 +1,160 @@
+.activities {
+    text-align: center;
+    padding: 60px 5%;
+}
+
+.act-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.highlight {
+    color: #E92B16;
+}
+
+.act-subtext {
+    color: #666;
+    max-width: 700px;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+
+/* CARD */
+
+.act-card {
+    background: #E5E5E5;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.act-card:hover {
+    transform: translateY(-7px);
+}
+
+
+/* IMAGE */
+
+.act-img {
+    position: relative;
+}
+
+.act-img img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.badge {
+    position: absolute;
+    padding: 6px 12px;
+    border-radius: 12px;
+    color: #000000;
+    font-size: 0.8rem;
+}
+
+.category {
+    left: 12px;
+    top: 12px;
+    background: #ffffff;
+}
+
+.rating {
+    right: 12px;
+    top: 12px;
+    background: #ffb400;
+    color: #fff;
+}
+
+
+/* CONTENT */
+
+.act-content {
+    padding: 18px 22px;
+    text-align: left;
+}
+
+.act-content h3 {
+    text-transform: capitalize;
+    margin-bottom: 8px;
+}
+
+.act-content p {
+    color: #787878;
+    font-size: 0.95rem;
+    /* margin-bottom: 15px; */
+    margin: 10px 0;
+    font-size: 15px;
+    color: #555;
+}
+
+.act-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #787878;
+}
+
+.act-info span i {
+    margin-right: 5px;
+    color: #4a90e2;
+    /* لون الأيقونات */
+}
+
+.age {
+    font-size: 0.85rem;
+    color: #787878;
+}
+
+
+/* BUTTONS */
+
+.btn-book {
+    margin-top: 12px;
+    width: auto;
+    padding: 6px 14px;
+    background: #043b64;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+    position: relative;
+    float: right;
+}
+
+.btn-book:hover {
+    background: #012a46;
+}
+
+.view-all {
+    margin-top: 40px;
+    padding: 12px 25px;
+    background: #dfe8ef;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+@media (max-width: 992px) {
+    .activities-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .activities-grid {
+        grid-template-columns: 1fr;
+    }
+}

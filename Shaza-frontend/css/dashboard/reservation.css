@@ -1,0 +1,442 @@
+:root {
+    --primary-blue: #4a69ff;
+    --bg-light: #f8f9fa;
+    --border-color: #e0e0e0;
+    --text-main: #333;
+    --text-muted: #777;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background-color: var(--bg-light);
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* Sidebar */
+
+:root {
+    --text-dark: #1a1a1a;
+    --active-blue: #3b59ff;
+    /* اللون الأزرق لـ Reservations */
+    --border-gray: #e0e0e0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+    width: 220px;
+    /* عرض السايد بار */
+    height: 60vh;
+    background-color: #F5F5F5;
+    border-right: 2px solid var(--border-gray);
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    position: fixed;
+}
+
+.sidebar-header {
+    height: 60px;
+    /* مسافة فارغة في الأعلى */
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    /* تجعل القائمة تأخذ المساحة المتاحة لتثبيت زر الخروج بالأسفل */
+}
+
+.nav-menu li {
+    margin-bottom: 5px;
+}
+
+.nav-menu li a {
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: 700;
+    /* خط سميك Bold كما في الصورة */
+    transition: 0.3s;
+}
+
+
+/* حالة العنصر المختار (Reservations) */
+
+.nav-menu li a.active {
+    color: var(--active-blue);
+}
+
+
+/* تأثير عند مرور الماوس */
+
+.nav-menu li a:hover {
+    background-color: #f9f9f9;
+}
+
+
+/* زر تسجيل الخروج في الأسفل */
+
+.sidebar-footer {
+    padding-bottom: 30px;
+}
+
+.sign-out {
+    display: block;
+    padding: 15px 25px;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* Main Content Area */
+
+.main-content {
+    margin-left: 250px;
+    flex-grow: 1;
+    padding: 20px 50px;
+}
+
+
+/* Content Typography */
+
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+
+/* Tabs */
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+    padding: 5px;
+    border-radius: 8px;
+    background: white;
+    width: fit-content;
+    margin: 0 auto 30px;
+}
+
+.tabs button {
+    padding: 8px 15px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    color: var(--text-muted);
+}
+
+.tabs button.active {
+    background: var(--primary-blue);
+    color: white;
+}
+
+
+/* Cards */
+
+.reservation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-body .info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.price {
+    color: var(--primary-blue);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+
+/* Status Badges */
+
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.confirmed {
+    background: #e6f4ea;
+    color: #1e7e34;
+}
+
+.pending {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.completed {
+    background: #e8eaf6;
+    color: #3f51b5;
+}
+
+
+/* Buttons */
+
+.card-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.btn-outline {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-danger {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: #E63F40;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+/* ألوان الحالات (Badges) */
+
+.completed {
+    background-color: #a5b4fc;
+    color: #312e81;
+}
+
+
+/* بنفسجي فاتح */
+
+.accepted {
+    background-color: #99f6e4;
+    color: #0d9488;
+}
+
+
+/* تركواز فاتح */
+
+.cancelled {
+    background-color: #fca5a5;
+    color: #b91c1c;
+}
+
+
+/* أحمر فاتح */
+
+
+/* تنسيق قسم التقييم (Rate) */
+
+.rate-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.stars-box {
+    border: 1px solid #ccc;
+    padding: 2px 8px;
+    border-radius: 5px;
+    color: #9ca3af;
+}
+
+
+/* أزرار جديدة */
+
+.btn-primary-red {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-outline-dark {
+    background-color: #f3f4f6;
+    border: 1px solid #374151;
+    color: #374151;
+    padding: 10px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+/* تعديل عرض الكروت لتكون متناسقة */
+
+.card {
+    max-width: 700px;
+    margin-bottom: 20px;
+}
+
+
+/* --- Media Queries for Responsiveness --- */
+
+
+/* للشاشات المتوسطة (Tablets - 1024px وأقل) */
+
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 220px;
+        /* تقليل المسافة الجانبية */
+        padding: 20px;
+    }
+    .search-container {
+        width: 250px;
+        /* تصغير شريط البحث */
+    }
+}
+
+
+/* للموبايل (Mobile - 768px وأقل) */
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+        /* ترتيب العناصر فوق بعضها */
+    }
+    /* إخفاء السايد بار التقليدي وتحويله لهيدر بسيط أو إخفاؤه */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 2px solid var(--border-gray);
+        padding-top: 10px;
+    }
+    .nav-menu {
+        display: flex;
+        overflow-x: auto;
+        /* السماح بالتمرير العرضي للروابط */
+        padding: 10px;
+    }
+    .nav-menu li a {
+        padding: 10px 15px;
+        font-size: 14px;
+        white-space: nowrap;
+        /* منع انكسار النص */
+    }
+    .sidebar-header,
+    .sidebar-footer {
+        display: none;
+        /* إخفاء المسافات وزر تسجيل الخروج لترك مساحة */
+    }
+    /* تعديل المحتوى الرئيسي */
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+    /* الهيدر العلوي */
+    .top-bar {
+        flex-direction: column;
+        /* البحث فوق البروفايل */
+        gap: 15px;
+        padding: 15px;
+    }
+    .search-container {
+        width: 100%;
+        /* البحث يأخذ العرض الكامل */
+    }
+    .user-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+    /* التابات (Tabs) */
+    .tabs {
+        width: 100%;
+        overflow-x: auto;
+        /* تمرير عرضي إذا كانت التابات كثيرة */
+        justify-content: flex-start;
+        padding: 10px;
+    }
+    /* الكروت */
+    .reservation-list {
+        width: 100%;
+    }
+    .card {
+        padding: 15px;
+    }
+    .card-header h3 {
+        font-size: 1.1rem;
+    }
+    .card-body .info-row {
+        flex-direction: column;
+        /* المعلومات تحت بعضها في الموبايل */
+        gap: 5px;
+    }
+    .card-footer {
+        flex-direction: column;
+        /* الأزرار تحت بعضها */
+    }
+    .btn-outline,
+    .btn-danger,
+    .btn-primary-red,
+    .btn-outline-dark {
+        width: 100%;
+        /* الأزرار تأخذ العرض الكامل */
+    }
+}
+
+
+/* للشاشات الصغيرة جداً (أقل من 480px) */
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    .user-details {
+        display: none;
+        /* إخفاء اسم المستخدم لترك مساحة للجرس والبروفايل */
+    }
+}

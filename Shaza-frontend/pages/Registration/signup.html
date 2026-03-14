@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/Registration/signup.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Sign Up</h1>
+
+      <div class="card">
+        <form>
+          <div class="row">
+            <input type="text" placeholder="National ID *" required />
+            <input type="text" placeholder="Full name *" required />
+          </div>
+
+          <div class="row">
+            <input type="email" placeholder="Email *" required />
+            <input type="tel" placeholder="Phone number *" required />
+          </div>
+
+          <div class="row">
+            <!-- <div class="pass-group"> -->
+            <input
+              type="password"
+              id="password"
+              placeholder="password *"
+              required
+            />
+            <!-- <span class="show" onclick="togglePass('password')">👁</span> -->
+            <!-- </div> -->
+
+            <!-- <div class="pass-group"> -->
+            <input
+              type="password"
+              id="confirmPass"
+              placeholder="Confirm password *"
+              required
+            />
+            <!-- <span class="show" onclick="togglePass('confirmPass')">👁</span> -->
+            <!-- </div> -->
+          </div>
+
+          <label class="terms">
+            <input type="checkbox" required />
+            I am agree to
+            <a href="/pages/terms&conditions.html">Terms & Conditions</a> and
+            <a href="/pages/privacy.html">Privacy Policy</a>
+          </label>
+
+          <button class="btn">sign Up</button>
+
+          <p class="login-link">
+            Already have an account?
+            <a href="/pages/Registration/login.html">[Sign in Here]</a>
+          </p>
+
+          <div class="divider">
+            <span>OR</span>
+          </div>
+
+          <button type="button" class="google-btn">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" />
+            sign in with Google
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="/js/signup.js"></script>
+  </body>
+</html>

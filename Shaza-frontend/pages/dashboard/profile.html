@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/dashboard/profile.css" />
+  </head>
+
+  <body>
+    <main class="main-content">
+      <div class="header">
+        <h1>User Profile</h1>
+      </div>
+
+      <div class="profile-grid">
+        <aside class="profile-sidebar">
+          <div class="profile-image-section">
+            <div class="image-wrapper">
+              <img
+                src="/assets/user-avatar.png"
+                alt="Profile Picture"
+                id="profile-img"
+              />
+              <label for="upload-img" class="upload-label">
+                <i class="fa-solid fa-camera"></i>
+              </label>
+              <input type="file" id="upload-img" hidden accept="image/*" />
+            </div>
+            <h2>Shaza Mazen</h2>
+            <p class="role">Premium Member</p>
+          </div>
+
+          <div class="quick-stats">
+            <div class="stat-item">
+              <span class="stat-label">Join Date</span>
+              <span class="stat-value">Jan 2024</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Status</span>
+              <span class="stat-value status-active">Active</span>
+            </div>
+          </div>
+        </aside>
+
+        <section class="profile-details-card">
+          <form id="profile-form">
+            <h3>Personal Information</h3>
+            <div class="form-grid">
+              <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" value="Shaza Mazen" required />
+              </div>
+              <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" value="shaza@example.com" required />
+              </div>
+              <div class="input-group">
+                <label>Phone Number</label>
+                <input type="tel" value="01012345678" required />
+              </div>
+              <div class="input-group">
+                <label>National ID</label>
+                <input type="text" value="29901010000000" readonly />
+                <small class="helper-text"
+                  >National ID cannot be changed.</small
+                >
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-save">Save Changes</button>
+              <button type="button" class="btn-cancel">Cancel</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+    <script src="/js/layout.js"></script>
+  </body>
+</html>

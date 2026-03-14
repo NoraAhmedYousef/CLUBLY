@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/Registration/login.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Login</h1>
+
+      <div class="card">
+        <form>
+          <div class="row">
+            <input
+              type="email"
+              placeholder="Email Address *"
+              required
+              style="width: 100%"
+            />
+          </div>
+
+          <div class="row">
+            <input
+              type="password"
+              id="password"
+              placeholder="Password *"
+              required
+              style="width: 100%"
+            />
+          </div>
+
+          <div
+            style="
+              margin-bottom: 20px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <label style="cursor: pointer">
+              <input type="checkbox" /> Remember me
+            </label>
+            <a
+              href="/pages/Registration/forget.html"
+              style="color: #0e1b50; text-decoration: none; font-size: 14px"
+              >Forgot Password?</a
+            >
+          </div>
+
+          <button class="btn">Login</button>
+
+          <p class="login-link">
+            Don't have an account?
+            <a href="/pages/Registration/signup.html">[Sign up Here]</a>
+          </p>
+
+          <div class="divider">
+            <span>OR</span>
+          </div>
+
+          <button type="button" class="google-btn">
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="Google"
+            />
+            Sign in with Google
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="/js/login.js"></script>
+  </body>
+</html>

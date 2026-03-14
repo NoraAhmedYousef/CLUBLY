@@ -1,0 +1,152 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* ليصبح الكارت في منتصف الشاشة تماماً */
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    /* جعل العرض أصغر من صفحة الـ Sign up */
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.row input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    /* الـ border الافتراضي اللي طلبتيه */
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.row input:focus {
+    border-color: #0e1b50;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.options a {
+    color: #0e1b50;
+    text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+    color: #0e1b50;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #fff;
+    padding: 35px;
+    border-radius: 12px;
+    border: 1px solid #ababab;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    box-sizing: border-box;
+    /* لضمان عدم خروج الإدخال عن الحواف */
+}
+
+.extra-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.forgot-pass {
+    color: #0e1b50;
+    text-decoration: none;
+}
+
+.btn {
+    width: 100%;
+    /* الزر يأخذ العرض بالكامل في الـ Login */
+    padding: 12px;
+    background: #0e1b50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #1a2a6e;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+}
+
+.divider span {
+    margin: 0 15px;
+    color: #777;
+    font-size: 12px;
+}
+
+.google-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.google-btn img {
+    width: 20px;
+}

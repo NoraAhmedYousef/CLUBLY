@@ -1,0 +1,206 @@
+/* التنسيق الأساسي للمحتوى */
+
+.main-content {
+    flex: 1;
+    background-color: #f0f2f5;
+    /* لون خلفية أهدى */
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    color: #1d3557;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+
+/* شبكة البروفايل الرئيسية */
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    /* عرض ثابت للجانب الأيسر */
+    gap: 30px;
+    max-width: 1200px;
+    align-items: start;
+}
+
+
+/* الكارت الأيسر */
+
+.profile-sidebar {
+    background: #fff;
+    padding: 40px 20px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.image-wrapper {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 15px;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #e9ecef;
+}
+
+.profile-sidebar h2 {
+    font-size: 1.4rem;
+    color: #1d3557;
+    margin: 10px 0 5px;
+}
+
+.role {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+
+/* الإحصائيات السريعة */
+
+.quick-stats {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.status-active {
+    color: #2a9d8f;
+}
+
+
+/* الجزء الأيمن - الفورم */
+
+.profile-details-card {
+    background: #fff;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.profile-details-card h3 {
+    margin-bottom: 25px;
+    color: #1d3557;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 10px;
+}
+
+.form-grid {
+    display: grid;
+    /* حل مشكلة التداخل: auto-fit يجعل العناصر تنزل لسطر جديد لو المساحة ضاقت */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.input-group input {
+    padding: 12px 15px;
+    border: 1.5px solid #dee2e6;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #457b9d;
+    box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+    outline: none;
+}
+
+.helper-text {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 4px;
+}
+
+
+/* الأزرار */
+
+.form-actions {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+}
+
+.btn-save,
+.btn-cancel {
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+}
+
+.btn-save {
+    background: #1d3557;
+    color: white;
+}
+
+.btn-save:hover {
+    background: #457b9d;
+    transform: translateY(-2px);
+}
+
+.btn-cancel {
+    background: #f8f9fa;
+    color: #6c757d;
+}
+
+.btn-cancel:hover {
+    background: #e9ecef;
+}
+
+
+/* Responsive */
+
+@media (max-width: 992px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+        /* تحت بعض في الشاشات الصغيرة */
+    }
+    .profile-sidebar {
+        max-width: 100%;
+    }
+}

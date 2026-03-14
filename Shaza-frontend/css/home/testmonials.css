@@ -1,0 +1,82 @@
+/* TESTIMONIAL SECTION */
+
+.testimonials-section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.test-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.test-title span {
+    color: #f44336;
+    /* نفس اللون الأحمر في الصورة */
+}
+
+.test-sub {
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 17px;
+}
+
+.test-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.test-card {
+    width: 330px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+    transition: 0.3s ease;
+}
+
+.test-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.test-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.test-name {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.test-role {
+    display: block;
+    margin-top: 4px;
+    color: #777;
+    font-size: 14px;
+}
+
+.stars {
+    margin: 12px 0;
+}
+
+.stars i {
+    color: #f4d03f;
+    margin: 0 1px;
+}
+
+.test-quote {
+    color: #444;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-top: 10px;
+    font-style: italic;
+}

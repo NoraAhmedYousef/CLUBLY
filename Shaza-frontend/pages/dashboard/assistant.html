@@ -1,0 +1,37 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- Sidebar Container -->
+    <div id="sidebar-container"></div>
+    <script>
+      // Load Sidebar Component
+      fetch("/components/sidebar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("sidebar-container").innerHTML = html;
+          highlightActiveLink();
+        });
+
+      function highlightActiveLink() {
+        const links = document.querySelectorAll(".side-link");
+        const page = "reservations";
+        links.forEach((l) => {
+          if (l.dataset.page === page) l.classList.add("active");
+        });
+      }
+
+      // Load Search Component
+      fetch("/components/search.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("search-container").innerHTML = html;
+          initSearch();
+        });
+    </script>
+  </body>
+</html>

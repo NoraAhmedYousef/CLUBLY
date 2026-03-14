@@ -1,0 +1,215 @@
+.main-content {
+    margin-left: 220px;
+    /* مطابق لعرض السايدبار في الكود اللي بعتيه */
+    flex-grow: 1;
+    padding: 20px 50px;
+    background-color: var(--bg-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* إضافة مهمة للهيدر عشان يظبط مكانه */
+
+#header-placeholder {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+/* notification.css */
+
+.notifications-container {
+    max-width: 800px;
+    margin: 0 auto;
+    /* padding: 40px 20px; */
+    /* الـ 40px اللي فوق دي بتمنع التداخل */
+    width: 100%;
+    /* flex-grow: 1; */
+}
+
+.page-main-title {
+    text-align: center;
+    font-size: 2rem;
+    /* مطابق لـ h1 في الحجوزات */
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+
+/* الفلاتر */
+
+.notif-filters {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: fit-content;
+    margin: 0 auto 30px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.filter-btn {
+    padding: 10px 25px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: #666;
+}
+
+.filter-btn.active {
+    color: var(--active-blue);
+    border-bottom: 2px solid var(--active-blue);
+}
+
+
+/* الكروت */
+
+.notif-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.notif-card.highlight {
+    background-color: #E3F2FD;
+    /* خلفية زرقاء فاتحة جداً */
+}
+
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.notif-title {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.notif-title .thin {
+    font-weight: 400;
+}
+
+.notif-actions i {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #999;
+}
+
+.starred {
+    color: #FFD700 !important;
+}
+
+.notif-text {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.notif-time {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+}
+
+
+/* الأزرار داخل التنبيه */
+
+.btn-notif-action {
+    padding: 6px 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.btn-see-more {
+    display: block;
+    margin: 30px auto;
+    background: #002D44;
+    /* لون كحلي غامق */
+    color: white;
+    padding: 12px 30px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* --- القواعد الأساسية للموبايل --- */
+
+@media (max-width: 768px) {
+    /* 1. تحويل الحاوية لتكون عمودية */
+    .dashboard-container {
+        flex-direction: column;
+    }
+    /* 2. إلغاء الهامش الجانبي للمحتوى الرئيسي */
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+    /* 3. جعل الفلاتر مرنة وقابلة للتمرير */
+    .notif-filters {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .filter-btn {
+        padding: 10px 15px;
+        flex: 1;
+        font-size: 14px;
+    }
+    /* 4. تعديل شكل كروت التنبيهات */
+    .notif-card {
+        padding: 15px;
+    }
+    .notif-title {
+        font-size: 14px;
+    }
+    .notif-text {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    /* 5. جعل الأزرار تأخذ العرض الكامل */
+    .btn-notif-action,
+    .btn-see-more {
+        width: 100%;
+        text-align: center;
+    }
+    /* 6. تعديل السايدبار في الموبايل */
+    /* إذا كنتِ تريدين إخفاءه أو تحويله لقائمة علوية */
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+}
+
+
+/* للشاشات الصغيرة جداً (أقل من 480px) */
+
+@media (max-width: 480px) {
+    .page-main-title {
+        font-size: 20px;
+    }
+    .notif-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

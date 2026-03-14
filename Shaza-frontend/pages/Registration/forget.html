@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="/css/Registration/forget.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Reset Password</h1>
+
+      <div class="card">
+        <p class="instruction">
+          Enter your email address and we'll send you a link to reset your
+          password.
+        </p>
+
+        <form id="forgotForm">
+          <div class="row">
+            <input
+              type="email"
+              id="resetEmail"
+              placeholder="Email Address *"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn">Send Reset Link</button>
+
+          <p class="login-link">
+            Back to
+            <a href="/pages/Registration/login.html">Login</a>
+          </p>
+        </form>
+      </div>
+    </div>
+    <script src="/js/forget.js"></script>
+  </body>
+</html>

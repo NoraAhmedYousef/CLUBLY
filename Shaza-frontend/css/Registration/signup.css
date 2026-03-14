@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.card {
+    width: 65%;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.row input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+.pass-group {
+    position: relative;
+    width: 100%;
+}
+
+.pass-group input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.pass-group .show {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    transform: translateY(-50%);
+}
+
+.terms {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.btn {
+    width: 180px;
+    display: block;
+    margin: auto;
+    padding: 12px;
+    background: #0e1b50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.login-link {
+    /* text-align: center; */
+    margin-top: 20px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+}
+
+.divider span {
+    margin: 0 15px;
+    color: #555;
+}
+
+.google-btn {
+    width: 240px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.google-btn img {
+    width: 22px;
+}

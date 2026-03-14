@@ -1,0 +1,88 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.back-link {
+    display: inline-block;
+    color: #0e1b50;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.policy-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+    color: #0e1b50;
+    font-size: 32px;
+    margin-top: 0;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.last-updated {
+    font-style: italic;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+section {
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: #0e1b50;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 0;
+    color: #555;
+}
+
+.footer-note {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer-note strong {
+    color: #0e1b50;
+}
+
+
+/* للموبايل */
+
+@media (max-width: 600px) {
+    .policy-card {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+}
