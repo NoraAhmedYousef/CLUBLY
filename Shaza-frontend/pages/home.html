@@ -1,0 +1,518 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clubly</title>
+
+    <link rel="stylesheet" href="/css/home/hero.css" />
+    <link rel="stylesheet" href="/css/home/features.css" />
+    <link rel="stylesheet" href="/css/home/activities.css" />
+    <link rel="stylesheet" href="/css/home/plans.css" />
+    <link rel="stylesheet" href="/css/home/testmonials.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-HHsOC+hNnFQgcMqnlonhL1mA6C17LZ0OLV5t1/H1VfoeyI6HqmJ9GdzbsQStk8HR+kjsr6esiWagHHXG6W1Fdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+
+  <body>
+    <!-- NavBar -->
+    <div id="navbar"></div>
+    <script>
+      fetch("../components/navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar").innerHTML = data;
+
+          // INIT: bind button to toggle right after insertion
+          const container = document.getElementById("navbar");
+          const btn = container.querySelector(".menu-toggle");
+          const links = container.querySelector(".navbar-links");
+
+          if (btn && links) {
+            btn.addEventListener("click", () => {
+              links.classList.toggle("open");
+            });
+          } else {
+            console.warn("Navbar elements not found:", {
+              btn,
+              links,
+            });
+          }
+        })
+        .catch((err) => console.error("Failed to load navbar:", err));
+    </script>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>
+          Your Family’s <span class="highlight">Fitness Journey</span><br />
+          Starts Here
+        </h1>
+        <p>
+          Modern sports club management with AI-powered recommendations,
+          family-friendly facilities, and comprehensive child safety features.
+        </p>
+        <div class="buttons">
+          <a href="#" class="btn">Start Your Journey</a>
+          <a href="#" class="btn btn-outline">Watch Demo</a>
+        </div>
+
+        <div class="hero-stats">
+          <div>
+            <h3>
+              <img
+                src="/assets/images/icons/Members.png"
+                class="icon"
+                alt="Members"
+              />
+              5k+
+            </h3>
+            <p>Activity Members</p>
+          </div>
+          <div>
+            <h3>
+              <img
+                src="/assets/images/icons/activities.png"
+                class="icon"
+                alt="Activities"
+              />
+              50+
+            </h3>
+            <p>Activities</p>
+          </div>
+          <div>
+            <h3>
+              <img
+                src="/assets/images/icons/shield.png"
+                class="icon"
+                alt="Child Safety"
+              />
+              100%
+            </h3>
+            <p>Child Safety</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img
+          src="/assets/images/Gemini_Generated_Image_na5zruna5zruna5z.png"
+          alt="Family Fitness"
+        />
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+      <div class="features-frame">
+        <h2 class="features-title">
+          Powerful Features for <span class="highlight">Modern Fitness</span>
+        </h2>
+        <p class="subtext">
+          Everything you need to manage memberships, book activities, and keep
+          your family active and safe.
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <img
+              src="/assets/images/icons/booking.png"
+              alt="Calendar Icon"
+              class="icon"
+            />
+            <h3>Smart Booking System</h3>
+            <p>
+              AI-powered activity recommendation with real-time availability and
+              interactive calendar view.
+            </p>
+          </div>
+
+          <div class="feature-card1">
+            <img
+              src="/assets/images/icons/Members.png"
+              alt="Members Icon"
+              class="icon"
+            />
+            <h3>Family Management</h3>
+            <p>
+              Link children to parent accounts with comprehensive monitoring and
+              booking capabilities.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <img
+              src="/assets/images/icons/shield.png"
+              alt="Shield Icon"
+              class="icon"
+            />
+            <h3>Child Safety Features</h3>
+            <p>
+              NFC check-in/out system with instant parent notifications and full
+              attendance tracking.
+            </p>
+          </div>
+
+          <div class="feature-card1">
+            <img
+              src="/assets/images/icons/bell.png"
+              alt="Bell Icon"
+              class="icon"
+            />
+            <h3>Smart Notifications</h3>
+            <p>
+              Automated reminders, booking confirmations, and real-time updates
+              for all activities.
+            </p>
+          </div>
+
+          <div class="feature-card1">
+            <img
+              src="/assets/images/icons/payment.png"
+              alt="Payment Icon"
+              class="icon"
+            />
+            <h3>Seamless Payments</h3>
+            <p>
+              Secure online payments with invoice tracking and automated
+              membership renewals.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <img
+              src="/assets/images/icons/search.png"
+              alt="Search Icon"
+              class="icon"
+            />
+            <h3>Advanced Search</h3>
+            <p>
+              Filter activities by date, category, trainer, availability, and
+              member ratings.
+            </p>
+          </div>
+
+          <div class="feature-card1">
+            <img
+              src="/assets/images/icons/chatbot.png"
+              alt="Chatbot Icon"
+              class="icon"
+            />
+            <h3>AI Assistant</h3>
+            <p>
+              Intelligent chatbot for instant support and personalized activity
+              recommendations.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <img
+              src="/assets/images/icons/analysis.png"
+              alt="Analytics Icon"
+              class="icon"
+            />
+            <h3>Analytics Dashboard</h3>
+            <p>
+              Comprehensive insights with churn prediction and performance
+              analytics for admins.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--------------------------------------------------- ACTIVITIES ---------------------------------->
+    <section class="activities">
+      <h2 class="act-title">
+        Activites For <span class="highlight">Every Age</span>
+      </h2>
+      <p class="act-subtext">
+        from toddler programs to adult fitness, we offer diverse activities
+        tailored to different age groups and interests
+      </p>
+
+      <div class="activities-grid">
+        <!-- CARD 1 -->
+        <div class="act-card">
+          <div class="act-img">
+            <img src="/assets/images/swim.avif" alt="" />
+            <span class="badge category">water sport</span>
+            <span class="badge rating"><i class="fa fa-star"></i> 4.9</span>
+          </div>
+
+          <div class="act-content">
+            <h3>youth swimming</h3>
+            <p>
+              Professional swimming lessons with certified instructors in our
+              heated pools
+            </p>
+
+            <div class="act-info">
+              <span><i class="fa-solid fa-clock"></i> 45 min</span>
+              <span><i class="fa-solid fa-users"></i> 12 kids</span>
+            </div>
+
+            <span class="age">Age Range: 6–60 years</span>
+
+            <button class="btn-book">Book Now</button>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="act-card">
+          <div class="act-img">
+            <img src="/assets/images/yoga.jpg" alt="" />
+            <span class="badge category">Wellness</span>
+            <span class="badge rating"><i class="fa fa-star"></i> 4.8</span>
+          </div>
+
+          <div class="act-content">
+            <h3>Family Yoga</h3>
+            <p>Relaxing yoga sessions designed for families to practice</p>
+
+            <div class="act-info">
+              <span><i class="fa fa-clock"></i> 60 min</span>
+              <span><i class="fa fa-users"></i> 8 families</span>
+            </div>
+
+            <span class="age">Age Range: All ages</span>
+
+            <button class="btn-book">Book Now</button>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="act-card">
+          <div class="act-img">
+            <img src="/assets/images/karate.avif" alt="" />
+            <span class="badge category">Combat Sports</span>
+            <span class="badge rating"><i class="fa fa-star"></i> 4.9</span>
+          </div>
+
+          <div class="act-content">
+            <h3>Kids Martial Arts</h3>
+            <p>
+              Build confidence and discipline through traditional martial arts
+              training
+            </p>
+
+            <div class="act-info">
+              <span><i class="fa fa-clock"></i> 50 min</span>
+              <span><i class="fa fa-users"></i> 15 kids</span>
+            </div>
+
+            <span class="age">Age Range: 5–14 years</span>
+
+            <button class="btn-book">Book Now</button>
+          </div>
+        </div>
+
+        <!-- CARD 4  -->
+        <div class="act-card">
+          <div class="act-img">
+            <img src="/assets/images/gym.jpg" alt="" />
+            <span class="badge category">Combat Sports</span>
+            <span class="badge rating"><i class="fa fa-star"></i> 4.9</span>
+          </div>
+
+          <div class="act-content">
+            <h3>Gym</h3>
+            <p>
+              High-intensity workouts with professional trainers and modern
+              equipment
+            </p>
+
+            <div class="act-info">
+              <span><i class="fa fa-clock"></i> 50 min</span>
+              <span><i class="fa fa-users"></i> 15 kids</span>
+            </div>
+
+            <span class="age">Age Range: 5–14 years</span>
+
+            <button class="btn-book">Book Now</button>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="act-card">
+          <div class="act-img">
+            <img src="/assets/images/basket.jpg" alt="" />
+            <span class="badge category">Wellness</span>
+            <span class="badge rating"><i class="fa fa-star"></i> 4.8</span>
+          </div>
+
+          <div class="act-content">
+            <h3>Basketball Training</h3>
+            <p>
+              Develop basketball skills with former professional players as
+              coaches
+            </p>
+
+            <div class="act-info">
+              <span><i class="fa fa-clock"></i> 60 min</span>
+              <span><i class="fa fa-users"></i> 8 families</span>
+            </div>
+
+            <span class="age">Age Range: All ages</span>
+
+            <button class="btn-book">Book Now</button>
+          </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="act-card">
+          <div class="act-img">
+            <img src="/assets/images/dancing.jpeg" alt="" />
+            <span class="badge category">Wellness</span>
+            <span class="badge rating"><i class="fa fa-star"></i> 4.8</span>
+          </div>
+
+          <div class="act-content">
+            <h3>Dance Classes</h3>
+            <p>
+              Creative expression through various dance styles for all skill
+              levels
+            </p>
+
+            <div class="act-info">
+              <span><i class="fa fa-clock"></i> 60 min</span>
+              <span><i class="fa fa-users"></i> 8 families</span>
+            </div>
+
+            <span class="age">Age Range: All ages</span>
+
+            <button class="btn-book">Book Now</button>
+          </div>
+        </div>
+      </div>
+      <button class="view-all">View All Activities</button>
+    </section>
+
+    <!------------------------ PLANS ------------------------------------------->
+    <section class="plans-section">
+      <h3 class="plans-title">
+        Choose your <span class="highlight">perfect plan</span>
+      </h3>
+      <p class="plans-subtext">
+        Flexible membership options designed for individuals and families
+      </p>
+
+      <div class="plans-container">
+        <div class="plan-card">
+          <h4>Individual</h4>
+          <p class="plan-desc">
+            Perfect for individuals starting their fitness journey
+          </p>
+          <h2 class="price">$49/mo</h2>
+
+          <ul class="plan-list">
+            <li><i class="fa-solid fa-check"></i> Access to all facilities</li>
+            <li>
+              <i class="fa-solid fa-check"></i> 1 Free personal training session
+            </li>
+            <li><i class="fa-solid fa-check"></i> Booking support system</li>
+          </ul>
+
+          <button class="plan-btn">Get Started</button>
+        </div>
+
+        <div class="plan-card">
+          <h4>Family</h4>
+          <p class="plan-desc">Ideal for families with children</p>
+          <h2 class="price">$129/mo</h2>
+
+          <ul class="plan-list">
+            <li><i class="fa-solid fa-check"></i> All facility access</li>
+            <li><i class="fa-solid fa-check"></i> Family programs</li>
+            <li><i class="fa-solid fa-check"></i> Priority booking</li>
+          </ul>
+
+          <button class="plan-btn">Get Started</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- testimonials -->
+
+    <section class="testimonials-section">
+      <h2 class="test-title">What Our Members <span>Say</span></h2>
+      <p class="test-sub">
+        Join thousands of satisfied families who have transformed their fitness
+        journey with us
+      </p>
+
+      <div class="test-container">
+        <!-- CARD 1 -->
+        <div class="test-card">
+          <img src="/assets/images/u2.jfif" class="test-img" alt="" />
+          <h3 class="test-name">salma mohamed</h3>
+          <span class="test-role">parent of 2</span>
+
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i
+            ><i class="fa fa-star"></i><i class="fa fa-star"></i
+            ><i class="fa fa-star"></i>
+          </div>
+
+          <p class="test-quote">
+            “The child safety features give me complete peace of mind. The app
+            is incredibly user-friendly!”
+          </p>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="test-card">
+          <img src="/assets/images/u1.jfif" class="test-img" alt="" />
+          <h3 class="test-name">Michael Chen</h3>
+          <span class="test-role">Adult Member</span>
+
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i
+            ><i class="fa fa-star"></i><i class="fa fa-star"></i
+            ><i class="fa fa-star"></i>
+          </div>
+
+          <p class="test-quote">
+            “The AI recommendations helped me discover activities I never knew
+            I'd love. Best investment I’ve made!”
+          </p>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="test-card">
+          <img src="/assets/images/u3.jfif" class="test-img" alt="" />
+          <h3 class="test-name">Emma Rodriguez</h3>
+          <span class="test-role">Family Plan User</span>
+
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i
+            ><i class="fa fa-star"></i><i class="fa fa-star"></i
+            ><i class="fa fa-star"></i>
+          </div>
+
+          <p class="test-quote">
+            “Managing our family’s activities has never been easier. Highly
+            recommended!”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+      fetch("/components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>

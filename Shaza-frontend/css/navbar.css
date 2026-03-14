@@ -1,0 +1,30 @@
+/* navbar */
+
+.navbar {
+    background-color: rgb(2, 30, 80);
+}
+
+.logo {
+    width: 35px;
+    /* حجم العرض */
+    height: 35px;
+    /* حجم الارتفاع */
+    object-fit: contain;
+    /* يحافظ على شكل الصورة */
+}
+
+.custom-btn {
+    background: linear-gradient(90deg, #022e7b, #ff0000);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.custom-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    color: #fff;
+}

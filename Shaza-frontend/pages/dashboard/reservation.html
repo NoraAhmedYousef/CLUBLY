@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Reservations Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard/reservation.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+    <link rel="stylesheet" href="/css/dashboard/header.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="dashboard-container">
+      <div id="sidebar-placeholder"></div>
+
+      <main class="main-content">
+        <div id="header-placeholder"></div>
+        <section class="reservations-section">
+          <h1>My Reservations</h1>
+          <p class="subtitle">Manage and track all your booking in one place</p>
+
+          <div class="tabs">
+            <button class="active">All</button>
+            <button>Pending</button>
+            <button>Accepted</button>
+            <button>Confirmed</button>
+            <button>Completed</button>
+            <button>Cancelled</button>
+          </div>
+
+          <div class="reservation-list">
+            <div class="card">
+              <div class="card-header">
+                <h3>Yoga Class</h3>
+                <span class="status confirmed"
+                  ><i class="fa-check-circle fa-regular"></i> Confirmed</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span
+                    ><i class="fa-regular fa-calendar"></i> 1/15/2025 -
+                    2/15/2025</span
+                  >
+                  <span><i class="fa-regular fa-clock"></i> 10 PM (60min)</span>
+                </div>
+                <div class="info-row">
+                  <span><i class="fa-solid fa-users"></i> 2 participants</span>
+                  <span class="price">500 pound</span>
+                </div>
+                <p class="duration"><strong>Duration:</strong> One Month</p>
+              </div>
+              <div class="card-footer">
+                <button class="btn-outline">Add To Calendar</button>
+                <button class="btn-outline">View Details</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>Football court</h3>
+                <span class="status pending"
+                  ><i class="fa-solid fa-circle-exclamation"></i> Pending</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span><i class="fa-regular fa-calendar"></i> 1/14/2025</span>
+                  <span><i class="fa-regular fa-clock"></i> 11 PM</span>
+                </div>
+                <p><i class="fa-solid fa-users"></i> 11 participants</p>
+                <p><strong>Duration:</strong> 120min</p>
+              </div>
+              <div class="card-footer">
+                <button class="btn-danger">Cancel</button>
+                <button class="btn-outline">View Details</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>Resturant</h3>
+                <span class="status completed"
+                  ><i class="fa-solid fa-check"></i> Completed</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span><i class="fa-regular fa-calendar"></i> 1/18/2025</span>
+                  <span><i class="fa-regular fa-clock"></i> 8 Pm</span>
+                </div>
+                <p><i class="fa-solid fa-users"></i> 6 participants</p>
+                <div class="rate-section">
+                  <span>Rate</span>
+                  <div class="stars-box">
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-primary-red">Book Again</button>
+                <button class="btn-outline">View Details</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>Resturant</h3>
+                <span class="status accepted"
+                  ><i class="fa-solid fa-check"></i> Accepted</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span><i class="fa-regular fa-calendar"></i> 1/18/2025</span>
+                  <span><i class="fa-regular fa-clock"></i> 8 Pm</span>
+                </div>
+                <p><i class="fa-solid fa-users"></i> 6 participants</p>
+                <div class="rate-section">
+                  <span>Rate</span>
+                  <div class="stars-box">
+                    <i class="fa-regular fa-star"></i
+                    ><i class="fa-regular fa-star"></i
+                    ><i class="fa-regular fa-star"></i
+                    ><i class="fa-regular fa-star"></i
+                    ><i class="fa-regular fa-star"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button class="btn-outline-dark">Book Now</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>Resturant</h3>
+                <span class="status cancelled"
+                  ><i class="fa-solid fa-xmark"></i> Cancelled</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span><i class="fa-regular fa-calendar"></i> 1/18/2025</span>
+                  <span><i class="fa-regular fa-clock"></i> 8 Pm</span>
+                </div>
+                <p><i class="fa-solid fa-users"></i> 6 participants</p>
+              </div>
+              <div class="card-footer">
+                <button class="btn-outline-dark">Rebook</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="/js/search.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/layout.js"></script>
+  </body>
+</html>

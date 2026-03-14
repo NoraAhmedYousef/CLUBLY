@@ -1,0 +1,103 @@
+/* الإعدادات العامة المتناسقة مع مشروعك */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* لجعل الكارت في منتصف الشاشة */
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    /* مقاس أصغر وأنسب لصفحة الباسورد */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #0e1b50;
+    margin-bottom: 15px;
+}
+
+.card {
+    width: 90%;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+/* تنسيق الصفوف والحقول */
+
+.row {
+    display: flex;
+    flex-direction: column;
+    /* ترتيب رأسي */
+    margin-bottom: 20px;
+}
+
+.row input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    box-sizing: border-box;
+    /* لضمان عدم خروج الإدخال عن الحدود */
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.row input:focus {
+    border-color: #0e1b50;
+}
+
+
+/* تنسيق مؤشر قوة كلمة المرور */
+
+#pass-strength {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 5px;
+    min-height: 15px;
+    /* يمنع اهتزاز التصميم عند ظهور النص */
+}
+
+
+/* تنسيق الزر - نفس ستايل الـ Sign Up */
+
+.btn {
+    width: 100%;
+    /* الزر بعرض الكارت */
+    padding: 13px;
+    background: #0e1b50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: #1a2a6e;
+}
+
+
+/* استجابة الشاشات الصغيرة */
+
+@media (max-width: 480px) {
+    .card {
+        padding: 25px;
+    }
+}

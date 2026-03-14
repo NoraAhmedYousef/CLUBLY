@@ -1,0 +1,96 @@
+:root {
+    --bg-gray: #F5F5F5;
+    /* اللون الرمادي الفاتح للخلفية */
+    --active-blue: #3b59ff;
+    /* أزرق Reservations */
+    --text-black: #000000;
+    /* اللون الأسود الصريح للخط */
+    --border-gray: #E0E0E0;
+    /* الخط الفاصل الجانبي */
+}
+
+.sidebar {
+    width: 240px;
+    /* عرض السايد بار كما في الصورة */
+    height: 100vh;
+    /* بطول الشاشة */
+    background-color: var(--bg-gray);
+    border-right: 2px solid var(--border-gray);
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    /* مسافة من الأعلى */
+    position: fixed;
+    left: 0;
+    top: 0;
+    font-family: sans-serif;
+    /* الخط نظيف وبسيط */
+}
+
+
+/* تنسيق الروابط العامة */
+
+.side-link {
+    display: block;
+    padding: 18px 35px;
+    /* مسافات داخلية عريضة كما في الصورة */
+    text-decoration: none;
+    color: var(--text-black);
+    font-size: 19px;
+    /* حجم خط واضح */
+    font-weight: 700;
+    /* خط سميك جداً Bold */
+    transition: 0.2s ease-in-out;
+}
+
+
+/* الرابط المختار (Reservations) */
+
+.side-link.active {
+    color: var(--active-blue) !important;
+}
+
+
+/* تأثير عند الوقوف بالماوس */
+
+.side-link:hover {
+    color: var(--active-blue);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+
+/* زر تسجيل الخروج في الأسفل */
+
+.sign-out {
+    margin-top: 20px;
+    /* مسافة بسيطة بعد Profile */
+    /* إذا أردتِ دفعه لآخر الصفحة تماماً استخدمي: margin-top: auto; padding-bottom: 40px; */
+}
+
+
+/* تنسيق السايدبار في الموبايل */
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        /* يأخذ عرض الشاشة بالكامل */
+        height: auto;
+        /* الطول حسب المحتوى */
+        position: relative;
+        /* ليس ثابتاً لكي لا يغطي المحتوى */
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+    /* جعل الروابط تظهر بجانب بعضها مع إمكانية التمرير */
+    .nav-menu {
+        display: flex;
+        overflow-x: auto;
+        padding: 5px;
+    }
+    .nav-menu li a {
+        padding: 10px 15px;
+        font-size: 14px;
+        white-space: nowrap;
+        /* يمنع نزول النص لسطر جديد */
+    }
+}

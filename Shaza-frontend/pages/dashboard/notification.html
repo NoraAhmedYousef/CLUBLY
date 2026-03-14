@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/dashboard/header.css" />
+    <link rel="stylesheet" href="/css/dashboard/notification.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="dashboard-container">
+      <div id="sidebar-placeholder"></div>
+
+      <main class="main-content">
+        <div id="header-placeholder"></div>
+
+        <div id="notification-content"></div>
+
+        <section class="notifications-container">
+          <h2 class="page-main-title">Notifications</h2>
+
+          <div class="notif-filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Unread</button>
+            <button class="filter-btn">Starred</button>
+          </div>
+
+          <div class="notif-list" highlight unread>
+            <div class="notif-card highlight">
+              <div class="notif-header">
+                <span class="notif-title">Booking Confirmed!</span>
+                <div class="notif-actions">
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </div>
+              <p class="notif-text">
+                Your Yoga Class on Friday, Oct 27 at 6 PM is confirmed.
+              </p>
+              <span class="notif-time">2 hours ago</span>
+            </div>
+
+            <div class="notif-card" is-starred>
+              <div class="notif-header">
+                <span class="notif-title">New Offer for You! Get 20% off</span>
+                <div class="notif-actions">
+                  <i class="fa-solid fa-star starred"></i>
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </div>
+              <p class="notif-text">
+                on all Swim all Swimming courses this month.
+              </p>
+              <button class="btn-notif-action">Book Now</button>
+              <span class="notif-time">1 day ago</span>
+            </div>
+
+            <div class="notif-card">
+              <div class="notif-header">
+                <span class="notif-title"
+                  >Reminder :
+                  <span class="thin"
+                    >Football match tomorrow at 8 PM. Don't!</span
+                  ></span
+                >
+                <div class="notif-actions">
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </div>
+              <span class="notif-time">3 days ago</span>
+            </div>
+          </div>
+
+          <div class="footer-action">
+            <button class="btn-see-more">See previous notifications</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/js/search.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/layout.js"></script>
+  </body>
+</html>

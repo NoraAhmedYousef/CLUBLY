@@ -1,0 +1,23 @@
+.search-input {
+    width: 180px;
+    /* عرض أصغر */
+    height: 32px;
+    /* ارتفاع أصغر */
+    padding: 5px 10px;
+    /* مسافات داخلية بسيطة */
+    font-size: 14px;
+    /* حجم الخط */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .search-input {
+        width: 140px;
+        height: 30px;
+        font-size: 13px;
+    }
+}

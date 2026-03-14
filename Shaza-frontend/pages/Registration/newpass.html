@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Password</title>
+    <link rel="stylesheet" href="/css/Registration/newpass.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>New Password</h1>
+
+      <div class="card">
+        <p>Please enter a strong password to secure your account.</p>
+
+        <form id="newPassForm">
+          <div class="row">
+            <input
+              type="password"
+              id="password"
+              placeholder="New Password *"
+              required
+            />
+
+            <div id="pass-strength"></div>
+          </div>
+
+          <div class="row">
+            <input
+              type="password"
+              id="confirmPass"
+              placeholder="Confirm New Password *"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn">Update Password</button>
+        </form>
+      </div>
+    </div>
+    <script src="/js/newpass.js"></script>
+  </body>
+</html>

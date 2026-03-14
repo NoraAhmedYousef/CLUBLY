@@ -1,0 +1,74 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/dashboard/membership.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="sidebar-placeholder"></div>
+      <main class="main-content">
+        <div id="header-placeholder"></div>
+        <div class="header">
+          <h1>Membership Details</h1>
+        </div>
+
+        <section class="membership-card">
+          <div class="card-header">
+            <div>
+              <h2>Main Member: <span>Shaza Mazen</span></h2>
+              <p>Member ID: <strong>#C1023</strong></p>
+            </div>
+            <div class="membership-status active">Active</div>
+          </div>
+
+          <div class="card-body">
+            <div class="info">
+              <p>
+                <i class="fa-solid fa-calendar-days"></i>
+                <strong>Join Date:</strong> 10 Jan 2024
+              </p>
+              <p>
+                <i class="fa-solid fa-rotate"></i>
+                <strong>Renewal Date:</strong> 10 Jan 2025
+              </p>
+              <p>
+                <i class="fa-solid fa-money-bill"></i>
+                <strong>Membership Fee:</strong> 1200 EGP / year
+              </p>
+            </div>
+
+            <div class="sub-members">
+              <h3>Sub Members</h3>
+              <ul>
+                <li><i class="fa-solid fa-user"></i> Sara Mazen</li>
+                <li><i class="fa-solid fa-user"></i> Omar Mazen</li>
+                <li><i class="fa-solid fa-user"></i> Youssef Mazen</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button class="btn-primary">
+              <i class="fa-solid fa-rotate"></i> Renew
+            </button>
+            <button class="btn-success">
+              <i class="fa-solid fa-credit-card"></i> Pay
+            </button>
+            <button class="btn-outline">
+              <i class="fa-solid fa-user-plus"></i> Add Member
+            </button>
+            <button class="btn-danger">
+              <i class="fa-solid fa-ban"></i> Cancel
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="/js/layout.js"></script>
+    <script src="/js/sidebar.js"></script>
+  </body>
+</html>

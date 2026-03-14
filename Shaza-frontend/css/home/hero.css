@@ -1,0 +1,136 @@
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 2rem;
+    /* background: linear-gradient(to right, #002f4a, #005f7a); */
+    color: rgb(0, 0, 0);
+    min-height: 80vh;
+    gap: 2rem;
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-text h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+}
+
+.hero-text .highlight {
+    color: #E92B16;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #808080;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    background: rgb(29, 56, 94);
+    color: rgb(255, 255, 255);
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn-outline {
+    background: #B1C3CE;
+    border: 2px solid rgb(69, 71, 134);
+    color: rgb(29, 56, 94);
+}
+
+.hero-stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.hero-stats div h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.hero-stats div p {
+    font-size: 0.9rem;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 20px;
+    height: auto;
+}
+
+
+/* أيقونات الـ hero stats */
+
+.hero-stats .icon {
+    width: 30px;
+    /* عرض الأيقونة */
+    height: 30px;
+    /* ارتفاع الأيقونة */
+}
+
+
+/* لو عايزة تكبري شوي على الديسكتوب */
+
+@media (min-width: 901px) {
+    .hero-stats .icon {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+/* تصغير الأيقونات على الموبايل */
+
+@media (max-width: 900px) {
+    .hero-stats .icon {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+    .hero-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .hero-image img {
+        max-width: 90%;
+        margin-bottom: 2rem;
+    }
+    .buttons {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+}
