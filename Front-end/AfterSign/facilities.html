@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/facility.css">
 <link rel="stylesheet" href="css/trainer.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
+
 <style>
 :root{--clubly-dark:#0d1b2a;--clubly-accent:#e85d2f;--clubly-teal:#2ec4b6;--clubly-gold:#d4a843;--header-h:64px;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--muted:#64748b;--border:#e2e8f0;}
 [data-theme="dark"]{--bg:#0a1628;--card-bg:#0f1f35;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;}
@@ -92,7 +94,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
   </nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
-    <a href="plans.html" class="btn-join">Join Now <i class="bi bi-arrow-right ms-1"></i></a>
+<button class="btn-join" onclick="handleSignOut()"><i class="bi bi-box-arrow-right me-1"></i>Sign Out</button>
   </div>
 </header>
 
@@ -354,7 +356,11 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <script src="js/facility.js"></script>
 <script>
 
-
+  const userRole = localStorage.getItem('role');
+if (userRole === 'admin') {
+  document.querySelector('.header-nav a[href="index.html"]').insertAdjacentHTML('beforebegin',
+    '<a href="../BeforeSign/Admin.html" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>');
+}
 let dark=false;
 document.getElementById('themeBtn').addEventListener('click',()=>{dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('themeBtn').innerHTML=dark?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';});
 window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
@@ -555,7 +561,26 @@ async function authHandleSignup(){
   }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
   finally{btn.disabled=false;btn.textContent='Create Account';}
 }
-
+function handleSignOut() {
+  Swal.fire({
+    title: 'Sign Out?',
+    text: 'Are you sure you want to sign out of Clubly?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#e85d2f',
+    cancelButtonColor: '#6c757d',
+    confirmButtonText: '<i class="bi bi-box-arrow-right me-1"></i>Yes, Sign Out',
+    cancelButtonText: 'Cancel'
+  }).then(result => {
+    if (result.isConfirmed) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('fullName');
+      localStorage.removeItem('userId');
+      window.location.href = '../BeforeSign/index.html';
+    }
+  });
+}
 </script>
 </body>
 </html>

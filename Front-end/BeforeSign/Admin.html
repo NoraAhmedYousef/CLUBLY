@@ -628,9 +628,17 @@ body {
     <span class="logo-text">Cl<span>u</span>bly</span>
   </a>
 
-  <nav class="header-nav">
-  
-  </nav>
+ <nav class="header-nav">
+  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+  <a href="../AfterSign/index.html">Home</a>
+  <a href="../AfterSign/activities.html">Activities</a>
+  <a href="../AfterSign/facilities.html">Facilities</a>
+  <a href="../AfterSign/trainers.html">Trainers</a>
+  <a href="../AfterSign/plans.html">Membership Plans</a>
+  <a href="../AfterSign/about.html">About Us</a>
+  <a href="../AfterSign/faq.html">FAQ</a>
+  <a href="../AfterSign/contact.html">Contact</a>
+</nav>
 
   <div class="header-actions">
     <button class="btn-theme-header" id="themeToggleHeader" title="Toggle Theme">
@@ -2931,8 +2939,7 @@ function handleSignOut() {
         localStorage.removeItem('user');
         sessionStorage.clear();
         // Redirect to login page (adjust URL as needed)
-        window.location.href = '/login.html';
-      });
+window.location.href = '../BeforeSign/index.html';     });
     }
   });
 }
