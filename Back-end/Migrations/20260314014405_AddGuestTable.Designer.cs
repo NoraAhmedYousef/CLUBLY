@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SignUp.Data;
 
@@ -11,9 +12,11 @@ using SignUp.Data;
 namespace SignUp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260314014405_AddGuestTable")]
+    partial class AddGuestTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("TrainersId");
 
-                    b.ToTable("ActivityTrainer", (string)null);
+                    b.ToTable("ActivityTrainer");
                 });
 
             modelBuilder.Entity("Clubly.Model.ActivityGroupTimeSlot", b =>
@@ -61,7 +64,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("ActivityGroupId");
 
-                    b.ToTable("ActivityGroupTimeSlots", (string)null);
+                    b.ToTable("ActivityGroupTimeSlots");
                 });
 
             modelBuilder.Entity("Clubly.Model.FacilitySchedule", b =>
@@ -92,7 +95,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.ToTable("FacilitySchedules", (string)null);
+                    b.ToTable("FacilitySchedules");
                 });
 
             modelBuilder.Entity("Clubly.Model.FacilityTimeSlot", b =>
@@ -119,7 +122,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityScheduleId");
 
-                    b.ToTable("FacilityTimeSlots", (string)null);
+                    b.ToTable("FacilityTimeSlots");
                 });
 
             modelBuilder.Entity("Clubly.Model.Guest", b =>
@@ -170,7 +173,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guests", (string)null);
+                    b.ToTable("Guests");
                 });
 
             modelBuilder.Entity("SignUp.Model.Activity", b =>
@@ -202,7 +205,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("SignUp.Model.ActivityGroup", b =>
@@ -255,7 +258,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("ActivityGroups", (string)null);
+                    b.ToTable("ActivityGroups");
                 });
 
             modelBuilder.Entity("SignUp.Model.Admin", b =>
@@ -302,7 +305,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("SignUp.Model.Announcement", b =>
@@ -334,7 +337,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Announcements", (string)null);
+                    b.ToTable("Announcements");
                 });
 
             modelBuilder.Entity("SignUp.Model.ContactMessage", b =>
@@ -366,7 +369,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactMessages", (string)null);
+                    b.ToTable("ContactMessages");
                 });
 
             modelBuilder.Entity("SignUp.Model.Facility", b =>
@@ -403,7 +406,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityCategoryId");
 
-                    b.ToTable("Facilities", (string)null);
+                    b.ToTable("Facilities");
                 });
 
             modelBuilder.Entity("SignUp.Model.FacilityBooking", b =>
@@ -477,7 +480,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityScheduleId");
 
-                    b.ToTable("FacilityBookings", (string)null);
+                    b.ToTable("FacilityBookings");
                 });
 
             modelBuilder.Entity("SignUp.Model.FacilityCategory", b =>
@@ -507,7 +510,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FacilityCategories", (string)null);
+                    b.ToTable("FacilityCategories");
                 });
 
             modelBuilder.Entity("SignUp.Model.Member", b =>
@@ -569,7 +572,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("MemberShipId");
 
-                    b.ToTable("Members", (string)null);
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("SignUp.Model.MemberShip", b =>
@@ -599,7 +602,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberShips", (string)null);
+                    b.ToTable("MemberShips");
                 });
 
             modelBuilder.Entity("SignUp.Model.Trainer", b =>
@@ -657,7 +660,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers", (string)null);
+                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("ActivityTrainer", b =>

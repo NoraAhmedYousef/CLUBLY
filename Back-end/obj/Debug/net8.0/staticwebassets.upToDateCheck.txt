@@ -16,4 +16,3 @@ wwwroot\Uploads\members\a4c41a53-7e08-45c1-8f12-c7e957f24562_Admin Dashboard Ove
 wwwroot\Uploads\members\e563190c-e8fc-4f97-9a99-bd944d0f1e3d_Screenshot 2025-12-02 205128.png
 wwwroot\Uploads\Trainers\029a67d0-5b0a-4314-aa7c-78d9da3bf1cf.png
 wwwroot\Uploads\Trainers\43b02616-74b9-41cd-a41a-51eb15a9f12f.png
-wwwroot\Uploads\Admins\60f3c9a4-4866-4d90-bb1d-aa9f7b546a84.png

@@ -419,10 +419,10 @@ C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\Clubly.csproj.Up2Date
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\Clubly.dll
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\refint\Clubly.dll
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\Clubly.pdb
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\Clubly.genruntimeconfig.cache
 C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\ref\Clubly.dll
+C:\Users\noraa\Downloads\CLUBLY Git\CLUBLY\CLUBLY-backend\Back-end\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

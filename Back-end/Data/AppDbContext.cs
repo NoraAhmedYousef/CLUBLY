@@ -12,8 +12,6 @@ namespace SignUp.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         // ===== TABLES =====
-        public DbSet<User> Users1 { get; set; }
-        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
@@ -29,6 +27,7 @@ namespace SignUp.Data
         public DbSet<FacilityBooking> FacilityBookings { get; set; }
         public DbSet<ActivityGroupTimeSlot> ActivityGroupTimeSlots { get; set; }
 
+        public DbSet<Guest> Guests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

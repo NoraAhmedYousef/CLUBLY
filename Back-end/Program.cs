@@ -4,6 +4,7 @@ using Clubly.Repository.Interface;
 using Clubly.Repository.Interfaces;
 using Clubly.Service.Class;
 using Clubly.Service.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -37,41 +38,44 @@ namespace SignUp
             var jwtIssuer = builder.Configuration["Jwt:Issuer"]!;
             var jwtAudience = builder.Configuration["Jwt:Audience"]!;
 
-            builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = jwtIssuer,
-                        ValidAudience = jwtAudience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
-
-            builder.Services.AddAuthorization();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+      .AddJwtBearer(options => {
+          options.TokenValidationParameters = new TokenValidationParameters
+          {
+              ValidateIssuer = true,
+              ValidateAudience = true,
+              ValidateLifetime = true,
+              ValidateIssuerSigningKey = true,
+              ValidIssuer = builder.Configuration["Jwt:Issuer"],
+              ValidAudience = builder.Configuration["Jwt:Audience"],
+              IssuerSigningKey = new SymmetricSecurityKey(
+          Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+          };
+      });
 
 
-            // ????????????????? CORS ?????????????????
+            /*   builder.Services.AddCors(options =>
+               {
+                   options.AddPolicy("Frontend", policy =>
+                       policy.WithOrigins(
+                               "http://localhost:3000",
+                               "http://localhost:4200",
+                               "http://localhost:5173",
+                               "http://127.0.0.1:5500",
+                               "https://yourclub.com"
+                           )
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials());
+               });
+            */
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("Frontend", policy =>
-                    policy.WithOrigins(
-                            "http://localhost:3000",
-                            "http://localhost:4200",
-                            "http://localhost:5173",
-                            "http://127.0.0.1:5500",
-                            "https://yourclub.com"
-                        )
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
+                options.AddPolicy("Frontend", policy =>  
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
             });
-
 
             // ????????????????? CONTROLLERS ?????????????????
             builder.Services.AddControllers();
@@ -108,8 +112,7 @@ namespace SignUp
             });
 
 
-            // ????????????????? PASSWORD HASHER ?????????????????
-            builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+      
 
 
             // ????????????????? REPOSITORIES ?????????????????
@@ -164,14 +167,12 @@ namespace SignUp
             app.MapControllers();
 
 
-            // ????????????????? AUTO MIGRATION ?????????????????
-            if (app.Environment.IsDevelopment())
+         
+            using (var scope = app.Services.CreateScope())
             {
-                using var scope = app.Services.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 db.Database.Migrate();
             }
-
 
             app.Run();
         }

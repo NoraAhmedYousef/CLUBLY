@@ -1,8 +1,12 @@
-﻿namespace SignUp.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SignUp.DTO
 {
     public class LoginDto
     {
-        public string Identifier { get; set; } // NationalId or Phone Or Email
-        public string Password { get; set; }
+        [Required][EmailAddress] public string Email { get; set; } = "";
+        [Required] public string Password { get; set; } = "";
+        [Required] public string Role { get; set; } = ""; // admin | member | trainer | guest
     }
 }
+
