@@ -702,10 +702,16 @@ body {
       <i class="bi bi-megaphone-fill"></i>
       <span class="link-text">Announcements</span>
     </a>
+    
     <div class="sidebar-divider"></div>
 <div class="sidebar-section">System</div>
+
 <a class="sidebar-link" onclick="showPage('admins')" data-label="Admins">
   <i class="bi bi-shield-lock"></i><span class="link-text">Admins</span>
+</a>
+<a class="sidebar-link" onclick="showPage('profile')" data-label="My Profile">
+  <i class="bi bi-person-circle"></i>
+  <span class="link-text">My Profile</span>
 </a>
   </aside>
 
@@ -1614,7 +1620,7 @@ body {
     <input class="form-check-input" type="checkbox" name="Announcement" value="Guests" id="editAnnGuests">
     <label class="form-check-label" for="editAnnGuests">Guests</label>
   </div>
-</div>                <div class="col-md-6"><label class="form-label">Publish Date</label><input id="editDate_ann" name="PublishDate" type="date" class="form-control"></div>
+</div>           <div class="col-md-6"><label class="form-label">Publish Date</label><input id="editDate_ann" name="PublishDate" type="date" class="form-control"></div>
                 <div class="col-md-6"><label class="form-label">Change Image</label><div id="editDrag_ann" class="drag-area" tabindex="0"><div class="small-muted"><i class="bi bi-cloud-arrow-up me-2"></i>Drag & drop to replace</div><input id="editImage_ann" name="Image" type="file" accept="image/*" style="display:none;"></div><div class="d-flex gap-3 align-items-center mt-2"><img id="editPreview_ann" class="img-preview" alt="preview"><button id="removeImageBtn_ann" type="button" class="btn btn-outline-danger btn-sm" style="display:none;"><i class="bi bi-x-lg"></i> Remove</button></div></div>
               </div>
             </form>
@@ -1625,37 +1631,36 @@ body {
       <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer_ann" style="z-index:12000;"></div>
     </div>
     <!-- =============================== Admins =============================== -->
-
-
+ 
 <div class="page" id="page-admins">
-<div class="page-header">
-        <div><h2 class="fw-bold m-0">Admins</h2><small class="text-muted">Manage Admins — Create / Update / Delete</small></div>
+  <div class="page-header">
+    <div><h2 class="fw-bold m-0">Admins</h2><small class="text-muted">Manage Admins — Create / Update / Delete</small></div>
     <button class="btn btn-primary rounded-pill px-4" onclick="new bootstrap.Modal(document.getElementById('addAdminModal')).show()">
       <i class="bi bi-plus-lg"></i> Add Admin
     </button>
-    
   </div>
-<div class="clubly-card p-3 mb-3">
-  <div class="row g-2 align-items-center controls">
-    <div class="col-auto"><input id="searchInput_adm" class="form-control" placeholder="Search by name or email..."></div>
-    <div class="col-auto"><select id="genderFilter_adm" class="form-select"><option value="">Any gender</option><option value="Male">Male</option><option value="Female">Female</option></select></div>
-    <div class="col-auto ms-auto"><button class="btn btn-outline-primary" onclick="loadAdmins()"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
+  <div class="clubly-card p-3 mb-3">
+    <div class="row g-2 align-items-center controls">
+      <div class="col-auto"><input id="searchInput_adm" class="form-control" placeholder="Search by name or email..."></div>
+      <div class="col-auto"><select id="genderFilter_adm" class="form-select"><option value="">Any gender</option><option value="Male">Male</option><option value="Female">Female</option></select></div>
+      <div class="col-auto ms-auto"><button class="btn btn-outline-primary" onclick="loadAdmins()"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
+    </div>
   </div>
-</div>
   <!-- Table -->
-<div class="clubly-card p-0 mt-3">
+  <div class="clubly-card p-0 mt-3">
     <table class="table table-hover align-middle mb-0" id="adminsTable">
-<thead class="table-light"><tr>
+      <thead class="table-light"><tr>
         <th>Image</th><th>Name</th><th>Email</th><th>Phone</th>
         <th>National ID</th><th>Gender</th><th>Birth Date</th><th>Actions</th>
       </tr></thead>
       <tbody id="adminsTbody"><tr><td colspan="8" class="text-center py-4">Loading…</td></tr></tbody>
     </table>
   </div>
-
+ 
   <!-- Add Modal -->
   <div class="modal fade" id="addAdminModal" tabindex="-1">
-<div class="modal-dialog modal-lg modal-dialog-centered">      <div class="modal-content-cl modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content-cl modal-content">
         <div class="modal-header-cl modal-header">
           <h5 class="modal-title">Add Admin</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -1668,8 +1673,7 @@ body {
             <div class="col-md-6"><input name="Password" id="addPassword_a" class="form-control" type="password" placeholder="Password" required></div>
             <div class="col-md-6">
               <div class="input-group">
-                <input name="NationalId" id="addNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14"
-                  oninput="autoFillAdminNID('add')">
+                <input name="NationalId" id="addNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14" oninput="autoFillAdminNID('add')">
                 <span class="input-group-text" title="Auto-fills birthday & gender"><i class="bi bi-magic text-primary"></i></span>
               </div>
             </div>
@@ -1689,10 +1693,11 @@ body {
       </div>
     </div>
   </div>
-
+ 
   <!-- Edit Modal -->
   <div class="modal fade" id="editAdminModal" tabindex="-1">
-<div class="modal-dialog modal-lg modal-dialog-centered">      <div class="modal-content-cl modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content-cl modal-content">
         <div class="modal-header-cl modal-header">
           <h5 class="modal-title">Edit Admin</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -1706,8 +1711,7 @@ body {
             <div class="col-md-6"><input name="Password" id="editPassword_a" class="form-control" type="password" placeholder="New Password (leave blank to keep)"></div>
             <div class="col-md-6">
               <div class="input-group">
-                <input name="NationalId" id="editNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14"
-                  oninput="autoFillAdminNID('edit')">
+                <input name="NationalId" id="editNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14" oninput="autoFillAdminNID('edit')">
                 <span class="input-group-text"><i class="bi bi-magic text-primary"></i></span>
               </div>
             </div>
@@ -1724,6 +1728,149 @@ body {
           <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           <button class="btn btn-primary" onclick="updateAdmin()">Save Changes</button>
         </div>
+      </div>
+    </div>
+  </div>
+ 
+</div> <!-- ======= نهاية page-admins ======= -->
+ 
+<!-- =============================== ADMIN PROFILE =============================== -->
+<div class="page" id="page-profile">
+  <div class="page-header">
+    <div><h2 class="fw-bold m-0">My Profile</h2><small class="text-muted">View and update your account</small></div>
+  </div>
+ 
+  <div class="row g-4">
+    <!-- Left: Avatar card -->
+    <div class="col-lg-4">
+      <div class="clubly-card p-4 text-center">
+        <div id="adminAvatarBig" style="
+          width:110px;height:110px;border-radius:50%;
+          background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+          display:flex;align-items:center;justify-content:center;
+          font-size:2.5rem;font-weight:900;color:#fff;
+          margin:0 auto 14px;border:4px solid var(--clubly-accent);
+          overflow:hidden;position:relative;">
+          <img id="adminProfileImg" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;">
+          <span id="adminProfileInitials">A</span>
+        </div>
+        <h5 class="fw-bold mb-1" id="adminProfileName">Admin</h5>
+        <p class="text-muted small mb-2" id="adminProfileEmail">—</p>
+        <span style="background:rgba(232,93,47,.1);color:var(--clubly-accent);padding:4px 14px;border-radius:20px;font-size:.82rem;font-weight:600;">
+          👑 Administrator
+        </span>
+        <div class="mt-3">
+          <input type="file" id="adminFileInput" accept="image/*" style="display:none;">
+          <button onclick="document.getElementById('adminFileInput').click()" 
+            style="background:none;border:1px solid var(--clubly-accent);color:var(--clubly-accent);
+            padding:6px 18px;border-radius:20px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.85rem;">
+            <i class="bi bi-camera"></i> Edit Photo
+          </button>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Right: Info + Password -->
+    <div class="col-lg-8">
+      <!-- Personal Info -->
+      <div class="clubly-card p-4 mb-3">
+        <h6 class="fw-bold mb-3 pb-2 border-bottom"><i class="bi bi-person-fill me-2 text-primary"></i>Personal Information</h6>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="adminProfName" class="form-control" placeholder="Full Name">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="adminProfEmail" class="form-control" disabled>
+            <small class="text-muted">Email cannot be changed here.</small>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" id="adminProfPhone" class="form-control" placeholder="Phone">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">National ID</label>
+            <input type="text" id="adminProfNID" class="form-control" disabled>
+            <small class="text-muted">Cannot be changed.</small>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Gender</label>
+            <input type="text" id="adminProfGender" class="form-control" disabled>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Date of Birth</label>
+            <input type="text" id="adminProfDOB" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="mt-3 d-flex gap-2">
+          <button onclick="saveAdminProfile()" 
+            style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;
+            padding:9px 24px;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;">
+            <i class="bi bi-check-lg me-1"></i> Save Changes
+          </button>
+        </div>
+      </div>
+ 
+      <!-- Change Password -->
+     <!-- Change Password — Button only -->
+<div class="clubly-card p-4">
+  <h6 class="fw-bold mb-3 pb-2 border-bottom">
+    <i class="bi bi-lock-fill me-2 text-danger"></i>Change Password
+  </h6>
+  <p style="color:var(--muted); font-size:.88rem; margin-bottom:16px;">
+    Keep your account secure by updating your password regularly.
+  </p>
+  <button data-bs-toggle="modal" data-bs-target="#adminPassModal"
+    style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;border:none;
+    padding:9px 24px;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;">
+    <i class="bi bi-shield-lock me-1"></i> Change Password
+  </button>
+</div>
+      </div>
+ 
+    </div>
+  </div>
+</div> <!-- ======= نهاية page-profile ======= -->
+ <!-- ===== ADMIN CHANGE PASSWORD MODAL ===== -->
+<div class="modal fade" id="adminPassModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Change Password</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="adminPassForm">
+          <div class="mb-3">
+            <label class="form-label">Current Password</label>
+            <div class="input-group">
+              <input type="password" id="adminCurrPass" class="form-control" placeholder="Current password">
+              <button class="btn btn-outline-secondary toggle-pw" type="button"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <div class="input-group">
+              <input type="password" id="adminNewPass" class="form-control" placeholder="New password (min 6 chars)">
+              <button class="btn btn-outline-secondary toggle-pw" type="button"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Confirm New Password</label>
+            <div class="input-group">
+              <input type="password" id="adminConfirmPass" class="form-control" placeholder="Confirm new password">
+              <button class="btn btn-outline-secondary toggle-pw" type="button"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <div id="adminPassMsg" class="mt-2"></div>
+        </form>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-success rounded-pill px-4" onclick="saveAdminPassword()">
+          <i class="bi bi-check-lg me-1"></i> Save Password
+        </button>
       </div>
     </div>
   </div>
@@ -1778,7 +1925,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
-const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins'];
+const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins','profile'];
 
 function showPage(name) {
   pages.forEach(p => {
@@ -1847,7 +1994,7 @@ function showToastIn(containerId, msg, type='success') {
 // ===================================================
 // HELPER FUNCTIONS
 // ===================================================
-function fixUrl(url) { if(!url) return ''; return url.startsWith('http') ? url : 'https://localhost:7132' + url; }
+function fixUrl(url) { if(!url) return ''; return url.startsWith('http') ? url : 'http://clublywebsite.runasp.net' + url; }
 function escapeHtml(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function extractFromNationalId(nid) {
   if(!/^\d{14}$/.test(nid)) return null;
@@ -2898,7 +3045,16 @@ window.addEventListener('DOMContentLoaded', async () => {
 const pageLoadFlags = {};
 const origShowPage = showPage;
 window.showPage = function(name) {
-  origShowPage(name);
+  // call original base function directly
+  pages.forEach(p => {
+    document.getElementById('page-' + p)?.classList.remove('active');
+  });
+  document.getElementById('page-' + name)?.classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => {
+    if (l.getAttribute('onclick')?.includes("'" + name + "'")) l.classList.add('active');
+  });
+  window.scrollTo(0, 0);
   if (pageLoadFlags[name]) return;
   pageLoadFlags[name] = true;
   if (name === 'trainer') { loadActivitiesForTrainers(); loadTrainers(); }
@@ -2909,6 +3065,7 @@ window.showPage = function(name) {
   if (name === 'membership') fetchMemberships();
   if (name === 'announcement') loadAnnouncements();
   if (name === 'admins') loadAdmins();
+if (name === 'profile') loadAdminProfile();
 
 };
 
@@ -2935,9 +3092,8 @@ function handleSignOut() {
         showConfirmButton: false
       }).then(() => {
         // Clear any stored auth tokens
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        sessionStorage.clear();
+    localStorage.clear();
+sessionStorage.clear();
         // Redirect to login page (adjust URL as needed)
 window.location.href = '../BeforeSign/index.html';     });
     }
@@ -3371,6 +3527,135 @@ document.querySelectorAll('.modal').forEach(modal => {
       btn.innerHTML = '<i class="bi bi-eye"></i>';
     });
   });
+});
+// ===================================================
+// ADMIN PROFILE PAGE
+// ===================================================
+async function loadAdminProfile() {
+  let userId = localStorage.getItem('userId');
+  
+  if (!userId) {
+    // fallback: جيب بيانات المستخدم الحالي بالـ token
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch('http://clublywebsite.runasp.net/api/Admin/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const a = await res.json();
+        userId = a.id;
+        localStorage.setItem('userId', userId);
+        fillProfileData(a);
+        return;
+      }
+    } catch {}
+    return;
+  }
+  
+  try {
+    const res = await fetch(`${adminsApi}/${userId}`);
+    if (!res.ok) throw new Error();
+    fillProfileData(await res.json());
+  } catch {
+    showToast('Failed to load profile', 'error');
+  }
+}
+
+function fillProfileData(a) {
+  const initials = (a.fullName || 'A').split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+  document.getElementById('adminProfileInitials').textContent = initials;
+  document.getElementById('adminProfileName').textContent = a.fullName || '—';
+  document.getElementById('adminProfileEmail').textContent = a.email || '—';
+  if (a.imageUrl) {
+    const img = document.getElementById('adminProfileImg');
+    img.src = fixUrl(a.imageUrl);
+    img.style.display = 'block';
+    document.getElementById('adminProfileInitials').style.display = 'none';
+  }
+  document.getElementById('adminProfName').value   = a.fullName || '';
+  document.getElementById('adminProfEmail').value  = a.email || '';
+  document.getElementById('adminProfPhone').value  = a.phone || '';
+  document.getElementById('adminProfNID').value    = a.nationalId || '';
+  document.getElementById('adminProfGender').value = a.gender || '';
+  document.getElementById('adminProfDOB').value    = a.dateOfBirth ? a.dateOfBirth.split('T')[0] : '';
+}
+
+async function saveAdminProfile() {
+  const userId = localStorage.getItem('userId');
+  if (!userId) return;
+  const fd = new FormData();
+  fd.append('FullName', document.getElementById('adminProfName').value);
+  fd.append('Phone',    document.getElementById('adminProfPhone').value);
+  const img = document.getElementById('adminFileInput').files[0];
+  if (img) fd.append('Image', img);
+  try {
+    const res = await fetch(`${adminsApi}/${userId}`, { method: 'PUT', body: fd });
+    if (!res.ok) throw new Error();
+    // Update header name
+    const newName = document.getElementById('adminProfName').value;
+    localStorage.setItem('fullName', newName);
+    Swal.fire({ title: 'Updated!', icon: 'success', timer: 1500, showConfirmButton: false });
+    await loadAdminProfile();
+  } catch {
+    showToast('Failed to save', 'error');
+  }
+}
+
+async function saveAdminPassword() {
+  const userId   = localStorage.getItem('userId');
+  const currPass = document.getElementById('adminCurrPass').value;
+  const newPass  = document.getElementById('adminNewPass').value;
+  const confPass = document.getElementById('adminConfirmPass').value;
+  const msgEl    = document.getElementById('adminPassMsg');
+  msgEl.innerHTML = '';
+
+  if (!currPass) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>';
+    return;
+  }
+  if (!newPass || newPass.length < 6) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 6 characters.</span>';
+    return;
+  }
+  if (newPass !== confPass) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords do not match.</span>';
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append('FullName',        document.getElementById('adminProfName').value);
+  fd.append('CurrentPassword', currPass);
+  fd.append('NewPassword',     newPass);
+
+  try {
+    const res = await fetch(`${adminsApi}/${userId}`, { method: 'PUT', body: fd });
+    if (!res.ok) {
+      const err = await res.text();
+      msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${err || 'Failed to update password.'}</span>`;
+      return;
+    }
+    msgEl.innerHTML = '<span style="color:#22c55e;font-size:.85rem;">✓ Password updated successfully!</span>';
+    document.getElementById('adminCurrPass').value   = '';
+    document.getElementById('adminNewPass').value    = '';
+    document.getElementById('adminConfirmPass').value = '';
+    setTimeout(() => {
+      bootstrap.Modal.getInstance(document.getElementById('adminPassModal')).hide();
+      msgEl.innerHTML = '';
+    }, 1500);
+  } catch {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Failed to update password.</span>';
+  }
+}
+
+// Photo preview
+document.getElementById('adminFileInput')?.addEventListener('change', function() {
+  if (this.files[0]) {
+    const img = document.getElementById('adminProfileImg');
+    img.src = URL.createObjectURL(this.files[0]);
+    img.style.display = 'block';
+    document.getElementById('adminProfileInitials').style.display = 'none';
+  }
 });
 </script>
 </body>
