@@ -45,9 +45,16 @@ namespace SignUp.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<AdminDto>> Update(int id, [FromForm] UpdateAdminDto dto)
         {
-            var updatedAdmin = await _adminService.UpdateAdminAsync(id, dto);
-            if (updatedAdmin == null) return NotFound("Admin not found");
-            return Ok(updatedAdmin);
+            try
+            {
+                var updatedAdmin = await _adminService.UpdateAdminAsync(id, dto);
+                if (updatedAdmin == null) return NotFound("Admin not found");
+                return Ok(updatedAdmin);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/admin/{id}

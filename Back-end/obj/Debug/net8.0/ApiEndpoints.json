@@ -385,6 +385,11 @@
         "IsRequired": false
       },
       {
+        "Name": "CurrentPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "NewPassword",
         "Type": "System.String",
         "IsRequired": false
@@ -1108,6 +1113,11 @@
       {
         "Name": "Image",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "CurrentPassword",
+        "Type": "System.String",
         "IsRequired": false
       },
       {

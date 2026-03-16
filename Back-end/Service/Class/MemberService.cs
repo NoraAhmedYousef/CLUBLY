@@ -116,14 +116,19 @@ namespace SignUp.Service.Classes
             if (dto.MemberType != null) m.MemberType = dto.MemberType;
             if (dto.MemberShipId != null) m.MemberShipId = dto.MemberShipId;
 
-            // --------- Update Password ----------
-            if (!string.IsNullOrWhiteSpace(dto.NewPassword))
+            // -------- update password ----------
+            if (!string.IsNullOrEmpty(dto.NewPassword))
             {
+                if (string.IsNullOrEmpty(dto.CurrentPassword))
+                    throw new Exception("Current password is required");
+
+                if (!VerifyPassword(dto.CurrentPassword, m.PasswordHash, m.PasswordSalt))
+                    throw new Exception("Current password is incorrect");
+
                 CreatePasswordHash(dto.NewPassword, out string hash, out string salt);
                 m.PasswordHash = hash;
                 m.PasswordSalt = salt;
             }
-
             // --------- Update Image ----------
             if (dto.Image != null)
                 m.ImageUrl = await SaveImage(dto.Image);

@@ -16,6 +16,7 @@ namespace SignUp.DTO
         [MaxLength(50)]
         public string? Gender { get; set; }
         public IFormFile? Image { get; set; }
+        public string? CurrentPassword { get; set; }
         public string? NewPassword { get; set; }
 
 

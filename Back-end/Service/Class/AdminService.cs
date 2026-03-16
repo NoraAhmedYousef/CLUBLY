@@ -143,17 +143,22 @@ namespace SignUp.Service.Class
             // -------- update password ----------
             if (!string.IsNullOrEmpty(dto.NewPassword))
             {
+                if (string.IsNullOrEmpty(dto.CurrentPassword))
+                    throw new Exception("Current password is required");
+
+                if (!VerifyPassword(dto.CurrentPassword, a.PasswordHash, a.PasswordSalt))
+                    throw new Exception("Current password is incorrect");
+
                 CreatePasswordHash(dto.NewPassword, out string hash, out string salt);
                 a.PasswordHash = hash;
                 a.PasswordSalt = salt;
             }
 
-            await _repo.UpdateAsync(a);
+            await _repo.UpdateAsync(a);  // ← ده ناقص
 
-            return await GetAdminByIdAsync(a.Id)
+            return await GetAdminByIdAsync(a.Id)  // ← وده ناقص
                 ?? throw new Exception("Admin not found after update");
         }
-
         public async Task<bool> DeleteAdminAsync(int id)
         {
             var a = await _repo.GetByIdAsync(id);

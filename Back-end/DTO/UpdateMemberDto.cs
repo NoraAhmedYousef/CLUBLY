@@ -15,6 +15,7 @@ namespace SignUp.DTO
         public string? MemberType { get; set; }
         public int? MemberShipId { get; set; }
         public IFormFile? Image { get; set; }
+        public string? CurrentPassword { get; set; }
         public string? NewPassword { get; set; }
 
 
