@@ -459,209 +459,426 @@ html{scroll-behavior:smooth;}
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// ── Theme & Scroll ───────────────────────────────────
-let dark=false;
-document.getElementById('themeBtn').addEventListener('click',()=>{dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('themeBtn').innerHTML=dark?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';});
-window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
+  
+// ── Dropdown animation CSS ───────────────────────────
+const _style = document.createElement('style');
+_style.textContent = `
+  @keyframes dropIn {
+    from { opacity:0; transform:translateY(-8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  #mainHeader { position: relative; }
+`;
+document.head.appendChild(_style);
 
-// ── Modal ────────────────────────────────────────────
+// ── Theme & Scroll ───────────────────────────────────
+let dark = false;
+document.getElementById('themeBtn').addEventListener('click', () => {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  document.getElementById('themeBtn').innerHTML = dark
+    ? '<i class="bi bi-sun"></i>'
+    : '<i class="bi bi-moon-stars"></i>';
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 300);
+});
+
+// ── API Base ─────────────────────────────────────────
 const API_BASE = 'https://localhost:7132/api/auth';
 let authModalInstance;
-function openModal(page){
-  if(!authModalInstance) authModalInstance=new bootstrap.Modal(document.getElementById('authModal'));
-  authShowPage(page==='register'?'authSignupPage':'authLoginPage');
+
+// ── Open Auth Modal ──────────────────────────────────
+function openModal(page) {
+  if (!authModalInstance)
+    authModalInstance = new bootstrap.Modal(document.getElementById('authModal'));
+  authShowPage(page === 'register' ? 'authSignupPage' : 'authLoginPage');
   authModalInstance.show();
 }
 
-// ── Page Switch ──────────────────────────────────────
-function authShowPage(id){
-  document.querySelectorAll('.auth-inner-page').forEach(p=>p.style.display='none');
-  document.getElementById(id).style.display='block';
+// ── Header Update Based on Role ──────────────────────
+function updateHeaderForRole() {
+  const role     = localStorage.getItem('role');
+  const fullName = localStorage.getItem('fullName');
+
+  // ── أ) تحديث أول لينك في الـ nav ──────────────────
+  const dashLink = document.querySelector('.header-nav a:first-child');
+  if (dashLink) {
+    const dashConfig = {
+  admin:   { label: '👑 Admin Dashboard',   href: 'Admin.html' },
+  member:  { label: '🎯 Member Dashboard',  href: 'Member dashboard.html' },
+  trainer: { label: '🏆 Trainer Dashboard', href: 'trainer-dashboard.html' },
+      guest:   { label: '🌟 My Dashboard',      href: 'guest-dashboard.html' },
+    };
+    if (role && dashConfig[role]) {
+      const cfg = dashConfig[role];
+      dashLink.innerHTML = `<i class="bi bi-speedometer2 me-1"></i>${cfg.label}`;
+      dashLink.href = cfg.href;
+      dashLink.style.cssText =
+        'color:var(--clubly-accent);font-weight:700;background:rgba(232,93,47,.1);border-radius:6px;';
+    }
+  }
+
+  // ── ب) تحديث الـ header-actions ───────────────────
+  const actionsEl = document.querySelector('.header-actions');
+  if (!actionsEl) return;
+
+  if (role && fullName) {
+    // المستخدم logged in — عرض chip + dropdown
+    const initials = fullName.split(' ').slice(0, 2).map(w => w[0]?.toUpperCase() || '').join('');
+    const roleColors = {
+      admin:   { bg: '#e85d2f', label: 'Admin'   },
+      member:  { bg: '#7c5cfc', label: 'Member'  },
+      trainer: { bg: '#00a896', label: 'Trainer' },
+      guest:   { bg: '#f59e0b', label: 'Guest'   },
+    };
+    const rc = roleColors[role] || { bg: '#64748b', label: role };
+    const dashHref = document.querySelector('.header-nav a:first-child')?.href || '#';
+
+    actionsEl.innerHTML = `
+      <!-- Theme Toggle -->
+      <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
+
+      <!-- User Chip -->
+      <div id="userChip" onclick="toggleUserDropdown()" style="
+        display:flex;align-items:center;gap:10px;
+        background:rgba(255,255,255,.08);
+        border:1px solid rgba(255,255,255,.15);
+        padding:6px 14px 6px 8px;
+        border-radius:50px;cursor:pointer;transition:all .2s;
+      ">
+        <div style="
+          width:32px;height:32px;border-radius:50%;
+          background:${rc.bg};color:#fff;
+          display:flex;align-items:center;justify-content:center;
+          font-size:.8rem;font-weight:900;flex-shrink:0;
+        ">${initials}</div>
+        <div style="line-height:1.2;">
+          <div style="color:#fff;font-weight:700;font-size:.85rem;white-space:nowrap;">${fullName}</div>
+          <div style="color:rgba(255,255,255,.5);font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;">${rc.label}</div>
+        </div>
+        <i class="bi bi-chevron-down" id="chipChevron"
+           style="color:rgba(255,255,255,.5);font-size:.75rem;margin-left:2px;transition:transform .2s;"></i>
+      </div>
+
+      <!-- Dropdown -->
+      <div id="userDropdown" style="
+        display:none;position:absolute;
+        top:calc(var(--header-h) + 6px);right:20px;
+        background:var(--clubly-dark);
+        border:1px solid rgba(255,255,255,.1);
+        border-radius:14px;min-width:200px;
+        box-shadow:0 12px 40px rgba(0,0,0,.4);
+        overflow:hidden;z-index:3000;
+        animation:dropIn .15s ease;
+      ">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.07);">
+          <div style="font-weight:700;color:#fff;font-size:.9rem;">${fullName}</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.45);">${rc.label}</div>
+        </div>
+        <a href="${dashHref}" style="
+          display:flex;align-items:center;gap:10px;
+          padding:11px 16px;color:rgba(255,255,255,.8);
+          text-decoration:none;font-size:.88rem;font-weight:600;
+          transition:background .15s;
+        "
+          onmouseover="this.style.background='rgba(255,255,255,.06)'"
+          onmouseout="this.style.background='transparent'">
+          <i class="bi bi-speedometer2" style="color:var(--clubly-accent);"></i> My Dashboard
+        </a>
+        <button onclick="handleSignOut()" style="
+          display:flex;align-items:center;gap:10px;width:100%;
+          padding:11px 16px;color:#ff6b6b;
+          background:none;border:none;
+          font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:600;
+          cursor:pointer;border-top:1px solid rgba(255,255,255,.07);
+          transition:background .15s;
+        "
+          onmouseover="this.style.background='rgba(255,0,0,.06)'"
+          onmouseout="this.style.background='transparent'">
+          <i class="bi bi-box-arrow-right"></i> Sign Out
+        </button>
+      </div>
+    `;
+
+    // Re-wire theme toggle بعد ما عملنا innerHTML
+    document.getElementById('themeBtn')?.addEventListener('click', () => {
+      dark = !dark;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+      document.getElementById('themeBtn').innerHTML = dark
+        ? '<i class="bi bi-sun"></i>'
+        : '<i class="bi bi-moon-stars"></i>';
+    });
+
+  }
+  // لو مش logged in — الـ header يفضل زي ما هو (Sign In + Join Now)
+}
+
+// ── Toggle User Dropdown ─────────────────────────────
+function toggleUserDropdown() {
+  const dd  = document.getElementById('userDropdown');
+  const chv = document.getElementById('chipChevron');
+  if (!dd) return;
+  const isOpen = dd.style.display === 'block';
+  dd.style.display = isOpen ? 'none' : 'block';
+  if (chv) chv.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// إغلاق الـ dropdown لو الضغط برا
+document.addEventListener('click', e => {
+  if (!e.target.closest('#userChip') && !e.target.closest('#userDropdown')) {
+    const dd  = document.getElementById('userDropdown');
+    const chv = document.getElementById('chipChevron');
+    if (dd)  dd.style.display = 'none';
+    if (chv) chv.style.transform = '';
+  }
+});
+
+// ── Sign Out ─────────────────────────────────────────
+function handleSignOut() {
+  localStorage.clear();
+  window.location.reload();
+}
+
+// ── DOMContentLoaded ─────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  updateHeaderForRole();
+
+  // init role styling in modal
+  const adminEl = document.querySelector('.auth-role-opt[data-role="admin"]');
+  if (adminEl) authSelectRole(adminEl);
+});
+
+// ── Auth Page Switch ──────────────────────────────────
+function authShowPage(id) {
+  document.querySelectorAll('.auth-inner-page').forEach(p => p.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
 }
 
 // ── Role Select ──────────────────────────────────────
-let authSelectedRole='admin';
-function authSelectRole(el){
-  document.querySelectorAll('.auth-role-opt').forEach(r=>{
-    r.style.border='2px solid #e2e8f0';
-    r.style.background='#f8fafc';
-    r.querySelector('span:last-child').style.color='#64748b';
+let authSelectedRole = 'admin';
+function authSelectRole(el) {
+  document.querySelectorAll('.auth-role-opt').forEach(r => {
+    r.style.border = '2px solid #e2e8f0';
+    r.style.background = '#f8fafc';
+    r.querySelector('span:last-child').style.color = '#64748b';
   });
-  const roleColors={admin:'#ff6b35',trainer:'#00d4aa',member:'#7c5cfc',guest:'#f59e0b'};
-  const role=el.dataset.role;
-  el.style.border=`2px solid ${roleColors[role]}`;
-  el.style.background=`rgba(${role==='admin'?'255,107,53':role==='trainer'?'0,212,170':role==='member'?'124,92,252':'245,158,11'},.06)`;
-  el.querySelector('span:last-child').style.color=roleColors[role];
-  authSelectedRole=role;
+  const roleColors = { admin: '#ff6b35', trainer: '#00d4aa', member: '#7c5cfc', guest: '#f59e0b' };
+  const role = el.dataset.role;
+  el.style.border = `2px solid ${roleColors[role]}`;
+  el.style.background = `rgba(${
+    role === 'admin' ? '255,107,53'
+    : role === 'trainer' ? '0,212,170'
+    : role === 'member' ? '124,92,252'
+    : '245,158,11'
+  },.06)`;
+  el.querySelector('span:last-child').style.color = roleColors[role];
+  authSelectedRole = role;
 }
-// init admin active styling
-document.addEventListener('DOMContentLoaded',()=>{
-  const adminEl=document.querySelector('.auth-role-opt[data-role="admin"]');
-  if(adminEl) authSelectRole(adminEl);
-});
 
 // ── Toast ────────────────────────────────────────────
-function authShowNotif(msg,type='success'){
-  const n=document.getElementById('authNotif');
-  n.textContent=(type==='success'?'✓  ':'✕  ')+msg;
-  n.style.background=type==='success'?'#00a896':'#e53e3e';
-  n.style.opacity='1';n.style.transform='translateY(0)';
-  setTimeout(()=>{n.style.opacity='0';n.style.transform='translateY(8px)';},3200);
+function authShowNotif(msg, type = 'success') {
+  const n = document.getElementById('authNotif');
+  n.textContent = (type === 'success' ? '✓  ' : '✕  ') + msg;
+  n.style.background = type === 'success' ? '#00a896' : '#e53e3e';
+  n.style.opacity = '1';
+  n.style.transform = 'translateY(0)';
+  setTimeout(() => { n.style.opacity = '0'; n.style.transform = 'translateY(8px)'; }, 3200);
 }
 
 // ── Field State ──────────────────────────────────────
-function authSetField(inputId,errId,isValid,errMsg){
-  const inp=document.getElementById(inputId);
-  const err=document.getElementById(errId);
-  inp.style.borderColor=isValid?'#00d4aa':'#e53e3e';
-  inp.style.background=isValid?'#f6fdfb':'#fff8f8';
-  if(!isValid&&errMsg){err.textContent='⚠ '+errMsg;err.style.display='block';}
-  else{err.style.display='none';}
+function authSetField(inputId, errId, isValid, errMsg) {
+  const inp = document.getElementById(inputId);
+  const err = document.getElementById(errId);
+  inp.style.borderColor = isValid ? '#00d4aa' : '#e53e3e';
+  inp.style.background  = isValid ? '#f6fdfb' : '#fff8f8';
+  if (!isValid && errMsg) { err.textContent = '⚠ ' + errMsg; err.style.display = 'block'; }
+  else { err.style.display = 'none'; }
   return isValid;
 }
 
 // ── Validators ───────────────────────────────────────
-function authValidateEmail(iId,eId){
-  const v=document.getElementById(iId).value.trim();
-  if(!v) return authSetField(iId,eId,false,'Email is required');
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return authSetField(iId,eId,false,'Enter a valid email');
-  return authSetField(iId,eId,true);
+function authValidateEmail(iId, eId) {
+  const v = document.getElementById(iId).value.trim();
+  if (!v) return authSetField(iId, eId, false, 'Email is required');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return authSetField(iId, eId, false, 'Enter a valid email');
+  return authSetField(iId, eId, true);
 }
-function authValidateRequired(iId,eId,msg){
-  const v=document.getElementById(iId).value;
-  if(!v) return authSetField(iId,eId,false,msg);
-  return authSetField(iId,eId,true);
+function authValidateRequired(iId, eId, msg) {
+  const v = document.getElementById(iId).value;
+  if (!v) return authSetField(iId, eId, false, msg);
+  return authSetField(iId, eId, true);
 }
-function authValidateMinLen(iId,eId,label,min){
-  const v=document.getElementById(iId).value.trim();
-  if(!v) return authSetField(iId,eId,false,label+' is required');
-  if(v.length<min) return authSetField(iId,eId,false,label+' must be at least '+min+' characters');
-  return authSetField(iId,eId,true);
+function authValidateMinLen(iId, eId, label, min) {
+  const v = document.getElementById(iId).value.trim();
+  if (!v) return authSetField(iId, eId, false, label + ' is required');
+  if (v.length < min) return authSetField(iId, eId, false, label + ' must be at least ' + min + ' characters');
+  return authSetField(iId, eId, true);
 }
-function authValidatePhone(iId,eId){
-  const v=document.getElementById(iId).value.trim();
-  if(!v) return authSetField(iId,eId,false,'Phone number is required');
-  if(!/^0\d{9,10}$/.test(v)) return authSetField(iId,eId,false,'Enter a valid number (e.g. 01012345678)');
-  return authSetField(iId,eId,true);
+function authValidatePhone(iId, eId) {
+  const v = document.getElementById(iId).value.trim();
+  if (!v) return authSetField(iId, eId, false, 'Phone number is required');
+  if (!/^0\d{9,10}$/.test(v)) return authSetField(iId, eId, false, 'Enter a valid number (e.g. 01012345678)');
+  return authSetField(iId, eId, true);
 }
-function authValidatePassword(iId,eId){
-  const v=document.getElementById(iId).value;
-  if(!v) return authSetField(iId,eId,false,'Password is required');
-  if(v.length<6) return authSetField(iId,eId,false,'Password must be at least 6 characters');
-  return authSetField(iId,eId,true);
+function authValidatePassword(iId, eId) {
+  const v = document.getElementById(iId).value;
+  if (!v) return authSetField(iId, eId, false, 'Password is required');
+  if (v.length < 6) return authSetField(iId, eId, false, 'Password must be at least 6 characters');
+  return authSetField(iId, eId, true);
 }
 
 // ── Eye Toggle ───────────────────────────────────────
-const EYE_OPEN=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
-const EYE_CLOSE=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
-function authToggleEye(iId,btn){
-  const inp=document.getElementById(iId);
-  const show=inp.type==='password';
-  inp.type=show?'text':'password';
-  btn.innerHTML=show?EYE_CLOSE:EYE_OPEN;
+const EYE_OPEN  = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const EYE_CLOSE = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+function authToggleEye(iId, btn) {
+  const inp  = document.getElementById(iId);
+  const show = inp.type === 'password';
+  inp.type   = show ? 'text' : 'password';
+  btn.innerHTML = show ? EYE_CLOSE : EYE_OPEN;
 }
 
 // ── Password Strength ────────────────────────────────
-function authCheckStrength(id){
-  const val=document.getElementById(id).value;
-  const wrap=document.getElementById('suStrengthWrap');
-  const lbl=document.getElementById('suStrengthLabel');
-  if(!val){wrap.style.display='none';return;}
-  wrap.style.display='block';
-  let score=0;
-  if(val.length>=6)score++;
-  if(val.length>=10)score++;
-  if(/[A-Z]/.test(val)&&/[a-z]/.test(val))score++;
-  if(/[0-9]/.test(val)&&/[^A-Za-z0-9]/.test(val))score++;
-  const levels=[{color:'#e53e3e',label:'Weak'},{color:'#f59e0b',label:'Fair'},{color:'#00d4aa',label:'Good'},{color:'#00a896',label:'Strong'}];
-  const lvl=levels[score-1]||levels[0];
-  ['asb1','asb2','asb3','asb4'].forEach((bid,i)=>{document.getElementById(bid).style.background=i<score?lvl.color:'#e2e8f0';});
-  lbl.textContent=lvl.label;lbl.style.color=lvl.color;
+function authCheckStrength(id) {
+  const val  = document.getElementById(id).value;
+  const wrap = document.getElementById('suStrengthWrap');
+  const lbl  = document.getElementById('suStrengthLabel');
+  if (!val) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  let score = 0;
+  if (val.length >= 6)  score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+  if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) score++;
+  const levels = [
+    { color: '#e53e3e', label: 'Weak'   },
+    { color: '#f59e0b', label: 'Fair'   },
+    { color: '#00d4aa', label: 'Good'   },
+    { color: '#00a896', label: 'Strong' },
+  ];
+  const lvl = levels[score - 1] || levels[0];
+  ['asb1','asb2','asb3','asb4'].forEach((bid, i) => {
+    document.getElementById(bid).style.background = i < score ? lvl.color : '#e2e8f0';
+  });
+  lbl.textContent = lvl.label;
+  lbl.style.color = lvl.color;
 }
 
 // ── National ID Parser ───────────────────────────────
-function authParseNationalId(val){
-  const statusEl=document.getElementById('nidStatus');
-  const birthEl=document.getElementById('suBirth');
-  const genderEl=document.getElementById('suGender');
-  const pillsEl=document.getElementById('nidPills');
-  const errEl=document.getElementById('suNIDErr');
-  const nidInput=document.getElementById('suNID');
-  birthEl.value='';genderEl.value='';
-  pillsEl.style.display='none';
-  if(!val){statusEl.textContent='';errEl.style.display='none';nidInput.style.borderColor='#e2e8f0';return;}
-  if(!/^\d+$/.test(val)){statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'National ID must contain digits only');}
-  if(val.length<14){statusEl.textContent='⏳';nidInput.style.borderColor='#e2e8f0';errEl.style.display='none';return;}
-  const c=val[0];let century;
-  if(c==='2')century='19';
-  else if(c==='3')century='20';
-  else{statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'First digit must be 2 or 3');}
-  const yy=val.substring(1,3),mm=val.substring(3,5),dd=val.substring(5,7);
-  const mo=parseInt(mm),dy=parseInt(dd);
-  if(mo<1||mo>12||dy<1||dy>31){statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'Invalid date in National ID');}
-  const seq=parseInt(val.substring(11,14));
-  const gender=seq%2!==0?'Male':'Female';
-  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const birth=`${String(dy).padStart(2,'0')} ${months[mo-1]} ${century}${yy}`;
-  birthEl.value=birth;genderEl.value=gender;
-  document.getElementById('pillBirth').textContent=`📅 ${birth}`;
-  document.getElementById('pillGender').textContent=`${gender==='Male'?'♂':'♀'} ${gender}`;
-  pillsEl.style.display='flex';
-  statusEl.textContent='✅';
-  authSetField('suNID','suNIDErr',true);
+function authParseNationalId(val) {
+  const statusEl  = document.getElementById('nidStatus');
+  const birthEl   = document.getElementById('suBirth');
+  const genderEl  = document.getElementById('suGender');
+  const pillsEl   = document.getElementById('nidPills');
+  const errEl     = document.getElementById('suNIDErr');
+  const nidInput  = document.getElementById('suNID');
+  birthEl.value = ''; genderEl.value = '';
+  pillsEl.style.display = 'none';
+  if (!val) { statusEl.textContent = ''; errEl.style.display = 'none'; nidInput.style.borderColor = '#e2e8f0'; return; }
+  if (!/^\d+$/.test(val)) { statusEl.textContent = '❌'; return authSetField('suNID', 'suNIDErr', false, 'National ID must contain digits only'); }
+  if (val.length < 14)    { statusEl.textContent = '⏳'; nidInput.style.borderColor = '#e2e8f0'; errEl.style.display = 'none'; return; }
+  const c = val[0]; let century;
+  if (c === '2') century = '19';
+  else if (c === '3') century = '20';
+  else { statusEl.textContent = '❌'; return authSetField('suNID', 'suNIDErr', false, 'First digit must be 2 or 3'); }
+  const yy = val.substring(1, 3), mm = val.substring(3, 5), dd = val.substring(5, 7);
+  const mo = parseInt(mm), dy = parseInt(dd);
+  if (mo < 1 || mo > 12 || dy < 1 || dy > 31) { statusEl.textContent = '❌'; return authSetField('suNID', 'suNIDErr', false, 'Invalid date in National ID'); }
+  const seq = parseInt(val.substring(11, 14));
+  const gender = seq % 2 !== 0 ? 'Male' : 'Female';
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const birth  = `${String(dy).padStart(2,'0')} ${months[mo-1]} ${century}${yy}`;
+  birthEl.value = birth; genderEl.value = gender;
+  document.getElementById('pillBirth').textContent  = `📅 ${birth}`;
+  document.getElementById('pillGender').textContent = `${gender === 'Male' ? '♂' : '♀'} ${gender}`;
+  pillsEl.style.display = 'flex';
+  statusEl.textContent = '✅';
+  authSetField('suNID', 'suNIDErr', true);
 }
 
 // ── Login ────────────────────────────────────────────
-async function authHandleLogin(){
-  const emailOk=authValidateEmail('siEmail','siEmailErr');
-  const passOk=authValidateRequired('siPassword','siPassErr','Password is required');
-  if(!emailOk||!passOk) return authShowNotif('Please fix the errors above','error');
-  const btn=document.getElementById('signinBtn');
-  btn.disabled=true;btn.textContent='Please wait…';
-  try{
-   const res=await fetch(`${API_BASE}/login`,{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({email:document.getElementById('siEmail').value.trim(),password:document.getElementById('siPassword').value,role:authSelectedRole})});
-const json=await res.json();
-if(!res.ok){authShowNotif(json||'Invalid credentials','error');return;}
-localStorage.setItem('token',json.token);
-localStorage.setItem('role',json.role);
-localStorage.setItem('fullName',json.fullName);
-localStorage.setItem('userId',json.id);
-authShowNotif(`Welcome back, ${json.fullName}!`);
-const urls={admin:'Admin.html',member:'index.html',trainer:'index.html',guest:'index.html'};
-setTimeout(()=>{window.location.href=urls[json.role]||'index.html';},1000);
-  }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
-  finally{btn.disabled=false;btn.textContent='Sign In';}
+async function authHandleLogin() {
+  const emailOk = authValidateEmail('siEmail', 'siEmailErr');
+  const passOk  = authValidateRequired('siPassword', 'siPassErr', 'Password is required');
+  if (!emailOk || !passOk) return authShowNotif('Please fix the errors above', 'error');
+  const btn = document.getElementById('signinBtn');
+  btn.disabled = true; btn.textContent = 'Please wait…';
+  try {
+    const res  = await fetch(`${API_BASE}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email:    document.getElementById('siEmail').value.trim(),
+        password: document.getElementById('siPassword').value,
+        role:     authSelectedRole
+      })
+    });
+    const json = await res.json();
+    if (!res.ok) { authShowNotif(json || 'Invalid credentials', 'error'); return; }
+    localStorage.setItem('token',    json.token);
+    localStorage.setItem('role',     json.role);
+    localStorage.setItem('fullName', json.fullName);
+    localStorage.setItem('userId',   json.id);
+    authShowNotif(`Welcome back, ${json.fullName}!`);
+     const urls = {
+  admin:   'Admin.html',
+  member:  'Member dashboard.html',
+  trainer: 'trainer-dashboard.html',
+  guest:   'guest-dashboard.html',
+    };
+    setTimeout(() => { window.location.href = urls[json.role] || 'index.html'; }, 1000);
+  } catch {
+    authShowNotif('Cannot reach the server. Please try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
 }
 
 // ── Signup ───────────────────────────────────────────
-async function authHandleSignup(){
-  const firstOk=authValidateMinLen('suFirst','suFirstErr','First name',2);
-  const lastOk=authValidateMinLen('suLast','suLastErr','Last name',2);
-  const emailOk=authValidateEmail('suEmail','suEmailErr');
-  const phoneOk=authValidatePhone('suPhone','suPhoneErr');
-  const passOk=authValidatePassword('suPassword','suPassErr');
-  const nid=document.getElementById('suNID').value.trim();
-  const birth=document.getElementById('suBirth').value;
-  const gender=document.getElementById('suGender').value;
-  let nidOk=true;
-  if(!nid||!/^\d{14}$/.test(nid)){authSetField('suNID','suNIDErr',false,'National ID must be exactly 14 digits');nidOk=false;}
-  else if(!birth||!gender){authSetField('suNID','suNIDErr',false,'Could not parse ID — check the number');nidOk=false;}
-  if(!firstOk||!lastOk||!nidOk||!emailOk||!phoneOk||!passOk) return authShowNotif('Please fix the errors above','error');
-  const btn=document.getElementById('signupBtn');
-  btn.disabled=true;btn.textContent='Please wait…';
-  try{
-  const res=await fetch(`${API_BASE}/register`,{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({firstName:document.getElementById('suFirst').value.trim(),lastName:document.getElementById('suLast').value.trim(),nationalId:nid,dateOfBirth:birth,gender,email:document.getElementById('suEmail').value.trim(),phone:document.getElementById('suPhone').value.trim(),password:document.getElementById('suPassword').value})});
-const json=await res.json();
-if(!res.ok){authShowNotif(json||'Registration failed','error');return;}
-localStorage.setItem('token',json.token);
-localStorage.setItem('role',json.role);
-localStorage.setItem('fullName',json.fullName);
-authShowNotif('Account created successfully! ✅');
-setTimeout(()=>{window.location.href='index.html';},1000);
-  }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
-  finally{btn.disabled=false;btn.textContent='Create Account';}
+async function authHandleSignup() {
+  const firstOk = authValidateMinLen('suFirst', 'suFirstErr', 'First name', 2);
+  const lastOk  = authValidateMinLen('suLast',  'suLastErr',  'Last name',  2);
+  const emailOk = authValidateEmail('suEmail', 'suEmailErr');
+  const phoneOk = authValidatePhone('suPhone', 'suPhoneErr');
+  const passOk  = authValidatePassword('suPassword', 'suPassErr');
+  const nid     = document.getElementById('suNID').value.trim();
+  const birth   = document.getElementById('suBirth').value;
+  const gender  = document.getElementById('suGender').value;
+  let nidOk = true;
+  if (!nid || !/^\d{14}$/.test(nid)) { authSetField('suNID','suNIDErr',false,'National ID must be exactly 14 digits'); nidOk = false; }
+  else if (!birth || !gender) { authSetField('suNID','suNIDErr',false,'Could not parse ID — check the number'); nidOk = false; }
+  if (!firstOk || !lastOk || !nidOk || !emailOk || !phoneOk || !passOk)
+    return authShowNotif('Please fix the errors above', 'error');
+  const btn = document.getElementById('signupBtn');
+  btn.disabled = true; btn.textContent = 'Please wait…';
+  try {
+    const res  = await fetch(`${API_BASE}/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName:   document.getElementById('suFirst').value.trim(),
+        lastName:    document.getElementById('suLast').value.trim(),
+        nationalId:  nid,
+        dateOfBirth: birth,
+        gender,
+        email:    document.getElementById('suEmail').value.trim(),
+        phone:    document.getElementById('suPhone').value.trim(),
+        password: document.getElementById('suPassword').value
+      })
+    });
+    const json = await res.json();
+    if (!res.ok) { authShowNotif(json || 'Registration failed', 'error'); return; }
+    localStorage.setItem('token',    json.token);
+    localStorage.setItem('role',     json.role);
+    localStorage.setItem('fullName', json.fullName);
+    authShowNotif('Account created successfully! ✅');
+    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+  } catch {
+    authShowNotif('Cannot reach the server. Please try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
 }
 </script>
 </body>

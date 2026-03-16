@@ -630,31 +630,70 @@ body {
 .chat-history {
   flex: 1;
   overflow-y: auto;
-  padding: 10px 0;
+  padding: 16px 4px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   scrollbar-width: thin;
 }
+.msg-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.msg-row.user-row  { flex-direction: row-reverse; }
+.msg-row.bot-row   { flex-direction: row; }
+.msg-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.msg-avatar.bot-av  { background: linear-gradient(135deg, var(--clubly-accent), #c0392b); }
+.msg-avatar.user-av { background: #e2e8f0; }
 .msg-bubble {
-  max-width: 75%;
-  padding: 10px 16px;
-  border-radius: 14px;
-  font-size: .9rem;
-  line-height: 1.5;
+  max-width: 72%;
+  padding: 11px 16px;
+  border-radius: 16px;
+  font-size: .95rem;
+  font-weight: 600;
+  line-height: 1.8;
+  word-break: break-word;
 }
 .msg-user {
   background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
   color: #fff;
-  align-self: flex-end;
   border-bottom-right-radius: 4px;
+  text-align: right;
 }
 .msg-assistant {
-  background: var(--bg);
+  background: var(--card-bg);
   color: var(--text);
-  align-self: flex-start;
   border-bottom-left-radius: 4px;
   border: 1px solid var(--border);
+  text-align: right;
+  direction: rtl;
+}
+.msg-assistant ul, .msg-assistant ol {
+  padding-right: 18px;
+  margin: 4px 0;
+}
+.msg-assistant li { margin: 3px 0; }
+/* Typing dots */
+.typing-dots { display: flex; gap: 5px; padding: 4px 2px; align-items: center; }
+.typing-dots span {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--clubly-accent);
+  animation: typingBounce 1.2s infinite;
+  opacity: 0.6;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes typingBounce {
+  0%,60%,100% { transform: translateY(0); opacity:.6; }
+  30% { transform: translateY(-6px); opacity:1; }
 }
 .quick-prompt {
   background: var(--bg);
@@ -774,12 +813,17 @@ body {
   </a>
 
   <nav class="header-nav">
-    <a onclick="showPage('dashboard')" id="hn-dashboard" class="active">Dashboard</a>
-    <a onclick="showPage('reservations')" id="hn-reservations">Reservations</a>
-    <a onclick="showPage('membership')" id="hn-membership">Membership</a>
-    <a onclick="showPage('notifications')" id="hn-notifications">Notifications</a>
-    <a onclick="showPage('ai')" id="hn-ai">AI Assistant</a>
-  </nav>
+  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+  <a href="../AfterSign/index.html">Home</a>
+  <a href="../AfterSign/activities.html">Activities</a>
+  <a href="../AfterSign/facilities.html">Facilities</a>
+  <a href="../AfterSign/trainers.html">Trainers</a>
+  <a href="../AfterSign/plans.html">Membership Plans</a>
+  <a href="../AfterSign/about.html">About Us</a>
+  <a href="../AfterSign/faq.html">FAQ</a>
+  <a href="../AfterSign/contact.html">Contact</a>
+</nav>
+
 
   <div class="header-actions">
     <button class="btn-theme-header" id="themeToggle" title="Toggle Theme">
@@ -1004,10 +1048,11 @@ body {
       <div class="content-card">
         <div class="chat-area">
           <div class="chat-history" id="chatHistory"></div>
-          <div class="d-flex flex-wrap gap-2 py-3" id="quickPrompts">
-            <button class="quick-prompt" data-prompt="What are my upcoming reservations?">My Reservations</button>
-            <button class="quick-prompt" data-prompt="How many days left in my membership?">Membership Status</button>
-            <button class="quick-prompt" data-prompt="What are the club's working hours?">Club Hours</button>
+          <div id="quickPrompts" style="display:flex; flex-wrap:wrap; gap:8px; padding:12px 0;">
+            <button class="quick-prompt" data-prompt="إيه الأنشطة المتاحة؟">الأنشطة المتاحة</button>
+            <button class="quick-prompt" data-prompt="مين المدربين المتاحين؟">المدربين</button>
+            <button class="quick-prompt" data-prompt="إيه المجموعات التدريبية المتاحة؟">المجموعات</button>
+            <button class="quick-prompt" data-prompt="أفضل رياضة لخسارة الوزن؟">خسارة الوزن</button>
           </div>
           <div class="chat-input-bar">
             <input type="text" id="chatInput" placeholder="Ask the assistant anything..." />
@@ -1032,7 +1077,7 @@ body {
               <span id="profileInitials">SA</span>
             </div>
             <h4 style="font-weight:900; color:var(--text);" id="profileNameDisplay">Sara Ali</h4>
-            <p style="color:var(--muted); margin-bottom:10px;" id="profileEmailDisplay">sara.ali@example.com</p>
+            <p style="color:var(--muted); margin-bottom:10px;" id="profileEmailDisplay"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ae9fbe8fbb4fbf6f3daffe2fbf7eaf6ffb4f9f5f7">[email&#160;protected]</a></p>
             <span class="member-since-tag">Member Since <span id="memberSinceDisplay">Jan 2022</span></span>
             <div class="mt-3">
               <input type="file" id="fileInput" accept="image/*" style="display:none;">
@@ -1043,44 +1088,80 @@ body {
           </div>
         </div>
         <div class="col-lg-8">
-          <div class="content-card">
-            <div class="card-title-clubly">Personal Information</div>
-            <form id="profileForm">
-              <div class="row g-3 mb-3">
-                <div class="col-6">
-                  <label class="form-label-clubly">First Name</label>
-                  <input class="form-control-clubly" type="text" id="firstName" value="Sara">
-                </div>
-                <div class="col-6">
-                  <label class="form-label-clubly">Last Name</label>
-                  <input class="form-control-clubly" type="text" id="lastName" value="Ali">
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label-clubly">Email Address</label>
-                <input class="form-control-clubly" type="email" id="emailAddress" value="sara.ali@example.com" disabled>
-                <div style="font-size:.78rem; color:var(--muted); margin-top:4px;">Email cannot be changed here.</div>
-              </div>
-              <div class="row g-3 mb-3">
-                <div class="col-6">
-                  <label class="form-label-clubly">Phone Number</label>
-                  <input class="form-control-clubly" type="tel" id="phoneNumber" value="+20 01234567890">
-                </div>
-                <div class="col-6">
-                  <label class="form-label-clubly">Date of Birth</label>
-                  <input class="form-control-clubly" type="date" id="dateOfBirth" value="1995-05-20">
-                </div>
-              </div>
-              <div class="mb-4">
-                <label class="form-label-clubly">Address</label>
-                <input class="form-control-clubly" type="text" id="address" value="10 Club St., City, 11835">
-              </div>
-              <div class="d-flex gap-3 align-items-center flex-wrap">
-                <button type="submit" class="save-btn-clubly">Save Changes</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#passModal" style="background:none; border:none; color:#ef4444; font-weight:700; cursor:pointer; font-family:inherit;">Change Password</button>
-              </div>
-            </form>
-          </div>
+         <div class="content-card">
+  <div class="card-title-clubly">Personal Information</div>
+  <form id="profileForm">
+    <!-- Row 1: First + Last Name -->
+    <div class="row g-3 mb-3">
+      <div class="col-6">
+        <label class="form-label-clubly">First Name</label>
+        <input class="form-control-clubly" type="text" id="firstName" value="Sara">
+      </div>
+      <div class="col-6">
+        <label class="form-label-clubly">Last Name</label>
+        <input class="form-control-clubly" type="text" id="lastName" value="Ali">
+      </div>
+    </div>
+
+    <!-- Row 2: Email + Phone -->
+    <div class="row g-3 mb-3">
+      <div class="col-6">
+        <label class="form-label-clubly">Email Address</label>
+        <input class="form-control-clubly" type="email" id="emailAddress" value="sara.ali@example.com" disabled>
+        <div style="font-size:.78rem; color:var(--muted); margin-top:4px;">Email cannot be changed here.</div>
+      </div>
+      <div class="col-6">
+        <label class="form-label-clubly">Phone Number</label>
+        <input class="form-control-clubly" type="tel" id="phoneNumber" value="+20 01234567890">
+      </div>
+    </div>
+
+    <!-- Row 3: National ID + Gender -->
+    <div class="row g-3 mb-3">
+      <div class="col-6">
+        <label class="form-label-clubly">National ID</label>
+        <input class="form-control-clubly" type="text" id="nationalId" disabled>
+        <div style="font-size:.78rem; color:var(--muted); margin-top:4px;">Cannot be changed.</div>
+      </div>
+      <div class="col-6">
+        <label class="form-label-clubly">Gender</label>
+        <input class="form-control-clubly" type="text" id="gender" disabled>
+      </div>
+    </div>
+
+    <!-- Row 4: Date of Birth + Member Type -->
+    <div class="row g-3 mb-3">
+      <div class="col-6">
+        <label class="form-label-clubly">Date of Birth</label>
+        <input class="form-control-clubly" type="date" id="dateOfBirth" value="1995-05-20">
+      </div>
+      <div class="col-6">
+        <label class="form-label-clubly">Member Type</label>
+        <input class="form-control-clubly" type="text" id="memberType" disabled>
+      </div>
+    </div>
+
+    <!-- Row 5: Membership Name + Membership Number -->
+    <div class="row g-3 mb-4">
+      <div class="col-6">
+        <label class="form-label-clubly">Membership Plan</label>
+        <input class="form-control-clubly" type="text" id="membershipPlan" disabled>
+      </div>
+      <div class="col-6">
+        <label class="form-label-clubly">Membership Number</label>
+        <input class="form-control-clubly" type="text" id="membershipNumber" disabled>
+      </div>
+    </div>
+
+    <div class="d-flex gap-3 align-items-center flex-wrap">
+      <button type="submit" class="save-btn-clubly">Save Changes</button>
+      <button type="button" data-bs-toggle="modal" data-bs-target="#passModal" 
+        style="background:none; border:none; color:#ef4444; font-weight:700; cursor:pointer; font-family:inherit;">
+        Change Password
+      </button>
+    </div>
+  </form>
+</div>
         </div>
       </div>
     </div>
@@ -1094,8 +1175,7 @@ body {
           <p style="color:var(--muted); margin-bottom:24px;">You will need to sign in again to access your dashboard and reservations.</p>
           <div class="d-flex gap-3 justify-content-center">
             <button class="btn-cancel" onclick="showPage('dashboard')">Cancel</button>
-            <button class="btn-clubly-primary" style="background:linear-gradient(135deg,#ef4444,#dc2626);" onclick="alert('Signed out! Redirecting to login...')">
-              <i class="bi bi-box-arrow-right"></i> Sign Out
+<button class="btn-clubly-primary" style="background:linear-gradient(135deg,#ef4444,#dc2626);" onclick="handleSignOut()">              <i class="bi bi-box-arrow-right"></i> Sign Out
             </button>
           </div>
         </div>
@@ -1127,7 +1207,7 @@ body {
       <div class="footer-contact">
         <div><i class="bi bi-geo-alt-fill"></i> 123 Fitness Street, City, State 12345</div>
         <div><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</div>
-        <div><i class="bi bi-envelope-fill"></i> info@clubly.com</div>
+        <div><i class="bi bi-envelope-fill"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99f0f7fff6d9faf5ecfbf5e0b7faf6f4">[email&#160;protected]</a></div>
       </div>
     </div>
     <div class="footer-col">
@@ -1210,6 +1290,88 @@ body {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  const API_BASE_URL = 'https://localhost:7132/api';
+const memberId = localStorage.getItem('userId');
+const memberName = localStorage.getItem('fullName') || 'Member';
+
+// ── تحديث الاسم في الـ header والـ welcome
+document.addEventListener('DOMContentLoaded', async () => {
+  // Header name
+  const nameParts = memberName.split(' ');
+  const firstName = nameParts[0] || 'Member';
+  const initials = nameParts.slice(0,2).map(w => w[0]?.toUpperCase() || '').join('');
+  
+  document.querySelector('.header-user span').textContent = memberName;
+  document.querySelector('.user-avatar').textContent = initials;
+  document.getElementById('profileNameDisplay').textContent = memberName;
+  document.getElementById('profileInitials').textContent = initials;
+  document.getElementById('profileEmailDisplay').textContent = '';
+  
+  // Welcome message
+  document.querySelector('.page-title-clubly span').textContent = firstName + '!';
+  
+  if (!memberId) return;
+  
+  try {
+    const res = await fetch(`${API_BASE_URL}/Members/${memberId}`);
+    if (!res.ok) throw new Error();
+    const m = await res.json();
+    
+    // Header
+    document.querySelector('.header-user span').textContent = m.fullName || memberName;
+    const parts = (m.fullName || '').split(' ');
+    const ini = parts.slice(0,2).map(w => w[0]?.toUpperCase() || '').join('');
+    document.querySelector('.user-avatar').textContent = ini;
+    
+    // Welcome
+    document.querySelector('#page-dashboard .page-title-clubly span').textContent = 
+      (parts[0] || 'Member') + '!';
+    
+    // Profile page
+    document.getElementById('profileNameDisplay').textContent = m.fullName || '';
+    document.getElementById('profileEmailDisplay').textContent = m.email || '';
+    document.getElementById('profileInitials').textContent = ini;
+    
+    const nameSplit = (m.fullName || '').split(' ');
+    document.getElementById('firstName').value = nameSplit[0] || '';
+    document.getElementById('lastName').value = nameSplit.slice(1).join(' ') || '';
+    document.getElementById('emailAddress').value = m.email || '';
+    document.getElementById('phoneNumber').value = m.phone || '';
+  if (m.nationalId)        document.getElementById('nationalId').value = m.nationalId;
+if (m.gender)            document.getElementById('gender').value = m.gender;
+if (m.memberType)        document.getElementById('memberType').value = m.memberType;
+if (m.membershipName)    document.getElementById('membershipPlan').value = m.membershipName;
+if (m.memberShipNumber)  document.getElementById('membershipNumber').value = 'CBM-' + m.memberShipNumber;
+    
+    // Join date
+    if (m.joinDate) {
+      const jd = new Date(m.joinDate);
+      document.getElementById('memberSinceDisplay').textContent = 
+        jd.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+    }
+    
+    // Profile image
+    if (m.imageUrl) {
+      const img = document.getElementById('profileImg');
+      img.src = m.imageUrl.startsWith('http') ? m.imageUrl : 'https://localhost:7132' + m.imageUrl;
+      img.style.display = 'block';
+      document.getElementById('profileInitials').style.display = 'none';
+    }
+    
+    // Membership info
+    if (m.membershipName) {
+      document.getElementById('mem-tier').textContent = m.membershipName;
+      document.getElementById('renewTierName').textContent = m.membershipName;
+      state.membership.tier = m.membershipName;
+    }
+    if (m.memberShipNumber) {
+      document.getElementById('mem-id').textContent = 'CBM-' + m.memberShipNumber;
+    }
+    
+  } catch(e) {
+    console.warn('Could not load member data:', e);
+  }
+});
 // ===== STATE =====
 const state = {
   currentPage: 'dashboard',
@@ -1458,42 +1620,130 @@ document.getElementById('markAllBtn').addEventListener('click', () => {
   filterNotifications();
 });
 
-// ===== AI CHAT =====
+// ===== AI CHAT — Clubly Chatbot (HF Space) =====
+const CHATBOT_API  = 'https://mazinyaser0-sports-chatbot.hf.space/sports-chat';
+const SESSION_ID   = 'dash_' + Math.random().toString(36).slice(2, 9);
+let   isLoadingMsg = false;
+
 function appendMsg(text, sender) {
-  const div = document.createElement('div');
-  div.className = 'msg-bubble ' + (sender === 'user' ? 'msg-user' : 'msg-assistant');
-  div.textContent = text;
-  document.getElementById('chatHistory').appendChild(div);
+  const isUser = sender === 'user';
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + (isUser ? 'user-row' : 'bot-row');
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar ' + (isUser ? 'user-av' : 'bot-av');
+  avatar.textContent = isUser ? '👤' : '🤖';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble ' + (isUser ? 'msg-user' : 'msg-assistant');
+  bubble.innerHTML = isUser ? escapeHtml(text) : formatBotText(text);
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  document.getElementById('chatHistory').appendChild(row);
   document.getElementById('chatHistory').scrollTop = 9999;
 }
 
-function aiResponse(msg) {
-  const m = msg.toLowerCase();
-  let r = "I'm sorry, I didn't quite catch that. Try asking about your Reservations or Membership.";
-  if (m.includes('hello') || m.includes('hi')) r = "Hello Sara! I'm your Clubly AI Assistant. How can I help you today?";
-  else if (m.includes('reservation') || m.includes('booking')) r = "You have 3 upcoming reservations: Zumba Class (Dec 12, 5PM), Yoga Session (Dec 12, 7PM), and Pilates Class (Dec 15, 6AM). Would you like more details?";
-  else if (m.includes('membership') || m.includes('days left')) r = "Your Platinum Tier membership is valid for 156 more days. Your next payment is due on Feb 15, 2026.";
-  else if (m.includes('hours') || m.includes('working')) r = "The club is open daily from 6:00 AM to 10:00 PM. The pool closes 30 minutes before club closing time.";
-  setTimeout(() => appendMsg(r, 'assistant'), 500);
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function showTyping() {
+  const row = document.createElement('div');
+  row.className = 'msg-row bot-row';
+  row.id = 'typingIndicator';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar bot-av';
+  avatar.textContent = '🤖';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble msg-assistant';
+  bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  document.getElementById('chatHistory').appendChild(row);
+  document.getElementById('chatHistory').scrollTop = 9999;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+function formatBotText(text) {
+  // escape HTML first
+  let t = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // headers
+  t = t.replace(/^### (.+)$/gm, '<div style="font-weight:800;font-size:.95rem;color:var(--clubly-accent);margin:10px 0 4px">$1</div>');
+  t = t.replace(/^## (.+)$/gm,  '<div style="font-weight:700;font-size:.92rem;margin:8px 0 3px;border-bottom:1px solid var(--border);padding-bottom:3px">$1</div>');
+  // bold
+  t = t.replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--clubly-accent)">$1</strong>');
+  // numbered list
+  t = t.replace(/^(\d+)\. (.+)$/gm, '<div style="margin:4px 0;padding-right:4px"><span style="color:var(--clubly-accent);font-weight:700">$1.</span> $2</div>');
+  // bullet list
+  t = t.replace(/^[\-\*] (.+)$/gm, '<div style="margin:4px 0;padding-right:4px">• $1</div>');
+  // newlines
+  t = t.replace(/\n{2,}/g, '<br><br>');
+  t = t.replace(/\n/g, '<br>');
+  return t;
+}
+
+async function sendToBot(message) {
+  if (isLoadingMsg) return;
+  isLoadingMsg = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  showTyping();
+  try {
+    const res = await fetch(CHATBOT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, session_id: SESSION_ID })
+    });
+    removeTyping();
+    if (!res.ok) throw new Error('Server error');
+    const data = await res.json();
+    appendMsg(data.reply || 'حدث خطأ، حاول مرة أخرى.', 'assistant');
+  } catch (e) {
+    removeTyping();
+    appendMsg('⚠️ مش قادر أتصل بالسيرفر، حاول تاني.', 'assistant');
+  }
+  isLoadingMsg = false;
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function hideQuickPrompts() {
+  const qp = document.getElementById('quickPrompts');
+  if (qp) { qp.style.display = 'none'; qp.style.visibility = 'hidden'; qp.style.height = '0'; qp.style.padding = '0'; }
 }
 
 document.getElementById('sendBtn').addEventListener('click', sendChat);
 document.getElementById('chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendChat(); });
 function sendChat() {
   const v = document.getElementById('chatInput').value.trim();
-  if (!v) return;
+  if (!v || isLoadingMsg) return;
   appendMsg(v, 'user');
-  aiResponse(v);
   document.getElementById('chatInput').value = '';
+  // Hide quick prompts after first message
+  hideQuickPrompts();
+  sendToBot(v);
 }
 
 document.getElementById('quickPrompts').addEventListener('click', e => {
   if (e.target.classList.contains('quick-prompt')) {
     const p = e.target.dataset.prompt;
     appendMsg(p, 'user');
-    aiResponse(p);
+    hideQuickPrompts();
+    sendToBot(p);
   }
 });
+
+// Welcome message
+setTimeout(() => {
+  appendMsg('أهلاً! أنا Clubly AI Coach 💪 اسألني عن أي رياضة أو الأنشطة المتاحة في النادي.', 'assistant');
+}, 300);
 
 // ===== PROFILE =====
 document.getElementById('profileForm').addEventListener('submit', e => {
@@ -1517,32 +1767,55 @@ document.getElementById('fileInput').addEventListener('change', function() {
     reader.readAsDataURL(this.files[0]);
   }
 });
-
-document.getElementById('passForm').addEventListener('submit', e => {
+document.getElementById('passForm').addEventListener('submit', async e => {
   e.preventDefault();
   const curr = document.getElementById('currPass').value;
-  const np = document.getElementById('newPass').value;
-  const cp = document.getElementById('confirmPass').value;
-  const msg = document.getElementById('passMsg');
-  if (curr.length < 5) { msg.innerHTML = '<span style="color:#ef4444; font-size:.85rem;">Invalid current password.</span>'; return; }
-  if (np !== cp) { msg.innerHTML = '<span style="color:#ef4444; font-size:.85rem;">Passwords do not match.</span>'; return; }
-  msg.innerHTML = '<span style="color:#22c55e; font-size:.85rem;">Password updated successfully!</span>';
-  setTimeout(() => {
-    bootstrap.Modal.getInstance(document.getElementById('passModal')).hide();
-    msg.innerHTML = '';
-    document.getElementById('passForm').reset();
-  }, 1500);
+  const np   = document.getElementById('newPass').value;
+  const cp   = document.getElementById('confirmPass').value;
+  const msg  = document.getElementById('passMsg');
+  msg.innerHTML = '';
+
+  if (!curr) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>'; return; }
+  if (!np || np.length < 6) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 6 characters.</span>'; return; }
+  if (np !== cp) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords do not match.</span>'; return; }
+
+  const fd = new FormData();
+  fd.append('CurrentPassword', curr);
+  fd.append('NewPassword', np);
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/Members/${memberId}`, { method: 'PUT', body: fd });
+    if (!res.ok) {
+      const err = await res.text();
+      msg.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${err || 'Failed to update password.'}</span>`;
+      return;
+    }
+    msg.innerHTML = '<span style="color:#22c55e;font-size:.85rem;">✓ Password updated successfully!</span>';
+    setTimeout(() => {
+      bootstrap.Modal.getInstance(document.getElementById('passModal')).hide();
+      msg.innerHTML = '';
+      document.getElementById('currPass').value = '';
+      document.getElementById('newPass').value = '';
+      document.getElementById('confirmPass').value = '';
+    }, 1500);
+  } catch {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Failed to connect to server.</span>';
+  }
 });
 
+// وأضف الـ function
+function handleSignOut() {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.href = 'index.html';
+}
 // ===== INIT =====
-document.addEventListener('DOMContentLoaded', () => {
-  generateCalendar();
-  renderUpcoming();
-  renderSchedule();
-  renderMembership();
-  filterNotifications();
-  appendMsg("Welcome to your Clubly AI Assistant! How can I help you today?", 'assistant');
-});
+generateCalendar();
+renderUpcoming();
+renderSchedule();
+renderMembership();
+renderNotifications(state.notifications);
+
 </script>
 </body>
 </html>
