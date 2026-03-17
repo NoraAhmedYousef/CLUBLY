@@ -951,8 +951,9 @@ body {
           <h1 class="page-title-clubly">Reservations</h1>
           <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Manage your activity bookings</p>
         </div>
-        <button class="btn-clubly-primary" onclick="alert('Reservation booking coming soon!')">
-          <i class="bi bi-plus-lg"></i> New Reservation
+<button class="btn-clubly-primary" onclick="loadMyBookings()">
+  <i class="bi bi-arrow-clockwise"></i> Refresh
+</button>          <i class="bi bi-plus-lg"></i> New Reservation
         </button>
       </div>
 
@@ -1371,6 +1372,8 @@ if (m.memberShipNumber)  document.getElementById('membershipNumber').value = 'CB
   } catch(e) {
     console.warn('Could not load member data:', e);
   }
+      loadMyBookings();
+
 });
 // ===== STATE =====
 const state = {
@@ -1808,6 +1811,63 @@ function handleSignOut() {
   localStorage.clear();
   sessionStorage.clear();
   window.location.href = 'index.html';
+}
+async function loadMyBookings() {
+  if (!memberId) return;
+  try {
+    const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+    if (!res.ok) throw new Error();
+    const bookings = await res.json();
+
+    // Update stats
+    document.getElementById('dash-bookings').textContent = bookings.length;
+
+    // Update upcoming reservations
+    state.reservations = bookings
+      .filter(b => b.status.toLowerCase() !== 'cancelled')
+      .slice(0, 5)
+      .map(b => ({
+        name: b.activityName + ' — ' + b.groupName,
+        date: b.startDate,
+        time: b.status,
+        color: b.status.toLowerCase() === 'approved' ? '#22c55e' :
+               b.status.toLowerCase() === 'pending'  ? '#f59e0b' : '#94a3b8'
+      }));
+
+    renderUpcoming();
+
+    // Update schedule data from bookings
+    bookings.forEach(b => {
+      const key = b.startDate?.split('T')[0] || b.startDate;
+      if (!key) return;
+      if (!state.scheduleData[key]) state.scheduleData[key] = [];
+      const exists = state.scheduleData[key].find(x => x.id === b.id);
+      if (!exists) {
+        state.scheduleData[key].push({
+          id: b.id,
+          name: b.activityName,
+          trainer: b.memberName || '',
+          location: b.groupName,
+          time: b.startDate + ' → ' + b.endDate,
+          status: b.status === 'Approved' ? 'Confirmed' :
+                  b.status === 'Pending'  ? 'Pending Approval' : 'Completed',
+          icon: 'fas fa-running',
+          colorClass: b.status === 'Approved' ? 'sched-blue' :
+                      b.status === 'Pending'  ? 'sched-orange' : 'sched-gray'
+        });
+      }
+    });
+
+    // Highlight activity dates in calendar
+    state.activityDates = [...new Set(bookings.map(b => {
+      const d = b.startDate?.split('T')[0] || b.startDate;
+      return d ? new Date(d).getDate() : null;
+    }).filter(Boolean))];
+    generateCalendar();
+
+  } catch(e) {
+    console.warn('Could not load bookings:', e);
+  }
 }
 // ===== INIT =====
 generateCalendar();

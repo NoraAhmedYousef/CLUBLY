@@ -173,6 +173,7 @@ function clearActivityFilters() {
 }
 
 function handleBookActivity(id) {
+  window._currentActivityId = id;
   const act  = (window._allActivities || []).find(a => (a.Id || a.id) == id);
   const name = act ? (act.Name || act.name || 'Activity') : 'Activity';
   openActivityGroupPicker(id, name);
@@ -289,8 +290,10 @@ function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime,
     btn.style.color       = '#e85d2f';
     btn.style.boxShadow   = '0 0 0 3px rgba(232,93,47,.15)';
   }
-window._actPickerChoice = { groupId, groupName, date, startTime, endTime, price, trainer, durationDays };
-  document.getElementById('actPickerSelected').innerHTML =
+window._actPickerChoice = { 
+  groupId, groupName, date, startTime, endTime, price, trainer, durationDays,
+  activityId: window._currentActivityId || 0
+};  document.getElementById('actPickerSelected').innerHTML =
     `<i class="bi bi-check-circle-fill" style="color:#2ec4b6"></i> <strong>${groupName}</strong> &nbsp; ${date} &nbsp; ${startTime} → ${endTime}`;
 
   const confirmBtn = document.getElementById('actPickerConfirm');

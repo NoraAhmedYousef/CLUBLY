@@ -702,7 +702,13 @@ body {
       <i class="bi bi-megaphone-fill"></i>
       <span class="link-text">Announcements</span>
     </a>
-    
+    <div class="sidebar-divider"></div>
+<div class="sidebar-section">Bookings</div>
+
+<a class="sidebar-link" onclick="showPage('bookings')" data-label="Bookings">
+  <i class="bi bi-calendar-check-fill"></i>
+  <span class="link-text">Bookings</span>
+</a>
     <div class="sidebar-divider"></div>
 <div class="sidebar-section">System</div>
 
@@ -725,72 +731,17 @@ body {
         <p>Here's what's happening at <span class="accent-text fw-bold">Clubly</span> today.</p>
       </div>
 
-      <div class="row g-4 mb-5">
-        <div class="col-md-3">
-          <div class="stats-card border-start border-primary border-4">
-            <div class="stat-icon bg-primary bg-opacity-10 text-primary"><i class="bi bi-people-fill"></i></div>
-            <p>Total Members</p>
-            <h3 class="text-primary">6</h3>
-            <a href="#" class="btn btn-primary btn-custom" onclick="showPage('member')">View Members</a>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card border-start border-success border-4">
-            <div class="stat-icon bg-success bg-opacity-10 text-success"><i class="bi bi-person-badge-fill"></i></div>
-            <p>Trainers</p>
-            <h3 class="text-success">3</h3>
-            <a href="#" class="btn btn-success btn-custom" onclick="showPage('trainer')">View Trainers</a>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card border-start border-warning border-4">
-            <div class="stat-icon bg-warning bg-opacity-10 text-warning"><i class="bi bi-currency-dollar"></i></div>
-            <p>Total Revenue (YTD)</p>
-            <h3 class="text-warning">$150</h3>
-            <a href="#" class="btn btn-warning btn-custom text-dark" onclick="showPage('membership')">View Payments</a>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card border-start border-danger border-4">
-            <div class="stat-icon bg-danger bg-opacity-10 text-danger"><i class="bi bi-calendar-event-fill"></i></div>
-            <p>Active Activities</p>
-            <h3 class="text-danger">2</h3>
-            <a href="#" class="btn btn-danger btn-custom" onclick="showPage('activity')">View Activities</a>
-          </div>
-        </div>
-      </div>
+          <div style="margin-left: 150px;">   
+<img src="../img/2026-03-11 at 5.28.49 PM.jpeg"  width="900px">
 
-      <div class="row g-4">
-        <div class="col-md-6">
-          <div class="clubly-card p-4">
-            <h6 class="fw-bold mb-3"><i class="bi bi-building-fill text-primary me-2"></i>Facilities Overview</h6>
-            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-              <span>Main Gym</span><span class="badge bg-success">Active</span>
-            </div>
-            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
-              <span>Swimming Pool</span><span class="badge bg-success">Active</span>
-            </div>
-            <div class="d-flex justify-content-between align-items-center py-2">
-              <span>Squash Court</span><span class="badge bg-warning text-dark">Maintenance</span>
-            </div>
-            <a href="#" class="btn btn-sm btn-outline-primary mt-3" onclick="showPage('facility')">Manage Facilities →</a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="clubly-card p-4">
-            <h6 class="fw-bold mb-3"><i class="bi bi-megaphone-fill text-danger me-2"></i>Recent Announcements</h6>
-            <div class="py-2 border-bottom">
-              <div class="fw-semibold small">Summer Camp 2025 Registration Open</div>
-              <div class="small text-muted">Published: 2025-06-01</div>
-            </div>
-            <div class="py-2">
-              <div class="fw-semibold small">Pool Maintenance Schedule Update</div>
-              <div class="small text-muted">Published: 2025-05-15</div>
-            </div>
-            <a href="#" class="btn btn-sm btn-outline-danger mt-3" onclick="showPage('announcement')">All Announcements →</a>
-          </div>
-        </div>
-      </div>
+<br><br>
+
+<a href="https://app.powerbi.com/groups/me/reports/6dddef52-90d4-4452-9319-296c59d4fbfa/b1f4237056b02e0e1375?experience=power-bi" target="_self">
+<button  class="btn btn-success btn-custom">View Interactive Dashboard</button>
+</a>
+  </div>
+
+      
     </div>
 
     <!-- =============================== MEMBERS =============================== -->
@@ -1007,8 +958,12 @@ body {
             <tbody id="categoriesTableBody"><tr><td colspan="5" class="text-center py-4 text-muted">Loading...</td></tr></tbody>
           </table>
         </div>
+        <div class="d-flex justify-content-between align-items-center p-3 border-top">
+          <small id="itemsInfo_cat" class="text-muted"></small>
+          <nav><ul class="pagination mb-0" id="pagination_cat"></ul></nav>
+        </div>
       </div>
-      <nav><ul id="pagination_cat" class="pagination justify-content-center mt-3"></ul></nav>
+    
 
       <!-- Category Modal -->
       <div class="modal fade" id="categoryModal" tabindex="-1">
@@ -1123,7 +1078,7 @@ body {
             </select>
           </div>
           <div class="col-auto ms-auto">
-            <button class="btn btn-outline-secondary btn-sm" onclick="loadSchedules()">
+            <button class="btn btn-outline-primary" onclick="loadSchedules()">
               <i class="bi bi-arrow-clockwise"></i> Refresh
             </button>
           </div>
@@ -1500,6 +1455,10 @@ body {
             <tbody id="membershipTableBody"><tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr></tbody>
           </table>
         </div>
+        <div class="d-flex justify-content-between align-items-center p-3 border-top">
+          <small id="itemsInfo_m" class="text-muted"></small>
+           <nav><ul id="pagination_m" class="pagination justify-content-center mt-3"></ul></nav>
+        </div>
       </div>
 
       <!-- Membership Modal -->
@@ -1525,14 +1484,14 @@ body {
     <div class="page" id="page-announcement">
       <div class="page-header">
         <div><h2 class="fw-bold m-0">Announcements</h2><small class="text-muted">Manage announcements — Create / Update / Delete</small></div>
-        <button class="btn btn-primary" id="openAddBtn_ann"><i class="bi bi-plus-lg"></i> Add Announcement</button>
+        <button class="btn btn-primary rounded-pill px-4" id="openAddBtn_ann"><i class="bi bi-plus-lg"></i> Add Announcement</button>
       </div>
       <div class="clubly-card p-3 mb-3">
         <div class="row g-2 align-items-center controls">
           <div class="col-auto"><input id="searchInput_ann" class="form-control" placeholder="Search by title or text..."></div>
           <div class="col-auto"><select id="sortBy_ann" class="form-select"><option value="date_desc">Publish Date ↓</option><option value="date_asc">Publish Date ↑</option><option value="title_asc">Title A→Z</option><option value="title_desc">Title Z→A</option></select></div>
           <div class="col-auto"><select id="pageSize_ann" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option></select></div>
-          <div class="col-auto ms-auto"><small class="text-muted">Showing <span id="itemsInfo_ann">0</span> items</small></div>
+          <div class="col-auto ms-auto"><small class="text-muted"><span id="itemsInfo_ann"></span> </small></div>
           <div class="col-auto"><button class="btn btn-outline-primary" id="refreshBtn_ann"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
         </div>
       </div>
@@ -1630,6 +1589,82 @@ body {
       </div>
       <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer_ann" style="z-index:12000;"></div>
     </div>
+
+
+
+
+    <div class="page" id="page-bookings">
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold">
+    <i class="bi bi-calendar-check-fill me-2" style="color:var(--clubly-accent)"></i>
+    Bookings Management
+  </h4>
+  <button class="btn btn-outline-primary btn-sm" onclick="loadBookings()">
+    <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+  </button>
+</div>
+
+  <!-- Tabs: Activity / Facility -->
+  <ul class="nav nav-tabs mb-3" id="bookingTabs">
+    <li class="nav-item">
+      <button class="nav-link active" onclick="switchBookingTab('activity')">Activity Bookings</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" onclick="switchBookingTab('facility')">Facility Bookings</button>
+    </li>
+  </ul>
+
+  <!-- Activity Bookings Table -->
+  <div id="tab-activity-bookings">
+    <div class="card p-3">
+      <table class="table table-hover align-middle">
+        <thead style="background:var(--table-head)">
+          <tr>
+            <th>#</th>
+            <th>Member</th>
+            <th>Activity</th>
+            <th>Group</th>
+            <th>Date</th>
+            <th>End Date</th>
+            <th>Participants</th>
+            <th>Price</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+       <tbody id="activityBookingsBody">
+          <!-- تتحمل من الـ API -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Facility Bookings Table -->
+  <div id="tab-facility-bookings" style="display:none">
+    <div class="card p-3">
+      <table class="table table-hover align-middle">
+        <thead style="background:var(--table-head)">
+          <tr>
+            <th>#</th>
+            <th>Member</th>
+            <th>Facility</th>
+            <th>Date</th>
+            <th>End Date</th>
+            <th>Participants</th>
+            <th>Price</th>
+           <th>Receipt</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="facilityBookingsBody">
+          <!-- تتحمل من الـ API -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
     <!-- =============================== Admins =============================== -->
  
 <div class="page" id="page-admins">
@@ -1925,7 +1960,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
-const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins','profile'];
+const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins','profile','bookings'];
 
 function showPage(name) {
   pages.forEach(p => {
@@ -2311,10 +2346,11 @@ function renderCatPage(){
   const start=(currentPageCat-1)*pageSizeCat, items=filteredCats.slice(start,start+pageSizeCat);
   const tbody=document.getElementById('categoriesTableBody'); tbody.innerHTML='';
   if(!items.length){tbody.innerHTML='<tr><td colspan="5" class="text-center py-4 text-muted">No categories found</td></tr>'; return;}
-  items.forEach(cat=>{const tr=document.createElement('tr'); tr.innerHTML=`<td class="ps-3 fw-semibold">${escapeHtml(cat.name)}</td><td>${escapeHtml(cat.description||'')}</td><td class="text-center"><span class="badge ${cat.status==='Active'?'bg-success':'bg-secondary'}">${escapeHtml(cat.status)}</span></td><td class="text-center small text-muted">${cat.createdAt?new Date(cat.createdAt).toLocaleDateString():'-'}</td><td class="text-center"><button class="btn btn-sm btn-outline-primary me-2 edit-btn-cat"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-outline-danger delete-btn-cat"><i class="bi bi-trash"></i></button></td>`; tr.querySelector('.edit-btn-cat').onclick=()=>openCatEditModal(cat.id); tr.querySelector('.delete-btn-cat').onclick=()=>deleteCat(cat.id); tbody.appendChild(tr);});
+  items.forEach(cat=>{const tr=document.createElement('tr'); tr.innerHTML=`<td class="ps-3 fw-semibold">${escapeHtml(cat.name)}</td><td>${escapeHtml(cat.description||'')}</td><td class="text-center"><span class="badge ${cat.status==='Active'?'bg-success':'bg-secondary'}">${escapeHtml(cat.status)}</span></td><td class="text-center small text-muted">${cat.createdAt?new Date(cat.createdAt).toLocaleDateString():'-'}</td><td class="text-center"><button class="btn btn-link text-primary  edit-btn-cat"><i class="bi bi-pencil-square"></i></button><button class=" btn btn-link text-danger delete-btn-cat"><i class="bi bi-trash3-fill"></i></button></td>`; tr.querySelector('.edit-btn-cat').onclick=()=>openCatEditModal(cat.id); tr.querySelector('.delete-btn-cat').onclick=()=>deleteCat(cat.id); tbody.appendChild(tr);});
   const totalPages=Math.max(1,Math.ceil(filteredCats.length/pageSizeCat));
   makePagination('pagination_cat',currentPageCat,totalPages,p=>{currentPageCat=p;renderCatPage();});
 }
+
 const catModal=()=>bootstrap.Modal.getOrCreateInstance(document.getElementById('categoryModal'));
 document.getElementById('addBtn').onclick=()=>{document.getElementById('modalTitle').innerText='Add New Facility Category';document.getElementById('saveBtnText').innerText='Save';document.getElementById('categoryId').value='';document.getElementById('cat_name').value='';document.getElementById('cat_description').value='';document.getElementById('cat_status').value='Active';catModal().show();};
 async function openCatEditModal(id){const res=await fetch(`${catApiUrl}/${id}`);const cat=await res.json();document.getElementById('modalTitle').innerText='Edit Category';document.getElementById('saveBtnText').innerText='Update';document.getElementById('categoryId').value=cat.id;document.getElementById('cat_name').value=cat.name;document.getElementById('cat_description').value=cat.description||'';document.getElementById('cat_status').value=cat.status;catModal().show();}
@@ -2329,6 +2365,9 @@ document.getElementById('searchInput_cat')?.addEventListener('input',e=>{searchC
 document.getElementById('sortBy_cat')?.addEventListener('change',e=>{sortCat=e.target.value;applyCatFilters();});
 document.getElementById('pageSize_cat')?.addEventListener('change',()=>{currentPageCat=1;applyCatFilters();});
 document.getElementById('refreshBtn_cat')?.addEventListener('click',fetchCategories);
+
+
+
 
 // ===================================================
 // ============== FACILITIES MODULE ==================
@@ -2715,8 +2754,8 @@ function addEditSlot(container, data) {
       </select>
     </div>
     <div class="col-auto d-flex align-items-end">
-      <button type="button" class="btn btn-outline-danger btn-sm remove-slot-btn">
-        <i class="bi bi-trash"></i>
+      <button type="button" class="btn btn-link text-danger btn-sm remove-slot-btn">
+        <i class="bi bi-trash3-fill"></i>
       </button>
     </div>
   </div>`;
@@ -2887,10 +2926,13 @@ document.getElementById('slotsContainer_g').addEventListener('change', (e) => {
 const msApiUrl='https://localhost:7132/api/MemberShips';
 const msModalEl=document.getElementById('membershipModal');
 const msModal=new bootstrap.Modal(msModalEl);
-function fetchMemberships(){document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>';fetch(msApiUrl).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(ms=>{document.getElementById('membershipTableBody').innerHTML='';ms.forEach(m=>{const tr=document.createElement('tr');tr.dataset.id=m.id;tr.innerHTML=`<td>${m.name}</td><td>${m.description??''}</td><td>${m.duration}</td><td>$${m.price}</td><td><span class="badge ${m.status==='Active'?'bg-success':'bg-secondary'}">${m.status}</span></td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-ms"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-ms"><i class="bi bi-trash3-fill"></i></button></td>`;document.getElementById('membershipTableBody').appendChild(tr);});}).catch(e=>document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center text-danger py-4">Failed to load</td></tr>');}
+function fetchMemberships(){document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>';fetch(msApiUrl).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(ms=>{document.getElementById('membershipTableBody').innerHTML='';ms.forEach(m=>{const tr=document.createElement('tr');tr.dataset.id=m.id;tr.innerHTML=`<td>${m.name}</td><td>${m.description??''}</td><td>${m.duration}</td><td>$${m.price}</td><td><span class="badge ${m.status==='Active'?'bg-success':'bg-secondary'}">${m.status}</span></td><td class="text-center"><button class=" btn btn-link text-primary edit-btn-ms"><i class="bi bi-pencil-square"></i></button><button class="btn btn-link text-danger  delete-btn-ms"><i class="bi bi-trash3-fill"></i></button></td>`;document.getElementById('membershipTableBody').appendChild(tr);});}).catch(e=>document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center text-danger py-4">Failed to load</td></tr>');}
 document.getElementById('membershipTableBody').addEventListener('click',async e=>{const btn=e.target.closest('button');if(!btn)return;const tr=btn.closest('tr');const id=tr?.dataset.id;if(btn.classList.contains('delete-btn-ms')){if(confirm('Delete this membership?')){await fetch(`${msApiUrl}/${id}`,{method:'DELETE'});fetchMemberships();}}else if(btn.classList.contains('edit-btn-ms')){const m=await(await fetch(`${msApiUrl}/${id}`)).json();document.getElementById('membershipIdHidden').value=m.id;document.getElementById('ms_name').value=m.name;document.getElementById('ms_description').value=m.description??'';document.getElementById('ms_duration').value=m.duration;document.getElementById('ms_price').value=m.price;document.getElementById('ms_status').value=m.status;document.getElementById('saveMembershipBtn').textContent='Update';msModal.show();}});
 document.getElementById('saveMembershipBtn').addEventListener('click',async()=>{const id=document.getElementById('membershipIdHidden').value;const data={name:document.getElementById('ms_name').value,description:document.getElementById('ms_description').value,duration:parseInt(document.getElementById('ms_duration').value),price:parseFloat(document.getElementById('ms_price').value),status:document.getElementById('ms_status').value};const method=id?'PUT':'POST';const url=id?`${msApiUrl}/${id}`:msApiUrl;try{const res=await fetch(url,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(!res.ok)throw new Error();msModal.hide();fetchMemberships();}catch(e){alert('Failed');}});
 msModalEl.addEventListener('hidden.bs.modal',()=>{document.getElementById('membershipIdHidden').value='';document.getElementById('ms_name').value='';document.getElementById('ms_description').value='';document.getElementById('ms_duration').value='';document.getElementById('ms_price').value='';document.getElementById('ms_status').value='';document.getElementById('saveMembershipBtn').textContent='Save';});
+let membershipsData=[], currentPageMs=1, pageSizeMs=10;
+function fetchMemberships(){document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>';fetch(msApiUrl).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(ms=>{membershipsData=ms;currentPageMs=1;renderMembershipPage(currentPageMs);}).catch(()=>document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center text-danger py-4">Failed to load</td></tr>');}
+function renderMembershipPage(page){const tbody=document.getElementById('membershipTableBody');tbody.innerHTML='';const total=membershipsData.length,totalPages=Math.max(1,Math.ceil(total/pageSizeMs));if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageMs=page;const start=(page-1)*pageSizeMs,end=Math.min(start+pageSizeMs,total),items=membershipsData.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">No memberships found</td></tr>';}else{items.forEach(m=>{const tr=document.createElement('tr');tr.dataset.id=m.id;tr.innerHTML=`<td>${m.name}</td><td>${m.description??''}</td><td>${m.duration}</td><td>$${m.price}</td><td><span class="badge ${m.status==='Active'?'bg-success':'bg-secondary'}">${m.status}</span></td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-ms"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-ms"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});}document.getElementById('itemsInfo_m').textContent=`Showing ${total===0?0:start+1}-${end} of ${total}`;makePagination('pagination_m',currentPageMs,totalPages,renderMembershipPage);}
 
 // ===================================================
 // ============== ANNOUNCEMENTS MODULE ===============
@@ -2900,7 +2942,7 @@ let annData=[], filteredAnn=[], currentPageAnn=1, pageSizeAnn=10;
 function showToastAnn(msg,type='success'){showToastIn('toastContainer_ann',msg,type);}
 async function loadAnnouncements(){document.getElementById('annTable').innerHTML='<tr><td colspan="5" class="p-5 text-center text-muted">Loading...</td></tr>';try{const res=await fetch(annApiUrl);if(!res.ok)throw new Error();annData=await res.json();applyAnnFilters();}catch(e){document.getElementById('annTable').innerHTML='<tr><td colspan="5" class="text-center text-danger py-4">Error loading announcements</td></tr>';}}
 function applyAnnFilters(){const q=document.getElementById('searchInput_ann')?.value.trim().toLowerCase()||'';const sortBy=document.getElementById('sortBy_ann')?.value||'date_desc';pageSizeAnn=parseInt(document.getElementById('pageSize_ann')?.value||'10');filteredAnn=annData.filter(a=>!q||(a.title&&a.title.toLowerCase().includes(q))||(a.text&&a.text.toLowerCase().includes(q)));filteredAnn.sort((a,b)=>{switch(sortBy){case'date_desc':return new Date(b.publishDate)-new Date(a.publishDate);case'date_asc':return new Date(a.publishDate)-new Date(b.publishDate);case'title_asc':return(a.title||'').localeCompare(b.title||'');case'title_desc':return(b.title||'').localeCompare(a.title||'');default:return 0;}});renderAnnPage(1);}
-function renderAnnPage(page){const tbody=document.getElementById('annTable');tbody.innerHTML='';const total=filteredAnn.length,totalPages=Math.ceil(total/pageSizeAnn)||1;if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageAnn=page;const start=(page-1)*pageSizeAnn,end=Math.min(start+pageSizeAnn,total);const items=filteredAnn.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="5" class="text-center py-4">No announcements</td></tr>';}else items.forEach(a=>{tbody.innerHTML+=`<tr><td>${escapeHtml(a.title)}</td><td style="max-width:400px">${escapeHtml(a.text)}</td><td class="text-center">${a.publishDate?.split('T')[0]||''}</td><td>${a.imageUrl?`<img src="${fixUrl(a.imageUrl)}" class="thumb">`:'<span class="small-muted">No Image</span>'}</td><td class="text-center"><button class="btn btn-sm btn-outline-primary edit-btn-ann" data-id="${a.id}"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-sm btn-outline-danger delete-btn-ann" data-id="${a.id}"><i class="bi bi-trash3-fill"></i></button></td></tr>`;});document.getElementById('itemsInfo_ann').textContent=total;document.getElementById('pageInfo_ann').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_ann',currentPageAnn,totalPages,renderAnnPage);attachAnnEvents();}
+function renderAnnPage(page){const tbody=document.getElementById('annTable');tbody.innerHTML='';const total=filteredAnn.length,totalPages=Math.ceil(total/pageSizeAnn)||1;if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageAnn=page;const start=(page-1)*pageSizeAnn,end=Math.min(start+pageSizeAnn,total);const items=filteredAnn.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="5" class="text-center py-4">No announcements</td></tr>';}else items.forEach(a=>{tbody.innerHTML+=`<tr><td>${escapeHtml(a.title)}</td><td style="max-width:400px">${escapeHtml(a.text)}</td><td class="text-center">${a.publishDate?.split('T')[0]||''}</td><td>${a.imageUrl?`<img src="${fixUrl(a.imageUrl)}" class="thumb">`:'<span class="small-muted">No Image</span>'}</td><td class="text-center"><button class="btn btn-link text-primary edit-btn-ann" data-id="${a.id}"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-link text-danger delete-btn-ann" data-id="${a.id}"><i class="bi bi-trash3-fill"></i></button></td></tr>`;});document.getElementById('itemsInfo_ann').textContent=total;document.getElementById('pageInfo_ann').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_ann',currentPageAnn,totalPages,renderAnnPage);attachAnnEvents();}
 function attachAnnEvents(){document.querySelectorAll('.edit-btn-ann').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${annApiUrl}/${btn.dataset.id}`);const a=await res.json();document.getElementById('editId_ann').value=a.id;document.getElementById('editTitle_ann').value=a.title;document.getElementById('editText_ann').value=a.text;document.getElementById('editDate_ann').value=a.publishDate?.split('T')[0]||'';const prev=document.getElementById('editPreview_ann');const removeBtn=document.getElementById('removeImageBtn_ann');if(a.imageUrl){prev.src=fixUrl(a.imageUrl);prev.style.display='block';removeBtn.style.display='inline-block';removeBtn.dataset.remove='0';}else{prev.style.display='none';removeBtn.style.display='none';}new bootstrap.Modal(document.getElementById('editModal_ann')).show();}catch(e){showToastAnn('Error loading data','error');}};});document.querySelectorAll('.delete-btn-ann').forEach(btn=>{btn.onclick=()=>{Swal.fire({title:'Delete announcement?',icon:'warning',showCancelButton:true,confirmButtonText:'Yes, delete'}).then(async r=>{if(r.isConfirmed){try{await fetch(`${annApiUrl}/${btn.dataset.id}`,{method:'DELETE'});showToastAnn('Deleted');loadAnnouncements();}catch(e){showToastAnn('Delete failed','error');}}});};});}
 document.getElementById('openAddBtn_ann').onclick=()=>{document.getElementById('addForm_ann').reset();document.getElementById('addPreview_ann').style.display='none';new bootstrap.Modal(document.getElementById('addModal_ann')).show();};
 /* addSaveBtn_ann and editSaveBtn_ann overridden below with validation */
@@ -2961,8 +3003,8 @@ function renderAdmins() {
       <td>${a.gender || ''}</td>
 <td>${a.dateOfBirth ? a.dateOfBirth.split('T')[0] : '—'}</td>
       <td>
-        <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditAdmin(${a.id})"><i class="bi bi-pencil"></i></button>
-        <button class="btn btn-sm btn-outline-danger" onclick="deleteAdmin(${a.id})"><i class="bi bi-trash"></i></button>
+        <button class="btn btn-link text-primary" onclick="openEditAdmin(${a.id})"><i class="bi bi-pencil-square"></i></button>
+        <button class="btn btn-link text-danger" onclick="deleteAdmin(${a.id})"><i class="bi bi-trash3-fill"></i></button>
       </td>
     </tr>`).join('');
 }
@@ -3066,8 +3108,12 @@ window.showPage = function(name) {
   if (name === 'announcement') loadAnnouncements();
   if (name === 'admins') loadAdmins();
 if (name === 'profile') loadAdminProfile();
+if (name === 'bookings') loadBookings();
+
 
 };
+
+
 
 // ===================================================
 // SIGN OUT
@@ -3528,6 +3574,117 @@ document.querySelectorAll('.modal').forEach(modal => {
     });
   });
 });
+// ===== BOOKINGS =====
+const API = 'https://localhost:7132/api';
+
+function switchBookingTab(tab) {
+  document.getElementById('tab-activity-bookings').style.display = tab === 'activity' ? '' : 'none';
+  document.getElementById('tab-facility-bookings').style.display = tab === 'facility' ? '' : 'none';
+  document.querySelectorAll('#bookingTabs .nav-link').forEach((btn, i) => {
+    btn.classList.toggle('active', (tab === 'activity' && i === 0) || (tab === 'facility' && i === 1));
+  });
+}
+
+async function loadBookings() {
+  // Activity Bookings
+  try {
+    const res1 = await fetch(`${API}/ActivityBookings`);
+    const activityData = await res1.json();
+    document.getElementById('activityBookingsBody').innerHTML = activityData.length
+      ? activityData.map((b, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${b.memberName}</td>
+          <td>${b.activityName}</td>
+          <td>${b.groupName}</td>
+          <td>${b.startDate}</td>
+          <td>${b.endDate}</td>
+          <td>${b.participants}</td>
+       <td>${b.totalPrice} EGP</td>
+          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+          <td>${getStatusBadge(b.status)}</td>
+          <td>${getActionButtons(b.id, b.status, 'activity')}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="10" class="text-center text-muted py-4">No activity bookings found</td></tr>';
+  } catch(e) {
+    document.getElementById('activityBookingsBody').innerHTML =
+      '<tr><td colspan="10" class="text-center text-danger py-4">Failed to load activity bookings</td></tr>';
+    console.error('Activity bookings error:', e);
+  }
+
+  // Facility Bookings
+  try {
+    const res2 = await fetch(`${API}/FacilityBookings`);
+    const facilityData = await res2.json();
+    document.getElementById('facilityBookingsBody').innerHTML = facilityData.length
+      ? facilityData.map((b, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${b.bookedByName}</td>
+          <td>${b.facilityName}</td>
+          <td>${b.bookingDate}</td>
+          <td>${b.startTime} → ${b.endTime}</td>
+          <td>${b.participants}</td>
+     <td>${b.price} EGP</td>
+          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+          <td>${getStatusBadge(b.status)}</td>
+          <td>${getActionButtons(b.id, b.status, 'facility')}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="9" class="text-center text-muted py-4">No facility bookings found</td></tr>';
+  } catch(e) {
+    document.getElementById('facilityBookingsBody').innerHTML =
+      '<tr><td colspan="9" class="text-center text-danger py-4">Failed to load facility bookings</td></tr>';
+    console.error('Facility bookings error:', e);
+  }
+}
+function getStatusBadge(status) {
+  const s = (status || '').toLowerCase();
+  if (s === 'pending')                       return '<span class="badge bg-warning text-dark">Pending</span>';
+  if (s === 'approved' || s === 'confirmed') return '<span class="badge bg-success">Approved</span>';
+  if (s === 'cancelled')                     return '<span class="badge bg-danger">Cancelled</span>';
+  return '<span class="badge bg-secondary">Unknown</span>';
+}
+function getActionButtons(id, status, type) {
+  if ((status || '').toLowerCase() !== 'pending') return '<span class="text-muted small">No actions</span>';
+  return `
+    <button class="btn btn-sm btn-success me-1" onclick="updateBooking(${id},'approve','${type}')">
+      <i class="bi bi-check-lg"></i> Approve
+    </button>
+    <button class="btn btn-sm btn-danger" onclick="updateBooking(${id},'cancel','${type}')">
+      <i class="bi bi-x-lg"></i> Cancel
+    </button>`;
+}
+
+async function updateBooking(id, action, type) {
+  const confirmed = await Swal.fire({
+    title: action === 'approve' ? 'Approve this booking?' : 'Cancel this booking?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: action === 'approve' ? '#22c55e' : '#ef4444',
+    confirmButtonText: action === 'approve' ? 'Yes, Approve' : 'Yes, Cancel'
+  });
+  if (!confirmed.isConfirmed) return;
+
+const statusMap = {
+  activity: { approve: 'Approved',  cancel: 'Cancelled' },
+  facility:  { approve: 'Approved',  cancel: 'Cancelled' }
+};
+  const endpoint = type === 'activity' ? 'ActivityBookings' : 'FacilityBookings';
+
+  try {
+    const res = await fetch(`${API}/${endpoint}/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: statusMap[type][action] })
+    });
+    if (!res.ok) throw new Error();
+    Swal.fire({ title: 'Done!', icon: 'success', timer: 1200, showConfirmButton: false });
+    loadBookings();
+  } catch {
+    Swal.fire('Error', 'Something went wrong!', 'error');
+  }
+}
+
 // ===================================================
 // ADMIN PROFILE PAGE
 // ===================================================
