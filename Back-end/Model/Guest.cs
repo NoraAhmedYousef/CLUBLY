@@ -15,6 +15,8 @@
             public string PasswordHash { get; set; } = "";
             public string PasswordSalt { get; set; } = "";
             public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        }
+        public ICollection<ActivityBooking> ActivityBookings { get; set; } = new List<ActivityBooking>();
+
     }
+}
 

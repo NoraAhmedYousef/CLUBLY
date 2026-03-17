@@ -5,7 +5,7 @@ namespace Clubly.DTO
     public class CreateFacilityBookingDto
     {
         [Required]
-        public int FacilityScheduleId { get; set; }
+        public int? FacilityScheduleId { get; set; }
 
         public int? MemberId { get; set; }
 
@@ -29,7 +29,9 @@ namespace Clubly.DTO
 
         public string PaymentMethod { get; set; } = "";
         public string TransactionId { get; set; } = "";
+        public string ReceiptImageUrl { get; set; } = "";
+
         public decimal Price { get; set; }
-        public int FacilityId { get; internal set; }
+        public int FacilityId { get;  set; }
     }
 }

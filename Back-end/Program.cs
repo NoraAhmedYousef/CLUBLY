@@ -126,7 +126,8 @@ namespace SignUp
             builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IFacilityBookingRepository, FacilityBookingRepository>();
-
+            builder.Services.AddScoped<IActivityBookingRepository, ActivityBookingRepository>();
+            builder.Services.AddScoped<IAdminBookingRepository, AdminBookingRepository>();
 
 
             // ????????????????? SERVICES ?????????????????
@@ -143,7 +144,8 @@ namespace SignUp
             builder.Services.AddScoped<IFacilityScheduleRepository, FacilityScheduleRepository>();
             builder.Services.AddScoped<IFacilityScheduleService, FacilityScheduleService>();
             builder.Services.AddScoped<IFacilityBookingService, FacilityBookingService>();
-
+            builder.Services.AddScoped<IActivityBookingService, ActivityBookingService>();
+            builder.Services.AddScoped<IAdminBookingService, AdminBookingService>();
 
             // ????????????????? BUILD ?????????????????
             var app = builder.Build();

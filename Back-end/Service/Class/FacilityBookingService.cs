@@ -15,7 +15,7 @@ namespace Clubly.Service.Class
             Id = b.Id,
             FacilityId = b.FacilityId,
             FacilityName = b.Facility?.Name ?? "",
-            ScheduleId = b.FacilityScheduleId,
+            ScheduleId = b.FacilityScheduleId ?? 0,
             MemberId = b.MemberId,
             BookedByName = b.BookedByName,
             BookedByEmail = b.BookedByEmail,
@@ -27,7 +27,8 @@ namespace Clubly.Service.Class
             PaymentMethod = b.PaymentMethod,
             TransactionId = b.TransactionId,
             Price = b.Price,
-            CreatedAt = b.CreatedAt,
+ReceiptImageUrl = b.ReceiptImageUrl ?? "",
+CreatedAt = b.CreatedAt,
         };
 
         public async Task<List<FacilityBookingDto>> GetAllAsync() =>
@@ -42,16 +43,19 @@ namespace Clubly.Service.Class
         public async Task<(FacilityBookingDto? result, string? error)> CreateAsync(CreateFacilityBookingDto dto)
         {
             // Conflict check
-            var conflict = await _repo.HasConflictAsync(
-                dto.FacilityId, dto.BookingDate, dto.StartTime, dto.EndTime);
+            if (dto.FacilityScheduleId.HasValue && dto.FacilityScheduleId > 0)
+            {
+                var conflict = await _repo.HasConflictAsync(
+                    dto.FacilityId, dto.BookingDate, dto.StartTime, dto.EndTime);
 
-            if (conflict)
-                return (null, "This time slot is already booked for this facility.");
+                if (conflict)
+                    return (null, "This time slot is already booked for this facility.");
+            }
 
             var booking = new FacilityBooking
             {
                 FacilityId = dto.FacilityId,
-                FacilityScheduleId = dto.FacilityScheduleId,
+                FacilityScheduleId = dto.FacilityScheduleId ?? 0,
                 MemberId = dto.MemberId,
                 BookedByName = dto.BookedByName,
                 BookedByEmail = dto.BookedByEmail,

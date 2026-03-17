@@ -135,6 +135,117 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Clubly.Controllers.ActivityBookingsController",
+    "Method": "GetAll",
+    "RelativePath": "api/ActivityBookings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.ActivityBookingsController",
+    "Method": "Create",
+    "RelativePath": "api/ActivityBookings",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Clubly.DTO.CreateActivityBookingDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.ActivityBookingsController",
+    "Method": "GetById",
+    "RelativePath": "api/ActivityBookings/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.ActivityBookingsController",
+    "Method": "Delete",
+    "RelativePath": "api/ActivityBookings/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.ActivityBookingsController",
+    "Method": "UpdateStatus",
+    "RelativePath": "api/ActivityBookings/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Clubly.DTO.UpdateActivityBookingStatusDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.ActivityBookingsController",
+    "Method": "GetByActivity",
+    "RelativePath": "api/ActivityBookings/by-activity/{activityId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "activityId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.ActivityBookingsController",
+    "Method": "GetByMember",
+    "RelativePath": "api/ActivityBookings/by-member/{memberId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "memberId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SignUp.Controllers.ActivityGroupsController",
     "Method": "GetAll",
     "RelativePath": "api/ActivityGroups",
@@ -418,6 +529,100 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.AdminBookingsController",
+    "Method": "GetAllActivityBookings",
+    "RelativePath": "api/AdminBookings/activities",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.AdminBookingsController",
+    "Method": "GetActivityBookingById",
+    "RelativePath": "api/AdminBookings/activities/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.AdminBookingsController",
+    "Method": "UpdateActivityStatus",
+    "RelativePath": "api/AdminBookings/activities/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Clubly.DTO.UpdateActivityBookingStatusDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.AdminBookingsController",
+    "Method": "GetAllFacilityBookings",
+    "RelativePath": "api/AdminBookings/facilities",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.AdminBookingsController",
+    "Method": "GetFacilityBookingById",
+    "RelativePath": "api/AdminBookings/facilities/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.AdminBookingsController",
+    "Method": "UpdateFacilityStatus",
+    "RelativePath": "api/AdminBookings/facilities/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Clubly.DTO.UpdateFacilityBookingStatusDto",
         "IsRequired": true
       }
     ],

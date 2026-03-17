@@ -1,0 +1,24 @@
+﻿namespace Clubly.DTO
+{
+    public class ActivityBookingDto
+    {
+        public int Id { get; set; }
+        public int ActivityId { get; set; }
+        public string ActivityName { get; set; } = "";
+        public int ActivityGroupId { get; set; }
+        public string GroupName { get; set; } = "";
+        public int MemberId { get; set; }
+        public string MemberName { get; set; } = "";
+        public string MemberEmail { get; set; } = "";
+        public DateOnly StartDate { get; set; }
+        public DateOnly EndDate { get; set; }
+        public int Participants { get; set; }
+        public decimal TotalPrice { get; set; }
+        public string Status { get; set; } = "";
+        public string PaymentMethod { get; set; } = "";
+        public string TransactionId { get; set; } = "";
+        public string ReceiptImageUrl { get; set; } = "";
+
+        public DateTime CreatedAt { get; set; }
+    }
+}

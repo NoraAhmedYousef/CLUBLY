@@ -10,8 +10,8 @@ namespace SignUp.Model
         public int FacilityId { get; set; }
         public Facility Facility { get; set; } = null!;
 
-        public int FacilityScheduleId { get; set; }
-        public FacilitySchedule Schedule { get; set; } = null!;
+        public int? FacilityScheduleId { get; set; }
+        public FacilitySchedule? Schedule { get; set; }
 
         // Member أو Guest
         public int? MemberId { get; set; }

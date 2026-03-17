@@ -1,4 +1,5 @@
 ﻿
+using Clubly.Model;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
@@ -24,6 +25,8 @@ namespace SignUp.Model
         public string? ImageUrl { get; set; }
         public string PasswordHash { get; set; } = "";
         public string PasswordSalt { get; set; } = "";
+        public ICollection<ActivityBooking> ActivityBookings { get; set; } = new List<ActivityBooking>();
+
 
     }
 }

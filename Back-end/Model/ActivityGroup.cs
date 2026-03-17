@@ -22,6 +22,7 @@ namespace SignUp.Model
         public string Status { get; set; } = "Active";
         public ICollection<ActivityGroupTimeSlot> TimeSlots { get; set; } = new List<ActivityGroupTimeSlot>();
 
+        public ICollection<ActivityBooking> Bookings { get; set; } = new List<ActivityBooking>();
 
 
     }

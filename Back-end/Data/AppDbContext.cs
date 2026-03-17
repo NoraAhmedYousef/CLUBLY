@@ -26,6 +26,7 @@ namespace SignUp.Data
         public DbSet<FacilityTimeSlot> FacilityTimeSlots { get; set; }
         public DbSet<FacilityBooking> FacilityBookings { get; set; }
         public DbSet<ActivityGroupTimeSlot> ActivityGroupTimeSlots { get; set; }
+        public DbSet<ActivityBooking> ActivityBookings { get; set; }
 
         public DbSet<Guest> Guests { get; set; }
 

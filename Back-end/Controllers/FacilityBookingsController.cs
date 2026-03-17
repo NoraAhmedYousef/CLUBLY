@@ -26,15 +26,26 @@ namespace Clubly.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateFacilityBookingDto dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            var (result, error) = await _service.CreateAsync(dto);
-            if (error is not null)
-                return Conflict(new { message = error });
-            return CreatedAtAction(nameof(GetById), new { id = result!.Id }, result);
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return BadRequest(new { message = string.Join(", ", errors) });
+            }
+            try
+            {
+                var (result, error) = await _service.CreateAsync(dto);
+                if (error is not null)
+                    return Conflict(new { message = error });
+                return CreatedAtAction(nameof(GetById), new { id = result!.Id }, result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message, inner = ex.InnerException?.Message });
+            }
         }
 
-        // Admin: تغيير الـ status (Confirmed / Cancelled)
-        [HttpPatch("{id}/status")]
+            // Admin: تغيير الـ status (Confirmed / Cancelled)
+            [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateFacilityBookingStatusDto dto)
         {
             var ok = await _service.UpdateStatusAsync(id, dto);

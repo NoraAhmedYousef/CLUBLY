@@ -17,6 +17,7 @@
         public string PaymentMethod { get; set; } = "";
         public string TransactionId { get; set; } = "";
         public decimal Price { get; set; }
+        public string ReceiptImageUrl { get; set; } = "";
         public DateTime CreatedAt { get; set; }
     }
 }

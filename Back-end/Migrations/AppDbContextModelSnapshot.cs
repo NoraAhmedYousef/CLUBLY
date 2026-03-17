@@ -34,7 +34,74 @@ namespace SignUp.Migrations
 
                     b.HasIndex("TrainersId");
 
-                    b.ToTable("ActivityTrainer", (string)null);
+                    b.ToTable("ActivityTrainer");
+                });
+
+            modelBuilder.Entity("Clubly.Model.ActivityBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ActivityGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("GuestId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Participants")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ReceiptImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityGroupId");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("GuestId");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("ActivityBookings");
                 });
 
             modelBuilder.Entity("Clubly.Model.ActivityGroupTimeSlot", b =>
@@ -61,7 +128,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("ActivityGroupId");
 
-                    b.ToTable("ActivityGroupTimeSlots", (string)null);
+                    b.ToTable("ActivityGroupTimeSlots");
                 });
 
             modelBuilder.Entity("Clubly.Model.FacilitySchedule", b =>
@@ -92,7 +159,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.ToTable("FacilitySchedules", (string)null);
+                    b.ToTable("FacilitySchedules");
                 });
 
             modelBuilder.Entity("Clubly.Model.FacilityTimeSlot", b =>
@@ -119,7 +186,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityScheduleId");
 
-                    b.ToTable("FacilityTimeSlots", (string)null);
+                    b.ToTable("FacilityTimeSlots");
                 });
 
             modelBuilder.Entity("Clubly.Model.Guest", b =>
@@ -170,7 +237,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guests", (string)null);
+                    b.ToTable("Guests");
                 });
 
             modelBuilder.Entity("SignUp.Model.Activity", b =>
@@ -202,7 +269,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.ToTable("Activities", (string)null);
+                    b.ToTable("Activities");
                 });
 
             modelBuilder.Entity("SignUp.Model.ActivityGroup", b =>
@@ -255,7 +322,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("ActivityGroups", (string)null);
+                    b.ToTable("ActivityGroups");
                 });
 
             modelBuilder.Entity("SignUp.Model.Admin", b =>
@@ -302,7 +369,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("SignUp.Model.Announcement", b =>
@@ -334,7 +401,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Announcements", (string)null);
+                    b.ToTable("Announcements");
                 });
 
             modelBuilder.Entity("SignUp.Model.ContactMessage", b =>
@@ -366,7 +433,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactMessages", (string)null);
+                    b.ToTable("ContactMessages");
                 });
 
             modelBuilder.Entity("SignUp.Model.Facility", b =>
@@ -403,7 +470,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityCategoryId");
 
-                    b.ToTable("Facilities", (string)null);
+                    b.ToTable("Facilities");
                 });
 
             modelBuilder.Entity("SignUp.Model.FacilityBooking", b =>
@@ -436,7 +503,7 @@ namespace SignUp.Migrations
                     b.Property<int>("FacilityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FacilityScheduleId")
+                    b.Property<int?>("FacilityScheduleId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MemberId")
@@ -477,7 +544,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityScheduleId");
 
-                    b.ToTable("FacilityBookings", (string)null);
+                    b.ToTable("FacilityBookings");
                 });
 
             modelBuilder.Entity("SignUp.Model.FacilityCategory", b =>
@@ -507,7 +574,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FacilityCategories", (string)null);
+                    b.ToTable("FacilityCategories");
                 });
 
             modelBuilder.Entity("SignUp.Model.Member", b =>
@@ -569,7 +636,7 @@ namespace SignUp.Migrations
 
                     b.HasIndex("MemberShipId");
 
-                    b.ToTable("Members", (string)null);
+                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("SignUp.Model.MemberShip", b =>
@@ -599,7 +666,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MemberShips", (string)null);
+                    b.ToTable("MemberShips");
                 });
 
             modelBuilder.Entity("SignUp.Model.Trainer", b =>
@@ -657,7 +724,7 @@ namespace SignUp.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Trainers", (string)null);
+                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("ActivityTrainer", b =>
@@ -673,6 +740,37 @@ namespace SignUp.Migrations
                         .HasForeignKey("TrainersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Clubly.Model.ActivityBooking", b =>
+                {
+                    b.HasOne("SignUp.Model.ActivityGroup", "ActivityGroup")
+                        .WithMany("Bookings")
+                        .HasForeignKey("ActivityGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SignUp.Model.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Clubly.Model.Guest", null)
+                        .WithMany("ActivityBookings")
+                        .HasForeignKey("GuestId");
+
+                    b.HasOne("SignUp.Model.Member", "Member")
+                        .WithMany("ActivityBookings")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("ActivityGroup");
+
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Clubly.Model.ActivityGroupTimeSlot", b =>
@@ -764,8 +862,7 @@ namespace SignUp.Migrations
                     b.HasOne("Clubly.Model.FacilitySchedule", "Schedule")
                         .WithMany()
                         .HasForeignKey("FacilityScheduleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Facility");
 
@@ -786,6 +883,11 @@ namespace SignUp.Migrations
                     b.Navigation("TimeSlots");
                 });
 
+            modelBuilder.Entity("Clubly.Model.Guest", b =>
+                {
+                    b.Navigation("ActivityBookings");
+                });
+
             modelBuilder.Entity("SignUp.Model.Activity", b =>
                 {
                     b.Navigation("ActivityGroups");
@@ -793,6 +895,8 @@ namespace SignUp.Migrations
 
             modelBuilder.Entity("SignUp.Model.ActivityGroup", b =>
                 {
+                    b.Navigation("Bookings");
+
                     b.Navigation("TimeSlots");
                 });
 
@@ -805,6 +909,11 @@ namespace SignUp.Migrations
                     b.Navigation("Bookings");
 
                     b.Navigation("Schedules");
+                });
+
+            modelBuilder.Entity("SignUp.Model.Member", b =>
+                {
+                    b.Navigation("ActivityBookings");
                 });
 #pragma warning restore 612, 618
         }
