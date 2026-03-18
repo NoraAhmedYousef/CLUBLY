@@ -422,8 +422,8 @@ function schedPickerConfirm() {
   const fac  = (allFacilities || []).find(f => (f.Id || f.id) == _schedPickerChoice.facilityId);
   const name = fac ? (fac.Name || fac.name || 'Facility') : 'Facility';
 
-openBookingModal('facility', _schedPickerChoice.facilityId, name, _schedPickerChoice.slotPrice || 0);
-  setTimeout(() => {
+openBookingModal('facility', _schedPickerChoice.facilityId, name, _schedPickerChoice.slotPrice || 0, [], [], _schedPickerChoice.scheduleId);
+ setTimeout(() => {
     const dateEl     = document.getElementById('bpDate');
     const timeEl     = document.getElementById('bpTime');
     const facilityEl = document.getElementById('bpFacility') || document.getElementById('bpName');

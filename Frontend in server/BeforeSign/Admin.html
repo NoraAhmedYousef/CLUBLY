@@ -47,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: auto;
   transition: background .2s, color .2s;
 }
 
@@ -210,6 +210,7 @@ body {
   background: rgba(255,255,255,.08);
   transform: translateX(3px);
 }
+
 .sidebar-link.active {
   color: #fff;
   background: linear-gradient(135deg, rgba(232,93,47,.8), rgba(192,57,43,.8));
@@ -613,6 +614,40 @@ body {
 [data-theme="dark"] .modal-footer {
   background: #091423;
 }
+
+.table thead th {
+  white-space: nowrap;
+  font-size: .75rem;
+  
+}
+.table tbody td {
+  white-space: nowrap;
+}
+.sticky-col {
+  position: sticky;
+  right: 0;
+  background: var(--card-bg);
+  z-index: 3;
+  box-shadow: -3px 0 6px rgba(0,0,0,.12);
+  min-width: 160px;
+}
+.sticky-col-2 {
+  position: sticky;
+  right: 160px;
+  background: var(--card-bg);
+  z-index: 3;
+  min-width: 90px;
+}
+[data-theme="dark"] .sticky-col,
+[data-theme="dark"] .sticky-col-2 {
+  background: var(--card-bg);
+}
+#activityBookingsBody td:last-child,
+#activityBookingsBody th:last-child,
+#facilityBookingsBody td:last-child,
+#facilityBookingsBody th:last-child {
+  min-width: 180px;
+}
 </style>
 </head>
 <body>
@@ -702,7 +737,13 @@ body {
       <i class="bi bi-megaphone-fill"></i>
       <span class="link-text">Announcements</span>
     </a>
-    
+    <div class="sidebar-divider"></div>
+<div class="sidebar-section">Bookings</div>
+
+<a class="sidebar-link" onclick="showPage('bookings')" data-label="Bookings">
+  <i class="bi bi-calendar-check-fill"></i>
+  <span class="link-text">Bookings</span>
+</a>
     <div class="sidebar-divider"></div>
 <div class="sidebar-section">System</div>
 
@@ -1583,8 +1624,99 @@ body {
       </div>
       <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer_ann" style="z-index:12000;"></div>
     </div>
+
+
+
+
+    <div class="page" id="page-bookings">
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold">
+    <i class="bi bi-calendar-check-fill me-2" style="color:var(--clubly-accent)"></i>
+    Bookings Management
+  </h4>
+  <button class="btn btn-outline-primary btn-sm" onclick="loadBookings()">
+    <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+  </button>
+</div>
+<div class="clubly-card p-3 mb-3">
+  <div class="row g-2 align-items-center controls">
+    <div class="col-auto">
+<input id="searchMembership" class="form-control" placeholder="Search by membership #..." style="width:220px" oninput="loadBookings()">    </div>
+    <div class="col-auto ms-auto">
+      <button class="btn btn-outline-primary" onclick="loadBookings()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+  </div>
+</div>
+  <!-- Tabs: Activity / Facility -->
+  <ul class="nav nav-tabs mb-3" id="bookingTabs">
+    <li class="nav-item">
+      <button class="nav-link active" onclick="switchBookingTab('activity')">Activity Bookings</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" onclick="switchBookingTab('facility')">Facility Bookings</button>
+    </li>
+  </ul>
+
+<!-- Activity Bookings Table -->
+<div id="tab-activity-bookings">
+  <div class="card p-3">
+<div class="table-responsive" style="overflow-x:auto;">
+<table class="table table-hover align-middle" style="min-width:2000px;font-size:.82rem;">
+        <thead style="background:var(--table-head)">
+          <tr>
+            <th>#</th>
+            <th>Membership #</th>
+            <th>Member</th>
+            <th>Activity</th>
+            <th>Group</th>
+            <th>Date</th>
+            <th>End Date</th>
+            <th>Participants</th>
+            <th>Price</th>
+            <th>Payment Method</th>
+            <th>Transaction ID</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="activityBookingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Facility Bookings Table -->
+<div id="tab-facility-bookings" style="display:none">
+  <div class="card p-3">
+<div class="table-responsive" style="overflow-x:auto;">
+<table class="table table-hover align-middle" style="min-width:2000px;font-size:.82rem;">
+        <thead style="background:var(--table-head)">
+          <tr>
+            <th>#</th>
+            <th>Membership #</th>
+            <th>Member</th>
+            <th>Facility</th>
+            <th>Date</th>
+            <th>End Date</th>
+            <th>Participants</th>
+            <th>Price</th>
+            <th>Payment Method</th>
+            <th>Transaction ID</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="facilityBookingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- end tab-facility-bookings -->
+</div><!-- end page-bookings -->
     <!-- =============================== Admins =============================== -->
- 
 <div class="page" id="page-admins">
   <div class="page-header">
     <div><h2 class="fw-bold m-0">Admins</h2><small class="text-muted">Manage Admins — Create / Update / Delete</small></div>
@@ -1878,7 +2010,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
-const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins','profile'];
+const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins','profile','bookings'];
 
 function showPage(name) {
   pages.forEach(p => {
@@ -3026,6 +3158,8 @@ window.showPage = function(name) {
   if (name === 'announcement') loadAnnouncements();
   if (name === 'admins') loadAdmins();
 if (name === 'profile') loadAdminProfile();
+if (name === 'bookings') loadBookings();
+
 
 };
 
@@ -3490,6 +3624,129 @@ document.querySelectorAll('.modal').forEach(modal => {
     });
   });
 });
+// ===== BOOKINGS =====
+const API = 'http://clublywebsite.runasp.net/api';
+
+function switchBookingTab(tab) {
+  document.getElementById('tab-activity-bookings').style.display = tab === 'activity' ? '' : 'none';
+  document.getElementById('tab-facility-bookings').style.display = tab === 'facility' ? '' : 'none';
+  document.querySelectorAll('#bookingTabs .nav-link').forEach((btn, i) => {
+    btn.classList.toggle('active', (tab === 'activity' && i === 0) || (tab === 'facility' && i === 1));
+  });
+}
+
+async function loadBookings() {
+  const membershipSearch = (document.getElementById('searchMembership')?.value || '').trim();
+  // Activity Bookings
+  try {
+    const res1 = await fetch(`${API}/ActivityBookings`);
+    const activityData = await res1.json();
+    const filtered1 = membershipSearch ? activityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch)) : activityData;
+    document.getElementById('activityBookingsBody').innerHTML = filtered1.length
+      ? filtered1.map((b, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${b.memberShipNumber || '—'}</td>
+
+          <td>${b.memberName}</td>
+          <td>${b.activityName}</td>
+          <td>${b.groupName}</td>
+          <td>${b.startDate}</td>
+          <td>${b.endDate}</td>
+          <td>${b.participants}</td>
+       <td>${b.totalPrice} EGP</td>
+<td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+<td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+<td>${b.receiptImageUrl ? `<a href="http://clublywebsite.runasp.net${b.receiptImageUrl}" target="_blank"><img src="http://clublywebsite.runasp.net${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>          
+     <td>${getStatusBadge(b.status)}</td>
+          <td style="min-width:200px;">${getActionButtons(b.id, b.status, 'activity')}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="10" class="text-center text-muted py-4">No activity bookings found</td></tr>';
+  } catch(e) {
+    document.getElementById('activityBookingsBody').innerHTML =
+      '<tr><td colspan="10" class="text-center text-danger py-4">Failed to load activity bookings</td></tr>';
+    console.error('Activity bookings error:', e);
+  }
+
+  // Facility Bookings
+  try {
+const res2 = await fetch(`${API}/FacilityBookings`);
+    const facilityData = await res2.json();
+    const filtered2 = membershipSearch ? facilityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch)) : facilityData;
+    document.getElementById('facilityBookingsBody').innerHTML = filtered2.length
+      ? filtered2.map((b, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>${b.memberShipNumber || '—'}</td>
+
+          <td>${b.bookedByName}</td>
+          <td>${b.facilityName}</td>
+          <td>${b.bookingDate}</td>
+          <td>${b.startTime} → ${b.endTime}</td>
+          <td>${b.participants}</td>
+     <td>${b.price} EGP</td>
+<td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+<td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>   
+<td>${b.receiptImageUrl ? `<a href="http://clublywebsite.runasp.net${b.receiptImageUrl}" target="_blank"><img src="http://clublywebsite.runasp.net${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>    
+      
+<td class="sticky-col-2">${getStatusBadge(b.status)}</td>
+          <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="9" class="text-center text-muted py-4">No facility bookings found</td></tr>';
+  } catch(e) {
+    document.getElementById('facilityBookingsBody').innerHTML =
+      '<tr><td colspan="9" class="text-center text-danger py-4">Failed to load facility bookings</td></tr>';
+    console.error('Facility bookings error:', e);
+  }
+}
+function getStatusBadge(status) {
+  const s = (status || '').toLowerCase();
+  if (s === 'pending')                       return '<span class="badge bg-warning text-dark">Pending</span>';
+  if (s === 'approved' || s === 'confirmed') return '<span class="badge bg-success">Approved</span>';
+  if (s === 'cancelled')                     return '<span class="badge bg-danger">Cancelled</span>';
+  return '<span class="badge bg-secondary">Unknown</span>';
+}
+function getActionButtons(id, status, type) {
+  if ((status || '').toLowerCase() !== 'pending') return '<span class="text-muted small">No actions</span>';
+  return `
+    <button class="btn btn-sm btn-success me-1" onclick="updateBooking(${id},'approve','${type}')">
+      <i class="bi bi-check-lg"></i> Approve
+    </button>
+    <button class="btn btn-sm btn-danger" onclick="updateBooking(${id},'cancel','${type}')">
+      <i class="bi bi-x-lg"></i> Cancel
+    </button>`;
+}
+
+async function updateBooking(id, action, type) {
+  const confirmed = await Swal.fire({
+    title: action === 'approve' ? 'Approve this booking?' : 'Cancel this booking?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: action === 'approve' ? '#22c55e' : '#ef4444',
+    confirmButtonText: action === 'approve' ? 'Yes, Approve' : 'Yes, Cancel'
+  });
+  if (!confirmed.isConfirmed) return;
+
+const statusMap = {
+  activity: { approve: 'Approved',  cancel: 'Cancelled' },
+  facility:  { approve: 'Approved',  cancel: 'Cancelled' }
+};
+  const endpoint = type === 'activity' ? 'ActivityBookings' : 'FacilityBookings';
+
+  try {
+    const res = await fetch(`${API}/${endpoint}/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: statusMap[type][action] })
+    });
+    if (!res.ok) throw new Error();
+    Swal.fire({ title: 'Done!', icon: 'success', timer: 1200, showConfirmButton: false });
+    loadBookings();
+  } catch {
+    Swal.fire('Error', 'Something went wrong!', 'error');
+  }
+}
+
 // ===================================================
 // ADMIN PROFILE PAGE
 // ===================================================

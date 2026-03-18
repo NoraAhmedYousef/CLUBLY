@@ -157,9 +157,9 @@
   /* ══════════════════════════════════════════════════════════════════════════
      PUBLIC API
   ══════════════════════════════════════════════════════════════════════════ */
-window.openBookingModal = function (type, id, name, slotPrice = 0, slots = [], trainerGroups = []) {
+window.openBookingModal = function (type, id, name, slotPrice = 0, slots = [], trainerGroups = [], scheduleId = 0) {
   ensureModal();
-  _ctx = { type, id, name, slotPrice, slots, trainerGroups };
+  _ctx = { type, id, name, slotPrice, slots, trainerGroups, scheduleId };
     _formData = {};
     setHeader(type, name);
     renderStep1();
@@ -167,12 +167,12 @@ window.openBookingModal = function (type, id, name, slotPrice = 0, slots = [], t
     ov.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   };
-
-  window.closeBookingModal = function () {
+window.closeBookingModal = function () {
     const ov = document.getElementById('bpOverlay');
     if (ov) ov.style.display = 'none';
     document.body.style.overflow = '';
     _ctx = null; _formData = {};
+    window._bpReceiptBase64 = ""; // تصفير الصورة عند الإغلاق
   };
 
   function setHeader(type, name) {
@@ -569,19 +569,33 @@ const rows = [
     document.getElementById('tabW').classList.toggle('active', suf === 'W');
   };
 
-  window.bpFile = function (input, suf) {
-    if (input.files && input.files[0]) {
-      document.getElementById('bpUT' + suf).textContent = '✅ ' + input.files[0].name;
-      document.getElementById('bpUL' + suf).classList.add('has-file');
-    }
-  };
+window.bpFile = function (input, suf) {
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    window._bpReceiptFile = file;  // ← غير ده
+    document.getElementById('bpUT' + suf).textContent = '✅ ' + file.name;
+    document.getElementById('bpUL' + suf).classList.add('has-file');
+  
+
+    // تحويل الصورة لـ Base64
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      window._bpReceiptBase64 = e.target.result; // ده الـ String اللي هنبعته
+    };
+    reader.readAsDataURL(file);
+  }
+};
 
   window.bpBack = function () {
     setHeader(_ctx.type, _ctx.name);
     renderStep1();
   };
-
-  window.bpPay = function () {
+function formatTime(t) {
+  if (!t) return '00:00:00';
+  const parts = t.split(':');
+  return parts.length === 2 ? t + ':00' : t;
+}
+window.bpPay = async function () {
     const suf = document.getElementById('tabI').classList.contains('active') ? 'I' : 'W';
     if (!v('bpAmt' + suf)) { showErr('Please enter the amount.');         return; }
     if (!v('bpTx'  + suf)) { showErr('Please enter the Transaction ID.'); return; }
@@ -590,16 +604,89 @@ const rows = [
     btn.disabled  = true;
     btn.innerHTML = '⏳ Processing…';
 
-    // Replace this with your real API call
-    setTimeout(() => {
+    try {
+      const memberId = localStorage.getItem('userId');
+      if (!memberId) { showErr('Please sign in first.'); btn.disabled=false; btn.innerHTML='Complete Payment'; return; }
+
+ if (_formData.type === 'facility') {
+        const facPayload = {
+          facilityId:         _ctx.id,
+          facilityScheduleId: _ctx.scheduleId || null,
+          memberId:           parseInt(memberId),
+          bookedByName:       localStorage.getItem('fullName') || 'Guest',
+          bookedByEmail:      '',
+          bookingDate:        _formData.date,
+       startTime: formatTime(_formData.time),
+endTime:   formatTime(_formData.endTime),
+          participants:       parseInt(_formData.participants) || 1,
+          paymentMethod:      suf === 'I' ? 'InstaPay' : 'E-Wallet',
+          transactionId:      v('bpTx' + suf),
+          price:              parseFloat(v('bpAmt' + suf)) || _formData.price,
+          // السطر المهم اللي كان ناقص:
+          receiptImageUrl:    window._bpReceiptBase64 || "" 
+        };
+        
+   const fd2 = new FormData();
+fd2.append('facilityId',         _ctx.id);
+if (_ctx.scheduleId) fd2.append('facilityScheduleId', _ctx.scheduleId);
+fd2.append('memberId',           memberId);
+fd2.append('bookedByName',       localStorage.getItem('fullName') || 'Guest');
+fd2.append('bookedByEmail', localStorage.getItem('email') || 'guest@clubly.com');
+fd2.append('bookingDate',        _formData.date);
+fd2.append('startTime',          formatTime(_formData.time));
+fd2.append('endTime',            formatTime(_formData.endTime));
+fd2.append('participants',       parseInt(_formData.participants) || 1);
+fd2.append('paymentMethod',      suf === 'I' ? 'InstaPay' : 'E-Wallet');
+fd2.append('transactionId',      v('bpTx' + suf));
+fd2.append('price',              parseFloat(v('bpAmt' + suf)) || _formData.price);
+if (window._bpReceiptFile) fd2.append('receiptImage', window._bpReceiptFile);
+
+const facRes = await fetch('http://clublywebsite.runasp.net/api/FacilityBookings', {
+  method: 'POST',
+  body: fd2
+});
+      if (!facRes.ok) {
+  const err = await facRes.text(); // ← غير json لـ text
+  console.log('ERROR:', err);      // ← هتشوف المشكلة بالظبط
+  showErr(err);
+  btn.disabled = false; btn.innerHTML = 'Complete Payment';
+  return;
+}
+
+    // ... داخل ميثود bpPay ...
+} else {
+  const fd = new FormData();
+  fd.append('activityId',      window._actPickerActivityId || 0);
+  fd.append('activityGroupId', _ctx.id);
+  fd.append('memberId',        memberId);
+  fd.append('startDate',       _formData.date);
+  fd.append('participants',    parseInt(_formData.participants) || 1);
+  fd.append('paymentMethod',   suf === 'I' ? 'InstaPay' : 'EWallet');
+  fd.append('transactionId',   v('bpTx' + suf));
+  if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
+
+  const res = await fetch('http://clublywebsite.runasp.net/api/ActivityBookings', {
+    method: 'POST',
+    body: fd   // بدون Content-Type header خالص
+  });
+// ...
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          showErr(err.message || 'Booking failed. Please try again.');
+          btn.disabled = false; btn.innerHTML = 'Complete Payment';
+          return;
+        }
+      }
+
+      // Success
       document.getElementById('bpBody').innerHTML = `
         <div style="text-align:center;padding:36px 20px;">
           <div style="font-size:3.5rem;margin-bottom:14px;">✅</div>
           <div style="font-size:1.1rem;font-weight:900;color:#1a2332;margin-bottom:8px;">
-            Booking Confirmed!
+            Booking Submitted!
           </div>
           <div style="color:#64748b;font-size:.88rem;line-height:1.7;margin-bottom:24px;">
-            Your booking has been submitted successfully.<br>
+            Your booking is <strong style="color:#f59e0b;">Pending</strong> approval.<br>
             We'll confirm once payment is verified.
           </div>
           <button class="bp-btn-primary" onclick="closeBookingModal()"
@@ -607,7 +694,12 @@ const rows = [
             Close
           </button>
         </div>`;
-    }, 1200);
+
+    } catch(e) {
+      showErr('Connection error. Please try again.');
+      btn.disabled = false;
+      btn.innerHTML = 'Complete Payment';
+    }
   };
 
   /* ══════════════════════════════════════════════════════════════════════════
