@@ -14,6 +14,8 @@ namespace SignUp.Model
         public FacilitySchedule? Schedule { get; set; }
 
         // Member أو Guest
+        public Member? Member { get; set; }
+
         public int? MemberId { get; set; }
 
         [Required, MaxLength(100)]

@@ -24,7 +24,7 @@ namespace Clubly.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateFacilityBookingDto dto)
+        public async Task<IActionResult> Create([FromForm] CreateFacilityBookingDto dto, IFormFile? receiptImage)
         {
             if (!ModelState.IsValid)
             {
@@ -33,9 +33,19 @@ namespace Clubly.Controllers
             }
             try
             {
+                if (receiptImage != null && receiptImage.Length > 0)
+                {
+                    var uploads = Path.Combine("wwwroot", "receipts");
+                    Directory.CreateDirectory(uploads);
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(receiptImage.FileName)}";
+                    var filePath = Path.Combine(uploads, fileName);
+                    using var stream = new FileStream(filePath, FileMode.Create);
+                    await receiptImage.CopyToAsync(stream);
+                    dto.ReceiptImageUrl = $"/receipts/{fileName}";
+                }
+
                 var (result, error) = await _service.CreateAsync(dto);
-                if (error is not null)
-                    return Conflict(new { message = error });
+                if (error is not null) return Conflict(new { message = error });
                 return CreatedAtAction(nameof(GetById), new { id = result!.Id }, result);
             }
             catch (Exception ex)
@@ -44,8 +54,8 @@ namespace Clubly.Controllers
             }
         }
 
-            // Admin: تغيير الـ status (Confirmed / Cancelled)
-            [HttpPatch("{id}/status")]
+        // Admin: تغيير الـ status (Confirmed / Cancelled)
+        [HttpPatch("{id}/status")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateFacilityBookingStatusDto dto)
         {
             var ok = await _service.UpdateStatusAsync(id, dto);

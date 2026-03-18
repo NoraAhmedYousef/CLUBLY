@@ -9,9 +9,13 @@
         public string GroupName { get; set; } = "";
         public int MemberId { get; set; }
         public string MemberName { get; set; } = "";
+        public string MemberShipNumber { get; set; } = "";
+
         public string MemberEmail { get; set; } = "";
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
+        public List<ActivityTimeSlotDto> TimeSlots { get; set; } = new();
+
         public int Participants { get; set; }
         public decimal TotalPrice { get; set; }
         public string Status { get; set; } = "";

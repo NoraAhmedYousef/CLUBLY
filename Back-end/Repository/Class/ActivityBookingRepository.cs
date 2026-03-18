@@ -16,6 +16,8 @@ namespace Clubly.Repository.Class
                  .Include(b => b.Activity)
                  .Include(b => b.ActivityGroup)
                  .Include(b => b.Member)
+            .Include(b => b.ActivityGroup)
+    .ThenInclude(g => g.TimeSlots)
                  .OrderByDescending(b => b.CreatedAt)
                  .ToListAsync();
 
@@ -33,6 +35,8 @@ namespace Clubly.Repository.Class
                  .Include(b => b.Activity)
                  .Include(b => b.ActivityGroup)
                  .Where(b => b.MemberId == memberId)
+            .Include(b => b.ActivityGroup)
+    .ThenInclude(g => g.TimeSlots)
                  .OrderByDescending(b => b.CreatedAt)
                  .ToListAsync();
 

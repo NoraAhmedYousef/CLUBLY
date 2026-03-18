@@ -226,19 +226,73 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateActivityBookingDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateActivityBookingDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateActivityBookingDto"
+                "type": "object",
+                "properties": {
+                  "ActivityId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "ActivityGroupId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MemberId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "StartDate": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "Participants": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "PaymentMethod": {
+                    "type": "string"
+                  },
+                  "ReceiptImageUrl": {
+                    "type": "string"
+                  },
+                  "TransactionId": {
+                    "type": "string"
+                  },
+                  "receiptImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "ActivityId": {
+                  "style": "form"
+                },
+                "ActivityGroupId": {
+                  "style": "form"
+                },
+                "MemberId": {
+                  "style": "form"
+                },
+                "StartDate": {
+                  "style": "form"
+                },
+                "Participants": {
+                  "style": "form"
+                },
+                "PaymentMethod": {
+                  "style": "form"
+                },
+                "ReceiptImageUrl": {
+                  "style": "form"
+                },
+                "TransactionId": {
+                  "style": "form"
+                },
+                "receiptImage": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -1463,19 +1517,108 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/CreateFacilityBookingDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateFacilityBookingDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateFacilityBookingDto"
+                "required": [
+                  "BookingDate"
+                ],
+                "type": "object",
+                "properties": {
+                  "FacilityScheduleId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MemberId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "BookedByName": {
+                    "type": "string"
+                  },
+                  "BookedByEmail": {
+                    "type": "string"
+                  },
+                  "BookingDate": {
+                    "type": "string"
+                  },
+                  "StartTime": {
+                    "type": "string"
+                  },
+                  "EndTime": {
+                    "type": "string"
+                  },
+                  "Participants": {
+                    "maximum": 500,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "PaymentMethod": {
+                    "type": "string"
+                  },
+                  "TransactionId": {
+                    "type": "string"
+                  },
+                  "ReceiptImageUrl": {
+                    "type": "string"
+                  },
+                  "Price": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "FacilityId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "receiptImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "FacilityScheduleId": {
+                  "style": "form"
+                },
+                "MemberId": {
+                  "style": "form"
+                },
+                "BookedByName": {
+                  "style": "form"
+                },
+                "BookedByEmail": {
+                  "style": "form"
+                },
+                "BookingDate": {
+                  "style": "form"
+                },
+                "StartTime": {
+                  "style": "form"
+                },
+                "EndTime": {
+                  "style": "form"
+                },
+                "Participants": {
+                  "style": "form"
+                },
+                "PaymentMethod": {
+                  "style": "form"
+                },
+                "TransactionId": {
+                  "style": "form"
+                },
+                "ReceiptImageUrl": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "FacilityId": {
+                  "style": "form"
+                },
+                "receiptImage": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -2601,44 +2744,6 @@
         },
         "additionalProperties": false
       },
-      "CreateActivityBookingDto": {
-        "type": "object",
-        "properties": {
-          "activityId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "activityGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "memberId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "participants": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "paymentMethod": {
-            "type": "string",
-            "nullable": true
-          },
-          "receiptImageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "transactionId": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateActivityGroupDto": {
         "type": "object",
         "properties": {
@@ -2700,76 +2805,6 @@
           "day": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateFacilityBookingDto": {
-        "required": [
-          "bookedByName",
-          "bookingDate",
-          "endTime",
-          "facilityScheduleId",
-          "startTime"
-        ],
-        "type": "object",
-        "properties": {
-          "facilityScheduleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "memberId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "bookedByName": {
-            "maxLength": 100,
-            "minLength": 1,
-            "type": "string"
-          },
-          "bookedByEmail": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          },
-          "bookingDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "startTime": {
-            "type": "string",
-            "format": "time"
-          },
-          "endTime": {
-            "type": "string",
-            "format": "time"
-          },
-          "participants": {
-            "maximum": 500,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "paymentMethod": {
-            "type": "string",
-            "nullable": true
-          },
-          "transactionId": {
-            "type": "string",
-            "nullable": true
-          },
-          "receiptImageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "price": {
-            "type": "number",
-            "format": "double"
-          },
-          "facilityId": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false

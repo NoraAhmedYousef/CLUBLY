@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SignUp.Data;
 
@@ -11,9 +12,11 @@ using SignUp.Data;
 namespace SignUp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260317020529_server")]
+    partial class server
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -544,8 +547,6 @@ namespace SignUp.Migrations
 
                     b.HasIndex("FacilityScheduleId");
 
-                    b.HasIndex("MemberId");
-
                     b.ToTable("FacilityBookings");
                 });
 
@@ -866,13 +867,7 @@ namespace SignUp.Migrations
                         .HasForeignKey("FacilityScheduleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("SignUp.Model.Member", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId");
-
                     b.Navigation("Facility");
-
-                    b.Navigation("Member");
 
                     b.Navigation("Schedule");
                 });

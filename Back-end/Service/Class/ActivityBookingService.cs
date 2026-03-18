@@ -26,12 +26,23 @@ namespace Clubly.Service.Class
             ActivityGroupId = b.ActivityGroupId,
             GroupName = b.ActivityGroup?.Name ?? "",
             MemberId = b.MemberId,
+            MemberShipNumber = b.Member?.MemberShipNumber.ToString() ?? "",
+
             MemberName = b.Member?.FullName ?? "",
             MemberEmail = b.Member?.Email ?? "",
             StartDate = b.StartDate,
             EndDate = b.EndDate,
-            Participants = b.Participants,
+            TimeSlots = b.ActivityGroup?.TimeSlots?.Select(s => new ActivityTimeSlotDto
+            {
+                StartTime = s.StartTime.ToString(@"hh\:mm"),
+                EndTime = s.EndTime.ToString(@"hh\:mm"),
+                Day = s.Day
+            }).ToList() ?? new(),
+        
+        Participants = b.Participants,
             TotalPrice = b.TotalPrice,
+            ReceiptImageUrl = b.ReceiptImageUrl ?? "",
+
             Status = b.Status,
             PaymentMethod = b.PaymentMethod,
             TransactionId = b.TransactionId,
@@ -52,7 +63,19 @@ namespace Clubly.Service.Class
             var b = await _repo.GetByIdAsync(id);
             return b is null ? null : ToDto(b);
         }
+        private static async Task<string?> SaveReceiptAsync(string? base64)
+        {
+            if (string.IsNullOrEmpty(base64) || !base64.StartsWith("data:image"))
+                return base64;
 
+            var data = base64.Split(',')[1];
+            var bytes = Convert.FromBase64String(data);
+            var uploads = Path.Combine("wwwroot", "receipts");
+            Directory.CreateDirectory(uploads);
+            var fileName = $"{Guid.NewGuid()}.jpg";
+            await File.WriteAllBytesAsync(Path.Combine(uploads, fileName), bytes);
+            return $"/receipts/{fileName}";
+        }
         public async Task<(ActivityBookingDto? result, string? error)> CreateAsync(CreateActivityBookingDto dto)
         {
             var group = await _db.ActivityGroups
@@ -80,6 +103,7 @@ namespace Clubly.Service.Class
                 TotalPrice = group.Price * dto.Participants,
                 PaymentMethod = dto.PaymentMethod,
                 TransactionId = dto.TransactionId,
+                ReceiptImageUrl = await SaveReceiptAsync(dto.ReceiptImageUrl),
                 Status = "Pending",
             };
 

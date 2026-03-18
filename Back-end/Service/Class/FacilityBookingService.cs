@@ -17,6 +17,8 @@ namespace Clubly.Service.Class
             FacilityName = b.Facility?.Name ?? "",
             ScheduleId = b.FacilityScheduleId ?? 0,
             MemberId = b.MemberId,
+            MemberShipNumber = b.Member?.MemberShipNumber.ToString() ?? "",
+
             BookedByName = b.BookedByName,
             BookedByEmail = b.BookedByEmail,
             BookingDate = b.BookingDate,
@@ -39,14 +41,28 @@ CreatedAt = b.CreatedAt,
             var b = await _repo.GetByIdAsync(id);
             return b is null ? null : ToDto(b);
         }
+        private static async Task<string?> SaveReceiptAsync(string? base64)
+        {
+            if (string.IsNullOrEmpty(base64) || !base64.StartsWith("data:image"))
+                return base64;
 
+            var data = base64.Split(',')[1];
+            var bytes = Convert.FromBase64String(data);
+            var uploads = Path.Combine("wwwroot", "receipts");
+            Directory.CreateDirectory(uploads);
+            var fileName = $"{Guid.NewGuid()}.jpg";
+            await File.WriteAllBytesAsync(Path.Combine(uploads, fileName), bytes);
+            return $"/receipts/{fileName}";
+        }
         public async Task<(FacilityBookingDto? result, string? error)> CreateAsync(CreateFacilityBookingDto dto)
         {
             // Conflict check
             if (dto.FacilityScheduleId.HasValue && dto.FacilityScheduleId > 0)
             {
                 var conflict = await _repo.HasConflictAsync(
-                    dto.FacilityId, dto.BookingDate, dto.StartTime, dto.EndTime);
+                    dto.FacilityId, DateOnly.Parse(dto.BookingDate),
+    TimeOnly.Parse(dto.StartTime),
+    TimeOnly.Parse(dto.EndTime));
 
                 if (conflict)
                     return (null, "This time slot is already booked for this facility.");
@@ -59,13 +75,15 @@ CreatedAt = b.CreatedAt,
                 MemberId = dto.MemberId,
                 BookedByName = dto.BookedByName,
                 BookedByEmail = dto.BookedByEmail,
-                BookingDate = dto.BookingDate,
-                StartTime = dto.StartTime,
-                EndTime = dto.EndTime,
+                BookingDate = DateOnly.Parse(dto.BookingDate),
+                StartTime = TimeOnly.Parse(dto.StartTime),
+                EndTime = TimeOnly.Parse(dto.EndTime),
                 Participants = dto.Participants,
                 PaymentMethod = dto.PaymentMethod,
                 TransactionId = dto.TransactionId,
+
                 Price = dto.Price,
+                ReceiptImageUrl = await SaveReceiptAsync(dto.ReceiptImageUrl),
                 Status = "Pending",
             };
 

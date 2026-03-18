@@ -153,9 +153,49 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "Clubly.DTO.CreateActivityBookingDto",
-        "IsRequired": true
+        "Name": "ActivityId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ActivityGroupId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MemberId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "StartDate",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "Participants",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PaymentMethod",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ReceiptImageUrl",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TransactionId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "receiptImage",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -937,9 +977,74 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "Clubly.DTO.CreateFacilityBookingDto",
-        "IsRequired": true
+        "Name": "FacilityScheduleId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "MemberId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "BookedByName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "BookedByEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "BookingDate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StartTime",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "EndTime",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Participants",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PaymentMethod",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TransactionId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ReceiptImageUrl",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Price",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "FacilityId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "receiptImage",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -14,6 +14,7 @@ namespace Clubly.Repository.Class
 
         public async Task<List<FacilityBooking>> GetAllAsync() =>
             await _db.FacilityBookings
+            .Include(b => b.Member)
                      .Include(b => b.Facility)
                      .Include(b => b.Schedule)
                      .OrderByDescending(b => b.BookingDate)

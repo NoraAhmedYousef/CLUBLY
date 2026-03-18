@@ -33,9 +33,21 @@ namespace Clubly.Controllers
             Ok(await _service.GetByMemberAsync(memberId));
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateActivityBookingDto dto)
+        public async Task<IActionResult> Create([FromForm] CreateActivityBookingDto dto, IFormFile? receiptImage)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            if (receiptImage != null && receiptImage.Length > 0)
+            {
+                var uploads = Path.Combine("wwwroot", "receipts");
+                Directory.CreateDirectory(uploads);
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(receiptImage.FileName)}";
+                var filePath = Path.Combine(uploads, fileName);
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await receiptImage.CopyToAsync(stream);
+                dto.ReceiptImageUrl = $"/receipts/{fileName}";
+            }
+
             var (result, error) = await _service.CreateAsync(dto);
             if (error is not null) return Conflict(new { message = error });
             return CreatedAtAction(nameof(GetById), new { id = result!.Id }, result);

@@ -8,7 +8,7 @@
         public DateOnly StartDate { get; set; }
         public int Participants { get; set; } = 1;
         public string PaymentMethod { get; set; } = "";
-        public string ReceiptImageUrl { get; set; } = "";
+        public string ? ReceiptImageUrl { get; set; } = "";
 
         public string TransactionId { get; set; } = "";
     }
