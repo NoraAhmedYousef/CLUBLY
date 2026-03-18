@@ -306,6 +306,8 @@ function actPickerConfirm() {
   bootstrap.Modal.getInstance(document.getElementById('actPickerModal')).hide();
 
   const c = window._actPickerChoice;
+    window._actPickerActivityId = c.activityId || window._currentActivityId || 0;
+
   openBookingModal('activity', c.groupId, window._actPickerActivityName, c.price);
 
  setTimeout(() => {

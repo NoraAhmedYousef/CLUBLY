@@ -47,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: auto;
   transition: background .2s, color .2s;
 }
 
@@ -210,6 +210,7 @@ body {
   background: rgba(255,255,255,.08);
   transform: translateX(3px);
 }
+
 .sidebar-link.active {
   color: #fff;
   background: linear-gradient(135deg, rgba(232,93,47,.8), rgba(192,57,43,.8));
@@ -612,6 +613,40 @@ body {
 }
 [data-theme="dark"] .modal-footer {
   background: #091423;
+}
+
+.table thead th {
+  white-space: nowrap;
+  font-size: .75rem;
+  
+}
+.table tbody td {
+  white-space: nowrap;
+}
+.sticky-col {
+  position: sticky;
+  right: 0;
+  background: var(--card-bg);
+  z-index: 3;
+  box-shadow: -3px 0 6px rgba(0,0,0,.12);
+  min-width: 160px;
+}
+.sticky-col-2 {
+  position: sticky;
+  right: 160px;
+  background: var(--card-bg);
+  z-index: 3;
+  min-width: 90px;
+}
+[data-theme="dark"] .sticky-col,
+[data-theme="dark"] .sticky-col-2 {
+  background: var(--card-bg);
+}
+#activityBookingsBody td:last-child,
+#activityBookingsBody th:last-child,
+#facilityBookingsBody td:last-child,
+#facilityBookingsBody th:last-child {
+  min-width: 180px;
 }
 </style>
 </head>
@@ -1603,7 +1638,17 @@ body {
     <i class="bi bi-arrow-clockwise me-1"></i> Refresh
   </button>
 </div>
-
+<div class="clubly-card p-3 mb-3">
+  <div class="row g-2 align-items-center controls">
+    <div class="col-auto">
+<input id="searchMembership" class="form-control" placeholder="Search by membership #..." style="width:220px" oninput="loadBookings()">    </div>
+    <div class="col-auto ms-auto">
+      <button class="btn btn-outline-primary" onclick="loadBookings()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+  </div>
+</div>
   <!-- Tabs: Activity / Facility -->
   <ul class="nav nav-tabs mb-3" id="bookingTabs">
     <li class="nav-item">
@@ -1614,13 +1659,15 @@ body {
     </li>
   </ul>
 
-  <!-- Activity Bookings Table -->
-  <div id="tab-activity-bookings">
-    <div class="card p-3">
-      <table class="table table-hover align-middle">
+<!-- Activity Bookings Table -->
+<div id="tab-activity-bookings">
+  <div class="card p-3">
+<div class="table-responsive" style="overflow-x:auto;">
+<table class="table table-hover align-middle" style="min-width:2000px;font-size:.82rem;">
         <thead style="background:var(--table-head)">
           <tr>
             <th>#</th>
+            <th>Membership #</th>
             <th>Member</th>
             <th>Activity</th>
             <th>Group</th>
@@ -1628,45 +1675,48 @@ body {
             <th>End Date</th>
             <th>Participants</th>
             <th>Price</th>
+            <th>Payment Method</th>
+            <th>Transaction ID</th>
             <th>Receipt</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
-       <tbody id="activityBookingsBody">
-          <!-- تتحمل من الـ API -->
-        </tbody>
+        <tbody id="activityBookingsBody"></tbody>
       </table>
     </div>
   </div>
+</div>
 
-  <!-- Facility Bookings Table -->
-  <div id="tab-facility-bookings" style="display:none">
-    <div class="card p-3">
-      <table class="table table-hover align-middle">
+<!-- Facility Bookings Table -->
+<div id="tab-facility-bookings" style="display:none">
+  <div class="card p-3">
+<div class="table-responsive" style="overflow-x:auto;">
+<table class="table table-hover align-middle" style="min-width:2000px;font-size:.82rem;">
         <thead style="background:var(--table-head)">
           <tr>
             <th>#</th>
+            <th>Membership #</th>
             <th>Member</th>
             <th>Facility</th>
             <th>Date</th>
             <th>End Date</th>
             <th>Participants</th>
             <th>Price</th>
-           <th>Receipt</th>
+            <th>Payment Method</th>
+            <th>Transaction ID</th>
+            <th>Receipt</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody id="facilityBookingsBody">
-          <!-- تتحمل من الـ API -->
-        </tbody>
+        <tbody id="facilityBookingsBody"></tbody>
       </table>
     </div>
   </div>
-</div>
+</div><!-- end tab-facility-bookings -->
+</div><!-- end page-bookings -->
     <!-- =============================== Admins =============================== -->
- 
 <div class="page" id="page-admins">
   <div class="page-header">
     <div><h2 class="fw-bold m-0">Admins</h2><small class="text-muted">Manage Admins — Create / Update / Delete</small></div>
@@ -3586,14 +3636,18 @@ function switchBookingTab(tab) {
 }
 
 async function loadBookings() {
+  const membershipSearch = (document.getElementById('searchMembership')?.value || '').trim();
   // Activity Bookings
   try {
     const res1 = await fetch(`${API}/ActivityBookings`);
     const activityData = await res1.json();
-    document.getElementById('activityBookingsBody').innerHTML = activityData.length
-      ? activityData.map((b, i) => `
+    const filtered1 = membershipSearch ? activityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch)) : activityData;
+    document.getElementById('activityBookingsBody').innerHTML = filtered1.length
+      ? filtered1.map((b, i) => `
         <tr>
           <td>${i+1}</td>
+          <td>${b.memberShipNumber || '—'}</td>
+
           <td>${b.memberName}</td>
           <td>${b.activityName}</td>
           <td>${b.groupName}</td>
@@ -3601,9 +3655,11 @@ async function loadBookings() {
           <td>${b.endDate}</td>
           <td>${b.participants}</td>
        <td>${b.totalPrice} EGP</td>
-          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
-          <td>${getStatusBadge(b.status)}</td>
-          <td>${getActionButtons(b.id, b.status, 'activity')}</td>
+<td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+<td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+<td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>          
+     <td>${getStatusBadge(b.status)}</td>
+          <td style="min-width:200px;">${getActionButtons(b.id, b.status, 'activity')}</td>
         </tr>`).join('')
       : '<tr><td colspan="10" class="text-center text-muted py-4">No activity bookings found</td></tr>';
   } catch(e) {
@@ -3614,21 +3670,27 @@ async function loadBookings() {
 
   // Facility Bookings
   try {
-    const res2 = await fetch(`${API}/FacilityBookings`);
+const res2 = await fetch(`${API}/FacilityBookings`);
     const facilityData = await res2.json();
-    document.getElementById('facilityBookingsBody').innerHTML = facilityData.length
-      ? facilityData.map((b, i) => `
+    const filtered2 = membershipSearch ? facilityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch)) : facilityData;
+    document.getElementById('facilityBookingsBody').innerHTML = filtered2.length
+      ? filtered2.map((b, i) => `
         <tr>
           <td>${i+1}</td>
+          <td>${b.memberShipNumber || '—'}</td>
+
           <td>${b.bookedByName}</td>
           <td>${b.facilityName}</td>
           <td>${b.bookingDate}</td>
           <td>${b.startTime} → ${b.endTime}</td>
           <td>${b.participants}</td>
      <td>${b.price} EGP</td>
-          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
-          <td>${getStatusBadge(b.status)}</td>
-          <td>${getActionButtons(b.id, b.status, 'facility')}</td>
+<td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+<td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>   
+<td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>    
+      
+<td class="sticky-col-2">${getStatusBadge(b.status)}</td>
+          <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
         </tr>`).join('')
       : '<tr><td colspan="9" class="text-center text-muted py-4">No facility bookings found</td></tr>';
   } catch(e) {

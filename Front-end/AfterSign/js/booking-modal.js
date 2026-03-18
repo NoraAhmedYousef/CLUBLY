@@ -572,8 +572,10 @@ const rows = [
 window.bpFile = function (input, suf) {
   if (input.files && input.files[0]) {
     const file = input.files[0];
+    window._bpReceiptFile = file;  // ← غير ده
     document.getElementById('bpUT' + suf).textContent = '✅ ' + file.name;
     document.getElementById('bpUL' + suf).classList.add('has-file');
+  
 
     // تحويل الصورة لـ Base64
     const reader = new FileReader();
@@ -588,7 +590,11 @@ window.bpFile = function (input, suf) {
     setHeader(_ctx.type, _ctx.name);
     renderStep1();
   };
-
+function formatTime(t) {
+  if (!t) return '00:00:00';
+  const parts = t.split(':');
+  return parts.length === 2 ? t + ':00' : t;
+}
 window.bpPay = async function () {
     const suf = document.getElementById('tabI').classList.contains('active') ? 'I' : 'W';
     if (!v('bpAmt' + suf)) { showErr('Please enter the amount.');         return; }
@@ -610,8 +616,8 @@ window.bpPay = async function () {
           bookedByName:       localStorage.getItem('fullName') || 'Guest',
           bookedByEmail:      '',
           bookingDate:        _formData.date,
-          startTime:          _formData.time + ':00',
-          endTime:            _formData.endTime + ':00',
+       startTime: formatTime(_formData.time),
+endTime:   formatTime(_formData.endTime),
           participants:       parseInt(_formData.participants) || 1,
           paymentMethod:      suf === 'I' ? 'InstaPay' : 'E-Wallet',
           transactionId:      v('bpTx' + suf),
@@ -620,37 +626,48 @@ window.bpPay = async function () {
           receiptImageUrl:    window._bpReceiptBase64 || "" 
         };
         
-        const facRes = await fetch('https://localhost:7132/api/FacilityBookings', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(facPayload)
-        });
-        if (!facRes.ok) {
-          const err = await facRes.json().catch(() => ({}));
-          showErr(err.message || 'Booking failed. Please try again.');
-          btn.disabled = false; btn.innerHTML = 'Complete Payment';
-          return;
-        }
+   const fd2 = new FormData();
+fd2.append('facilityId',         _ctx.id);
+if (_ctx.scheduleId) fd2.append('facilityScheduleId', _ctx.scheduleId);
+fd2.append('memberId',           memberId);
+fd2.append('bookedByName',       localStorage.getItem('fullName') || 'Guest');
+fd2.append('bookedByEmail', localStorage.getItem('email') || 'guest@clubly.com');
+fd2.append('bookingDate',        _formData.date);
+fd2.append('startTime',          formatTime(_formData.time));
+fd2.append('endTime',            formatTime(_formData.endTime));
+fd2.append('participants',       parseInt(_formData.participants) || 1);
+fd2.append('paymentMethod',      suf === 'I' ? 'InstaPay' : 'E-Wallet');
+fd2.append('transactionId',      v('bpTx' + suf));
+fd2.append('price',              parseFloat(v('bpAmt' + suf)) || _formData.price);
+if (window._bpReceiptFile) fd2.append('receiptImage', window._bpReceiptFile);
+
+const facRes = await fetch('https://localhost:7132/api/FacilityBookings', {
+  method: 'POST',
+  body: fd2
+});
+      if (!facRes.ok) {
+  const err = await facRes.text(); // ← غير json لـ text
+  console.log('ERROR:', err);      // ← هتشوف المشكلة بالظبط
+  showErr(err);
+  btn.disabled = false; btn.innerHTML = 'Complete Payment';
+  return;
+}
 
     // ... داخل ميثود bpPay ...
 } else {
-  const payload = {
-    activityId:      window._actPickerActivityId || 0,
-    activityGroupId: parseInt(_ctx.id),
-    memberId:        parseInt(memberId),
-    startDate:       _formData.date,
-    participants:    parseInt(_formData.participants) || 1,
-    paymentMethod:   suf === 'I' ? 'InstaPay' : 'EWallet',
-    transactionId:   v('bpTx' + suf),
-    // بنبعت الـ Base64 string هنا
-    receiptImageUrl: window._bpReceiptBase64 || "" 
-  };
+  const fd = new FormData();
+  fd.append('activityId',      window._actPickerActivityId || 0);
+  fd.append('activityGroupId', _ctx.id);
+  fd.append('memberId',        memberId);
+  fd.append('startDate',       _formData.date);
+  fd.append('participants',    parseInt(_formData.participants) || 1);
+  fd.append('paymentMethod',   suf === 'I' ? 'InstaPay' : 'EWallet');
+  fd.append('transactionId',   v('bpTx' + suf));
+  if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
 
-  // ... باقي كود الـ fetch كما هو ...
   const res = await fetch('https://localhost:7132/api/ActivityBookings', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    body: fd   // بدون Content-Type header خالص
   });
 // ...
         if (!res.ok) {
