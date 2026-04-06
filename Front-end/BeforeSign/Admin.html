@@ -674,7 +674,15 @@ body {
   <a href="../AfterSign/faq.html">FAQ</a>
   <a href="../AfterSign/contact.html">Contact</a>
 </nav>
-
+<!-- Notification Bell -->
+<div class="notif-bell-wrapper" style="position:relative;">
+  <button class="btn-theme-header" id="notifBellBtn" title="My Notifications"
+    onclick="showPage('my-notifications')"
+    style="position:relative;">
+    <i class="bi bi-bell-fill"></i>
+    <span class="notif-badge-count" id="notifBellBadge" style="display:none">0</span>
+  </button>
+</div>
   <div class="header-actions">
     <button class="btn-theme-header" id="themeToggleHeader" title="Toggle Theme">
       <i class="bi bi-moon-stars"></i>
@@ -732,11 +740,15 @@ body {
 
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Communication</div>
-
-    <a class="sidebar-link" onclick="showPage('announcement')" data-label="Announcements">
-      <i class="bi bi-megaphone-fill"></i>
-      <span class="link-text">Announcements</span>
-    </a>
+    <a class="sidebar-link" onclick="showPage('notifications')" data-label="Notifications">
+  <i class="bi bi-bell-fill"></i>
+  <span class="link-text">Notifications</span>
+</a>
+<a class="sidebar-link" onclick="showPage('my-notifications')" data-label="My Inbox">
+  <i class="bi bi-inbox-fill"></i>
+  <span class="link-text">My Inbox</span>
+</a>
+  
     <div class="sidebar-divider"></div>
 <div class="sidebar-section">Bookings</div>
 
@@ -767,8 +779,7 @@ body {
       </div>
 
           <div style="margin-left: 150px;">   
-<img src="../img/2026-03-11 at 5.28.49 PM.jpeg"  width="900px">
-
+<img src="../img/dashboard-report.jpeg" width="900px">
 <br><br>
 
 <a href="https://app.powerbi.com/groups/me/reports/6dddef52-90d4-4452-9319-296c59d4fbfa/b1f4237056b02e0e1375?experience=power-bi" target="_self">
@@ -1514,117 +1525,402 @@ body {
         </div></div>
       </div>
     </div>
+<!-- =============================== NOTIFICATIONS =============================== -->
+<div class="page" id="page-notifications">
+  <div class="page-header">
+    <div>
+      <h2 class="fw-bold m-0">Notifications</h2>
+      <small class="text-muted">Send push notifications to members, trainers, admins or guests</small>
+    </div>
+  </div>
 
-    <!-- =============================== ANNOUNCEMENTS =============================== -->
-    <div class="page" id="page-announcement">
-      <div class="page-header">
-        <div><h2 class="fw-bold m-0">Announcements</h2><small class="text-muted">Manage announcements — Create / Update / Delete</small></div>
-        <button class="btn btn-primary rounded-pill px-4" id="openAddBtn_ann"><i class="bi bi-plus-lg"></i> Add Announcement</button>
-      </div>
-      <div class="clubly-card p-3 mb-3">
-        <div class="row g-2 align-items-center controls">
-          <div class="col-auto"><input id="searchInput_ann" class="form-control" placeholder="Search by title or text..."></div>
-          <div class="col-auto"><select id="sortBy_ann" class="form-select"><option value="date_desc">Publish Date ↓</option><option value="date_asc">Publish Date ↑</option><option value="title_asc">Title A→Z</option><option value="title_desc">Title Z→A</option></select></div>
-          <div class="col-auto"><select id="pageSize_ann" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option></select></div>
-          <div class="col-auto ms-auto"><small class="text-muted"><span id="itemsInfo_ann"></span> </small></div>
-          <div class="col-auto"><button class="btn btn-outline-primary" id="refreshBtn_ann"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
-        </div>
-      </div>
-      <div class="clubly-card p-0">
-        <div class="table-scroll">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-light"><tr><th>Title</th><th>Text</th><th class="text-center">Publish Date</th><th>Image</th><th class="text-center">Actions</th></tr></thead>
-            <tbody id="annTable"><tr><td colspan="5" class="p-5 text-center">Loading...</td></tr></tbody>
-          </table>
-        </div>
-        <div class="d-flex justify-content-between align-items-center p-3 border-top">
-          <div class="small-muted" id="pageInfo_ann"></div>
-          <nav><ul class="pagination mb-0" id="pagination_ann"></ul></nav>
-        </div>
+  <!-- Send Form Card -->
+  <div class="clubly-card p-4 mb-4">
+    <h5 class="fw-bold mb-3">
+      <i class="bi bi-send-fill me-2" style="color:var(--clubly-accent)"></i>Send New Notification
+    </h5>
+    <div class="row g-3">
+
+      <!-- Title -->
+      <div class="col-md-6">
+        <label class="form-label">Title <span class="text-danger">*</span></label>
+        <input type="text" id="notif_title" class="form-control" placeholder="Notification title...">
+        <div class="invalid-feedback">Title is required (min 3 chars)</div>
       </div>
 
-      <!-- Add Announcement Modal -->
-      <div class="modal fade" id="addModal_ann" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content rounded-4">
-          <div class="modal-header border-0"><h5 class="modal-title">Add Announcement</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-          <div class="modal-body">
-            <form id="addForm_ann" enctype="multipart/form-data" autocomplete="off">
-              <div class="row g-3">
-                <div class="col-12"><label class="form-label">Title</label><input id="addTitle_ann" name="Title" class="form-control" required></div>
-                <div class="col-12"><label class="form-label">Text</label><textarea id="addText_ann" name="Text" class="form-control" rows="4" required></textarea></div>
-<div class="col-md-4">
-  <label class="form-label fw-semibold">Select For Who</label>
+      <!-- Type / Priority -->
+      <div class="col-md-3">
+        <label class="form-label">Type</label>
+        <select id="notif_type" class="form-select">
+          <option value="Info">ℹ️ Info</option>
+          <option value="Warning">⚠️ Warning</option>
+          <option value="Success">✅ Success</option>
+          <option value="Urgent">🔴 Urgent</option>
+        </select>
+      </div>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Admins" id="annAdmins">
-    <label class="form-check-label" for="annAdmins">Admins</label>
-  </div>
+      <!-- Schedule -->
+      <div class="col-md-3">
+        <label class="form-label">Send At (optional)</label>
+        <input type="datetime-local" id="notif_schedule" class="form-control">
+        <small class="text-muted">Leave blank to send now</small>
+      </div>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Trainers" id="annTrainers">
-    <label class="form-check-label" for="annTrainers">Trainers</label>
-  </div>
+      <!-- Description -->
+      <div class="col-12">
+        <label class="form-label">Description <span class="text-danger">*</span></label>
+        <textarea id="notif_description" class="form-control" rows="3" placeholder="Write your notification message..."></textarea>
+        <div class="d-flex justify-content-between mt-1">
+          <div class="invalid-feedback" style="display:block;visibility:hidden" id="notif_desc_err">Description required (min 10 chars)</div>
+          <small class="text-muted ms-auto" id="notif_charcount">0 / 500</small>
+        </div>
+      </div>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Members" id="annMembers">
-    <label class="form-check-label" for="annMembers">Members</label>
-  </div>
+      <!-- Image Upload -->
+      <div class="col-md-6">
+        <label class="form-label">Image <span class="text-muted">(optional)</span></label>
+        <div id="notifDragArea" class="drag-area" tabindex="0"
+          style="border:2px dashed var(--border);border-radius:10px;padding:18px;text-align:center;cursor:pointer;transition:border-color .2s;">
+          <i class="bi bi-cloud-arrow-up" style="font-size:22px;color:var(--clubly-accent)"></i>
+          <div class="small text-muted mt-1">Drag & drop or click to select image</div>
+          <input type="file" id="notif_image" accept="image/*" style="display:none;">
+        </div>
+        <div class="mt-2 d-flex align-items-center gap-2" id="notifImagePreviewWrap" style="display:none!important">
+          <img id="notif_image_preview" style="width:80px;height:60px;object-fit:cover;border-radius:8px;border:1px solid var(--border);" alt="preview">
+          <button type="button" class="btn btn-outline-danger btn-sm" id="removeNotifImage">
+            <i class="bi bi-x-lg"></i> Remove
+          </button>
+        </div>
+      </div>
 
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Guests" id="annGuests">
-    <label class="form-check-label" for="annGuests">Guests</label>
-  </div>
-</div>                <div class="col-md-6"><label class="form-label">Image (optional)</label><div id="addDrag_ann" class="drag-area" tabindex="0"><div class="small-muted"><i class="bi bi-cloud-arrow-up me-2"></i>Drag & drop or click to select</div><input id="addImage_ann" name="Image" type="file" accept="image/*" style="display:none;"></div><img id="addPreview_ann" class="img-preview" alt="preview"></div>
-              </div>
-            </form>
+      <!-- Recipients -->
+      <div class="col-md-6">
+        <label class="form-label">Send To <span class="text-danger">*</span></label>
+        <div class="d-flex flex-wrap gap-2 mt-1" id="notifRecipients">
+          <div class="form-check form-check-inline border rounded-pill px-3 py-2">
+            <input class="form-check-input" type="checkbox" id="notifToAdmins" value="Admins">
+            <label class="form-check-label" for="notifToAdmins">
+              <i class="bi bi-shield-fill text-danger me-1"></i>Admins
+            </label>
           </div>
-          <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="addSaveBtn_ann" class="btn btn-primary">Save</button></div>
-        </div></div>
-      </div>
-
-      <!-- Edit Announcement Modal -->
-      <div class="modal fade" id="editModal_ann" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content rounded-4">
-          <div class="modal-header border-0"><h5 class="modal-title">Edit Announcement</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
-          <div class="modal-body">
-            <form id="editForm_ann" enctype="multipart/form-data" autocomplete="off">
-              <input type="hidden" id="editId_ann" name="Id">
-              <div class="row g-3">
-                <div class="col-12"><label class="form-label">Title</label><input id="editTitle_ann" name="Title" class="form-control" required></div>
-                <div class="col-12"><label class="form-label">Text</label><textarea id="editText_ann" name="Text" class="form-control" rows="4" required></textarea></div>
-<div class="col-md-4">
-  <label class="form-label fw-semibold">Select For Who</label>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Admins" id="editAnnGuests">
-    <label class="form-check-label" for="editAnnGuests">Admins</label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Trainers" id="editAnnTrainers">
-    <label class="form-check-label" for="editAnnTrainers">Trainers</label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Members" id="editAnnMembers">
-    <label class="form-check-label" for="editAnnMembers">Members</label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="Announcement" value="Guests" id="editAnnGuests">
-    <label class="form-check-label" for="editAnnGuests">Guests</label>
-  </div>
-</div>           <div class="col-md-6"><label class="form-label">Publish Date</label><input id="editDate_ann" name="PublishDate" type="date" class="form-control"></div>
-                <div class="col-md-6"><label class="form-label">Change Image</label><div id="editDrag_ann" class="drag-area" tabindex="0"><div class="small-muted"><i class="bi bi-cloud-arrow-up me-2"></i>Drag & drop to replace</div><input id="editImage_ann" name="Image" type="file" accept="image/*" style="display:none;"></div><div class="d-flex gap-3 align-items-center mt-2"><img id="editPreview_ann" class="img-preview" alt="preview"><button id="removeImageBtn_ann" type="button" class="btn btn-outline-danger btn-sm" style="display:none;"><i class="bi bi-x-lg"></i> Remove</button></div></div>
-              </div>
-            </form>
+          <div class="form-check form-check-inline border rounded-pill px-3 py-2">
+            <input class="form-check-input" type="checkbox" id="notifToTrainers" value="Trainers">
+            <label class="form-check-label" for="notifToTrainers">
+              <i class="bi bi-person-badge-fill text-primary me-1"></i>Trainers
+            </label>
           </div>
-          <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="editSaveBtn_ann" class="btn btn-warning text-white">Update</button></div>
-        </div></div>
+          <div class="form-check form-check-inline border rounded-pill px-3 py-2">
+            <input class="form-check-input" type="checkbox" id="notifToMembers" value="Members">
+            <label class="form-check-label" for="notifToMembers">
+              <i class="bi bi-people-fill text-success me-1"></i>Members
+            </label>
+          </div>
+          <div class="form-check form-check-inline border rounded-pill px-3 py-2">
+            <input class="form-check-input" type="checkbox" id="notifToGuests" value="Guests">
+            <label class="form-check-label" for="notifToGuests">
+              <i class="bi bi-person-fill text-secondary me-1"></i>Guests
+            </label>
+          </div>
+        </div>
+        <div class="text-danger small mt-1" id="notifRecipientsErr" style="display:none">
+          Please select at least one recipient
+        </div>
+
+        <!-- Select All -->
+        <div class="mt-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="toggleAllNotifRecipients()">
+            <i class="bi bi-check2-all me-1"></i>Select / Deselect All
+          </button>
+        </div>
       </div>
-      <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer_ann" style="z-index:12000;"></div>
+
+      <!-- Actions -->
+      <div class="col-12 d-flex gap-2 justify-content-end border-top pt-3">
+        <button class="btn btn-outline-secondary rounded-pill px-4" onclick="resetNotifForm()">
+          <i class="bi bi-x-circle me-1"></i>Clear
+        </button>
+        <button class="btn btn-primary rounded-pill px-5 fw-bold" onclick="sendNotification()" id="sendNotifBtn">
+          <i class="bi bi-send-fill me-2"></i>Send Notification
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Table Card -->
+  <div class="clubly-card p-0">
+    <div class="d-flex justify-content-between align-items-center px-4 py-3 border-bottom flex-wrap gap-2">
+      <div>
+        <h5 class="fw-bold mb-0">
+          <i class="bi bi-clock-history me-2" style="color:var(--clubly-teal)"></i>Notifications History
+        </h5>
+        <small class="text-muted">All sent notifications sorted by latest</small>
+      </div>
+      <div class="d-flex gap-2 flex-wrap align-items-center">
+        <input id="notifSearchInput" class="form-control form-control-sm" style="width:200px" placeholder="Search title...">
+        <select id="notifFilterRecipient" class="form-select form-select-sm" style="width:140px">
+          <option value="">All recipients</option>
+          <option value="Admins">Admins</option>
+          <option value="Trainers">Trainers</option>
+          <option value="Members">Members</option>
+          <option value="Guests">Guests</option>
+        </select>
+        <select id="notifFilterType" class="form-select form-select-sm" style="width:120px">
+          <option value="">All types</option>
+          <option value="Info">Info</option>
+          <option value="Warning">Warning</option>
+          <option value="Success">Success</option>
+          <option value="Urgent">Urgent</option>
+        </select>
+        <button class="btn btn-outline-primary btn-sm" onclick="loadNotifications()">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+      </div>
     </div>
 
+    <div class="table-scroll">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th class="text-center">Type</th>
+            <th class="text-center">Recipients</th>
+            <th class="text-center">Image</th>
+            <th class="text-center">Sent At</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="notificationsTable">
+          <tr><td colspan="8" class="text-center py-4 text-muted">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center px-4 py-3 border-top">
+      <small id="notifItemsInfo" class="text-muted"></small>
+      <nav><ul class="pagination mb-0" id="notifPagination"></ul></nav>
+    </div>
+  </div>
+
+</div>
+<!-- View Notification Details Modal -->
+<div class="modal fade" id="viewNotifModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">
+          <i class="bi bi-bell-fill me-2" style="color:var(--clubly-accent)"></i>
+          Notification Details
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body px-4 py-3">
+
+        <!-- Type Badge + Title -->
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span id="vn_typeBadge" class="badge fs-6 px-3 py-2"></span>
+          <h5 id="vn_title" class="fw-bold mb-0"></h5>
+        </div>
+
+        <!-- Description -->
+        <div class="clubly-card p-3 mb-3">
+          <label class="form-label text-muted mb-1">
+            <i class="bi bi-chat-text me-1"></i>Description
+          </label>
+          <p id="vn_description" class="mb-0" style="white-space:pre-wrap;line-height:1.7;"></p>
+        </div>
+
+        <div class="row g-3">
+
+          <!-- Image -->
+          <div class="col-md-5" id="vn_imageCol">
+            <label class="form-label text-muted mb-1">
+              <i class="bi bi-image me-1"></i>Image
+            </label>
+            <div>
+              <a id="vn_imageLink" href="#" target="_blank">
+                <img id="vn_image"
+                  style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;border:1px solid var(--border);">
+              </a>
+            </div>
+          </div>
+
+          <!-- Details -->
+          <div class="col-md-7">
+
+            <!-- Recipients -->
+            <div class="mb-3">
+              <label class="form-label text-muted mb-1">
+                <i class="bi bi-people-fill me-1"></i>Recipients
+              </label>
+              <div id="vn_recipients" class="d-flex flex-wrap gap-1 mt-1"></div>
+            </div>
+
+            <!-- Sent At -->
+            <div class="mb-3">
+              <label class="form-label text-muted mb-1">
+                <i class="bi bi-calendar-event me-1"></i>Sent At
+              </label>
+              <div class="d-flex align-items-center gap-2 mt-1">
+                <span id="vn_date"
+                  class="badge bg-secondary fs-6 px-3 py-2"
+                  style="font-weight:600;letter-spacing:.3px;">
+                </span>
+                <span id="vn_time"
+                  class="badge bg-light text-dark border fs-6 px-3 py-2"
+                  style="font-weight:600;">
+                </span>
+              </div>
+            </div>
+
+            <!-- Scheduled At (optional) -->
+            <div class="mb-3" id="vn_scheduledRow" style="display:none">
+              <label class="form-label text-muted mb-1">
+                <i class="bi bi-clock me-1"></i>Scheduled At
+              </label>
+              <div id="vn_scheduled" class="badge bg-warning text-dark px-3 py-2 fs-6"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0 justify-content-between">
+        <button class="btn btn-outline-danger rounded-pill px-4" id="vn_deleteBtn">
+          <i class="bi bi-trash3-fill me-1"></i>Delete
+        </button>
+        <button class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ======= end page-notifications ======= -->
+
+<!-- =============================== MY NOTIFICATIONS INBOX =============================== -->
+<div class="page" id="page-my-notifications">
+
+  <div class="page-header">
+    <div>
+      <h2 class="fw-bold m-0">
+        <i class="bi bi-inbox-fill me-2" style="color:var(--clubly-accent)"></i>My Inbox
+      </h2>
+      <small class="text-muted">Notifications sent to Admins</small>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <span class="badge bg-secondary rounded-pill px-3 py-2" id="myNotifUnreadCount" style="font-size:.85rem;">
+        0 unread
+      </span>
+      <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="markAllMyNotifsRead()">
+        <i class="bi bi-check2-all me-1"></i>Mark all read
+      </button>
+      <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="loadMyNotifications()">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="clubly-card p-3 mb-3">
+    <div class="row g-2 align-items-center controls">
+      <div class="col-auto">
+        <input id="myNotifSearch" class="form-control" placeholder="Search notifications..." style="width:240px">
+      </div>
+      <div class="col-auto">
+        <select id="myNotifFilterType" class="form-select" style="width:140px">
+          <option value="">All types</option>
+          <option value="Info">ℹ️ Info</option>
+          <option value="Warning">⚠️ Warning</option>
+          <option value="Success">✅ Success</option>
+          <option value="Urgent">🔴 Urgent</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <select id="myNotifFilterStatus" class="form-select" style="width:140px">
+          <option value="">All</option>
+          <option value="unread">Unread</option>
+          <option value="read">Read</option>
+        </select>
+      </div>
+      <div class="col-auto ms-auto">
+        <small class="text-muted" id="myNotifInfo"></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inbox List -->
+  <div class="clubly-card p-0" id="myNotifList">
+    <div class="text-center py-5 text-muted">
+      <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-3">
+    <nav><ul class="pagination" id="myNotifPagination"></ul></nav>
+  </div>
+
+</div>
+<!-- ======= end page-my-notifications ======= -->
+
+
+<!-- ===== MY NOTIFICATION DETAIL MODAL ===== -->
+<div class="modal fade" id="myNotifDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header border-0">
+        <div class="d-flex align-items-center gap-3">
+          <div id="mnd_typeIcon" class="notif-type-icon" style="width:46px;height:46px;font-size:20px;"></div>
+          <div>
+            <h5 class="modal-title mb-0 fw-bold" id="mnd_title">—</h5>
+            <small class="text-muted" id="mnd_meta">—</small>
+          </div>
+        </div>
+        <button class="btn-close" data-bs-dismiss="modal" style="filter:invert(1)"></button>
+      </div>
+
+      <div class="modal-body px-4 pb-2">
+
+        <!-- Type Badge -->
+        <div class="mb-3">
+          <span id="mnd_typeBadge" class="badge fs-6 px-3 py-2 me-2"></span>
+          <span id="mnd_statusBadge" class="badge bg-secondary fs-6 px-3 py-2"></span>
+        </div>
+
+        <!-- Description -->
+        <div class="clubly-card p-3 mb-3">
+          <p id="mnd_description" class="mb-0" style="white-space:pre-wrap;line-height:1.8;font-size:.95rem;"></p>
+        </div>
+
+        <!-- Image -->
+        <div id="mnd_imageWrap" class="mb-3" style="display:none">
+          <label class="form-label text-muted">
+            <i class="bi bi-image me-1"></i>Attached Image
+          </label>
+          <div>
+            <a id="mnd_imageLink" href="#" target="_blank">
+              <img id="mnd_image"
+                style="max-width:100%;max-height:280px;object-fit:cover;
+                border-radius:12px;border:1px solid var(--border);cursor:pointer;">
+            </a>
+          </div>
+        </div>
+
+        <!-- Sent At -->
+        <div class="d-flex align-items-center gap-2 mt-2">
+          <i class="bi bi-clock text-muted"></i>
+          <small class="text-muted">Sent:</small>
+          <span id="mnd_sentAt" class="badge bg-light text-dark border px-3 py-1"
+            style="font-size:.8rem;font-weight:600;"></span>
+        </div>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -2010,8 +2306,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
-const pages = ['main','member','trainer','category','facility','activity','group','membership','announcement','admins','profile','bookings'];
-
+const pages = ['main','member','trainer','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings'];
 function showPage(name) {
   pages.forEach(p => {
     document.getElementById('page-' + p)?.classList.remove('active');
@@ -2983,26 +3278,682 @@ msModalEl.addEventListener('hidden.bs.modal',()=>{document.getElementById('membe
 let membershipsData=[], currentPageMs=1, pageSizeMs=10;
 function fetchMemberships(){document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>';fetch(msApiUrl).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(ms=>{membershipsData=ms;currentPageMs=1;renderMembershipPage(currentPageMs);}).catch(()=>document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center text-danger py-4">Failed to load</td></tr>');}
 function renderMembershipPage(page){const tbody=document.getElementById('membershipTableBody');tbody.innerHTML='';const total=membershipsData.length,totalPages=Math.max(1,Math.ceil(total/pageSizeMs));if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageMs=page;const start=(page-1)*pageSizeMs,end=Math.min(start+pageSizeMs,total),items=membershipsData.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">No memberships found</td></tr>';}else{items.forEach(m=>{const tr=document.createElement('tr');tr.dataset.id=m.id;tr.innerHTML=`<td>${m.name}</td><td>${m.description??''}</td><td>${m.duration}</td><td>$${m.price}</td><td><span class="badge ${m.status==='Active'?'bg-success':'bg-secondary'}">${m.status}</span></td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-ms"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-ms"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});}document.getElementById('itemsInfo_m').textContent=`Showing ${total===0?0:start+1}-${end} of ${total}`;makePagination('pagination_m',currentPageMs,totalPages,renderMembershipPage);}
+// ===================================================
+// ============== NOTIFICATIONS MODULE ===============
+// ===================================================
+const notifApiUrl = 'https://localhost:7132/api/Notifications';
+let notifData = [], notifFiltered = [], notifPage = 1, notifPageSize = 10;
+
+function showToastNotif(msg, type = 'success') { showToastIn('toastContainer', msg, type); }
+
+// ── Char counter ──────────────────────────────────────────────────────────────
+document.getElementById('notif_description')?.addEventListener('input', function () {
+  const len = this.value.length;
+  const counter = document.getElementById('notif_charcount');
+  counter.textContent = `${len} / 500`;
+  counter.style.color = len > 500 ? '#dc3545' : 'var(--muted)';
+  if (len > 500) this.value = this.value.substring(0, 500);
+});
+
+// ── Image drag & drop ──────────────────────────────────────────────────────────
+(function () {
+  const box = document.getElementById('notifDragArea');
+  const input = document.getElementById('notif_image');
+  const previewWrap = document.getElementById('notifImagePreviewWrap');
+  const preview = document.getElementById('notif_image_preview');
+  const removeBtn = document.getElementById('removeNotifImage');
+  if (!box) return;
+
+  function showPreview(file) {
+    if (!file) return;
+    preview.src = URL.createObjectURL(file);
+    previewWrap.style.display = 'flex';
+    box.style.display = 'none';
+  }
+
+  box.addEventListener('click', () => input.click());
+  box.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') input.click(); });
+  input.addEventListener('change', e => { if (e.target.files[0]) showPreview(e.target.files[0]); });
+
+  ['dragenter', 'dragover'].forEach(ev => box.addEventListener(ev, e => { e.preventDefault(); box.style.borderColor = 'var(--clubly-accent)'; }));
+  ['dragleave', 'drop'].forEach(ev => box.addEventListener(ev, e => { e.preventDefault(); box.style.borderColor = ''; }));
+  box.addEventListener('drop', e => {
+    const f = e.dataTransfer.files[0];
+    if (f && f.type.startsWith('image/')) {
+      const dt = new DataTransfer(); dt.items.add(f); input.files = dt.files;
+      showPreview(f);
+    }
+  });
+
+  removeBtn?.addEventListener('click', () => {
+    input.value = '';
+    preview.src = '';
+    previewWrap.style.display = 'none';
+    box.style.display = '';
+  });
+})();
+
+// ── Toggle all recipients ────────────────────────────────────────────────────
+function toggleAllNotifRecipients() {
+  const checks = document.querySelectorAll('#notifRecipients input[type="checkbox"]');
+  const allChecked = Array.from(checks).every(c => c.checked);
+  checks.forEach(c => c.checked = !allChecked);
+}
+
+// ── Reset form ───────────────────────────────────────────────────────────────
+function resetNotifForm() {
+  document.getElementById('notif_title').value = '';
+  document.getElementById('notif_description').value = '';
+  document.getElementById('notif_type').value = 'Info';
+  document.getElementById('notif_schedule').value = '';
+  document.getElementById('notif_charcount').textContent = '0 / 500';
+  document.querySelectorAll('#notifRecipients input[type="checkbox"]').forEach(c => c.checked = false);
+  document.getElementById('notif_image').value = '';
+  document.getElementById('notif_image_preview').src = '';
+  document.getElementById('notifImagePreviewWrap').style.display = 'none';
+  document.getElementById('notifDragArea').style.display = '';
+  // Clear validation
+  ['notif_title', 'notif_description'].forEach(id => {
+    document.getElementById(id)?.classList.remove('is-invalid', 'is-valid');
+  });
+  document.getElementById('notifRecipientsErr').style.display = 'none';
+  document.getElementById('notif_desc_err').style.visibility = 'hidden';
+}
+
+// ── Validate & Send ───────────────────────────────────────────────────────────
+async function sendNotification() {
+  let valid = true;
+
+  const titleEl = document.getElementById('notif_title');
+  const descEl = document.getElementById('notif_description');
+  const descErr = document.getElementById('notif_desc_err');
+  const recipErr = document.getElementById('notifRecipientsErr');
+
+  // Title
+  titleEl.classList.remove('is-invalid', 'is-valid');
+  if (!titleEl.value.trim() || titleEl.value.trim().length < 3) {
+    titleEl.classList.add('is-invalid'); valid = false;
+  } else titleEl.classList.add('is-valid');
+
+  // Description
+  descEl.classList.remove('is-invalid', 'is-valid');
+  if (!descEl.value.trim() || descEl.value.trim().length < 10) {
+    descEl.classList.add('is-invalid');
+    descErr.style.visibility = 'visible'; valid = false;
+  } else {
+    descEl.classList.add('is-valid');
+    descErr.style.visibility = 'hidden';
+  }
+
+  // Recipients
+  const selectedRecipients = Array.from(
+    document.querySelectorAll('#notifRecipients input[type="checkbox"]:checked')
+  ).map(c => c.value);
+
+  if (!selectedRecipients.length) {
+    recipErr.style.display = 'block'; valid = false;
+  } else recipErr.style.display = 'none';
+
+  if (!valid) return;
+
+  // Build FormData
+  const fd = new FormData();
+  fd.append('Title', titleEl.value.trim());
+  fd.append('Description', descEl.value.trim());
+  fd.append('Type', document.getElementById('notif_type').value);
+
+  const scheduleVal = document.getElementById('notif_schedule').value;
+  if (scheduleVal) fd.append('ScheduledAt', new Date(scheduleVal).toISOString());
+
+  selectedRecipients.forEach(r => fd.append('Recipients', r));
+
+  const imgFile = document.getElementById('notif_image').files[0];
+  if (imgFile) fd.append('Image', imgFile);
+
+  // Add creation timestamp
+  fd.append('CreatedAt', new Date().toISOString());
+
+  const btn = document.getElementById('sendNotifBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+  try {
+    const res = await fetch(notifApiUrl, { method: 'POST', body: fd });
+    if (!res.ok) throw new Error(await res.text() || 'Failed to send');
+
+    Swal.fire({
+      title: 'Sent!',
+      html: `Notification sent to: <strong>${selectedRecipients.join(', ')}</strong>`,
+      icon: 'success',
+      timer: 2500,
+      showConfirmButton: false
+    });
+
+    resetNotifForm();
+    await loadNotifications();
+  } catch (e) {
+    Swal.fire('Error', e.message || 'Failed to send notification', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-send-fill me-2"></i>Send Notification';
+  }
+}
+
+// ── Load & render history ─────────────────────────────────────────────────────
+async function loadNotifications() {
+  document.getElementById('notificationsTable').innerHTML =
+    '<tr><td colspan="8" class="text-center py-4 text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Loading...</td></tr>';
+  try {
+    const res = await fetch(notifApiUrl);
+    notifData = res.ok ? await res.json() : [];
+    // Sort by latest first
+    notifData.sort((a, b) => new Date(b.createdAt || b.sentAt || 0) - new Date(a.createdAt || a.sentAt || 0));
+    applyNotifFilters();
+  } catch (e) {
+    document.getElementById('notificationsTable').innerHTML =
+      '<tr><td colspan="8" class="text-center text-danger py-4">Failed to load notifications</td></tr>';
+  }
+}
+
+function applyNotifFilters() {
+  const q = (document.getElementById('notifSearchInput')?.value || '').trim().toLowerCase();
+  const recip = document.getElementById('notifFilterRecipient')?.value || '';
+  const type = document.getElementById('notifFilterType')?.value || '';
+
+  notifFiltered = notifData.filter(n => {
+    const matchQ = !q || (n.title || '').toLowerCase().includes(q);
+    const matchR = !recip || (n.recipients || []).includes(recip) || (typeof n.recipients === 'string' && n.recipients.includes(recip));
+    const matchT = !type || n.type === type;
+    return matchQ && matchR && matchT;
+  });
+
+  notifPage = 1;
+  renderNotifTable();
+}
+
+function renderNotifTable() {
+  const tbody = document.getElementById('notificationsTable');
+  const total = notifFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / notifPageSize));
+  if (notifPage > totalPages) notifPage = totalPages;
+
+  const start = (notifPage - 1) * notifPageSize;
+  const items = notifFiltered.slice(start, start + notifPageSize);
+
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center py-5 text-muted">No notifications found</td></tr>';
+    document.getElementById('notifItemsInfo').textContent = '';
+    document.getElementById('notifPagination').innerHTML = '';
+    return;
+  }
+
+  const typeColors = {
+    'Info':    'bg-info text-dark',
+    'Warning': 'bg-warning text-dark',
+    'Success': 'bg-success text-white',
+    'Urgent':  'bg-danger text-white',
+  };
+  const typeIcons = {
+    'Info': 'ℹ️', 'Warning': '⚠️', 'Success': '✅', 'Urgent': '🔴'
+  };
+
+  tbody.innerHTML = items.map((n, i) => {
+  // ✅ Support both backend formats
+const recipients = Array.isArray(n.recipients) && n.recipients.length
+  ? n.recipients
+  : (typeof n.recipients === 'string' && n.recipients
+      ? n.recipients.split(',').map(s => s.trim())
+      : (() => {
+          const r = [];
+          if (n.toAdmins)   r.push('Admins');
+          if (n.toTrainers) r.push('Trainers');
+          if (n.toMembers)  r.push('Members');
+          if (n.toGuests)   r.push('Guests');
+          return r;
+        })()
+    );
+
+    const recipBadges = recipients.map(r => {
+      const colors = { Admins: 'bg-danger', Trainers: 'bg-primary', Members: 'bg-success', Guests: 'bg-secondary' };
+      return `<span class="badge ${colors[r] || 'bg-secondary'} me-1">${r}</span>`;
+    }).join('');
+
+    // Format date & time
+    const rawDate = n.createdAt || n.sentAt || n.scheduledAt;
+    let dateStr = '—', timeStr = '';
+    if (rawDate) {
+      const d = new Date(rawDate);
+      dateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+      timeStr = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    const imgHtml = n.imageUrl
+      ? `<a href="${fixUrl(n.imageUrl)}" target="_blank">
+           <img src="${fixUrl(n.imageUrl)}" style="width:48px;height:38px;object-fit:cover;border-radius:6px;border:1px solid var(--border);">
+         </a>`
+      : '<span class="text-muted small">—</span>';
+
+    const typeBadge = n.type
+      ? `<span class="badge ${typeColors[n.type] || 'bg-secondary'}">${typeIcons[n.type] || ''} ${n.type}</span>`
+      : '—';
+
+    const desc = (n.description || '').length > 60
+      ? escapeHtml(n.description.substring(0, 60)) + '…'
+      : escapeHtml(n.description || '');
+
+    return `<tr>
+      <td class="text-muted">${start + i + 1}</td>
+      <td class="fw-semibold">${escapeHtml(n.title || '')}</td>
+      <td style="max-width:220px;white-space:normal;font-size:.85rem;">${desc}</td>
+      <td class="text-center">${typeBadge}</td>
+      <td class="text-center" style="min-width:140px">${recipBadges || '—'}</td>
+      <td class="text-center">${imgHtml}</td>
+      <td class="text-center" style="min-width:110px">
+        <div style="font-size:.82rem;font-weight:600;">${dateStr}</div>
+        <div style="font-size:.78rem;color:var(--muted);">${timeStr}</div>
+      </td>
+      <td class="text-center">
+        <button class="btn btn-link text-danger btn-sm" onclick="deleteNotification(${n.id})" title="Delete">
+          <i class="bi bi-trash3-fill"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('notifItemsInfo').textContent =
+    `Showing ${start + 1}–${Math.min(start + notifPageSize, total)} of ${total}`;
+  makePagination('notifPagination', notifPage, totalPages, p => { notifPage = p; renderNotifTable(); });
+}
+
+// ── Delete ────────────────────────────────────────────────────────────────────
+async function deleteNotification(id) {
+  const result = await Swal.fire({
+    title: 'Delete notification?',
+    text: 'This action cannot be undone.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#e85d2f',
+    confirmButtonText: 'Yes, delete'
+  });
+  if (!result.isConfirmed) return;
+  try {
+    const res = await fetch(`${notifApiUrl}/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error();
+    showToastNotif('Notification deleted');
+    await loadNotifications();
+  } catch (e) {
+    showToastNotif('Failed to delete', 'error');
+  }
+}
+// ── View Details ───────────────────────────────────────────────────────────────
+function viewNotifDetails(id) {
+  const n = notifData.find(x => x.id === id);
+  if (!n) return;
+
+  // Type badge
+  const typeColors = {
+    'Info':    'bg-info text-dark',
+    'Warning': 'bg-warning text-dark',
+    'Success': 'bg-success text-white',
+    'Urgent':  'bg-danger text-white',
+  };
+  const typeIcons = { 'Info': 'ℹ️', 'Warning': '⚠️', 'Success': '✅', 'Urgent': '🔴' };
+  const typeBadgeEl = document.getElementById('vn_typeBadge');
+  typeBadgeEl.className = `badge fs-6 px-3 py-2 ${typeColors[n.type] || 'bg-secondary'}`;
+  typeBadgeEl.textContent = `${typeIcons[n.type] || ''} ${n.type || '—'}`;
+
+  // Title & Description
+  document.getElementById('vn_title').textContent = n.title || '—';
+  document.getElementById('vn_description').textContent = n.description || '—';
+
+  // Image
+  const imgCol  = document.getElementById('vn_imageCol');
+  const imgEl   = document.getElementById('vn_image');
+  const imgLink = document.getElementById('vn_imageLink');
+  if (n.imageUrl) {
+    imgEl.src = fixUrl(n.imageUrl);
+    imgLink.href = fixUrl(n.imageUrl);
+    imgCol.style.display = '';
+  } else {
+    imgCol.style.display = 'none';
+  }
+
+  // Recipients
+  const recipientsEl = document.getElementById('vn_recipients');
+  const recipients = Array.isArray(n.recipients)
+    ? n.recipients
+    : (typeof n.recipients === 'string' ? n.recipients.split(',').map(s => s.trim()) : []);
+  const recipColors = { Admins: 'bg-danger', Trainers: 'bg-primary', Members: 'bg-success', Guests: 'bg-secondary' };
+  recipientsEl.innerHTML = recipients.length
+    ? recipients.map(r => `<span class="badge ${recipColors[r] || 'bg-secondary'} px-3 py-2 fs-6">${r}</span>`).join('')
+    : '<span class="text-muted">—</span>';
+
+  // Date & Time
+  const rawDate = n.createdAt || n.sentAt || n.scheduledAt;
+  if (rawDate) {
+    const d = new Date(rawDate);
+    document.getElementById('vn_date').textContent =
+      d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    document.getElementById('vn_time').textContent =
+      d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  } else {
+    document.getElementById('vn_date').textContent = '—';
+    document.getElementById('vn_time').textContent = '';
+  }
+
+  // Scheduled At
+  const scheduledRow = document.getElementById('vn_scheduledRow');
+  if (n.scheduledAt && n.scheduledAt !== n.createdAt) {
+    const sd = new Date(n.scheduledAt);
+    document.getElementById('vn_scheduled').textContent =
+      sd.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' +
+      sd.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    scheduledRow.style.display = '';
+  } else {
+    scheduledRow.style.display = 'none';
+  }
+
+  // Delete button inside modal
+  document.getElementById('vn_deleteBtn').onclick = async () => {
+    bootstrap.Modal.getInstance(document.getElementById('viewNotifModal')).hide();
+    await deleteNotification(id);
+  };
+
+  new bootstrap.Modal(document.getElementById('viewNotifModal')).show();
+}
+// ── Search / filter events ────────────────────────────────────────────────────
+document.getElementById('notifSearchInput')?.addEventListener('input', () => {
+  clearTimeout(window.__tNotif);
+  window.__tNotif = setTimeout(applyNotifFilters, 200);
+});
+['notifFilterRecipient', 'notifFilterType'].forEach(id =>
+  document.getElementById(id)?.addEventListener('change', applyNotifFilters)
+);
 
 // ===================================================
-// ============== ANNOUNCEMENTS MODULE ===============
+// ============== MY NOTIFICATIONS INBOX =============
 // ===================================================
-const annApiUrl='https://localhost:7132/api/Announcements';
-let annData=[], filteredAnn=[], currentPageAnn=1, pageSizeAnn=10;
-function showToastAnn(msg,type='success'){showToastIn('toastContainer_ann',msg,type);}
-async function loadAnnouncements(){document.getElementById('annTable').innerHTML='<tr><td colspan="5" class="p-5 text-center text-muted">Loading...</td></tr>';try{const res=await fetch(annApiUrl);if(!res.ok)throw new Error();annData=await res.json();applyAnnFilters();}catch(e){document.getElementById('annTable').innerHTML='<tr><td colspan="5" class="text-center text-danger py-4">Error loading announcements</td></tr>';}}
-function applyAnnFilters(){const q=document.getElementById('searchInput_ann')?.value.trim().toLowerCase()||'';const sortBy=document.getElementById('sortBy_ann')?.value||'date_desc';pageSizeAnn=parseInt(document.getElementById('pageSize_ann')?.value||'10');filteredAnn=annData.filter(a=>!q||(a.title&&a.title.toLowerCase().includes(q))||(a.text&&a.text.toLowerCase().includes(q)));filteredAnn.sort((a,b)=>{switch(sortBy){case'date_desc':return new Date(b.publishDate)-new Date(a.publishDate);case'date_asc':return new Date(a.publishDate)-new Date(b.publishDate);case'title_asc':return(a.title||'').localeCompare(b.title||'');case'title_desc':return(b.title||'').localeCompare(a.title||'');default:return 0;}});renderAnnPage(1);}
-function renderAnnPage(page){const tbody=document.getElementById('annTable');tbody.innerHTML='';const total=filteredAnn.length,totalPages=Math.ceil(total/pageSizeAnn)||1;if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageAnn=page;const start=(page-1)*pageSizeAnn,end=Math.min(start+pageSizeAnn,total);const items=filteredAnn.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="5" class="text-center py-4">No announcements</td></tr>';}else items.forEach(a=>{tbody.innerHTML+=`<tr><td>${escapeHtml(a.title)}</td><td style="max-width:400px">${escapeHtml(a.text)}</td><td class="text-center">${a.publishDate?.split('T')[0]||''}</td><td>${a.imageUrl?`<img src="${fixUrl(a.imageUrl)}" class="thumb">`:'<span class="small-muted">No Image</span>'}</td><td class="text-center"><button class="btn btn-link text-primary edit-btn-ann" data-id="${a.id}"><i class="bi bi-pencil-square"></i></button> <button class="btn btn-link text-danger delete-btn-ann" data-id="${a.id}"><i class="bi bi-trash3-fill"></i></button></td></tr>`;});document.getElementById('itemsInfo_ann').textContent=total;document.getElementById('pageInfo_ann').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_ann',currentPageAnn,totalPages,renderAnnPage);attachAnnEvents();}
-function attachAnnEvents(){document.querySelectorAll('.edit-btn-ann').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${annApiUrl}/${btn.dataset.id}`);const a=await res.json();document.getElementById('editId_ann').value=a.id;document.getElementById('editTitle_ann').value=a.title;document.getElementById('editText_ann').value=a.text;document.getElementById('editDate_ann').value=a.publishDate?.split('T')[0]||'';const prev=document.getElementById('editPreview_ann');const removeBtn=document.getElementById('removeImageBtn_ann');if(a.imageUrl){prev.src=fixUrl(a.imageUrl);prev.style.display='block';removeBtn.style.display='inline-block';removeBtn.dataset.remove='0';}else{prev.style.display='none';removeBtn.style.display='none';}new bootstrap.Modal(document.getElementById('editModal_ann')).show();}catch(e){showToastAnn('Error loading data','error');}};});document.querySelectorAll('.delete-btn-ann').forEach(btn=>{btn.onclick=()=>{Swal.fire({title:'Delete announcement?',icon:'warning',showCancelButton:true,confirmButtonText:'Yes, delete'}).then(async r=>{if(r.isConfirmed){try{await fetch(`${annApiUrl}/${btn.dataset.id}`,{method:'DELETE'});showToastAnn('Deleted');loadAnnouncements();}catch(e){showToastAnn('Delete failed','error');}}});};});}
-document.getElementById('openAddBtn_ann').onclick=()=>{document.getElementById('addForm_ann').reset();document.getElementById('addPreview_ann').style.display='none';new bootstrap.Modal(document.getElementById('addModal_ann')).show();};
-/* addSaveBtn_ann and editSaveBtn_ann overridden below with validation */
-document.getElementById('removeImageBtn_ann').onclick=()=>{document.getElementById('editPreview_ann').style.display='none';document.getElementById('removeImageBtn_ann').dataset.remove='1';};
-function wireDrag(boxId,fileId,prevId){const box=document.getElementById(boxId),input=document.getElementById(fileId),prev=document.getElementById(prevId);if(!box||!input||!prev)return;box.addEventListener('click',()=>input.click());input.addEventListener('change',e=>{if(e.target.files[0]){prev.src=URL.createObjectURL(e.target.files[0]);prev.style.display='block';}});['dragenter','dragover'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.add('dragover');}));['dragleave','drop'].forEach(ev=>box.addEventListener(ev,e=>{e.preventDefault();box.classList.remove('dragover');}));box.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f){input.files=e.dataTransfer.files;prev.src=URL.createObjectURL(f);prev.style.display='block';}});}
-wireDrag('addDrag_ann','addImage_ann','addPreview_ann');
-wireDrag('editDrag_ann','editImage_ann','editPreview_ann');
-['searchInput_ann','sortBy_ann','pageSize_ann'].forEach(id=>document.getElementById(id)?.addEventListener('input',applyAnnFilters));
-document.getElementById('refreshBtn_ann')?.addEventListener('click',loadAnnouncements);
+const myNotifApi = 'https://localhost:7132/api/Notifications';
 
+// Read state stored in localStorage
+let _readNotifIds = new Set(
+  JSON.parse(localStorage.getItem('readNotifIds') || '[]')
+);
+
+let _myNotifs         = [];
+let _myNotifsFiltered = [];
+let _myNotifPage      = 1;
+const _myNotifPageSize = 10;
+
+function saveReadState() {
+  localStorage.setItem('readNotifIds', JSON.stringify([..._readNotifIds]));
+}
+
+function markAsRead(id) {
+  _readNotifIds.add(id);
+  saveReadState();
+  updateBellBadge();
+}
+
+function markAllMyNotifsRead() {
+  _myNotifs.forEach(n => _readNotifIds.add(n.id));
+  saveReadState();
+  updateBellBadge();
+  renderMyNotifList();
+  updateMyNotifUnreadCount();
+}
+
+function updateBellBadge() {
+  const unread = _myNotifs.filter(n => n.toAdmins && !_readNotifIds.has(n.id)).length;
+  const badge  = document.getElementById('notifBellBadge');
+  if (!badge) return;
+  if (unread > 0) {
+    badge.textContent = unread > 99 ? '99+' : unread;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function updateMyNotifUnreadCount() {
+  const unread = _myNotifs.filter(n => n.toAdmins && !_readNotifIds.has(n.id)).length;
+  const el = document.getElementById('myNotifUnreadCount');
+  if (el) {
+    el.textContent = `${unread} unread`;
+    el.className = `badge rounded-pill px-3 py-2 ${unread > 0 ? 'bg-danger' : 'bg-secondary'}`;
+    el.style.fontSize = '.85rem';
+  }
+}
+
+async function loadMyNotifications() {
+  const listEl = document.getElementById('myNotifList');
+  if (listEl) listEl.innerHTML =
+    '<div class="text-center py-5 text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Loading...</div>';
+
+  try {
+    const res = await fetch(myNotifApi);
+    const all = res.ok ? await res.json() : [];
+
+    // فلتر: بس اللي فيها toAdmins = true
+    _myNotifs = all.filter(n => n.toAdmins === true);
+    _myNotifs.sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+
+    updateBellBadge();
+    updateMyNotifUnreadCount();
+    applyMyNotifFilters();
+  } catch (e) {
+    if (listEl) listEl.innerHTML =
+      '<div class="text-center py-5 text-danger">Failed to load notifications</div>';
+  }
+}
+
+function applyMyNotifFilters() {
+  const q      = (document.getElementById('myNotifSearch')?.value || '').trim().toLowerCase();
+  const type   = document.getElementById('myNotifFilterType')?.value  || '';
+  const status = document.getElementById('myNotifFilterStatus')?.value || '';
+
+  _myNotifsFiltered = _myNotifs.filter(n => {
+    const matchQ  = !q      || (n.title||'').toLowerCase().includes(q) || (n.description||'').toLowerCase().includes(q);
+    const matchT  = !type   || n.type === type;
+    const isRead  = _readNotifIds.has(n.id);
+    const matchS  = !status || (status === 'unread' && !isRead) || (status === 'read' && isRead);
+    return matchQ && matchT && matchS;
+  });
+
+  _myNotifPage = 1;
+  renderMyNotifList();
+}
+
+function renderMyNotifList() {
+  const listEl = document.getElementById('myNotifList');
+  if (!listEl) return;
+
+  const total      = _myNotifsFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / _myNotifPageSize));
+  if (_myNotifPage > totalPages) _myNotifPage = totalPages;
+  const start = (_myNotifPage - 1) * _myNotifPageSize;
+  const items = _myNotifsFiltered.slice(start, start + _myNotifPageSize);
+
+  // Update info
+  const infoEl = document.getElementById('myNotifInfo');
+  if (infoEl) infoEl.textContent = total ? `Showing ${start+1}–${Math.min(start+_myNotifPageSize,total)} of ${total}` : '';
+
+  if (!items.length) {
+    listEl.innerHTML = `
+      <div class="text-center py-5">
+        <i class="bi bi-bell-slash" style="font-size:3rem;color:var(--muted);opacity:.4;"></i>
+        <p class="text-muted mt-3 mb-0">No notifications found</p>
+      </div>`;
+    document.getElementById('myNotifPagination').innerHTML = '';
+    return;
+  }
+
+  const typeConfig = {
+    'Info':    { icon: 'bi-info-circle-fill',  bg: 'rgba(13,202,240,.12)',  color: '#0dcaf0' },
+    'Warning': { icon: 'bi-exclamation-triangle-fill', bg: 'rgba(255,193,7,.15)', color: '#ffc107' },
+    'Success': { icon: 'bi-check-circle-fill', bg: 'rgba(25,135,84,.12)',   color: '#198754' },
+    'Urgent':  { icon: 'bi-exclamation-circle-fill', bg: 'rgba(220,53,69,.12)', color: '#dc3545' },
+    'default': { icon: 'bi-bell-fill',         bg: 'rgba(100,116,139,.12)', color: '#64748b' },
+  };
+
+  listEl.innerHTML = items.map(n => {
+    const isRead = _readNotifIds.has(n.id);
+    const cfg    = typeConfig[n.type] || typeConfig['default'];
+    const raw    = n.sentAt || n.SentAt;
+    const d      = raw ? new Date(raw) : null;
+
+    // Time formatting — زي تطبيقات المحادثة
+    let timeStr = '—';
+    if (d) {
+      const now   = new Date();
+      const diff  = now - d;
+      const mins  = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      const days  = Math.floor(diff / 86400000);
+      if      (mins  < 1)   timeStr = 'Just now';
+      else if (mins  < 60)  timeStr = `${mins}m ago`;
+      else if (hours < 24)  timeStr = `${hours}h ago`;
+      else if (days  < 7)   timeStr = `${days}d ago`;
+      else timeStr = d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+    }
+
+    const fullDate = d
+      ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) +
+        ' ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
+      : '—';
+
+    const shortDesc = (n.description || '').length > 120
+      ? escapeHtml(n.description.substring(0, 120)) + '…'
+      : escapeHtml(n.description || '');
+
+    return `
+      <div class="notif-inbox-item ${isRead ? '' : 'unread'}"
+           onclick="openMyNotifDetail(${n.id})"
+           title="${escapeHtml(n.title)}">
+
+        <!-- Type Icon -->
+        <div class="notif-type-icon" style="background:${cfg.bg};color:${cfg.color};">
+          <i class="bi ${cfg.icon}"></i>
+        </div>
+
+        <!-- Content -->
+        <div style="flex:1;min-width:0;">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="notif-inbox-title">${escapeHtml(n.title || '—')}</span>
+            ${!isRead ? '<span class="unread-dot"></span>' : ''}
+          </div>
+          <div class="notif-inbox-desc">${shortDesc}</div>
+          ${n.imageUrl
+            ? `<div class="mt-2">
+                 <img src="${fixUrl(n.imageUrl)}"
+                   style="height:52px;width:80px;object-fit:cover;border-radius:6px;border:1px solid var(--border);">
+               </div>`
+            : ''}
+        </div>
+
+        <!-- Meta -->
+        <div class="notif-inbox-meta">
+          <div style="font-weight:${isRead?'400':'700'};font-size:.8rem;" title="${fullDate}">
+            ${timeStr}
+          </div>
+          <div class="mt-1">
+            <span class="badge"
+              style="background:${cfg.bg};color:${cfg.color};font-size:.72rem;border:1px solid ${cfg.color}33;">
+              ${n.type || 'Info'}
+            </span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  makePagination('myNotifPagination', _myNotifPage, totalPages, p => {
+    _myNotifPage = p;
+    renderMyNotifList();
+  });
+
+  updateMyNotifUnreadCount();
+}
+
+function openMyNotifDetail(id) {
+  const n = _myNotifs.find(x => x.id === id);
+  if (!n) return;
+
+  // Mark as read
+  markAsRead(id);
+
+  // Re-render to update unread state
+  renderMyNotifList();
+
+  // Type config
+  const typeColors = {
+    'Info':    { badge: 'bg-info text-dark',    icon: 'bi-info-circle-fill',  bg: 'rgba(13,202,240,.15)',  color: '#0dcaf0' },
+    'Warning': { badge: 'bg-warning text-dark', icon: 'bi-exclamation-triangle-fill', bg: 'rgba(255,193,7,.15)', color: '#ffc107' },
+    'Success': { badge: 'bg-success text-white',icon: 'bi-check-circle-fill', bg: 'rgba(25,135,84,.15)',   color: '#198754' },
+    'Urgent':  { badge: 'bg-danger text-white', icon: 'bi-exclamation-circle-fill', bg: 'rgba(220,53,69,.15)', color: '#dc3545' },
+  };
+  const cfg = typeColors[n.type] || { badge: 'bg-secondary', icon: 'bi-bell-fill', bg: 'rgba(100,116,139,.15)', color: '#64748b' };
+
+  // Type icon in header
+  const iconEl = document.getElementById('mnd_typeIcon');
+  iconEl.style.background = cfg.bg;
+  iconEl.style.color      = cfg.color;
+  iconEl.innerHTML        = `<i class="bi ${cfg.icon}"></i>`;
+
+  // Title
+  document.getElementById('mnd_title').textContent = n.title || '—';
+
+  // Type badge
+  const typeBadgeEl = document.getElementById('mnd_typeBadge');
+  typeBadgeEl.className   = `badge fs-6 px-3 py-2 ${cfg.badge}`;
+  typeBadgeEl.textContent = `${n.type || 'Info'}`;
+
+  // Status badge
+  document.getElementById('mnd_statusBadge').textContent = n.status || 'Sent';
+
+  // Meta line (date in header)
+  const raw = n.sentAt || n.SentAt;
+  const d   = raw ? new Date(raw) : null;
+  document.getElementById('mnd_meta').textContent = d
+    ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' }) +
+      ' at ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
+    : '—';
+
+  // Sent At pill
+  document.getElementById('mnd_sentAt').textContent = d
+    ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) +
+      '  ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' })
+    : '—';
+
+  // Description
+  document.getElementById('mnd_description').textContent = n.description || '—';
+
+  // Image
+  const imgWrap = document.getElementById('mnd_imageWrap');
+  const imgEl   = document.getElementById('mnd_image');
+  const imgLink = document.getElementById('mnd_imageLink');
+  if (n.imageUrl) {
+    imgEl.src    = fixUrl(n.imageUrl);
+    imgLink.href = fixUrl(n.imageUrl);
+    imgWrap.style.display = '';
+  } else {
+    imgWrap.style.display = 'none';
+  }
+
+  new bootstrap.Modal(document.getElementById('myNotifDetailModal')).show();
+}
+
+// ── Events ─────────────────────────────────────────────────────────────────────
+document.getElementById('myNotifSearch')?.addEventListener('input', () => {
+  clearTimeout(window.__tMyNotif);
+  window.__tMyNotif = setTimeout(applyMyNotifFilters, 200);
+});
+['myNotifFilterType','myNotifFilterStatus'].forEach(id =>
+  document.getElementById(id)?.addEventListener('change', applyMyNotifFilters)
+);
+
+// ── Lazy load ──────────────────────────────────────────────────────────────────
+// أضف في الـ pageLoadFlags section:
+// if (name === 'my-notifications') loadMyNotifications();
 // ===================================================
 // ============== Admins MODULE ===============
 // ===================================================
@@ -3131,6 +4082,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   await loadMemberShips();
   await loadMembers();
   // Don't auto-load other pages — lazy-load them
+   fetch('https://localhost:7132/api/Notifications')
+    .then(r => r.ok ? r.json() : [])
+    .then(all => {
+      _myNotifs = all.filter(n => n.toAdmins === true);
+      updateBellBadge();
+    })
+    .catch(() => {});
 });
 
 // Lazy-load data when switching pages
@@ -3155,7 +4113,9 @@ window.showPage = function(name) {
   if (name === 'activity') { loadFacilitiesForAct(); loadActivities(); }
   if (name === 'group') { loadActivitiesForGroups(); loadGroups(); }
   if (name === 'membership') fetchMemberships();
-  if (name === 'announcement') loadAnnouncements();
+if (name === 'notifications') loadNotifications();
+if (name === 'my-notifications') loadMyNotifications();
+
   if (name === 'admins') loadAdmins();
 if (name === 'profile') loadAdminProfile();
 if (name === 'bookings') loadBookings();
@@ -3562,50 +4522,6 @@ document.getElementById('saveEditBtn_f').onclick = async () => {
   await saveFacilityForm('editFacilityForm', 'editFacilityModal', `${facApiUrl}/${document.getElementById('editFacilityForm').id.value}`, 'PUT');
 };
 
-// Announcement form validation
-function validateAnnouncementForm(formId) {
-  const form = document.getElementById(formId);
-  let valid = true;
-  const titleEl = form.querySelector('[name="Title"]');
-  const textEl = form.querySelector('[name="Text"]');
-  [titleEl, textEl].forEach(el => el.classList.remove('is-invalid', 'is-valid'));
-  if (!titleEl.value.trim() || titleEl.value.length < 3) {
-    titleEl.classList.add('is-invalid');
-    let fb = titleEl.nextElementSibling; if (!fb || !fb.classList.contains('invalid-feedback')) { fb = document.createElement('div'); fb.className = 'invalid-feedback'; titleEl.after(fb); }
-    fb.textContent = 'Title is required (min 3 chars)'; valid = false;
-  } else titleEl.classList.add('is-valid');
-  if (!textEl.value.trim() || textEl.value.length < 10) {
-    textEl.classList.add('is-invalid');
-    let fb = textEl.nextElementSibling; if (!fb || !fb.classList.contains('invalid-feedback')) { fb = document.createElement('div'); fb.className = 'invalid-feedback'; textEl.after(fb); }
-    fb.textContent = 'Announcement text required (min 10 chars)'; valid = false;
-  } else textEl.classList.add('is-valid');
-  return valid;
-}
-
-document.getElementById('addSaveBtn_ann').onclick = async () => {
-  if (!validateAnnouncementForm('addForm_ann')) return;
-  const fd = new FormData(document.getElementById('addForm_ann'));
-  try {
-    const res = await fetch(annApiUrl, { method: 'POST', body: fd });
-    if (!res.ok) throw 0;
-    bootstrap.Modal.getInstance(document.getElementById('addModal_ann')).hide();
-    showToastAnn('Announcement added');
-    loadAnnouncements();
-  } catch(e) { showToastAnn('Failed to add', 'error'); }
-};
-
-document.getElementById('editSaveBtn_ann').onclick = async () => {
-  if (!validateAnnouncementForm('editForm_ann')) return;
-  const fd = new FormData(document.getElementById('editForm_ann'));
-  if (document.getElementById('removeImageBtn_ann').dataset.remove === '1') fd.append('RemoveImage', 'true');
-  try {
-    const res = await fetch(`${annApiUrl}/${document.getElementById('editId_ann').value}`, { method: 'PUT', body: fd });
-    if (!res.ok) throw 0;
-    bootstrap.Modal.getInstance(document.getElementById('editModal_ann')).hide();
-    showToastAnn('Updated');
-    loadAnnouncements();
-  } catch(e) { showToastAnn('Update failed', 'error'); }
-};
 
 // ===================================================
 // CONSISTENT MODAL STYLING — Reset validation on open
