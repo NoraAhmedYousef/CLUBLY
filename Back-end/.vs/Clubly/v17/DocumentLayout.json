@@ -3,16 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\notificationresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\notificationresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\class\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\trainerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\notificationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\interface\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\controllers\\membershipscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -83,32 +107,8 @@
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\class\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\class\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\class\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\class\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\notificationresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\notificationresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\dto\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:dto\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\model\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:model\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\service\\interfaces\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:service\\interfaces\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\repository\\interface\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|solutionrelative:repository\\interface\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{655E718D-91D6-4A44-AD4E-7E439ECE6202}|Clubly.csproj|c:\\users\\noraa\\downloads\\clubly git\\clubly\\clubly-backend\\back-end\\migrations\\20260405001136_addgueststable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -134,11 +134,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 26,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 8,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "Controllers\\WeatherForecastController.cs",
@@ -151,7 +151,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "TrainersController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\TrainersController.cs",
               "RelativeDocumentMoniker": "Controllers\\TrainersController.cs",
@@ -159,11 +159,12 @@
               "RelativeToolTip": "Controllers\\TrainersController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-06T01:18:35.192Z"
+              "WhenOpened": "2026-04-06T01:18:35.192Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "MemberShipsController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\MemberShipsController.cs",
               "RelativeDocumentMoniker": "Controllers\\MemberShipsController.cs",
@@ -175,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "MembersController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\MembersController.cs",
               "RelativeDocumentMoniker": "Controllers\\MembersController.cs",
@@ -187,7 +188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "GuestsController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\GuestsController.cs",
               "RelativeDocumentMoniker": "Controllers\\GuestsController.cs",
@@ -199,7 +200,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "FacilitySchedulesController .cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilitySchedulesController .cs",
               "RelativeDocumentMoniker": "Controllers\\FacilitySchedulesController .cs",
@@ -211,7 +212,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "FacilityCategoriesController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilityCategoriesController.cs",
               "RelativeDocumentMoniker": "Controllers\\FacilityCategoriesController.cs",
@@ -223,7 +224,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "FacilityBookingsController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilityBookingsController.cs",
               "RelativeDocumentMoniker": "Controllers\\FacilityBookingsController.cs",
@@ -235,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "FacilitiesController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\FacilitiesController.cs",
               "RelativeDocumentMoniker": "Controllers\\FacilitiesController.cs",
@@ -247,7 +248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
@@ -259,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "AdminController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
@@ -271,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "AdminBookingsController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\AdminBookingsController.cs",
               "RelativeDocumentMoniker": "Controllers\\AdminBookingsController.cs",
@@ -283,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
               "Title": "ActivityGroupsController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\ActivityGroupsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ActivityGroupsController.cs",
@@ -295,7 +296,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 20,
               "Title": "ActivityBookingsController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\ActivityBookingsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ActivityBookingsController.cs",
@@ -307,7 +308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 21,
               "Title": "ActivitiesController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\ActivitiesController.cs",
               "RelativeDocumentMoniker": "Controllers\\ActivitiesController.cs",
@@ -319,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 22,
               "Title": "20260406011713_Notificationsserver.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Migrations\\20260406011713_Notificationsserver.cs",
               "RelativeDocumentMoniker": "Migrations\\20260406011713_Notificationsserver.cs",
@@ -339,8 +340,7 @@
               "RelativeToolTip": "Migrations\\20260406011635_removeannoun.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-06T01:16:35.408Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-06T01:16:35.408Z"
             },
             {
               "$type": "Document",
@@ -368,7 +368,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 25,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
@@ -380,7 +380,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 24,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -388,36 +388,37 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAKAAAAAAAAAAAAAQwI4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T23:03:37.622Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-05T23:03:37.622Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "NotificationsController.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\NotificationsController.cs",
               "RelativeDocumentMoniker": "Controllers\\NotificationsController.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Controllers\\NotificationsController.cs",
               "RelativeToolTip": "Controllers\\NotificationsController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAAADMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T23:03:16.036Z"
+              "WhenOpened": "2026-04-05T23:03:16.036Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 6,
               "Title": "NotificationService.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\NotificationService.cs",
               "RelativeDocumentMoniker": "Service\\Class\\NotificationService.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Class\\NotificationService.cs",
               "RelativeToolTip": "Service\\Class\\NotificationService.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAswHQAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T23:02:32.776Z"
+              "WhenOpened": "2026-04-05T23:02:32.776Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "INotificationService.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Service\\Interfaces\\INotificationService.cs",
               "RelativeDocumentMoniker": "Service\\Interfaces\\INotificationService.cs",
@@ -429,19 +430,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 2,
               "Title": "NotificationRepository.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\NotificationRepository.cs",
               "RelativeDocumentMoniker": "Repository\\Class\\NotificationRepository.cs",
-              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\NotificationRepository.cs",
-              "RelativeToolTip": "Repository\\Class\\NotificationRepository.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAYwCUAAAA1AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\Class\\NotificationRepository.cs*",
+              "RelativeToolTip": "Repository\\Class\\NotificationRepository.cs*",
+              "ViewState": "AgIAABMAAAAAAAAAAAAkwCUAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T22:59:35.998Z"
+              "WhenOpened": "2026-04-05T22:59:35.998Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 7,
               "Title": "INotificationRepository.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Repository\\interface\\INotificationRepository.cs",
               "RelativeDocumentMoniker": "Repository\\interface\\INotificationRepository.cs",
@@ -449,24 +451,25 @@
               "RelativeToolTip": "Repository\\interface\\INotificationRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T22:59:04.086Z"
+              "WhenOpened": "2026-04-05T22:59:04.086Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 0,
               "Title": "NotificationResponseDto.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\NotificationResponseDto.cs",
               "RelativeDocumentMoniker": "DTO\\NotificationResponseDto.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\NotificationResponseDto.cs",
               "RelativeToolTip": "DTO\\NotificationResponseDto.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAuwBAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-05T22:58:25.508Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 3,
               "Title": "NotificationDto.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\DTO\\NotificationDto.cs",
               "RelativeDocumentMoniker": "DTO\\NotificationDto.cs",
@@ -479,13 +482,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 1,
               "Title": "Notification.cs",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Notification.cs",
               "RelativeDocumentMoniker": "Model\\Notification.cs",
               "ToolTip": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\Model\\Notification.cs",
               "RelativeToolTip": "Model\\Notification.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAzwA8AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-05T22:56:48.426Z",
               "EditorCaption": ""
@@ -504,7 +507,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 23,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\noraa\\Downloads\\CLUBLY Git\\CLUBLY\\CLUBLY-backend\\Back-end\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",

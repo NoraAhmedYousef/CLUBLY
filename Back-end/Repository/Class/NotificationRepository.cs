@@ -34,6 +34,8 @@ namespace Clubly.Repository.Class
             existing.ToAdmins = updated.ToAdmins;
             existing.ToGuests = updated.ToGuests;
             existing.Status = updated.Status;
+            if (updated.Type != null)
+                existing.Type = updated.Type;
             if (updated.ImageUrl != null)
                 existing.ImageUrl = updated.ImageUrl;
             await _context.SaveChangesAsync();

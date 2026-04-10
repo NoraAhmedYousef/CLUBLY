@@ -339,7 +339,8 @@
               "RelativeToolTip": "Migrations\\20260406011635_removeannoun.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-06T01:16:35.408Z"
+              "WhenOpened": "2026-04-06T01:16:35.408Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -387,7 +388,8 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAKAAAAAAAAAAAAAQwI4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T23:03:37.622Z"
+              "WhenOpened": "2026-04-05T23:03:37.622Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -459,7 +461,8 @@
               "RelativeToolTip": "DTO\\NotificationResponseDto.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T22:58:25.508Z"
+              "WhenOpened": "2026-04-05T22:58:25.508Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -471,7 +474,8 @@
               "RelativeToolTip": "DTO\\NotificationDto.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAcwBEAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T22:58:05.356Z"
+              "WhenOpened": "2026-04-05T22:58:05.356Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -483,7 +487,8 @@
               "RelativeToolTip": "Model\\Notification.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-05T22:56:48.426Z"
+              "WhenOpened": "2026-04-05T22:56:48.426Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
