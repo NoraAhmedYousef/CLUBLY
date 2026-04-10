@@ -17,3 +17,9 @@ wwwroot\Uploads\members\e563190c-e8fc-4f97-9a99-bd944d0f1e3d_Screenshot 2025-12-
 wwwroot\Uploads\Trainers\029a67d0-5b0a-4314-aa7c-78d9da3bf1cf.png
 wwwroot\Uploads\Trainers\43b02616-74b9-41cd-a41a-51eb15a9f12f.png
 wwwroot\Uploads\members\39afc57c-36ef-43fd-bc35-fe237eb77004_Gemini_Generated_Image_kfvlulkfvlulkfvl.png
+wwwroot\receipts\2fcc9472-1dac-47fd-a4f5-f8978aedc844.png
+wwwroot\receipts\49b4d849-cc67-490c-af72-95b09b9c1fc5.png
+wwwroot\receipts\a534d143-9532-44a5-9345-dffba71e878f.png
+wwwroot\receipts\d320c8f5-5be5-4e18-b483-15bfe8090bd8.png
+wwwroot\receipts\eec21209-0a7a-436e-bea7-db1bbdfac8b4.png
+wwwroot\receipts\fd4218a9-d043-4138-aa87-af4cb55dd3e2.png

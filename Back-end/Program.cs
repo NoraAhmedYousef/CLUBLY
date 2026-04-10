@@ -123,11 +123,12 @@ namespace SignUp
             builder.Services.AddScoped<IFacilityCategoryRepository, FacilityCategoryRepository>();
             builder.Services.AddScoped<IMemberShipRepository, MemberShipRepository>();
             builder.Services.AddScoped<IActivityGroupRepository, ActivityGroupRepository>();
-            builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IFacilityBookingRepository, FacilityBookingRepository>();
             builder.Services.AddScoped<IActivityBookingRepository, ActivityBookingRepository>();
             builder.Services.AddScoped<IAdminBookingRepository, AdminBookingRepository>();
+            builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+            builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 
             // ????????????????? SERVICES ?????????????????
@@ -139,13 +140,15 @@ namespace SignUp
             builder.Services.AddScoped<IFacilityCategoryService, FacilityCategoryService>();
             builder.Services.AddScoped<IMemberShipService, MemberShipService>();
             builder.Services.AddScoped<IActivityGroupService, ActivityGroupService>();
-            builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
             builder.Services.AddScoped<IAdminService, AdminService>();
             builder.Services.AddScoped<IFacilityScheduleRepository, FacilityScheduleRepository>();
             builder.Services.AddScoped<IFacilityScheduleService, FacilityScheduleService>();
             builder.Services.AddScoped<IFacilityBookingService, FacilityBookingService>();
             builder.Services.AddScoped<IActivityBookingService, ActivityBookingService>();
             builder.Services.AddScoped<IAdminBookingService, AdminBookingService>();
+
+            builder.Services.AddScoped<IGuestService, GuestService>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
 
             // ????????????????? BUILD ?????????????????
             var app = builder.Build();

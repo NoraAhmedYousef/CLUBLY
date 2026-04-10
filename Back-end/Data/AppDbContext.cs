@@ -20,7 +20,6 @@ namespace SignUp.Data
         public DbSet<FacilityCategory> FacilityCategories { get; set; }
         public DbSet<MemberShip> MemberShips { get; set; }
         public DbSet<ActivityGroup> ActivityGroups { get; set; }
-        public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<FacilitySchedule> FacilitySchedules { get; set; }
         public DbSet<FacilityTimeSlot> FacilityTimeSlots { get; set; }
@@ -29,6 +28,7 @@ namespace SignUp.Data
         public DbSet<ActivityBooking> ActivityBookings { get; set; }
 
         public DbSet<Guest> Guests { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
