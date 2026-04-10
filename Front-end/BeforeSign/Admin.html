@@ -648,6 +648,178 @@ body {
 #facilityBookingsBody th:last-child {
   min-width: 180px;
 }
+/* ===== NOTIFICATION BELL BADGE ===== */
+.notif-bell-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.notif-badge-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: var(--clubly-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid var(--clubly-dark);
+  transition: all .2s;
+}
+
+/* ===== INBOX ITEMS — FULL REDESIGN ===== */
+.notif-inbox-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background .15s;
+  position: relative;
+  text-decoration: none;
+}
+.notif-inbox-item:last-child { border-bottom: none; }
+.notif-inbox-item:hover { background: rgba(232,93,47,.04); }
+[data-theme="dark"] .notif-inbox-item:hover { background: rgba(232,93,47,.08); }
+
+/* Unread state */
+.notif-inbox-item.unread { background: rgba(232,93,47,.03); }
+[data-theme="dark"] .notif-inbox-item.unread { background: rgba(232,93,47,.06); }
+.notif-inbox-item.unread::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--clubly-accent);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Type icon circle */
+.notif-type-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Content area */
+.notif-inbox-body { flex: 1; min-width: 0; }
+
+.notif-inbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 5px;
+}
+
+.notif-inbox-title {
+  font-size: .93rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.notif-inbox-item:not(.unread) .notif-inbox-title {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.notif-inbox-time {
+  font-size: .75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+.notif-inbox-item.unread .notif-inbox-time {
+  color: var(--clubly-accent);
+}
+
+.notif-inbox-desc {
+  font-size: .84rem;
+  color: var(--muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.notif-inbox-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.notif-type-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+/* Thumbnail image */
+.notif-thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+/* Unread dot */
+.unread-dot {
+  width: 9px;
+  height: 9px;
+  background: var(--clubly-accent);
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+/* Empty state */
+.notif-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+}
+.notif-empty-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: rgba(100,116,139,.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  color: var(--muted);
+}
+
+/* Dark mode fixes */
+[data-theme="dark"] .notif-type-pill { filter: brightness(.85); }
 </style>
 </head>
 <body>
@@ -3405,7 +3577,11 @@ async function sendNotification() {
   const scheduleVal = document.getElementById('notif_schedule').value;
   if (scheduleVal) fd.append('ScheduledAt', new Date(scheduleVal).toISOString());
 
-  selectedRecipients.forEach(r => fd.append('Recipients', r));
+fd.append('ToAdmins',   selectedRecipients.includes('Admins')   ? 'true' : 'false');
+fd.append('ToTrainers', selectedRecipients.includes('Trainers') ? 'true' : 'false');
+fd.append('ToMembers',  selectedRecipients.includes('Members')  ? 'true' : 'false');
+fd.append('ToGuests',   selectedRecipients.includes('Guests')   ? 'true' : 'false');
+fd.append('Type',       document.getElementById('notif_type').value);
 
   const imgFile = document.getElementById('notif_image').files[0];
   if (imgFile) fd.append('Image', imgFile);
@@ -3774,26 +3950,34 @@ function renderMyNotifList() {
   const start = (_myNotifPage - 1) * _myNotifPageSize;
   const items = _myNotifsFiltered.slice(start, start + _myNotifPageSize);
 
-  // Update info
   const infoEl = document.getElementById('myNotifInfo');
-  if (infoEl) infoEl.textContent = total ? `Showing ${start+1}–${Math.min(start+_myNotifPageSize,total)} of ${total}` : '';
+  if (infoEl) infoEl.textContent = total
+    ? `Showing ${start+1}–${Math.min(start+_myNotifPageSize, total)} of ${total}`
+    : '';
 
   if (!items.length) {
     listEl.innerHTML = `
-      <div class="text-center py-5">
-        <i class="bi bi-bell-slash" style="font-size:3rem;color:var(--muted);opacity:.4;"></i>
-        <p class="text-muted mt-3 mb-0">No notifications found</p>
+      <div class="notif-empty">
+        <div class="notif-empty-icon">
+          <i class="bi bi-bell-slash"></i>
+        </div>
+        <p class="fw-semibold mb-0" style="color:var(--text);">No notifications yet</p>
+        <p class="text-muted small mb-0">Notifications sent to Admins will appear here</p>
       </div>`;
     document.getElementById('myNotifPagination').innerHTML = '';
     return;
   }
 
   const typeConfig = {
-    'Info':    { icon: 'bi-info-circle-fill',  bg: 'rgba(13,202,240,.12)',  color: '#0dcaf0' },
-    'Warning': { icon: 'bi-exclamation-triangle-fill', bg: 'rgba(255,193,7,.15)', color: '#ffc107' },
-    'Success': { icon: 'bi-check-circle-fill', bg: 'rgba(25,135,84,.12)',   color: '#198754' },
-    'Urgent':  { icon: 'bi-exclamation-circle-fill', bg: 'rgba(220,53,69,.12)', color: '#dc3545' },
-    'default': { icon: 'bi-bell-fill',         bg: 'rgba(100,116,139,.12)', color: '#64748b' },
+    'Info':    { icon: 'bi-info-circle-fill',           bg: 'rgba(13,202,240,.12)',  color: '#0dcaf0',  pillBg: 'rgba(13,202,240,.15)',  pillColor: '#0590a8' },
+    'Warning': { icon: 'bi-exclamation-triangle-fill',  bg: 'rgba(255,193,7,.15)',   color: '#e6ac00',  pillBg: 'rgba(255,193,7,.18)',   pillColor: '#a07700' },
+    'Success': { icon: 'bi-check-circle-fill',          bg: 'rgba(25,135,84,.12)',   color: '#198754',  pillBg: 'rgba(25,135,84,.15)',   pillColor: '#198754' },
+    'Urgent':  { icon: 'bi-exclamation-circle-fill',    bg: 'rgba(220,53,69,.12)',   color: '#dc3545',  pillBg: 'rgba(220,53,69,.15)',   pillColor: '#dc3545' },
+    'default': { icon: 'bi-bell-fill',                  bg: 'rgba(100,116,139,.12)', color: '#64748b',  pillBg: 'rgba(100,116,139,.15)', pillColor: '#64748b' },
+  };
+
+  const typeLabels = {
+    'Info': 'ℹ Info', 'Warning': '⚠ Warning', 'Success': '✓ Success', 'Urgent': '🔴 Urgent'
   };
 
   listEl.innerHTML = items.map(n => {
@@ -3802,7 +3986,7 @@ function renderMyNotifList() {
     const raw    = n.sentAt || n.SentAt;
     const d      = raw ? new Date(raw) : null;
 
-    // Time formatting — زي تطبيقات المحادثة
+    // Smart time
     let timeStr = '—';
     if (d) {
       const now   = new Date();
@@ -3814,55 +3998,64 @@ function renderMyNotifList() {
       else if (mins  < 60)  timeStr = `${mins}m ago`;
       else if (hours < 24)  timeStr = `${hours}h ago`;
       else if (days  < 7)   timeStr = `${days}d ago`;
-      else timeStr = d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+      else timeStr = d.toLocaleDateString('en-GB', { day:'2-digit', month:'short' });
     }
 
     const fullDate = d
       ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) +
-        ' ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
-      : '—';
+        ' at ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
+      : '';
 
-    const shortDesc = (n.description || '').length > 120
-      ? escapeHtml(n.description.substring(0, 120)) + '…'
+    const shortDesc = (n.description || '').length > 140
+      ? escapeHtml(n.description.substring(0, 140)) + '…'
       : escapeHtml(n.description || '');
+
+    const thumbHtml = n.imageUrl
+      ? `<img src="${fixUrl(n.imageUrl)}" class="notif-thumb" alt="">`
+      : '';
+
+    const unreadDot = !isRead
+      ? `<span class="unread-dot" title="Unread"></span>`
+      : '';
 
     return `
       <div class="notif-inbox-item ${isRead ? '' : 'unread'}"
            onclick="openMyNotifDetail(${n.id})"
-           title="${escapeHtml(n.title)}">
+           title="${escapeHtml(n.title || '')} — ${fullDate}">
 
-        <!-- Type Icon -->
+        <!-- Left: type icon -->
         <div class="notif-type-icon" style="background:${cfg.bg};color:${cfg.color};">
           <i class="bi ${cfg.icon}"></i>
         </div>
 
-        <!-- Content -->
-        <div style="flex:1;min-width:0;">
-          <div class="d-flex align-items-center gap-2 mb-1">
-            <span class="notif-inbox-title">${escapeHtml(n.title || '—')}</span>
-            ${!isRead ? '<span class="unread-dot"></span>' : ''}
+        <!-- Middle: content -->
+        <div class="notif-inbox-body">
+          <div class="notif-inbox-header">
+            <span class="notif-inbox-title">${escapeHtml(n.title || '—')} ${unreadDot}</span>
+            <span class="notif-inbox-time" title="${fullDate}">${timeStr}</span>
           </div>
           <div class="notif-inbox-desc">${shortDesc}</div>
-          ${n.imageUrl
-            ? `<div class="mt-2">
-                 <img src="${fixUrl(n.imageUrl)}"
-                   style="height:52px;width:80px;object-fit:cover;border-radius:6px;border:1px solid var(--border);">
-               </div>`
-            : ''}
+          <div class="notif-inbox-footer">
+            <span class="notif-type-pill"
+              style="background:${cfg.pillBg};color:${cfg.pillColor};">
+              <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
+              ${typeLabels[n.type] || n.type || 'Notification'}
+            </span>
+            ${isRead
+              ? `<span style="font-size:.72rem;color:var(--muted);"><i class="bi bi-check2-all me-1"></i>Read</span>`
+              : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;"><i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New</span>`
+            }
+          </div>
         </div>
 
-        <!-- Meta -->
-        <div class="notif-inbox-meta">
-          <div style="font-weight:${isRead?'400':'700'};font-size:.8rem;" title="${fullDate}">
-            ${timeStr}
-          </div>
-          <div class="mt-1">
-            <span class="badge"
-              style="background:${cfg.bg};color:${cfg.color};font-size:.72rem;border:1px solid ${cfg.color}33;">
-              ${n.type || 'Info'}
-            </span>
-          </div>
+        <!-- Right: thumbnail if any -->
+        ${thumbHtml}
+
+        <!-- Arrow -->
+        <div style="color:var(--muted);font-size:14px;margin-top:14px;flex-shrink:0;">
+          <i class="bi bi-chevron-right"></i>
         </div>
+
       </div>`;
   }).join('');
 
