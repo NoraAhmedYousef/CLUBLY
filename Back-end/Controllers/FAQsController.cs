@@ -29,7 +29,7 @@ namespace Clubly.Controllers
 
         // GET /api/FAQs/all — للـ Admin (يشوف المحذوف والمخفي)
         [HttpGet("all")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> GetAllAdmin()
         {
             var faqs = await _db.FAQs
@@ -40,7 +40,7 @@ namespace Clubly.Controllers
 
         // POST
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] FAQ dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Question) || string.IsNullOrWhiteSpace(dto.Answer))
@@ -61,7 +61,7 @@ namespace Clubly.Controllers
 
         // PUT
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] FAQ dto)
         {
             var faq = await _db.FAQs.FindAsync(id);
@@ -78,7 +78,7 @@ namespace Clubly.Controllers
 
         // DELETE
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var faq = await _db.FAQs.FindAsync(id);
@@ -90,7 +90,7 @@ namespace Clubly.Controllers
 
         // PATCH /{id}/toggle — تفعيل/تعطيل
         [HttpPatch("{id}/toggle")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Toggle(int id)
         {
             var faq = await _db.FAQs.FindAsync(id);
