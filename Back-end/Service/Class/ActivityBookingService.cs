@@ -27,22 +27,26 @@ namespace Clubly.Service.Class
             GroupName = b.ActivityGroup?.Name ?? "",
             MemberId = b.MemberId,
             MemberShipNumber = b.Member?.MemberShipNumber.ToString() ?? "",
-
             MemberName = b.Member?.FullName ?? "",
             MemberEmail = b.Member?.Email ?? "",
+
+            // ←←← التعديلات المهمة هنا
+            TrainerId = b.TrainerId,
+            TrainerName = b.Trainer?.FullName ?? "No Trainer Assigned",
+
             StartDate = b.StartDate,
             EndDate = b.EndDate,
+
             TimeSlots = b.ActivityGroup?.TimeSlots?.Select(s => new ActivityTimeSlotDto
             {
                 StartTime = s.StartTime.ToString(@"hh\:mm"),
                 EndTime = s.EndTime.ToString(@"hh\:mm"),
                 Day = s.Day
             }).ToList() ?? new(),
-        
-        Participants = b.Participants,
+
+            Participants = b.Participants,
             TotalPrice = b.TotalPrice,
             ReceiptImageUrl = b.ReceiptImageUrl ?? "",
-
             Status = b.Status,
             PaymentMethod = b.PaymentMethod,
             TransactionId = b.TransactionId,
@@ -97,6 +101,7 @@ namespace Clubly.Service.Class
                 ActivityId = dto.ActivityId,
                 ActivityGroupId = dto.ActivityGroupId,
                 MemberId = dto.MemberId,
+                TrainerId = group.TrainerId,                // ← أضيفي هذا السطر
                 StartDate = dto.StartDate,
                 EndDate = endDate,
                 Participants = dto.Participants,
@@ -109,7 +114,8 @@ namespace Clubly.Service.Class
 
             var created = await _repo.CreateAsync(booking);
             var result = await _repo.GetByIdAsync(created.Id);
-            return (ToDto(result!), null);
+
+            return (result is null ? null : ToDto(result), null);
         }
 
         public async Task<(bool success, string? error)> UpdateStatusAsync(int id, UpdateActivityBookingStatusDto dto)

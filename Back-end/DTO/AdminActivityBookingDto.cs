@@ -7,6 +7,7 @@
         public string GroupName { get; set; } = "";
         public string MemberName { get; set; } = "";
         public string MemberEmail { get; set; } = "";
+        public string? TrainerName { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
         public int Participants { get; set; }

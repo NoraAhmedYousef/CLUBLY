@@ -9,6 +9,8 @@
         public string GroupName { get; set; } = "";
         public int MemberId { get; set; }
         public string MemberName { get; set; } = "";
+        public int? TrainerId { get; set; }
+        public string? TrainerName { get; set; }
         public string MemberShipNumber { get; set; } = "";
 
         public string MemberEmail { get; set; } = "";

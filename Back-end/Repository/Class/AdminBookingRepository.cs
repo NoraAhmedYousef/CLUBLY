@@ -21,7 +21,9 @@ namespace Clubly.Repository.Class
             return await _context.ActivityBookings
                 .Include(b => b.Activity)
                 .Include(b => b.ActivityGroup)
+                    .ThenInclude(g => g.TimeSlots)
                 .Include(b => b.Member)
+                .Include(b => b.Trainer)  // ← لازم يكون هنا قبل الـ Select
                 .OrderByDescending(b => b.CreatedAt)
                 .Select(b => new ActivityBookingDto
                 {
@@ -31,8 +33,14 @@ namespace Clubly.Repository.Class
                     ActivityGroupId = b.ActivityGroupId,
                     GroupName = b.ActivityGroup.Name,
                     MemberId = b.MemberId,
+                    MemberShipNumber = b.Member.MemberShipNumber.ToString(),
                     MemberName = b.Member.FullName,
                     MemberEmail = b.Member.Email,
+                    TrainerId = b.TrainerId,
+                    // ← الفرق هنا: EF Core في الـ Select بيحتاج nullable check صريح
+                    TrainerName = b.TrainerId != null
+                        ? b.Trainer.FullName
+                        : "No Trainer Assigned",
                     StartDate = b.StartDate,
                     EndDate = b.EndDate,
                     Participants = b.Participants,
@@ -45,7 +53,6 @@ namespace Clubly.Repository.Class
                 })
                 .ToListAsync();
         }
-
         public async Task<ActivityBookingDto?> GetActivityBookingByIdAsync(int id)
         {
             return await _context.ActivityBookings
@@ -63,6 +70,8 @@ namespace Clubly.Repository.Class
                     MemberId = b.MemberId,
                     MemberName = b.Member.FullName,
                     MemberEmail = b.Member.Email,
+                    TrainerId = b.TrainerId,
+                    TrainerName = b.Trainer != null ? b.Trainer.FullName : "No Trainer Assigned",
                     StartDate = b.StartDate,
                     EndDate = b.EndDate,
                     Participants = b.Participants,

@@ -18,5 +18,15 @@ namespace SignUp.Model
         public string Message { get; set; } = "";
 
         public DateTime SentAt { get; set; } = DateTime.UtcNow;
+        [MaxLength(100)]
+        public string? Phone { get; set; }
+
+        [MaxLength(100)]
+        public string? Topic { get; set; }
+
+        [MaxLength(50)]
+        public string? UserRole { get; set; }  // "Admin"/"Member"/"Trainer"/"Guest"/null
+
+        public bool IsRead { get; set; } = false;
     }
 }

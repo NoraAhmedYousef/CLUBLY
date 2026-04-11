@@ -11,40 +11,42 @@ namespace Clubly.Repository.Class
         private readonly AppDbContext _db;
     public ActivityBookingRepository(AppDbContext db) => _db = db;
 
-    public async Task<List<ActivityBooking>> GetAllAsync() =>
+        public async Task<List<ActivityBooking>> GetAllAsync() =>
+            await _db.ActivityBookings
+                     .Include(b => b.Activity)
+                     .Include(b => b.ActivityGroup)
+                        .ThenInclude(g => g.TimeSlots)
+                     .Include(b => b.Member)
+                     .Include(b => b.Trainer) // أضف هذا السطر هنا
+                     .OrderByDescending(b => b.CreatedAt)
+                     .ToListAsync();
+
+        public async Task<List<ActivityBooking>> GetByActivityAsync(int activityId) =>
+            await _db.ActivityBookings
+                     .Include(b => b.Activity)
+                     .Include(b => b.ActivityGroup)
+                     .Include(b => b.Member)
+                     .Include(b => b.Trainer) // وأضف هذا السطر هنا أيضاً
+                     .Where(b => b.ActivityId == activityId)
+                     .OrderByDescending(b => b.CreatedAt)
+                     .ToListAsync();
+
+        public async Task<List<ActivityBooking>> GetByMemberAsync(int memberId) =>
+            await _db.ActivityBookings
+                     .Include(b => b.Activity)
+                     .Include(b => b.ActivityGroup)
+                        .ThenInclude(g => g.TimeSlots)
+                     .Include(b => b.Trainer) // ويفضل هنا أيضاً لضمان ظهور البيانات للمشترك
+                     .Where(b => b.MemberId == memberId)
+                     .OrderByDescending(b => b.CreatedAt)
+                     .ToListAsync();
+
+        public async Task<ActivityBooking?> GetByIdAsync(int id) =>
         await _db.ActivityBookings
                  .Include(b => b.Activity)
                  .Include(b => b.ActivityGroup)
                  .Include(b => b.Member)
-            .Include(b => b.ActivityGroup)
-    .ThenInclude(g => g.TimeSlots)
-                 .OrderByDescending(b => b.CreatedAt)
-                 .ToListAsync();
-
-    public async Task<List<ActivityBooking>> GetByActivityAsync(int activityId) =>
-        await _db.ActivityBookings
-                 .Include(b => b.Activity)
-                 .Include(b => b.ActivityGroup)
-                 .Include(b => b.Member)
-                 .Where(b => b.ActivityId == activityId)
-                 .OrderByDescending(b => b.CreatedAt)
-                 .ToListAsync();
-
-    public async Task<List<ActivityBooking>> GetByMemberAsync(int memberId) =>
-        await _db.ActivityBookings
-                 .Include(b => b.Activity)
-                 .Include(b => b.ActivityGroup)
-                 .Where(b => b.MemberId == memberId)
-            .Include(b => b.ActivityGroup)
-    .ThenInclude(g => g.TimeSlots)
-                 .OrderByDescending(b => b.CreatedAt)
-                 .ToListAsync();
-
-    public async Task<ActivityBooking?> GetByIdAsync(int id) =>
-        await _db.ActivityBookings
-                 .Include(b => b.Activity)
-                 .Include(b => b.ActivityGroup)
-                 .Include(b => b.Member)
+            .Include(b => b.Trainer)
                  .FirstOrDefaultAsync(b => b.Id == id);
 
     public async Task<bool> IsDuplicateAsync(int memberId, int activityGroupId) =>
