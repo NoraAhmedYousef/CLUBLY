@@ -321,21 +321,36 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-const FAQS=[
-  {q:"How do I join Clubly?",a:"Simply click 'Join Now' on our website, choose your membership plan, fill in your details, and complete payment. You'll get instant access to your member portal where you can start booking classes right away."},
-  {q:"Can I try Clubly before joining?",a:"Yes! We offer a 3-day free trial pass for first-time visitors. Visit us at the club or book your trial online through the Contact page. No credit card required."},
-  {q:"What are the club's operating hours?",a:"Clubly is open daily from 6:00 AM to 10:00 PM, 365 days a year. The pool closes at 9:30 PM. Certain areas may have different hours — check the schedule on the app for details."},
-  {q:"Can I freeze or cancel my membership?",a:"Yes. You can freeze your membership for up to 2 months per year (with at least 7 days notice). Cancellations require 30 days notice. All requests are handled through your member portal."},
-  {q:"Are there family or student discounts?",a:"Absolutely! We offer 15% off for students with valid IDs, and family packages (3+ members) get up to 25% discount. Corporate packages are also available — contact us for details."},
-  {q:"What should I bring on my first visit?",a:"Bring comfortable workout clothes, sports shoes, a water bottle, and a towel. Lockers are available. For the pool, bring a swimsuit and cap (caps are also available for purchase at our shop)."},
-  {q:"How do I book a class?",a:"Members can book classes through the Clubly app or website up to 7 days in advance. Some popular classes fill up fast, so we recommend booking early. Cancellations must be made 2 hours before class."},
-  {q:"Are personal training sessions included?",a:"Personal training is included in the Platinum plan (2 sessions/month). For other plans, PT sessions can be purchased separately starting from $25 per session. Package discounts are available."},
-];
-document.getElementById('faqList').innerHTML=FAQS.map((f,i)=>`
-  <div class="faq-item" id="faq-${i}">
-    <div class="faq-q" onclick="toggleFAQ(${i})"><span>${f.q}</span><i class="bi bi-chevron-down faq-icon"></i></div>
-    <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
-  </div>`).join('');
+async function loadFAQs() {
+  try {
+    const res = await fetch('https://localhost:7132/api/FAQs');
+    const faqs = res.ok ? await res.json() : [];
+
+    const list = document.getElementById('faqList');
+
+    if (!faqs.length) {
+      list.innerHTML = '<p class="text-center text-muted">No FAQs available yet.</p>';
+      return;
+    }
+
+    list.innerHTML = faqs.map((f, i) => `
+      <div class="faq-item" id="faq-${i}">
+        <div class="faq-q" onclick="toggleFAQ(${i})">
+          <span>${f.question}</span>
+          <i class="bi bi-chevron-down faq-icon"></i>
+        </div>
+        <div class="faq-a">
+          <div class="faq-a-inner">${f.answer}</div>
+        </div>
+      </div>`).join('');
+
+  } catch(e) {
+    document.getElementById('faqList').innerHTML =
+      '<p class="text-center text-muted">Failed to load FAQs.</p>';
+  }
+}
+
+loadFAQs();
 function toggleFAQ(i){const el=document.getElementById('faq-'+i);const wasOpen=el.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));if(!wasOpen)el.classList.add('open');}
 let dark=false;
 document.getElementById('themeBtn').addEventListener('click',()=>{dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('themeBtn').innerHTML=dark?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';});

@@ -920,7 +920,16 @@ body {
   <i class="bi bi-inbox-fill"></i>
   <span class="link-text">My Inbox</span>
 </a>
-  
+  <a class="sidebar-link" onclick="showPage('contact-messages')" data-label="Contact Messages">
+  <i class="bi bi-envelope-open-fill"></i>
+  <span class="link-text">Contact Messages</span>
+</a>
+<div class="sidebar-divider"></div>
+<div class="sidebar-section">Content</div>
+<a class="sidebar-link" onclick="showPage('faqs')" data-label="FAQ Management">
+  <i class="bi bi-question-circle-fill"></i>
+  <span class="link-text">FAQ Management</span>
+</a>
     <div class="sidebar-divider"></div>
 <div class="sidebar-section">Bookings</div>
 
@@ -1967,6 +1976,139 @@ body {
   </div>
 </div>
 <!-- ======= end page-notifications ======= -->
+<!-- =============================== CONTACT MESSAGES =============================== -->
+<div class="page" id="page-contact-messages">
+  <div class="page-header">
+    <div>
+      <h2 class="fw-bold m-0">
+        <i class="bi bi-envelope-open-fill me-2" style="color:var(--clubly-accent)"></i>Contact Messages
+      </h2>
+      <small class="text-muted">Messages received from the contact form</small>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+      <span class="badge bg-danger rounded-pill px-3 py-2" id="contactUnreadBadge" style="font-size:.85rem;display:none">0 unread</span>
+      <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="markAllContactRead()">
+        <i class="bi bi-check2-all me-1"></i>Mark all read
+      </button>
+      <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="loadContactMessages()">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="clubly-card p-3 mb-3">
+    <div class="row g-2 align-items-center controls">
+      <div class="col-auto">
+        <input id="contactSearch" class="form-control" placeholder="Search by name, email, topic..." style="width:260px">
+      </div>
+      <div class="col-auto">
+        <select id="contactFilterRole" class="form-select" style="width:150px">
+          <option value="">All roles</option>
+          <option value="Admin">Admin</option>
+          <option value="Member">Member</option>
+          <option value="Trainer">Trainer</option>
+          <option value="Guest">Guest</option>
+          <option value="null">No account</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <select id="contactFilterRead" class="form-select" style="width:140px">
+          <option value="">All</option>
+          <option value="unread">Unread</option>
+          <option value="read">Read</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <select id="contactFilterTopic" class="form-select" style="width:170px">
+          <option value="">All topics</option>
+          <option>General Inquiry</option>
+          <option>Membership Plans</option>
+          <option>Book a Tour</option>
+          <option>Personal Training</option>
+          <option>Technical Support</option>
+            <option>Other</option>
+
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="clubly-card p-0">
+    <div class="table-scroll">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Sender</th>
+            <th>Email / Phone</th>
+            <th>Topic</th>
+            <th>Message</th>
+            <th class="text-center">Role</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="contactMessagesTable">
+          <tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center p-3 border-top">
+      <small id="contactInfo" class="text-muted"></small>
+      <nav><ul class="pagination mb-0" id="contactPagination"></ul></nav>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Message Detail Modal -->
+<div class="modal fade" id="contactDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">
+          <i class="bi bi-envelope-open me-2" style="color:var(--clubly-accent)"></i>Message Details
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body px-4">
+        <!-- Sender Info -->
+        <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3" style="background:var(--table-head)">
+          <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--clubly-accent),#c0392b);display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;font-weight:900;flex-shrink:0;" id="cd_avatar">?</div>
+          <div class="flex-1">
+            <div class="fw-bold" id="cd_name">—</div>
+            <div class="text-muted small" id="cd_email">—</div>
+            <div class="text-muted small" id="cd_phone"></div>
+          </div>
+          <div class="text-end">
+            <span id="cd_roleBadge" class="badge px-3 py-2 mb-1"></span><br>
+            <small class="text-muted" id="cd_date">—</small>
+          </div>
+        </div>
+
+        <!-- Topic -->
+        <div class="mb-3">
+          <label class="form-label text-muted"><i class="bi bi-tag me-1"></i>Topic</label>
+          <div id="cd_topic" class="fw-semibold">—</div>
+        </div>
+
+        <!-- Message -->
+        <div class="clubly-card p-3">
+          <label class="form-label text-muted"><i class="bi bi-chat-text me-1"></i>Message</label>
+          <p id="cd_message" style="white-space:pre-wrap;line-height:1.8;margin:0;"></p>
+        </div>
+      </div>
+      <div class="modal-footer border-0 justify-content-between">
+        <button class="btn btn-outline-danger rounded-pill px-4" id="cd_deleteBtn">
+          <i class="bi bi-trash3-fill me-1"></i>Delete
+        </button>
+        <button class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- =============================== MY NOTIFICATIONS INBOX =============================== -->
 <div class="page" id="page-my-notifications">
@@ -2034,7 +2176,119 @@ body {
 </div>
 <!-- ======= end page-my-notifications ======= -->
 
+<!-- =============================== FAQ MANAGEMENT =============================== -->
+<div class="page" id="page-faqs">
+  <div class="page-header">
+    <div>
+      <h2 class="fw-bold m-0">
+        <i class="bi bi-question-circle-fill me-2" style="color:var(--clubly-accent)"></i>FAQ Management
+      </h2>
+      <small class="text-muted">Add, edit, reorder and publish FAQs shown on the website</small>
+    </div>
+    <button class="btn btn-primary rounded-pill px-4" onclick="openFaqModal()">
+      <i class="bi bi-plus-lg me-1"></i> Add FAQ
+    </button>
+  </div>
 
+  <div class="clubly-card p-3 mb-3">
+    <div class="row g-2 align-items-center controls">
+      <div class="col-auto">
+        <input id="faqSearch" class="form-control" placeholder="Search questions..." style="width:260px">
+      </div>
+      <div class="col-auto">
+        <select id="faqFilterStatus" class="form-select" style="width:140px">
+          <option value="">All</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="col-auto ms-auto">
+        <button class="btn btn-outline-primary btn-sm" onclick="loadFaqsAdmin()">
+          <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="clubly-card p-0">
+    <div class="table-scroll">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th style="width:50px">Order</th>
+            <th>Question</th>
+            <th>Answer</th>
+            <th class="text-center" style="width:80px">Order</th>
+            <th class="text-center" style="width:100px">Status</th>
+            <th class="text-center" style="width:130px">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="faqsTable">
+          <tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center p-3 border-top">
+      <small id="faqInfo" class="text-muted"></small>
+      <nav><ul class="pagination mb-0" id="faqPagination"></ul></nav>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Modal -->
+<div class="modal fade" id="faqModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="faqModalTitle">
+          <i class="bi bi-question-circle me-2" style="color:var(--clubly-accent)"></i>Add FAQ
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body px-4">
+        <input type="hidden" id="faqId">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Question <span class="text-danger">*</span></label>
+          <input type="text" id="faqQuestion" class="form-control"
+            placeholder="e.g. How do I join Clubly?">
+          <div class="invalid-feedback">Question is required (min 5 chars)</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Answer <span class="text-danger">*</span></label>
+          <textarea id="faqAnswer" class="form-control" rows="4"
+            placeholder="Write a clear and helpful answer..."></textarea>
+          <div class="d-flex justify-content-between mt-1">
+            <div class="invalid-feedback" style="display:block;visibility:hidden" id="faqAnswerErr">
+              Answer is required (min 10 chars)
+            </div>
+            <small class="text-muted ms-auto" id="faqCharCount">0 / 2000</small>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Display Order</label>
+            <input type="number" id="faqOrder" class="form-control" value="0" min="0">
+            <small class="text-muted">Lower = shown first</small>
+          </div>
+          <div class="col-md-5 d-flex align-items-center mt-4">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="faqIsActive" checked>
+              <label class="form-check-label fw-semibold" for="faqIsActive">
+                Active (visible on website)
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary rounded-pill px-5 fw-bold" onclick="saveFaq()">
+          <i class="bi bi-check-lg me-1"></i><span id="faqSaveBtnText">Save FAQ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ===== MY NOTIFICATION DETAIL MODAL ===== -->
 <div class="modal fade" id="myNotifDetailModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -2138,6 +2392,7 @@ body {
             <th>Membership #</th>
             <th>Member</th>
             <th>Activity</th>
+            <th>Trainer</th>
             <th>Group</th>
             <th>Date</th>
             <th>End Date</th>
@@ -2184,6 +2439,7 @@ body {
   </div>
 </div><!-- end tab-facility-bookings -->
 </div><!-- end page-bookings -->
+
     <!-- =============================== Admins =============================== -->
 <div class="page" id="page-admins">
   <div class="page-header">
@@ -2478,8 +2734,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
-const pages = ['main','member','trainer','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings'];
-function showPage(name) {
+const pages = ['main','member','trainer','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs'];function showPage(name) {
   pages.forEach(p => {
     document.getElementById('page-' + p)?.classList.remove('active');
     const nav = document.getElementById('nav-' + p);
@@ -4308,14 +4563,271 @@ window.showPage = function(name) {
   if (name === 'membership') fetchMemberships();
 if (name === 'notifications') loadNotifications();
 if (name === 'my-notifications') loadMyNotifications();
-
+if (name === 'contact-messages') loadContactMessages();
+if (name === 'faqs') loadFaqsAdmin();
   if (name === 'admins') loadAdmins();
 if (name === 'profile') loadAdminProfile();
 if (name === 'bookings') loadBookings();
 
 
 };
+// ===================================================
+// ============== CONTACT MESSAGES ===================
+// ===================================================
+const contactApi = 'https://localhost:7132/api/ContactMessages';
+let _contactMsgs = [], _contactFiltered = [], _contactPage = 1;
+const _contactPageSize = 10;
 
+async function loadContactMessages() {
+  document.getElementById('contactMessagesTable').innerHTML =
+    '<tr><td colspan="9" class="text-center py-4 text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Loading...</td></tr>';
+  try {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      document.getElementById('contactMessagesTable').innerHTML =
+        '<tr><td colspan="9" class="text-center text-danger py-4">Please sign in as Admin first.</td></tr>';
+      return;
+    }
+
+    const res = await fetch(contactApi, {
+      method: 'GET',
+      headers: { 
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (res.status === 401) {
+      document.getElementById('contactMessagesTable').innerHTML =
+        '<tr><td colspan="9" class="text-center text-danger py-4">Session expired. Please sign in again.</td></tr>';
+      return;
+    }
+
+    if (res.status === 403) {
+      document.getElementById('contactMessagesTable').innerHTML =
+        '<tr><td colspan="9" class="text-center text-danger py-4">Access denied. Admin role required.</td></tr>';
+      return;
+    }
+
+    _contactMsgs = res.ok ? await res.json() : [];
+    updateContactUnreadBadge();
+    applyContactFilters();
+  } catch {
+    document.getElementById('contactMessagesTable').innerHTML =
+      '<tr><td colspan="9" class="text-center text-danger py-4">Failed to load messages</td></tr>';
+  }
+}
+
+function updateContactUnreadBadge() {
+  const unread = _contactMsgs.filter(m => !m.isRead).length;
+  const el = document.getElementById('contactUnreadBadge');
+  if (unread > 0) {
+    el.textContent = `${unread} unread`;
+    el.style.display = 'inline-flex';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function applyContactFilters() {
+  const q      = (document.getElementById('contactSearch')?.value || '').trim().toLowerCase();
+  const role   = document.getElementById('contactFilterRole')?.value || '';
+  const status = document.getElementById('contactFilterRead')?.value || '';
+  const topic  = document.getElementById('contactFilterTopic')?.value || '';
+
+  _contactFiltered = _contactMsgs.filter(m => {
+    const matchQ = !q || (m.name||'').toLowerCase().includes(q)
+                      || (m.email||'').toLowerCase().includes(q)
+                      || (m.topic||'').toLowerCase().includes(q)
+                      || (m.message||'').toLowerCase().includes(q);
+    const matchRole = !role
+      ? true
+      : role === 'null'
+        ? !m.userRole
+        : (m.userRole||'').toLowerCase() === role.toLowerCase();
+    const matchStatus = !status
+      ? true
+      : status === 'unread' ? !m.isRead : m.isRead;
+    const matchTopic = !topic || m.topic === topic;
+    return matchQ && matchRole && matchStatus && matchTopic;
+  });
+
+  _contactPage = 1;
+  renderContactTable();
+}
+
+function renderContactTable() {
+  const tbody = document.getElementById('contactMessagesTable');
+  const total = _contactFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / _contactPageSize));
+  if (_contactPage > totalPages) _contactPage = totalPages;
+  const start = (_contactPage - 1) * _contactPageSize;
+  const items = _contactFiltered.slice(start, start + _contactPageSize);
+
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="text-center py-5 text-muted">No messages found</td></tr>';
+    document.getElementById('contactInfo').textContent = '';
+    document.getElementById('contactPagination').innerHTML = '';
+    return;
+  }
+
+  const roleColors = {
+    admin:   'bg-danger',
+    member:  'bg-success',
+    trainer: 'bg-primary',
+    guest:   'bg-warning text-dark',
+  };
+
+  tbody.innerHTML = items.map((m, i) => {
+    const d = new Date(m.sentAt);
+    const dateStr = d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+    const timeStr = d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+    const role = (m.userRole || '').toLowerCase();
+    const roleBadge = m.userRole
+      ? `<span class="badge ${roleColors[role] || 'bg-secondary'}">${m.userRole}</span>`
+      : `<span class="badge bg-light text-muted border">No account</span>`;
+    const statusBadge = m.isRead
+      ? `<span class="badge bg-light text-muted border"><i class="bi bi-check2-all me-1"></i>Read</span>`
+      : `<span class="badge bg-danger"><i class="bi bi-circle-fill me-1" style="font-size:7px"></i>New</span>`;
+    const shortMsg = (m.message || '').length > 60
+      ? escapeHtml(m.message.substring(0, 60)) + '…'
+      : escapeHtml(m.message);
+
+    return `<tr style="${!m.isRead ? 'font-weight:600;' : ''}">
+      <td class="text-muted">${start + i + 1}</td>
+      <td>${escapeHtml(m.name || '—')}</td>
+      <td>
+        <div style="font-size:.85rem">${escapeHtml(m.email || '—')}</div>
+        ${m.phone ? `<div class="text-muted" style="font-size:.8rem">${escapeHtml(m.phone)}</div>` : ''}
+      </td>
+      <td>${escapeHtml(m.topic || '—')}</td>
+      <td style="max-width:220px;white-space:normal;font-size:.85rem">${shortMsg}</td>
+      <td class="text-center">${roleBadge}</td>
+      <td class="text-center">${statusBadge}</td>
+      <td class="text-center">
+        <div style="font-size:.82rem;font-weight:600">${dateStr}</div>
+        <div class="text-muted" style="font-size:.78rem">${timeStr}</div>
+      </td>
+      <td class="text-center">
+        <button class="btn btn-link text-primary btn-sm" onclick="openContactDetail(${m.id})" title="View">
+          <i class="bi bi-eye-fill"></i>
+        </button>
+        <button class="btn btn-link text-danger btn-sm" onclick="deleteContactMessage(${m.id})" title="Delete">
+          <i class="bi bi-trash3-fill"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('contactInfo').textContent =
+    `Showing ${start+1}–${Math.min(start+_contactPageSize, total)} of ${total}`;
+  makePagination('contactPagination', _contactPage, totalPages, p => {
+    _contactPage = p; renderContactTable();
+  });
+}
+
+async function openContactDetail(id) {
+  const m = _contactMsgs.find(x => x.id === id);
+  if (!m) return;
+
+  // تعليم كمقروء
+  if (!m.isRead) {
+    try {
+      const token = localStorage.getItem('token');
+      await fetch(`${contactApi}/${id}/read`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      m.isRead = true;
+      updateContactUnreadBadge();
+      renderContactTable();
+    } catch {}
+  }
+
+  const roleColors = { admin:'#dc3545', member:'#198754', trainer:'#0d6efd', guest:'#ffc107' };
+  const role = (m.userRole || '').toLowerCase();
+  const initials = (m.name || '?').split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+  const d = new Date(m.sentAt);
+
+  document.getElementById('cd_avatar').textContent = initials;
+  document.getElementById('cd_name').textContent   = m.name  || '(Anonymous)';
+  document.getElementById('cd_email').textContent  = m.email || '—';
+  document.getElementById('cd_phone').textContent  = m.phone || '';
+
+  const roleBadgeEl = document.getElementById('cd_roleBadge');
+  if (m.userRole) {
+    roleBadgeEl.textContent = m.userRole;
+    roleBadgeEl.style.background = roleColors[role] || '#6c757d';
+    roleBadgeEl.style.color = role === 'guest' ? '#333' : '#fff';
+  } else {
+    roleBadgeEl.textContent = 'No account';
+    roleBadgeEl.style.background = '#e2e8f0';
+    roleBadgeEl.style.color = '#64748b';
+  }
+
+  document.getElementById('cd_date').textContent = d.toLocaleDateString('en-GB', {
+    day:'2-digit', month:'long', year:'numeric'
+  }) + ' ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+
+  document.getElementById('cd_topic').textContent   = m.topic   || '—';
+  document.getElementById('cd_message').textContent = m.message || '—';
+
+  document.getElementById('cd_deleteBtn').onclick = async () => {
+    bootstrap.Modal.getInstance(document.getElementById('contactDetailModal')).hide();
+    await deleteContactMessage(id);
+  };
+
+  new bootstrap.Modal(document.getElementById('contactDetailModal')).show();
+}
+
+async function deleteContactMessage(id) {
+  const r = await Swal.fire({
+    title: 'Delete this message?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#e85d2f',
+    confirmButtonText: 'Yes, delete'
+  });
+  if (!r.isConfirmed) return;
+  try {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${contactApi}/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error();
+    _contactMsgs = _contactMsgs.filter(m => m.id !== id);
+    updateContactUnreadBadge();
+    applyContactFilters();
+    showToast('Message deleted', 'success');
+  } catch {
+    showToast('Failed to delete', 'error');
+  }
+}
+
+async function markAllContactRead() {
+  const unread = _contactMsgs.filter(m => !m.isRead);
+  const token = localStorage.getItem('token');
+  await Promise.all(unread.map(m =>
+    fetch(`${contactApi}/${m.id}/read`, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+  ));
+  unread.forEach(m => m.isRead = true);
+  updateContactUnreadBadge();
+  renderContactTable();
+}
+
+// Events
+document.getElementById('contactSearch')?.addEventListener('input', () => {
+  clearTimeout(window.__tContact);
+  window.__tContact = setTimeout(applyContactFilters, 200);
+});
+['contactFilterRole','contactFilterRead','contactFilterTopic'].forEach(id =>
+  document.getElementById(id)?.addEventListener('change', applyContactFilters)
+);
 
 
 // ===================================================
@@ -4759,6 +5271,7 @@ async function loadBookings() {
 
           <td>${b.memberName}</td>
           <td>${b.activityName}</td>
+<td>${b.trainerName || b.TrainerName || b.trainer?.name || '<span class="text-muted">No Trainer</span>'}</td>
           <td>${b.groupName}</td>
           <td>${b.startDate}</td>
           <td>${b.endDate}</td>
@@ -4855,7 +5368,231 @@ const statusMap = {
     Swal.fire('Error', 'Something went wrong!', 'error');
   }
 }
+// ===================================================
+// ============== FAQ MANAGEMENT =====================
+// ===================================================
+const faqApi = 'https://localhost:7132/api/FAQs';
+let _faqs = [], _faqsFiltered = [], _faqPage = 1;
+const _faqPageSize = 10;
 
+document.getElementById('faqAnswer')?.addEventListener('input', function() {
+  const len = this.value.length;
+  document.getElementById('faqCharCount').textContent = `${len} / 2000`;
+  if (len > 2000) this.value = this.value.substring(0, 2000);
+});
+
+async function loadFaqsAdmin() {
+  document.getElementById('faqsTable').innerHTML =
+    '<tr><td colspan="6" class="text-center py-4 text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Loading...</td></tr>';
+  try {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${faqApi}/all`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    _faqs = res.ok ? await res.json() : [];
+    applyFaqFilters();
+  } catch {
+    document.getElementById('faqsTable').innerHTML =
+      '<tr><td colspan="6" class="text-center text-danger py-4">Failed to load FAQs</td></tr>';
+  }
+}
+
+function applyFaqFilters() {
+  const q      = (document.getElementById('faqSearch')?.value || '').trim().toLowerCase();
+  const status = document.getElementById('faqFilterStatus')?.value || '';
+
+  _faqsFiltered = _faqs.filter(f => {
+    const matchQ = !q || f.question.toLowerCase().includes(q) || f.answer.toLowerCase().includes(q);
+    const matchS = !status ? true : status === 'active' ? f.isActive : !f.isActive;
+    return matchQ && matchS;
+  });
+  _faqPage = 1;
+  renderFaqTable();
+}
+
+function renderFaqTable() {
+  const tbody = document.getElementById('faqsTable');
+  const total = _faqsFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / _faqPageSize));
+  if (_faqPage > totalPages) _faqPage = totalPages;
+  const start = (_faqPage - 1) * _faqPageSize;
+  const items = _faqsFiltered.slice(start, start + _faqPageSize);
+
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted">No FAQs found</td></tr>';
+    document.getElementById('faqInfo').textContent = '';
+    document.getElementById('faqPagination').innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = items.map(f => {
+    const shortAnswer = f.answer.length > 80
+      ? escapeHtml(f.answer.substring(0, 80)) + '…'
+      : escapeHtml(f.answer);
+    const statusBadge = f.isActive
+      ? `<span class="badge bg-success rounded-pill px-3">Active</span>`
+      : `<span class="badge bg-secondary rounded-pill px-3">Hidden</span>`;
+
+    return `<tr>
+      <td class="text-muted fw-semibold">${f.displayOrder}</td>
+      <td style="max-width:260px;white-space:normal;font-weight:600;font-size:.88rem;">${escapeHtml(f.question)}</td>
+      <td style="max-width:300px;white-space:normal;font-size:.84rem;color:var(--muted);">${shortAnswer}</td>
+      <td class="text-center">${f.displayOrder}</td>
+      <td class="text-center">${statusBadge}</td>
+      <td class="text-center">
+        <button class="btn btn-link p-1 ${f.isActive ? 'text-warning' : 'text-success'}"
+          onclick="toggleFaqStatus(${f.id})" title="${f.isActive ? 'Hide' : 'Show'}">
+          <i class="bi bi-${f.isActive ? 'eye-slash' : 'eye'}"></i>
+        </button>
+        <button class="btn btn-link text-primary p-1" onclick="openFaqModal(${f.id})" title="Edit">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button class="btn btn-link text-danger p-1" onclick="deleteFaq(${f.id})" title="Delete">
+          <i class="bi bi-trash3-fill"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('faqInfo').textContent =
+    `Showing ${start+1}–${Math.min(start+_faqPageSize, total)} of ${total}`;
+  makePagination('faqPagination', _faqPage, totalPages, p => {
+    _faqPage = p; renderFaqTable();
+  });
+}
+
+function openFaqModal(id = null) {
+  document.getElementById('faqId').value         = '';
+  document.getElementById('faqQuestion').value   = '';
+  document.getElementById('faqAnswer').value     = '';
+  document.getElementById('faqOrder').value      = '0';
+  document.getElementById('faqIsActive').checked = true;
+  document.getElementById('faqCharCount').textContent = '0 / 2000';
+  document.getElementById('faqModalTitle').innerHTML =
+    `<i class="bi bi-question-circle me-2" style="color:var(--clubly-accent)"></i>${id ? 'Edit FAQ' : 'Add FAQ'}`;
+  document.getElementById('faqSaveBtnText').textContent = id ? 'Update FAQ' : 'Save FAQ';
+
+  ['faqQuestion','faqAnswer'].forEach(elId => {
+    document.getElementById(elId)?.classList.remove('is-invalid','is-valid');
+  });
+  document.getElementById('faqAnswerErr').style.visibility = 'hidden';
+
+  if (id) {
+    const f = _faqs.find(x => x.id === id);
+    if (!f) return;
+    document.getElementById('faqId').value         = f.id;
+    document.getElementById('faqQuestion').value   = f.question;
+    document.getElementById('faqAnswer').value     = f.answer;
+    document.getElementById('faqOrder').value      = f.displayOrder;
+    document.getElementById('faqIsActive').checked = f.isActive;
+    document.getElementById('faqCharCount').textContent = `${f.answer.length} / 2000`;
+  }
+
+  new bootstrap.Modal(document.getElementById('faqModal')).show();
+}
+
+async function saveFaq() {
+  const id       = document.getElementById('faqId').value;
+  const question = document.getElementById('faqQuestion').value.trim();
+  const answer   = document.getElementById('faqAnswer').value.trim();
+  const order    = parseInt(document.getElementById('faqOrder').value) || 0;
+  const isActive = document.getElementById('faqIsActive').checked;
+
+  let valid = true;
+  const qEl  = document.getElementById('faqQuestion');
+  const aEl  = document.getElementById('faqAnswer');
+  const aErr = document.getElementById('faqAnswerErr');
+
+  qEl.classList.remove('is-invalid','is-valid');
+  aEl.classList.remove('is-invalid','is-valid');
+
+  if (!question || question.length < 5) {
+    qEl.classList.add('is-invalid'); valid = false;
+  } else qEl.classList.add('is-valid');
+
+  if (!answer || answer.length < 10) {
+    aEl.classList.add('is-invalid');
+    aErr.style.visibility = 'visible'; valid = false;
+  } else {
+    aEl.classList.add('is-valid');
+    aErr.style.visibility = 'hidden';
+  }
+
+  if (!valid) return;
+
+  const token = localStorage.getItem('token');
+  const payload = { question, answer, displayOrder: order, isActive };
+
+  try {
+    const url    = id ? `${faqApi}/${id}` : faqApi;
+    const method = id ? 'PUT' : 'POST';
+    const res = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error();
+    bootstrap.Modal.getInstance(document.getElementById('faqModal')).hide();
+    Swal.fire({
+      title: id ? 'Updated!' : 'Added!',
+      icon: 'success', timer: 1500, showConfirmButton: false
+    });
+    await loadFaqsAdmin();
+  } catch {
+    showToast('Failed to save FAQ', 'error');
+  }
+}
+
+async function toggleFaqStatus(id) {
+  const token = localStorage.getItem('token');
+  try {
+    const res = await fetch(`${faqApi}/${id}/toggle`, {
+      method: 'PATCH',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const faq = _faqs.find(f => f.id === id);
+    if (faq) faq.isActive = data.isActive;
+    applyFaqFilters();
+    showToast(`FAQ ${data.isActive ? 'activated' : 'hidden'}`, 'success');
+  } catch {
+    showToast('Failed to toggle', 'error');
+  }
+}
+
+async function deleteFaq(id) {
+  const r = await Swal.fire({
+    title: 'Delete this FAQ?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#e85d2f',
+    confirmButtonText: 'Yes, delete'
+  });
+  if (!r.isConfirmed) return;
+  try {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${faqApi}/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error();
+    _faqs = _faqs.filter(f => f.id !== id);
+    applyFaqFilters();
+    showToast('FAQ deleted', 'success');
+  } catch {
+    showToast('Failed to delete', 'error');
+  }
+}
+
+document.getElementById('faqSearch')?.addEventListener('input', () => {
+  clearTimeout(window.__tFaq);
+  window.__tFaq = setTimeout(applyFaqFilters, 200);
+});
+document.getElementById('faqFilterStatus')?.addEventListener('change', applyFaqFilters);
 // ===================================================
 // ADMIN PROFILE PAGE
 // ===================================================

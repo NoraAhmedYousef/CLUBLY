@@ -1098,6 +1098,7 @@ body {
                 <tr>
                   <th style="padding:12px 16px;">#</th>
                   <th style="padding:12px 16px;">Activity</th>
+                  <th>Trainer</th>
                   <th style="padding:12px 16px;">Group</th>
                   <th style="padding:12px 16px;">Start Date</th>
                   <th style="padding:12px 16px;">End Date</th>
@@ -1849,6 +1850,7 @@ async function loadMemberBookings() {
           <tr>
             <td style="padding:12px 16px;">${i + 1}</td>
             <td style="padding:12px 16px;">${b.activityName || '—'}</td>
+            <td style="padding:12px 16px;">${b.trainerName || '<span class="text-muted">No Trainer</span>'}</td>   <!-- ← أضيفي هذا -->
             <td style="padding:12px 16px;">${b.groupName || '—'}</td>
             <td style="padding:12px 16px;">${b.startDate || '—'}</td>
             <td style="padding:12px 16px;">${b.endDate || '—'}</td>
