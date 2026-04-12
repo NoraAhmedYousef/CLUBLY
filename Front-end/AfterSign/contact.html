@@ -111,8 +111,7 @@ textarea.contact-input{resize:vertical;min-height:120px;}
           <div class="card-dark" style="padding:32px;">
             <h4 style="font-weight:900;color:#fff;margin-bottom:24px;">Send Us a Message</h4>
             <form class="contact-form" id="contactForm">
-              <select class="contact-input" style="color:var(--muted);"><option value="" disabled selected>Topic</option><option>General Inquiry</option><option>Membership Plans</option><option>Book a Tour</option><option>Personal Training</option><option>Technical Support</option></select>
-              <textarea class="contact-input" placeholder="Your message..."></textarea>
+<select class="contact-input" style="color:var(--muted);"><option value="" disabled selected>Topic</option><option>General Inquiry</option><option>Membership Plans</option><option>Book a Tour</option><option>Personal Training</option><option>Technical Support</option><option>Other</option></select>              <textarea class="contact-input" placeholder="Your message..."></textarea>
               <button type="submit" class="btn-form-submit">Send Message <i class="bi bi-send-fill ms-2"></i></button>
               <div id="contactSuccess" style="display:none;margin-top:12px;color:#22c55e;font-weight:700;text-align:center;"><i class="bi bi-check-circle me-1"></i> Message sent! We'll get back to you within 24 hours.</div>
             </form>
@@ -342,8 +341,55 @@ if (userRole && dashboardUrls[userRole]) {
   if (navEl) navEl.insertAdjacentHTML('beforebegin',
     `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
 }
-document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('contactSuccess').style.display='block';e.target.reset();setTimeout(()=>document.getElementById('contactSuccess').style.display='none',5000);});
-let dark=false;
+document.getElementById('contactForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const btn = e.target.querySelector('button[type="submit"]');
+  const successEl = document.getElementById('contactSuccess');
+
+  // جمع البيانات
+  const inputs = e.target.querySelectorAll('input, select, textarea');
+  const nameVal    = e.target.querySelector('input[type="text"]')?.value.trim();
+  const emailVal   = e.target.querySelector('input[type="email"]')?.value.trim();
+  const phoneVal   = e.target.querySelector('input[type="tel"]')?.value.trim();
+  const topicVal   = e.target.querySelector('select')?.value;
+  const messageVal = e.target.querySelector('textarea')?.value.trim();
+
+  const payload = {
+    name:    nameVal    || null,
+    email:   emailVal   || null,
+    phone:   phoneVal   || null,
+    topic:   topicVal   || null,
+    message: messageVal || ''
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+    // جهّز الـ headers — لو في token أبعته
+    const headers = { 'Content-Type': 'application/json' };
+    const token = localStorage.getItem('token');
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch('https://localhost:7132/api/ContactMessages', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error();
+
+    successEl.style.display = 'block';
+    e.target.reset();
+    setTimeout(() => successEl.style.display = 'none', 5000);
+  } catch {
+    alert('Failed to send. Please try again.');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Send Message <i class="bi bi-send-fill ms-2"></i>';
+  }
+});let dark=false;
 document.getElementById('themeBtn').addEventListener('click',()=>{dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('themeBtn').innerHTML=dark?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';});
 window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
 

@@ -2372,15 +2372,83 @@ body {
   </div>
 </div>
   <!-- Tabs: Activity / Facility -->
-  <ul class="nav nav-tabs mb-3" id="bookingTabs">
-    <li class="nav-item">
-      <button class="nav-link active" onclick="switchBookingTab('activity')">Activity Bookings</button>
-    </li>
-    <li class="nav-item">
-      <button class="nav-link" onclick="switchBookingTab('facility')">Facility Bookings</button>
-    </li>
-  </ul>
-
+<ul class="nav nav-tabs mb-3" id="bookingTabs">
+  <li class="nav-item">
+    <button class="nav-link active" onclick="switchBookingTab('activity')">
+      <i class="bi bi-calendar-check me-1"></i>Member Activity Bookings
+    </button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" onclick="switchBookingTab('facility')">
+      <i class="bi bi-building me-1"></i>Member Facility Bookings
+    </button>
+  </li>
+ <li class="nav-item">
+  <button class="nav-link" onclick="switchBookingTab('guest')">
+    <i class="bi bi-person me-1"></i>Guest Activity Bookings
+  </button>
+</li>
+<li class="nav-item">
+  <button class="nav-link" onclick="switchBookingTab('guestfacility')">
+    <i class="bi bi-building me-1"></i>Guest Facility Bookings
+  </button>
+</li>
+</ul>
+<!-- Guest Activity Bookings Table -->
+<div id="tab-guest-bookings" style="display:none">
+  <div class="card p-3">
+    <div class="table-responsive" style="overflow-x:auto;">
+      <table class="table table-hover align-middle" style="min-width:1800px;font-size:.82rem;">
+        <thead style="background:var(--table-head)">
+          <tr>
+            <th>#</th>
+            <th>Guest Name</th>
+            <th>Activity</th>
+            <th>Trainer</th>
+            <th>Group</th>
+            <th>Date</th>
+            <th>End Date</th>
+            <th>Participants</th>
+            <th>Price</th>
+            <th>Payment Method</th>
+            <th>Transaction ID</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="guestBookingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Guest Facility Bookings Table -->
+<div id="tab-guestfacility-bookings" style="display:none">
+  <div class="card p-3">
+    <div class="table-responsive" style="overflow-x:auto;">
+      <table class="table table-hover align-middle" style="min-width:1800px;font-size:.82rem;">
+        <thead style="background:var(--table-head)">
+          <tr>
+            <th>#</th>
+            <th>Guest Name</th>
+          
+            <th>Facility</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Participants</th>
+            <th>Price</th>
+            <th>Payment Method</th>
+            <th>Transaction ID</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="guestFacilityBookingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <!-- Activity Bookings Table -->
 <div id="tab-activity-bookings">
   <div class="card p-3">
@@ -5247,80 +5315,168 @@ document.querySelectorAll('.modal').forEach(modal => {
 });
 // ===== BOOKINGS =====
 const API = 'https://localhost:7132/api';
-
 function switchBookingTab(tab) {
-  document.getElementById('tab-activity-bookings').style.display = tab === 'activity' ? '' : 'none';
-  document.getElementById('tab-facility-bookings').style.display = tab === 'facility' ? '' : 'none';
+  document.getElementById('tab-activity-bookings').style.display       = tab === 'activity'       ? '' : 'none';
+  document.getElementById('tab-facility-bookings').style.display       = tab === 'facility'       ? '' : 'none';
+  document.getElementById('tab-guest-bookings').style.display          = tab === 'guest'          ? '' : 'none';
+  document.getElementById('tab-guestfacility-bookings').style.display  = tab === 'guestfacility'  ? '' : 'none';
+
   document.querySelectorAll('#bookingTabs .nav-link').forEach((btn, i) => {
-    btn.classList.toggle('active', (tab === 'activity' && i === 0) || (tab === 'facility' && i === 1));
+    btn.classList.toggle('active',
+      (tab === 'activity'      && i === 0) ||
+      (tab === 'facility'      && i === 1) ||
+      (tab === 'guest'         && i === 2) ||
+      (tab === 'guestfacility' && i === 3)
+    );
   });
 }
 
 async function loadBookings() {
   const membershipSearch = (document.getElementById('searchMembership')?.value || '').trim();
-  // Activity Bookings
+
+  // ── 1. Member Activity Bookings ──
   try {
     const res1 = await fetch(`${API}/ActivityBookings`);
     const activityData = await res1.json();
-    const filtered1 = membershipSearch ? activityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch)) : activityData;
+    const memberData = activityData.filter(b => b.memberId != null);
+    const filtered1 = membershipSearch
+      ? memberData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch))
+      : memberData;
+
     document.getElementById('activityBookingsBody').innerHTML = filtered1.length
       ? filtered1.map((b, i) => `
         <tr>
           <td>${i+1}</td>
           <td>${b.memberShipNumber || '—'}</td>
-
           <td>${b.memberName}</td>
           <td>${b.activityName}</td>
-<td>${b.trainerName || b.TrainerName || b.trainer?.name || '<span class="text-muted">No Trainer</span>'}</td>
+          <td>${b.trainerName || b.TrainerName || b.trainer?.name || '<span class="text-muted">No Trainer</span>'}</td>
           <td>${b.groupName}</td>
           <td>${b.startDate}</td>
           <td>${b.endDate}</td>
           <td>${b.participants}</td>
-       <td>${b.totalPrice} EGP</td>
-<td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
-<td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-<td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>          
-     <td>${getStatusBadge(b.status)}</td>
+          <td>${b.totalPrice} EGP</td>
+          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+          <td>${getStatusBadge(b.status)}</td>
           <td style="min-width:200px;">${getActionButtons(b.id, b.status, 'activity')}</td>
         </tr>`).join('')
-      : '<tr><td colspan="10" class="text-center text-muted py-4">No activity bookings found</td></tr>';
+      : '<tr><td colspan="15" class="text-center text-muted py-4">No activity bookings found</td></tr>';
   } catch(e) {
     document.getElementById('activityBookingsBody').innerHTML =
-      '<tr><td colspan="10" class="text-center text-danger py-4">Failed to load activity bookings</td></tr>';
+      '<tr><td colspan="15" class="text-center text-danger py-4">Failed to load activity bookings</td></tr>';
     console.error('Activity bookings error:', e);
   }
 
-  // Facility Bookings
+  // ── 2. Guest Activity Bookings ──
   try {
-const res2 = await fetch(`${API}/FacilityBookings`);
+    const res3 = await fetch(`${API}/ActivityBookings`);
+    const allData = await res3.json();
+    const guestData = allData.filter(b => b.guestId != null && b.memberId == null);
+    const filtered3 = membershipSearch ? [] : guestData;
+
+    document.getElementById('guestBookingsBody').innerHTML = filtered3.length
+      ? filtered3.map((b, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>
+            <div style="font-weight:600">${b.guestName || b.memberName || '—'}</div>
+            <div style="font-size:.78rem;color:var(--muted)">Guest</div>
+          </td>
+          <td>${b.activityName}</td>
+          <td>${b.trainerName || '<span class="text-muted">No Trainer</span>'}</td>
+          <td>${b.groupName}</td>
+          <td>${b.startDate}</td>
+          <td>${b.endDate}</td>
+          <td>${b.participants}</td>
+          <td>${b.totalPrice} EGP</td>
+          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.receiptImageUrl
+            ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
+                 <img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;">
+               </a>`
+            : '<span class="text-muted small">No receipt</span>'}</td>
+          <td>${getStatusBadge(b.status)}</td>
+          <td>${getActionButtons(b.id, b.status, 'activity')}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="14" class="text-center text-muted py-4">No guest bookings found</td></tr>';
+  } catch(e) {
+    document.getElementById('guestBookingsBody').innerHTML =
+      '<tr><td colspan="14" class="text-center text-danger py-4">Failed to load guest bookings</td></tr>';
+  }
+
+  // ── 3. Member Facility Bookings ──
+  try {
+    const res2 = await fetch(`${API}/FacilityBookings`);
     const facilityData = await res2.json();
-    const filtered2 = membershipSearch ? facilityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch)) : facilityData;
+    const memberFacilityData = facilityData.filter(b => b.memberId != null);
+    const filtered2 = membershipSearch
+      ? memberFacilityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch))
+      : memberFacilityData;
+
     document.getElementById('facilityBookingsBody').innerHTML = filtered2.length
       ? filtered2.map((b, i) => `
         <tr>
           <td>${i+1}</td>
           <td>${b.memberShipNumber || '—'}</td>
-
           <td>${b.bookedByName}</td>
           <td>${b.facilityName}</td>
           <td>${b.bookingDate}</td>
           <td>${b.startTime} → ${b.endTime}</td>
           <td>${b.participants}</td>
-     <td>${b.price} EGP</td>
-<td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
-<td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>   
-<td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>    
-      
-<td class="sticky-col-2">${getStatusBadge(b.status)}</td>
+          <td>${b.price} EGP</td>
+          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+          <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
           <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
         </tr>`).join('')
-      : '<tr><td colspan="9" class="text-center text-muted py-4">No facility bookings found</td></tr>';
+      : '<tr><td colspan="13" class="text-center text-muted py-4">No facility bookings found</td></tr>';
   } catch(e) {
     document.getElementById('facilityBookingsBody').innerHTML =
-      '<tr><td colspan="9" class="text-center text-danger py-4">Failed to load facility bookings</td></tr>';
+      '<tr><td colspan="13" class="text-center text-danger py-4">Failed to load facility bookings</td></tr>';
     console.error('Facility bookings error:', e);
   }
+
+  // ── 4. Guest Facility Bookings ──
+  try {
+    const res4 = await fetch(`${API}/FacilityBookings`);
+    const allFacData = await res4.json();
+    const guestFacData = allFacData.filter(b => b.memberId == null);
+
+    document.getElementById('guestFacilityBookingsBody').innerHTML = guestFacData.length
+      ? guestFacData.map((b, i) => `
+        <tr>
+          <td>${i+1}</td>
+          <td>
+            <div style="font-weight:600">${b.bookedByName || '—'}</div>
+            <div style="font-size:.78rem;color:var(--muted)">Guest</div>
+          </td>
+          <td>${b.facilityName}</td>
+          <td>${b.bookingDate}</td>
+          <td>${b.startTime} → ${b.endTime}</td>
+          <td>${b.participants}</td>
+          <td>${b.price} EGP</td>
+          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+          <td>${b.receiptImageUrl
+            ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
+                 <img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;">
+               </a>`
+            : '<span class="text-muted small">No receipt</span>'}</td>
+          <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
+          <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
+        </tr>`).join('')
+      : '<tr><td colspan="13" class="text-center text-muted py-4">No guest facility bookings found</td></tr>';
+  } catch(e) {
+    document.getElementById('guestFacilityBookingsBody').innerHTML =
+      '<tr><td colspan="13" class="text-center text-danger py-4">Failed to load guest facility bookings</td></tr>';
+  }
 }
+
+// ─────────────────────────────────────────────────
 function getStatusBadge(status) {
   const s = (status || '').toLowerCase();
   if (s === 'pending')                       return '<span class="badge bg-warning text-dark">Pending</span>';
@@ -5328,6 +5484,7 @@ function getStatusBadge(status) {
   if (s === 'cancelled')                     return '<span class="badge bg-danger">Cancelled</span>';
   return '<span class="badge bg-secondary">Unknown</span>';
 }
+
 function getActionButtons(id, status, type) {
   if ((status || '').toLowerCase() !== 'pending') return '<span class="text-muted small">No actions</span>';
   return `
@@ -5349,10 +5506,10 @@ async function updateBooking(id, action, type) {
   });
   if (!confirmed.isConfirmed) return;
 
-const statusMap = {
-  activity: { approve: 'Approved',  cancel: 'Cancelled' },
-  facility:  { approve: 'Approved',  cancel: 'Cancelled' }
-};
+  const statusMap = {
+    activity: { approve: 'Approved', cancel: 'Cancelled' },
+    facility:  { approve: 'Approved', cancel: 'Cancelled' }
+  };
   const endpoint = type === 'activity' ? 'ActivityBookings' : 'FacilityBookings';
 
   try {
