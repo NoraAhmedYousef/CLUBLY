@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clubly — Trainer Portal</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --clubly-dark:   #0d1b2a;
+  --clubly-navy:   #122236;
+  --clubly-accent: #e85d2f;
+  --clubly-teal:   #2ec4b6;
+  --clubly-gold:   #d4a843;
+  --sidebar-w:     255px;
+  --sidebar-mini:  68px;
+  --header-h:      60px;
+  --bg:            #f0f4f8;
+  --card-bg:       #ffffff;
+  --text:          #1a202c;
+  --muted:         #64748b;
+  --border:        #e2e8f0;
+}
+[data-theme="dark"] {
+  --bg:       #0a1628;
+  --card-bg:  #0f1f35;
+  --text:     #e2e8f0;
+  --muted:    #94a3b8;
+  --border:   #1e3a5f;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .25s,color .25s;
+}
+
+/* ======= HEADER ======= */
+.clubly-header{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--header-h);
+  background:var(--clubly-dark);
+  display:flex;align-items:center;
+  padding:0 20px;
+  z-index:2000;
+  box-shadow:0 2px 24px rgba(0,0,0,.45);
+}
+.toggle-btn{
+  background:none;border:none;color:#fff;
+  font-size:22px;cursor:pointer;
+  padding:4px 8px;border-radius:6px;
+  transition:background .2s;margin-right:8px;
+  flex-shrink:0;
+}
+.toggle-btn:hover{background:rgba(255,255,255,.1);}
+.header-logo{
+  display:flex;align-items:center;gap:8px;
+  text-decoration:none;min-width:200px;
+  transition:min-width .3s;
+}
+.logo-icon{font-size:26px;color:var(--clubly-accent);}
+.logo-text{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:.5px;}
+.logo-text span{color:var(--clubly-accent);}
+.header-nav{display:flex;gap:4px;flex:1;padding:0 10px;}
+.header-nav a{
+  color:rgba(255,255,255,.75);text-decoration:none;
+  font-size:.88rem;padding:6px 11px;border-radius:6px;
+  transition:all .2s;white-space:nowrap;cursor:pointer;
+  border:none;background:none;
+}
+.header-nav a:hover,.header-nav a.active{color:#fff;background:rgba(255,255,255,.1);}
+.header-actions{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.trainer-badge{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:30px;
+  padding:4px 14px 4px 6px;
+}
+.trainer-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.82rem;color:#fff;
+  border:2px solid rgba(46,196,182,.4);
+}
+.trainer-name{font-size:.85rem;color:rgba(255,255,255,.9);font-weight:700;}
+.trainer-role{font-size:.72rem;color:var(--clubly-teal);font-weight:600;}
+.btn-theme{
+  background:rgba(255,255,255,.1);color:#fff;border:none;
+  width:36px;height:36px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:background .2s;
+}
+.btn-theme:hover{background:rgba(255,255,255,.2);}
+.btn-signout{
+  background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+  color:#fff;border:none;padding:7px 18px;border-radius:50px;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;
+  font-family:inherit;
+}
+.btn-signout:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(232,93,47,.4);}
+
+/* ======= LAYOUT ======= */
+.layout-body{
+  display:flex;
+  margin-top:var(--header-h);
+  flex:1;
+}
+
+/* ======= SIDEBAR ======= */
+.sidebar{
+  width:var(--sidebar-w);
+  min-width:var(--sidebar-w);
+  background:linear-gradient(180deg,#0d1b2a 0%,#091423 100%);
+  position:fixed;
+  top:var(--header-h);left:0;bottom:0;
+  overflow-y:auto;overflow-x:hidden;
+  transition:width .3s ease,min-width .3s ease;
+  z-index:1000;
+  padding:16px 0 80px;
+  border-right:1px solid rgba(255,255,255,.06);
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.1) transparent;
+}
+.sidebar.collapsed{
+  width:var(--sidebar-mini);
+  min-width:var(--sidebar-mini);
+}
+.sidebar-section{
+  padding:8px 12px 4px;
+  font-size:10px;text-transform:uppercase;
+  letter-spacing:1.2px;color:rgba(255,255,255,.3);
+  font-weight:700;white-space:nowrap;overflow:hidden;
+  transition:opacity .2s;
+}
+.sidebar.collapsed .sidebar-section{opacity:0;}
+.sidebar-link{
+  display:flex;align-items:center;gap:12px;
+  color:rgba(255,255,255,.7);text-decoration:none;
+  padding:10px 16px;margin:2px 8px;
+  border-radius:9px;font-size:.9rem;font-weight:600;
+  transition:all .2s;cursor:pointer;
+  white-space:nowrap;overflow:hidden;
+  border:none;background:none;
+  width:calc(100% - 16px);text-align:left;
+  position:relative;
+}
+.sidebar-link i{font-size:18px;min-width:20px;text-align:center;flex-shrink:0;}
+.link-text{transition:opacity .25s,max-width .25s;max-width:200px;overflow:hidden;}
+.sidebar.collapsed .link-text{opacity:0;max-width:0;}
+.sidebar-link:hover{color:#fff;background:rgba(255,255,255,.08);transform:translateX(3px);}
+.sidebar-link.active{
+  color:#fff;
+  background:linear-gradient(135deg,rgba(232,93,47,.85),rgba(192,57,43,.85));
+  box-shadow:0 4px 15px rgba(232,93,47,.3);
+}
+/* tooltip on collapsed */
+.sidebar.collapsed .sidebar-link:hover::after{
+  content:attr(data-label);
+  position:absolute;left:calc(var(--sidebar-mini) + 4px);top:50%;
+  transform:translateY(-50%);
+  background:var(--clubly-accent);color:#fff;
+  padding:5px 12px;border-radius:7px;
+  font-size:.8rem;font-weight:600;white-space:nowrap;
+  z-index:3000;box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.sidebar-divider{height:1px;background:rgba(255,255,255,.06);margin:10px 16px;}
+
+/* ======= CONTENT ======= */
+.content-area{
+  margin-left:var(--sidebar-w);
+  flex:1;padding:28px;
+  min-height:calc(100vh - var(--header-h));
+  transition:margin-left .3s;
+}
+.content-area.expanded{margin-left:var(--sidebar-mini);}
+
+/* ======= PAGES ======= */
+.page{display:none;animation:fadeIn .2s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ======= FOOTER ======= */
+.clubly-footer{
+  background:var(--clubly-dark);color:rgba(255,255,255,.65);
+  width:100%;z-index:1500;clear:both;
+}
+.footer-inner{display:flex;gap:60px;padding:30px 50px 20px;flex-wrap:wrap;}
+.footer-col h5{color:#fff;font-weight:700;margin-bottom:14px;font-size:1rem;}
+.footer-links{list-style:none;padding:0;}
+.footer-links li{margin-bottom:6px;}
+.footer-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.88rem;transition:color .2s;cursor:pointer;background:none;border:none;}
+.footer-links a:hover{color:var(--clubly-accent);}
+.footer-contact{font-size:.88rem;line-height:2;}
+.footer-contact i{color:var(--clubly-teal);margin-right:6px;}
+.footer-socials{display:flex;gap:12px;margin-top:10px;}
+.footer-socials a{color:rgba(255,255,255,.6);font-size:18px;transition:color .2s,transform .2s;text-decoration:none;}
+.footer-socials a:hover{color:var(--clubly-accent);transform:translateY(-2px);}
+.footer-bottom{text-align:center;padding:12px;border-top:1px solid rgba(255,255,255,.08);font-size:.82rem;color:rgba(255,255,255,.4);}
+
+/* ======= SHARED COMPONENTS ======= */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.page-title{font-size:1.6rem;font-weight:900;color:var(--text);}
+.page-subtitle{font-size:.88rem;color:var(--muted);margin-top:3px;}
+
+.card-clubly{
+  background:var(--card-bg);border-radius:14px;
+  padding:22px;border:1px solid var(--border);
+  box-shadow:0 2px 12px rgba(0,0,0,.05);
+  transition:box-shadow .2s;
+}
+.card-clubly:hover{box-shadow:0 6px 24px rgba(0,0,0,.09);}
+.card-title{
+  font-size:.95rem;font-weight:700;color:var(--text);
+  margin-bottom:16px;padding-bottom:12px;
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+/* stat cards */
+.stat-card{
+  background:var(--card-bg);border-radius:14px;padding:20px;
+  border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.05);
+  transition:transform .2s,box-shadow .2s;
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.1);}
+.stat-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:14px;
+}
+.si-orange{background:rgba(232,93,47,.12);color:var(--clubly-accent);}
+.si-teal  {background:rgba(46,196,182,.12);color:var(--clubly-teal);}
+.si-gold  {background:rgba(212,168,67,.12);color:var(--clubly-gold);}
+.si-blue  {background:rgba(59,130,246,.12);color:#3b82f6;}
+.si-green {background:rgba(34,197,94,.12);color:#22c55e;}
+.si-red   {background:rgba(239,68,68,.12);color:#ef4444;}
+
+.stat-label{font-size:.8rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.stat-val{font-size:2rem;font-weight:900;color:var(--text);line-height:1.1;margin-top:4px;}
+.stat-unit{font-size:.9rem;font-weight:400;color:var(--muted);}
+.stat-change{font-size:.78rem;margin-top:6px;}
+.up{color:#22c55e;} .down{color:#ef4444;}
+
+/* btn */
+.btn-primary-cl{
+  background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+  color:#fff;border:none;padding:8px 20px;border-radius:50px;
+  font-weight:700;font-size:.88rem;cursor:pointer;
+  transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  font-family:inherit;
+}
+.btn-primary-cl:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(232,93,47,.4);}
+.btn-secondary-cl{
+  background:var(--bg);border:1px solid var(--border);color:var(--text);
+  padding:8px 18px;border-radius:50px;font-weight:600;font-size:.88rem;
+  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  font-family:inherit;
+}
+.btn-secondary-cl:hover{border-color:var(--clubly-accent);color:var(--clubly-accent);}
+.btn-teal-cl{
+  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  color:#fff;border:none;padding:8px 20px;border-radius:50px;
+  font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:6px;font-family:inherit;
+}
+.btn-teal-cl:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(46,196,182,.4);}
+
+/* badges */
+.badge-cl{display:inline-flex;align-items:center;gap:4px;padding:3px 11px;border-radius:20px;font-size:.75rem;font-weight:700;}
+.b-green {background:rgba(34,197,94,.12);color:#16a34a;}
+.b-orange{background:rgba(232,93,47,.12);color:var(--clubly-accent);}
+.b-blue  {background:rgba(59,130,246,.12);color:#2563eb;}
+.b-red   {background:rgba(239,68,68,.12);color:#dc2626;}
+.b-gold  {background:rgba(212,168,67,.12);color:#b45309;}
+.b-gray  {background:rgba(100,116,139,.12);color:var(--muted);}
+.b-teal  {background:rgba(46,196,182,.12);color:#0d9488;}
+
+/* table */
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+thead th{background:var(--bg);padding:12px 16px;font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);text-align:left;white-space:nowrap;}
+tbody td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.88rem;color:var(--text);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(232,93,47,.03);}
+
+/* search */
+.search-bar{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:10px;padding:8px 14px;transition:border-color .2s;
+}
+.search-bar:focus-within{border-color:var(--clubly-accent);}
+.search-bar input{border:none;outline:none;background:transparent;color:var(--text);font-family:inherit;font-size:.88rem;flex:1;}
+
+/* form */
+.form-group{margin-bottom:18px;}
+.form-label{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.4px;}
+.form-input{
+  width:100%;background:var(--bg);border:1px solid var(--border);
+  border-radius:9px;padding:10px 14px;color:var(--text);
+  font-family:inherit;font-size:.9rem;outline:none;transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--clubly-accent);}
+select.form-input{cursor:pointer;}
+textarea.form-input{resize:vertical;min-height:90px;}
+
+/* schedule session card */
+.session-card{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;background:var(--card-bg);
+  border-radius:12px;margin-bottom:10px;
+  border:1px solid var(--border);border-left:4px solid transparent;
+  transition:all .2s;cursor:pointer;
+}
+.session-card:hover{transform:translateX(4px);box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.session-card.type-yoga   {border-left-color:#3b82f6;}
+.session-card.type-crossfit{border-left-color:var(--clubly-accent);}
+.session-card.type-pilates {border-left-color:#9333ea;}
+.session-card.type-swim    {border-left-color:var(--clubly-teal);}
+.session-card.type-zumba   {border-left-color:var(--clubly-gold);}
+.session-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;flex-shrink:0;
+}
+.session-info{flex:1;}
+.session-name{font-weight:700;font-size:.95rem;color:var(--text);}
+.session-meta{font-size:.78rem;color:var(--muted);margin-top:2px;}
+.session-right{text-align:right;flex-shrink:0;}
+.session-time{font-weight:700;font-size:.88rem;color:var(--text);}
+.session-slots{font-size:.75rem;color:var(--muted);margin-top:2px;}
+
+/* member row */
+.member-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.member-row:last-child{border-bottom:none;}
+.m-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0;}
+.m-name{font-weight:700;font-size:.9rem;color:var(--text);}
+.m-detail{font-size:.78rem;color:var(--muted);}
+.progress-bar-wrap{flex:1;max-width:120px;}
+.progress-track{background:var(--border);border-radius:10px;height:6px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--clubly-accent),var(--clubly-gold));}
+
+/* notification */
+.notif-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;background:var(--card-bg);border-radius:12px;
+  margin-bottom:10px;border:1px solid var(--border);
+  border-left:4px solid transparent;transition:all .2s;cursor:pointer;
+}
+.notif-item:hover{transform:translateX(4px);box-shadow:0 4px 12px rgba(0,0,0,.07);}
+.notif-icon{width:40px;height:40px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.ni-blue  {border-color:#3b82f6;color:#3b82f6;}
+.ni-red   {border-color:#ef4444;color:#ef4444;}
+.ni-green {border-color:#22c55e;color:#22c55e;}
+.ni-yellow{border-color:var(--clubly-gold);color:var(--clubly-gold);}
+.ni-teal  {border-color:var(--clubly-teal);color:var(--clubly-teal);}
+.notif-msg{font-weight:600;font-size:.88rem;color:var(--text);}
+.notif-time{font-size:.76rem;color:var(--muted);margin-top:2px;}
+.unread-dot{width:8px;height:8px;background:var(--clubly-accent);border-radius:50%;flex-shrink:0;}
+
+/* profile */
+.profile-hero{
+  background:linear-gradient(135deg,var(--clubly-dark) 0%,#1a3a5c 100%);
+  border-radius:16px;padding:28px;position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:24px;margin-bottom:20px;
+  box-shadow:0 8px 32px rgba(0,0,0,.2);
+}
+.profile-hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:rgba(46,196,182,.1);border-radius:50%;}
+.profile-hero::after{content:'';position:absolute;bottom:-60px;left:60px;width:180px;height:180px;background:rgba(232,93,47,.08);border-radius:50%;}
+.trainer-avatar-big{
+  width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;font-weight:900;color:#fff;
+  border:4px solid rgba(46,196,182,.4);flex-shrink:0;
+  position:relative;z-index:1;overflow:hidden;
+}
+.trainer-avatar-big img{width:100%;height:100%;object-fit:cover;display:none;}
+.profile-hero-info{position:relative;z-index:1;}
+.profile-hero-name{font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.profile-hero-role{color:var(--clubly-teal);font-weight:700;font-size:.9rem;}
+.profile-hero-stars{color:var(--clubly-gold);font-size:.9rem;margin-top:6px;}
+.spec-tag{
+  display:inline-block;background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);
+  padding:3px 12px;border-radius:20px;font-size:.78rem;font-weight:600;margin:3px 2px;
+}
+
+/* rating stars */
+.stars{color:var(--clubly-gold);}
+
+/* chart bar simple */
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:80px;padding-top:8px;}
+.bar{flex:1;border-radius:6px 6px 0 0;min-width:24px;transition:height .4s ease;position:relative;}
+.bar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:.68rem;color:var(--muted);white-space:nowrap;}
+.bar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:.7rem;font-weight:700;color:var(--text);}
+
+/* week schedule grid */
+.week-grid{display:grid;grid-template-columns:60px repeat(7,1fr);gap:2px;font-size:.8rem;}
+.wg-header{background:var(--bg);padding:8px 4px;text-align:center;border-radius:6px;font-weight:700;color:var(--muted);font-size:.75rem;}
+.wg-time{padding:6px 4px;text-align:right;color:var(--muted);font-size:.72rem;padding-right:8px;display:flex;align-items:center;justify-content:flex-end;}
+.wg-cell{min-height:42px;border-radius:6px;border:1px dashed var(--border);}
+.wg-session{
+  border-radius:6px;padding:4px 6px;font-size:.72rem;font-weight:700;
+  margin:1px;cursor:pointer;transition:opacity .2s;line-height:1.3;
+}
+.wg-session:hover{opacity:.8;}
+
+/* modal */
+.modal-content-cl{background:var(--card-bg);color:var(--text);border-radius:16px;border:1px solid var(--border);}
+.modal-header-cl{border-bottom:1px solid var(--border);padding:18px 22px;}
+.modal-body-cl{padding:22px;}
+.modal-footer-cl{border-top:1px solid var(--border);padding:14px 22px;display:flex;gap:10px;justify-content:flex-end;}
+
+/* signout */
+.signout-icon{width:80px;height:80px;border-radius:50%;background:rgba(239,68,68,.1);border:3px solid rgba(239,68,68,.3);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#ef4444;margin:0 auto 16px;}
+
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .content-area{margin-left:0;padding:16px;}
+  .header-nav{display:none;}
+  .trainer-name,.trainer-role{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ======= HEADER ======= -->
+<header class="clubly-header">
+  <button class="toggle-btn" id="toggleBtn" title="Toggle Sidebar">
+    <i class="bi bi-list"></i>
+  </button>
+  <a class="header-logo" href="#">
+    <i class="bi bi-lightning-charge-fill logo-icon"></i>
+    <span class="logo-text">Cl<span>u</span>bly</span>
+  </a>
+  <nav class="header-nav">
+    <a onclick="showPage('dashboard')" id="hn-dashboard" class="active">Dashboard</a>
+    <a onclick="showPage('schedule')" id="hn-schedule">Schedule</a>
+    <a onclick="showPage('members')" id="hn-members">My Members</a>
+    <a onclick="showPage('sessions')" id="hn-sessions">Sessions</a>
+    <a onclick="showPage('reports')" id="hn-reports">Reports</a>
+    <a onclick="showPage('notifications')" id="hn-notifications">Notifications</a>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-theme" id="themeBtn" title="Toggle Theme"><i class="bi bi-moon-stars"></i></button>
+    <div class="trainer-badge">
+      <div class="trainer-avatar">AK</div>
+      <div>
+        <div class="trainer-name">Ahmed Karim</div>
+        <div class="trainer-role">Senior Trainer</div>
+      </div>
+    </div>
+    <button class="btn-signout" onclick="showPage('signout')">Sign Out</button>
+  </div>
+</header>
+
+<!-- ======= LAYOUT ======= -->
+<div class="layout-body">
+
+  <!-- ======= SIDEBAR ======= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">Overview</div>
+    <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard" data-label="Dashboard">
+      <i class="bi bi-speedometer2"></i><span class="link-text">Dashboard</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('schedule')" id="sb-schedule" data-label="My Schedule">
+      <i class="bi bi-calendar-week"></i><span class="link-text">My Schedule</span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">Management</div>
+    <button class="sidebar-link" onclick="showPage('members')" id="sb-members" data-label="My Members">
+      <i class="bi bi-people"></i><span class="link-text">My Members</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('sessions')" id="sb-sessions" data-label="Sessions">
+      <i class="bi bi-clipboard2-pulse"></i><span class="link-text">Sessions</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('reports')" id="sb-reports" data-label="Reports">
+      <i class="bi bi-bar-chart-line"></i><span class="link-text">Reports</span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">Account</div>
+    <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
+      <i class="bi bi-bell"></i><span class="link-text">Notifications</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile" data-label="Profile">
+      <i class="bi bi-person-circle"></i><span class="link-text">Profile</span>
+    </button>
+    <div class="sidebar-divider"></div>
+    <button class="sidebar-link" onclick="showPage('signout')" id="sb-signout" style="color:rgba(239,68,68,.8);" data-label="Sign Out">
+      <i class="bi bi-box-arrow-right"></i><span class="link-text">Sign Out</span>
+    </button>
+  </aside>
+
+  <!-- ======= CONTENT ======= -->
+  <main class="content-area" id="contentArea">
+
+    <!-- ====== PAGE: DASHBOARD ====== -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Good morning, <span style="color:var(--clubly-accent)">Ahmed!</span></h1>
+          <p class="page-subtitle">Here's your training overview for today.</p>
+        </div>
+        <button class="btn-primary-cl" onclick="openAddSession()">
+          <i class="bi bi-plus-lg"></i> Add Session
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-xl-2">
+          <div class="stat-card">
+            <div class="stat-icon si-orange"><i class="bi bi-calendar-check"></i></div>
+            <div class="stat-label">Today's Sessions</div>
+            <div class="stat-val">4</div>
+            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>1 from yesterday</div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-2">
+          <div class="stat-card">
+            <div class="stat-icon si-teal"><i class="bi bi-people"></i></div>
+            <div class="stat-label">Active Members</div>
+            <div class="stat-val">28</div>
+            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>3 this week</div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-2">
+          <div class="stat-card">
+            <div class="stat-icon si-gold"><i class="bi bi-star-fill"></i></div>
+            <div class="stat-label">Rating</div>
+            <div class="stat-val">4.8 <span class="stat-unit">/5</span></div>
+            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>+0.2 this month</div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-2">
+          <div class="stat-card">
+            <div class="stat-icon si-blue"><i class="bi bi-clock-history"></i></div>
+            <div class="stat-label">Hours This Month</div>
+            <div class="stat-val">68 <span class="stat-unit">hrs</span></div>
+            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>8 vs last month</div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-2">
+          <div class="stat-card">
+            <div class="stat-icon si-green"><i class="bi bi-check2-circle"></i></div>
+            <div class="stat-label">Sessions Done</div>
+            <div class="stat-val">142</div>
+            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>12 this month</div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-2">
+          <div class="stat-card">
+            <div class="stat-icon si-red"><i class="bi bi-x-circle"></i></div>
+            <div class="stat-label">Cancellations</div>
+            <div class="stat-val">3</div>
+            <div class="stat-change down"><i class="bi bi-arrow-down-short"></i>2 less this month</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's schedule + top members -->
+      <div class="row g-3">
+        <div class="col-lg-7">
+          <div class="card-clubly">
+            <div class="card-title">
+              <span><i class="bi bi-calendar-day me-2" style="color:var(--clubly-accent)"></i>Today's Schedule</span>
+              <span style="font-size:.78rem;color:var(--muted);" id="todayDate"></span>
+            </div>
+            <div id="todaySchedule"></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card-clubly">
+            <div class="card-title">
+              <span><i class="bi bi-trophy me-2" style="color:var(--clubly-gold)"></i>Top Members</span>
+              <button class="btn-secondary-cl" onclick="showPage('members')" style="font-size:.75rem;padding:4px 12px;">View All</button>
+            </div>
+            <div id="topMembersList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: SCHEDULE ====== -->
+    <div class="page" id="page-schedule">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">My Schedule</h1>
+          <p class="page-subtitle">Weekly overview of your training sessions</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn-secondary-cl" id="prevWeekBtn"><i class="bi bi-chevron-left"></i></button>
+          <span id="weekLabel" style="display:flex;align-items:center;font-weight:700;color:var(--text);padding:0 10px;"></span>
+          <button class="btn-secondary-cl" id="nextWeekBtn"><i class="bi bi-chevron-right"></i></button>
+        </div>
+        <button class="btn-primary-cl" onclick="openAddSession()"><i class="bi bi-plus-lg"></i> Add Session</button>
+      </div>
+      <div class="card-clubly" style="overflow-x:auto;">
+        <div id="weekScheduleGrid"></div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: MEMBERS ====== -->
+    <div class="page" id="page-members">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">My Members</h1>
+          <p class="page-subtitle">28 active members under your training</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <div class="search-bar">
+            <i class="bi bi-search" style="color:var(--muted);"></i>
+            <input type="text" id="memberSearch" placeholder="Search members..." oninput="filterMembers()">
+          </div>
+          <select class="form-input" id="memberFilter" onchange="filterMembers()" style="width:auto;border-radius:50px;padding:8px 16px;font-size:.85rem;">
+            <option value="all">All Types</option>
+            <option value="private">Private</option>
+            <option value="group">Group</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-clubly">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Type</th>
+                <th>Speciality</th>
+                <th>Sessions Done</th>
+                <th>Last Session</th>
+                <th>Progress</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="membersTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: SESSIONS ====== -->
+    <div class="page" id="page-sessions">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Session Management</h1>
+          <p class="page-subtitle">Create, edit, and manage your training sessions</p>
+        </div>
+        <button class="btn-primary-cl" onclick="openAddSession()"><i class="bi bi-plus-lg"></i> New Session</button>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="card-clubly">
+            <div class="card-title">
+              <span>All Sessions</span>
+              <div class="search-bar" style="width:200px;">
+                <i class="bi bi-search" style="color:var(--muted);"></i>
+                <input type="text" placeholder="Search..." oninput="filterSessions(this.value)">
+              </div>
+            </div>
+            <div id="allSessionsList"></div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card-clubly">
+            <div class="card-title"><span>Quick Stats</span></div>
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+                  <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-accent);">12</div>
+                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Week</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+                  <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-teal);">48</div>
+                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Month</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+                  <div style="font-size:1.8rem;font-weight:900;color:#22c55e;">94%</div>
+                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Attendance</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+                  <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-gold);">4.8</div>
+                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Avg Rating</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-title" style="border-top:1px solid var(--border);padding-top:14px;">
+              <span>By Type</span>
+            </div>
+            <div id="sessionTypeBreakdown"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: REPORTS ====== -->
+    <div class="page" id="page-reports">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Reports & Analytics</h1>
+          <p class="page-subtitle">Your performance insights and member progress</p>
+        </div>
+        <select class="form-input" style="width:auto;border-radius:50px;padding:8px 20px;">
+          <option>This Month</option>
+          <option>Last Month</option>
+          <option>Last 3 Months</option>
+        </select>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="card-clubly mb-3">
+            <div class="card-title"><span><i class="bi bi-bar-chart me-2" style="color:var(--clubly-accent)"></i>Sessions Per Week</span></div>
+            <div id="sessionsChart" style="padding-bottom:24px;"></div>
+          </div>
+          <div class="card-clubly">
+            <div class="card-title"><span><i class="bi bi-people me-2" style="color:var(--clubly-teal)"></i>Member Progress Overview</span></div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Member</th><th>Goal</th><th>Progress</th><th>Sessions</th><th>Trend</th></tr></thead>
+                <tbody id="progressTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card-clubly mb-3">
+            <div class="card-title"><span>Monthly Summary</span></div>
+            <div id="monthlySummary"></div>
+          </div>
+          <div class="card-clubly">
+            <div class="card-title"><span><i class="bi bi-star me-2" style="color:var(--clubly-gold)"></i>Member Reviews</span></div>
+            <div id="reviewsList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: NOTIFICATIONS ====== -->
+<div class="page" id="page-notifications">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">
+        <i class="bi bi-bell-fill me-2" style="color:var(--clubly-accent);"></i>
+        Notifications
+      </h1>
+      <p class="page-subtitle">Messages sent to trainers</p>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <span id="trainerUnreadBadge"
+        style="background:rgba(245,158,11,.12);color:#b45309;
+               border:1px solid rgba(245,158,11,.3);
+               padding:5px 14px;border-radius:20px;
+               font-size:.82rem;font-weight:700;">
+        0 unread
+      </span>
+      <button class="btn-teal-cl" onclick="markAllTrainerRead()">
+        <i class="bi bi-check2-all"></i> Mark all read
+      </button>
+      <button class="btn-secondary-cl" onclick="loadTrainerNotifications()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card-clubly mb-3" style="padding:14px 20px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <div class="search-bar" style="flex:1;min-width:200px;max-width:300px;">
+        <i class="bi bi-search" style="color:var(--muted);"></i>
+        <input type="text" id="trainerNotifSearch"
+          placeholder="Search notifications…"
+          oninput="applyTrainerNotifFilters()">
+      </div>
+      <select id="trainerNotifType" onchange="applyTrainerNotifFilters()"
+        style="background:var(--bg);border:1px solid var(--border);
+               border-radius:9px;padding:9px 14px;color:var(--text);
+               font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All types</option>
+        <option value="Info">ℹ️ Info</option>
+        <option value="Warning">⚠️ Warning</option>
+        <option value="Success">✅ Success</option>
+        <option value="Urgent">🔴 Urgent</option>
+      </select>
+      <select id="trainerNotifStatus" onchange="applyTrainerNotifFilters()"
+        style="background:var(--bg);border:1px solid var(--border);
+               border-radius:9px;padding:9px 14px;color:var(--text);
+               font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All</option>
+        <option value="unread">Unread</option>
+        <option value="read">Read</option>
+      </select>
+      <small id="trainerNotifInfo"
+        style="color:var(--muted);margin-left:auto;"></small>
+    </div>
+  </div>
+
+  <!-- List -->
+  <div class="card-clubly" style="padding:0;">
+    <div id="trainerNotifList">
+      <div style="text-align:center;padding:50px;color:var(--muted);">
+        <i class="bi bi-bell" style="font-size:2.5rem;opacity:.3;
+           display:block;margin-bottom:12px;"></i>
+        <p>Loading…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div style="display:flex;justify-content:center;margin-top:16px;">
+    <nav><ul class="pagination mb-0" id="trainerNotifPagination"></ul></nav>
+  </div>
+
+</div>
+
+    <!-- ====== PAGE: PROFILE ====== -->
+    <div class="page" id="page-profile">
+      <div class="page-header">
+        <h1 class="page-title">My Profile</h1>
+        <button class="btn-primary-cl" onclick="document.getElementById('profileForm').requestSubmit()">
+          <i class="bi bi-check-lg"></i> Save Changes
+        </button>
+      </div>
+
+      <div class="profile-hero">
+        <div class="trainer-avatar-big" id="profileAvatarBig">
+          <img id="profileImg" src="" alt="">
+          <span id="profileInitials">AK</span>
+        </div>
+        <div class="profile-hero-info">
+          <div class="profile-hero-name">Ahmed Karim</div>
+          <div class="profile-hero-role"><i class="bi bi-shield-check me-1"></i>Senior Trainer · 5 Years Experience</div>
+          <div class="profile-hero-stars">
+            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+            <span style="color:rgba(255,255,255,.7);font-size:.82rem;margin-left:6px;">4.8 / 5 (124 reviews)</span>
+          </div>
+          <div style="margin-top:10px;">
+            <span class="spec-tag">Yoga</span>
+            <span class="spec-tag">CrossFit</span>
+            <span class="spec-tag">Pilates</span>
+            <span class="spec-tag">Nutrition</span>
+          </div>
+        </div>
+        <div style="margin-left:auto;z-index:1;">
+          <input type="file" id="profileImgInput" accept="image/*" style="display:none">
+          <button onclick="document.getElementById('profileImgInput').click()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.82rem;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">
+            <i class="bi bi-camera me-1"></i>Edit Photo
+          </button>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="card-clubly">
+            <div class="card-title"><span>Personal Information</span></div>
+            <form id="profileForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input class="form-input" type="text" value="Ahmed" id="pfFirstName">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input class="form-input" type="text" value="Karim" id="pfLastName">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input class="form-input" type="email" value="ahmed.karim@clubly.com" disabled>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Phone</label>
+                    <input class="form-input" type="tel" value="+20 01098765432">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Specialization</label>
+                    <select class="form-input">
+                      <option>Yoga & Mindfulness</option>
+                      <option selected>CrossFit & HIIT</option>
+                      <option>Pilates</option>
+                      <option>Swimming</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Experience (Years)</label>
+                    <input class="form-input" type="number" value="5" min="0">
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-input">Certified CrossFit Level 2 and Yoga instructor with 5 years of experience helping members achieve their fitness goals through structured training plans and positive motivation.</textarea>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="form-label">Certifications</label>
+                    <input class="form-input" type="text" value="CrossFit Level 2, Yoga RYT-200, CPR Certified, Nutrition Coach">
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary-cl mt-2" style="display:none"></button>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card-clubly mb-3">
+            <div class="card-title"><span>Quick Stats</span></div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
+                <span style="font-size:.85rem;color:var(--muted);">Total Sessions</span>
+                <span style="font-weight:900;color:var(--text);">142</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
+                <span style="font-size:.85rem;color:var(--muted);">Active Members</span>
+                <span style="font-weight:900;color:var(--text);">28</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
+                <span style="font-size:.85rem;color:var(--muted);">Rating</span>
+                <span style="font-weight:900;color:var(--clubly-gold);">4.8 ⭐</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
+                <span style="font-size:.85rem;color:var(--muted);">Joined</span>
+                <span style="font-weight:900;color:var(--text);">Jan 2020</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-clubly">
+            <div class="card-title"><span>Change Password</span></div>
+            <form id="passForm">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input class="form-input" type="password" id="currPass">
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input class="form-input" type="password" id="newPass">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input class="form-input" type="password" id="confPass">
+              </div>
+              <div id="passMsg" style="font-size:.82rem;margin-bottom:10px;"></div>
+              <button type="submit" class="btn-teal-cl" style="width:100%;justify-content:center;">Update Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: SIGN OUT ====== -->
+    <div class="page" id="page-signout">
+      <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
+        <div class="card-clubly text-center" style="max-width:420px;width:100%;">
+          <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
+          <h4 style="font-weight:900;color:var(--text);margin-bottom:8px;">Confirm Sign Out</h4>
+          <p style="color:var(--muted);margin-bottom:24px;">You will need to sign in again to access your trainer portal.</p>
+          <div class="d-flex gap-3 justify-content-center">
+            <button class="btn-secondary-cl" onclick="showPage('dashboard')">Cancel</button>
+            <button class="btn-primary-cl" style="background:linear-gradient(135deg,#ef4444,#dc2626);" onclick="alert('Signed out! Redirecting to login...')">
+              <i class="bi bi-box-arrow-right"></i> Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ======= FOOTER ======= -->
+<footer class="clubly-footer">
+  <div class="footer-inner">
+    <div class="footer-col" style="max-width:220px">
+      <h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5>
+      <p style="font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.7">Your family's fitness journey starts here. Modern sports club management.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul class="footer-links">
+        <li><a onclick="showPage('dashboard')">Dashboard</a></li>
+        <li><a onclick="showPage('schedule')">Schedule</a></li>
+        <li><a onclick="showPage('members')">Members</a></li>
+        <li><a onclick="showPage('reports')">Reports</a></li>
+        <li><a onclick="showPage('profile')">Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact Us</h5>
+      <div class="footer-contact">
+        <div><i class="bi bi-geo-alt-fill"></i> 123 Fitness Street, City 12345</div>
+        <div><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</div>
+        <div><i class="bi bi-envelope-fill"></i> info@clubly.com</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Follow Us</h5>
+      <div class="footer-socials">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-twitter-x"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+</footer>
+
+<!-- ADD SESSION MODAL -->
+<div class="modal fade" id="addSessionModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);" id="sessionModalTitle">Add New Session</h5>
+        <button type="button" data-bs-dismiss="modal" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body-cl">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Session Name</label>
+              <input class="form-input" type="text" id="sessName" placeholder="e.g. Morning Yoga">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Type</label>
+              <select class="form-input" id="sessType">
+                <option value="yoga">Yoga</option>
+                <option value="crossfit">CrossFit</option>
+                <option value="pilates">Pilates</option>
+                <option value="swim">Swimming</option>
+                <option value="zumba">Zumba</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input class="form-input" type="date" id="sessDate">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Start Time</label>
+              <input class="form-input" type="time" id="sessStart" value="09:00">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">End Time</label>
+              <input class="form-input" type="time" id="sessEnd" value="10:00">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <select class="form-input" id="sessLocation">
+                <option>Studio A</option>
+                <option>Studio B</option>
+                <option>Main Hall</option>
+                <option>Olympic Pool</option>
+                <option>Gym Floor</option>
+                <option>Outdoor Court</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Max Capacity</label>
+              <input class="form-input" type="number" id="sessCap" value="15" min="1">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-label">Notes</label>
+              <textarea class="form-input" id="sessNotes" placeholder="Any special instructions or requirements..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-primary-cl" onclick="saveSession()"><i class="bi bi-check-lg"></i> Save Session</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ===== DATA =====
+const DATA = {
+  sessions: [
+    { id:1, name:"Morning Yoga", type:"yoga", date:"2025-02-22", start:"08:00", end:"09:00", location:"Studio A", capacity:15, enrolled:12, status:"active" },
+    { id:2, name:"CrossFit HIIT", type:"crossfit", date:"2025-02-22", start:"10:00", end:"11:00", location:"Gym Floor", capacity:20, enrolled:18, status:"active" },
+    { id:3, name:"Pilates Core", type:"pilates", date:"2025-02-22", start:"14:00", end:"15:00", location:"Studio B", capacity:12, enrolled:10, status:"active" },
+    { id:4, name:"Evening Zumba", type:"zumba", date:"2025-02-22", start:"18:00", end:"19:00", location:"Main Hall", capacity:30, enrolled:24, status:"active" },
+    { id:5, name:"Yoga Flow", type:"yoga", date:"2025-02-23", start:"09:00", end:"10:00", location:"Studio A", capacity:15, enrolled:8, status:"upcoming" },
+    { id:6, name:"Swimming Basics", type:"swim", date:"2025-02-23", start:"11:00", end:"12:00", location:"Olympic Pool", capacity:10, enrolled:6, status:"upcoming" },
+    { id:7, name:"CrossFit Strength", type:"crossfit", date:"2025-02-24", start:"07:00", end:"08:00", location:"Gym Floor", capacity:20, enrolled:15, status:"upcoming" },
+    { id:8, name:"Pilates Stretch", type:"pilates", date:"2025-02-20", start:"15:00", end:"16:00", location:"Studio B", capacity:12, enrolled:11, status:"completed" },
+  ],
+  members: [
+    { id:1, name:"Sara Ali", initials:"SA", color:"#3b82f6", type:"private", speciality:"Yoga", sessions:24, lastSession:"Feb 20, 2025", progress:78, status:"active" },
+    { id:2, name:"Omar Hassan", initials:"OH", color:"#22c55e", type:"group", speciality:"CrossFit", sessions:18, lastSession:"Feb 21, 2025", progress:65, status:"active" },
+    { id:3, name:"Nour Farid", initials:"NF", color:"#9333ea", type:"private", speciality:"Pilates", sessions:31, lastSession:"Feb 19, 2025", progress:90, status:"active" },
+    { id:4, name:"Khaled Maged", initials:"KM", color:"var(--clubly-accent)", type:"group", speciality:"CrossFit", sessions:12, lastSession:"Feb 18, 2025", progress:45, status:"active" },
+    { id:5, name:"Layla Samir", initials:"LS", color:"var(--clubly-teal)", type:"private", speciality:"Yoga", sessions:8, lastSession:"Feb 15, 2025", progress:30, status:"inactive" },
+    { id:6, name:"Tarek Ibrahim", initials:"TI", color:"var(--clubly-gold)", type:"group", speciality:"Zumba", sessions:20, lastSession:"Feb 22, 2025", progress:82, status:"active" },
+    { id:7, name:"Mona Wael", initials:"MW", color:"#ef4444", type:"private", speciality:"Pilates", sessions:15, lastSession:"Feb 21, 2025", progress:60, status:"active" },
+    { id:8, name:"Rami Adel", initials:"RA", color:"#3b82f6", type:"group", speciality:"CrossFit", sessions:9, lastSession:"Feb 16, 2025", progress:38, status:"active" },
+  ],
+  notifications: [
+    { id:1, msg:"Sara Ali booked a Yoga session for Feb 25", time:"5 min ago", type:"blue", icon:"fas fa-calendar-plus", read:false },
+    { id:2, msg:"Khaled Maged cancelled his CrossFit session", time:"1 hour ago", type:"red", icon:"fas fa-calendar-times", read:false },
+    { id:3, msg:"New member Rami Adel assigned to your group", time:"3 hours ago", type:"teal", icon:"fas fa-user-plus", read:false },
+    { id:4, msg:"Your Yoga session rated 5 stars by Nour Farid!", time:"Yesterday", type:"yellow", icon:"fas fa-star", read:false },
+    { id:5, msg:"Studio A is booked for maintenance on Feb 28", time:"Yesterday", type:"red", icon:"fas fa-exclamation-triangle", read:true },
+    { id:6, msg:"Monthly performance report is ready", time:"2 days ago", type:"blue", icon:"fas fa-chart-bar", read:true },
+    { id:7, msg:"Payment received for 3 private sessions", time:"3 days ago", type:"green", icon:"fas fa-dollar-sign", read:true },
+  ],
+  reviews: [
+    { member:"Sara Ali", rating:5, text:"Ahmed is an incredible trainer! My flexibility improved dramatically.", date:"Feb 18" },
+    { member:"Nour Farid", rating:5, text:"Best Pilates instructor I've ever had. Very motivating!", date:"Feb 15" },
+    { member:"Tarek Ibrahim", rating:4, text:"Great Zumba sessions, always energetic and fun.", date:"Feb 10" },
+  ]
+};
+
+const typeConfig = {
+  yoga:     { label:"Yoga",     color:"#3b82f6", bg:"rgba(59,130,246,.12)",  icon:"fas fa-spa" },
+  crossfit: { label:"CrossFit", color:"#e85d2f", bg:"rgba(232,93,47,.12)",   icon:"fas fa-dumbbell" },
+  pilates:  { label:"Pilates",  color:"#9333ea", bg:"rgba(147,51,234,.12)",  icon:"fas fa-heartbeat" },
+  swim:     { label:"Swimming", color:"#2ec4b6", bg:"rgba(46,196,182,.12)",  icon:"fas fa-swimmer" },
+  zumba:    { label:"Zumba",    color:"#d4a843", bg:"rgba(212,168,67,.12)",  icon:"fas fa-music" },
+};
+
+// ===== SIDEBAR TOGGLE =====
+let sidebarOpen = true;
+document.getElementById('toggleBtn').addEventListener('click', () => {
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
+  document.getElementById('contentArea').classList.toggle('expanded', !sidebarOpen);
+});
+
+// ===== THEME =====
+let dark = false;
+document.getElementById('themeBtn').addEventListener('click', () => {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  document.getElementById('themeBtn').innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+});
+
+// ===== NAVIGATION =====
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  const sb = document.getElementById('sb-' + name);
+  if (sb) sb.classList.add('active');
+  document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
+  const hn = document.getElementById('hn-' + name);
+  if (hn) hn.classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ===== SESSION CARD HTML =====
+function sessionCardHTML(s) {
+  const t = typeConfig[s.type] || typeConfig.yoga;
+  const pct = Math.round((s.enrolled / s.capacity) * 100);
+  const statusBadge = s.status === 'completed' ? 'b-gray' : s.status === 'upcoming' ? 'b-blue' : 'b-green';
+  return `
+    <div class="session-card type-${s.type}">
+      <div class="session-icon" style="background:${t.bg};color:${t.color}"><i class="${t.icon}"></i></div>
+      <div class="session-info">
+        <div class="session-name">${s.name}</div>
+        <div class="session-meta"><i class="bi bi-geo-alt" style="margin-right:4px;"></i>${s.location} &nbsp;·&nbsp; <i class="bi bi-people" style="margin-right:4px;"></i>${s.enrolled}/${s.capacity}</div>
+      </div>
+      <div class="session-right">
+        <div class="session-time">${s.start} – ${s.end}</div>
+        <span class="badge-cl ${statusBadge}" style="margin-top:4px;">${s.status}</span>
+      </div>
+    </div>`;
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const todaySess = DATA.sessions.filter(s => s.date === '2025-02-22');
+  document.getElementById('todaySchedule').innerHTML = todaySess.length
+    ? todaySess.map(sessionCardHTML).join('')
+    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions scheduled today.</p>';
+
+  const top = [...DATA.members].sort((a,b) => b.progress - a.progress).slice(0,5);
+  document.getElementById('topMembersList').innerHTML = top.map(m => `
+    <div class="member-row">
+      <div class="m-avatar" style="background:${m.color}">${m.initials}</div>
+      <div style="flex:1">
+        <div class="m-name">${m.name}</div>
+        <div class="m-detail">${m.speciality} · ${m.sessions} sessions</div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div style="font-size:.72rem;color:var(--muted);text-align:right;margin-bottom:3px;">${m.progress}%</div>
+        <div class="progress-track"><div class="progress-fill" style="width:${m.progress}%"></div></div>
+      </div>
+    </div>`).join('');
+}
+
+// ===== SCHEDULE =====
+let weekOffset = 0;
+function getWeekStart(offset) {
+  const d = new Date();
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff + offset * 7);
+  d.setHours(0,0,0,0);
+  return d;
+}
+
+function renderWeekSchedule() {
+  const ws = getWeekStart(weekOffset);
+  const we = new Date(ws); we.setDate(we.getDate() + 6);
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const hours = ['07:00','08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+  const typeColors = { yoga:'#3b82f6', crossfit:'#e85d2f', pilates:'#9333ea', swim:'#2ec4b6', zumba:'#d4a843' };
+
+  document.getElementById('weekLabel').textContent =
+    ws.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' – ' +
+    we.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  let html = `<div class="week-grid" style="min-width:600px;">`;
+  html += `<div class="wg-header"></div>`;
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(ws); d.setDate(d.getDate() + i);
+    const isToday = d.toDateString() === new Date().toDateString();
+    html += `<div class="wg-header" style="${isToday ? 'color:var(--clubly-accent);' : ''}">${days[i]}<br><span style="font-size:.7rem;font-weight:400;">${d.getDate()}</span></div>`;
+  }
+
+  hours.forEach(hr => {
+    html += `<div class="wg-time">${hr}</div>`;
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(ws); d.setDate(d.getDate() + i);
+      const dateStr = d.toISOString().slice(0,10);
+      const sess = DATA.sessions.filter(s => s.date === dateStr && s.start === hr);
+      if (sess.length) {
+        html += `<div class="wg-cell" style="border:none;">`;
+        sess.forEach(s => {
+          const c = typeColors[s.type] || '#888';
+          html += `<div class="wg-session" style="background:${c}22;color:${c};border-left:3px solid ${c};" title="${s.name} · ${s.location}">${s.name}</div>`;
+        });
+        html += `</div>`;
+      } else {
+        html += `<div class="wg-cell"></div>`;
+      }
+    }
+  });
+  html += `</div>`;
+  document.getElementById('weekScheduleGrid').innerHTML = html;
+}
+
+document.getElementById('prevWeekBtn').addEventListener('click', () => { weekOffset--; renderWeekSchedule(); });
+document.getElementById('nextWeekBtn').addEventListener('click', () => { weekOffset++; renderWeekSchedule(); });
+
+// ===== MEMBERS =====
+function renderMembers(list) {
+  const statusBadge = s => s === 'active' ? '<span class="badge-cl b-green">Active</span>' : '<span class="badge-cl b-gray">Inactive</span>';
+  document.getElementById('membersTable').innerHTML = list.map(m => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:10px;">
+        <div class="m-avatar" style="background:${m.color};width:34px;height:34px;font-size:.78rem;">${m.initials}</div>
+        <div><div style="font-weight:700;">${m.name}</div><div style="font-size:.75rem;color:var(--muted);">${m.type} training</div></div>
+      </div></td>
+      <td><span class="badge-cl ${m.type==='private'?'b-orange':'b-blue'}">${m.type}</span></td>
+      <td>${m.speciality}</td>
+      <td><strong>${m.sessions}</strong></td>
+      <td style="color:var(--muted);font-size:.85rem;">${m.lastSession}</td>
+      <td><div style="display:flex;align-items:center;gap:8px;">
+        <div class="progress-track" style="width:80px;"><div class="progress-fill" style="width:${m.progress}%"></div></div>
+        <span style="font-size:.78rem;font-weight:700;">${m.progress}%</span>
+      </div></td>
+      <td>${statusBadge(m.status)}</td>
+    </tr>`).join('');
+}
+
+function filterMembers() {
+  const q = document.getElementById('memberSearch').value.toLowerCase();
+  const f = document.getElementById('memberFilter').value;
+  renderMembers(DATA.members.filter(m =>
+    (m.name.toLowerCase().includes(q) || m.speciality.toLowerCase().includes(q)) &&
+    (f === 'all' || m.type === f)
+  ));
+}
+
+// ===== SESSIONS PAGE =====
+function renderAllSessions(list) {
+  document.getElementById('allSessionsList').innerHTML = (list || DATA.sessions).map(sessionCardHTML).join('');
+}
+function filterSessions(q) {
+  renderAllSessions(DATA.sessions.filter(s => s.name.toLowerCase().includes(q.toLowerCase())));
+}
+function renderSessionTypeBreakdown() {
+  const counts = {};
+  DATA.sessions.forEach(s => { counts[s.type] = (counts[s.type]||0) + 1; });
+  document.getElementById('sessionTypeBreakdown').innerHTML = Object.entries(counts).map(([type, count]) => {
+    const t = typeConfig[type];
+    const pct = Math.round((count / DATA.sessions.length) * 100);
+    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="width:32px;height:32px;border-radius:8px;background:${t.bg};color:${t.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;"><i class="${t.icon}"></i></div>
+      <div style="flex:1;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:.82rem;font-weight:700;color:var(--text);">${t.label}</span><span style="font-size:.78rem;color:var(--muted);">${count} sessions</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:${t.color};"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== REPORTS =====
+function renderReports() {
+  // bar chart
+  const weekData = [
+    { label:'Mon', val:3 }, { label:'Tue', val:4 }, { label:'Wed', val:2 },
+    { label:'Thu', val:5 }, { label:'Fri', val:4 }, { label:'Sat', val:2 }, { label:'Sun', val:1 }
+  ];
+  const max = Math.max(...weekData.map(d => d.val));
+  document.getElementById('sessionsChart').innerHTML = `
+    <div class="bar-chart" style="margin-bottom:28px;">
+      ${weekData.map(d => {
+        const h = Math.round((d.val/max)*80);
+        return `<div class="bar" style="height:${h}px;background:linear-gradient(180deg,var(--clubly-accent),rgba(232,93,47,.3));">
+          <span class="bar-val">${d.val}</span>
+          <span class="bar-label">${d.label}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+
+  // progress table
+  document.getElementById('progressTable').innerHTML = DATA.members.slice(0,6).map(m => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:8px;">
+        <div class="m-avatar" style="background:${m.color};width:30px;height:30px;font-size:.7rem;">${m.initials}</div>
+        <span style="font-weight:600;">${m.name}</span>
+      </div></td>
+      <td style="font-size:.82rem;color:var(--muted);">${m.speciality}</td>
+      <td><div style="display:flex;align-items:center;gap:8px;">
+        <div class="progress-track" style="width:80px;"><div class="progress-fill" style="width:${m.progress}%"></div></div>
+        <span style="font-size:.78rem;font-weight:700;">${m.progress}%</span>
+      </div></td>
+      <td><strong>${m.sessions}</strong></td>
+      <td><span style="color:${m.progress > 60 ? '#22c55e':'var(--clubly-accent)'};font-size:1.1rem;">${m.progress > 60 ? '↑':'→'}</span></td>
+    </tr>`).join('');
+
+  // monthly summary
+  document.getElementById('monthlySummary').innerHTML = [
+    { label:'Total Sessions', val:'48', icon:'bi-calendar-check', color:'var(--clubly-accent)' },
+    { label:'Total Hours', val:'68 hrs', icon:'bi-clock', color:'var(--clubly-teal)' },
+    { label:'Avg Attendance', val:'94%', icon:'bi-people', color:'#22c55e' },
+    { label:'New Members', val:'3', icon:'bi-person-plus', color:'#3b82f6' },
+  ].map(i => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px;border:1px solid var(--border);">
+      <div style="width:38px;height:38px;border-radius:9px;background:${i.color}22;color:${i.color};display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;"><i class="bi ${i.icon}"></i></div>
+      <div style="flex:1;"><div style="font-size:.78rem;color:var(--muted);">${i.label}</div></div>
+      <div style="font-weight:900;font-size:1.1rem;color:var(--text);">${i.val}</div>
+    </div>`).join('');
+
+  // reviews
+  document.getElementById('reviewsList').innerHTML = DATA.reviews.map(r => `
+    <div style="padding:14px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-weight:700;font-size:.88rem;">${r.member}</span>
+        <span style="color:var(--clubly-gold);font-size:.85rem;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted);margin:0;">"${r.text}"</p>
+      <div style="font-size:.72rem;color:var(--muted);margin-top:4px;">${r.date}</div>
+    </div>`).join('');
+}
+
+// ===== TRAINER NOTIFICATIONS =====
+const NOTIF_API_TRAINER = 'https://localhost:7132/api/Notifications';
+let _trainerNotifs = [];
+let _trainerNotifsFiltered = [];
+let _trainerNotifPage = 1;
+const _trainerNotifPageSize = 8;
+
+let _trainerReadIds = new Set(
+  JSON.parse(localStorage.getItem('trainerReadIds') || '[]').map(String)
+);
+
+function saveTrainerReadState() {
+  localStorage.setItem('trainerReadIds',
+    JSON.stringify([..._trainerReadIds]));
+}
+
+function markTrainerAsRead(id) {
+  _trainerReadIds.add(String(id));
+  saveTrainerReadState();
+  updateTrainerUnreadBadge();
+}
+
+function markAllTrainerRead() {
+  _trainerNotifs.forEach(n => _trainerReadIds.add(String(n.id)));
+  saveTrainerReadState();
+  renderTrainerNotifList();
+  updateTrainerUnreadBadge();
+}
+
+function updateTrainerUnreadBadge() {
+  const unread = _trainerNotifs
+    .filter(n => !_trainerReadIds.has(String(n.id))).length;
+
+  const badge = document.getElementById('trainerUnreadBadge');
+  if (badge) {
+    badge.textContent = `${unread} unread`;
+    badge.style.background = unread > 0
+      ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
+    badge.style.color = unread > 0 ? '#b45309' : 'var(--muted)';
+    badge.style.borderColor = unread > 0
+      ? 'rgba(245,158,11,.3)' : 'var(--border)';
+  }
+}
+
+async function loadTrainerNotifications() {
+  const listEl = document.getElementById('trainerNotifList');
+  if (listEl) listEl.innerHTML = `
+    <div style="text-align:center;padding:50px;color:var(--muted);">
+      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+    </div>`;
+
+  try {
+    const res = await fetch(NOTIF_API_TRAINER);
+    const all = res.ok ? await res.json() : [];
+    _trainerNotifs = all
+      .filter(n => n.toTrainers === true || n.toTrainers === 'true' || n.toTrainers == 1)
+      .sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+    updateTrainerUnreadBadge();
+    applyTrainerNotifFilters();
+  } catch(e) {
+    if (listEl) listEl.innerHTML = `
+      <div style="text-align:center;padding:50px;color:#ef4444;">
+        <i class="bi bi-exclamation-circle"
+           style="font-size:2rem;display:block;margin-bottom:10px;"></i>
+        Failed to load notifications
+      </div>`;
+  }
+}
+
+function applyTrainerNotifFilters() {
+  const q      = (document.getElementById('trainerNotifSearch')?.value || '').toLowerCase();
+  const type   = document.getElementById('trainerNotifType')?.value || '';
+  const status = document.getElementById('trainerNotifStatus')?.value || '';
+
+  _trainerNotifsFiltered = _trainerNotifs.filter(n => {
+    const matchQ = !q ||
+      (n.title||'').toLowerCase().includes(q) ||
+      (n.description||'').toLowerCase().includes(q);
+    const matchT = !type || n.type === type;
+    const isRead = _trainerReadIds.has(String(n.id));
+    const matchS = !status
+      || (status === 'unread' && !isRead)
+      || (status === 'read'   &&  isRead);
+    return matchQ && matchT && matchS;
+  });
+
+  _trainerNotifPage = 1;
+  renderTrainerNotifList();
+}
+
+function renderTrainerNotifList() {
+  const listEl = document.getElementById('trainerNotifList');
+  if (!listEl) return;
+
+  const total      = _trainerNotifsFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / _trainerNotifPageSize));
+  if (_trainerNotifPage > totalPages) _trainerNotifPage = totalPages;
+
+  const start = (_trainerNotifPage - 1) * _trainerNotifPageSize;
+  const items = _trainerNotifsFiltered.slice(start, start + _trainerNotifPageSize);
+
+  const infoEl = document.getElementById('trainerNotifInfo');
+  if (infoEl) infoEl.textContent = total
+    ? `Showing ${start+1}–${Math.min(start+_trainerNotifPageSize,total)} of ${total}`
+    : '';
+
+  if (!items.length) {
+    listEl.innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+        <i class="bi bi-bell-slash"
+           style="font-size:2.5rem;opacity:.35;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">
+          No notifications</p>
+        <p style="font-size:.88rem;">
+          Notifications sent to trainers will appear here</p>
+      </div>`;
+    document.getElementById('trainerNotifPagination').innerHTML = '';
+    return;
+  }
+
+  const typeConfig = {
+    'Info':    { icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.12)',  color:'#0590a8', pill:'rgba(13,202,240,.15)',  pillColor:'#0590a8'  },
+    'Warning': { icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#a07700', pill:'rgba(255,193,7,.18)',   pillColor:'#a07700'  },
+    'Success': { icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.12)',   color:'#198754', pill:'rgba(25,135,84,.15)',   pillColor:'#198754'  },
+    'Urgent':  { icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.12)',   color:'#dc3545', pill:'rgba(220,53,69,.15)',   pillColor:'#dc3545'  },
+    'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.12)', color:'#64748b', pill:'rgba(100,116,139,.15)', pillColor:'#64748b'  },
+  };
+
+  const typeLabels = {
+    'Info':'ℹ Info','Warning':'⚠ Warning',
+    'Success':'✓ Success','Urgent':'🔴 Urgent'
+  };
+
+  listEl.innerHTML = items.map(n => {
+    const isRead = _trainerReadIds.has(String(n.id));
+    const cfg    = typeConfig[n.type] || typeConfig['default'];
+    const d      = n.sentAt ? new Date(n.sentAt) : null;
+
+    let timeStr = '—';
+    if (d) {
+      const diff  = new Date() - d;
+      const mins  = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      const days  = Math.floor(diff / 86400000);
+      if      (mins  < 1)  timeStr = 'Just now';
+      else if (mins  < 60) timeStr = `${mins}m ago`;
+      else if (hours < 24) timeStr = `${hours}h ago`;
+      else if (days  < 7)  timeStr = `${days}d ago`;
+      else timeStr = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+    }
+
+    const fullDate = d
+      ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+        + ' at ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+      : '';
+
+    const shortDesc = (n.description||'').length > 130
+      ? n.description.substring(0,130) + '…'
+      : (n.description||'');
+
+    const thumbHtml = n.imageUrl
+      ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
+              style="width:64px;height:48px;object-fit:cover;
+                     border-radius:8px;border:1px solid var(--border);flex-shrink:0;">`
+      : '';
+
+    return `
+      <div onclick="openTrainerNotifDetail(${n.id})"
+        style="display:flex;align-items:flex-start;gap:14px;
+               padding:18px 22px;border-bottom:1px solid var(--border);
+               cursor:pointer;transition:background .15s;position:relative;
+               background:${isRead?'transparent':'rgba(232,93,47,.025)'};"
+        onmouseover="this.style.background='rgba(232,93,47,.04)'"
+        onmouseout="this.style.background='${isRead?'transparent':'rgba(232,93,47,.025)'}'">
+
+        ${!isRead ? `<div style="position:absolute;left:0;top:0;bottom:0;
+          width:4px;background:var(--clubly-accent);
+          border-radius:0 4px 4px 0;"></div>` : ''}
+
+        <div style="width:46px;height:46px;border-radius:50%;flex-shrink:0;
+                    background:${cfg.bg};color:${cfg.color};margin-top:2px;
+                    display:flex;align-items:center;justify-content:center;
+                    font-size:20px;">
+          <i class="bi ${cfg.icon}"></i>
+        </div>
+
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;
+                      gap:12px;margin-bottom:5px;">
+            <span style="font-size:.93rem;font-weight:${isRead?'600':'800'};
+                         color:${isRead?'var(--muted)':'var(--text)'};
+                         white-space:nowrap;overflow:hidden;
+                         text-overflow:ellipsis;flex:1;">
+              ${n.title||'—'}
+              ${!isRead ? `<span style="display:inline-block;width:8px;height:8px;
+                background:var(--clubly-accent);border-radius:50%;
+                margin-left:5px;vertical-align:middle;"></span>` : ''}
+            </span>
+            <span style="font-size:.75rem;white-space:nowrap;flex-shrink:0;
+                         font-weight:600;
+                         color:${isRead?'var(--muted)':'var(--clubly-accent)'};"
+                  title="${fullDate}">${timeStr}</span>
+          </div>
+
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.5;
+                      margin-bottom:8px;overflow:hidden;display:-webkit-box;
+                      -webkit-line-clamp:2;-webkit-box-orient:vertical;">
+            ${shortDesc}
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="display:inline-flex;align-items:center;gap:4px;
+                         padding:3px 10px;border-radius:50px;font-size:.72rem;
+                         font-weight:700;background:${cfg.pill};color:${cfg.pillColor};">
+              <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
+              ${typeLabels[n.type] || n.type || 'Notification'}
+            </span>
+            ${isRead
+              ? `<span style="font-size:.72rem;color:var(--muted);">
+                   <i class="bi bi-check2-all me-1"></i>Read
+                 </span>`
+              : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;">
+                   <i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New
+                 </span>`}
+          </div>
+        </div>
+
+        ${thumbHtml}
+
+        <div style="color:var(--muted);font-size:14px;
+                    margin-top:14px;flex-shrink:0;">
+          <i class="bi bi-chevron-right"></i>
+        </div>
+      </div>`;
+  }).join('');
+
+  buildTrainerNotifPagination(totalPages);
+  updateTrainerUnreadBadge();
+}
+
+function buildTrainerNotifPagination(totalPages) {
+  const ul = document.getElementById('trainerNotifPagination');
+  if (!ul) return;
+  ul.innerHTML = '';
+  const li = (label, disabled, fn, active=false) => {
+    const el = document.createElement('li');
+    el.className = 'page-item'
+      + (disabled ? ' disabled':'')
+      + (active   ? ' active'  :'');
+    el.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+    if (!disabled) el.onclick = e => { e.preventDefault(); fn(); };
+    return el;
+  };
+  ul.appendChild(li('«', _trainerNotifPage===1, () => {
+    _trainerNotifPage=1; renderTrainerNotifList();
+  }));
+  const s = Math.max(1, _trainerNotifPage-2);
+  const e = Math.min(totalPages, _trainerNotifPage+2);
+  for (let i=s; i<=e; i++) {
+    ul.appendChild(li(i, false, () => {
+      _trainerNotifPage=i; renderTrainerNotifList();
+    }, i===_trainerNotifPage));
+  }
+  ul.appendChild(li('»', _trainerNotifPage===totalPages, () => {
+    _trainerNotifPage=totalPages; renderTrainerNotifList();
+  }));
+}
+
+function openTrainerNotifDetail(id) {
+  const n = _trainerNotifs.find(x => x.id === id);
+  if (!n) return;
+  markTrainerAsRead(id);
+  renderTrainerNotifList();
+
+  const typeConfig = {
+    'Info':    { bg:'rgba(13,202,240,.15)',  color:'#0dcaf0', icon:'bi-info-circle-fill'         },
+    'Warning': { bg:'rgba(255,193,7,.15)',   color:'#ffc107', icon:'bi-exclamation-triangle-fill' },
+    'Success': { bg:'rgba(25,135,84,.15)',   color:'#198754', icon:'bi-check-circle-fill'         },
+    'Urgent':  { bg:'rgba(220,53,69,.15)',   color:'#dc3545', icon:'bi-exclamation-circle-fill'   },
+    'default': { bg:'rgba(100,116,139,.15)', color:'#64748b', icon:'bi-bell-fill'                 },
+  };
+  const cfg = typeConfig[n.type] || typeConfig['default'];
+  const d   = n.sentAt ? new Date(n.sentAt) : null;
+  const fullDate = d
+    ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})
+      + ' at ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+    : '—';
+
+  let modal = document.getElementById('trainerNotifDetailModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'trainerNotifDetailModal';
+    modal.className = 'modal fade';
+    modal.tabIndex = -1;
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content-cl"
+           style="background:var(--card-bg);border-radius:16px;
+                  border:1px solid var(--border);">
+
+        <div class="modal-header-cl"
+             style="display:flex;align-items:center;gap:14px;">
+          <div style="width:46px;height:46px;border-radius:50%;
+                      background:${cfg.bg};color:${cfg.color};flex-shrink:0;
+                      display:flex;align-items:center;justify-content:center;
+                      font-size:20px;">
+            <i class="bi ${cfg.icon}"></i>
+          </div>
+          <div style="flex:1;">
+            <h5 style="margin:0;font-weight:800;color:var(--text);">
+              ${n.title||'—'}
+            </h5>
+            <small style="color:var(--muted);">${fullDate}</small>
+          </div>
+          <button data-bs-dismiss="modal"
+            style="background:none;border:none;color:var(--muted);
+                   font-size:1.3rem;cursor:pointer;">✕</button>
+        </div>
+
+        <div class="modal-body-cl">
+          <div style="margin-bottom:14px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;
+                         padding:5px 16px;border-radius:50px;
+                         font-size:.88rem;font-weight:700;
+                         background:${cfg.bg};color:${cfg.color};">
+              <i class="bi ${cfg.icon}"></i>${n.type||'Notification'}
+            </span>
+          </div>
+
+          <div style="background:var(--bg);border-radius:10px;padding:16px;
+                      border:1px solid var(--border);margin-bottom:16px;">
+            <p style="margin:0;white-space:pre-wrap;line-height:1.8;
+                      font-size:.95rem;color:var(--text);">
+              ${n.description||'—'}
+            </p>
+          </div>
+
+          ${n.imageUrl ? `
+          <div style="margin-bottom:16px;">
+            <a href="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
+               target="_blank">
+              <img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
+                style="max-width:100%;max-height:260px;object-fit:cover;
+                       border-radius:12px;border:1px solid var(--border);cursor:pointer;">
+            </a>
+          </div>` : ''}
+
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="bi bi-clock" style="color:var(--muted);"></i>
+            <small style="color:var(--muted);">Sent:</small>
+            <span style="background:#d4edda;color:#155724;padding:3px 12px;
+                         border-radius:20px;font-size:.8rem;font-weight:600;">
+              ${fullDate}
+            </span>
+          </div>
+        </div>
+
+        <div class="modal-footer-cl">
+          <button data-bs-dismiss="modal"
+            style="background:var(--bg);border:1px solid var(--border);
+                   color:var(--text);padding:8px 20px;border-radius:8px;
+                   cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+  new bootstrap.Modal(modal).show();
+}
+
+// ===== ADD SESSION MODAL =====
+function openAddSession() {
+  document.getElementById('sessDate').value = new Date().toISOString().slice(0,10);
+  new bootstrap.Modal(document.getElementById('addSessionModal')).show();
+}
+function saveSession() {
+  const name = document.getElementById('sessName').value.trim();
+  if (!name) { alert('Please enter a session name.'); return; }
+  const newSess = {
+    id: DATA.sessions.length + 1,
+    name, type: document.getElementById('sessType').value,
+    date: document.getElementById('sessDate').value,
+    start: document.getElementById('sessStart').value,
+    end: document.getElementById('sessEnd').value,
+    location: document.getElementById('sessLocation').value,
+    capacity: parseInt(document.getElementById('sessCap').value),
+    enrolled: 0, status: 'upcoming'
+  };
+  DATA.sessions.push(newSess);
+  bootstrap.Modal.getInstance(document.getElementById('addSessionModal')).hide();
+  document.getElementById('sessName').value = '';
+  renderDashboard(); renderWeekSchedule(); renderAllSessions(); renderSessionTypeBreakdown();
+}
+
+// ===== PROFILE =====
+document.getElementById('profileForm').addEventListener('submit', e => {
+  e.preventDefault(); alert('Profile updated successfully!');
+});
+document.getElementById('passForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const curr = document.getElementById('currPass').value;
+  const np = document.getElementById('newPass').value;
+  const cp = document.getElementById('confPass').value;
+  const msg = document.getElementById('passMsg');
+  if (curr.length < 5) { msg.innerHTML='<span style="color:#ef4444">Invalid current password.</span>'; return; }
+  if (np !== cp) { msg.innerHTML='<span style="color:#ef4444">Passwords do not match.</span>'; return; }
+  msg.innerHTML='<span style="color:#22c55e">Password updated successfully!</span>';
+  setTimeout(() => { msg.innerHTML=''; document.getElementById('passForm').reset(); }, 2000);
+});
+document.getElementById('profileImgInput').addEventListener('change', function() {
+  if (this.files && this.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('profileImg');
+      img.src = e.target.result; img.style.display='block';
+      document.getElementById('profileInitials').style.display='none';
+    };
+    reader.readAsDataURL(this.files[0]);
+  }
+});
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  renderDashboard();
+  renderWeekSchedule();
+  renderMembers(DATA.members);
+  renderAllSessions();
+  renderSessionTypeBreakdown();
+  renderReports();
+loadTrainerNotifications();
+});
+</script>
+</body>
+</html>
