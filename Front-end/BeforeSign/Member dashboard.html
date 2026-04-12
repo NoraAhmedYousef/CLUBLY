@@ -451,7 +451,29 @@ body {
 .badge-confirmed { background: #d4edda; color: #155724; }
 .badge-pending { background: #fff3cd; color: #856404; }
 .badge-completed { background: #e2e3e5; color: #495057; }
-
+/* ===== FILTER TABS ===== */
+.notif-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.notif-tab {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.notif-tab.active, .notif-tab:hover {
+  background: var(--clubly-accent);
+  color: #fff;
+  border-color: var(--clubly-accent);
+}
 /* ===== NOTIFICATIONS ===== */
 .notif-item {
   display: flex;
@@ -1088,7 +1110,13 @@ body {
           </button>
         </li>
       </ul>
-
+<!-- فلاتر الحالة -->
+<div class="notif-tabs mb-3" id="memberStatusTabs">
+  <button class="notif-tab active" onclick="filterMemberStatus('all', this)">All</button>
+  <button class="notif-tab" onclick="filterMemberStatus('approved', this)">Approved</button>
+  <button class="notif-tab" onclick="filterMemberStatus('pending', this)">Pending</button>
+  <button class="notif-tab" onclick="filterMemberStatus('cancelled', this)">Cancelled</button>
+</div>
       <!-- Activity Bookings -->
       <div id="mem-tab-activity">
         <div class="content-card p-0">
@@ -1712,13 +1740,41 @@ const state = {
     ]
   }
 };
+// ===== MEMBER BOOKING FILTERS =====
+let _memAllActivity = [];
+let _memAllFacility = [];
+let _memCurrentTab    = 'activity';
+let _memCurrentStatus = 'all';
 function switchMemberTab(tab) {
+  _memCurrentTab = tab;
   document.getElementById('mem-tab-activity').style.display = tab === 'activity' ? '' : 'none';
   document.getElementById('mem-tab-facility').style.display = tab === 'facility' ? '' : 'none';
   document.querySelectorAll('#memberBookingTabs .nav-link').forEach((btn, i) => {
-    btn.classList.toggle('active', 
+    btn.classList.toggle('active',
       (tab === 'activity' && i === 0) || (tab === 'facility' && i === 1));
   });
+  applyMemberBookingFilter();
+}
+
+function filterMemberStatus(status, el) {
+  _memCurrentStatus = status;
+  document.querySelectorAll('#memberStatusTabs .notif-tab').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  applyMemberBookingFilter();
+}
+
+function applyMemberBookingFilter() {
+  if (_memCurrentTab === 'activity') {
+    const filtered = _memCurrentStatus === 'all'
+      ? _memAllActivity
+      : _memAllActivity.filter(b => (b.status || '').toLowerCase() === _memCurrentStatus);
+    renderMemActivityTable(filtered);
+  } else {
+    const filtered = _memCurrentStatus === 'all'
+      ? _memAllFacility
+      : _memAllFacility.filter(b => (b.status || '').toLowerCase() === _memCurrentStatus);
+    renderMemFacilityTable(filtered);
+  }
 }
 async function loadMembershipData() {
   if (!memberId) return;
@@ -1838,109 +1894,112 @@ async function loadMemberBookings() {
   if (!memberId) return;
 
   document.getElementById('mem-activity-body').innerHTML =
-    '<tr><td colspan="12" class="text-center py-4" style="color:var(--muted);">Loading...</td></tr>';
+    '<tr><td colspan="13" class="text-center py-4" style="color:var(--muted);"><div class="spinner-border spinner-border-sm me-2"></div>Loading...</td></tr>';
 
   try {
     const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
     if (!res.ok) throw new Error();
-    const data = await res.json();
-
-    document.getElementById('mem-activity-body').innerHTML = data.length
-      ? data.map((b, i) => `
-          <tr>
-            <td style="padding:12px 16px;">${i + 1}</td>
-            <td style="padding:12px 16px;">${b.activityName || '—'}</td>
-            <td style="padding:12px 16px;">${b.trainerName || '<span class="text-muted">No Trainer</span>'}</td>   <!-- ← أضيفي هذا -->
-            <td style="padding:12px 16px;">${b.groupName || '—'}</td>
-            <td style="padding:12px 16px;">${b.startDate || '—'}</td>
-            <td style="padding:12px 16px;">${b.endDate || '—'}</td>
-            <td style="padding:12px 16px;">
-              ${b.timeSlots && b.timeSlots.length
-                ? b.timeSlots.map(s => `
-                    <div style="font-size:.82rem; margin-bottom:3px;">
-                      <span class="sched-badge badge-confirmed" style="margin-right:4px;">${s.day || ''}</span>
-                      <span style="font-weight:600;">${s.startTime || '—'}</span>
-                    </div>`).join('')
-                : '—'}
-            </td>
-            <td style="padding:12px 16px;">
-              ${b.timeSlots && b.timeSlots.length
-                ? b.timeSlots.map(s => `
-                    <div style="font-size:.82rem; font-weight:600; margin-bottom:3px;">${s.endTime || '—'}</div>`).join('')
-                : '—'}
-            </td>
-            <td style="padding:12px 16px;">${b.totalPrice ?? b.price ?? '—'} EGP</td>
-            <td style="padding:12px 16px;">
-              ${b.paymentMethod
-                ? `<span class="sched-badge badge-confirmed">${b.paymentMethod}</span>`
-                : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
-            </td>
-            <td style="padding:12px 16px;">
-              ${b.transactionId
-                ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
-                : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
-            </td>
-            <td style="padding:12px 16px;">
-              ${b.receiptImageUrl
-                ? `<a href="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}" target="_blank">
-                     <img src="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}"
-                          style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
-                   </a>`
-                : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
-            </td>
-            <td style="padding:12px 16px;">${getMemStatusBadge(b.status)}</td>
-          </tr>`).join('')
-      : '<tr><td colspan="12" class="text-center py-4" style="color:var(--muted);">No activity bookings found.</td></tr>';
-
-  } catch(e) {
+    _memAllActivity = await res.json();
+  } catch {
+    _memAllActivity = [];
     document.getElementById('mem-activity-body').innerHTML =
-      '<tr><td colspan="12" class="text-center py-4" style="color:var(--muted);">Failed to load bookings.</td></tr>';
+      '<tr><td colspan="13" class="text-center py-4" style="color:#ef4444;">Failed to load.</td></tr>';
   }
-
-  document.getElementById('mem-facility-body').innerHTML =
-    '<tr><td colspan="10" class="text-center py-4" style="color:var(--muted);">Loading...</td></tr>';
 
   try {
     const res2 = await fetch(`${API_BASE_URL}/FacilityBookings`);
     if (!res2.ok) throw new Error();
-    const allFacility = await res2.json();
-    const data2 = allFacility.filter(b => String(b.memberId) === String(memberId));
-
-    document.getElementById('mem-facility-body').innerHTML = data2.length
-      ? data2.map((b, i) => `
-          <tr>
-            <td style="padding:12px 16px;">${i + 1}</td>
-            <td style="padding:12px 16px;">${b.facilityName || '—'}</td>
-            <td style="padding:12px 16px;">${b.bookingDate ? b.bookingDate.split('T')[0] : '—'}</td>
-            <td style="padding:12px 16px;">${b.startTime || '—'} → ${b.endTime || '—'}</td>
-            <td style="padding:12px 16px;">${b.participants ?? '—'}</td>
-            <td style="padding:12px 16px;">${b.price ?? '—'} EGP</td>
-            <td style="padding:12px 16px;">
-              ${b.paymentMethod
-                ? `<span class="sched-badge badge-confirmed">${b.paymentMethod}</span>`
-                : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
-            </td>
-            <td style="padding:12px 16px;">
-              ${b.transactionId
-                ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
-                : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
-            </td>
-            <td style="padding:12px 16px;">
-              ${b.receiptImageUrl
-                ? `<a href="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}" target="_blank">
-                     <img src="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}"
-                          style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
-                   </a>`
-                : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
-            </td>
-            <td style="padding:12px 16px;">${getMemStatusBadge(b.status)}</td>
-          </tr>`).join('')
-      : '<tr><td colspan="10" class="text-center py-4" style="color:var(--muted);">No facility bookings found.</td></tr>';
-
-  } catch(e) {
-    document.getElementById('mem-facility-body').innerHTML =
-      '<tr><td colspan="10" class="text-center py-4" style="color:var(--muted);">Failed to load bookings.</td></tr>';
+    const all = await res2.json();
+    _memAllFacility = all.filter(b => String(b.memberId) === String(memberId));
+  } catch {
+    _memAllFacility = [];
   }
+
+  applyMemberBookingFilter();
+}
+
+function renderMemActivityTable(data) {
+  const tbody = document.getElementById('mem-activity-body');
+  tbody.innerHTML = data.length
+    ? data.map((b, i) => `
+        <tr>
+          <td style="padding:12px 16px;">${i + 1}</td>
+          <td style="padding:12px 16px;">${b.activityName || '—'}</td>
+          <td style="padding:12px 16px;">${b.trainerName || '<span style="color:var(--muted);">No Trainer</span>'}</td>
+          <td style="padding:12px 16px;">${b.groupName || '—'}</td>
+          <td style="padding:12px 16px;">${b.startDate || '—'}</td>
+          <td style="padding:12px 16px;">${b.endDate || '—'}</td>
+          <td style="padding:12px 16px;">
+            ${b.timeSlots && b.timeSlots.length
+              ? b.timeSlots.map(s => `
+                  <div style="font-size:.82rem; margin-bottom:3px;">
+                    <span class="sched-badge badge-confirmed" style="margin-right:4px;">${s.day || ''}</span>
+                    <span style="font-weight:600;">${s.startTime || '—'}</span>
+                  </div>`).join('')
+              : '—'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.timeSlots && b.timeSlots.length
+              ? b.timeSlots.map(s => `
+                  <div style="font-size:.82rem; font-weight:600; margin-bottom:3px;">${s.endTime || '—'}</div>`).join('')
+              : '—'}
+          </td>
+          <td style="padding:12px 16px;">${b.totalPrice ?? b.price ?? '—'} EGP</td>
+          <td style="padding:12px 16px;">
+            ${b.paymentMethod
+              ? `<span class="sched-badge badge-confirmed">${b.paymentMethod}</span>`
+              : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.transactionId
+              ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
+              : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.receiptImageUrl
+              ? `<a href="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}" target="_blank">
+                   <img src="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}"
+                        style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
+                 </a>`
+              : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
+          </td>
+          <td style="padding:12px 16px;">${getMemStatusBadge(b.status)}</td>
+        </tr>`).join('')
+    : '<tr><td colspan="13" class="text-center py-4" style="color:var(--muted);">No bookings found.</td></tr>';
+}
+
+function renderMemFacilityTable(data) {
+  const tbody = document.getElementById('mem-facility-body');
+  tbody.innerHTML = data.length
+    ? data.map((b, i) => `
+        <tr>
+          <td style="padding:12px 16px;">${i + 1}</td>
+          <td style="padding:12px 16px;">${b.facilityName || '—'}</td>
+          <td style="padding:12px 16px;">${b.bookingDate ? b.bookingDate.split('T')[0] : '—'}</td>
+          <td style="padding:12px 16px;">${b.startTime || '—'} → ${b.endTime || '—'}</td>
+          <td style="padding:12px 16px;">${b.participants ?? '—'}</td>
+          <td style="padding:12px 16px;">${b.price ?? '—'} EGP</td>
+          <td style="padding:12px 16px;">
+            ${b.paymentMethod
+              ? `<span class="sched-badge badge-confirmed">${b.paymentMethod}</span>`
+              : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.transactionId
+              ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
+              : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.receiptImageUrl
+              ? `<a href="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}" target="_blank">
+                   <img src="${API_BASE_URL.replace('/api','')}${b.receiptImageUrl}"
+                        style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
+                 </a>`
+              : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
+          </td>
+          <td style="padding:12px 16px;">${getMemStatusBadge(b.status)}</td>
+        </tr>`).join('')
+    : '<tr><td colspan="10" class="text-center py-4" style="color:var(--muted);">No bookings found.</td></tr>';
 }
 
 function getMemStatusBadge(status) {

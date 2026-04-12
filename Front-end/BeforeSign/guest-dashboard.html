@@ -903,49 +903,103 @@ body {
     </div>
 
     <!-- ======== PAGE: BOOKINGS ======== -->
-    <div class="page" id="page-bookings">
-      <div class="page-header-clubly">
-        <div>
-          <h1 class="page-title-clubly">My Bookings</h1>
-          <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your activity and facility reservations</p>
-        </div>
-        <button class="btn-clubly-primary" onclick="openNewBookingMenu()">
-          <i class="bi bi-plus-lg"></i> New Booking
-        </button>
-      </div>
+   <div class="page" id="page-bookings">
+  <div class="page-header-clubly">
+    <div>
+      <h1 class="page-title-clubly">My Bookings</h1>
+      <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your activity and facility reservations</p>
+    </div>
+   
+  </div>
 
-      <!-- Filter tabs -->
-      <div class="notif-tabs mb-3">
-        <button class="notif-tab active" onclick="filterBookings('all', this)">All</button>
-        <button class="notif-tab" onclick="filterBookings('confirmed', this)">Confirmed</button>
-        <button class="notif-tab" onclick="filterBookings('pending', this)">Pending</button>
-        <button class="notif-tab" onclick="filterBookings('completed', this)">Completed</button>
-        <button class="notif-tab" onclick="filterBookings('cancelled', this)">Cancelled</button>
-      </div>
+  <!-- تاب Activity / Facility -->
+<ul class="nav nav-tabs mb-3" id="bookingTypeTabs">
+  <li class="nav-item">
+    <button class="nav-link active" onclick="switchBookingType('activity', this)">
+      <i class="bi bi-calendar-check me-1"></i>Activity Bookings
+    </button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" onclick="switchBookingType('facility', this)">
+      <i class="bi bi-building me-1"></i>Facility Bookings
+    </button>
+  </li>
+</ul>
 
-      <div class="content-card">
-        <div class="table-responsive">
-          <table class="bookings-table" id="bookingsTable">
-            <thead>
-              <tr>
-                <th>Activity / Facility</th>
-                <th>Date & Time</th>
-                <th>Trainer</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="bookingsTbody"></tbody>
-          </table>
-        </div>
-        <div class="empty-state" id="bookingsEmpty" style="display:none;">
-          <i class="bi bi-calendar-x"></i>
-          <p>No bookings found.</p>
-        </div>
+  <!-- Activity Bookings -->
+  <div id="activityBookingsSection">
+    <div class="notif-tabs mb-3">
+      <button class="notif-tab active" onclick="filterBookings('all', this)">All</button>
+      <button class="notif-tab" onclick="filterBookings('confirmed', this)">Confirmed</button>
+      <button class="notif-tab" onclick="filterBookings('pending', this)">Pending</button>
+      <button class="notif-tab" onclick="filterBookings('completed', this)">Completed</button>
+      <button class="notif-tab" onclick="filterBookings('cancelled', this)">Cancelled</button>
+    </div>
+    <div class="content-card">
+      <div class="table-responsive">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Activity / Facility</th>
+              <th>Trainer</th>
+              <th>Group</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Price</th>
+              <th>Payment</th>
+              <th>Transaction ID</th>
+              <th>Receipt</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTbody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="bookingsEmpty" style="display:none;">
+        <i class="bi bi-calendar-x"></i>
+        <p>No bookings found.</p>
       </div>
     </div>
+  </div>
 
+  <!-- Facility Bookings -->
+  <div id="facilityBookingsSection" style="display:none;">
+    <div class="notif-tabs mb-3">
+      <button class="notif-tab active" onclick="filterFacilityBookings('all', this)">All</button>
+      <button class="notif-tab" onclick="filterFacilityBookings('approved', this)">Approved</button>
+      <button class="notif-tab" onclick="filterFacilityBookings('pending', this)">Pending</button>
+      <button class="notif-tab" onclick="filterFacilityBookings('cancelled', this)">Cancelled</button>
+    </div>
+    <div class="content-card">
+      <div class="table-responsive">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Facility</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Participants</th>
+              <th>Price</th>
+              <th>Payment</th>
+              <th>Transaction ID</th>
+              <th>Receipt</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="facilityBookingsTbody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="facilityBookingsEmpty" style="display:none;">
+        <i class="bi bi-building"></i>
+        <p>No facility bookings found.</p>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- ======== PAGE: SCHEDULE ======== -->
     <div class="page" id="page-schedule">
       <div class="page-header-clubly">
@@ -1079,55 +1133,19 @@ body {
 
 </div>
 
-    <!-- ======== PAGE: UPGRADE ======== -->
-    <div class="page" id="page-upgrade">
-      <div class="page-header-clubly">
-        <h1 class="page-title-clubly">Upgrade Your Plan</h1>
-      </div>
-      <div class="row g-3">
-        <!-- Basic -->
-        <div class="col-md-4">
-          <div class="content-card" style="border:2px solid var(--border); position:relative;">
-            <div style="font-size:1.1rem; font-weight:900; color:var(--text); margin-bottom:6px;">Basic Member</div>
-            <div style="font-size:2rem; font-weight:900; color:var(--clubly-accent);">200 <span style="font-size:1rem; font-weight:400; color:var(--muted);">EGP/mo</span></div>
-            <hr style="border-color:var(--border); margin:16px 0;">
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> Up to 5 bookings/month</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> Access to basic facilities</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> 1 trainer session</div>
-            <div class="benefit-item"><i class="bi bi-x-circle-fill" style="color:#ef4444;"></i> Priority booking</div>
-            <button class="btn-clubly-primary w-100 mt-3" style="justify-content:center;" onclick="alert('Upgrade request sent! Admin will review.')">Choose Basic</button>
-          </div>
-        </div>
-        <!-- Standard -->
-        <div class="col-md-4">
-          <div class="content-card" style="border:2px solid var(--clubly-teal); position:relative;">
-            <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--clubly-teal); color:#fff; font-size:.72rem; font-weight:900; padding:3px 14px; border-radius:20px; white-space:nowrap;">MOST POPULAR</div>
-            <div style="font-size:1.1rem; font-weight:900; color:var(--text); margin-bottom:6px;">Standard Member</div>
-            <div style="font-size:2rem; font-weight:900; color:var(--clubly-teal);">400 <span style="font-size:1rem; font-weight:400; color:var(--muted);">EGP/mo</span></div>
-            <hr style="border-color:var(--border); margin:16px 0;">
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> Unlimited bookings</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> All facilities access</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> 4 trainer sessions</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> Priority booking</div>
-            <button class="btn-clubly-teal w-100 mt-3" style="justify-content:center;" onclick="alert('Upgrade request sent! Admin will review.')">Choose Standard</button>
-          </div>
-        </div>
-        <!-- Platinum -->
-        <div class="col-md-4">
-          <div class="content-card" style="border:2px solid var(--clubly-gold); position:relative; background:linear-gradient(180deg, var(--card-bg) 0%, rgba(212,168,67,.04) 100%);">
-            <div style="font-size:1.1rem; font-weight:900; color:var(--text); margin-bottom:6px;">Platinum Member</div>
-            <div style="font-size:2rem; font-weight:900; color:var(--clubly-gold);">700 <span style="font-size:1rem; font-weight:400; color:var(--muted);">EGP/mo</span></div>
-            <hr style="border-color:var(--border); margin:16px 0;">
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> Unlimited everything</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> Dedicated trainer</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> VIP lounge access</div>
-            <div class="benefit-item"><i class="bi bi-check-circle-fill" style="color:#22c55e;"></i> Guest passes (x2)</div>
-            <button class="btn-clubly-primary w-100 mt-3" style="justify-content:center; background:linear-gradient(135deg,var(--clubly-gold),#b8860b);" onclick="alert('Upgrade request sent! Admin will review.')">Choose Platinum</button>
-          </div>
-        </div>
-        
-      </div>
+   <!-- ======== PAGE: UPGRADE ======== -->
+<div class="page" id="page-upgrade">
+  <div class="page-header-clubly">
+    <h1 class="page-title-clubly">Upgrade Your Plan</h1>
+    <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Choose a membership plan to unlock full access.</p>
+  </div>
+  <div class="row g-4" id="upgradePlansGrid">
+    <div class="col-12 text-center py-5">
+      <div class="spinner-border" style="color:var(--clubly-accent);"></div>
+      <p class="mt-3" style="color:var(--muted);">Loading plans…</p>
     </div>
+  </div>
+</div>
 <!-- ======== PAGE: PROFILE ======== -->
 <div class="page" id="page-profile">
   <div class="page-header-clubly">
@@ -1266,6 +1284,7 @@ document.getElementById('dashName').textContent     = firstName + '!';
 
 // ===== MOCK DATA =====
 const state = {
+   facilityBookings: [],
   bookings: [
     { id:1, name:'Football Training', type:'activity', icon:'bi bi-dribbble', color:'#e85d2f', date:'Mar 1, 2026', time:'5:00 PM', trainer:'Menna Mohamed', price:100, status:'confirmed' },
     { id:2, name:'Swimming Pool',     type:'facility', icon:'bi bi-water',    color:'#2ec4b6', date:'Mar 3, 2026', time:'8:00 AM', trainer:'—',            price:300, status:'pending'   },
@@ -1313,13 +1332,12 @@ function showPage(id) {
   document.getElementById('page-' + id)?.classList.add('active');
   document.getElementById('sb-' + id)?.classList.add('active');
   document.getElementById('hn-' + id)?.classList.add('active');
-  // Re-render on visit
   if (id === 'bookings')      renderBookings();
   if (id === 'schedule')      renderSchedule();
   if (id === 'payments')      renderPayments();
-if (id === 'notifications') loadGuestNotifications();
-  if (id === 'profile') loadGuestProfile();
-
+  if (id === 'notifications') loadGuestNotifications();
+  if (id === 'profile')       loadGuestProfile();
+  if (id === 'upgrade')       loadUpgradePlans(); // ← أضيفي السطر ده
 }
 
 // ===== THEME =====
@@ -1385,7 +1403,88 @@ function renderUpcoming() {
       </span>
     </div>`).join('');
 }
+// ===== SWITCH BOOKING TYPE =====
+function switchBookingType(type, el) {
+  document.querySelectorAll('#bookingTypeTabs .nav-link')
+    .forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  
+  if (type === 'activity') {
+    document.getElementById('activityBookingsSection').style.display = 'block';
+    document.getElementById('facilityBookingsSection').style.display = 'none';
+  } else {
+    document.getElementById('activityBookingsSection').style.display = 'none';
+    document.getElementById('facilityBookingsSection').style.display = 'block';
+    renderFacilityBookings();
+  }
+}
 
+// ===== FACILITY BOOKINGS TABLE =====
+function renderFacilityBookings(filter) {
+  const f = filter || 'all';
+  const list = f === 'all'
+    ? state.facilityBookings
+    : state.facilityBookings.filter(b => b.status.toLowerCase() === f);
+
+  const tbody = document.getElementById('facilityBookingsTbody');
+  const empty = document.getElementById('facilityBookingsEmpty');
+
+  if (!list.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const statusMap = {
+    approved:  'pill-approved',
+    pending:   'pill-pending',
+    cancelled: 'pill-cancelled',
+    confirmed: 'pill-confirmed'
+  };
+
+  tbody.innerHTML = list.map((b, i) => `
+    <tr>
+      <td style="padding:12px 16px;">${i + 1}</td>
+      <td style="padding:12px 16px; font-weight:700;">${b.facilityName}</td>
+      <td style="padding:12px 16px;">${b.bookingDate}</td>
+      <td style="padding:12px 16px; font-weight:600;">
+        ${b.startTime ? b.startTime.substring(0,5) : '—'} → ${b.endTime ? b.endTime.substring(0,5) : '—'}
+      </td>
+      <td style="padding:12px 16px;">${b.participants}</td>
+      <td style="padding:12px 16px; font-weight:700;">${b.price} EGP</td>
+      <td style="padding:12px 16px;">
+        ${b.paymentMethod
+          ? `<span class="status-pill pill-approved">${b.paymentMethod}</span>`
+          : '—'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.transactionId
+          ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
+          : '—'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.receiptImageUrl
+          ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
+               <img src="https://localhost:7132${b.receiptImageUrl}"
+                 style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
+             </a>`
+          : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        <span class="status-pill ${statusMap[b.status?.toLowerCase()] || 'pill-pending'}">
+          ${b.status}
+        </span>
+      </td>
+    </tr>`).join('');
+}
+
+function filterFacilityBookings(filter, el) {
+  document.querySelectorAll('#facilityBookingsSection .notif-tab')
+    .forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderFacilityBookings(filter);
+}
 // ===== BOOKINGS TABLE =====
 function renderBookings(filter) {
   const f = filter || state.currentBookingFilter;
@@ -1401,11 +1500,17 @@ function renderBookings(filter) {
   }
   empty.style.display = 'none';
 
-  const statusMap = { confirmed:'pill-confirmed', pending:'pill-pending', cancelled:'pill-cancelled', completed:'pill-completed' };
+  const statusMap = {
+    confirmed: 'pill-confirmed',
+    pending:   'pill-pending',
+    cancelled: 'pill-cancelled',
+    completed: 'pill-completed'
+  };
 
-  tbody.innerHTML = list.map(b => `
+  tbody.innerHTML = list.map((b, i) => `
     <tr data-status="${b.status}">
-      <td>
+      <td style="padding:12px 16px;">${i + 1}</td>
+      <td style="padding:12px 16px;">
         <div style="display:flex; align-items:center; gap:10px;">
           <div class="booking-type-icon" style="background:${b.color}18; color:${b.color};">
             <i class="${b.icon}"></i>
@@ -1416,20 +1521,50 @@ function renderBookings(filter) {
           </div>
         </div>
       </td>
-      <td>
-        <div style="font-weight:600;">${b.date}</div>
-        <div style="font-size:.78rem; color:var(--muted);">${b.time}</div>
+      <td style="padding:12px 16px; color:var(--muted);">${b.trainer}</td>
+      <td style="padding:12px 16px; color:var(--muted);">${b.group || '—'}</td>
+      <td style="padding:12px 16px;">${b.startDate || b.date || '—'}</td>
+      <td style="padding:12px 16px;">${b.endDate || '—'}</td>
+      <td style="padding:12px 16px;">
+        ${b.timeSlots && b.timeSlots.length
+          ? b.timeSlots.map(s => `
+              <div style="font-size:.82rem; margin-bottom:3px;">
+                <span class="status-pill pill-approved" style="margin-right:4px;">${s.day || ''}</span>
+                <span style="font-weight:600;">${s.startTime || '—'}</span>
+              </div>`).join('')
+          : `<span style="font-weight:600;">${b.time || '—'}</span>`}
       </td>
-      <td style="color:var(--muted); font-size:.88rem;">${b.trainer}</td>
-      <td style="font-weight:700;">${b.price} EGP</td>
-      <td><span class="status-pill ${statusMap[b.status]}">${b.status.charAt(0).toUpperCase()+b.status.slice(1)}</span></td>
-      <td>
-        ${b.status === 'pending'
-          ? `<button class="btn-pay" onclick="payBooking(${b.id})">Pay Now</button>`
-          : `<button style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:.82rem;" onclick="cancelBooking(${b.id})">
-               ${b.status === 'confirmed' ? '<i class="bi bi-x-circle me-1"></i>Cancel' : '—'}
-             </button>`}
+      <td style="padding:12px 16px;">
+        ${b.timeSlots && b.timeSlots.length
+          ? b.timeSlots.map(s => `
+              <div style="font-size:.82rem; font-weight:600; margin-bottom:3px;">${s.endTime || '—'}</div>`).join('')
+          : '—'}
       </td>
+      <td style="padding:12px 16px; font-weight:700;">${b.price} EGP</td>
+      <td style="padding:12px 16px;">
+        ${b.paymentMethod
+          ? `<span class="status-pill pill-approved">${b.paymentMethod}</span>`
+          : '<span style="color:var(--muted); font-size:.8rem;">—</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.transactionId
+          ? `<code style="font-size:.8rem; background:var(--bg); padding:2px 8px; border-radius:4px; color:var(--clubly-teal);">${b.transactionId}</code>`
+          : '<span style="color:var(--muted); font-size:.8rem;">—</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.receiptImageUrl
+          ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
+               <img src="https://localhost:7132${b.receiptImageUrl}"
+                    style="width:48px; height:36px; object-fit:cover; border-radius:6px; cursor:pointer;">
+             </a>`
+          : '<span style="color:var(--muted); font-size:.8rem;">No receipt</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        <span class="status-pill ${statusMap[b.status]}">
+          ${b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+        </span>
+      </td>
+
     </tr>`).join('');
 }
 
@@ -1461,45 +1596,86 @@ function cancelBooking(id) {
 function renderSchedule() {
   const d   = state.scheduleDate;
   const key = d.toISOString().slice(0,10);
-  const items = state.schedule[key] || [];
-  const opts  = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
+  const opts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
   document.getElementById('schedDateLabel').textContent = d.toLocaleDateString('en-US', opts);
 
-  const el    = document.getElementById('scheduleList');
-  const empty = document.getElementById('schedEmpty');
+  const actItems  = state.schedule[key]      || [];
+  const facItems  = state.facilitySchedule?.[key] || [];
+  const el        = document.getElementById('scheduleList');
+  const empty     = document.getElementById('schedEmpty');
 
-  if (!items.length) {
+  if (!actItems.length && !facItems.length) {
     el.innerHTML = '';
     empty.style.display = 'block';
     return;
   }
   empty.style.display = 'none';
 
-  const colorBorderMap = { 'sched-orange':'var(--clubly-accent)', 'sched-teal':'var(--clubly-teal)', 'sched-gold':'var(--clubly-gold)', 'sched-blue':'#3b82f6' };
-  const badgeMap = { Confirmed:'badge-confirmed', Pending:'badge-pending', Completed:'pill-completed', Approved:'badge-approved' };
+  const colorBorderMap = {
+    'sched-orange':'var(--clubly-accent)',
+    'sched-teal':'var(--clubly-teal)',
+    'sched-gold':'var(--clubly-gold)',
+    'sched-blue':'#3b82f6'
+  };
+  const badgeMap = {
+    Confirmed:'badge-confirmed', Pending:'badge-pending',
+    Completed:'pill-completed',  Approved:'badge-approved'
+  };
 
-  el.innerHTML = items.map(r => `
-    <div class="schedule-item" style="border-left-color:${colorBorderMap[r.colorClass]||'var(--clubly-accent)'};">
-      <div class="sched-icon ${r.colorClass}"><i class="${r.icon}"></i></div>
-      <div class="sched-details">
-        <div class="sched-name">${r.name}</div>
-        <div class="sched-info">${r.trainer !== '—' ? 'Trainer: '+r.trainer+' · ' : ''}${r.location}</div>
-      </div>
-      <div class="sched-time-status">
-        <div class="sched-time">${r.time}</div>
-        <span class="sched-badge ${badgeMap[r.status]||''}">${r.status}</span>
-      </div>
-    </div>`).join('');
+  // Activity section
+  let html = '';
+  if (actItems.length) {
+    html += `
+      <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;
+                  letter-spacing:1px;color:var(--clubly-accent);
+                  margin-bottom:10px;padding:6px 0;
+                  border-bottom:2px solid rgba(232,93,47,.15);">
+        <i class="bi bi-calendar-check me-2"></i>Activity Sessions
+      </div>`;
+    html += actItems.map(r => `
+      <div class="schedule-item" style="border-left-color:${colorBorderMap[r.colorClass]||'var(--clubly-accent)'};">
+        <div class="sched-icon ${r.colorClass}"><i class="${r.icon}"></i></div>
+        <div class="sched-details">
+          <div class="sched-name">${r.name}</div>
+          <div class="sched-info">
+            ${r.trainer !== '—' ? 'Trainer: '+r.trainer+' · ' : ''}${r.location}
+          </div>
+        </div>
+        <div class="sched-time-status">
+          <div class="sched-time">${r.time}</div>
+          <span class="sched-badge ${badgeMap[r.status]||''}">${r.status}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // Facility section
+  if (facItems.length) {
+    html += `
+      <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;
+                  letter-spacing:1px;color:var(--clubly-teal);
+                  margin:16px 0 10px;padding:6px 0;
+                  border-bottom:2px solid rgba(46,196,182,.15);">
+        <i class="bi bi-building me-2"></i>Facility Bookings
+      </div>`;
+    html += facItems.map(r => `
+      <div class="schedule-item teal" style="border-left-color:var(--clubly-teal);">
+        <div class="sched-icon sched-teal"><i class="bi bi-building"></i></div>
+        <div class="sched-details">
+          <div class="sched-name">${r.name}</div>
+          <div class="sched-info">
+            ${r.participants ? r.participants + ' participants' : ''} 
+            ${r.price ? ' · ' + r.price + ' EGP' : ''}
+          </div>
+        </div>
+        <div class="sched-time-status">
+          <div class="sched-time">${r.time}</div>
+          <span class="sched-badge ${badgeMap[r.status]||'badge-pending'}">${r.status}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  el.innerHTML = html;
 }
-
-document.getElementById('prevDayBtn').addEventListener('click', () => {
-  state.scheduleDate.setDate(state.scheduleDate.getDate() - 1);
-  renderSchedule();
-});
-document.getElementById('nextDayBtn').addEventListener('click', () => {
-  state.scheduleDate.setDate(state.scheduleDate.getDate() + 1);
-  renderSchedule();
-});
 
 // ===== PAYMENTS =====
 function renderPayments() {
@@ -2056,45 +2232,66 @@ const res2 = await fetch(`${API}/ActivityBookings/by-guest/${guestId}`);
     const bookings = await res2.json();
 
     // حول الـ bookings للـ state format
-    state.bookings = bookings.map(b => ({
-      id:      b.id,
-      name:    b.activityName || '—',
-      type:    'activity',
-      icon:    'bi bi-calendar-check',
-      color:   '#e85d2f',
-      date:    b.startDate ? b.startDate.split('T')[0] : '—',
-      time:    b.timeSlots?.length ? b.timeSlots[0].startTime?.substring(0,5) : '—',
-      trainer: b.trainerName || '—',
-      price:   b.totalPrice || 0,
-      status:  (b.status || '').toLowerCase()
-    }));
+state.bookings = bookings.map(b => ({
+  id:             b.id,
+  name:           b.activityName || '—',
+  type:           'activity',
+  icon:           'bi bi-calendar-check',
+  color:          '#e85d2f',
+  date:           b.startDate ? b.startDate.split('T')[0] : '—',
+  startDate:      b.startDate ? b.startDate.split('T')[0] : '—',
+  endDate:        b.endDate   ? b.endDate.split('T')[0]   : '—',
+  time:           b.timeSlots?.length ? b.timeSlots[0].startTime?.substring(0,5) : '—',
+  timeSlots:      b.timeSlots || [],
+  trainer:        b.trainerName || '—',
+  group:          b.groupName   || '—',
+  price:          b.totalPrice  || 0,
+  paymentMethod:  b.paymentMethod  || '',
+  transactionId:  b.transactionId  || '',
+  receiptImageUrl: b.receiptImageUrl || '',
+  status:         (b.status || '').toLowerCase()
+}));
 
     // حدث الـ schedule data
     state.schedule = {};
     state.bookingDates = [];
-    bookings.forEach(b => {
-      const key = b.startDate?.split('T')[0];
-      if (!key) return;
-      if (!state.schedule[key]) state.schedule[key] = [];
-      state.schedule[key].push({
-        name:       b.activityName || '—',
-        icon:       'bi bi-calendar-check',
-        colorClass: b.status?.toLowerCase() === 'approved' ? 'sched-blue' :
-                    b.status?.toLowerCase() === 'pending'  ? 'sched-orange' : 'sched-gold',
-        trainer:    b.trainerName || '—',
-        location:   b.groupName || '—',
-        time:       b.timeSlots?.length
-                      ? b.timeSlots[0].startTime?.substring(0,5) + ' → ' + b.timeSlots[0].endTime?.substring(0,5)
-                      : '—',
-        status:     b.status || '—'
-      });
+ bookings.forEach(b => {
+  const start = b.startDate?.split('T')[0];
+  const end   = b.endDate?.split('T')[0];
+  if (!start) return;
 
-      // Calendar dots
-      const d = new Date(key).getDate();
-      if (!state.bookingDates.includes(d)) state.bookingDates.push(d);
+  // أضف الـ booking لكل يوم من startDate لـ endDate
+  const startD = new Date(start);
+  const endD   = end ? new Date(end) : startD;
+  
+  for (let dt = new Date(startD); dt <= endD; dt.setDate(dt.getDate() + 1)) {
+    const key = dt.toISOString().split('T')[0];
+    if (!state.schedule[key]) state.schedule[key] = [];
+    
+    // تجنب التكرار
+    const exists = state.schedule[key].find(x => x.bookingId === b.id);
+    if (exists) continue;
+
+    state.schedule[key].push({
+      bookingId:  b.id,
+      name:       b.activityName || '—',
+      icon:       'bi bi-calendar-check',
+      colorClass: b.status?.toLowerCase() === 'approved' ? 'sched-blue' :
+                  b.status?.toLowerCase() === 'pending'  ? 'sched-orange' : 'sched-gold',
+      trainer:    b.trainerName || '—',
+      location:   b.groupName || '—',
+      time:       b.timeSlots?.length
+                    ? b.timeSlots[0].startTime?.substring(0,5) + ' → ' + b.timeSlots[0].endTime?.substring(0,5)
+                    : '—',
+      status:     b.status || '—'
     });
 
-    // حدث الـ invoices من الـ bookings
+    // Calendar dots
+    const d = dt.getDate();
+    if (!state.bookingDates.includes(d)) state.bookingDates.push(d);
+  }
+});
+// حدث الـ invoices من الـ bookings
     state.invoices = bookings.map((b, i) => ({
       id:     'INV-' + String(i+1).padStart(3,'0'),
       name:   b.activityName || '—',
@@ -2102,6 +2299,8 @@ const res2 = await fetch(`${API}/ActivityBookings/by-guest/${guestId}`);
       amount: b.totalPrice || 0,
       paid:   (b.status || '').toLowerCase() === 'approved'
     }));
+
+    // ← هنا أضيفي الكود ده ↓
 
     // Re-render كل حاجة
     renderUpcoming();
@@ -2113,6 +2312,148 @@ const res2 = await fetch(`${API}/ActivityBookings/by-guest/${guestId}`);
 
   } catch(e) {
     console.warn('Could not load bookings:', e);
+  }
+
+  // جيب الـ Facility Bookings
+  try {
+    const res3 = await fetch(`${API}/FacilityBookings`);
+    if (!res3.ok) throw new Error();
+    const allFacility = await res3.json();
+    const facilityBookings = allFacility.filter(b => String(b.guestId) === String(guestId));
+
+    state.facilityBookings = facilityBookings.map(b => ({
+      facilityName:    b.facilityName   || '—',
+      bookingDate:     b.bookingDate    || '—',
+      startTime:       b.startTime,
+      endTime:         b.endTime,
+      participants:    b.participants   || 1,
+      price:           b.price          || 0,
+      paymentMethod:   b.paymentMethod  || '',
+      transactionId:   b.transactionId  || '',
+      receiptImageUrl: b.receiptImageUrl|| '',
+      status:          b.status         || 'Pending'
+    }));
+
+    // ===== بناء facilitySchedule =====
+    state.facilitySchedule = {};
+    facilityBookings.forEach(b => {
+    const key = b.bookingDate
+  ? String(b.bookingDate).split('T')[0]
+  : null;
+      if (!key) return;
+      if (!state.facilitySchedule[key]) state.facilitySchedule[key] = [];
+      state.facilitySchedule[key].push({
+        name:         b.facilityName || '—',
+        time:         (b.startTime ? b.startTime.substring(0,5) : '—')
+                    + ' → '
+                    + (b.endTime   ? b.endTime.substring(0,5)   : '—'),
+        participants: b.participants || 1,
+        price:        b.price || 0,
+        status:       b.status || 'Pending'
+      });
+
+      // Calendar dots للـ facility
+      const day = new Date(key).getDate();
+      if (!state.bookingDates.includes(day)) state.bookingDates.push(day);
+    });
+
+    generateCalendar();
+    renderSchedule();
+
+  } catch(e) {
+    console.warn('Could not load facility bookings:', e);
+  }
+}
+// ===== UPGRADE PLANS =====
+const PLAN_ICONS_UP  = ['🥉','🥈','🥇','💎','🏅','⭐'];
+const PLAN_COLORS_UP = ['#cd7f32','#94a3b8','#d4a843','#e85d2f','#7c5cfc','#2ec4b6'];
+const PLAN_BGS_UP    = [
+  'rgba(205,127,50,.08)','rgba(148,163,184,.08)',
+  'rgba(212,168,67,.08)','rgba(232,93,47,.06)',
+  'rgba(124,92,252,.08)','rgba(46,196,182,.08)'
+];
+
+async function loadUpgradePlans() {
+  const grid = document.getElementById('upgradePlansGrid');
+  if (!grid) return;
+
+  try {
+    const res   = await fetch(`${API}/MemberShips`);
+    const data  = res.ok ? await res.json() : [];
+    const plans = data.filter(p => (p.status || '').toLowerCase() === 'active');
+
+    if (!plans.length) {
+      grid.innerHTML = `<div class="col-12 text-center py-5" style="color:var(--muted);">No plans available right now.</div>`;
+      return;
+    }
+
+    grid.innerHTML = plans.map((p, i) => {
+      const name     = p.name     || '';
+      const desc     = p.description || '';
+      const price    = p.price    || 0;
+      const duration = p.duration || 1;
+      const featured = i === 0;
+      const color    = PLAN_COLORS_UP[i % PLAN_COLORS_UP.length];
+      const bg       = PLAN_BGS_UP[i % PLAN_BGS_UP.length];
+      const icon     = PLAN_ICONS_UP[i % PLAN_ICONS_UP.length];
+
+      return `
+      <div class="col-sm-6 col-lg-3">
+        <div style="background:${bg};border-radius:20px;padding:28px 22px;
+                    position:relative;overflow:hidden;transition:all .3s;
+                    border:2px solid ${featured ? color : 'var(--border)'};
+                    box-shadow:${featured ? '0 12px 40px rgba(232,93,47,.2)' : '0 2px 12px rgba(0,0,0,.06)'};
+                    transform:${featured ? 'translateY(-6px)' : 'none'};">
+
+          ${featured ? `<div style="position:absolute;top:14px;right:14px;
+            background:${color};color:#fff;padding:3px 12px;
+            border-radius:20px;font-size:.72rem;font-weight:700;">🏆 Popular</div>` : ''}
+
+          <div style="width:50px;height:50px;border-radius:12px;
+                      background:rgba(255,255,255,0.15);color:${color};
+                      display:flex;align-items:center;justify-content:center;
+                      font-size:1.5rem;margin-bottom:14px;">${icon}</div>
+
+          <div style="font-size:1rem;font-weight:900;color:var(--text);margin-bottom:6px;">${name}</div>
+
+          <div style="font-size:2.2rem;font-weight:900;color:${color};line-height:1;margin-bottom:4px;">
+            ${price} <span style="font-size:.9rem;font-weight:400;color:var(--muted);">EGP</span>
+          </div>
+
+          <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">
+            ${duration} month${duration > 1 ? 's' : ''} membership
+          </div>
+
+          ${desc ? `
+          <div style="display:flex;align-items:flex-start;gap:8px;
+                      font-size:.85rem;color:var(--text);margin-bottom:16px;">
+            <i class="bi bi-check-circle-fill" style="color:#22c55e;flex-shrink:0;margin-top:2px;"></i>
+            <span>${desc}</span>
+          </div>` : ''}
+
+          <button onclick="requestUpgrade(${p.id}, '${name}')"
+            style="width:100%;border:none;padding:11px;border-radius:50px;
+                   font-weight:700;font-size:.9rem;cursor:pointer;
+                   font-family:'Cairo',sans-serif;transition:all .2s;
+                   background:${featured ? `linear-gradient(135deg,${color},${color}cc)` : 'transparent'};
+                   color:${featured ? '#fff' : color};
+                   border:${featured ? 'none' : `2px solid ${color}`};"
+            onmouseover="this.style.opacity='.85'"
+            onmouseout="this.style.opacity='1'">
+            Get Started ${featured ? '🚀' : '→'}
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+
+  } catch(e) {
+    grid.innerHTML = `<div class="col-12 text-center py-5" style="color:#ef4444;">Failed to load plans.</div>`;
+  }
+}
+
+function requestUpgrade(planId, planName) {
+  if (confirm(`Request upgrade to "${planName}"?\nAdmin will review your request.`)) {
+    alert(`✅ Upgrade request sent for "${planName}"!\nAdmin will contact you soon.`);
   }
 }
 // ===== INIT =====

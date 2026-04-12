@@ -724,7 +724,29 @@ body {
   gap: 12px;
   margin-bottom: 5px;
 }
-
+/* ===== FILTER TABS ===== */
+.notif-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.notif-tab {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.notif-tab.active, .notif-tab:hover {
+  background: var(--clubly-accent);
+  color: #fff;
+  border-color: var(--clubly-accent);
+}
 .notif-inbox-title {
   font-size: .93rem;
   font-weight: 700;
@@ -2394,6 +2416,13 @@ body {
   </button>
 </li>
 </ul>
+<!-- فلاتر الحالة -->
+<div class="notif-tabs mb-3" id="adminBookingStatusTabs">
+  <button class="notif-tab active" onclick="filterAdminBookingStatus('all', this)">All</button>
+  <button class="notif-tab" onclick="filterAdminBookingStatus('approved', this)">Approved</button>
+  <button class="notif-tab" onclick="filterAdminBookingStatus('pending', this)">Pending</button>
+  <button class="notif-tab" onclick="filterAdminBookingStatus('cancelled', this)">Cancelled</button>
+</div>
 <!-- Guest Activity Bookings Table -->
 <div id="tab-guest-bookings" style="display:none">
   <div class="card p-3">
@@ -5316,10 +5345,13 @@ document.querySelectorAll('.modal').forEach(modal => {
 // ===== BOOKINGS =====
 const API = 'https://localhost:7132/api';
 function switchBookingTab(tab) {
-  document.getElementById('tab-activity-bookings').style.display       = tab === 'activity'       ? '' : 'none';
-  document.getElementById('tab-facility-bookings').style.display       = tab === 'facility'       ? '' : 'none';
-  document.getElementById('tab-guest-bookings').style.display          = tab === 'guest'          ? '' : 'none';
-  document.getElementById('tab-guestfacility-bookings').style.display  = tab === 'guestfacility'  ? '' : 'none';
+  _adminCurrentTab = tab;
+  _adminCurrentStatus = 'all';
+
+  document.getElementById('tab-activity-bookings').style.display      = tab === 'activity'      ? '' : 'none';
+  document.getElementById('tab-facility-bookings').style.display      = tab === 'facility'      ? '' : 'none';
+  document.getElementById('tab-guest-bookings').style.display         = tab === 'guest'         ? '' : 'none';
+  document.getElementById('tab-guestfacility-bookings').style.display = tab === 'guestfacility' ? '' : 'none';
 
   document.querySelectorAll('#bookingTabs .nav-link').forEach((btn, i) => {
     btn.classList.toggle('active',
@@ -5329,153 +5361,185 @@ function switchBookingTab(tab) {
       (tab === 'guestfacility' && i === 3)
     );
   });
+
+  // Reset filter tabs
+  document.querySelectorAll('#adminBookingStatusTabs .notif-tab').forEach(b => b.classList.remove('active'));
+  document.querySelector('#adminBookingStatusTabs .notif-tab')?.classList.add('active');
+
+  applyAdminBookingFilter();
 }
 
+function filterAdminBookingStatus(status, el) {
+  _adminCurrentStatus = status;
+  document.querySelectorAll('#adminBookingStatusTabs .notif-tab').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  applyAdminBookingFilter();
+}
+
+function applyAdminBookingFilter() {
+  const s = _adminCurrentStatus;
+
+  if (_adminCurrentTab === 'activity') {
+    const filtered = s === 'all' ? _adminAllActivity
+      : _adminAllActivity.filter(b => (b.status || '').toLowerCase() === s);
+    renderAdminActivityTable(filtered);
+
+  } else if (_adminCurrentTab === 'facility') {
+    const filtered = s === 'all' ? _adminAllFacility
+      : _adminAllFacility.filter(b => (b.status || '').toLowerCase() === s);
+    renderAdminFacilityTable(filtered);
+
+  } else if (_adminCurrentTab === 'guest') {
+    const filtered = s === 'all' ? _adminAllGuestAct
+      : _adminAllGuestAct.filter(b => (b.status || '').toLowerCase() === s);
+    renderAdminGuestActTable(filtered);
+
+  } else if (_adminCurrentTab === 'guestfacility') {
+    const filtered = s === 'all' ? _adminAllGuestFac
+      : _adminAllGuestFac.filter(b => (b.status || '').toLowerCase() === s);
+    renderAdminGuestFacTable(filtered);
+  }
+}
+// ===== BOOKING FILTER STATE =====
+let _adminCurrentTab    = 'activity';
+let _adminCurrentStatus = 'all';
+let _adminAllActivity   = [];
+let _adminAllFacility   = [];
+let _adminAllGuestAct   = [];
+let _adminAllGuestFac   = [];
 async function loadBookings() {
   const membershipSearch = (document.getElementById('searchMembership')?.value || '').trim();
 
-  // ── 1. Member Activity Bookings ──
+  // 1. Member Activity Bookings
   try {
-    const res1 = await fetch(`${API}/ActivityBookings`);
-    const activityData = await res1.json();
-    const memberData = activityData.filter(b => b.memberId != null);
-    const filtered1 = membershipSearch
-      ? memberData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch))
-      : memberData;
+    const res = await fetch(`${API}/ActivityBookings`);
+    const all = await res.json();
+    _adminAllActivity = all.filter(b => b.memberId != null);
+    if (membershipSearch)
+      _adminAllActivity = _adminAllActivity.filter(b =>
+        String(b.memberShipNumber || '').includes(membershipSearch));
+  } catch { _adminAllActivity = []; }
 
-    document.getElementById('activityBookingsBody').innerHTML = filtered1.length
-      ? filtered1.map((b, i) => `
-        <tr>
-          <td>${i+1}</td>
-          <td>${b.memberShipNumber || '—'}</td>
-          <td>${b.memberName}</td>
-          <td>${b.activityName}</td>
-          <td>${b.trainerName || b.TrainerName || b.trainer?.name || '<span class="text-muted">No Trainer</span>'}</td>
-          <td>${b.groupName}</td>
-          <td>${b.startDate}</td>
-          <td>${b.endDate}</td>
-          <td>${b.participants}</td>
-          <td>${b.totalPrice} EGP</td>
-          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
-          <td>${getStatusBadge(b.status)}</td>
-          <td style="min-width:200px;">${getActionButtons(b.id, b.status, 'activity')}</td>
-        </tr>`).join('')
-      : '<tr><td colspan="15" class="text-center text-muted py-4">No activity bookings found</td></tr>';
-  } catch(e) {
-    document.getElementById('activityBookingsBody').innerHTML =
-      '<tr><td colspan="15" class="text-center text-danger py-4">Failed to load activity bookings</td></tr>';
-    console.error('Activity bookings error:', e);
-  }
-
-  // ── 2. Guest Activity Bookings ──
+  // 2. Member Facility Bookings
   try {
-    const res3 = await fetch(`${API}/ActivityBookings`);
-    const allData = await res3.json();
-    const guestData = allData.filter(b => b.guestId != null && b.memberId == null);
-    const filtered3 = membershipSearch ? [] : guestData;
+    const res = await fetch(`${API}/FacilityBookings`);
+    const all = await res.json();
+    _adminAllFacility = all.filter(b => b.memberId != null);
+    if (membershipSearch)
+      _adminAllFacility = _adminAllFacility.filter(b =>
+        String(b.memberShipNumber || '').includes(membershipSearch));
+  } catch { _adminAllFacility = []; }
 
-    document.getElementById('guestBookingsBody').innerHTML = filtered3.length
-      ? filtered3.map((b, i) => `
-        <tr>
-          <td>${i+1}</td>
-          <td>
-            <div style="font-weight:600">${b.guestName || b.memberName || '—'}</div>
-            <div style="font-size:.78rem;color:var(--muted)">Guest</div>
-          </td>
-          <td>${b.activityName}</td>
-          <td>${b.trainerName || '<span class="text-muted">No Trainer</span>'}</td>
-          <td>${b.groupName}</td>
-          <td>${b.startDate}</td>
-          <td>${b.endDate}</td>
-          <td>${b.participants}</td>
-          <td>${b.totalPrice} EGP</td>
-          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.receiptImageUrl
-            ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
-                 <img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;">
-               </a>`
-            : '<span class="text-muted small">No receipt</span>'}</td>
-          <td>${getStatusBadge(b.status)}</td>
-          <td>${getActionButtons(b.id, b.status, 'activity')}</td>
-        </tr>`).join('')
-      : '<tr><td colspan="14" class="text-center text-muted py-4">No guest bookings found</td></tr>';
-  } catch(e) {
-    document.getElementById('guestBookingsBody').innerHTML =
-      '<tr><td colspan="14" class="text-center text-danger py-4">Failed to load guest bookings</td></tr>';
-  }
-
-  // ── 3. Member Facility Bookings ──
+  // 3. Guest Activity Bookings
   try {
-    const res2 = await fetch(`${API}/FacilityBookings`);
-    const facilityData = await res2.json();
-    const memberFacilityData = facilityData.filter(b => b.memberId != null);
-    const filtered2 = membershipSearch
-      ? memberFacilityData.filter(b => String(b.memberShipNumber || '').includes(membershipSearch))
-      : memberFacilityData;
+    const res = await fetch(`${API}/ActivityBookings`);
+    const all = await res.json();
+    _adminAllGuestAct = membershipSearch ? []
+      : all.filter(b => b.guestId != null && b.memberId == null);
+  } catch { _adminAllGuestAct = []; }
 
-    document.getElementById('facilityBookingsBody').innerHTML = filtered2.length
-      ? filtered2.map((b, i) => `
-        <tr>
-          <td>${i+1}</td>
-          <td>${b.memberShipNumber || '—'}</td>
-          <td>${b.bookedByName}</td>
-          <td>${b.facilityName}</td>
-          <td>${b.bookingDate}</td>
-          <td>${b.startTime} → ${b.endTime}</td>
-          <td>${b.participants}</td>
-          <td>${b.price} EGP</td>
-          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;" title="View Receipt"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
-          <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
-          <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
-        </tr>`).join('')
-      : '<tr><td colspan="13" class="text-center text-muted py-4">No facility bookings found</td></tr>';
-  } catch(e) {
-    document.getElementById('facilityBookingsBody').innerHTML =
-      '<tr><td colspan="13" class="text-center text-danger py-4">Failed to load facility bookings</td></tr>';
-    console.error('Facility bookings error:', e);
-  }
-
-  // ── 4. Guest Facility Bookings ──
+  // 4. Guest Facility Bookings
   try {
-    const res4 = await fetch(`${API}/FacilityBookings`);
-    const allFacData = await res4.json();
-    const guestFacData = allFacData.filter(b => b.memberId == null);
+    const res = await fetch(`${API}/FacilityBookings`);
+    const all = await res.json();
+    _adminAllGuestFac = membershipSearch ? []
+      : all.filter(b => b.memberId == null);
+  } catch { _adminAllGuestFac = []; }
 
-    document.getElementById('guestFacilityBookingsBody').innerHTML = guestFacData.length
-      ? guestFacData.map((b, i) => `
-        <tr>
-          <td>${i+1}</td>
-          <td>
-            <div style="font-weight:600">${b.bookedByName || '—'}</div>
-            <div style="font-size:.78rem;color:var(--muted)">Guest</div>
-          </td>
-          <td>${b.facilityName}</td>
-          <td>${b.bookingDate}</td>
-          <td>${b.startTime} → ${b.endTime}</td>
-          <td>${b.participants}</td>
-          <td>${b.price} EGP</td>
-          <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-          <td>${b.receiptImageUrl
-            ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
-                 <img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;">
-               </a>`
-            : '<span class="text-muted small">No receipt</span>'}</td>
-          <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
-          <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
-        </tr>`).join('')
-      : '<tr><td colspan="13" class="text-center text-muted py-4">No guest facility bookings found</td></tr>';
-  } catch(e) {
-    document.getElementById('guestFacilityBookingsBody').innerHTML =
-      '<tr><td colspan="13" class="text-center text-danger py-4">Failed to load guest facility bookings</td></tr>';
-  }
+  applyAdminBookingFilter();
 }
 
+function renderAdminActivityTable(data) {
+  document.getElementById('activityBookingsBody').innerHTML = data.length
+    ? data.map((b, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td>${b.memberShipNumber || '—'}</td>
+        <td>${b.memberName}</td>
+        <td>${b.activityName}</td>
+        <td>${b.trainerName || '<span class="text-muted">No Trainer</span>'}</td>
+        <td>${b.groupName}</td>
+        <td>${b.startDate}</td>
+        <td>${b.endDate}</td>
+        <td>${b.participants}</td>
+        <td>${b.totalPrice} EGP</td>
+        <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td>${getStatusBadge(b.status)}</td>
+        <td style="min-width:200px;">${getActionButtons(b.id, b.status, 'activity')}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="15" class="text-center text-muted py-4">No bookings found</td></tr>';
+}
+
+function renderAdminFacilityTable(data) {
+  document.getElementById('facilityBookingsBody').innerHTML = data.length
+    ? data.map((b, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td>${b.memberShipNumber || '—'}</td>
+        <td>${b.bookedByName}</td>
+        <td>${b.facilityName}</td>
+        <td>${b.bookingDate}</td>
+        <td>${b.startTime} → ${b.endTime}</td>
+        <td>${b.participants}</td>
+        <td>${b.price} EGP</td>
+        <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
+        <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="13" class="text-center text-muted py-4">No bookings found</td></tr>';
+}
+
+function renderAdminGuestActTable(data) {
+  document.getElementById('guestBookingsBody').innerHTML = data.length
+    ? data.map((b, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td>
+          <div style="font-weight:600">${b.guestName || b.memberName || '—'}</div>
+          <div style="font-size:.78rem;color:var(--muted)">Guest</div>
+        </td>
+        <td>${b.activityName}</td>
+        <td>${b.trainerName || '<span class="text-muted">No Trainer</span>'}</td>
+        <td>${b.groupName}</td>
+        <td>${b.startDate}</td>
+        <td>${b.endDate}</td>
+        <td>${b.participants}</td>
+        <td>${b.totalPrice} EGP</td>
+        <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td>${getStatusBadge(b.status)}</td>
+        <td>${getActionButtons(b.id, b.status, 'activity')}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="14" class="text-center text-muted py-4">No bookings found</td></tr>';
+}
+
+function renderAdminGuestFacTable(data) {
+  document.getElementById('guestFacilityBookingsBody').innerHTML = data.length
+    ? data.map((b, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td>
+          <div style="font-weight:600">${b.bookedByName || '—'}</div>
+          <div style="font-size:.78rem;color:var(--muted)">Guest</div>
+        </td>
+        <td>${b.facilityName}</td>
+        <td>${b.bookingDate}</td>
+        <td>${b.startTime} → ${b.endTime}</td>
+        <td>${b.participants}</td>
+        <td>${b.price} EGP</td>
+        <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
+        <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="12" class="text-center text-muted py-4">No bookings found</td></tr>';
+}
 // ─────────────────────────────────────────────────
 function getStatusBadge(status) {
   const s = (status || '').toLowerCase();
