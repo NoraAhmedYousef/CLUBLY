@@ -242,6 +242,10 @@
                     "type": "integer",
                     "format": "int32"
                   },
+                  "GuestId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
                   "TrainerId": {
                     "type": "integer",
                     "format": "int32"
@@ -277,6 +281,9 @@
                   "style": "form"
                 },
                 "MemberId": {
+                  "style": "form"
+                },
+                "GuestId": {
                   "style": "form"
                 },
                 "TrainerId": {
@@ -436,6 +443,29 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ActivityBookings/by-guest/{guestId}": {
+      "get": {
+        "tags": [
+          "ActivityBookings"
+        ],
+        "parameters": [
+          {
+            "name": "guestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1459,6 +1489,10 @@
                     "type": "integer",
                     "format": "int32"
                   },
+                  "GuestId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
                   "BookedByName": {
                     "type": "string"
                   },
@@ -1508,6 +1542,9 @@
                   "style": "form"
                 },
                 "MemberId": {
+                  "style": "form"
+                },
+                "GuestId": {
                   "style": "form"
                 },
                 "BookedByName": {

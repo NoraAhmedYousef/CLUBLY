@@ -33,9 +33,9 @@ namespace Clubly.Repository.Class
                     ActivityGroupId = b.ActivityGroupId,
                     GroupName = b.ActivityGroup.Name,
                     MemberId = b.MemberId,
-                    MemberShipNumber = b.Member.MemberShipNumber.ToString(),
-                    MemberName = b.Member.FullName,
-                    MemberEmail = b.Member.Email,
+                    MemberShipNumber = b.Member != null ? b.Member.MemberShipNumber.ToString() : "",
+                    MemberName = b.Member != null ? b.Member.FullName : (b.Guest != null ? b.Guest.FullName : ""),
+                    MemberEmail = b.Member != null ? b.Member.Email : (b.Guest != null ? b.Guest.Email : ""),
                     TrainerId = b.TrainerId,
                     // ← الفرق هنا: EF Core في الـ Select بيحتاج nullable check صريح
                     TrainerName = b.TrainerId != null
@@ -68,8 +68,8 @@ namespace Clubly.Repository.Class
                     ActivityGroupId = b.ActivityGroupId,
                     GroupName = b.ActivityGroup.Name,
                     MemberId = b.MemberId,
-                    MemberName = b.Member.FullName,
-                    MemberEmail = b.Member.Email,
+                    MemberName = b.Member != null ? b.Member.FullName : (b.Guest != null ? b.Guest.FullName : ""),
+                    MemberEmail = b.Member != null ? b.Member.Email : (b.Guest != null ? b.Guest.Email : ""),
                     TrainerId = b.TrainerId,
                     TrainerName = b.Trainer != null ? b.Trainer.FullName : "No Trainer Assigned",
                     StartDate = b.StartDate,

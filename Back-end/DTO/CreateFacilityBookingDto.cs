@@ -7,7 +7,7 @@ namespace Clubly.DTO
         public int? FacilityScheduleId { get; set; }
 
         public int? MemberId { get; set; }
-
+        public int? GuestId { get; set; }
         public string BookedByName { get; set; } = "";
 
         public string BookedByEmail { get; set; } = "";

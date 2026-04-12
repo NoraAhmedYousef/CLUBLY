@@ -68,5 +68,12 @@ namespace Clubly.Controllers
             var ok = await _service.DeleteAsync(id);
             return ok ? NoContent() : NotFound();
         }
+        [HttpGet("by-guest/{guestId}")]
+        public async Task<IActionResult> GetByGuest(int guestId)
+        {
+            var all = await _service.GetAllAsync();
+            var result = all.Where(b => b.GuestId == guestId).ToList();
+            return Ok(result);
+        }
     }
 }

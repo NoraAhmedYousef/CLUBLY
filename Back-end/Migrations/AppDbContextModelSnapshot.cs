@@ -51,6 +51,14 @@ namespace SignUp.Migrations
                     b.Property<int>("ActivityId")
                         .HasColumnType("int");
 
+                    b.Property<string>("BookedByEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BookedByName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -60,7 +68,7 @@ namespace SignUp.Migrations
                     b.Property<int?>("GuestId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MemberId")
+                    b.Property<int?>("MemberId")
                         .HasColumnType("int");
 
                     b.Property<int>("Participants")
@@ -572,6 +580,9 @@ namespace SignUp.Migrations
                     b.Property<int?>("FacilityScheduleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("GuestId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MemberId")
                         .HasColumnType("int");
 
@@ -609,6 +620,8 @@ namespace SignUp.Migrations
                     b.HasIndex("FacilityId");
 
                     b.HasIndex("FacilityScheduleId");
+
+                    b.HasIndex("GuestId");
 
                     b.HasIndex("MemberId");
 
@@ -824,15 +837,13 @@ namespace SignUp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Clubly.Model.Guest", null)
+                    b.HasOne("Clubly.Model.Guest", "Guest")
                         .WithMany("ActivityBookings")
                         .HasForeignKey("GuestId");
 
                     b.HasOne("SignUp.Model.Member", "Member")
                         .WithMany("ActivityBookings")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MemberId");
 
                     b.HasOne("SignUp.Model.Trainer", "Trainer")
                         .WithMany()
@@ -841,6 +852,8 @@ namespace SignUp.Migrations
                     b.Navigation("Activity");
 
                     b.Navigation("ActivityGroup");
+
+                    b.Navigation("Guest");
 
                     b.Navigation("Member");
 
@@ -938,11 +951,17 @@ namespace SignUp.Migrations
                         .HasForeignKey("FacilityScheduleId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Clubly.Model.Guest", "Guest")
+                        .WithMany()
+                        .HasForeignKey("GuestId");
+
                     b.HasOne("SignUp.Model.Member", "Member")
                         .WithMany()
                         .HasForeignKey("MemberId");
 
                     b.Navigation("Facility");
+
+                    b.Navigation("Guest");
 
                     b.Navigation("Member");
 

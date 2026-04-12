@@ -1,4 +1,6 @@
-﻿namespace Clubly.DTO
+﻿using Clubly.Model;
+
+namespace Clubly.DTO
 {
     public class ActivityBookingDto
     {
@@ -7,8 +9,11 @@
         public string ActivityName { get; set; } = "";
         public int ActivityGroupId { get; set; }
         public string GroupName { get; set; } = "";
-        public int MemberId { get; set; }
-        public string MemberName { get; set; } = "";
+        public int? MemberId { get; set; }
+        public string? MemberName { get; set; } = "";
+        public string? GuestName { get; set; } = "";
+
+        public int? GuestId { get; set; }
         public int? TrainerId { get; set; }
         public string? TrainerName { get; set; }
         public string MemberShipNumber { get; set; } = "";

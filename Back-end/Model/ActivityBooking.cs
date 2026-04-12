@@ -14,8 +14,14 @@ namespace Clubly.Model
         public int ActivityGroupId { get; set; }
         public ActivityGroup ActivityGroup { get; set; } = null!;
 
-        public int MemberId { get; set; }
-        public Member Member { get; set; } = null!;
+        public int? MemberId { get; set; }
+        public Member? Member { get; set; }
+
+        public int? GuestId { get; set; }
+        public Guest? Guest { get; set; }
+
+        public string BookedByName { get; set; } = "";
+        public string BookedByEmail { get; set; } = "";
         public int? TrainerId { get; set; }                   
         public Trainer? Trainer { get; set; }                  
         public DateOnly StartDate { get; set; }

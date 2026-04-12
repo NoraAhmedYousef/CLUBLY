@@ -29,7 +29,8 @@ namespace Clubly.Service.Class
             MemberShipNumber = b.Member?.MemberShipNumber.ToString() ?? "",
             MemberName = b.Member?.FullName ?? "",
             MemberEmail = b.Member?.Email ?? "",
-
+            GuestId = b.GuestId,
+            GuestName = b.Guest?.FullName ?? "",
             // ←←← التعديلات المهمة هنا
             TrainerId = b.TrainerId,
             TrainerName = b.Trainer?.FullName ?? "No Trainer Assigned",
@@ -88,8 +89,7 @@ namespace Clubly.Service.Class
             if (group is null)
                 return (null, "Activity group not found.");
 
-            var isDuplicate = await _repo.IsDuplicateAsync(dto.MemberId, dto.ActivityGroupId);
-            if (isDuplicate)
+            var isDuplicate = await _repo.IsDuplicateAsync(dto.MemberId, dto.GuestId, dto.ActivityGroupId); if (isDuplicate)
                 return (null, "You already have an active booking in this group.");
 
             var endDate = group.DurationDays.HasValue
@@ -101,6 +101,8 @@ namespace Clubly.Service.Class
                 ActivityId = dto.ActivityId,
                 ActivityGroupId = dto.ActivityGroupId,
                 MemberId = dto.MemberId,
+                GuestId = dto.GuestId,
+
                 TrainerId = group.TrainerId,                // ← أضيفي هذا السطر
                 StartDate = dto.StartDate,
                 EndDate = endDate,
@@ -137,6 +139,9 @@ namespace Clubly.Service.Class
 
         public async Task<bool> DeleteAsync(int id) =>
             await _repo.DeleteAsync(id);
+        // في الـ Service
+        public async Task<List<ActivityBookingDto>> GetByGuestAsync(int guestId) =>
+            (await _repo.GetByGuestAsync(guestId)).Select(ToDto).ToList();
     }
 }
     

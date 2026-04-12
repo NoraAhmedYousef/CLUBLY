@@ -17,6 +17,9 @@ namespace SignUp.Model
         public Member? Member { get; set; }
 
         public int? MemberId { get; set; }
+        public Guest? Guest { get; set; }
+
+        public int? GuestId { get; set; }
 
         [Required, MaxLength(100)]
         public string BookedByName { get; set; } = "";

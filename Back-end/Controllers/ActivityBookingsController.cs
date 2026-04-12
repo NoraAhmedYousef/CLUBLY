@@ -72,5 +72,8 @@ namespace Clubly.Controllers
             var ok = await _service.DeleteAsync(id);
             return ok ? NoContent() : NotFound(new { message = "Booking not found." });
         }
+        [HttpGet("by-guest/{guestId:int}")]
+        public async Task<IActionResult> GetByGuest(int guestId) =>
+    Ok(await _service.GetByGuestAsync(guestId));
     }
 }

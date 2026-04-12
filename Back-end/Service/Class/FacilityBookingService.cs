@@ -17,6 +17,8 @@ namespace Clubly.Service.Class
             FacilityName = b.Facility?.Name ?? "",
             ScheduleId = b.FacilityScheduleId ?? 0,
             MemberId = b.MemberId,
+            GuestId = b.GuestId,
+
             MemberShipNumber = b.Member?.MemberShipNumber.ToString() ?? "",
 
             BookedByName = b.BookedByName,
@@ -72,7 +74,8 @@ CreatedAt = b.CreatedAt,
             {
                 FacilityId = dto.FacilityId,
                 FacilityScheduleId = dto.FacilityScheduleId ?? 0,
-                MemberId = dto.MemberId,
+                MemberId = dto.MemberId.HasValue && dto.MemberId > 0 ? dto.MemberId : null,
+                GuestId = dto.GuestId.HasValue && dto.GuestId > 0 ? dto.GuestId : null,
                 BookedByName = dto.BookedByName,
                 BookedByEmail = dto.BookedByEmail,
                 BookingDate = DateOnly.Parse(dto.BookingDate),

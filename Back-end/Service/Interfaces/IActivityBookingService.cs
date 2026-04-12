@@ -11,5 +11,6 @@ namespace Clubly.Service.Interfaces
         Task<(ActivityBookingDto? result, string? error)> CreateAsync(CreateActivityBookingDto dto);
         Task<(bool success, string? error)> UpdateStatusAsync(int id, UpdateActivityBookingStatusDto dto);
         Task<bool> DeleteAsync(int id);
+        Task<List<ActivityBookingDto>> GetByGuestAsync(int guestId);
     }
 }

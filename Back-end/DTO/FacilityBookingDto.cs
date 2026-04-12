@@ -7,6 +7,8 @@
         public string FacilityName { get; set; } = "";
         public int ScheduleId { get; set; }
         public int? MemberId { get; set; }
+        public int? GuestId { get; set; }
+
         public string MemberShipNumber { get; set; } = "";
 
         public string BookedByName { get; set; } = "";

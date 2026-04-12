@@ -17,6 +17,8 @@ namespace Clubly.Repository.Class
                      .Include(b => b.ActivityGroup)
                         .ThenInclude(g => g.TimeSlots)
                      .Include(b => b.Member)
+
+             .Include(b => b.Guest)
                      .Include(b => b.Trainer) // أضف هذا السطر هنا
                      .OrderByDescending(b => b.CreatedAt)
                      .ToListAsync();
@@ -40,19 +42,29 @@ namespace Clubly.Repository.Class
                      .Where(b => b.MemberId == memberId)
                      .OrderByDescending(b => b.CreatedAt)
                      .ToListAsync();
-
+        public async Task<List<ActivityBooking>> GetByGuestAsync(int guestId) =>
+    await _db.ActivityBookings
+             .Include(b => b.Activity)
+             .Include(b => b.ActivityGroup)
+                .ThenInclude(g => g.TimeSlots)
+             .Include(b => b.Guest)
+             .Include(b => b.Trainer)
+             .Where(b => b.GuestId == guestId)
+             .OrderByDescending(b => b.CreatedAt)
+             .ToListAsync();
         public async Task<ActivityBooking?> GetByIdAsync(int id) =>
         await _db.ActivityBookings
                  .Include(b => b.Activity)
                  .Include(b => b.ActivityGroup)
                  .Include(b => b.Member)
+             .Include(b => b.Guest)
             .Include(b => b.Trainer)
                  .FirstOrDefaultAsync(b => b.Id == id);
 
-    public async Task<bool> IsDuplicateAsync(int memberId, int activityGroupId) =>
-        await _db.ActivityBookings.AnyAsync(b =>
-            b.MemberId == memberId &&
-            b.ActivityGroupId == activityGroupId &&
+        public async Task<bool> IsDuplicateAsync(int? memberId, int? guestId, int activityGroupId) =>
+            await _db.ActivityBookings.AnyAsync(b =>
+                (memberId != null ? b.MemberId == memberId : b.GuestId == guestId) &&
+                    b.ActivityGroupId == activityGroupId &&
             b.Status != "Cancelled");
 
     public async Task<ActivityBooking> CreateAsync(ActivityBooking booking)
