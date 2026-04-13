@@ -1000,28 +1000,53 @@ body {
     </div>
   </div>
 </div>
-    <!-- ======== PAGE: SCHEDULE ======== -->
+<!-- ======== PAGE: SCHEDULE ======== -->
     <div class="page" id="page-schedule">
       <div class="page-header-clubly">
         <div>
           <h1 class="page-title-clubly">My Schedule</h1>
-          <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Daily view of your upcoming sessions</p>
-        </div>
-        <div class="d-flex align-items-center gap-2">
-          <button class="cal-nav-btn" id="prevDayBtn"><i class="bi bi-chevron-left"></i></button>
-          <span id="schedDateLabel" style="font-weight:700; font-size:.95rem; min-width:200px; text-align:center; color:var(--text);"></span>
-          <button class="cal-nav-btn" id="nextDayBtn"><i class="bi bi-chevron-right"></i></button>
+          <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your upcoming sessions</p>
         </div>
       </div>
 
       <div class="content-card">
-        <div id="scheduleList"></div>
-        <div class="empty-state" id="schedEmpty" style="display:none;">
-          <i class="bi bi-calendar-check"></i>
-          <p>No sessions scheduled for this day.</p>
-        </div>
-      </div>
+       <!-- Switch Tabs -->
+<ul class="nav nav-tabs mb-3" id="scheduleTypeTabs">
+  <li class="nav-item">
+    <button class="nav-link active" onclick="switchScheduleType('activity', this)">
+      <i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i>Activity Sessions
+    </button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" onclick="switchScheduleType('facility', this)">
+      <i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i>Facility Bookings
+    </button>
+  </li>
+</ul>
+
+<!-- Activity Section -->
+<div id="activityScheduleSection">
+  <div class="content-card">
+    <div id="scheduleList"></div>
+    <div class="empty-state" id="schedEmpty" style="display:none;">
+      <i class="bi bi-calendar-check"></i>
+      <p>No activity sessions.</p>
     </div>
+  </div>
+</div>
+<!-- Facility Section -->
+<div id="facilityScheduleSection" style="display:none;">
+  <div class="content-card">
+    <div id="facilityScheduleList"></div>
+    <div class="empty-state" id="facilitySchedEmpty" style="display:none;">
+      <i class="bi bi-building"></i>
+      <p>No facility bookings.</p>
+    </div>
+  </div>
+</div>
+
+      </div><!-- close content-card wrapper -->
+    </div><!-- close page-schedule -->
 
     <!-- ======== PAGE: PAYMENTS ======== -->
     <div class="page" id="page-payments">
@@ -1593,120 +1618,186 @@ function cancelBooking(id) {
 }
 
 // ===== SCHEDULE =====
-function renderSchedule() {
-  const d   = state.scheduleDate;
-  const key = d.toISOString().slice(0,10);
-  const opts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
-  document.getElementById('schedDateLabel').textContent = d.toLocaleDateString('en-US', opts);
-
-  const actItems  = state.schedule[key]      || [];
-  const facItems  = state.facilitySchedule?.[key] || [];
-  const el        = document.getElementById('scheduleList');
-  const empty     = document.getElementById('schedEmpty');
-
-  if (!actItems.length && !facItems.length) {
-    el.innerHTML = '';
-    empty.style.display = 'block';
-    return;
+function switchScheduleType(type, el) {
+  document.querySelectorAll('#scheduleTypeTabs .nav-link')
+    .forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (type === 'activity') {
+    document.getElementById('activityScheduleSection').style.display = 'block';
+    document.getElementById('facilityScheduleSection').style.display = 'none';
+  } else {
+    document.getElementById('activityScheduleSection').style.display = 'none';
+    document.getElementById('facilityScheduleSection').style.display = 'block';
   }
-  empty.style.display = 'none';
-
-  const colorBorderMap = {
-    'sched-orange':'var(--clubly-accent)',
-    'sched-teal':'var(--clubly-teal)',
-    'sched-gold':'var(--clubly-gold)',
-    'sched-blue':'#3b82f6'
-  };
-  const badgeMap = {
-    Confirmed:'badge-confirmed', Pending:'badge-pending',
-    Completed:'pill-completed',  Approved:'badge-approved'
-  };
-
-  // Activity section
-  let html = '';
-  if (actItems.length) {
-    html += `
-      <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;
-                  letter-spacing:1px;color:var(--clubly-accent);
-                  margin-bottom:10px;padding:6px 0;
-                  border-bottom:2px solid rgba(232,93,47,.15);">
-        <i class="bi bi-calendar-check me-2"></i>Activity Sessions
-      </div>`;
-    html += actItems.map(r => `
-      <div class="schedule-item" style="border-left-color:${colorBorderMap[r.colorClass]||'var(--clubly-accent)'};">
-        <div class="sched-icon ${r.colorClass}"><i class="${r.icon}"></i></div>
-        <div class="sched-details">
-          <div class="sched-name">${r.name}</div>
-          <div class="sched-info">
-            ${r.trainer !== '—' ? 'Trainer: '+r.trainer+' · ' : ''}${r.location}
-          </div>
-        </div>
-        <div class="sched-time-status">
-          <div class="sched-time">${r.time}</div>
-          <span class="sched-badge ${badgeMap[r.status]||''}">${r.status}</span>
-        </div>
-      </div>`).join('');
-  }
-
-  // Facility section
-  if (facItems.length) {
-    html += `
-      <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;
-                  letter-spacing:1px;color:var(--clubly-teal);
-                  margin:16px 0 10px;padding:6px 0;
-                  border-bottom:2px solid rgba(46,196,182,.15);">
-        <i class="bi bi-building me-2"></i>Facility Bookings
-      </div>`;
-    html += facItems.map(r => `
-      <div class="schedule-item teal" style="border-left-color:var(--clubly-teal);">
-        <div class="sched-icon sched-teal"><i class="bi bi-building"></i></div>
-        <div class="sched-details">
-          <div class="sched-name">${r.name}</div>
-          <div class="sched-info">
-            ${r.participants ? r.participants + ' participants' : ''} 
-            ${r.price ? ' · ' + r.price + ' EGP' : ''}
-          </div>
-        </div>
-        <div class="sched-time-status">
-          <div class="sched-time">${r.time}</div>
-          <span class="sched-badge ${badgeMap[r.status]||'badge-pending'}">${r.status}</span>
-        </div>
-      </div>`).join('');
-  }
-
-  el.innerHTML = html;
 }
 
+function renderSchedule() {
+  const badgeMap = {
+    Confirmed:'badge-confirmed', Pending:'badge-pending',
+    Completed:'pill-completed',  Approved:'badge-approved',
+    confirmed:'badge-confirmed', pending:'badge-pending',
+    completed:'pill-completed',  approved:'badge-approved'
+  };
+
+  // ── Activity Sessions ──
+  const allActItems = Object.values(state.schedule || {}).flat();
+  const actEl   = document.getElementById('scheduleList');
+  const actEmpty = document.getElementById('schedEmpty');
+
+  if (!allActItems.length) {
+    actEl.innerHTML = '';
+    actEmpty.style.display = 'block';
+  } else {
+    actEmpty.style.display = 'none';
+    actEl.innerHTML = allActItems.map(r => `
+      <div class="schedule-item" style="border-left-color:var(--clubly-accent); margin-bottom:10px;">
+        <div class="sched-icon sched-orange">
+          <i class="${r.icon || 'bi bi-calendar-check'}"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${r.name}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${r.trainer && r.trainer !== '—'
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-person-fill" style="color:var(--clubly-teal);"></i>${r.trainer}
+                 </span>` : ''}
+            ${r.location && r.location !== '—'
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-people-fill" style="color:var(--clubly-gold);"></i>${r.location}
+                 </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>${r.time}
+          </div>
+          <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">${r.status}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // ── Facility Bookings ──
+  const allFacItems = Object.values(state.facilitySchedule || {}).flat();
+  const facEl    = document.getElementById('facilityScheduleList');
+  const facEmpty = document.getElementById('facilitySchedEmpty');
+
+  if (!allFacItems.length) {
+    facEl.innerHTML = '';
+    facEmpty.style.display = 'block';
+  } else {
+    facEmpty.style.display = 'none';
+    facEl.innerHTML = allFacItems.map(r => `
+      <div class="schedule-item teal" style="border-left-color:var(--clubly-teal); margin-bottom:10px;">
+        <div class="sched-icon sched-teal">
+          <i class="bi bi-building"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${r.name}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${r.participants
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-people-fill" style="color:var(--clubly-teal);"></i>${r.participants} participants
+                 </span>` : ''}
+            ${r.price
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-tag-fill" style="color:var(--clubly-gold);"></i>${r.price} EGP
+                 </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>${r.time}
+          </div>
+          <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">${r.status}</span>
+        </div>
+      </div>`).join('');
+  }
+}
 // ===== PAYMENTS =====
 function renderPayments() {
-  const paid    = state.invoices.filter(i => i.paid).reduce((s, i) => s + i.amount, 0);
-  const pending = state.invoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
-  document.getElementById('pay-total').textContent   = paid + ' EGP';
-  document.getElementById('pay-pending').textContent = pending + ' EGP';
-  document.getElementById('invoiceCount').textContent = state.invoices.length + ' invoices';
+  // دمج الـ activity + facility invoices
+  const actInvoices = state.invoices || [];
+  const facInvoices = (state.facilityBookings || []).map((b, i) => ({
+    id:     'FAC-' + String(i+1).padStart(3,'0'),
+    name:   b.facilityName || '—',
+    date:   b.bookingDate  || '—',
+    amount: b.price        || 0,
+    paid:   (b.status || '').toLowerCase() === 'approved',
+    type:   'facility'
+  }));
+  const allInvoices = [...actInvoices, ...facInvoices];
 
-  document.getElementById('invoiceList').innerHTML = state.invoices.map(inv => `
+  const paid    = allInvoices.filter(i => i.paid).reduce((s, i) => s + i.amount, 0);
+  const pending = allInvoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
+  document.getElementById('pay-total').textContent    = paid    + ' EGP';
+  document.getElementById('pay-pending').textContent  = pending + ' EGP';
+  document.getElementById('invoiceCount').textContent = allInvoices.length + ' invoices';
+
+  if (!allInvoices.length) {
+    document.getElementById('invoiceList').innerHTML = `
+      <div class="empty-state">
+        <i class="bi bi-receipt"></i>
+        <p>No invoices yet.</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('invoiceList').innerHTML = allInvoices.map(inv => `
     <div class="invoice-item">
-      <div class="invoice-icon"><i class="bi bi-receipt"></i></div>
+      <div class="invoice-icon">
+        <i class="bi ${inv.type === 'facility' ? 'bi-building' : 'bi-receipt'}"></i>
+      </div>
       <div class="invoice-info">
-        <div class="invoice-name">${inv.name}</div>
+        <div class="invoice-name">
+          ${inv.type === 'facility'
+            ? `<span style="font-size:.7rem;background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">Facility</span>`
+            : `<span style="font-size:.7rem;background:rgba(232,93,47,.1);color:var(--clubly-accent);
+                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">Activity</span>`}
+          ${inv.name}
+        </div>
         <div class="invoice-date">${inv.id} · ${inv.date}</div>
       </div>
       <div style="display:flex; align-items:center; gap:10px;">
         <div class="invoice-amount ${inv.paid ? 'paid' : 'pending'}">${inv.amount} EGP</div>
-        ${!inv.paid
-          ? `<button class="btn-pay" onclick="payInvoice('${inv.id}')">Pay</button>`
-          : `<span style="font-size:.75rem; color:#22c55e; font-weight:700;"><i class="bi bi-check-circle-fill me-1"></i>Paid</span>`}
+     ${inv.paid
+          ? `<span style="font-size:.78rem;color:#22c55e;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;">
+               <i class="bi bi-check-circle-fill"></i>Paid
+             </span>`
+          : `<span style="font-size:.78rem;color:#f59e0b;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;
+                          background:rgba(245,158,11,.1);padding:3px 10px;
+                          border-radius:20px;border:1px solid rgba(245,158,11,.3);">
+               <i class="bi bi-clock-history"></i>Awaiting Approval
+             </span>`}
       </div>
     </div>`).join('');
 }
 
 function payInvoice(invId) {
-  const inv = state.invoices.find(i => i.id === invId);
-  if (inv && confirm(`Pay ${inv.amount} EGP for "${inv.name}"?`)) {
-    inv.paid = true;
-    const booking = state.bookings.find(b => b.name === inv.name);
-    if (booking) booking.status = 'confirmed';
+  // ابحث في الـ activity أو الـ facility
+  const actInvoices = state.invoices || [];
+  const facInvoices = (state.facilityBookings || []).map((b, i) => ({
+    id: 'FAC-' + String(i+1).padStart(3,'0'), name: b.facilityName || '—',
+    date: b.bookingDate || '—', amount: b.price || 0,
+    paid: (b.status||'').toLowerCase() === 'approved', type: 'facility', _idx: i
+  }));
+  const inv = [...actInvoices, ...facInvoices].find(i => i.id === invId);
+if (inv && confirm(`Pay ${inv.amount} EGP for "${inv.name}"?`)) {
+    if (inv.type === 'facility') {
+      // حدث الـ facility booking
+      const fb = state.facilityBookings[inv._idx];
+      if (fb) fb.status = 'Approved';
+    } else {
+      inv.paid = true;
+      const booking = state.bookings.find(b => b.name === inv.name);
+      if (booking) booking.status = 'confirmed';
+    }
     renderPayments();
     renderBookings();
     updateStats();
@@ -2255,23 +2346,17 @@ state.bookings = bookings.map(b => ({
     // حدث الـ schedule data
     state.schedule = {};
     state.bookingDates = [];
- bookings.forEach(b => {
+bookings.forEach(b => {
   const start = b.startDate?.split('T')[0];
-  const end   = b.endDate?.split('T')[0];
   if (!start) return;
 
-  // أضف الـ booking لكل يوم من startDate لـ endDate
-  const startD = new Date(start);
-  const endD   = end ? new Date(end) : startD;
-  
-  for (let dt = new Date(startD); dt <= endD; dt.setDate(dt.getDate() + 1)) {
-    const key = dt.toISOString().split('T')[0];
-    if (!state.schedule[key]) state.schedule[key] = [];
-    
-    // تجنب التكرار
-    const exists = state.schedule[key].find(x => x.bookingId === b.id);
-    if (exists) continue;
+  // أضف الـ booking مرة واحدة بس في الـ schedule
+  const key = start; // استخدم startDate كـ key فقط
+  if (!state.schedule[key]) state.schedule[key] = [];
 
+  // تجنب التكرار
+  const exists = state.schedule[key].find(x => x.bookingId === b.id);
+  if (!exists) {
     state.schedule[key].push({
       bookingId:  b.id,
       name:       b.activityName || '—',
@@ -2285,11 +2370,11 @@ state.bookings = bookings.map(b => ({
                     : '—',
       status:     b.status || '—'
     });
-
-    // Calendar dots
-    const d = dt.getDate();
-    if (!state.bookingDates.includes(d)) state.bookingDates.push(d);
   }
+
+  // Calendar dot للـ startDate فقط
+  const d = new Date(start).getDate();
+  if (!state.bookingDates.includes(d)) state.bookingDates.push(d);
 });
 // حدث الـ invoices من الـ bookings
     state.invoices = bookings.map((b, i) => ({
@@ -2456,6 +2541,7 @@ function requestUpgrade(planId, planName) {
     alert(`✅ Upgrade request sent for "${planName}"!\nAdmin will contact you soon.`);
   }
 }
+
 // ===== INIT =====
 generateCalendar();
 renderUpcoming();

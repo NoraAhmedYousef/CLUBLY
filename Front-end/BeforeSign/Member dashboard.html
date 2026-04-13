@@ -988,16 +988,27 @@ body {
       <i class="bi bi-speedometer2"></i>
       <span>Dashboard</span>
     </button>
-    <button class="sidebar-link" onclick="showPage('reservations')" id="sb-reservations" data-label="Reservations">
+  <button class="sidebar-link" onclick="showPage('reservations')" id="sb-reservations" data-label="Reservations">
       <i class="bi bi-calendar-check"></i>
       <span>Reservations</span>
     </button>
+    <button class="sidebar-link" onclick="showPage('schedule')" id="sb-schedule" data-label="Schedule">
+      <i class="bi bi-clock-history"></i>
+      <span>Schedule</span>
+    </button>
+       <button class="sidebar-link" onclick="showPage('payments')" id="sb-payments" data-label="Payments">
+  <i class="bi bi-receipt"></i>
+  <span>Payments</span>
+</button>
+    
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Account</div>
     <button class="sidebar-link" onclick="showPage('membership')" id="sb-membership" data-label="Membership">
       <i class="bi bi-credit-card"></i>
       <span>Membership</span>
     </button>
+
+ 
     <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
       <i class="bi bi-bell"></i>
       <span>Notifications</span>
@@ -1175,7 +1186,50 @@ body {
         </div>
       </div>
     </div>
+<!-- ======== PAGE: SCHEDULE ======== -->
+    <div class="page" id="page-schedule">
+      <div class="page-header-clubly">
+        <div>
+          <h1 class="page-title-clubly">My Schedule</h1>
+          <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your upcoming sessions</p>
+        </div>
+      </div>
 
+      <ul class="nav nav-tabs mb-3" id="memberScheduleTabs">
+        <li class="nav-item">
+          <button class="nav-link active" onclick="switchMemberScheduleType('activity', this)">
+            <i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i>Activity Sessions
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" onclick="switchMemberScheduleType('facility', this)">
+            <i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i>Facility Bookings
+          </button>
+        </li>
+      </ul>
+
+      <!-- Activity Section -->
+      <div id="memberActivityScheduleSection">
+        <div class="content-card">
+          <div id="memberActivityScheduleList"></div>
+          <div class="empty-state" id="memberActivitySchedEmpty" style="display:none;">
+            <i class="bi bi-calendar-check"></i>
+            <p>No activity sessions found.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Facility Section -->
+      <div id="memberFacilityScheduleSection" style="display:none;">
+        <div class="content-card">
+          <div id="memberFacilityScheduleList"></div>
+          <div class="empty-state" id="memberFacilitySchedEmpty" style="display:none;">
+            <i class="bi bi-building"></i>
+            <p>No facility bookings found.</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- ======== PAGE: MEMBERSHIP ======== -->
     <div class="page" id="page-membership">
       <div class="page-header-clubly">
@@ -1356,7 +1410,65 @@ body {
     </div>
   </div>
 </div>
+<!-- ======== PAGE: PAYMENTS ======== -->
+<div class="page" id="page-payments">
+  <div class="page-header-clubly">
+    <h1 class="page-title-clubly">Payments</h1>
+  </div>
 
+  <div class="row g-3 mb-3">
+    <div class="col-md-4">
+      <div class="payment-card"
+        style="background:linear-gradient(135deg,#0d1b2a,#1a3a5c);
+               border-radius:16px;padding:26px;color:#fff;position:relative;
+               overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);margin-bottom:20px;">
+        <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;
+                    background:rgba(46,196,182,.12);border-radius:50%;"></div>
+        <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
+                    opacity:.65;margin-bottom:4px;">Total Paid</div>
+        <div style="font-size:1.5rem;font-weight:900;position:relative;z-index:1;"
+             id="mem-pay-total">— EGP</div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,#4a1010,#7c2d12);
+                  border-radius:16px;padding:26px;color:#fff;position:relative;
+                  overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);">
+        <div style="position:absolute;bottom:-50px;left:-20px;width:140px;height:140px;
+                    background:rgba(232,93,47,.08);border-radius:50%;"></div>
+        <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
+                    opacity:.65;margin-bottom:4px;">Pending Amount</div>
+        <div style="font-size:1.5rem;font-weight:900;position:relative;z-index:1;"
+             id="mem-pay-pending">— EGP</div>
+        <div style="margin-top:10px;position:relative;z-index:1;">
+          <span style="display:inline-flex;align-items:center;gap:5px;
+                       background:rgba(245,158,11,.2);color:#f59e0b;
+                       border:1px solid rgba(245,158,11,.35);
+                       padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;
+                         display:inline-block;"></span>
+            Awaiting Payment
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="content-card">
+        <div class="card-title-clubly" style="display:flex;align-items:center;
+             justify-content:space-between;">
+          <span>Invoice History</span>
+          <span style="font-size:.78rem;color:var(--muted);font-weight:400;"
+                id="mem-invoice-count"></span>
+        </div>
+        <div id="mem-invoice-list">
+          <div class="text-center py-4" style="color:var(--muted);">
+            <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- ======== PAGE: AI ASSISTANT ======== -->
     <div class="page" id="page-ai">
       <div class="page-header-clubly">
@@ -1517,6 +1629,8 @@ body {
       <ul class="footer-links">
         <li><a onclick="showPage('dashboard')">Home</a></li>
         <li><a onclick="showPage('reservations')">Reservations</a></li>
+                <li><a onclick="showPage('schedule')">Schedule</a></li>
+
         <li><a onclick="showPage('membership')">Membership</a></li>
         <li><a onclick="showPage('notifications')">Notifications</a></li>
         <li><a onclick="showPage('profile')">Profile</a></li>
@@ -2023,6 +2137,8 @@ function showPage(name) {
   document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
   const hn = document.getElementById('hn-' + name);
   if (hn) hn.classList.add('active');
+  if (name === 'schedule') loadMemberSchedule();
+    if (name === 'payments')  loadMemberPayments();  
 
   state.currentPage = name;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2740,7 +2856,229 @@ async function loadMyBookings() {
     console.warn('Could not load bookings:', e);
   }
 }
+// ===== MEMBER SCHEDULE =====
+let _memberScheduleActivity = [];
+let _memberScheduleFacility = [];
 
+function switchMemberScheduleType(type, el) {
+  document.querySelectorAll('#memberScheduleTabs .nav-link')
+    .forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (type === 'activity') {
+    document.getElementById('memberActivityScheduleSection').style.display = 'block';
+    document.getElementById('memberFacilityScheduleSection').style.display = 'none';
+  } else {
+    document.getElementById('memberActivityScheduleSection').style.display = 'none';
+    document.getElementById('memberFacilityScheduleSection').style.display = 'block';
+  }
+}
+
+function renderMemberSchedule() {
+  const badgeMap = {
+    confirmed:'badge-confirmed', approved:'badge-confirmed',
+    pending:'badge-pending',     completed:'badge-completed',
+    cancelled:'badge-completed'
+  };
+
+  // ── Activity ──
+  const actEl    = document.getElementById('memberActivityScheduleList');
+  const actEmpty = document.getElementById('memberActivitySchedEmpty');
+
+  if (!_memberScheduleActivity.length) {
+    actEl.innerHTML = '';
+    actEmpty.style.display = 'block';
+  } else {
+    actEmpty.style.display = 'none';
+    actEl.innerHTML = _memberScheduleActivity.map(b => `
+      <div class="schedule-item" style="border-left-color:var(--clubly-accent); margin-bottom:10px;">
+        <div class="sched-icon sched-orange">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${b.activityName || '—'}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${b.trainerName ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-person-fill" style="color:var(--clubly-teal);"></i>${b.trainerName}
+              </span>` : ''}
+            ${b.groupName ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-people-fill" style="color:var(--clubly-gold);"></i>${b.groupName}
+              </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>
+            ${b.timeSlots?.length
+              ? b.timeSlots[0].startTime?.substring(0,5) + ' → ' + b.timeSlots[0].endTime?.substring(0,5)
+              : '—'}
+          </div>
+          <span class="sched-badge ${badgeMap[(b.status||'').toLowerCase()] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">
+            ${b.status || '—'}
+          </span>
+        </div>
+      </div>`).join('');
+  }
+
+  // ── Facility ──
+  const facEl    = document.getElementById('memberFacilityScheduleList');
+  const facEmpty = document.getElementById('memberFacilitySchedEmpty');
+
+  if (!_memberScheduleFacility.length) {
+    facEl.innerHTML = '';
+    facEmpty.style.display = 'block';
+  } else {
+    facEmpty.style.display = 'none';
+    facEl.innerHTML = _memberScheduleFacility.map(b => `
+      <div class="schedule-item" style="border-left-color:var(--clubly-teal); margin-bottom:10px;">
+        <div class="sched-icon sched-blue">
+          <i class="bi bi-building"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${b.facilityName || '—'}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${b.participants ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-people-fill" style="color:var(--clubly-teal);"></i>${b.participants} participants
+              </span>` : ''}
+            ${b.price ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-tag-fill" style="color:var(--clubly-gold);"></i>${b.price} EGP
+              </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>
+            ${b.startTime ? b.startTime.substring(0,5) : '—'} → ${b.endTime ? b.endTime.substring(0,5) : '—'}
+          </div>
+          <span class="sched-badge ${badgeMap[(b.status||'').toLowerCase()] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">
+            ${b.status || '—'}
+          </span>
+        </div>
+      </div>`).join('');
+  }
+}
+
+async function loadMemberSchedule() {
+  if (!memberId) return;
+  try {
+    const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+    _memberScheduleActivity = res.ok ? await res.json() : [];
+  } catch { _memberScheduleActivity = []; }
+
+  try {
+    const res2 = await fetch(`${API_BASE_URL}/FacilityBookings`);
+    const all  = res2.ok ? await res2.json() : [];
+    _memberScheduleFacility = all.filter(b => String(b.memberId) === String(memberId));
+  } catch { _memberScheduleFacility = []; }
+
+  renderMemberSchedule();
+}
+// ===== PAYMENTS PAGE =====
+async function loadMemberPayments() {
+  if (!memberId) return;
+
+  let actInvoices = [];
+  let facInvoices = [];
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+    if (res.ok) {
+      const bookings = await res.json();
+      actInvoices = bookings.map((b, i) => ({
+        id:     'INV-' + String(i + 1).padStart(3, '0'),
+        name:   b.activityName || '—',
+        date:   b.startDate ? b.startDate.split('T')[0] : '—',
+        amount: b.totalPrice || b.price || 0,
+        paid:   (b.status || '').toLowerCase() === 'approved',
+        type:   'activity'
+      }));
+    }
+  } catch { actInvoices = []; }
+
+  try {
+    const res2 = await fetch(`${API_BASE_URL}/FacilityBookings`);
+    if (res2.ok) {
+      const all = await res2.json();
+      const myFac = all.filter(b => String(b.memberId) === String(memberId));
+      facInvoices = myFac.map((b, i) => ({
+        id:     'FAC-' + String(i + 1).padStart(3, '0'),
+        name:   b.facilityName || '—',
+        date:   b.bookingDate ? b.bookingDate.split('T')[0] : '—',
+        amount: b.price || 0,
+        paid:   (b.status || '').toLowerCase() === 'approved',
+        type:   'facility'
+      }));
+    }
+  } catch { facInvoices = []; }
+
+  const allInvoices = [...actInvoices, ...facInvoices];
+  const paid    = allInvoices.filter(i => i.paid).reduce((s, i) => s + i.amount, 0);
+  const pending = allInvoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
+
+  document.getElementById('mem-pay-total').textContent   = paid    + ' EGP';
+  document.getElementById('mem-pay-pending').textContent = pending + ' EGP';
+  document.getElementById('mem-invoice-count').textContent =
+    allInvoices.length + ' invoice' + (allInvoices.length !== 1 ? 's' : '');
+
+  const listEl = document.getElementById('mem-invoice-list');
+  if (!allInvoices.length) {
+    listEl.innerHTML = `
+      <div class="text-center py-4" style="color:var(--muted);">
+        <i class="bi bi-receipt" style="font-size:2rem;opacity:.3;display:block;margin-bottom:8px;"></i>
+        <p>No invoices yet.</p>
+      </div>`;
+    return;
+  }
+
+  listEl.innerHTML = allInvoices.map(inv => `
+    <div style="display:flex;align-items:center;gap:14px;padding:14px 0;
+                border-bottom:1px solid var(--border);">
+      <div style="width:40px;height:40px;border-radius:10px;
+                  background:rgba(232,93,47,.1);color:var(--clubly-accent);
+                  display:flex;align-items:center;justify-content:center;
+                  font-size:1rem;flex-shrink:0;">
+        <i class="bi ${inv.type === 'facility' ? 'bi-building' : 'bi-receipt'}"></i>
+      </div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:.9rem;color:var(--text);">
+          <span style="font-size:.7rem;padding:1px 7px;border-radius:10px;
+                       margin-right:6px;font-weight:700;
+                       background:${inv.type === 'facility'
+                         ? 'rgba(46,196,182,.1);color:var(--clubly-teal)'
+                         : 'rgba(232,93,47,.1);color:var(--clubly-accent)'};">
+            ${inv.type === 'facility' ? 'Facility' : 'Activity'}
+          </span>
+          ${inv.name}
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">
+          ${inv.id} · ${inv.date}
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-weight:900;font-size:1rem;color:${inv.paid ? '#22c55e' : '#f59e0b'};">
+          ${inv.amount} EGP
+        </div>
+        ${inv.paid
+          ? `<span style="font-size:.78rem;color:#22c55e;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;">
+               <i class="bi bi-check-circle-fill"></i>Paid
+             </span>`
+          : `<span style="font-size:.78rem;color:#f59e0b;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;
+                          background:rgba(245,158,11,.1);padding:3px 10px;
+                          border-radius:20px;border:1px solid rgba(245,158,11,.3);">
+               <i class="bi bi-clock-history"></i>Awaiting Approval
+             </span>`}
+      </div>
+    </div>`).join('');
+}
 // ===== INIT =====
 generateCalendar();
 renderUpcoming();
