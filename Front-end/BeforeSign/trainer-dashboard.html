@@ -423,7 +423,23 @@ textarea.form-input{resize:vertical;min-height:90px;}
 .modal-header-cl{border-bottom:1px solid var(--border);padding:18px 22px;}
 .modal-body-cl{padding:22px;}
 .modal-footer-cl{border-top:1px solid var(--border);padding:14px 22px;display:flex;gap:10px;justify-content:flex-end;}
-
+.day-filter-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 7px 18px;
+  font-family: 'Cairo', sans-serif;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.day-filter-btn.active {
+  background: var(--clubly-teal);
+  color: #fff;
+  border-color: var(--clubly-teal);
+}
 /* signout */
 .signout-icon{width:80px;height:80px;border-radius:50%;background:rgba(239,68,68,.1);border:3px solid rgba(239,68,68,.3);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#ef4444;margin:0 auto 16px;}
 
@@ -433,6 +449,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
   .header-nav{display:none;}
   .trainer-name,.trainer-role{display:none;}
 }
+
 </style>
 </head>
 <body>
@@ -447,20 +464,22 @@ textarea.form-input{resize:vertical;min-height:90px;}
     <span class="logo-text">Cl<span>u</span>bly</span>
   </a>
   <nav class="header-nav">
-    <a onclick="showPage('dashboard')" id="hn-dashboard" class="active">Dashboard</a>
-    <a onclick="showPage('schedule')" id="hn-schedule">Schedule</a>
-    <a onclick="showPage('members')" id="hn-members">My Members</a>
-    <a onclick="showPage('sessions')" id="hn-sessions">Sessions</a>
-    <a onclick="showPage('reports')" id="hn-reports">Reports</a>
-    <a onclick="showPage('notifications')" id="hn-notifications">Notifications</a>
-  </nav>
+  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+  <a href="../AfterSign/index.html">Home</a>
+  <a href="../AfterSign/activities.html">Activities</a>
+  <a href="../AfterSign/facilities.html">Facilities</a>
+  <a href="../AfterSign/trainers.html">Trainers</a>
+  <a href="../AfterSign/plans.html">Membership Plans</a>
+  <a href="../AfterSign/about.html">About Us</a>
+  <a href="../AfterSign/faq.html">FAQ</a>
+  <a href="../AfterSign/contact.html">Contact</a>
+</nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn" title="Toggle Theme"><i class="bi bi-moon-stars"></i></button>
     <div class="trainer-badge">
       <div class="trainer-avatar">AK</div>
       <div>
         <div class="trainer-name">Ahmed Karim</div>
-        <div class="trainer-role">Senior Trainer</div>
       </div>
     </div>
     <button class="btn-signout" onclick="showPage('signout')">Sign Out</button>
@@ -476,22 +495,18 @@ textarea.form-input{resize:vertical;min-height:90px;}
     <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard" data-label="Dashboard">
       <i class="bi bi-speedometer2"></i><span class="link-text">Dashboard</span>
     </button>
-    <button class="sidebar-link" onclick="showPage('schedule')" id="sb-schedule" data-label="My Schedule">
-      <i class="bi bi-calendar-week"></i><span class="link-text">My Schedule</span>
-    </button>
+  <button class="sidebar-link" onclick="showPage('schedule-new')" id="sb-schedule-new" data-label="My Schedule">
+  <i class="bi bi-calendar-week"></i><span class="link-text">My Schedule</span>
+</button>
 
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Management</div>
     <button class="sidebar-link" onclick="showPage('members')" id="sb-members" data-label="My Members">
       <i class="bi bi-people"></i><span class="link-text">My Members</span>
     </button>
-    <button class="sidebar-link" onclick="showPage('sessions')" id="sb-sessions" data-label="Sessions">
-      <i class="bi bi-clipboard2-pulse"></i><span class="link-text">Sessions</span>
-    </button>
-    <button class="sidebar-link" onclick="showPage('reports')" id="sb-reports" data-label="Reports">
-      <i class="bi bi-bar-chart-line"></i><span class="link-text">Reports</span>
-    </button>
-
+ <button class="sidebar-link" onclick="showPage('groups')" id="sb-groups" data-label="My Groups">
+  <i class="bi bi-diagram-3"></i><span class="link-text">My Groups</span>
+</button>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Account</div>
     <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
@@ -522,56 +537,50 @@ textarea.form-input{resize:vertical;min-height:90px;}
       </div>
 
       <!-- Stats -->
-      <div class="row g-3 mb-4">
-        <div class="col-6 col-xl-2">
-          <div class="stat-card">
-            <div class="stat-icon si-orange"><i class="bi bi-calendar-check"></i></div>
-            <div class="stat-label">Today's Sessions</div>
-            <div class="stat-val">4</div>
-            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>1 from yesterday</div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-2">
-          <div class="stat-card">
-            <div class="stat-icon si-teal"><i class="bi bi-people"></i></div>
-            <div class="stat-label">Active Members</div>
-            <div class="stat-val">28</div>
-            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>3 this week</div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-2">
-          <div class="stat-card">
-            <div class="stat-icon si-gold"><i class="bi bi-star-fill"></i></div>
-            <div class="stat-label">Rating</div>
-            <div class="stat-val">4.8 <span class="stat-unit">/5</span></div>
-            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>+0.2 this month</div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-2">
-          <div class="stat-card">
-            <div class="stat-icon si-blue"><i class="bi bi-clock-history"></i></div>
-            <div class="stat-label">Hours This Month</div>
-            <div class="stat-val">68 <span class="stat-unit">hrs</span></div>
-            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>8 vs last month</div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-2">
-          <div class="stat-card">
-            <div class="stat-icon si-green"><i class="bi bi-check2-circle"></i></div>
-            <div class="stat-label">Sessions Done</div>
-            <div class="stat-val">142</div>
-            <div class="stat-change up"><i class="bi bi-arrow-up-short"></i>12 this month</div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-2">
-          <div class="stat-card">
-            <div class="stat-icon si-red"><i class="bi bi-x-circle"></i></div>
-            <div class="stat-label">Cancellations</div>
-            <div class="stat-val">3</div>
-            <div class="stat-change down"><i class="bi bi-arrow-down-short"></i>2 less this month</div>
-          </div>
-        </div>
-      </div>
+     <div class="row g-3 mb-4">
+  <div class="col-6 col-xl-2">
+    <div class="stat-card">
+      <div class="stat-icon si-orange"><i class="bi bi-calendar-check"></i></div>
+      <div class="stat-label">Today's Sessions</div>
+      <div class="stat-val" id="stat-today">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-xl-2">
+    <div class="stat-card">
+      <div class="stat-icon si-teal"><i class="bi bi-people"></i></div>
+      <div class="stat-label">Active Members</div>
+      <div class="stat-val" id="stat-members">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-xl-2">
+    <div class="stat-card">
+      <div class="stat-icon si-gold"><i class="bi bi-star-fill"></i></div>
+      <div class="stat-label">Rating</div>
+      <div class="stat-val" id="stat-rating">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-xl-2">
+    <div class="stat-card">
+      <div class="stat-icon si-blue"><i class="bi bi-receipt"></i></div>
+      <div class="stat-label">Total Bookings</div>
+      <div class="stat-val" id="stat-total">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-xl-2">
+    <div class="stat-card">
+      <div class="stat-icon si-green"><i class="bi bi-check2-circle"></i></div>
+      <div class="stat-label">Approved</div>
+      <div class="stat-val" id="stat-approved">—</div>
+    </div>
+  </div>
+  <div class="col-6 col-xl-2">
+    <div class="stat-card">
+      <div class="stat-icon si-red"><i class="bi bi-clock"></i></div>
+      <div class="stat-label">Pending</div>
+      <div class="stat-val" id="stat-pending">—</div>
+    </div>
+  </div>
+</div>
 
       <!-- Today's schedule + top members -->
       <div class="row g-3">
@@ -615,45 +624,64 @@ textarea.form-input{resize:vertical;min-height:90px;}
       </div>
     </div>
 
-    <!-- ====== PAGE: MEMBERS ====== -->
-    <div class="page" id="page-members">
-      <div class="page-header">
-        <div>
-          <h1 class="page-title">My Members</h1>
-          <p class="page-subtitle">28 active members under your training</p>
-        </div>
-        <div class="d-flex gap-2 flex-wrap">
-          <div class="search-bar">
-            <i class="bi bi-search" style="color:var(--muted);"></i>
-            <input type="text" id="memberSearch" placeholder="Search members..." oninput="filterMembers()">
-          </div>
-          <select class="form-input" id="memberFilter" onchange="filterMembers()" style="width:auto;border-radius:50px;padding:8px 16px;font-size:.85rem;">
-            <option value="all">All Types</option>
-            <option value="private">Private</option>
-            <option value="group">Group</option>
-          </select>
-        </div>
-      </div>
-      <div class="card-clubly">
-        <div class="tbl-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Member</th>
-                <th>Type</th>
-                <th>Speciality</th>
-                <th>Sessions Done</th>
-                <th>Last Session</th>
-                <th>Progress</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="membersTable"></tbody>
-          </table>
-        </div>
-      </div>
+   <!-- ====== PAGE: MEMBERS ====== -->
+<div class="page" id="page-members">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Members</h1>
+      <p class="page-subtitle" id="membersSubtitle">Loading...</p>
     </div>
+    <div class="search-bar">
+      <i class="bi bi-search" style="color:var(--muted);"></i>
+      <input type="text" id="memberSearch" placeholder="Search by name..." oninput="filterMembers()">
+    </div>
+  </div>
 
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-3" id="memberTypeTabs">
+    <li class="nav-item">
+      <button class="nav-link active" onclick="switchMemberTab('member', this)">
+        <i class="bi bi-person-check me-1"></i> Member Bookings
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" onclick="switchMemberTab('guest', this)">
+        <i class="bi bi-person me-1"></i> Guest Bookings
+      </button>
+    </li>
+  </ul>
+
+  <!-- Status Filter -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+    <button class="day-filter-btn active" onclick="filterMemberStatus('all', this)">All</button>
+    <button class="day-filter-btn" onclick="filterMemberStatus('approved', this)">Approved</button>
+    <button class="day-filter-btn" onclick="filterMemberStatus('pending', this)">Pending</button>
+    <button class="day-filter-btn" onclick="filterMemberStatus('cancelled', this)">Cancelled</button>
+  </div>
+
+  <!-- Table -->
+  <div class="card-clubly" style="padding:0;">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Type</th>
+            <th>Activity</th>
+            <th>Group</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="membersTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
     <!-- ====== PAGE: SESSIONS ====== -->
     <div class="page" id="page-sessions">
       <div class="page-header">
@@ -680,31 +708,31 @@ textarea.form-input{resize:vertical;min-height:90px;}
           <div class="card-clubly">
             <div class="card-title"><span>Quick Stats</span></div>
             <div class="row g-2 mb-3">
-              <div class="col-6">
-                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
-                  <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-accent);">12</div>
-                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Week</div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
-                  <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-teal);">48</div>
-                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Month</div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
-                  <div style="font-size:1.8rem;font-weight:900;color:#22c55e;">94%</div>
-                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Attendance</div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
-                  <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-gold);">4.8</div>
-                  <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Avg Rating</div>
-                </div>
-              </div>
-            </div>
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-accent);" id="sess-week">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Week</div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-teal);" id="sess-month">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Month</div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:#22c55e;" id="sess-approved">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Approved</div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-gold);" id="sess-pending">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Pending</div>
+    </div>
+  </div>
+</div>
             <div class="card-title" style="border-top:1px solid var(--border);padding-top:14px;">
               <span>By Type</span>
             </div>
@@ -851,11 +879,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
         <div class="profile-hero-info">
           <div class="profile-hero-name">Ahmed Karim</div>
           <div class="profile-hero-role"><i class="bi bi-shield-check me-1"></i>Senior Trainer · 5 Years Experience</div>
-          <div class="profile-hero-stars">
-            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-            <i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
-            <span style="color:rgba(255,255,255,.7);font-size:.82rem;margin-left:6px;">4.8 / 5 (124 reviews)</span>
-          </div>
+      
           <div style="margin-top:10px;">
             <span class="spec-tag">Yoga</span>
             <span class="spec-tag">CrossFit</span>
@@ -876,87 +900,67 @@ textarea.form-input{resize:vertical;min-height:90px;}
           <div class="card-clubly">
             <div class="card-title"><span>Personal Information</span></div>
             <form id="profileForm">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">First Name</label>
-                    <input class="form-input" type="text" value="Ahmed" id="pfFirstName">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Last Name</label>
-                    <input class="form-input" type="text" value="Karim" id="pfLastName">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input class="form-input" type="email" value="ahmed.karim@clubly.com" disabled>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Phone</label>
-                    <input class="form-input" type="tel" value="+20 01098765432">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Specialization</label>
-                    <select class="form-input">
-                      <option>Yoga & Mindfulness</option>
-                      <option selected>CrossFit & HIIT</option>
-                      <option>Pilates</option>
-                      <option>Swimming</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Experience (Years)</label>
-                    <input class="form-input" type="number" value="5" min="0">
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group">
-                    <label class="form-label">Bio</label>
-                    <textarea class="form-input">Certified CrossFit Level 2 and Yoga instructor with 5 years of experience helping members achieve their fitness goals through structured training plans and positive motivation.</textarea>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="form-group">
-                    <label class="form-label">Certifications</label>
-                    <input class="form-input" type="text" value="CrossFit Level 2, Yoga RYT-200, CPR Certified, Nutrition Coach">
-                  </div>
-                </div>
-              </div>
-              <button type="submit" class="btn-primary-cl mt-2" style="display:none"></button>
-            </form>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input class="form-input" type="text" id="pfFirstName">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input class="form-input" type="text" id="pfLastName">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="pfEmail" disabled>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed here.</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input class="form-input" type="tel" id="pfPhone">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">National ID</label>
+        <input class="form-input" type="text" id="pfNationalId" disabled>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed.</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Gender</label>
+        <input class="form-input" type="text" id="pfGender" disabled>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Date of Birth</label>
+        <input class="form-input" type="date" id="pfDob">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Years of Experience</label>
+        <input class="form-input" type="number" id="pfExp" min="0">
+      </div>
+    </div>
+
+  </div>
+  <button type="submit" class="btn-primary-cl mt-3">
+    <i class="bi bi-check-lg"></i> Save Changes
+  </button>
+</form>
           </div>
         </div>
         <div class="col-lg-4">
-          <div class="card-clubly mb-3">
-            <div class="card-title"><span>Quick Stats</span></div>
-            <div style="display:flex;flex-direction:column;gap:12px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
-                <span style="font-size:.85rem;color:var(--muted);">Total Sessions</span>
-                <span style="font-weight:900;color:var(--text);">142</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
-                <span style="font-size:.85rem;color:var(--muted);">Active Members</span>
-                <span style="font-weight:900;color:var(--text);">28</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
-                <span style="font-size:.85rem;color:var(--muted);">Rating</span>
-                <span style="font-weight:900;color:var(--clubly-gold);">4.8 ⭐</span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--bg);border-radius:8px;">
-                <span style="font-size:.85rem;color:var(--muted);">Joined</span>
-                <span style="font-weight:900;color:var(--text);">Jan 2020</span>
-              </div>
-            </div>
-          </div>
+
           <div class="card-clubly">
             <div class="card-title"><span>Change Password</span></div>
             <form id="passForm">
@@ -979,7 +983,58 @@ textarea.form-input{resize:vertical;min-height:90px;}
         </div>
       </div>
     </div>
+<!-- ====== PAGE: SCHEDULE (NEW) ====== -->
+<div class="page" id="page-schedule-new">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Schedule</h1>
+      <p class="page-subtitle">Weekly sessions from all your groups</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+    <button class="day-filter-btn active" onclick="filterScheduleDay('all',this)">All Days</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Saturday',this)">Sat</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Sunday',this)">Sun</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Monday',this)">Mon</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Tuesday',this)">Tue</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Wednesday',this)">Wed</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Thursday',this)">Thu</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Friday',this)">Fri</button>
+  </div>
+  <div id="scheduleGroupsList"></div>
+</div>
 
+<!-- ====== PAGE: GROUPS ====== -->
+<div class="page" id="page-groups">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Groups</h1>
+      <p class="page-subtitle">Your activity groups</p>
+    </div>
+    <button class="btn-teal-cl" onclick="loadTrainerGroups()">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </div>
+  <div class="card-clubly mb-3" style="padding:14px 20px;">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      <div class="search-bar" style="flex:1;min-width:200px;max-width:280px;">
+        <i class="bi bi-search" style="color:var(--muted);"></i>
+        <input type="text" id="groupSearch" placeholder="Search..." oninput="renderGroupsPage()">
+      </div>
+      <select id="groupActivityFilter" onchange="renderGroupsPage()"
+        class="form-input" style="width:auto;border-radius:50px;padding:8px 16px;">
+        <option value="">All Activities</option>
+      </select>
+      <select id="groupDayFilter" onchange="renderGroupsPage()"
+        class="form-input" style="width:auto;border-radius:50px;padding:8px 16px;">
+        <option value="">All Days</option>
+        <option>Saturday</option><option>Sunday</option><option>Monday</option>
+        <option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option>
+      </select>
+    </div>
+  </div>
+  <div id="groupsListContainer"></div>
+</div>
     <!-- ====== PAGE: SIGN OUT ====== -->
     <div class="page" id="page-signout">
       <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
@@ -989,7 +1044,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
           <p style="color:var(--muted);margin-bottom:24px;">You will need to sign in again to access your trainer portal.</p>
           <div class="d-flex gap-3 justify-content-center">
             <button class="btn-secondary-cl" onclick="showPage('dashboard')">Cancel</button>
-            <button class="btn-primary-cl" style="background:linear-gradient(135deg,#ef4444,#dc2626);" onclick="alert('Signed out! Redirecting to login...')">
+            <button class="btn-primary-cl" style="background:linear-gradient(135deg,#ef4444,#dc2626);"onclick="handleSignOut()">
               <i class="bi bi-box-arrow-right"></i> Sign Out
             </button>
           </div>
@@ -1121,51 +1176,25 @@ textarea.form-input{resize:vertical;min-height:90px;}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// ===== DATA =====
-const DATA = {
-  sessions: [
-    { id:1, name:"Morning Yoga", type:"yoga", date:"2025-02-22", start:"08:00", end:"09:00", location:"Studio A", capacity:15, enrolled:12, status:"active" },
-    { id:2, name:"CrossFit HIIT", type:"crossfit", date:"2025-02-22", start:"10:00", end:"11:00", location:"Gym Floor", capacity:20, enrolled:18, status:"active" },
-    { id:3, name:"Pilates Core", type:"pilates", date:"2025-02-22", start:"14:00", end:"15:00", location:"Studio B", capacity:12, enrolled:10, status:"active" },
-    { id:4, name:"Evening Zumba", type:"zumba", date:"2025-02-22", start:"18:00", end:"19:00", location:"Main Hall", capacity:30, enrolled:24, status:"active" },
-    { id:5, name:"Yoga Flow", type:"yoga", date:"2025-02-23", start:"09:00", end:"10:00", location:"Studio A", capacity:15, enrolled:8, status:"upcoming" },
-    { id:6, name:"Swimming Basics", type:"swim", date:"2025-02-23", start:"11:00", end:"12:00", location:"Olympic Pool", capacity:10, enrolled:6, status:"upcoming" },
-    { id:7, name:"CrossFit Strength", type:"crossfit", date:"2025-02-24", start:"07:00", end:"08:00", location:"Gym Floor", capacity:20, enrolled:15, status:"upcoming" },
-    { id:8, name:"Pilates Stretch", type:"pilates", date:"2025-02-20", start:"15:00", end:"16:00", location:"Studio B", capacity:12, enrolled:11, status:"completed" },
-  ],
-  members: [
-    { id:1, name:"Sara Ali", initials:"SA", color:"#3b82f6", type:"private", speciality:"Yoga", sessions:24, lastSession:"Feb 20, 2025", progress:78, status:"active" },
-    { id:2, name:"Omar Hassan", initials:"OH", color:"#22c55e", type:"group", speciality:"CrossFit", sessions:18, lastSession:"Feb 21, 2025", progress:65, status:"active" },
-    { id:3, name:"Nour Farid", initials:"NF", color:"#9333ea", type:"private", speciality:"Pilates", sessions:31, lastSession:"Feb 19, 2025", progress:90, status:"active" },
-    { id:4, name:"Khaled Maged", initials:"KM", color:"var(--clubly-accent)", type:"group", speciality:"CrossFit", sessions:12, lastSession:"Feb 18, 2025", progress:45, status:"active" },
-    { id:5, name:"Layla Samir", initials:"LS", color:"var(--clubly-teal)", type:"private", speciality:"Yoga", sessions:8, lastSession:"Feb 15, 2025", progress:30, status:"inactive" },
-    { id:6, name:"Tarek Ibrahim", initials:"TI", color:"var(--clubly-gold)", type:"group", speciality:"Zumba", sessions:20, lastSession:"Feb 22, 2025", progress:82, status:"active" },
-    { id:7, name:"Mona Wael", initials:"MW", color:"#ef4444", type:"private", speciality:"Pilates", sessions:15, lastSession:"Feb 21, 2025", progress:60, status:"active" },
-    { id:8, name:"Rami Adel", initials:"RA", color:"#3b82f6", type:"group", speciality:"CrossFit", sessions:9, lastSession:"Feb 16, 2025", progress:38, status:"active" },
-  ],
-  notifications: [
-    { id:1, msg:"Sara Ali booked a Yoga session for Feb 25", time:"5 min ago", type:"blue", icon:"fas fa-calendar-plus", read:false },
-    { id:2, msg:"Khaled Maged cancelled his CrossFit session", time:"1 hour ago", type:"red", icon:"fas fa-calendar-times", read:false },
-    { id:3, msg:"New member Rami Adel assigned to your group", time:"3 hours ago", type:"teal", icon:"fas fa-user-plus", read:false },
-    { id:4, msg:"Your Yoga session rated 5 stars by Nour Farid!", time:"Yesterday", type:"yellow", icon:"fas fa-star", read:false },
-    { id:5, msg:"Studio A is booked for maintenance on Feb 28", time:"Yesterday", type:"red", icon:"fas fa-exclamation-triangle", read:true },
-    { id:6, msg:"Monthly performance report is ready", time:"2 days ago", type:"blue", icon:"fas fa-chart-bar", read:true },
-    { id:7, msg:"Payment received for 3 private sessions", time:"3 days ago", type:"green", icon:"fas fa-dollar-sign", read:true },
-  ],
-  reviews: [
-    { member:"Sara Ali", rating:5, text:"Ahmed is an incredible trainer! My flexibility improved dramatically.", date:"Feb 18" },
-    { member:"Nour Farid", rating:5, text:"Best Pilates instructor I've ever had. Very motivating!", date:"Feb 15" },
-    { member:"Tarek Ibrahim", rating:4, text:"Great Zumba sessions, always energetic and fun.", date:"Feb 10" },
-  ]
-};
+  
+// ===== CONFIG =====
+const API = 'https://localhost:7132/api';
+const trainerId   = localStorage.getItem('userId');
+const trainerName = localStorage.getItem('fullName') || 'Trainer';
 
 const typeConfig = {
-  yoga:     { label:"Yoga",     color:"#3b82f6", bg:"rgba(59,130,246,.12)",  icon:"fas fa-spa" },
-  crossfit: { label:"CrossFit", color:"#e85d2f", bg:"rgba(232,93,47,.12)",   icon:"fas fa-dumbbell" },
-  pilates:  { label:"Pilates",  color:"#9333ea", bg:"rgba(147,51,234,.12)",  icon:"fas fa-heartbeat" },
-  swim:     { label:"Swimming", color:"#2ec4b6", bg:"rgba(46,196,182,.12)",  icon:"fas fa-swimmer" },
-  zumba:    { label:"Zumba",    color:"#d4a843", bg:"rgba(212,168,67,.12)",  icon:"fas fa-music" },
+  yoga:     { label:'Yoga',     color:'#3b82f6', bg:'rgba(59,130,246,.12)',  icon:'fas fa-spa' },
+  crossfit: { label:'CrossFit', color:'#e85d2f', bg:'rgba(232,93,47,.12)',   icon:'fas fa-dumbbell' },
+  pilates:  { label:'Pilates',  color:'#9333ea', bg:'rgba(147,51,234,.12)',  icon:'fas fa-heartbeat' },
+  swim:     { label:'Swimming', color:'#2ec4b6', bg:'rgba(46,196,182,.12)',  icon:'fas fa-swimmer' },
+  zumba:    { label:'Zumba',    color:'#d4a843', bg:'rgba(212,168,67,.12)',  icon:'fas fa-music' },
 };
+
+const AVATAR_COLORS = ['#3b82f6','#22c55e','#9333ea','#e85d2f','#2ec4b6','#d4a843','#ef4444'];
+
+function getInitials(name) {
+  return (name||'').split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+}
 
 // ===== SIDEBAR TOGGLE =====
 let sidebarOpen = true;
@@ -1180,9 +1209,36 @@ let dark = false;
 document.getElementById('themeBtn').addEventListener('click', () => {
   dark = !dark;
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
-  document.getElementById('themeBtn').innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+  document.getElementById('themeBtn').innerHTML = dark
+    ? '<i class="bi bi-sun"></i>'
+    : '<i class="bi bi-moon-stars"></i>';
 });
+function renderTrainerSessions(list) {
+  const data = list || _allBookings;
 
+  // حساب الـ stats
+  const now       = new Date();
+  const weekStart = new Date(now); 
+  weekStart.setDate(now.getDate() - now.getDay());
+  weekStart.setHours(0,0,0,0);
+  
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const thisWeek  = _allBookings.filter(b => new Date(b.startDate) >= weekStart).length;
+  const thisMonth = _allBookings.filter(b => new Date(b.startDate) >= monthStart).length;
+  const approved  = _allBookings.filter(b => (b.status||'').toLowerCase() === 'approved').length;
+  const pending   = _allBookings.filter(b => (b.status||'').toLowerCase() === 'pending').length;
+
+  const sw = document.getElementById('sess-week');
+  const sm = document.getElementById('sess-month');
+  const sa = document.getElementById('sess-approved');
+  const sp = document.getElementById('sess-pending');
+  if (sw) sw.textContent = thisWeek;
+  if (sm) sm.textContent = thisMonth;
+  if (sa) sa.textContent = approved;
+  if (sp) sp.textContent = pending;
+
+}
 // ===== NAVIGATION =====
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1196,50 +1252,7 @@ function showPage(name) {
   window.scrollTo({ top:0, behavior:'smooth' });
 }
 
-// ===== SESSION CARD HTML =====
-function sessionCardHTML(s) {
-  const t = typeConfig[s.type] || typeConfig.yoga;
-  const pct = Math.round((s.enrolled / s.capacity) * 100);
-  const statusBadge = s.status === 'completed' ? 'b-gray' : s.status === 'upcoming' ? 'b-blue' : 'b-green';
-  return `
-    <div class="session-card type-${s.type}">
-      <div class="session-icon" style="background:${t.bg};color:${t.color}"><i class="${t.icon}"></i></div>
-      <div class="session-info">
-        <div class="session-name">${s.name}</div>
-        <div class="session-meta"><i class="bi bi-geo-alt" style="margin-right:4px;"></i>${s.location} &nbsp;·&nbsp; <i class="bi bi-people" style="margin-right:4px;"></i>${s.enrolled}/${s.capacity}</div>
-      </div>
-      <div class="session-right">
-        <div class="session-time">${s.start} – ${s.end}</div>
-        <span class="badge-cl ${statusBadge}" style="margin-top:4px;">${s.status}</span>
-      </div>
-    </div>`;
-}
-
-// ===== DASHBOARD =====
-function renderDashboard() {
-  const today = new Date().toISOString().slice(0,10);
-  document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  const todaySess = DATA.sessions.filter(s => s.date === '2025-02-22');
-  document.getElementById('todaySchedule').innerHTML = todaySess.length
-    ? todaySess.map(sessionCardHTML).join('')
-    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions scheduled today.</p>';
-
-  const top = [...DATA.members].sort((a,b) => b.progress - a.progress).slice(0,5);
-  document.getElementById('topMembersList').innerHTML = top.map(m => `
-    <div class="member-row">
-      <div class="m-avatar" style="background:${m.color}">${m.initials}</div>
-      <div style="flex:1">
-        <div class="m-name">${m.name}</div>
-        <div class="m-detail">${m.speciality} · ${m.sessions} sessions</div>
-      </div>
-      <div class="progress-bar-wrap">
-        <div style="font-size:.72rem;color:var(--muted);text-align:right;margin-bottom:3px;">${m.progress}%</div>
-        <div class="progress-track"><div class="progress-fill" style="width:${m.progress}%"></div></div>
-      </div>
-    </div>`).join('');
-}
-
-// ===== SCHEDULE =====
+// ===== WEEK SCHEDULE (grid - بيستخدم الـ bookings الحقيقية) =====
 let weekOffset = 0;
 function getWeekStart(offset) {
   const d = new Date();
@@ -1254,8 +1267,8 @@ function renderWeekSchedule() {
   const ws = getWeekStart(weekOffset);
   const we = new Date(ws); we.setDate(we.getDate() + 6);
   const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const hours = ['07:00','08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:00','17:00','18:00','19:00'];
-  const typeColors = { yoga:'#3b82f6', crossfit:'#e85d2f', pilates:'#9333ea', swim:'#2ec4b6', zumba:'#d4a843' };
+  const hours = ['07:00','08:00','09:00','10:00','11:00','12:00',
+                 '14:00','15:00','16:00','17:00','18:00','19:00'];
 
   document.getElementById('weekLabel').textContent =
     ws.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' – ' +
@@ -1263,10 +1276,13 @@ function renderWeekSchedule() {
 
   let html = `<div class="week-grid" style="min-width:600px;">`;
   html += `<div class="wg-header"></div>`;
+
   for (let i = 0; i < 7; i++) {
     const d = new Date(ws); d.setDate(d.getDate() + i);
     const isToday = d.toDateString() === new Date().toDateString();
-    html += `<div class="wg-header" style="${isToday ? 'color:var(--clubly-accent);' : ''}">${days[i]}<br><span style="font-size:.7rem;font-weight:400;">${d.getDate()}</span></div>`;
+    html += `<div class="wg-header" style="${isToday?'color:var(--clubly-accent);':''}">
+      ${days[i]}<br><span style="font-size:.7rem;font-weight:400;">${d.getDate()}</span>
+    </div>`;
   }
 
   hours.forEach(hr => {
@@ -1274,12 +1290,19 @@ function renderWeekSchedule() {
     for (let i = 0; i < 7; i++) {
       const d = new Date(ws); d.setDate(d.getDate() + i);
       const dateStr = d.toISOString().slice(0,10);
-      const sess = DATA.sessions.filter(s => s.date === dateStr && s.start === hr);
-      if (sess.length) {
+      const matched = _allBookings.filter(b => {
+        const bDate = b.startDate ? b.startDate.split('T')[0] : '';
+        return bDate === dateStr;
+      });
+      if (matched.length) {
         html += `<div class="wg-cell" style="border:none;">`;
-        sess.forEach(s => {
-          const c = typeColors[s.type] || '#888';
-          html += `<div class="wg-session" style="background:${c}22;color:${c};border-left:3px solid ${c};" title="${s.name} · ${s.location}">${s.name}</div>`;
+        matched.forEach(b => {
+          html += `<div class="wg-session"
+            style="background:rgba(232,93,47,.15);color:var(--clubly-accent);
+                   border-left:3px solid var(--clubly-accent);"
+            title="${b.activityName||'Session'} · ${b.memberName||''}">
+            ${b.activityName||'Session'}
+          </div>`;
         });
         html += `</div>`;
       } else {
@@ -1287,6 +1310,7 @@ function renderWeekSchedule() {
       }
     }
   });
+
   html += `</div>`;
   document.getElementById('weekScheduleGrid').innerHTML = html;
 }
@@ -1294,117 +1318,85 @@ function renderWeekSchedule() {
 document.getElementById('prevWeekBtn').addEventListener('click', () => { weekOffset--; renderWeekSchedule(); });
 document.getElementById('nextWeekBtn').addEventListener('click', () => { weekOffset++; renderWeekSchedule(); });
 
-// ===== MEMBERS =====
-function renderMembers(list) {
-  const statusBadge = s => s === 'active' ? '<span class="badge-cl b-green">Active</span>' : '<span class="badge-cl b-gray">Inactive</span>';
-  document.getElementById('membersTable').innerHTML = list.map(m => `
-    <tr>
-      <td><div style="display:flex;align-items:center;gap:10px;">
-        <div class="m-avatar" style="background:${m.color};width:34px;height:34px;font-size:.78rem;">${m.initials}</div>
-        <div><div style="font-weight:700;">${m.name}</div><div style="font-size:.75rem;color:var(--muted);">${m.type} training</div></div>
-      </div></td>
-      <td><span class="badge-cl ${m.type==='private'?'b-orange':'b-blue'}">${m.type}</span></td>
-      <td>${m.speciality}</td>
-      <td><strong>${m.sessions}</strong></td>
-      <td style="color:var(--muted);font-size:.85rem;">${m.lastSession}</td>
-      <td><div style="display:flex;align-items:center;gap:8px;">
-        <div class="progress-track" style="width:80px;"><div class="progress-fill" style="width:${m.progress}%"></div></div>
-        <span style="font-size:.78rem;font-weight:700;">${m.progress}%</span>
-      </div></td>
-      <td>${statusBadge(m.status)}</td>
-    </tr>`).join('');
-}
-
-function filterMembers() {
-  const q = document.getElementById('memberSearch').value.toLowerCase();
-  const f = document.getElementById('memberFilter').value;
-  renderMembers(DATA.members.filter(m =>
-    (m.name.toLowerCase().includes(q) || m.speciality.toLowerCase().includes(q)) &&
-    (f === 'all' || m.type === f)
-  ));
-}
-
-// ===== SESSIONS PAGE =====
-function renderAllSessions(list) {
-  document.getElementById('allSessionsList').innerHTML = (list || DATA.sessions).map(sessionCardHTML).join('');
-}
-function filterSessions(q) {
-  renderAllSessions(DATA.sessions.filter(s => s.name.toLowerCase().includes(q.toLowerCase())));
-}
-function renderSessionTypeBreakdown() {
-  const counts = {};
-  DATA.sessions.forEach(s => { counts[s.type] = (counts[s.type]||0) + 1; });
-  document.getElementById('sessionTypeBreakdown').innerHTML = Object.entries(counts).map(([type, count]) => {
-    const t = typeConfig[type];
-    const pct = Math.round((count / DATA.sessions.length) * 100);
-    return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-      <div style="width:32px;height:32px;border-radius:8px;background:${t.bg};color:${t.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;"><i class="${t.icon}"></i></div>
-      <div style="flex:1;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:.82rem;font-weight:700;color:var(--text);">${t.label}</span><span style="font-size:.78rem;color:var(--muted);">${count} sessions</span></div>
-        <div class="progress-track"><div class="progress-fill" style="width:${pct}%;background:${t.color};"></div></div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-// ===== REPORTS =====
+// ===== REPORTS (static charts + real members) =====
 function renderReports() {
-  // bar chart
-  const weekData = [
-    { label:'Mon', val:3 }, { label:'Tue', val:4 }, { label:'Wed', val:2 },
-    { label:'Thu', val:5 }, { label:'Fri', val:4 }, { label:'Sat', val:2 }, { label:'Sun', val:1 }
-  ];
-  const max = Math.max(...weekData.map(d => d.val));
+  // ── Bar chart من الـ bookings الحقيقية ──
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const weekStart = new Date();
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
+  weekStart.setHours(0,0,0,0);
+
+  const weekData = days.map((label, i) => {
+    const d = new Date(weekStart);
+    d.setDate(d.getDate() + i);
+    const dateStr = d.toISOString().slice(0,10);
+    const val = _allBookings.filter(b => (b.startDate||'').split('T')[0] === dateStr).length;
+    return { label, val };
+  });
+
+  const max = Math.max(...weekData.map(d => d.val), 1);
   document.getElementById('sessionsChart').innerHTML = `
     <div class="bar-chart" style="margin-bottom:28px;">
       ${weekData.map(d => {
-        const h = Math.round((d.val/max)*80);
-        return `<div class="bar" style="height:${h}px;background:linear-gradient(180deg,var(--clubly-accent),rgba(232,93,47,.3));">
+        const h = Math.round((d.val / max) * 80);
+        return `<div class="bar"
+          style="height:${Math.max(h,4)}px;background:linear-gradient(180deg,var(--clubly-accent),rgba(232,93,47,.3));">
           <span class="bar-val">${d.val}</span>
           <span class="bar-label">${d.label}</span>
         </div>`;
       }).join('')}
     </div>`;
 
-  // progress table
-  document.getElementById('progressTable').innerHTML = DATA.members.slice(0,6).map(m => `
-    <tr>
-      <td><div style="display:flex;align-items:center;gap:8px;">
-        <div class="m-avatar" style="background:${m.color};width:30px;height:30px;font-size:.7rem;">${m.initials}</div>
-        <span style="font-weight:600;">${m.name}</span>
-      </div></td>
-      <td style="font-size:.82rem;color:var(--muted);">${m.speciality}</td>
-      <td><div style="display:flex;align-items:center;gap:8px;">
-        <div class="progress-track" style="width:80px;"><div class="progress-fill" style="width:${m.progress}%"></div></div>
-        <span style="font-size:.78rem;font-weight:700;">${m.progress}%</span>
-      </div></td>
-      <td><strong>${m.sessions}</strong></td>
-      <td><span style="color:${m.progress > 60 ? '#22c55e':'var(--clubly-accent)'};font-size:1.1rem;">${m.progress > 60 ? '↑':'→'}</span></td>
-    </tr>`).join('');
+  // ── Member progress من الـ bookings ──
+  const memberMap = {};
+  _allBookings.forEach(b => {
+    if (!b.memberId) return;
+    if (!memberMap[b.memberId]) memberMap[b.memberId] = { name: b.memberName||'Member', count: 0, activity: b.activityName||'—' };
+    memberMap[b.memberId].count++;
+  });
+  const members = Object.values(memberMap).slice(0, 6);
 
-  // monthly summary
+  document.getElementById('progressTable').innerHTML = members.length
+    ? members.map((m, i) => `
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="m-avatar" style="background:${AVATAR_COLORS[i%AVATAR_COLORS.length]};width:30px;height:30px;font-size:.7rem;">
+                ${getInitials(m.name)}
+              </div>
+              <span style="font-weight:600;">${m.name}</span>
+            </div>
+          </td>
+          <td style="font-size:.82rem;color:var(--muted);">${m.activity}</td>
+          <td><strong>${m.count}</strong> bookings</td>
+          <td><span style="color:#22c55e;font-size:1.1rem;">↑</span></td>
+        </tr>`).join('')
+    : '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);">No data yet.</td></tr>';
+
+  // ── Monthly summary ──
   document.getElementById('monthlySummary').innerHTML = [
-    { label:'Total Sessions', val:'48', icon:'bi-calendar-check', color:'var(--clubly-accent)' },
-    { label:'Total Hours', val:'68 hrs', icon:'bi-clock', color:'var(--clubly-teal)' },
-    { label:'Avg Attendance', val:'94%', icon:'bi-people', color:'#22c55e' },
-    { label:'New Members', val:'3', icon:'bi-person-plus', color:'#3b82f6' },
+    { label:'Total Bookings', val: _allBookings.length,                                                                      icon:'bi-calendar-check', color:'var(--clubly-accent)' },
+    { label:'Approved',       val: _allBookings.filter(b=>(b.status||'').toLowerCase()==='approved').length,                 icon:'bi-check-circle',   color:'#22c55e' },
+    { label:'Pending',        val: _allBookings.filter(b=>(b.status||'').toLowerCase()==='pending').length,                  icon:'bi-clock',          color:'var(--clubly-gold)' },
+    { label:'Members',        val: new Set(_allBookings.map(b=>b.memberId).filter(Boolean)).size,                            icon:'bi-people',         color:'#3b82f6' },
   ].map(i => `
-    <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:10px;border:1px solid var(--border);">
-      <div style="width:38px;height:38px;border-radius:9px;background:${i.color}22;color:${i.color};display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;"><i class="bi ${i.icon}"></i></div>
-      <div style="flex:1;"><div style="font-size:.78rem;color:var(--muted);">${i.label}</div></div>
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;
+                background:var(--bg);border-radius:10px;margin-bottom:10px;
+                border:1px solid var(--border);">
+      <div style="width:38px;height:38px;border-radius:9px;
+                  background:${i.color}22;color:${i.color};
+                  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">
+        <i class="bi ${i.icon}"></i>
+      </div>
+      <div style="flex:1;font-size:.78rem;color:var(--muted);">${i.label}</div>
       <div style="font-weight:900;font-size:1.1rem;color:var(--text);">${i.val}</div>
     </div>`).join('');
 
-  // reviews
-  document.getElementById('reviewsList').innerHTML = DATA.reviews.map(r => `
-    <div style="padding:14px 0;border-bottom:1px solid var(--border);">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-        <span style="font-weight:700;font-size:.88rem;">${r.member}</span>
-        <span style="color:var(--clubly-gold);font-size:.85rem;">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
-      </div>
-      <p style="font-size:.82rem;color:var(--muted);margin:0;">"${r.text}"</p>
-      <div style="font-size:.72rem;color:var(--muted);margin-top:4px;">${r.date}</div>
-    </div>`).join('');
+  document.getElementById('reviewsList').innerHTML = `
+    <div style="text-align:center;padding:30px;color:var(--muted);">
+      <i class="bi bi-star" style="font-size:2rem;opacity:.3;display:block;margin-bottom:8px;"></i>
+      <p>Reviews coming soon.</p>
+    </div>`;
 }
 
 // ===== TRAINER NOTIFICATIONS =====
@@ -1419,35 +1411,27 @@ let _trainerReadIds = new Set(
 );
 
 function saveTrainerReadState() {
-  localStorage.setItem('trainerReadIds',
-    JSON.stringify([..._trainerReadIds]));
+  localStorage.setItem('trainerReadIds', JSON.stringify([..._trainerReadIds]));
 }
-
 function markTrainerAsRead(id) {
   _trainerReadIds.add(String(id));
   saveTrainerReadState();
   updateTrainerUnreadBadge();
 }
-
 function markAllTrainerRead() {
   _trainerNotifs.forEach(n => _trainerReadIds.add(String(n.id)));
   saveTrainerReadState();
   renderTrainerNotifList();
   updateTrainerUnreadBadge();
 }
-
 function updateTrainerUnreadBadge() {
-  const unread = _trainerNotifs
-    .filter(n => !_trainerReadIds.has(String(n.id))).length;
-
+  const unread = _trainerNotifs.filter(n => !_trainerReadIds.has(String(n.id))).length;
   const badge = document.getElementById('trainerUnreadBadge');
   if (badge) {
     badge.textContent = `${unread} unread`;
-    badge.style.background = unread > 0
-      ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
-    badge.style.color = unread > 0 ? '#b45309' : 'var(--muted)';
-    badge.style.borderColor = unread > 0
-      ? 'rgba(245,158,11,.3)' : 'var(--border)';
+    badge.style.background   = unread > 0 ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
+    badge.style.color        = unread > 0 ? '#b45309' : 'var(--muted)';
+    badge.style.borderColor  = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
   }
 }
 
@@ -1457,42 +1441,34 @@ async function loadTrainerNotifications() {
     <div style="text-align:center;padding:50px;color:var(--muted);">
       <div class="spinner-border spinner-border-sm me-2"></div>Loading…
     </div>`;
-
   try {
     const res = await fetch(NOTIF_API_TRAINER);
     const all = res.ok ? await res.json() : [];
     _trainerNotifs = all
       .filter(n => n.toTrainers === true || n.toTrainers === 'true' || n.toTrainers == 1)
-      .sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+      .sort((a,b) => new Date(b.sentAt) - new Date(a.sentAt));
     updateTrainerUnreadBadge();
     applyTrainerNotifFilters();
   } catch(e) {
     if (listEl) listEl.innerHTML = `
       <div style="text-align:center;padding:50px;color:#ef4444;">
-        <i class="bi bi-exclamation-circle"
-           style="font-size:2rem;display:block;margin-bottom:10px;"></i>
+        <i class="bi bi-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:10px;"></i>
         Failed to load notifications
       </div>`;
   }
 }
 
 function applyTrainerNotifFilters() {
-  const q      = (document.getElementById('trainerNotifSearch')?.value || '').toLowerCase();
-  const type   = document.getElementById('trainerNotifType')?.value || '';
-  const status = document.getElementById('trainerNotifStatus')?.value || '';
-
+  const q      = (document.getElementById('trainerNotifSearch')?.value||'').toLowerCase();
+  const type   = document.getElementById('trainerNotifType')?.value||'';
+  const status = document.getElementById('trainerNotifStatus')?.value||'';
   _trainerNotifsFiltered = _trainerNotifs.filter(n => {
-    const matchQ = !q ||
-      (n.title||'').toLowerCase().includes(q) ||
-      (n.description||'').toLowerCase().includes(q);
+    const matchQ = !q || (n.title||'').toLowerCase().includes(q) || (n.description||'').toLowerCase().includes(q);
     const matchT = !type || n.type === type;
     const isRead = _trainerReadIds.has(String(n.id));
-    const matchS = !status
-      || (status === 'unread' && !isRead)
-      || (status === 'read'   &&  isRead);
+    const matchS = !status || (status==='unread'&&!isRead) || (status==='read'&&isRead);
     return matchQ && matchT && matchS;
   });
-
   _trainerNotifPage = 1;
   renderTrainerNotifList();
 }
@@ -1504,140 +1480,103 @@ function renderTrainerNotifList() {
   const total      = _trainerNotifsFiltered.length;
   const totalPages = Math.max(1, Math.ceil(total / _trainerNotifPageSize));
   if (_trainerNotifPage > totalPages) _trainerNotifPage = totalPages;
-
   const start = (_trainerNotifPage - 1) * _trainerNotifPageSize;
   const items = _trainerNotifsFiltered.slice(start, start + _trainerNotifPageSize);
 
   const infoEl = document.getElementById('trainerNotifInfo');
   if (infoEl) infoEl.textContent = total
-    ? `Showing ${start+1}–${Math.min(start+_trainerNotifPageSize,total)} of ${total}`
-    : '';
+    ? `Showing ${start+1}–${Math.min(start+_trainerNotifPageSize,total)} of ${total}` : '';
 
   if (!items.length) {
     listEl.innerHTML = `
       <div style="text-align:center;padding:60px 20px;color:var(--muted);">
-        <i class="bi bi-bell-slash"
-           style="font-size:2.5rem;opacity:.35;display:block;margin-bottom:12px;"></i>
-        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">
-          No notifications</p>
-        <p style="font-size:.88rem;">
-          Notifications sent to trainers will appear here</p>
+        <i class="bi bi-bell-slash" style="font-size:2.5rem;opacity:.35;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">No notifications</p>
+        <p style="font-size:.88rem;">Notifications sent to trainers will appear here</p>
       </div>`;
     document.getElementById('trainerNotifPagination').innerHTML = '';
     return;
   }
 
-  const typeConfig = {
-    'Info':    { icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.12)',  color:'#0590a8', pill:'rgba(13,202,240,.15)',  pillColor:'#0590a8'  },
-    'Warning': { icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#a07700', pill:'rgba(255,193,7,.18)',   pillColor:'#a07700'  },
-    'Success': { icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.12)',   color:'#198754', pill:'rgba(25,135,84,.15)',   pillColor:'#198754'  },
-    'Urgent':  { icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.12)',   color:'#dc3545', pill:'rgba(220,53,69,.15)',   pillColor:'#dc3545'  },
-    'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.12)', color:'#64748b', pill:'rgba(100,116,139,.15)', pillColor:'#64748b'  },
+  const nTypeConfig = {
+    'Info':    { icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.12)',  color:'#0590a8', pill:'rgba(13,202,240,.15)',  pillColor:'#0590a8' },
+    'Warning': { icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#a07700', pill:'rgba(255,193,7,.18)',   pillColor:'#a07700' },
+    'Success': { icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.12)',   color:'#198754', pill:'rgba(25,135,84,.15)',   pillColor:'#198754' },
+    'Urgent':  { icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.12)',   color:'#dc3545', pill:'rgba(220,53,69,.15)',   pillColor:'#dc3545' },
+    'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.12)', color:'#64748b', pill:'rgba(100,116,139,.15)', pillColor:'#64748b' },
   };
-
-  const typeLabels = {
-    'Info':'ℹ Info','Warning':'⚠ Warning',
-    'Success':'✓ Success','Urgent':'🔴 Urgent'
-  };
+  const typeLabels = { 'Info':'ℹ Info','Warning':'⚠ Warning','Success':'✓ Success','Urgent':'🔴 Urgent' };
 
   listEl.innerHTML = items.map(n => {
     const isRead = _trainerReadIds.has(String(n.id));
-    const cfg    = typeConfig[n.type] || typeConfig['default'];
+    const cfg    = nTypeConfig[n.type] || nTypeConfig['default'];
     const d      = n.sentAt ? new Date(n.sentAt) : null;
-
-    let timeStr = '—';
+    let timeStr  = '—';
     if (d) {
-      const diff  = new Date() - d;
-      const mins  = Math.floor(diff / 60000);
-      const hours = Math.floor(diff / 3600000);
-      const days  = Math.floor(diff / 86400000);
-      if      (mins  < 1)  timeStr = 'Just now';
-      else if (mins  < 60) timeStr = `${mins}m ago`;
-      else if (hours < 24) timeStr = `${hours}h ago`;
-      else if (days  < 7)  timeStr = `${days}d ago`;
-      else timeStr = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+      const diff = new Date()-d, mins=Math.floor(diff/60000), hours=Math.floor(diff/3600000), days=Math.floor(diff/86400000);
+      if (mins<1) timeStr='Just now';
+      else if (mins<60) timeStr=`${mins}m ago`;
+      else if (hours<24) timeStr=`${hours}h ago`;
+      else if (days<7) timeStr=`${days}d ago`;
+      else timeStr=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
     }
-
     const fullDate = d
       ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
-        + ' at ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
-      : '';
-
-    const shortDesc = (n.description||'').length > 130
-      ? n.description.substring(0,130) + '…'
-      : (n.description||'');
-
+        +' at '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) : '';
+    const shortDesc = (n.description||'').length>130 ? n.description.substring(0,130)+'…' : (n.description||'');
     const thumbHtml = n.imageUrl
-      ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
-              style="width:64px;height:48px;object-fit:cover;
-                     border-radius:8px;border:1px solid var(--border);flex-shrink:0;">`
-      : '';
+      ? `<img src="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}"
+             style="width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;">` : '';
 
     return `
       <div onclick="openTrainerNotifDetail(${n.id})"
-        style="display:flex;align-items:flex-start;gap:14px;
-               padding:18px 22px;border-bottom:1px solid var(--border);
-               cursor:pointer;transition:background .15s;position:relative;
+        style="display:flex;align-items:flex-start;gap:14px;padding:18px 22px;
+               border-bottom:1px solid var(--border);cursor:pointer;
+               transition:background .15s;position:relative;
                background:${isRead?'transparent':'rgba(232,93,47,.025)'};"
         onmouseover="this.style.background='rgba(232,93,47,.04)'"
         onmouseout="this.style.background='${isRead?'transparent':'rgba(232,93,47,.025)'}'">
 
-        ${!isRead ? `<div style="position:absolute;left:0;top:0;bottom:0;
-          width:4px;background:var(--clubly-accent);
-          border-radius:0 4px 4px 0;"></div>` : ''}
+        ${!isRead?`<div style="position:absolute;left:0;top:0;bottom:0;width:4px;
+          background:var(--clubly-accent);border-radius:0 4px 4px 0;"></div>`:''}
 
         <div style="width:46px;height:46px;border-radius:50%;flex-shrink:0;
                     background:${cfg.bg};color:${cfg.color};margin-top:2px;
-                    display:flex;align-items:center;justify-content:center;
-                    font-size:20px;">
+                    display:flex;align-items:center;justify-content:center;font-size:20px;">
           <i class="bi ${cfg.icon}"></i>
         </div>
 
         <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;justify-content:space-between;
-                      gap:12px;margin-bottom:5px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px;">
             <span style="font-size:.93rem;font-weight:${isRead?'600':'800'};
                          color:${isRead?'var(--muted)':'var(--text)'};
-                         white-space:nowrap;overflow:hidden;
-                         text-overflow:ellipsis;flex:1;">
+                         white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">
               ${n.title||'—'}
-              ${!isRead ? `<span style="display:inline-block;width:8px;height:8px;
-                background:var(--clubly-accent);border-radius:50%;
-                margin-left:5px;vertical-align:middle;"></span>` : ''}
+              ${!isRead?`<span style="display:inline-block;width:8px;height:8px;
+                background:var(--clubly-accent);border-radius:50%;margin-left:5px;vertical-align:middle;"></span>`:''}
             </span>
-            <span style="font-size:.75rem;white-space:nowrap;flex-shrink:0;
-                         font-weight:600;
+            <span style="font-size:.75rem;white-space:nowrap;flex-shrink:0;font-weight:600;
                          color:${isRead?'var(--muted)':'var(--clubly-accent)'};"
                   title="${fullDate}">${timeStr}</span>
           </div>
-
-          <div style="font-size:.84rem;color:var(--muted);line-height:1.5;
-                      margin-bottom:8px;overflow:hidden;display:-webkit-box;
-                      -webkit-line-clamp:2;-webkit-box-orient:vertical;">
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.5;margin-bottom:8px;
+                      overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">
             ${shortDesc}
           </div>
-
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span style="display:inline-flex;align-items:center;gap:4px;
-                         padding:3px 10px;border-radius:50px;font-size:.72rem;
-                         font-weight:700;background:${cfg.pill};color:${cfg.pillColor};">
+            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;
+                         border-radius:50px;font-size:.72rem;font-weight:700;
+                         background:${cfg.pill};color:${cfg.pillColor};">
               <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
-              ${typeLabels[n.type] || n.type || 'Notification'}
+              ${typeLabels[n.type]||n.type||'Notification'}
             </span>
             ${isRead
-              ? `<span style="font-size:.72rem;color:var(--muted);">
-                   <i class="bi bi-check2-all me-1"></i>Read
-                 </span>`
-              : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;">
-                   <i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New
-                 </span>`}
+              ?`<span style="font-size:.72rem;color:var(--muted);"><i class="bi bi-check2-all me-1"></i>Read</span>`
+              :`<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;"><i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New</span>`}
           </div>
         </div>
-
         ${thumbHtml}
-
-        <div style="color:var(--muted);font-size:14px;
-                    margin-top:14px;flex-shrink:0;">
+        <div style="color:var(--muted);font-size:14px;margin-top:14px;flex-shrink:0;">
           <i class="bi bi-chevron-right"></i>
         </div>
       </div>`;
@@ -1653,26 +1592,15 @@ function buildTrainerNotifPagination(totalPages) {
   ul.innerHTML = '';
   const li = (label, disabled, fn, active=false) => {
     const el = document.createElement('li');
-    el.className = 'page-item'
-      + (disabled ? ' disabled':'')
-      + (active   ? ' active'  :'');
+    el.className = 'page-item'+(disabled?' disabled':'')+(active?' active':'');
     el.innerHTML = `<a class="page-link" href="#">${label}</a>`;
     if (!disabled) el.onclick = e => { e.preventDefault(); fn(); };
     return el;
   };
-  ul.appendChild(li('«', _trainerNotifPage===1, () => {
-    _trainerNotifPage=1; renderTrainerNotifList();
-  }));
-  const s = Math.max(1, _trainerNotifPage-2);
-  const e = Math.min(totalPages, _trainerNotifPage+2);
-  for (let i=s; i<=e; i++) {
-    ul.appendChild(li(i, false, () => {
-      _trainerNotifPage=i; renderTrainerNotifList();
-    }, i===_trainerNotifPage));
-  }
-  ul.appendChild(li('»', _trainerNotifPage===totalPages, () => {
-    _trainerNotifPage=totalPages; renderTrainerNotifList();
-  }));
+  ul.appendChild(li('«', _trainerNotifPage===1, ()=>{ _trainerNotifPage=1; renderTrainerNotifList(); }));
+  const s=Math.max(1,_trainerNotifPage-2), e=Math.min(totalPages,_trainerNotifPage+2);
+  for (let i=s;i<=e;i++) ul.appendChild(li(i,false,()=>{ _trainerNotifPage=i; renderTrainerNotifList(); },i===_trainerNotifPage));
+  ul.appendChild(li('»', _trainerNotifPage===totalPages, ()=>{ _trainerNotifPage=totalPages; renderTrainerNotifList(); }));
 }
 
 function openTrainerNotifDetail(id) {
@@ -1681,19 +1609,18 @@ function openTrainerNotifDetail(id) {
   markTrainerAsRead(id);
   renderTrainerNotifList();
 
-  const typeConfig = {
-    'Info':    { bg:'rgba(13,202,240,.15)',  color:'#0dcaf0', icon:'bi-info-circle-fill'         },
+  const nTypeConfig = {
+    'Info':    { bg:'rgba(13,202,240,.15)',  color:'#0dcaf0', icon:'bi-info-circle-fill' },
     'Warning': { bg:'rgba(255,193,7,.15)',   color:'#ffc107', icon:'bi-exclamation-triangle-fill' },
-    'Success': { bg:'rgba(25,135,84,.15)',   color:'#198754', icon:'bi-check-circle-fill'         },
-    'Urgent':  { bg:'rgba(220,53,69,.15)',   color:'#dc3545', icon:'bi-exclamation-circle-fill'   },
-    'default': { bg:'rgba(100,116,139,.15)', color:'#64748b', icon:'bi-bell-fill'                 },
+    'Success': { bg:'rgba(25,135,84,.15)',   color:'#198754', icon:'bi-check-circle-fill' },
+    'Urgent':  { bg:'rgba(220,53,69,.15)',   color:'#dc3545', icon:'bi-exclamation-circle-fill' },
+    'default': { bg:'rgba(100,116,139,.15)', color:'#64748b', icon:'bi-bell-fill' },
   };
-  const cfg = typeConfig[n.type] || typeConfig['default'];
+  const cfg = nTypeConfig[n.type] || nTypeConfig['default'];
   const d   = n.sentAt ? new Date(n.sentAt) : null;
   const fullDate = d
     ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})
-      + ' at ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
-    : '—';
+      +' at '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) : '—';
 
   let modal = document.getElementById('trainerNotifDetailModal');
   if (!modal) {
@@ -1704,74 +1631,47 @@ function openTrainerNotifDetail(id) {
     document.body.appendChild(modal);
   }
 
-  modal.innerHTML = `
+modal.innerHTML = `
     <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content-cl"
-           style="background:var(--card-bg);border-radius:16px;
-                  border:1px solid var(--border);">
-
-        <div class="modal-header-cl"
-             style="display:flex;align-items:center;gap:14px;">
-          <div style="width:46px;height:46px;border-radius:50%;
-                      background:${cfg.bg};color:${cfg.color};flex-shrink:0;
-                      display:flex;align-items:center;justify-content:center;
-                      font-size:20px;">
+      <div class="modal-content modal-content-cl" style="background:var(--card-bg);border-radius:16px;border:1px solid var(--border);">
+<div class="modal-header-cl" style="display:flex;align-items:center;gap:14px;
+             background:var(--clubly-dark);border-radius:16px 16px 0 0;">          <div style="width:46px;height:46px;border-radius:50%;background:${cfg.bg};color:${cfg.color};
+                      flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;">
             <i class="bi ${cfg.icon}"></i>
           </div>
           <div style="flex:1;">
-            <h5 style="margin:0;font-weight:800;color:var(--text);">
-              ${n.title||'—'}
-            </h5>
-            <small style="color:var(--muted);">${fullDate}</small>
+           <h5 style="margin:0;font-weight:800;color:#fff;">${n.title||'—'}</h5>
+            <small style="color:rgba(255,255,255,.6);">${fullDate}</small>
           </div>
-          <button data-bs-dismiss="modal"
-            style="background:none;border:none;color:var(--muted);
-                   font-size:1.3rem;cursor:pointer;">✕</button>
-        </div>
-
-        <div class="modal-body-cl">
+          <button data-bs-dismiss="modal" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;">✕</button>        </div>
+        <div class="modal-body-cl" style="min-height:200px;">
           <div style="margin-bottom:14px;">
-            <span style="display:inline-flex;align-items:center;gap:6px;
-                         padding:5px 16px;border-radius:50px;
-                         font-size:.88rem;font-weight:700;
+            <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 16px;
+                         border-radius:50px;font-size:.88rem;font-weight:700;
                          background:${cfg.bg};color:${cfg.color};">
               <i class="bi ${cfg.icon}"></i>${n.type||'Notification'}
             </span>
           </div>
-
-          <div style="background:var(--bg);border-radius:10px;padding:16px;
-                      border:1px solid var(--border);margin-bottom:16px;">
-            <p style="margin:0;white-space:pre-wrap;line-height:1.8;
-                      font-size:.95rem;color:var(--text);">
-              ${n.description||'—'}
-            </p>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:16px;">
+            <p style="margin:0;white-space:pre-wrap;line-height:1.8;font-size:.95rem;color:var(--text);">${n.description||'—'}</p>
           </div>
-
-          ${n.imageUrl ? `
+          ${n.imageUrl?`
           <div style="margin-bottom:16px;">
-            <a href="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
-               target="_blank">
-              <img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
-                style="max-width:100%;max-height:260px;object-fit:cover;
-                       border-radius:12px;border:1px solid var(--border);cursor:pointer;">
+            <a href="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}" target="_blank">
+              <img src="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}"
+                style="max-width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid var(--border);cursor:pointer;">
             </a>
-          </div>` : ''}
-
+          </div>`:''}
           <div style="display:flex;align-items:center;gap:8px;">
             <i class="bi bi-clock" style="color:var(--muted);"></i>
             <small style="color:var(--muted);">Sent:</small>
-            <span style="background:#d4edda;color:#155724;padding:3px 12px;
-                         border-radius:20px;font-size:.8rem;font-weight:600;">
-              ${fullDate}
-            </span>
+            <span style="background:#d4edda;color:#155724;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:600;">${fullDate}</span>
           </div>
         </div>
-
         <div class="modal-footer-cl">
           <button data-bs-dismiss="modal"
-            style="background:var(--bg);border:1px solid var(--border);
-                   color:var(--text);padding:8px 20px;border-radius:8px;
-                   cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
+            style="background:var(--bg);border:1px solid var(--border);color:var(--text);
+                   padding:8px 20px;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
             Close
           </button>
         </div>
@@ -1789,37 +1689,53 @@ function openAddSession() {
 function saveSession() {
   const name = document.getElementById('sessName').value.trim();
   if (!name) { alert('Please enter a session name.'); return; }
-  const newSess = {
-    id: DATA.sessions.length + 1,
-    name, type: document.getElementById('sessType').value,
-    date: document.getElementById('sessDate').value,
-    start: document.getElementById('sessStart').value,
-    end: document.getElementById('sessEnd').value,
-    location: document.getElementById('sessLocation').value,
-    capacity: parseInt(document.getElementById('sessCap').value),
-    enrolled: 0, status: 'upcoming'
-  };
-  DATA.sessions.push(newSess);
   bootstrap.Modal.getInstance(document.getElementById('addSessionModal')).hide();
   document.getElementById('sessName').value = '';
-  renderDashboard(); renderWeekSchedule(); renderAllSessions(); renderSessionTypeBreakdown();
+  alert('Session saved locally. Connect to API to persist.');
 }
 
 // ===== PROFILE =====
-document.getElementById('profileForm').addEventListener('submit', e => {
-  e.preventDefault(); alert('Profile updated successfully!');
-});
-document.getElementById('passForm').addEventListener('submit', e => {
+document.getElementById('profileForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const curr = document.getElementById('currPass').value;
-  const np = document.getElementById('newPass').value;
-  const cp = document.getElementById('confPass').value;
-  const msg = document.getElementById('passMsg');
-  if (curr.length < 5) { msg.innerHTML='<span style="color:#ef4444">Invalid current password.</span>'; return; }
-  if (np !== cp) { msg.innerHTML='<span style="color:#ef4444">Passwords do not match.</span>'; return; }
-  msg.innerHTML='<span style="color:#22c55e">Password updated successfully!</span>';
-  setTimeout(() => { msg.innerHTML=''; document.getElementById('passForm').reset(); }, 2000);
+  if (!trainerId) { alert('Not logged in.'); return; }
+
+  const fd = new FormData();
+  fd.append('FullName',
+    document.getElementById('pfFirstName').value.trim() + ' ' +
+    document.getElementById('pfLastName').value.trim());
+  fd.append('Phone',             document.getElementById('pfPhone').value.trim());
+  fd.append('YearsOfExperience', document.getElementById('pfExp').value);
+
+  const dob = document.getElementById('pfDob').value;
+  if (dob) fd.append('DateOfBirth', dob);
+
+  try {
+    const res = await fetch(`${API}/Trainers/${trainerId}`, { method:'PUT', body:fd });
+    if (res.ok) alert('Profile updated successfully!');
+    else        alert('Failed to update profile.');
+  } catch { alert('Cannot reach server.'); }
 });
+
+document.getElementById('passForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const np  = document.getElementById('newPass').value;
+  const cp  = document.getElementById('confPass').value;
+  const msg = document.getElementById('passMsg');
+  msg.innerHTML = '';
+  if (np !== cp) { msg.innerHTML='<span style="color:#ef4444">Passwords do not match.</span>'; return; }
+  if (np.length < 6) { msg.innerHTML='<span style="color:#ef4444">Min 6 characters.</span>'; return; }
+  if (!trainerId) return;
+  const ok = await fetch(`${API}/Trainers/${trainerId}/set-password`, {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(np)
+  });
+  if (ok.ok) {
+    msg.innerHTML='<span style="color:#22c55e">Password updated!</span>';
+    setTimeout(()=>{ msg.innerHTML=''; document.getElementById('passForm').reset(); }, 2000);
+  } else {
+    msg.innerHTML='<span style="color:#ef4444">Failed to update password.</span>';
+  }
+});
+
 document.getElementById('profileImgInput').addEventListener('change', function() {
   if (this.files && this.files[0]) {
     const reader = new FileReader();
@@ -1832,15 +1748,494 @@ document.getElementById('profileImgInput').addEventListener('change', function()
   }
 });
 
-// ===== INIT =====
-document.addEventListener('DOMContentLoaded', () => {
-  renderDashboard();
+// ===== SIGN OUT =====
+function handleSignOut() {
+  localStorage.clear();
+  window.location.href = '../BeforeSign/index.html';
+}
+
+// ===== DATA VARS =====
+let _allBookings = [];
+let _allApiMembers = [];
+
+// ===== LOAD PROFILE =====
+async function loadTrainerProfile() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${API}/Trainers/${trainerId}`);
+    if (!res.ok) throw new Error();
+    const t = await res.json();
+
+    const parts = (t.fullName || trainerName).split(' ');
+    const ini   = getInitials(t.fullName || trainerName);
+
+    // Header
+    document.querySelector('.trainer-name').textContent   = t.fullName || trainerName;
+    document.querySelector('.trainer-avatar').textContent = ini;
+
+    // Welcome
+    document.querySelector('#page-dashboard .page-title span').textContent =
+      (parts[0] || 'Trainer') + '!';
+
+    // Profile hero
+    document.querySelector('.profile-hero-name').textContent = t.fullName || '';
+    document.querySelector('.profile-hero-role').innerHTML =
+      `<i class="bi bi-shield-check me-1"></i>${t.activities || 'Trainer'} · ${t.yearsOfExperience || 0} Yrs Experience`;
+    document.getElementById('profileInitials').textContent = ini;
+
+    // Image
+    if (t.imageUrl) {
+      const img = document.getElementById('profileImg');
+      img.src = t.imageUrl.startsWith('http') ? t.imageUrl : 'https://localhost:7132' + t.imageUrl;
+      img.style.display = 'block';
+      document.getElementById('profileInitials').style.display = 'none';
+    }
+
+    // Spec tags
+    const heroInfo = document.querySelector('.profile-hero-info');
+    heroInfo.querySelectorAll('.spec-tag').forEach(el => el.remove());
+    if (t.activities) {
+      t.activities.split(',').forEach(act => {
+        const span = document.createElement('span');
+        span.className = 'spec-tag';
+        span.textContent = act.trim();
+        heroInfo.appendChild(span);
+      });
+    }
+
+  // ── Form fields ──
+document.getElementById('pfFirstName').value  = parts[0] || '';
+document.getElementById('pfLastName').value   = parts.slice(1).join(' ') || '';
+document.getElementById('pfEmail').value      = t.email || '';
+document.getElementById('pfPhone').value      = t.phone || '';
+document.getElementById('pfNationalId').value = t.nationalId || '';
+document.getElementById('pfGender').value     = t.gender || '';
+document.getElementById('pfExp').value        = t.yearsOfExperience || '';
+
+if (t.dateOfBirth) {
+  document.getElementById('pfDob').value = t.dateOfBirth.split('T')[0];
+}
+    if (t.joinDate) {
+      const jd = new Date(t.joinDate);
+    }
+
+
+  } catch(e) { console.warn('Profile load failed:', e); }
+}
+// ===== LOAD BOOKINGS =====
+async function loadTrainerBookings() {
+  if (!trainerId) return;
+  
+  try {
+    // جيبي Member Bookings
+    const res1 = await fetch(`${API}/ActivityBookings/by-trainer/${trainerId}`);
+    const memberBookings = res1.ok ? await res1.json() : [];
+    
+    // جيبي Guest Bookings
+    const res2 = await fetch(`${API}/ActivityBookings`);
+    const allBookings = res2.ok ? await res2.json() : [];
+    const guestBookings = allBookings.filter(b => 
+      String(b.trainerId) === String(trainerId) && b.guestId != null
+    );
+
+    // دمجهم مع تمييز النوع
+    _allBookings = [
+      ...memberBookings.map(b => ({ ...b, _bookingType: 'Member' })),
+      ...guestBookings.map(b => ({ ...b, _bookingType: 'Guest' }))
+    ];
+
+  } catch(e) {
+    console.warn('Bookings load failed:', e);
+    _allBookings = [];
+  }
+
+  renderTrainerDashboard();
+  renderTrainerMembers();
+  renderTrainerSessions();
   renderWeekSchedule();
-  renderMembers(DATA.members);
-  renderAllSessions();
-  renderSessionTypeBreakdown();
   renderReports();
-loadTrainerNotifications();
+}
+
+// ===== DASHBOARD =====
+function renderTrainerDashboard() {
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById('todayDate').textContent =
+    new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  const todayBookings = _allBookings.filter(b => (b.startDate||'').split('T')[0] === today);
+  const approved      = _allBookings.filter(b=>(b.status||'').toLowerCase()==='approved').length;
+  const pending       = _allBookings.filter(b=>(b.status||'').toLowerCase()==='pending').length;
+  const uniqueMembers = new Set(_allBookings.map(b=>b.memberId)).size;
+
+  const stats = document.querySelectorAll('.stat-val');
+ document.getElementById('stat-today').textContent    = todayBookings.length;
+document.getElementById('stat-members').textContent  = uniqueMembers;
+document.getElementById('stat-rating').innerHTML     = '— <span class="stat-unit">/5</span>';
+document.getElementById('stat-total').textContent    = _allBookings.length;
+document.getElementById('stat-approved').textContent = approved;
+document.getElementById('stat-pending').textContent  = pending;
+
+  // Today's schedule
+  document.getElementById('todaySchedule').innerHTML = todayBookings.length
+    ? todayBookings.map(b => `
+        <div class="session-card" style="border-left-color:var(--clubly-accent);">
+          <div class="session-icon" style="background:rgba(232,93,47,.12);color:var(--clubly-accent);">
+            <i class="bi bi-calendar-check"></i>
+          </div>
+          <div class="session-info">
+            <div class="session-name">${b.activityName||'—'}</div>
+            <div class="session-meta">
+              <i class="bi bi-person me-1"></i>${b.memberName||'—'}
+              &nbsp;·&nbsp;
+              <span class="badge-cl ${(b.status||'').toLowerCase()==='approved'?'b-green':'b-gold'}">
+                ${b.status||'—'}
+              </span>
+            </div>
+          </div>
+          <div class="session-right">
+            <div class="session-time">${(b.startDate||'').split('T')[0]}</div>
+          </div>
+        </div>`).join('')
+    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions today.</p>';
+
+  // Top members
+  const memberMap = {};
+  _allBookings.forEach(b => {
+    if (!b.memberId) return;
+    if (!memberMap[b.memberId]) memberMap[b.memberId] = { name: b.memberName||'Member', count:0 };
+    memberMap[b.memberId].count++;
+  });
+  const top = Object.values(memberMap).sort((a,b)=>b.count-a.count).slice(0,5);
+
+  document.getElementById('topMembersList').innerHTML = top.length
+    ? top.map((m,i) => `
+        <div class="member-row">
+          <div class="m-avatar" style="background:${AVATAR_COLORS[i%AVATAR_COLORS.length]}">
+            ${getInitials(m.name)}
+          </div>
+          <div style="flex:1">
+            <div class="m-name">${m.name}</div>
+            <div class="m-detail">${m.count} bookings</div>
+          </div>
+        </div>`).join('')
+    : '<p style="color:var(--muted);text-align:center;padding:20px;">No members yet.</p>';
+}
+
+// ===== MEMBERS PAGE =====
+// ===== MEMBERS PAGE =====
+let _memberCurrentTab    = 'member';
+let _memberCurrentStatus = 'all';
+
+function switchMemberTab(tab, el) {
+  _memberCurrentTab = tab;
+  _memberCurrentStatus = 'all';
+
+  // Reset status filters
+  document.querySelectorAll('#page-members .day-filter-btn')
+    .forEach(b => b.classList.remove('active'));
+  document.querySelector('#page-members .day-filter-btn')
+    ?.classList.add('active');
+
+  // Update tab UI
+  document.querySelectorAll('#memberTypeTabs .nav-link')
+    .forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+
+  renderTrainerMembers();
+}
+
+function filterMemberStatus(status, el) {
+  _memberCurrentStatus = status;
+  document.querySelectorAll('#page-members .day-filter-btn')
+    .forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderTrainerMembers();
+}
+
+function filterMembers() {
+  renderTrainerMembers();
+}
+
+function renderTrainerMembers() {
+  const q = (document.getElementById('memberSearch')?.value || '').toLowerCase();
+
+  // فلتر بالـ tab (member or guest)
+  let list = _allBookings.filter(b =>
+    _memberCurrentTab === 'member'
+      ? b._bookingType === 'Member'
+      : b._bookingType === 'Guest'
+  );
+
+  // فلتر بالـ status
+  if (_memberCurrentStatus !== 'all') {
+    list = list.filter(b =>
+      (b.status || '').toLowerCase() === _memberCurrentStatus
+    );
+  }
+
+  // فلتر بالـ search
+  if (q) {
+    list = list.filter(b =>
+      (b.memberName || b.guestName || '').toLowerCase().includes(q)
+    );
+  }
+
+  // Update subtitle
+  const uniqueCount = new Set(list.map(b => b.memberId || b.guestId)).size;
+  const subtitleEl = document.getElementById('membersSubtitle');
+  if (subtitleEl) {
+    subtitleEl.textContent = `${uniqueCount} ${_memberCurrentTab === 'member' ? 'members' : 'guests'} under your training`;
+  }
+
+  const tbody = document.getElementById('membersTable');
+
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--muted);">
+      No ${_memberCurrentTab === 'member' ? 'members' : 'guests'} found.
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map((b, i) => {
+    const name = b.memberName || b.guestName || '—';
+    const isGuest = b._bookingType === 'Guest';
+    const statusClass = (b.status||'').toLowerCase() === 'approved' ? 'b-green'
+                      : (b.status||'').toLowerCase() === 'pending'  ? 'b-gold'
+                      : 'b-gray';
+
+    return `<tr>
+      <td>${i + 1}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="m-avatar"
+            style="background:${AVATAR_COLORS[i % AVATAR_COLORS.length]};
+                   width:34px;height:34px;font-size:.78rem;">
+            ${getInitials(name)}
+          </div>
+          <div style="font-weight:700;">${name}</div>
+        </div>
+      </td>
+      <td>
+        <span class="badge-cl ${isGuest ? 'b-teal' : 'b-blue'}">
+          <i class="bi bi-person${isGuest ? '' : '-check'} me-1"></i>
+          ${isGuest ? 'Guest' : 'Member'}
+        </span>
+      </td>
+      <td>${b.activityName || '—'}</td>
+      <td>${b.groupName || '—'}</td>
+      <td style="color:var(--muted);font-size:.85rem;">
+        ${b.startDate ? b.startDate.split('T')[0] : '—'}
+      </td>
+      <td style="color:var(--muted);font-size:.85rem;">
+        ${b.endDate ? b.endDate.split('T')[0] : '—'}
+      </td>
+      <td style="font-size:.85rem;">
+        ${b.timeSlots?.length ? b.timeSlots[0].startTime?.substring(0,5) : '—'}
+      </td>
+      <td style="font-size:.85rem;">
+        ${b.timeSlots?.length ? b.timeSlots[0].endTime?.substring(0,5) : '—'}
+      </td>
+      <td>
+        <span class="badge-cl ${statusClass}">
+          ${b.status || '—'}
+        </span>
+      </td>
+    </tr>`;
+  }).join('');
+}
+// ===== SESSIONS PAGE =====
+function renderTrainerSessions(list) {
+  const data = list || _allBookings;
+  document.getElementById('allSessionsList').innerHTML = data.length
+    ? data.map(b => {
+        const s = (b.status||'').toLowerCase();
+        return `
+          <div class="session-card" style="border-left-color:var(--clubly-accent);">
+            <div class="session-icon" style="background:rgba(232,93,47,.12);color:var(--clubly-accent);">
+              <i class="bi bi-calendar-check"></i>
+            </div>
+            <div class="session-info">
+              <div class="session-name">${b.activityName||'—'}</div>
+              <div class="session-meta">
+                <i class="bi bi-person me-1"></i>${b.memberName||'—'}
+                &nbsp;·&nbsp;
+                <i class="bi bi-people me-1"></i>${b.groupName||'—'}
+              </div>
+            </div>
+            <div class="session-right">
+              <div class="session-time">${(b.startDate||'').split('T')[0]}</div>
+              <span class="badge-cl ${s==='approved'?'b-green':s==='pending'?'b-gold':'b-gray'}" style="margin-top:4px;">${b.status||'—'}</span>
+            </div>
+          </div>`;
+      }).join('')
+    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions found.</p>';
+}
+
+function filterSessions(q) {
+  renderTrainerSessions(_allBookings.filter(b =>
+    (b.activityName||'').toLowerCase().includes(q.toLowerCase()) ||
+    (b.memberName||'').toLowerCase().includes(q.toLowerCase())
+  ));
+}
+// ===== MY GROUPS & SCHEDULE =====
+let _trainerGroups = [];
+let _scheduleCurrentDay = 'all';
+
+async function loadTrainerGroups() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${API}/ActivityGroups`);
+    const all = res.ok ? await res.json() : [];
+    // فلتر بالـ trainerId
+    _trainerGroups = all.filter(g => String(g.trainerId) === String(trainerId));
+  } catch { _trainerGroups = []; }
+  renderSchedulePage();
+  renderGroupsPage();
+}
+
+function filterScheduleDay(day, el) {
+  _scheduleCurrentDay = day;
+  document.querySelectorAll('.day-filter-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderSchedulePage();
+}
+
+function renderSchedulePage() {
+  const container = document.getElementById('scheduleGroupsList');
+  if (!container) return;
+
+  let groups = _trainerGroups;
+  if (_scheduleCurrentDay !== 'all') {
+    groups = groups.filter(g =>
+      g.timeSlots?.some(s => s.day === _scheduleCurrentDay)
+    );
+  }
+
+  if (!groups.length) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:80px 20px;color:var(--muted);">
+        <i class="bi bi-calendar-x" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;font-size:1rem;">No sessions found.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = groups.map(g => {
+    const slots = g.timeSlots || [];
+    const slotsHtml = slots.map(s => `
+      <span style="display:inline-flex;align-items:center;gap:4px;
+                   background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                   padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;margin:2px;">
+        <i class="bi bi-clock"></i> ${s.day||''} ${s.startTime?.substring(0,5)||''} → ${s.endTime?.substring(0,5)||''}
+      </span>`).join('');
+
+    return `
+      <div class="session-card" style="border-left-color:var(--clubly-teal);margin-bottom:12px;">
+        <div class="session-icon" style="background:rgba(46,196,182,.12);color:var(--clubly-teal);">
+          <i class="bi bi-people"></i>
+        </div>
+        <div class="session-info">
+          <div class="session-name">${g.name||'—'}</div>
+          <div class="session-meta" style="margin-top:4px;">
+            <i class="bi bi-lightning me-1" style="color:var(--clubly-accent);"></i>${g.activityName||'—'}
+            &nbsp;·&nbsp;
+            <i class="bi bi-building me-1" style="color:var(--muted);"></i>${g.facilityName||'—'}
+          </div>
+          <div style="margin-top:6px;">${slotsHtml}</div>
+        </div>
+        <div class="session-right">
+          <span style="font-size:.78rem;color:var(--muted);">Capacity</span>
+          <div style="font-weight:900;font-size:1.1rem;color:var(--text);">${g.capacity||'—'}</div>
+          <div style="font-size:.75rem;color:var(--muted);">members</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderGroupsPage() {
+  const q    = (document.getElementById('groupSearch')?.value||'').toLowerCase();
+  const actF = document.getElementById('groupActivityFilter')?.value||'';
+  const dayF = document.getElementById('groupDayFilter')?.value||'';
+
+  // Populate activity filter dropdown (مرة وحدة)
+  const actSel = document.getElementById('groupActivityFilter');
+  if (actSel && actSel.options.length <= 1) {
+    [...new Set(_trainerGroups.map(g=>g.activityName).filter(Boolean))].forEach(a => {
+      const o = document.createElement('option');
+      o.value = a; o.textContent = a;
+      actSel.appendChild(o);
+    });
+  }
+
+  const list = _trainerGroups.filter(g => {
+    const matchQ = !q || (g.name||'').toLowerCase().includes(q)
+                      || (g.activityName||'').toLowerCase().includes(q)
+                      || (g.code||'').toLowerCase().includes(q);
+    const matchA = !actF || g.activityName === actF;
+    const matchD = !dayF || g.timeSlots?.some(s => s.day === dayF);
+    return matchQ && matchA && matchD;
+  });
+
+  const container = document.getElementById('groupsListContainer');
+  if (!container) return;
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:80px 20px;color:var(--muted);">
+        <i class="bi bi-diagram-3" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;">No groups found.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="card-clubly" style="padding:0;">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Group Name</th><th>Activity</th>
+              <th>Facility</th><th>Capacity</th><th>Price</th><th>Time Slots</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map((g,i) => {
+              const slots = (g.timeSlots||[]).map(s =>
+                `<span style="display:inline-block;background:rgba(46,196,182,.1);
+                              color:var(--clubly-teal);padding:2px 8px;
+                              border-radius:10px;font-size:.72rem;font-weight:700;margin:1px;">
+                  ${s.day||''} ${s.startTime?.substring(0,5)||''}→${s.endTime?.substring(0,5)||''}
+                </span>`).join('');
+              return `
+                <tr>
+                  <td style="color:var(--muted);">${i+1}</td>
+                  <td><strong>${g.name||'—'}</strong>
+                    ${g.code?`<br><span style="font-size:.75rem;color:var(--muted);">${g.code}</span>`:''}</td>
+                  <td>${g.activityName||'—'}</td>
+                  <td>${g.facilityName||'—'}</td>
+                  <td style="text-align:center;font-weight:700;">${g.capacity||'—'}</td>
+                  <td style="font-weight:700;color:var(--clubly-accent);">${g.price||0} EGP</td>
+                  <td>${slots||'—'}</td>
+                </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async () => {
+  const parts = trainerName.split(' ');
+  const ini   = getInitials(trainerName);
+  document.querySelector('.trainer-name').textContent    = trainerName;
+  document.querySelector('.trainer-avatar').textContent  = ini;
+  document.querySelector('.page-title span').textContent = (parts[0]||'Trainer') + '!';
+
+  await loadTrainerProfile();
+  await loadTrainerBookings();
+  await loadTrainerGroups();     // ← زودي السطر ده
+  loadTrainerNotifications();
 });
 </script>
 </body>
