@@ -1089,6 +1089,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Clubly.Controllers.FacilityBookingsController",
+    "Method": "GetByGuest",
+    "RelativePath": "api/FacilityBookings/by-guest/{guestId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "guestId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SignUp.Controllers.FacilityCategoriesController",
     "Method": "GetAll",
     "RelativePath": "api/FacilityCategories",
@@ -2065,6 +2081,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SignUp.Controllers.TrainersController",
+    "Method": "SetPassword",
+    "RelativePath": "api/Trainers/{id}/set-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

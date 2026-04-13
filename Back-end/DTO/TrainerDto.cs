@@ -14,5 +14,6 @@
         public List<int> ActivityIds { get; set; } // للتعديل
         public bool IsActive { get; set; }
         public string? ImageUrl { get; set; }
+
     }
 }

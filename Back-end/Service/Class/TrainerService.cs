@@ -210,6 +210,18 @@ namespace SignUp.Service.Class
                 FullName = t.FullName
             }).ToList();
         }
+        public async Task<bool> SetPasswordAsync(int id, string password)
+        {
+            var trainer = await _context.Trainers.FindAsync(id);
+            if (trainer == null) return false;
+
+            CreatePasswordHash(password, out string hash, out string salt);
+            trainer.PasswordHash = hash;
+            trainer.PasswordSalt = salt;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
 

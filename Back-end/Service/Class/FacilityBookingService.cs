@@ -1,6 +1,8 @@
 ﻿using Clubly.DTO;
 using Clubly.Repository.Interface;
 using Clubly.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using SignUp.Data;
 using SignUp.Model;
 
 namespace Clubly.Service.Class
@@ -8,7 +10,13 @@ namespace Clubly.Service.Class
     public class FacilityBookingService: IFacilityBookingService
     {
         private readonly IFacilityBookingRepository _repo;
-        public FacilityBookingService(IFacilityBookingRepository repo) => _repo = repo;
+        private readonly AppDbContext _db; // ← أضيفي دي
+
+        public FacilityBookingService(IFacilityBookingRepository repo, AppDbContext db)
+        {
+            _repo = repo;
+            _db = db; // ← وأضيفي دي
+        }
 
         private static FacilityBookingDto ToDto(FacilityBooking b) => new()
         {
@@ -58,6 +66,20 @@ CreatedAt = b.CreatedAt,
         }
         public async Task<(FacilityBookingDto? result, string? error)> CreateAsync(CreateFacilityBookingDto dto)
         {
+            if (dto.GuestId.HasValue && dto.GuestId > 0)
+            {
+                var guestExists = await _db.Guests.AnyAsync(g => g.Id == dto.GuestId);
+                if (!guestExists)
+                    return (null, "Guest not found.");
+            }
+
+            // ✅ التحقق من الـ Member
+            if (dto.MemberId.HasValue && dto.MemberId > 0)
+            {
+                var memberExists = await _db.Members.AnyAsync(m => m.Id == dto.MemberId);
+                if (!memberExists)
+                    return (null, "Member not found.");
+            }
             // Conflict check
             if (dto.FacilityScheduleId.HasValue && dto.FacilityScheduleId > 0)
             {

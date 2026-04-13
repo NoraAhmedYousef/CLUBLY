@@ -12,6 +12,7 @@ namespace SignUp.Service.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<List<TrainerDto>> GetByActivityIdAsync(int activityId);
 
+        Task<bool> SetPasswordAsync(int id, string password);
 
     }
 }

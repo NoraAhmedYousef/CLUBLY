@@ -83,6 +83,25 @@ namespace Clubly.Service.Class
         }
         public async Task<(ActivityBookingDto? result, string? error)> CreateAsync(CreateActivityBookingDto dto)
         {
+            // ✅ 1. التحقق إن في member أو guest
+            if (!dto.MemberId.HasValue && !dto.GuestId.HasValue)
+                return (null, "Must provide either MemberId or GuestId.");
+
+            // ✅ 2. التحقق إن الـ Member موجود
+            if (dto.MemberId.HasValue && dto.MemberId > 0)
+            {
+                var memberExists = await _db.Members.AnyAsync(m => m.Id == dto.MemberId);
+                if (!memberExists)
+                    return (null, "Member not found.");
+            }
+
+            // ✅ 3. التحقق إن الـ Guest موجود
+            if (dto.GuestId.HasValue && dto.GuestId > 0)
+            {
+                var guestExists = await _db.Guests.AnyAsync(g => g.Id == dto.GuestId);
+                if (!guestExists)
+                    return (null, "Guest not found.");
+            }
             var group = await _db.ActivityGroups
                                  .FirstOrDefaultAsync(g => g.Id == dto.ActivityGroupId &&
                                                            g.ActivityId == dto.ActivityId);

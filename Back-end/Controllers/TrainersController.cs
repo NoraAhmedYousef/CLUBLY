@@ -67,5 +67,12 @@ namespace SignUp.Controllers
             var trainers = await _service.GetByActivityIdAsync(activityId);
             return Ok(trainers);
         }
+        [HttpPost("{id}/set-password")]
+        public async Task<IActionResult> SetPassword(int id, [FromBody] string password)
+        {
+            var ok = await _service.SetPasswordAsync(id, password);
+            if (!ok) return NotFound();
+            return Ok("Password set successfully");
+        }
     }
 }
