@@ -629,7 +629,7 @@ endTime:   formatTime(_formData.endTime),
    const fd2 = new FormData();
 fd2.append('facilityId',         _ctx.id);
 if (_ctx.scheduleId) fd2.append('facilityScheduleId', _ctx.scheduleId);
-const userRole = localStorage.getItem('userRole') || 'guest';
+const userRole = localStorage.getItem('role') || 'guest';
 if (userRole === 'member') {
   fd2.append('memberId', memberId);
 } else {
@@ -659,17 +659,25 @@ const facRes = await fetch('https://localhost:7132/api/FacilityBookings', {
 
     // ... داخل ميثود bpPay ...
 } else {
-  const fd = new FormData();
-  fd.append('activityId',      window._actPickerActivityId || 0);
-  fd.append('activityGroupId', _ctx.id);
-fd.append('guestId', memberId);
-  fd.append('trainerId',       window._actPickerTrainerId || '');
-  fd.append('startDate',       _formData.date);
-  fd.append('participants',    parseInt(_formData.participants) || 1);
-  fd.append('paymentMethod',   suf === 'I' ? 'InstaPay' : 'EWallet');
-  fd.append('transactionId',   v('bpTx' + suf));
+const fd = new FormData();
+fd.append('activityId',      window._actPickerActivityId || 0);
+fd.append('activityGroupId', _ctx.id);
 
-  if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
+// ✅ التعديل هنا
+const userRole = localStorage.getItem('role') || 'guest';
+if (userRole === 'member') {
+  fd.append('memberId', memberId);
+} else {
+  fd.append('guestId', memberId);
+}
+
+fd.append('trainerId',       window._actPickerTrainerId || '');
+fd.append('startDate',       _formData.date);
+fd.append('participants',    parseInt(_formData.participants) || 1);
+fd.append('paymentMethod',   suf === 'I' ? 'InstaPay' : 'EWallet');
+fd.append('transactionId',   v('bpTx' + suf));
+
+if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
 
   const res = await fetch('https://localhost:7132/api/ActivityBookings', {
     method: 'POST',
