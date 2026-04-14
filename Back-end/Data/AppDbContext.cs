@@ -30,6 +30,7 @@ namespace SignUp.Data
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<FAQ> FAQs { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

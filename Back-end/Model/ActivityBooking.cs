@@ -41,6 +41,7 @@ namespace Clubly.Model
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string ReceiptImageUrl { get; set; } = "";
+        public ICollection<Attendance> Attendances { get; set; }
 
     }
 }
