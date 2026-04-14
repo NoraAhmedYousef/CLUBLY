@@ -507,6 +507,11 @@ textarea.form-input{resize:vertical;min-height:90px;}
  <button class="sidebar-link" onclick="showPage('groups')" id="sb-groups" data-label="My Groups">
   <i class="bi bi-diagram-3"></i><span class="link-text">My Groups</span>
 </button>
+<button class="sidebar-link" onclick="showPage('attendance')" 
+  id="sb-attendance" data-label="Attendance">
+  <i class="bi bi-person-check"></i>
+  <span class="link-text">Attendance</span>
+</button>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Account</div>
     <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
@@ -667,6 +672,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
           <tr>
             <th>#</th>
             <th>Full Name</th>
+            
             <th>Type</th>
             <th>Activity</th>
             <th>Group</th>
@@ -1005,15 +1011,21 @@ textarea.form-input{resize:vertical;min-height:90px;}
 </div>
 
 <!-- ====== PAGE: GROUPS ====== -->
+<!-- ====== PAGE: GROUPS ====== -->
 <div class="page" id="page-groups">
   <div class="page-header">
     <div>
       <h1 class="page-title">My Groups</h1>
       <p class="page-subtitle">Your activity groups</p>
     </div>
-    <button class="btn-teal-cl" onclick="loadTrainerGroups()">
-      <i class="bi bi-arrow-clockwise"></i> Refresh
-    </button>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-teal-cl" onclick="loadTrainerGroups()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+      <button class="btn-primary-cl" onclick="openAddTrainerGroupModal()">
+        <i class="bi bi-plus-lg"></i> Add Group
+      </button>
+    </div>
   </div>
   <div class="card-clubly mb-3" style="padding:14px 20px;">
     <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
@@ -1051,7 +1063,156 @@ textarea.form-input{resize:vertical;min-height:90px;}
         </div>
       </div>
     </div>
+<!-- ====== PAGE: ATTENDANCE ====== -->
+<div class="page" id="page-attendance">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">
+        <i class="bi bi-person-check-fill me-2" style="color:var(--clubly-teal);"></i>
+        Attendance
+      </h1>
+      <p class="page-subtitle" id="attSubtitle">Select a group and date to take attendance</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <button class="btn-teal-cl" onclick="saveAllAttendance()" id="saveAllBtn" style="display:none;">
+        <i class="bi bi-check2-all"></i> Save All
+      </button>
+      <button class="btn-secondary-cl" onclick="loadAttendanceList()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+  </div>
 
+  <div class="card-clubly mb-4" style="padding:20px 24px;">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label">Group</label>
+        <select class="form-input" id="attGroupSelect" onchange="onAttGroupChange()">
+          <option value="">— Select Group —</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Date</label>
+        <input type="date" class="form-input" id="attDate" onchange="loadAttendanceList()">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Filter</label>
+        <select class="form-input" id="attFilter" onchange="renderAttendanceList()">
+          <option value="all">All Members</option>
+          <option value="present">Present Only</option>
+          <option value="absent">Absent Only</option>
+          <option value="unmarked">Not Marked Yet</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn-primary-cl" style="width:100%;justify-content:center;" onclick="loadAttendanceList()">
+          <i class="bi bi-search"></i> Load
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="attSummaryBar" style="display:none;" class="mb-4">
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--text);" id="attTotalCount">0</div>
+          <div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;">Total</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:#22c55e;" id="attPresentCount">0</div>
+          <div style="font-size:.75rem;color:#22c55e;font-weight:600;text-transform:uppercase;">Present</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:#ef4444;" id="attAbsentCount">0</div>
+          <div style="font-size:.75rem;color:#ef4444;font-weight:600;text-transform:uppercase;">Absent</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--clubly-gold);" id="attUnmarkedCount">0</div>
+          <div style="font-size:.75rem;color:var(--clubly-gold);font-weight:600;text-transform:uppercase;">Not Marked</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="attQuickActions" style="display:none;margin-bottom:16px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <button onclick="markAll(true)"
+        style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#16a34a;
+               padding:7px 18px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;
+               font-weight:700;font-size:.85rem;transition:all .2s;">
+        <i class="bi bi-check-all me-1"></i> Mark All Present
+      </button>
+      <button onclick="markAll(false)"
+        style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#dc2626;
+               padding:7px 18px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;
+               font-weight:700;font-size:.85rem;transition:all .2s;">
+        <i class="bi bi-x-lg me-1"></i> Mark All Absent
+      </button>
+      <span id="attDayInfo" style="font-size:.82rem;color:var(--muted);margin-left:8px;"></span>
+    </div>
+  </div>
+
+  <div class="card-clubly" style="padding:0;" id="attListCard">
+    <div id="attList" style="padding:60px 20px;text-align:center;color:var(--muted);">
+      <i class="bi bi-calendar-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+      <p style="font-weight:700;">Select a group and date to start</p>
+    </div>
+  </div>
+
+  <div id="attSummarySection" style="display:none;margin-top:24px;">
+    <div class="card-clubly">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border);">
+        <span style="font-weight:800;font-size:1rem;">
+          <i class="bi bi-bar-chart-fill me-2" style="color:var(--clubly-accent);"></i>Member Summary
+        </span>
+        <small style="color:var(--muted);">Click a member to see full history</small>
+      </div>
+      <div id="attSummaryList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Member History Modal -->
+<div class="modal fade" id="memberHistoryModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);" id="histModalTitle">Attendance History</h5>
+        <button data-bs-dismiss="modal" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body-cl">
+        <div class="row g-3 mb-4" id="histStats"></div>
+        <div style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:.82rem;font-weight:700;">
+            <span style="color:var(--muted);">Attendance Rate</span>
+            <span id="histRate" style="color:var(--clubly-accent);">0%</span>
+          </div>
+          <div style="background:var(--border);border-radius:10px;height:10px;overflow:hidden;">
+            <div id="histRateBar" style="height:100%;border-radius:10px;background:linear-gradient(90deg,var(--clubly-teal),#22c55e);transition:width .6s ease;width:0%;"></div>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Date</th><th style="text-align:center;">Status</th><th>Notes</th></tr></thead>
+            <tbody id="histRecords"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button data-bs-dismiss="modal" class="btn-secondary-cl">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   </main>
 </div>
 
@@ -1173,7 +1334,186 @@ textarea.form-input{resize:vertical;min-height:90px;}
     </div>
   </div>
 </div>
+<!-- ====== ADD GROUP MODAL (TRAINER) ====== -->
+<div class="modal fade" id="addTrainerGroupModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);">Add Activity Group</h5>
+        <button type="button" data-bs-dismiss="modal"
+          style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body-cl">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Group Name *</label>
+              <input class="form-input" type="text" id="tg_name" placeholder="e.g. Swimming G1">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Capacity *</label>
+              <input class="form-input" type="number" id="tg_capacity" min="1" placeholder="e.g. 10">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Group Code</label>
+              <input class="form-input" type="text" id="tg_code" placeholder="e.g. G1">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Activity *</label>
+              <select class="form-input" id="tg_activity" onchange="onTrainerGroupActivityChange('add')">
+                <option value="">Select activity...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Facility (auto)</label>
+              <input class="form-input" type="text" id="tg_facility" readonly
+                style="background:var(--bg);opacity:.8;">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Price (EGP)</label>
+              <input class="form-input" type="number" id="tg_price" min="0" placeholder="e.g. 500">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Duration (days)</label>
+              <input class="form-input" type="number" id="tg_duration" min="1" placeholder="e.g. 30">
+            </div>
+          </div>
+          <div class="col-md-4" style="display:flex;align-items:flex-end;padding-bottom:18px;">
+            <span id="tg_activityInfo"
+              style="font-size:.78rem;color:var(--muted);font-style:italic;">
+              Select an activity first
+            </span>
+          </div>
+          <!-- Time Slots -->
+          <div class="col-12">
+            <label class="form-label" style="color:var(--clubly-accent);">
+              Available Time Slots *
+            </label>
+            <div id="tg_slotsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
+            <button type="button" onclick="addTrainerGroupSlot('tg_slotsContainer')"
+              style="margin-top:10px;background:none;border:1px dashed var(--clubly-teal);
+                     color:var(--clubly-teal);padding:7px 18px;border-radius:50px;
+                     cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;
+                     font-size:.85rem;transition:all .2s;"
+              onmouseover="this.style.background='rgba(46,196,182,.1)'"
+              onmouseout="this.style.background='none'">
+              <i class="bi bi-plus-circle me-1"></i> Add Time Slot
+            </button>
+            <div id="tg_err" style="color:#ef4444;font-size:.82rem;margin-top:8px;display:none;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-primary-cl" onclick="saveTrainerGroup()">
+          <i class="bi bi-check-lg"></i> Save Group
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- ====== EDIT GROUP MODAL (TRAINER) ====== -->
+<div class="modal fade" id="editTrainerGroupModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);">Edit Activity Group</h5>
+        <button type="button" data-bs-dismiss="modal"
+          style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body-cl">
+        <input type="hidden" id="etg_id">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Group Name *</label>
+              <input class="form-input" type="text" id="etg_name">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Capacity *</label>
+              <input class="form-input" type="number" id="etg_capacity" min="1">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Group Code</label>
+              <input class="form-input" type="text" id="etg_code">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Activity *</label>
+              <select class="form-input" id="etg_activity" onchange="onTrainerGroupActivityChange('edit')">
+                <option value="">Select activity...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Facility (auto)</label>
+              <input class="form-input" type="text" id="etg_facility" readonly
+                style="background:var(--bg);opacity:.8;">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Price (EGP)</label>
+              <input class="form-input" type="number" id="etg_price" min="0">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Duration (days)</label>
+              <input class="form-input" type="number" id="etg_duration" min="1">
+            </div>
+          </div>
+          <!-- Time Slots -->
+          <div class="col-12">
+            <label class="form-label" style="color:var(--clubly-accent);">
+              Available Time Slots *
+            </label>
+            <div id="etg_slotsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
+            <button type="button" onclick="addTrainerGroupSlot('etg_slotsContainer')"
+              style="margin-top:10px;background:none;border:1px dashed var(--clubly-teal);
+                     color:var(--clubly-teal);padding:7px 18px;border-radius:50px;
+                     cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;
+                     font-size:.85rem;transition:all .2s;"
+              onmouseover="this.style.background='rgba(46,196,182,.1)'"
+              onmouseout="this.style.background='none'">
+              <i class="bi bi-plus-circle me-1"></i> Add Time Slot
+            </button>
+            <div id="etg_err" style="color:#ef4444;font-size:.82rem;margin-top:8px;display:none;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-teal-cl" onclick="updateTrainerGroup()">
+          <i class="bi bi-check-lg"></i> Update Group
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   
@@ -1827,22 +2167,25 @@ async function loadTrainerBookings() {
   if (!trainerId) return;
   
   try {
-    // جيبي Member Bookings
-    const res1 = await fetch(`${API}/ActivityBookings/by-trainer/${trainerId}`);
-    const memberBookings = res1.ok ? await res1.json() : [];
+    const res = await fetch(`${API}/ActivityBookings`);
+    const allBookings = res.ok ? await res.json() : [];
     
-    // جيبي Guest Bookings
-    const res2 = await fetch(`${API}/ActivityBookings`);
-    const allBookings = res2.ok ? await res2.json() : [];
-    const guestBookings = allBookings.filter(b => 
-      String(b.trainerId) === String(trainerId) && b.guestId != null
+    console.log('Sample booking:', allBookings[0]); // شوف الـ fields
+    
+    // فلتر بالـ trainerId الأول
+    const myBookings = allBookings.filter(b => 
+      String(b.trainerId) === String(trainerId)
     );
 
-    // دمجهم مع تمييز النوع
-    _allBookings = [
-      ...memberBookings.map(b => ({ ...b, _bookingType: 'Member' })),
-      ...guestBookings.map(b => ({ ...b, _bookingType: 'Guest' }))
-    ];
+    // تقسيم member vs guest
+    _allBookings = myBookings.map(b => ({
+      ...b,
+      _bookingType: b.guestId != null ? 'Guest' : 'Member'
+    }));
+    
+    console.log('My bookings:', _allBookings);
+    console.log('Members:', _allBookings.filter(b => b._bookingType === 'Member'));
+    console.log('Guests:', _allBookings.filter(b => b._bookingType === 'Guest'));
 
   } catch(e) {
     console.warn('Bookings load failed:', e);
@@ -1855,7 +2198,6 @@ async function loadTrainerBookings() {
   renderWeekSchedule();
   renderReports();
 }
-
 // ===== DASHBOARD =====
 function renderTrainerDashboard() {
   const today = new Date().toISOString().slice(0,10);
@@ -2157,7 +2499,7 @@ function renderGroupsPage() {
   const actF = document.getElementById('groupActivityFilter')?.value||'';
   const dayF = document.getElementById('groupDayFilter')?.value||'';
 
-  // Populate activity filter dropdown (مرة وحدة)
+  // Populate activity filter dropdown (once)
   const actSel = document.getElementById('groupActivityFilter');
   if (actSel && actSel.options.length <= 1) {
     [...new Set(_trainerGroups.map(g=>g.activityName).filter(Boolean))].forEach(a => {
@@ -2184,6 +2526,9 @@ function renderGroupsPage() {
       <div style="text-align:center;padding:80px 20px;color:var(--muted);">
         <i class="bi bi-diagram-3" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
         <p style="font-weight:700;">No groups found.</p>
+        <button class="btn-primary-cl" style="margin-top:10px;" onclick="openAddTrainerGroupModal()">
+          <i class="bi bi-plus-lg"></i> Add Your First Group
+        </button>
       </div>`;
     return;
   }
@@ -2194,8 +2539,14 @@ function renderGroupsPage() {
         <table>
           <thead>
             <tr>
-              <th>#</th><th>Group Name</th><th>Activity</th>
-              <th>Facility</th><th>Capacity</th><th>Price</th><th>Time Slots</th>
+              <th>#</th>
+              <th>Group Name</th>
+              <th>Activity</th>
+              <th>Facility</th>
+              <th style="text-align:center;">Capacity</th>
+              <th style="text-align:center;">Price</th>
+              <th>Time Slots</th>
+              <th style="text-align:center;">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -2206,16 +2557,36 @@ function renderGroupsPage() {
                               border-radius:10px;font-size:.72rem;font-weight:700;margin:1px;">
                   ${s.day||''} ${s.startTime?.substring(0,5)||''}→${s.endTime?.substring(0,5)||''}
                 </span>`).join('');
+
               return `
                 <tr>
                   <td style="color:var(--muted);">${i+1}</td>
-                  <td><strong>${g.name||'—'}</strong>
-                    ${g.code?`<br><span style="font-size:.75rem;color:var(--muted);">${g.code}</span>`:''}</td>
+                  <td>
+                    <strong>${g.name||'—'}</strong>
+                    ${g.code?`<br><span style="font-size:.75rem;color:var(--muted);">${g.code}</span>`:''}
+                  </td>
                   <td>${g.activityName||'—'}</td>
                   <td>${g.facilityName||'—'}</td>
                   <td style="text-align:center;font-weight:700;">${g.capacity||'—'}</td>
-                  <td style="font-weight:700;color:var(--clubly-accent);">${g.price||0} EGP</td>
+                  <td style="text-align:center;font-weight:700;color:var(--clubly-accent);">
+                    ${g.price||0} EGP
+                  </td>
                   <td>${slots||'—'}</td>
+                  <td style="text-align:center;">
+                    <button onclick="openEditTrainerGroupModal(${g.id})"
+                      style="background:rgba(59,130,246,.1);border:none;color:#3b82f6;
+                             width:32px;height:32px;border-radius:8px;cursor:pointer;
+                             margin-right:4px;font-size:.9rem;"
+                      title="Edit">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button onclick="deleteTrainerGroup(${g.id}, '${(g.name||'').replace(/'/g,"\\'")}' )"
+                      style="background:rgba(239,68,68,.1);border:none;color:#ef4444;
+                             width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:.9rem;"
+                      title="Delete">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </td>
                 </tr>`;
             }).join('')}
           </tbody>
@@ -2223,7 +2594,613 @@ function renderGroupsPage() {
       </div>
     </div>`;
 }
+// ===================================================
+// ====== TRAINER GROUP CRUD =========================
+// ===================================================
 
+const groupsApiUrl = 'https://localhost:7132/api/ActivityGroups';
+
+// ── Load trainer's own activities ──────────────────
+let _trainerOwnActivities = [];
+
+async function loadTrainerOwnActivities() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${API}/Trainers/byActivity/0`);
+    // جيب كل الـ activities وفلترها بالـ trainerId
+    const allAct = await fetch(`${API}/Activities`).then(r => r.json());
+    // احنا محتاجين الـ activities اللي الـ trainer ده بيدرسها
+    // من الـ trainer profile
+    const trainerRes = await fetch(`${API}/Trainers/${trainerId}`);
+    const trainer = await trainerRes.json();
+    const trainerActIds = trainer.activityIds || [];
+    _trainerOwnActivities = allAct.filter(a =>
+      trainerActIds.includes(a.id) || trainerActIds.includes(String(a.id))
+    );
+  } catch(e) {
+    console.warn('Could not load trainer activities:', e);
+    _trainerOwnActivities = [];
+  }
+}
+
+// ── Populate activity selects ──────────────────────
+function populateTrainerGroupActivitySelects() {
+  ['tg_activity', 'etg_activity'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="">Select activity...</option>' +
+      _trainerOwnActivities.map(a =>
+        `<option value="${a.id}" data-facility="${a.facilityName||''}"
+          ${String(a.id) === String(current) ? 'selected' : ''}>
+          ${a.name}
+        </option>`
+      ).join('');
+    if (current) sel.value = current;
+  });
+}
+
+// ── Auto-fill facility when activity changes ───────
+function onTrainerGroupActivityChange(mode) {
+  const prefix = mode === 'add' ? 'tg' : 'etg';
+  const sel    = document.getElementById(`${prefix}_activity`);
+  const opt    = sel.selectedOptions[0];
+  document.getElementById(`${prefix}_facility`).value =
+    opt?.dataset?.facility || '';
+}
+
+// ── Slot row builder ───────────────────────────────
+function addTrainerGroupSlot(containerId, data = null) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'tg-slot-row';
+  div.style.cssText = `
+    background:var(--bg);border:1px solid var(--border);
+    border-radius:12px;padding:14px 16px;position:relative;
+  `;
+  div.innerHTML = `
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label">Duration (hrs)</label>
+        <input type="number" name="durationHrs" class="form-input"
+          placeholder="e.g. 2" value="${data?.durationHrs||''}">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Start Time</label>
+        <input type="time" name="startTime" class="form-input"
+          value="${data?.startTime ? data.startTime.substring(0,5) : ''}">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">End Time (auto)</label>
+        <input type="time" name="endTime" class="form-input" readonly
+          style="opacity:.7;"
+          value="${data?.endTime ? data.endTime.substring(0,5) : ''}">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Day</label>
+        <select name="day" class="form-input">
+          <option value="">Select day</option>
+          ${['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday']
+            .map(d => `<option ${d===(data?.day||'')?'selected':''} >${d}</option>`).join('')}
+        </select>
+      </div>
+      <div class="col-md-1 d-flex align-items-end">
+        <button type="button" onclick="this.closest('.tg-slot-row').remove()"
+          style="background:rgba(239,68,68,.1);border:none;color:#ef4444;
+                 width:36px;height:36px;border-radius:8px;cursor:pointer;
+                 display:flex;align-items:center;justify-content:center;font-size:1rem;"
+          title="Remove slot">
+          <i class="bi bi-trash3"></i>
+        </button>
+      </div>
+    </div>`;
+
+  // Auto-calc end time
+  div.addEventListener('change', e => {
+    const row  = e.target.closest('.tg-slot-row');
+    const st   = row.querySelector('[name="startTime"]').value;
+    const dur  = parseFloat(row.querySelector('[name="durationHrs"]').value);
+    if (st && dur) {
+      const [h,m] = st.split(':').map(Number);
+      const total = h*60 + m + dur*60;
+      const endH  = String(Math.floor(total/60)%24).padStart(2,'0');
+      const endM  = String(total%60).padStart(2,'0');
+      row.querySelector('[name="endTime"]').value = `${endH}:${endM}`;
+    }
+  });
+
+  container.appendChild(div);
+}
+
+// ── Get slots from container ───────────────────────
+function getTrainerGroupSlots(containerId) {
+  return [...document.getElementById(containerId).querySelectorAll('.tg-slot-row')]
+    .map(row => ({
+      startTime: (row.querySelector('[name="startTime"]').value || '') + ':00',
+      endTime:   (row.querySelector('[name="endTime"]').value   || '') + ':00',
+      day:       row.querySelector('[name="day"]').value,
+      durationHrs: parseFloat(row.querySelector('[name="durationHrs"]').value) || 0,
+    }))
+    .filter(s => s.startTime !== ':00' && s.day);
+}
+
+// ── Open Add Modal ─────────────────────────────────
+async function openAddTrainerGroupModal() {
+  await loadTrainerOwnActivities();
+  populateTrainerGroupActivitySelects();
+
+  // Reset fields
+  ['tg_name','tg_capacity','tg_code','tg_price','tg_duration',
+   'tg_facility','tg_activity'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('tg_slotsContainer').innerHTML = '';
+  document.getElementById('tg_err').style.display = 'none';
+  addTrainerGroupSlot('tg_slotsContainer'); // default 1 slot
+  new bootstrap.Modal(document.getElementById('addTrainerGroupModal')).show();
+}
+
+// ── Save (Add) ─────────────────────────────────────
+async function saveTrainerGroup() {
+  const errEl = document.getElementById('tg_err');
+  errEl.style.display = 'none';
+
+  const name     = document.getElementById('tg_name').value.trim();
+  const capacity = parseInt(document.getElementById('tg_capacity').value);
+  const actId    = document.getElementById('tg_activity').value;
+  const slots    = getTrainerGroupSlots('tg_slotsContainer');
+
+  if (!name || name.length < 2) {
+    errEl.textContent = 'Group name is required (min 2 chars).';
+    errEl.style.display = 'block'; return;
+  }
+  if (!capacity || capacity < 1) {
+    errEl.textContent = 'Capacity must be at least 1.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!actId) {
+    errEl.textContent = 'Please select an activity.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!slots.length) {
+    errEl.textContent = 'Please add at least one time slot.';
+    errEl.style.display = 'block'; return;
+  }
+
+  const payload = {
+    Name:       name,
+    Capacity:   capacity,
+    Code:       document.getElementById('tg_code').value.trim() || null,
+    ActivityId: parseInt(actId),
+    TrainerId:  parseInt(trainerId),
+    Price:      parseFloat(document.getElementById('tg_price').value) || 0,
+    DurationDays: parseInt(document.getElementById('tg_duration').value) || null,
+    Status:     'Active',
+    TimeSlots:  slots,
+  };
+
+  try {
+    const res = await fetch(groupsApiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    bootstrap.Modal.getInstance(
+      document.getElementById('addTrainerGroupModal')
+    ).hide();
+    // Show success
+    showTrainerGroupToast('Group added successfully! ✓', 'success');
+    await loadTrainerGroups();
+  } catch(e) {
+    errEl.textContent = 'Failed to save: ' + e.message;
+    errEl.style.display = 'block';
+  }
+}
+
+// ── Open Edit Modal ────────────────────────────────
+async function openEditTrainerGroupModal(id) {
+  await loadTrainerOwnActivities();
+  populateTrainerGroupActivitySelects();
+
+  try {
+    const res = await fetch(`${groupsApiUrl}/${id}`);
+    if (!res.ok) throw new Error();
+    const g = await res.json();
+
+    document.getElementById('etg_id').value       = g.id;
+    document.getElementById('etg_name').value     = g.name || '';
+    document.getElementById('etg_capacity').value = g.capacity || '';
+    document.getElementById('etg_code').value     = g.code || '';
+    document.getElementById('etg_price').value    = g.price || '';
+    document.getElementById('etg_duration').value = g.durationDays || '';
+    document.getElementById('etg_activity').value = g.activityId || '';
+    document.getElementById('etg_err').style.display = 'none';
+
+    // Auto-fill facility
+    const opt = document.getElementById('etg_activity').selectedOptions[0];
+    document.getElementById('etg_facility').value =
+      opt?.dataset?.facility || g.facilityName || '';
+
+    // Time slots
+    const sc = document.getElementById('etg_slotsContainer');
+    sc.innerHTML = '';
+    const slots = g.timeSlots || [];
+    if (slots.length) {
+      slots.forEach(s => addTrainerGroupSlot('etg_slotsContainer', s));
+    } else {
+      addTrainerGroupSlot('etg_slotsContainer');
+    }
+
+    new bootstrap.Modal(document.getElementById('editTrainerGroupModal')).show();
+  } catch(e) {
+    showTrainerGroupToast('Failed to load group.', 'error');
+  }
+}
+
+// ── Update ─────────────────────────────────────────
+async function updateTrainerGroup() {
+  const errEl = document.getElementById('etg_err');
+  errEl.style.display = 'none';
+
+  const id       = document.getElementById('etg_id').value;
+  const name     = document.getElementById('etg_name').value.trim();
+  const capacity = parseInt(document.getElementById('etg_capacity').value);
+  const actId    = document.getElementById('etg_activity').value;
+  const slots    = getTrainerGroupSlots('etg_slotsContainer');
+
+  if (!name || name.length < 2) {
+    errEl.textContent = 'Group name is required.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!capacity || capacity < 1) {
+    errEl.textContent = 'Capacity must be at least 1.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!slots.length) {
+    errEl.textContent = 'Please add at least one time slot.';
+    errEl.style.display = 'block'; return;
+  }
+
+  const payload = {
+    Name:       name,
+    Capacity:   capacity,
+    Code:       document.getElementById('etg_code').value.trim() || null,
+    ActivityId: parseInt(actId),
+    TrainerId:  parseInt(trainerId),
+    Price:      parseFloat(document.getElementById('etg_price').value) || 0,
+    DurationDays: parseInt(document.getElementById('etg_duration').value) || null,
+    Status:     'Active',
+    TimeSlots:  slots,
+  };
+
+  try {
+    const res = await fetch(`${groupsApiUrl}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    bootstrap.Modal.getInstance(
+      document.getElementById('editTrainerGroupModal')
+    ).hide();
+    showTrainerGroupToast('Group updated successfully! ✓', 'success');
+    await loadTrainerGroups();
+  } catch(e) {
+    errEl.textContent = 'Failed to update: ' + e.message;
+    errEl.style.display = 'block';
+  }
+}
+
+// ── Delete ─────────────────────────────────────────
+async function deleteTrainerGroup(id, name) {
+  if (!confirm(`Delete group "${name}"? This cannot be undone.`)) return;
+  try {
+    const res = await fetch(`${groupsApiUrl}/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error();
+    showTrainerGroupToast('Group deleted.', 'success');
+    await loadTrainerGroups();
+  } catch {
+    showTrainerGroupToast('Failed to delete group.', 'error');
+  }
+}
+
+// ── Toast helper ───────────────────────────────────
+function showTrainerGroupToast(msg, type = 'success') {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position:fixed;bottom:24px;right:24px;z-index:9999;
+    background:${type === 'success' ? '#22c55e' : '#ef4444'};
+    color:#fff;padding:12px 24px;border-radius:12px;
+    font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:slideInToast .3s ease;
+  `;
+  toast.textContent = msg;
+  if (!document.getElementById('trainerToastStyle')) {
+    const style = document.createElement('style');
+    style.id = 'trainerToastStyle';
+    style.textContent = `
+      @keyframes slideInToast {
+        from { transform: translateY(20px); opacity:0; }
+        to   { transform: translateY(0);   opacity:1; }
+      }`;
+    document.head.appendChild(style);
+  }
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+// ===================================================
+// ============== ATTENDANCE MODULE ==================
+// ===================================================
+const ATT_API = 'https://localhost:7132/api/Attendance';
+let _attData   = [];
+let _attGroups = [];
+
+async function loadAttendancePage() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${ATT_API}/groups/${trainerId}`);
+    _attGroups = res.ok ? await res.json() : [];
+    const sel = document.getElementById('attGroupSelect');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">— Select Group —</option>' +
+      _attGroups.map(g =>
+        `<option value="${g.id}">${g.name} · ${g.activityName}</option>`
+      ).join('');
+  } catch { _attGroups = []; }
+}
+
+function onAttGroupChange() {
+  const groupId = document.getElementById('attGroupSelect').value;
+  if (!groupId) return;
+  document.getElementById('attDate').value = new Date().toISOString().slice(0,10);
+  const group = _attGroups.find(g => String(g.id) === String(groupId));
+  if (group?.timeSlots?.length) {
+    const days = [...new Set(group.timeSlots.map(s => s.day))].join(', ');
+    document.getElementById('attDayInfo').textContent = `📅 Sessions: ${days}`;
+  }
+  loadAttendanceList();
+}
+
+async function loadAttendanceList() {
+  const groupId = document.getElementById('attGroupSelect').value;
+  const date    = document.getElementById('attDate').value;
+  if (!groupId || !date) return;
+
+  document.getElementById('attList').innerHTML = `
+    <div style="text-align:center;padding:40px;color:var(--muted);">
+      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+    </div>`;
+
+  try {
+    const res = await fetch(`${ATT_API}?groupId=${groupId}&date=${date}`);
+    _attData = res.ok ? await res.json() : [];
+    renderAttendanceList();
+    updateAttSummary();
+    loadMemberSummaries();
+    document.getElementById('attSummaryBar').style.display    = '';
+    document.getElementById('attQuickActions').style.display  = '';
+    document.getElementById('saveAllBtn').style.display       = '';
+    document.getElementById('attSummarySection').style.display = '';
+    const d = new Date(date);
+    document.getElementById('attSubtitle').textContent =
+      `${_attData.length} members · ${d.toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}`;
+  } catch {
+    document.getElementById('attList').innerHTML = `
+      <div style="text-align:center;padding:40px;color:#ef4444;">Failed to load.</div>`;
+  }
+}
+
+function renderAttendanceList() {
+  const filter = document.getElementById('attFilter').value;
+  let list = _attData.filter(m => {
+    if (filter === 'present')  return m.attended && (m._localPresent !== undefined ? m._localPresent : m.isPresent);
+    if (filter === 'absent')   return m.attended && !(m._localPresent !== undefined ? m._localPresent : m.isPresent);
+    if (filter === 'unmarked') return !m.attended && m._localPresent === undefined;
+    return true;
+  });
+
+  if (!list.length) {
+    document.getElementById('attList').innerHTML = `
+      <div style="text-align:center;padding:50px;color:var(--muted);">
+        <i class="bi bi-people" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
+        <p style="font-weight:700;">No members for this filter.</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('attList').innerHTML = list.map((m, i) => {
+    const initials  = getInitials(m.name || '?');
+    const color     = AVATAR_COLORS[i % AVATAR_COLORS.length];
+    const isPresent = m._localPresent !== undefined ? m._localPresent : m.isPresent;
+    const isMarked  = m.attended || m._localPresent !== undefined;
+
+    const statusHtml = isMarked
+      ? (isPresent
+          ? `<span style="background:rgba(34,197,94,.12);color:#16a34a;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">✓ Present</span>`
+          : `<span style="background:rgba(239,68,68,.12);color:#dc2626;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">✗ Absent</span>`)
+      : `<span style="background:rgba(212,168,67,.12);color:#b45309;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">— Not Marked</span>`;
+
+    return `
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 20px;
+                  border-bottom:1px solid var(--border);transition:background .15s;"
+           onmouseover="this.style.background='rgba(0,0,0,.02)'"
+           onmouseout="this.style.background='transparent'">
+        <div style="width:44px;height:44px;border-radius:50%;background:${color};
+                    display:flex;align-items:center;justify-content:center;
+                    color:#fff;font-weight:800;font-size:.88rem;flex-shrink:0;">
+          ${initials}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;color:var(--text);font-size:.93rem;">
+            ${m.name || '—'}
+            ${m.isGuest ? `<span style="background:rgba(46,196,182,.12);color:var(--clubly-teal);padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:700;margin-left:6px;">Guest</span>` : ''}
+          </div>
+          <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">
+            ${m.email || ''} &nbsp;·&nbsp;
+            <span style="color:var(--clubly-accent);">Ends: ${m.endDate || '—'}</span>
+          </div>
+        </div>
+        <div>${statusHtml}</div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="toggleAttendance(${m.bookingId}, true)"
+            style="background:${isMarked && isPresent ? 'rgba(34,197,94,.2)' : 'var(--bg)'};
+                   border:2px solid ${isMarked && isPresent ? '#22c55e' : 'var(--border)'};
+                   color:${isMarked && isPresent ? '#16a34a' : 'var(--muted)'};
+                   width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.1rem;
+                   transition:all .15s;display:flex;align-items:center;justify-content:center;">✓</button>
+          <button onclick="toggleAttendance(${m.bookingId}, false)"
+            style="background:${isMarked && !isPresent ? 'rgba(239,68,68,.2)' : 'var(--bg)'};
+                   border:2px solid ${isMarked && !isPresent ? '#ef4444' : 'var(--border)'};
+                   color:${isMarked && !isPresent ? '#dc2626' : 'var(--muted)'};
+                   width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.1rem;
+                   transition:all .15s;display:flex;align-items:center;justify-content:center;">✗</button>
+        </div>
+        <input type="text" id="note-${m.bookingId}" value="${m.notes || ''}"
+          placeholder="Note (optional)"
+          style="background:var(--bg);border:1px solid var(--border);border-radius:8px;
+                 padding:7px 12px;color:var(--text);font-family:'Cairo',sans-serif;
+                 font-size:.82rem;width:150px;outline:none;"
+          onfocus="this.style.borderColor='var(--clubly-accent)'"
+          onblur="this.style.borderColor='var(--border)'">
+      </div>`;
+  }).join('');
+
+  updateAttSummary();
+}
+
+function toggleAttendance(bookingId, isPresent) {
+  const m = _attData.find(x => x.bookingId === bookingId);
+  if (!m) return;
+  m._localPresent = isPresent;
+  m.attended = true;
+  renderAttendanceList();
+}
+
+function markAll(isPresent) {
+  _attData.forEach(m => { m._localPresent = isPresent; m.attended = true; });
+  renderAttendanceList();
+}
+
+function updateAttSummary() {
+  const total    = _attData.length;
+  const present  = _attData.filter(m => { const p = m._localPresent !== undefined ? m._localPresent : m.isPresent; return m.attended && p; }).length;
+  const absent   = _attData.filter(m => { const p = m._localPresent !== undefined ? m._localPresent : m.isPresent; return m.attended && !p; }).length;
+  const unmarked = _attData.filter(m => !m.attended && m._localPresent === undefined).length;
+  document.getElementById('attTotalCount').textContent    = total;
+  document.getElementById('attPresentCount').textContent  = present;
+  document.getElementById('attAbsentCount').textContent   = absent;
+  document.getElementById('attUnmarkedCount').textContent = unmarked;
+}
+
+async function saveAllAttendance() {
+  const date = document.getElementById('attDate').value;
+  if (!date) return;
+  const records = _attData
+    .filter(m => m.attended || m._localPresent !== undefined)
+    .map(m => ({
+      bookingId: m.bookingId,
+      isPresent: m._localPresent !== undefined ? m._localPresent : !!m.isPresent,
+      notes: document.getElementById(`note-${m.bookingId}`)?.value || m.notes || null
+    }));
+  if (!records.length) { showTrainerGroupToast('Mark at least one member first.', 'error'); return; }
+
+  const btn = document.getElementById('saveAllBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving…';
+  try {
+    const res = await fetch(`${ATT_API}/bulk`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, records })
+    });
+    if (!res.ok) throw new Error();
+    showTrainerGroupToast(`✓ Saved for ${records.length} members!`, 'success');
+    await loadAttendanceList();
+  } catch { showTrainerGroupToast('Failed to save.', 'error'); }
+  finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-check2-all"></i> Save All';
+  }
+}
+
+async function loadMemberSummaries() {
+  const container = document.getElementById('attSummaryList');
+  container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);"><div class="spinner-border spinner-border-sm me-2"></div>Loading…</div>`;
+  const summaries = await Promise.all(
+    _attData.slice(0,10).map(async m => {
+      try { const r = await fetch(`${ATT_API}/summary/${m.bookingId}`); return r.ok ? await r.json() : null; }
+      catch { return null; }
+    })
+  );
+  const valid = summaries.filter(Boolean);
+  if (!valid.length) { container.innerHTML = `<p style="text-align:center;color:var(--muted);padding:20px;">No records yet.</p>`; return; }
+  container.innerHTML = valid.map((s, i) => {
+    const rate = s.attendanceRate || 0;
+    const rateColor = rate >= 80 ? '#22c55e' : rate >= 50 ? 'var(--clubly-gold)' : '#ef4444';
+    return `
+      <div onclick="openMemberHistory(${s.bookingId})"
+        style="display:flex;align-items:center;gap:14px;padding:14px 0;
+               border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .2s;"
+        onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        <div style="width:38px;height:38px;border-radius:50%;background:${AVATAR_COLORS[i%AVATAR_COLORS.length]};
+                    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.8rem;flex-shrink:0;">
+          ${getInitials(s.name)}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:.9rem;">${s.name}</div>
+          <div style="font-size:.76rem;color:var(--muted);">${s.totalPresent} present · ${s.totalAbsent} absent · ends ${s.endDate}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-weight:900;font-size:1.1rem;color:${rateColor};">${rate}%</div>
+          <div style="width:80px;background:var(--border);border-radius:10px;height:5px;margin-top:4px;overflow:hidden;">
+            <div style="width:${rate}%;height:100%;background:${rateColor};border-radius:10px;"></div>
+          </div>
+        </div>
+        <i class="bi bi-chevron-right" style="color:var(--muted);font-size:.8rem;"></i>
+      </div>`;
+  }).join('');
+}
+
+async function openMemberHistory(bookingId) {
+  try {
+    const res = await fetch(`${ATT_API}/summary/${bookingId}`);
+    if (!res.ok) throw new Error();
+    const s = await res.json();
+    document.getElementById('histModalTitle').textContent = `${s.name} — Attendance History`;
+    const rate = s.attendanceRate || 0;
+    document.getElementById('histRate').textContent = `${rate}%`;
+    document.getElementById('histRateBar').style.width = `${rate}%`;
+    document.getElementById('histStats').innerHTML = [
+      { label:'Expected', val: s.expectedSessions, color:'var(--muted)' },
+      { label:'Present',  val: s.totalPresent,     color:'#22c55e' },
+      { label:'Absent',   val: s.totalAbsent,      color:'#ef4444' },
+      { label:'Rate',     val: rate + '%',          color:'var(--clubly-accent)' },
+    ].map(item => `
+      <div class="col-3">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+          <div style="font-size:1.5rem;font-weight:900;color:${item.color};">${item.val}</div>
+          <div style="font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;">${item.label}</div>
+        </div>
+      </div>`).join('');
+    document.getElementById('histRecords').innerHTML = s.records?.length
+      ? s.records.map((r, i) => `
+          <tr>
+            <td style="color:var(--muted);">${i+1}</td>
+            <td style="font-weight:600;">${r.date}</td>
+            <td style="text-align:center;">
+              ${r.isPresent
+                ? `<span style="background:rgba(34,197,94,.12);color:#16a34a;padding:3px 12px;border-radius:10px;font-size:.8rem;font-weight:700;">✓ Present</span>`
+                : `<span style="background:rgba(239,68,68,.12);color:#dc2626;padding:3px 12px;border-radius:10px;font-size:.8rem;font-weight:700;">✗ Absent</span>`}
+            </td>
+            <td style="color:var(--muted);font-size:.85rem;">${r.notes || '—'}</td>
+          </tr>`).join('')
+      : `<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);">No records yet.</td></tr>`;
+    new bootstrap.Modal(document.getElementById('memberHistoryModal')).show();
+  } catch { showTrainerGroupToast('Failed to load history.', 'error'); }
+}
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
   const parts = trainerName.split(' ');
@@ -2234,8 +3211,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await loadTrainerProfile();
   await loadTrainerBookings();
-  await loadTrainerGroups();     // ← زودي السطر ده
+  await loadTrainerGroups(); 
+  loadAttendancePage();
   loadTrainerNotifications();
+
 });
 </script>
 </body>
