@@ -2290,7 +2290,13 @@ async function saveGuestPassword() {
 }
 // ===== LOAD GUEST DATA FROM API =====
 const API = 'https://localhost:7132/api';
-
+function formatTime12Guest(t) {
+  if (!t || t === '—') return '—';
+  const [h, m] = String(t).substring(0,5).split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour = h % 12 || 12;
+  return `${hour}:${String(m).padStart(2,'0')} ${ampm}`;
+}
 async function initGuestPortal() {
   if (!guestId) return;
 
@@ -2365,9 +2371,9 @@ bookings.forEach(b => {
                   b.status?.toLowerCase() === 'pending'  ? 'sched-orange' : 'sched-gold',
       trainer:    b.trainerName || '—',
       location:   b.groupName || '—',
-      time:       b.timeSlots?.length
-                    ? b.timeSlots[0].startTime?.substring(0,5) + ' → ' + b.timeSlots[0].endTime?.substring(0,5)
-                    : '—',
+     time: b.timeSlots?.length
+  ? b.timeSlots[0].day + ' · ' + formatTime12Guest(b.timeSlots[0].startTime) + ' → ' + formatTime12Guest(b.timeSlots[0].endTime)
+  : '—',
       status:     b.status || '—'
     });
   }
@@ -2429,9 +2435,9 @@ bookings.forEach(b => {
       if (!state.facilitySchedule[key]) state.facilitySchedule[key] = [];
       state.facilitySchedule[key].push({
         name:         b.facilityName || '—',
-        time:         (b.startTime ? b.startTime.substring(0,5) : '—')
-                    + ' → '
-                    + (b.endTime   ? b.endTime.substring(0,5)   : '—'),
+    time: (b.bookingDate 
+  ? new Date(b.bookingDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) + ' · ' 
+  : '') + formatTime12Guest(b.startTime) + ' → ' + formatTime12Guest(b.endTime),
         participants: b.participants || 1,
         price:        b.price || 0,
         status:       b.status || 'Pending'

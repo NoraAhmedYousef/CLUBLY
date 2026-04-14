@@ -996,6 +996,10 @@ body {
       <i class="bi bi-clock-history"></i>
       <span>Schedule</span>
     </button>
+    <button class="sidebar-link" onclick="showPage('attendance')" id="sb-attendance" data-label="Attendance">
+  <i class="bi bi-person-check"></i>
+  <span>Attendance</span>
+</button>
        <button class="sidebar-link" onclick="showPage('payments')" id="sb-payments" data-label="Payments">
   <i class="bi bi-receipt"></i>
   <span>Payments</span>
@@ -1597,7 +1601,121 @@ body {
         </div>
       </div>
     </div>
+<!-- ======== PAGE: ATTENDANCE ======== -->
+<div class="page" id="page-attendance">
+  <div class="page-header-clubly">
+    <div>
+      <h1 class="page-title-clubly">
+        <i class="bi bi-person-check-fill me-2" style="color:var(--clubly-teal);"></i>
+        My Attendance
+      </h1>
+      <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">
+        Track your attendance across all your groups
+      </p>
+    </div>
+    <button class="btn-clubly-primary" onclick="loadMemberAttendance()">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </div>
 
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4" id="attSummaryCards">
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon-box icon-blue"><i class="bi bi-calendar3"></i></div>
+        <div class="stat-label">Total Sessions</div>
+        <div class="stat-value" id="mem-att-total">—</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon-box icon-green"><i class="bi bi-check-circle-fill"></i></div>
+        <div class="stat-label">Present</div>
+        <div class="stat-value" id="mem-att-present" style="color:#22c55e;">—</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon-box icon-orange"><i class="bi bi-x-circle-fill"></i></div>
+        <div class="stat-label">Absent</div>
+        <div class="stat-value" id="mem-att-absent" style="color:#ef4444;">—</div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="stat-card">
+        <div class="stat-icon-box icon-teal"><i class="bi bi-percent"></i></div>
+        <div class="stat-label">Attendance Rate</div>
+        <div class="stat-value" id="mem-att-rate" style="color:var(--clubly-teal);">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="content-card mb-3" style="padding:14px 20px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <select id="memAttGroupSel" onchange="onMemAttGroupChange()"
+        style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;
+               font-size:.87rem;cursor:pointer;min-width:200px;">
+        <option value="">— Select Group —</option>
+      </select>
+      <select id="memAttMonthSel" onchange="applyMemAttFilters()"
+        style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;
+               font-size:.87rem;cursor:pointer;">
+        <option value="">All Months</option>
+      </select>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button class="notif-tab active" onclick="setMemAttStatus('all',this)">All</button>
+        <button class="notif-tab" onclick="setMemAttStatus('present',this)">Present</button>
+        <button class="notif-tab" onclick="setMemAttStatus('absent',this)">Absent</button>
+        <button class="notif-tab" onclick="setMemAttStatus('unmarked',this)">Not Marked</button>
+      </div>
+      <small id="memAttInfo" style="color:var(--muted);margin-left:auto;font-size:.8rem;"></small>
+    </div>
+  </div>
+
+  <!-- Rate Bar per Group -->
+  <div id="memAttRateBar" style="display:none;" class="mb-3">
+    <div class="content-card">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div id="memAttRateCircle"
+          style="width:72px;height:72px;border-radius:50%;
+                 display:flex;align-items:center;justify-content:center;
+                 font-size:1.2rem;font-weight:900;flex-shrink:0;
+                 background:rgba(46,196,182,.12);color:var(--clubly-teal);
+                 border:3px solid rgba(46,196,182,.3);">
+          0%
+        </div>
+        <div style="flex:1;">
+          <div id="memAttGroupName" style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">—</div>
+          <div id="memAttGroupSub" style="font-size:.82rem;color:var(--muted);margin-bottom:8px;">—</div>
+          <div style="background:var(--border);border-radius:10px;height:8px;overflow:hidden;">
+            <div id="memAttRateFill"
+              style="height:100%;border-radius:10px;
+                     background:linear-gradient(90deg,var(--clubly-teal),#22c55e);
+                     transition:width .5s ease;width:0%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Records Table -->
+  <div class="content-card" style="padding:0;">
+    <div style="padding:14px 20px;border-bottom:1px solid var(--border);
+                display:flex;align-items:center;justify-content:space-between;">
+      <span style="font-weight:700;font-size:.95rem;">Session Records</span>
+      <span id="memAttRecsCount" style="font-size:.8rem;color:var(--muted);"></span>
+    </div>
+    <div id="memAttList">
+      <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+        <i class="bi bi-person-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;">Select a group to view your attendance</p>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- ======== PAGE: SIGN OUT ======== -->
     <div class="page" id="page-signout">
       <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
@@ -2137,8 +2255,9 @@ function showPage(name) {
   document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
   const hn = document.getElementById('hn-' + name);
   if (hn) hn.classList.add('active');
-  if (name === 'schedule') loadMemberSchedule();
-    if (name === 'payments')  loadMemberPayments();  
+if (name === 'schedule')   loadMemberSchedule();
+if (name === 'payments')   loadMemberPayments();
+if (name === 'attendance') loadMemberAttendance(); 
 
   state.currentPage = name;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2911,9 +3030,9 @@ function renderMemberSchedule() {
           <div style="font-weight:800;font-size:.95rem;color:var(--text);
                       display:flex;align-items:center;gap:4px;justify-content:flex-end;">
             <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>
-            ${b.timeSlots?.length
-              ? b.timeSlots[0].startTime?.substring(0,5) + ' → ' + b.timeSlots[0].endTime?.substring(0,5)
-              : '—'}
+         ${b.timeSlots?.length
+  ? b.timeSlots[0].day + ' · ' + formatTime12(b.timeSlots[0].startTime) + ' → ' + formatTime12(b.timeSlots[0].endTime)
+  : '—'}
           </div>
           <span class="sched-badge ${badgeMap[(b.status||'').toLowerCase()] || 'badge-pending'}"
                 style="margin-top:6px;display:inline-block;">
@@ -2954,8 +3073,9 @@ function renderMemberSchedule() {
           <div style="font-weight:800;font-size:.95rem;color:var(--text);
                       display:flex;align-items:center;gap:4px;justify-content:flex-end;">
             <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>
-            ${b.startTime ? b.startTime.substring(0,5) : '—'} → ${b.endTime ? b.endTime.substring(0,5) : '—'}
-          </div>
+${b.bookingDate 
+  ? new Date(b.bookingDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) + ' · ' 
+  : ''} ${formatTime12(b.startTime)} → ${formatTime12(b.endTime)}          </div>
           <span class="sched-badge ${badgeMap[(b.status||'').toLowerCase()] || 'badge-pending'}"
                 style="margin-top:6px;display:inline-block;">
             ${b.status || '—'}
@@ -3078,6 +3198,238 @@ async function loadMemberPayments() {
              </span>`}
       </div>
     </div>`).join('');
+}
+// ===================================================
+// ============ MEMBER ATTENDANCE ====================
+// ===================================================
+const MEM_ATT_API = 'https://localhost:7132/api/Attendance';
+let _memAttGroups  = [];
+let _memAttRecords = [];
+let _memAttFiltered = [];
+let _memAttStatus  = 'all';
+let _memAttBookingId = null;
+
+async function loadMemberAttendance() {
+  if (!memberId) return;
+
+  // جيب الـ groups من الـ bookings
+  try {
+    const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+    const bookings = res.ok ? await res.json() : [];
+
+    // كل booking = group
+    _memAttGroups = bookings.map(b => ({
+      bookingId:    b.id,
+      name:         b.groupName  || '—',
+      activity:     b.activityName || '—',
+      trainer:      b.trainerName  || '—',
+    }));
+
+    const sel = document.getElementById('memAttGroupSel');
+    sel.innerHTML = '<option value="">— Select Group —</option>' +
+      _memAttGroups.map(g =>
+        `<option value="${g.bookingId}">${g.name} · ${g.activity}</option>`
+      ).join('');
+
+  } catch(e) {
+    console.warn('Could not load groups for attendance:', e);
+    _memAttGroups = [];
+  }
+
+  // reset
+  _memAttRecords  = [];
+  _memAttFiltered = [];
+  updateMemAttSummary([]);
+  document.getElementById('memAttRateBar').style.display = 'none';
+  document.getElementById('memAttList').innerHTML = `
+    <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+      <i class="bi bi-person-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+      <p style="font-weight:700;">Select a group to view your attendance</p>
+    </div>`;
+}
+
+async function onMemAttGroupChange() {
+  const bookingId = document.getElementById('memAttGroupSel').value;
+  _memAttBookingId = bookingId || null;
+
+  if (!bookingId) {
+    _memAttRecords  = [];
+    _memAttFiltered = [];
+    updateMemAttSummary([]);
+    document.getElementById('memAttRateBar').style.display = 'none';
+    document.getElementById('memAttList').innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+        <i class="bi bi-person-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;">Select a group to view your attendance</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('memAttList').innerHTML = `
+    <div style="text-align:center;padding:40px;color:var(--muted);">
+      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+    </div>`;
+
+  try {
+   const [attRes, bookRes] = await Promise.all([
+  fetch(`${MEM_ATT_API}/summary/${bookingId}`),
+  fetch(`${API_BASE_URL}/ActivityBookings/${bookingId}`)
+]);
+if (!attRes.ok) throw new Error();
+const s       = await attRes.json();
+const booking = bookRes.ok ? await bookRes.json() : null;
+
+const slot      = booking?.timeSlots?.[0];
+const startTime = slot?.startTime ? slot.startTime.substring(0,5) : '—';
+const endTime   = slot?.endTime   ? slot.endTime.substring(0,5)   : '—';
+
+_memAttRecords = (s.records || []).map(r => ({
+  date:      r.date || '—',
+  weekday:   r.date ? new Date(r.date).toLocaleDateString('en-US',{weekday:'long'}) : '—',
+startTime: r.startTime ? String(r.startTime).substring(0,5) : startTime,
+endTime:   r.endTime   ? String(r.endTime).substring(0,5)   : endTime,
+  status:    r.isPresent === true  ? 'present'
+           : r.isPresent === false ? 'absent'
+           : 'unmarked',
+  notes: r.notes || '',
+})).sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    // Populate months filter
+    const months = [...new Set(_memAttRecords.map(r => r.date.substring(0,7)))].sort().reverse();
+    const mSel = document.getElementById('memAttMonthSel');
+    mSel.innerHTML = '<option value="">All Months</option>' +
+      months.map(m => {
+        const d = new Date(m + '-01');
+        const label = d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+        return `<option value="${m}">${label}</option>`;
+      }).join('');
+
+    // Rate bar
+    const group = _memAttGroups.find(g => String(g.bookingId) === String(bookingId));
+    const rate  = s.attendanceRate || 0;
+    document.getElementById('memAttRateBar').style.display = '';
+    document.getElementById('memAttRateCircle').textContent = rate + '%';
+    document.getElementById('memAttRateCircle').style.color =
+      rate >= 80 ? '#22c55e' : rate >= 50 ? 'var(--clubly-gold)' : '#ef4444';
+    document.getElementById('memAttRateCircle').style.background =
+      rate >= 80 ? 'rgba(34,197,94,.12)' : rate >= 50 ? 'rgba(212,168,67,.12)' : 'rgba(239,68,68,.12)';
+    document.getElementById('memAttRateCircle').style.borderColor =
+      rate >= 80 ? 'rgba(34,197,94,.3)' : rate >= 50 ? 'rgba(212,168,67,.3)' : 'rgba(239,68,68,.3)';
+    document.getElementById('memAttGroupName').textContent  = group?.name     || '—';
+    document.getElementById('memAttGroupSub').textContent   =
+      (group?.activity || '') + (group?.trainer ? '  ·  Trainer: ' + group.trainer : '');
+    document.getElementById('memAttRateFill').style.width   = rate + '%';
+    document.getElementById('memAttRateFill').style.background =
+      rate >= 80 ? 'linear-gradient(90deg,var(--clubly-teal),#22c55e)'
+                 : rate >= 50 ? 'linear-gradient(90deg,var(--clubly-gold),#f59e0b)'
+                 : 'linear-gradient(90deg,#ef4444,#dc2626)';
+
+    applyMemAttFilters();
+
+  } catch(e) {
+    document.getElementById('memAttList').innerHTML = `
+      <div style="text-align:center;padding:40px;color:#ef4444;">
+        Failed to load attendance records.
+      </div>`;
+  }
+}
+
+function setMemAttStatus(status, el) {
+  _memAttStatus = status;
+  document.querySelectorAll('#page-attendance .notif-tab')
+    .forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  applyMemAttFilters();
+}
+
+function applyMemAttFilters() {
+  const month = document.getElementById('memAttMonthSel').value;
+
+  _memAttFiltered = _memAttRecords.filter(r => {
+    const matchM = !month || r.date.startsWith(month);
+    const matchS = _memAttStatus === 'all' || r.status === _memAttStatus;
+    return matchM && matchS;
+  });
+
+  updateMemAttSummary(_memAttFiltered.length ? _memAttFiltered : _memAttRecords);
+  renderMemAttRecords();
+}
+
+function updateMemAttSummary(records) {
+  const total    = records.length;
+  const present  = records.filter(r => r.status === 'present').length;
+  const absent   = records.filter(r => r.status === 'absent').length;
+  const marked   = present + absent;
+  const rate     = marked ? Math.round((present / marked) * 100) : 0;
+
+  document.getElementById('mem-att-total').textContent   = total   || '—';
+  document.getElementById('mem-att-present').textContent = present || '—';
+  document.getElementById('mem-att-absent').textContent  = absent  || '—';
+  document.getElementById('mem-att-rate').textContent    = marked  ? rate + '%' : '—';
+}
+function formatTime12(t) {
+  if (!t || t === '—') return '—';
+  const [h, m] = t.substring(0,5).split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour = h % 12 || 12;
+  return `${hour}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+function renderMemAttRecords() {
+  const list = _memAttFiltered;
+  document.getElementById('memAttRecsCount').textContent =
+    list.length ? list.length + ' record' + (list.length !== 1 ? 's' : '') : '';
+  document.getElementById('memAttInfo').textContent =
+    _memAttRecords.length ? `${_memAttFiltered.length} of ${_memAttRecords.length} records` : '';
+
+  if (!list.length) {
+    document.getElementById('memAttList').innerHTML = `
+      <div style="text-align:center;padding:50px 20px;color:var(--muted);">
+        <i class="bi bi-calendar-x" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
+        <p style="font-weight:700;">No records match this filter.</p>
+      </div>`;
+    return;
+  }
+
+  const statusConfig = {
+    present:  { label:'Present',    cls:'b-green',  icon:'bi-check-circle-fill' },
+    absent:   { label:'Absent',     cls:'b-red',    icon:'bi-x-circle-fill'     },
+    unmarked: { label:'Not Marked', cls:'b-gold',   icon:'bi-dash-circle'       },
+  };
+
+  document.getElementById('memAttList').innerHTML = list.map(r => {
+    const cfg = statusConfig[r.status] || statusConfig['unmarked'];
+    const d   = new Date(r.date);
+    const dateStr = isNaN(d) ? r.date
+      : d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+
+    return `
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 20px;
+                  border-bottom:1px solid var(--border);transition:background .15s;"
+           onmouseover="this.style.background='rgba(0,0,0,.02)'"
+           onmouseout="this.style.background='transparent'">
+
+        <div style="width:80px;flex-shrink:0;">
+          <div style="font-weight:700;font-size:.88rem;color:var(--text);">${dateStr}</div>
+          <div style="font-size:.75rem;color:var(--muted);">${r.weekday}</div>
+        </div>
+
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:4px;">
+            <i class="bi bi-clock" style="font-size:.75rem;"></i>
+           ${formatTime12(r.startTime)}
+→
+${formatTime12(r.endTime)}
+          </div>
+          ${r.notes ? `<div style="font-size:.78rem;color:var(--muted);margin-top:3px;">
+            <i class="bi bi-chat-left-text me-1"></i>${r.notes}
+          </div>` : ''}
+        </div>
+
+        <span class="badge-cl ${cfg.cls}" style="flex-shrink:0;">
+          <i class="bi ${cfg.icon} me-1"></i>${cfg.label}
+        </span>
+      </div>`;
+  }).join('');
 }
 // ===== INIT =====
 generateCalendar();
