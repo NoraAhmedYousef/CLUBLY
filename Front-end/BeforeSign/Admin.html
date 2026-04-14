@@ -2316,16 +2316,16 @@ body {
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content rounded-4">
 
-      <div class="modal-header border-0">
-        <div class="d-flex align-items-center gap-3">
-          <div id="mnd_typeIcon" class="notif-type-icon" style="width:46px;height:46px;font-size:20px;"></div>
-          <div>
-            <h5 class="modal-title mb-0 fw-bold" id="mnd_title">—</h5>
-            <small class="text-muted" id="mnd_meta">—</small>
-          </div>
-        </div>
-        <button class="btn-close" data-bs-dismiss="modal" style="filter:invert(1)"></button>
-      </div>
+    <div class="modal-header border-0" style="background:#0d1b2a;border-radius:16px 16px 0 0;padding:20px 24px;">
+  <div class="d-flex align-items-center gap-3">
+    <div id="mnd_typeIcon" class="notif-type-icon" style="width:46px;height:46px;font-size:20px;"></div>
+    <div>
+      <h5 class="modal-title mb-0 fw-bold" id="mnd_title" style="color:#fff;">—</h5>
+      <small id="mnd_meta" style="color:rgba(255,255,255,.6);">—</small>
+    </div>
+  </div>
+  <button class="btn-close" data-bs-dismiss="modal" style="filter:invert(1);opacity:.7;"></button>
+</div>
 
       <div class="modal-body px-4 pb-2">
 
@@ -4335,8 +4335,8 @@ function renderMyNotifList() {
   listEl.innerHTML = items.map(n => {
     const isRead = _readNotifIds.has(n.id);
     const cfg    = typeConfig[n.type] || typeConfig['default'];
-    const raw    = n.sentAt || n.SentAt;
-    const d      = raw ? new Date(raw) : null;
+   const raw    = n.sentAt || n.SentAt;
+const d      = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
 
     // Smart time
     let timeStr = '—';
@@ -4456,8 +4456,8 @@ function openMyNotifDetail(id) {
   document.getElementById('mnd_statusBadge').textContent = n.status || 'Sent';
 
   // Meta line (date in header)
-  const raw = n.sentAt || n.SentAt;
-  const d   = raw ? new Date(raw) : null;
+const raw = n.sentAt || n.SentAt;
+const d   = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
   document.getElementById('mnd_meta').textContent = d
     ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' }) +
       ' at ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })

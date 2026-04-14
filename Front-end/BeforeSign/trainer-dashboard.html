@@ -1746,12 +1746,13 @@ let _trainerNotifsFiltered = [];
 let _trainerNotifPage = 1;
 const _trainerNotifPageSize = 8;
 
+const NOTIF_KEY = `trainerReadIds_${trainerId}`;
 let _trainerReadIds = new Set(
-  JSON.parse(localStorage.getItem('trainerReadIds') || '[]').map(String)
+  JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]').map(String)
 );
 
 function saveTrainerReadState() {
-  localStorage.setItem('trainerReadIds', JSON.stringify([..._trainerReadIds]));
+  localStorage.setItem(NOTIF_KEY, JSON.stringify([..._trainerReadIds]));
 }
 function markTrainerAsRead(id) {
   _trainerReadIds.add(String(id));
@@ -1850,8 +1851,9 @@ function renderTrainerNotifList() {
   listEl.innerHTML = items.map(n => {
     const isRead = _trainerReadIds.has(String(n.id));
     const cfg    = nTypeConfig[n.type] || nTypeConfig['default'];
-    const d      = n.sentAt ? new Date(n.sentAt) : null;
-    let timeStr  = '—';
+const d = n.sentAt 
+  ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
+  : null;    let timeStr  = '—';
     if (d) {
       const diff = new Date()-d, mins=Math.floor(diff/60000), hours=Math.floor(diff/3600000), days=Math.floor(diff/86400000);
       if (mins<1) timeStr='Just now';
@@ -1957,8 +1959,9 @@ function openTrainerNotifDetail(id) {
     'default': { bg:'rgba(100,116,139,.15)', color:'#64748b', icon:'bi-bell-fill' },
   };
   const cfg = nTypeConfig[n.type] || nTypeConfig['default'];
-  const d   = n.sentAt ? new Date(n.sentAt) : null;
-  const fullDate = d
+const d = n.sentAt 
+  ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
+  : null;  const fullDate = d
     ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})
       +' at '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) : '—';
 
@@ -2090,7 +2093,15 @@ document.getElementById('profileImgInput').addEventListener('change', function()
 
 // ===== SIGN OUT =====
 function handleSignOut() {
+  const keysToKeep = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('trainerReadIds_')) {
+      keysToKeep[key] = localStorage.getItem(key);
+    }
+  }
   localStorage.clear();
+  Object.entries(keysToKeep).forEach(([k, v]) => localStorage.setItem(k, v));
   window.location.href = '../BeforeSign/index.html';
 }
 

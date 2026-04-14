@@ -2421,14 +2421,19 @@ let _memberNotifsFiltered = [];
 let _memberNotifPage      = 1;
 const _memberNotifPageSize = 8;
 
-// Read state in localStorage
-let _memberReadIds = new Set(
-  JSON.parse(localStorage.getItem('memberReadNotifIds') || '[]').map(String)
-);
+
 
 function saveMemberReadState() {
-  localStorage.setItem('memberReadNotifIds', JSON.stringify([..._memberReadIds]));
+  localStorage.setItem(`memberReadNotifIds_${memberId}`, 
+    JSON.stringify([..._memberReadIds]));
 }
+
+// وعند التحميل:
+let _memberReadIds = new Set(
+  JSON.parse(
+    localStorage.getItem(`memberReadNotifIds_${memberId}`) || '[]'
+  ).map(String)
+);
 
 function markMemberAsRead(id) {
   _memberReadIds.add(String(id)); // ← String()
@@ -2546,8 +2551,7 @@ function renderMemberNotifList() {
 const isRead = _memberReadIds.has(String(n.id));
     const cfg    = typeConfig[n.type] || typeConfig['default'];
     const raw    = n.sentAt;
-    const d      = raw ? new Date(raw) : null;
-
+const d = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
     // Smart time
     let timeStr = '—';
     if (d) {
@@ -2665,61 +2669,93 @@ function openMemberNotifDetail(id) {
 
   markMemberAsRead(id);
   renderMemberNotifList();
-updateMemberNotifUnreadCount();
+  updateMemberNotifUnreadCount();
+
   const typeConfig = {
-    'Info':    { badge:'badge-confirmed', icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.15)',  color:'#0590a8' },
-    'Warning': { badge:'badge-pending',   icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#a07700' },
-    'Success': { badge:'badge-confirmed', icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.15)',   color:'#198754' },
-    'Urgent':  { badge:'badge-completed', icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.15)',   color:'#dc3545' },
+    'Info':    { icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.15)',  color:'#0dcaf0' },
+    'Warning': { icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#ffc107' },
+    'Success': { icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.15)',   color:'#198754' },
+    'Urgent':  { icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.15)',   color:'#dc3545' },
+    'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.15)', color:'#64748b' },
   };
-  const cfg = typeConfig[n.type] || { badge:'badge-completed', icon:'bi-bell-fill', bg:'rgba(100,116,139,.15)', color:'#64748b' };
+  const cfg = typeConfig[n.type] || typeConfig['default'];
+  const typeLabels = { 'Info':'Info','Warning':'Warning','Success':'Success','Urgent':'Urgent' };
 
-  // Icon
-  const iconEl = document.getElementById('mnd2_typeIcon');
-  iconEl.style.background = cfg.bg;
-  iconEl.style.color      = cfg.color;
-  iconEl.innerHTML        = `<i class="bi ${cfg.icon}"></i>`;
-
-  // Title & meta
-  document.getElementById('mnd2_title').textContent = n.title || '—';
-  const d = n.sentAt ? new Date(n.sentAt) : null;
-  document.getElementById('mnd2_meta').textContent = d
+  const d = n.sentAt
+    ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z')
+    : null;
+  const fullDate = d
     ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' })
       + ' at ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
     : '—';
 
-  // Type badge
-  const badgeEl = document.getElementById('mnd2_typeBadge');
-  badgeEl.className   = `sched-badge ${cfg.badge}`;
-  badgeEl.style.fontSize = '.88rem';
-  badgeEl.style.padding  = '5px 14px';
-  badgeEl.textContent = n.type || 'Notification';
-
-  // Description
-  document.getElementById('mnd2_description').textContent = n.description || '—';
-
-  // Image
-  const imgWrap = document.getElementById('mnd2_imageWrap');
-  const imgEl   = document.getElementById('mnd2_image');
-  const imgLink = document.getElementById('mnd2_imageLink');
-  if (n.imageUrl) {
-    const url = n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl;
-    imgEl.src    = url;
-    imgLink.href = url;
-    imgWrap.style.display = '';
-  } else {
-    imgWrap.style.display = 'none';
+  let modal = document.getElementById('memberNotifDetailModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'memberNotifDetailModal';
+    modal.className = 'modal fade';
+    modal.tabIndex = -1;
+    document.body.appendChild(modal);
   }
 
-  // Sent at
-  document.getElementById('mnd2_sentAt').textContent = d
-    ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' })
-      + '  ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' })
-    : '—';
+  modal.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content modal-content-clubly">
 
-  new bootstrap.Modal(document.getElementById('memberNotifDetailModal')).show();
+        <div style="display:flex;align-items:center;gap:14px;padding:18px 22px;
+                    background:#0d1b2a;border-radius:16px 16px 0 0;">
+          <div style="width:46px;height:46px;border-radius:50%;
+                      background:${cfg.bg};color:${cfg.color};
+                      flex-shrink:0;display:flex;align-items:center;
+                      justify-content:center;font-size:20px;">
+            <i class="bi ${cfg.icon}"></i>
+          </div>
+          <div style="flex:1;">
+            <h5 style="margin:0;font-weight:800;color:#fff;">${n.title || '—'}</h5>
+            <small style="color:rgba(255,255,255,.6);">${fullDate}</small>
+          </div>
+          <button data-bs-dismiss="modal"
+            style="background:none;border:none;color:rgba(255,255,255,.7);
+                   font-size:1.3rem;cursor:pointer;">✕</button>
+        </div>
+
+        <div class="modal-body-clubly" style="min-height:200px;">
+          <div style="margin-bottom:14px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;
+                         padding:5px 16px;border-radius:50px;font-size:.88rem;font-weight:700;
+                         background:${cfg.bg};color:${cfg.color};">
+              <i class="bi ${cfg.icon}"></i>${typeLabels[n.type] || n.type || 'Notification'}
+            </span>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;
+                      border:1px solid var(--border);margin-bottom:16px;">
+            <p style="margin:0;white-space:pre-wrap;line-height:1.8;
+                      font-size:.95rem;color:var(--text);">${n.description || '—'}</p>
+          </div>
+          ${n.imageUrl ? `
+          <div style="margin-bottom:16px;">
+            <a href="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}" target="_blank">
+              <img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
+                style="max-width:100%;max-height:260px;object-fit:cover;
+                       border-radius:12px;border:1px solid var(--border);cursor:pointer;">
+            </a>
+          </div>` : ''}
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="bi bi-clock" style="color:var(--muted);"></i>
+            <small style="color:var(--muted);">Sent:</small>
+            <span style="background:#d4edda;color:#155724;padding:3px 12px;
+                         border-radius:20px;font-size:.8rem;font-weight:600;">${fullDate}</span>
+          </div>
+        </div>
+
+        <div class="modal-footer-clubly">
+          <button data-bs-dismiss="modal" class="btn-cancel">Close</button>
+        </div>
+      </div>
+    </div>`;
+
+  new bootstrap.Modal(modal).show();
 }
-
 // ── Filter events ──────────────────────────────────────────────────────────────
 document.getElementById('memberNotifSearch')?.addEventListener('input', () => {
   clearTimeout(window.__tMN);
@@ -2914,7 +2950,9 @@ document.getElementById('passForm').addEventListener('submit', async e => {
 
 // وأضف الـ function
 function handleSignOut() {
-  localStorage.clear();
+  // امسح بس بيانات الـ user مش الـ notifications
+  localStorage.removeItem('userId');
+  localStorage.removeItem('fullName');
   sessionStorage.clear();
   window.location.href = 'index.html';
 }
