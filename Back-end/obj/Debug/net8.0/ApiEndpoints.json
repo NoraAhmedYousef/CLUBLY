@@ -1977,6 +1977,59 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Clubly.Controllers.TrainerRatingsController",
+    "Method": "Create",
+    "RelativePath": "api/TrainerRatings",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Clubly.DTO.CreateTrainerRatingDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.TrainerRatingsController",
+    "Method": "Check",
+    "RelativePath": "api/TrainerRatings/check",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "memberId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Clubly.Controllers.TrainerRatingsController",
+    "Method": "GetByTrainer",
+    "RelativePath": "api/TrainerRatings/trainer/{trainerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "trainerId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SignUp.Controllers.TrainersController",
     "Method": "GetAll",
     "RelativePath": "api/Trainers",

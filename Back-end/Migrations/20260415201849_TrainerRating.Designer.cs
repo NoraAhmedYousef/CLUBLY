@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SignUp.Data;
 
@@ -11,9 +12,11 @@ using SignUp.Data;
 namespace SignUp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260415201849_TrainerRating")]
+    partial class TrainerRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -388,8 +391,6 @@ namespace SignUp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ActivityBookingId");
 
                     b.HasIndex("MemberId");
 
@@ -973,12 +974,6 @@ namespace SignUp.Migrations
 
             modelBuilder.Entity("Clubly.Model.TrainerRating", b =>
                 {
-                    b.HasOne("Clubly.Model.ActivityBooking", "ActivityBooking")
-                        .WithMany()
-                        .HasForeignKey("ActivityBookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SignUp.Model.Member", "Member")
                         .WithMany()
                         .HasForeignKey("MemberId")
@@ -990,8 +985,6 @@ namespace SignUp.Migrations
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ActivityBooking");
 
                     b.Navigation("Member");
 

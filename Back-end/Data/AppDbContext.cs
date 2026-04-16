@@ -31,6 +31,7 @@ namespace SignUp.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<FAQ> FAQs { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<TrainerRating> TrainerRatings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
