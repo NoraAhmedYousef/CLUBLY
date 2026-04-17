@@ -1,0 +1,3629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clubly — Trainer Portal</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --clubly-dark:   #0d1b2a;
+  --clubly-navy:   #122236;
+  --clubly-accent: #e85d2f;
+  --clubly-teal:   #2ec4b6;
+  --clubly-gold:   #d4a843;
+  --sidebar-w:     255px;
+  --sidebar-mini:  68px;
+  --header-h:      60px;
+  --bg:            #f0f4f8;
+  --card-bg:       #ffffff;
+  --text:          #1a202c;
+  --muted:         #64748b;
+  --border:        #e2e8f0;
+}
+[data-theme="dark"] {
+  --bg:       #0a1628;
+  --card-bg:  #0f1f35;
+  --text:     #e2e8f0;
+  --muted:    #94a3b8;
+  --border:   #1e3a5f;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background .25s,color .25s;
+}
+
+/* ======= HEADER ======= */
+.clubly-header{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--header-h);
+  background:var(--clubly-dark);
+  display:flex;align-items:center;
+  padding:0 20px;
+  z-index:2000;
+  box-shadow:0 2px 24px rgba(0,0,0,.45);
+}
+.toggle-btn{
+  background:none;border:none;color:#fff;
+  font-size:22px;cursor:pointer;
+  padding:4px 8px;border-radius:6px;
+  transition:background .2s;margin-right:8px;
+  flex-shrink:0;
+}
+.toggle-btn:hover{background:rgba(255,255,255,.1);}
+.header-logo{
+  display:flex;align-items:center;gap:8px;
+  text-decoration:none;min-width:200px;
+  transition:min-width .3s;
+}
+.logo-icon{font-size:26px;color:var(--clubly-accent);}
+.logo-text{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:.5px;}
+.logo-text span{color:var(--clubly-accent);}
+.header-nav{display:flex;gap:4px;flex:1;padding:0 10px;}
+.header-nav a{
+  color:rgba(255,255,255,.75);text-decoration:none;
+  font-size:.88rem;padding:6px 11px;border-radius:6px;
+  transition:all .2s;white-space:nowrap;cursor:pointer;
+  border:none;background:none;
+}
+.header-nav a:hover,.header-nav a.active{color:#fff;background:rgba(255,255,255,.1);}
+.header-actions{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.trainer-badge{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:30px;
+  padding:4px 14px 4px 6px;
+}
+.trainer-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:.82rem;color:#fff;
+  border:2px solid rgba(46,196,182,.4);
+}
+.trainer-name{font-size:.85rem;color:rgba(255,255,255,.9);font-weight:700;}
+.trainer-role{font-size:.72rem;color:var(--clubly-teal);font-weight:600;}
+.btn-theme{
+  background:rgba(255,255,255,.1);color:#fff;border:none;
+  width:36px;height:36px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;transition:background .2s;
+}
+.btn-theme:hover{background:rgba(255,255,255,.2);}
+.btn-signout{
+  background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+  color:#fff;border:none;padding:7px 18px;border-radius:50px;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;
+  font-family:inherit;
+}
+.btn-signout:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(232,93,47,.4);}
+
+/* ======= LAYOUT ======= */
+.layout-body{
+  display:flex;
+  margin-top:var(--header-h);
+  flex:1;
+}
+
+/* ======= SIDEBAR ======= */
+.sidebar{
+  width:var(--sidebar-w);
+  min-width:var(--sidebar-w);
+  background:linear-gradient(180deg,#0d1b2a 0%,#091423 100%);
+  position:fixed;
+  top:var(--header-h);left:0;bottom:0;
+  overflow-y:auto;overflow-x:hidden;
+  transition:width .3s ease,min-width .3s ease;
+  z-index:1000;
+  padding:16px 0 80px;
+  border-right:1px solid rgba(255,255,255,.06);
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.1) transparent;
+}
+.sidebar.collapsed{
+  width:var(--sidebar-mini);
+  min-width:var(--sidebar-mini);
+}
+.sidebar-section{
+  padding:8px 12px 4px;
+  font-size:10px;text-transform:uppercase;
+  letter-spacing:1.2px;color:rgba(255,255,255,.3);
+  font-weight:700;white-space:nowrap;overflow:hidden;
+  transition:opacity .2s;
+}
+.sidebar.collapsed .sidebar-section{opacity:0;}
+.sidebar-link{
+  display:flex;align-items:center;gap:12px;
+  color:rgba(255,255,255,.7);text-decoration:none;
+  padding:10px 16px;margin:2px 8px;
+  border-radius:9px;font-size:.9rem;font-weight:600;
+  transition:all .2s;cursor:pointer;
+  white-space:nowrap;overflow:hidden;
+  border:none;background:none;
+  width:calc(100% - 16px);text-align:left;
+  position:relative;
+}
+.sidebar-link i{font-size:18px;min-width:20px;text-align:center;flex-shrink:0;}
+.link-text{transition:opacity .25s,max-width .25s;max-width:200px;overflow:hidden;}
+.sidebar.collapsed .link-text{opacity:0;max-width:0;}
+.sidebar-link:hover{color:#fff;background:rgba(255,255,255,.08);transform:translateX(3px);}
+.sidebar-link.active{
+  color:#fff;
+  background:linear-gradient(135deg,rgba(232,93,47,.85),rgba(192,57,43,.85));
+  box-shadow:0 4px 15px rgba(232,93,47,.3);
+}
+/* tooltip on collapsed */
+.sidebar.collapsed .sidebar-link:hover::after{
+  content:attr(data-label);
+  position:absolute;left:calc(var(--sidebar-mini) + 4px);top:50%;
+  transform:translateY(-50%);
+  background:var(--clubly-accent);color:#fff;
+  padding:5px 12px;border-radius:7px;
+  font-size:.8rem;font-weight:600;white-space:nowrap;
+  z-index:3000;box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.sidebar-divider{height:1px;background:rgba(255,255,255,.06);margin:10px 16px;}
+
+/* ======= CONTENT ======= */
+.content-area{
+  margin-left:var(--sidebar-w);
+  flex:1;padding:28px;
+  min-height:calc(100vh - var(--header-h));
+  transition:margin-left .3s;
+}
+.content-area.expanded{margin-left:var(--sidebar-mini);}
+
+/* ======= PAGES ======= */
+.page{display:none;animation:fadeIn .2s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ======= FOOTER ======= */
+.clubly-footer{
+  background:var(--clubly-dark);color:rgba(255,255,255,.65);
+  width:100%;z-index:1500;clear:both;
+}
+.footer-inner{display:flex;gap:60px;padding:30px 50px 20px;flex-wrap:wrap;}
+.footer-col h5{color:#fff;font-weight:700;margin-bottom:14px;font-size:1rem;}
+.footer-links{list-style:none;padding:0;}
+.footer-links li{margin-bottom:6px;}
+.footer-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.88rem;transition:color .2s;cursor:pointer;background:none;border:none;}
+.footer-links a:hover{color:var(--clubly-accent);}
+.footer-contact{font-size:.88rem;line-height:2;}
+.footer-contact i{color:var(--clubly-teal);margin-right:6px;}
+.footer-socials{display:flex;gap:12px;margin-top:10px;}
+.footer-socials a{color:rgba(255,255,255,.6);font-size:18px;transition:color .2s,transform .2s;text-decoration:none;}
+.footer-socials a:hover{color:var(--clubly-accent);transform:translateY(-2px);}
+.footer-bottom{text-align:center;padding:12px;border-top:1px solid rgba(255,255,255,.08);font-size:.82rem;color:rgba(255,255,255,.4);}
+
+/* ======= SHARED COMPONENTS ======= */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.page-title{font-size:1.6rem;font-weight:900;color:var(--text);}
+.page-subtitle{font-size:.88rem;color:var(--muted);margin-top:3px;}
+
+.card-clubly{
+  background:var(--card-bg);border-radius:14px;
+  padding:22px;border:1px solid var(--border);
+  box-shadow:0 2px 12px rgba(0,0,0,.05);
+  transition:box-shadow .2s;
+}
+.card-clubly:hover{box-shadow:0 6px 24px rgba(0,0,0,.09);}
+.card-title{
+  font-size:.95rem;font-weight:700;color:var(--text);
+  margin-bottom:16px;padding-bottom:12px;
+  border-bottom:2px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+/* stat cards */
+.stat-card{
+  background:var(--card-bg);border-radius:14px;padding:20px;
+  border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.05);
+  transition:transform .2s,box-shadow .2s;
+}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.1);}
+.stat-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:14px;
+}
+.si-orange{background:rgba(232,93,47,.12);color:var(--clubly-accent);}
+.si-teal  {background:rgba(46,196,182,.12);color:var(--clubly-teal);}
+.si-gold  {background:rgba(212,168,67,.12);color:var(--clubly-gold);}
+.si-blue  {background:rgba(59,130,246,.12);color:#3b82f6;}
+.si-green {background:rgba(34,197,94,.12);color:#22c55e;}
+.si-red   {background:rgba(239,68,68,.12);color:#ef4444;}
+
+.stat-label{font-size:.8rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.stat-val{font-size:2rem;font-weight:900;color:var(--text);line-height:1.1;margin-top:4px;}
+.stat-unit{font-size:.9rem;font-weight:400;color:var(--muted);}
+.stat-change{font-size:.78rem;margin-top:6px;}
+.up{color:#22c55e;} .down{color:#ef4444;}
+
+/* btn */
+.btn-primary-cl{
+  background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+  color:#fff;border:none;padding:8px 20px;border-radius:50px;
+  font-weight:700;font-size:.88rem;cursor:pointer;
+  transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  font-family:inherit;
+}
+.btn-primary-cl:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(232,93,47,.4);}
+.btn-secondary-cl{
+  background:var(--bg);border:1px solid var(--border);color:var(--text);
+  padding:8px 18px;border-radius:50px;font-weight:600;font-size:.88rem;
+  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+  font-family:inherit;
+}
+.btn-secondary-cl:hover{border-color:var(--clubly-accent);color:var(--clubly-accent);}
+.btn-teal-cl{
+  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  color:#fff;border:none;padding:8px 20px;border-radius:50px;
+  font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:6px;font-family:inherit;
+}
+.btn-teal-cl:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(46,196,182,.4);}
+
+/* badges */
+.badge-cl{display:inline-flex;align-items:center;gap:4px;padding:3px 11px;border-radius:20px;font-size:.75rem;font-weight:700;}
+.b-green {background:rgba(34,197,94,.12);color:#16a34a;}
+.b-orange{background:rgba(232,93,47,.12);color:var(--clubly-accent);}
+.b-blue  {background:rgba(59,130,246,.12);color:#2563eb;}
+.b-red   {background:rgba(239,68,68,.12);color:#dc2626;}
+.b-gold  {background:rgba(212,168,67,.12);color:#b45309;}
+.b-gray  {background:rgba(100,116,139,.12);color:var(--muted);}
+.b-teal  {background:rgba(46,196,182,.12);color:#0d9488;}
+
+/* table */
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;}
+thead th{background:var(--bg);padding:12px 16px;font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);text-align:left;white-space:nowrap;}
+tbody td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.88rem;color:var(--text);vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(232,93,47,.03);}
+
+/* search */
+.search-bar{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:10px;padding:8px 14px;transition:border-color .2s;
+}
+.search-bar:focus-within{border-color:var(--clubly-accent);}
+.search-bar input{border:none;outline:none;background:transparent;color:var(--text);font-family:inherit;font-size:.88rem;flex:1;}
+
+/* form */
+.form-group{margin-bottom:18px;}
+.form-label{font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.4px;}
+.form-input{
+  width:100%;background:var(--bg);border:1px solid var(--border);
+  border-radius:9px;padding:10px 14px;color:var(--text);
+  font-family:inherit;font-size:.9rem;outline:none;transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--clubly-accent);}
+select.form-input{cursor:pointer;}
+textarea.form-input{resize:vertical;min-height:90px;}
+
+/* schedule session card */
+.session-card{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;background:var(--card-bg);
+  border-radius:12px;margin-bottom:10px;
+  border:1px solid var(--border);border-left:4px solid transparent;
+  transition:all .2s;cursor:pointer;
+}
+.session-card:hover{transform:translateX(4px);box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.session-card.type-yoga   {border-left-color:#3b82f6;}
+.session-card.type-crossfit{border-left-color:var(--clubly-accent);}
+.session-card.type-pilates {border-left-color:#9333ea;}
+.session-card.type-swim    {border-left-color:var(--clubly-teal);}
+.session-card.type-zumba   {border-left-color:var(--clubly-gold);}
+.session-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.15rem;flex-shrink:0;
+}
+.session-info{flex:1;}
+.session-name{font-weight:700;font-size:.95rem;color:var(--text);}
+.session-meta{font-size:.78rem;color:var(--muted);margin-top:2px;}
+.session-right{text-align:right;flex-shrink:0;}
+.session-time{font-weight:700;font-size:.88rem;color:var(--text);}
+.session-slots{font-size:.75rem;color:var(--muted);margin-top:2px;}
+
+/* member row */
+.member-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.member-row:last-child{border-bottom:none;}
+.m-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0;}
+.m-name{font-weight:700;font-size:.9rem;color:var(--text);}
+.m-detail{font-size:.78rem;color:var(--muted);}
+.progress-bar-wrap{flex:1;max-width:120px;}
+.progress-track{background:var(--border);border-radius:10px;height:6px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--clubly-accent),var(--clubly-gold));}
+
+/* notification */
+.notif-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;background:var(--card-bg);border-radius:12px;
+  margin-bottom:10px;border:1px solid var(--border);
+  border-left:4px solid transparent;transition:all .2s;cursor:pointer;
+}
+.notif-item:hover{transform:translateX(4px);box-shadow:0 4px 12px rgba(0,0,0,.07);}
+.notif-icon{width:40px;height:40px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.ni-blue  {border-color:#3b82f6;color:#3b82f6;}
+.ni-red   {border-color:#ef4444;color:#ef4444;}
+.ni-green {border-color:#22c55e;color:#22c55e;}
+.ni-yellow{border-color:var(--clubly-gold);color:var(--clubly-gold);}
+.ni-teal  {border-color:var(--clubly-teal);color:var(--clubly-teal);}
+.notif-msg{font-weight:600;font-size:.88rem;color:var(--text);}
+.notif-time{font-size:.76rem;color:var(--muted);margin-top:2px;}
+.unread-dot{width:8px;height:8px;background:var(--clubly-accent);border-radius:50%;flex-shrink:0;}
+
+/* profile */
+.profile-hero{
+  background:linear-gradient(135deg,var(--clubly-dark) 0%,#1a3a5c 100%);
+  border-radius:16px;padding:28px;position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:24px;margin-bottom:20px;
+  box-shadow:0 8px 32px rgba(0,0,0,.2);
+}
+.profile-hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:rgba(46,196,182,.1);border-radius:50%;}
+.profile-hero::after{content:'';position:absolute;bottom:-60px;left:60px;width:180px;height:180px;background:rgba(232,93,47,.08);border-radius:50%;}
+.trainer-avatar-big{
+  width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;font-weight:900;color:#fff;
+  border:4px solid rgba(46,196,182,.4);flex-shrink:0;
+  position:relative;z-index:1;overflow:hidden;
+}
+.trainer-avatar-big img{width:100%;height:100%;object-fit:cover;display:none;}
+.profile-hero-info{position:relative;z-index:1;}
+.profile-hero-name{font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.profile-hero-role{color:var(--clubly-teal);font-weight:700;font-size:.9rem;}
+.profile-hero-stars{color:var(--clubly-gold);font-size:.9rem;margin-top:6px;}
+.spec-tag{
+  display:inline-block;background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);
+  padding:3px 12px;border-radius:20px;font-size:.78rem;font-weight:600;margin:3px 2px;
+}
+
+/* rating stars */
+.stars{color:var(--clubly-gold);}
+
+/* chart bar simple */
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:80px;padding-top:8px;}
+.bar{flex:1;border-radius:6px 6px 0 0;min-width:24px;transition:height .4s ease;position:relative;}
+.bar-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:.68rem;color:var(--muted);white-space:nowrap;}
+.bar-val{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:.7rem;font-weight:700;color:var(--text);}
+
+/* week schedule grid */
+.week-grid{display:grid;grid-template-columns:60px repeat(7,1fr);gap:2px;font-size:.8rem;}
+.wg-header{background:var(--bg);padding:8px 4px;text-align:center;border-radius:6px;font-weight:700;color:var(--muted);font-size:.75rem;}
+.wg-time{padding:6px 4px;text-align:right;color:var(--muted);font-size:.72rem;padding-right:8px;display:flex;align-items:center;justify-content:flex-end;}
+.wg-cell{min-height:42px;border-radius:6px;border:1px dashed var(--border);}
+.wg-session{
+  border-radius:6px;padding:4px 6px;font-size:.72rem;font-weight:700;
+  margin:1px;cursor:pointer;transition:opacity .2s;line-height:1.3;
+}
+.wg-session:hover{opacity:.8;}
+
+/* modal */
+.modal-content-cl{background:var(--card-bg);color:var(--text);border-radius:16px;border:1px solid var(--border);}
+.modal-header-cl{border-bottom:1px solid var(--border);padding:18px 22px;}
+.modal-body-cl{padding:22px;}
+.modal-footer-cl{border-top:1px solid var(--border);padding:14px 22px;display:flex;gap:10px;justify-content:flex-end;}
+.day-filter-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 7px 18px;
+  font-family: 'Cairo', sans-serif;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.day-filter-btn.active {
+  background: var(--clubly-teal);
+  color: #fff;
+  border-color: var(--clubly-teal);
+}
+/* signout */
+.signout-icon{width:80px;height:80px;border-radius:50%;background:rgba(239,68,68,.1);border:3px solid rgba(239,68,68,.3);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#ef4444;margin:0 auto 16px;}
+
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .content-area{margin-left:0;padding:16px;}
+  .header-nav{display:none;}
+  .trainer-name,.trainer-role{display:none;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- ======= HEADER ======= -->
+<header class="clubly-header">
+  <button class="toggle-btn" id="toggleBtn" title="Toggle Sidebar">
+    <i class="bi bi-list"></i>
+  </button>
+  <a class="header-logo" href="#">
+    <i class="bi bi-lightning-charge-fill logo-icon"></i>
+    <span class="logo-text">Cl<span>u</span>bly</span>
+  </a>
+  <nav class="header-nav">
+  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+  <a href="../AfterSign/index.html">Home</a>
+  <a href="../AfterSign/activities.html">Activities</a>
+  <a href="../AfterSign/facilities.html">Facilities</a>
+  <a href="../AfterSign/trainers.html">Trainers</a>
+  <a href="../AfterSign/plans.html">Membership Plans</a>
+  <a href="../AfterSign/about.html">About Us</a>
+  <a href="../AfterSign/faq.html">FAQ</a>
+  <a href="../AfterSign/contact.html">Contact</a>
+</nav>
+  <div class="header-actions">
+    <button class="btn-theme" id="themeBtn" title="Toggle Theme"><i class="bi bi-moon-stars"></i></button>
+    <div class="trainer-badge">
+      <div class="trainer-avatar">AK</div>
+      <div>
+        <div class="trainer-name">Ahmed Karim</div>
+      </div>
+    </div>
+    <button class="btn-signout" onclick="showPage('signout')">Sign Out</button>
+  </div>
+</header>
+
+<!-- ======= LAYOUT ======= -->
+<div class="layout-body">
+
+  <!-- ======= SIDEBAR ======= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">Overview</div>
+    <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard" data-label="Dashboard">
+      <i class="bi bi-speedometer2"></i><span class="link-text">Dashboard</span>
+    </button>
+  <button class="sidebar-link" onclick="showPage('schedule-new')" id="sb-schedule-new" data-label="My Schedule">
+  <i class="bi bi-calendar-week"></i><span class="link-text">My Schedule</span>
+</button>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">Management</div>
+    <button class="sidebar-link" onclick="showPage('members')" id="sb-members" data-label="My Members">
+      <i class="bi bi-people"></i><span class="link-text">My Members</span>
+    </button>
+ <button class="sidebar-link" onclick="showPage('groups')" id="sb-groups" data-label="My Groups">
+  <i class="bi bi-diagram-3"></i><span class="link-text">My Groups</span>
+</button>
+<button class="sidebar-link" onclick="showPage('attendance')" 
+  id="sb-attendance" data-label="Attendance">
+  <i class="bi bi-person-check"></i>
+  <span class="link-text">Attendance</span>
+</button>
+<button class="sidebar-link" onclick="showPage('ratings')" id="sb-ratings" data-label="Member Ratings">
+  <i class="bi bi-star-fill" style="color:var(--clubly-gold);"></i>
+  <span class="link-text">Member Ratings</span>
+</button>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">Account</div>
+    <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
+      <i class="bi bi-bell"></i><span class="link-text">Notifications</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile" data-label="Profile">
+      <i class="bi bi-person-circle"></i><span class="link-text">Profile</span>
+    </button>
+    <div class="sidebar-divider"></div>
+    <button class="sidebar-link" onclick="showPage('signout')" id="sb-signout" style="color:rgba(239,68,68,.8);" data-label="Sign Out">
+      <i class="bi bi-box-arrow-right"></i><span class="link-text">Sign Out</span>
+    </button>
+  </aside>
+
+  <!-- ======= CONTENT ======= -->
+  <main class="content-area" id="contentArea">
+
+    <!-- ====== PAGE: DASHBOARD ====== -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Good morning, <span style="color:var(--clubly-accent)">Ahmed!</span></h1>
+          <p class="page-subtitle">Here's your training overview for today.</p>
+        </div>
+        <button class="btn-primary-cl" onclick="openAddSession()">
+          <i class="bi bi-plus-lg"></i> Add Session
+        </button>
+      </div>
+
+      <!-- Stats -->
+     <div class="row g-3 mb-4">
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-orange"><i class="bi bi-calendar-check"></i></div>
+      <div class="stat-label">Today's Sessions</div>
+      <div class="stat-val" id="stat-today">—</div>
+    </div>
+  </div>
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-teal"><i class="bi bi-person-check"></i></div>
+      <div class="stat-label">Active Members</div>
+      <div class="stat-val" id="stat-members">—</div>
+    </div>
+  </div>
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-blue"><i class="bi bi-person"></i></div>
+      <div class="stat-label">Active Guests</div>
+      <div class="stat-val" id="stat-guests">—</div>
+    </div>
+  </div>
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-gold"><i class="bi bi-star-fill"></i></div>
+      <div class="stat-label">Rating</div>
+      <div class="stat-val" id="stat-rating">—</div>
+    </div>
+  </div>
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-blue"><i class="bi bi-receipt"></i></div>
+      <div class="stat-label">Total Bookings</div>
+      <div class="stat-val" id="stat-total">—</div>
+    </div>
+  </div>
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-green"><i class="bi bi-check2-circle"></i></div>
+      <div class="stat-label">Approved</div>
+      <div class="stat-val" id="stat-approved">—</div>
+    </div>
+  </div>
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-red"><i class="bi bi-clock"></i></div>
+      <div class="stat-label">Pending</div>
+      <div class="stat-val" id="stat-pending">—</div>
+    </div>
+  </div>
+</div>
+
+      <!-- Today's schedule + top members -->
+      <div class="row g-3">
+        <div class="col-lg-7">
+          <div class="card-clubly">
+            <div class="card-title">
+              <span><i class="bi bi-calendar-day me-2" style="color:var(--clubly-accent)"></i>Today's Schedule</span>
+              <span style="font-size:.78rem;color:var(--muted);" id="todayDate"></span>
+            </div>
+            <div id="todaySchedule"></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card-clubly">
+            <div class="card-title">
+              <span><i class="bi bi-trophy me-2" style="color:var(--clubly-gold)"></i>Top Members</span>
+              <button class="btn-secondary-cl" onclick="showPage('members')" style="font-size:.75rem;padding:4px 12px;">View All</button>
+            </div>
+            <div id="topMembersList"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Member Ratings Section -->
+<div class="row g-3 mt-3">
+  <div class="col-12">
+    <div class="card-clubly">
+      <div class="card-title">
+        <span><i class="bi bi-star-fill me-2" style="color:var(--clubly-gold)"></i>Member Ratings</span>
+        <span style="font-size:.78rem;color:var(--muted);" id="ratingsSubtitle"></span>
+      </div>
+      <div id="trainerRatingsList">
+        <div style="text-align:center;padding:30px;color:var(--muted);">
+          <span class="spinner-border spinner-border-sm me-2"></span>Loading ratings...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+    <!-- ====== PAGE: SCHEDULE ====== -->
+    <div class="page" id="page-schedule">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">My Schedule</h1>
+          <p class="page-subtitle">Weekly overview of your training sessions</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn-secondary-cl" id="prevWeekBtn"><i class="bi bi-chevron-left"></i></button>
+          <span id="weekLabel" style="display:flex;align-items:center;font-weight:700;color:var(--text);padding:0 10px;"></span>
+          <button class="btn-secondary-cl" id="nextWeekBtn"><i class="bi bi-chevron-right"></i></button>
+        </div>
+        <button class="btn-primary-cl" onclick="openAddSession()"><i class="bi bi-plus-lg"></i> Add Session</button>
+      </div>
+      <div class="card-clubly" style="overflow-x:auto;">
+        <div id="weekScheduleGrid"></div>
+      </div>
+    </div>
+
+   <!-- ====== PAGE: MEMBERS ====== -->
+<div class="page" id="page-members">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Members</h1>
+      <p class="page-subtitle" id="membersSubtitle">Loading...</p>
+    </div>
+    <div class="search-bar">
+      <i class="bi bi-search" style="color:var(--muted);"></i>
+      <input type="text" id="memberSearch" placeholder="Search by name..." oninput="filterMembers()">
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-3" id="memberTypeTabs">
+    <li class="nav-item">
+      <button class="nav-link active" onclick="switchMemberTab('member', this)">
+        <i class="bi bi-person-check me-1"></i> Member Bookings
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" onclick="switchMemberTab('guest', this)">
+        <i class="bi bi-person me-1"></i> Guest Bookings
+      </button>
+    </li>
+  </ul>
+
+  <!-- Status Filter -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+    <button class="day-filter-btn active" onclick="filterMemberStatus('all', this)">All</button>
+    <button class="day-filter-btn" onclick="filterMemberStatus('approved', this)">Approved</button>
+    <button class="day-filter-btn" onclick="filterMemberStatus('pending', this)">Pending</button>
+    <button class="day-filter-btn" onclick="filterMemberStatus('cancelled', this)">Cancelled</button>
+  </div>
+
+  <!-- Table -->
+  <div class="card-clubly" style="padding:0;">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            
+            <th>Type</th>
+            <th>Activity</th>
+            <th>Group</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="membersTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+    <!-- ====== PAGE: SESSIONS ====== -->
+    <div class="page" id="page-sessions">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Session Management</h1>
+          <p class="page-subtitle">Create, edit, and manage your training sessions</p>
+        </div>
+        <button class="btn-primary-cl" onclick="openAddSession()"><i class="bi bi-plus-lg"></i> New Session</button>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="card-clubly">
+            <div class="card-title">
+              <span>All Sessions</span>
+              <div class="search-bar" style="width:200px;">
+                <i class="bi bi-search" style="color:var(--muted);"></i>
+                <input type="text" placeholder="Search..." oninput="filterSessions(this.value)">
+              </div>
+            </div>
+            <div id="allSessionsList"></div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card-clubly">
+            <div class="card-title"><span>Quick Stats</span></div>
+            <div class="row g-2 mb-3">
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-accent);" id="sess-week">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Week</div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-teal);" id="sess-month">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">This Month</div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:#22c55e;" id="sess-approved">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Approved</div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div style="background:var(--bg);border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:1.8rem;font-weight:900;color:var(--clubly-gold);" id="sess-pending">—</div>
+      <div style="font-size:.75rem;color:var(--muted);font-weight:600;">Pending</div>
+    </div>
+  </div>
+</div>
+            <div class="card-title" style="border-top:1px solid var(--border);padding-top:14px;">
+              <span>By Type</span>
+            </div>
+            <div id="sessionTypeBreakdown"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: REPORTS ====== -->
+    <div class="page" id="page-reports">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Reports & Analytics</h1>
+          <p class="page-subtitle">Your performance insights and member progress</p>
+        </div>
+        <select class="form-input" style="width:auto;border-radius:50px;padding:8px 20px;">
+          <option>This Month</option>
+          <option>Last Month</option>
+          <option>Last 3 Months</option>
+        </select>
+      </div>
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="card-clubly mb-3">
+            <div class="card-title"><span><i class="bi bi-bar-chart me-2" style="color:var(--clubly-accent)"></i>Sessions Per Week</span></div>
+            <div id="sessionsChart" style="padding-bottom:24px;"></div>
+          </div>
+          <div class="card-clubly">
+            <div class="card-title"><span><i class="bi bi-people me-2" style="color:var(--clubly-teal)"></i>Member Progress Overview</span></div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Member</th><th>Goal</th><th>Progress</th><th>Sessions</th><th>Trend</th></tr></thead>
+                <tbody id="progressTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card-clubly mb-3">
+            <div class="card-title"><span>Monthly Summary</span></div>
+            <div id="monthlySummary"></div>
+          </div>
+          <div class="card-clubly">
+            <div class="card-title"><span><i class="bi bi-star me-2" style="color:var(--clubly-gold)"></i>Member Reviews</span></div>
+            <div id="reviewsList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PAGE: NOTIFICATIONS ====== -->
+<div class="page" id="page-notifications">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">
+        <i class="bi bi-bell-fill me-2" style="color:var(--clubly-accent);"></i>
+        Notifications
+      </h1>
+      <p class="page-subtitle">Messages sent to trainers</p>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <span id="trainerUnreadBadge"
+        style="background:rgba(245,158,11,.12);color:#b45309;
+               border:1px solid rgba(245,158,11,.3);
+               padding:5px 14px;border-radius:20px;
+               font-size:.82rem;font-weight:700;">
+        0 unread
+      </span>
+      <button class="btn-teal-cl" onclick="markAllTrainerRead()">
+        <i class="bi bi-check2-all"></i> Mark all read
+      </button>
+      <button class="btn-secondary-cl" onclick="loadTrainerNotifications()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card-clubly mb-3" style="padding:14px 20px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <div class="search-bar" style="flex:1;min-width:200px;max-width:300px;">
+        <i class="bi bi-search" style="color:var(--muted);"></i>
+        <input type="text" id="trainerNotifSearch"
+          placeholder="Search notifications…"
+          oninput="applyTrainerNotifFilters()">
+      </div>
+      <select id="trainerNotifType" onchange="applyTrainerNotifFilters()"
+        style="background:var(--bg);border:1px solid var(--border);
+               border-radius:9px;padding:9px 14px;color:var(--text);
+               font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All types</option>
+        <option value="Info">ℹ️ Info</option>
+        <option value="Warning">⚠️ Warning</option>
+        <option value="Success">✅ Success</option>
+        <option value="Urgent">🔴 Urgent</option>
+      </select>
+      <select id="trainerNotifStatus" onchange="applyTrainerNotifFilters()"
+        style="background:var(--bg);border:1px solid var(--border);
+               border-radius:9px;padding:9px 14px;color:var(--text);
+               font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All</option>
+        <option value="unread">Unread</option>
+        <option value="read">Read</option>
+      </select>
+      <small id="trainerNotifInfo"
+        style="color:var(--muted);margin-left:auto;"></small>
+    </div>
+  </div>
+
+  <!-- List -->
+  <div class="card-clubly" style="padding:0;">
+    <div id="trainerNotifList">
+      <div style="text-align:center;padding:50px;color:var(--muted);">
+        <i class="bi bi-bell" style="font-size:2.5rem;opacity:.3;
+           display:block;margin-bottom:12px;"></i>
+        <p>Loading…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div style="display:flex;justify-content:center;margin-top:16px;">
+    <nav><ul class="pagination mb-0" id="trainerNotifPagination"></ul></nav>
+  </div>
+
+</div>
+
+    <!-- ====== PAGE: PROFILE ====== -->
+    <div class="page" id="page-profile">
+      <div class="page-header">
+        <h1 class="page-title">My Profile</h1>
+        <button class="btn-primary-cl" onclick="document.getElementById('profileForm').requestSubmit()">
+          <i class="bi bi-check-lg"></i> Save Changes
+        </button>
+      </div>
+
+      <div class="profile-hero">
+        <div class="trainer-avatar-big" id="profileAvatarBig">
+          <img id="profileImg" src="" alt="">
+          <span id="profileInitials">AK</span>
+        </div>
+        <div class="profile-hero-info">
+          <div class="profile-hero-name">Ahmed Karim</div>
+          <div class="profile-hero-role"><i class="bi bi-shield-check me-1"></i>Senior Trainer · 5 Years Experience</div>
+      
+          <div style="margin-top:10px;">
+            <span class="spec-tag">Yoga</span>
+            <span class="spec-tag">CrossFit</span>
+            <span class="spec-tag">Pilates</span>
+            <span class="spec-tag">Nutrition</span>
+          </div>
+        </div>
+        <div style="margin-left:auto;z-index:1;">
+          <input type="file" id="profileImgInput" accept="image/*" style="display:none">
+          <button onclick="document.getElementById('profileImgInput').click()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.82rem;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">
+            <i class="bi bi-camera me-1"></i>Edit Photo
+          </button>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-8">
+          <div class="card-clubly">
+            <div class="card-title"><span>Personal Information</span></div>
+            <form id="profileForm">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input class="form-input" type="text" id="pfFirstName">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input class="form-input" type="text" id="pfLastName">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="pfEmail" disabled>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed here.</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input class="form-input" type="tel" id="pfPhone">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">National ID</label>
+        <input class="form-input" type="text" id="pfNationalId" disabled>
+        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed.</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Gender</label>
+        <input class="form-input" type="text" id="pfGender" disabled>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Date of Birth</label>
+        <input class="form-input" type="date" id="pfDob">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="form-label">Years of Experience</label>
+        <input class="form-input" type="number" id="pfExp" min="0">
+      </div>
+    </div>
+
+  </div>
+  <button type="submit" class="btn-primary-cl mt-3">
+    <i class="bi bi-check-lg"></i> Save Changes
+  </button>
+</form>
+          </div>
+        </div>
+        <div class="col-lg-4">
+
+          <div class="card-clubly">
+            <div class="card-title"><span>Change Password</span></div>
+            <form id="passForm">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input class="form-input" type="password" id="currPass">
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input class="form-input" type="password" id="newPass">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input class="form-input" type="password" id="confPass">
+              </div>
+              <div id="passMsg" style="font-size:.82rem;margin-bottom:10px;"></div>
+              <button type="submit" class="btn-teal-cl" style="width:100%;justify-content:center;">Update Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- ====== PAGE: SCHEDULE (NEW) ====== -->
+<div class="page" id="page-schedule-new">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Schedule</h1>
+      <p class="page-subtitle">Weekly sessions from all your groups</p>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+    <button class="day-filter-btn active" onclick="filterScheduleDay('all',this)">All Days</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Saturday',this)">Sat</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Sunday',this)">Sun</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Monday',this)">Mon</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Tuesday',this)">Tue</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Wednesday',this)">Wed</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Thursday',this)">Thu</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Friday',this)">Fri</button>
+  </div>
+  <div id="scheduleGroupsList"></div>
+</div>
+
+<!-- ====== PAGE: GROUPS ====== -->
+<!-- ====== PAGE: GROUPS ====== -->
+<div class="page" id="page-groups">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Groups</h1>
+      <p class="page-subtitle">Your activity groups</p>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-teal-cl" onclick="loadTrainerGroups()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+      <button class="btn-primary-cl" onclick="openAddTrainerGroupModal()">
+        <i class="bi bi-plus-lg"></i> Add Group
+      </button>
+    </div>
+  </div>
+  <div class="card-clubly mb-3" style="padding:14px 20px;">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      <div class="search-bar" style="flex:1;min-width:200px;max-width:280px;">
+        <i class="bi bi-search" style="color:var(--muted);"></i>
+        <input type="text" id="groupSearch" placeholder="Search..." oninput="renderGroupsPage()">
+      </div>
+      <select id="groupActivityFilter" onchange="renderGroupsPage()"
+        class="form-input" style="width:auto;border-radius:50px;padding:8px 16px;">
+        <option value="">All Activities</option>
+      </select>
+      <select id="groupDayFilter" onchange="renderGroupsPage()"
+        class="form-input" style="width:auto;border-radius:50px;padding:8px 16px;">
+        <option value="">All Days</option>
+        <option>Saturday</option><option>Sunday</option><option>Monday</option>
+        <option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option>
+      </select>
+    </div>
+  </div>
+  <div id="groupsListContainer"></div>
+</div>
+    <!-- ====== PAGE: SIGN OUT ====== -->
+    <div class="page" id="page-signout">
+      <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
+        <div class="card-clubly text-center" style="max-width:420px;width:100%;">
+          <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
+          <h4 style="font-weight:900;color:var(--text);margin-bottom:8px;">Confirm Sign Out</h4>
+          <p style="color:var(--muted);margin-bottom:24px;">You will need to sign in again to access your trainer portal.</p>
+          <div class="d-flex gap-3 justify-content-center">
+            <button class="btn-secondary-cl" onclick="showPage('dashboard')">Cancel</button>
+            <button class="btn-primary-cl" style="background:linear-gradient(135deg,#ef4444,#dc2626);"onclick="handleSignOut()">
+              <i class="bi bi-box-arrow-right"></i> Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ====== PAGE: RATINGS ====== -->
+<div class="page" id="page-ratings">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">
+        <i class="bi bi-star-fill me-2" style="color:var(--clubly-gold);"></i>Member Ratings
+      </h1>
+      <p class="page-subtitle" id="ratingsPageSubtitle">All reviews from your members</p>
+    </div>
+    <button class="btn-secondary-cl" onclick="loadRatingsPage()">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4" id="ratingsPageSummary"></div>
+
+  <!-- Filters -->
+  <div class="card-clubly mb-3" style="padding:14px 20px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <div class="search-bar" style="flex:1;min-width:200px;max-width:300px;">
+        <i class="bi bi-search" style="color:var(--muted);"></i>
+        <input type="text" id="ratingsSearch" placeholder="Search by member or comment..."
+          oninput="applyRatingsFilter()">
+      </div>
+      <select id="ratingsStarFilter" onchange="applyRatingsFilter()"
+        style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All Ratings</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+        <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+        <option value="3">⭐⭐⭐ 3 Stars</option>
+        <option value="2">⭐⭐ 2 Stars</option>
+        <option value="1">⭐ 1 Star</option>
+      </select>
+      <select id="ratingsActivityFilter" onchange="applyRatingsFilter()"
+        style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All Activities</option>
+      </select>
+      <small id="ratingsPageInfo" style="color:var(--muted);margin-left:auto;"></small>
+    </div>
+  </div>
+
+  <!-- Ratings List -->
+  <div class="card-clubly" style="padding:0;" id="ratingsPageList">
+    <div style="text-align:center;padding:60px;color:var(--muted);">
+      <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div style="display:flex;justify-content:center;margin-top:16px;">
+    <nav><ul class="pagination mb-0" id="ratingsPagination"></ul></nav>
+  </div>
+</div>
+<!-- ====== PAGE: ATTENDANCE ====== -->
+<div class="page" id="page-attendance">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">
+        <i class="bi bi-person-check-fill me-2" style="color:var(--clubly-teal);"></i>
+        Attendance
+      </h1>
+      <p class="page-subtitle" id="attSubtitle">Select a group and date to take attendance</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <button class="btn-teal-cl" onclick="saveAllAttendance()" id="saveAllBtn" style="display:none;">
+        <i class="bi bi-check2-all"></i> Save All
+      </button>
+      <button class="btn-secondary-cl" onclick="loadAttendanceList()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+  </div>
+
+  <div class="card-clubly mb-4" style="padding:20px 24px;">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label">Group</label>
+        <select class="form-input" id="attGroupSelect" onchange="onAttGroupChange()">
+          <option value="">— Select Group —</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Date</label>
+        <input type="date" class="form-input" id="attDate" onchange="loadAttendanceList()">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Filter</label>
+        <select class="form-input" id="attFilter" onchange="renderAttendanceList()">
+          <option value="all">All Members</option>
+          <option value="present">Present Only</option>
+          <option value="absent">Absent Only</option>
+          <option value="unmarked">Not Marked Yet</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn-primary-cl" style="width:100%;justify-content:center;" onclick="loadAttendanceList()">
+          <i class="bi bi-search"></i> Load
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="attSummaryBar" style="display:none;" class="mb-4">
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--text);" id="attTotalCount">0</div>
+          <div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;">Total</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:#22c55e;" id="attPresentCount">0</div>
+          <div style="font-size:.75rem;color:#22c55e;font-weight:600;text-transform:uppercase;">Present</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:#ef4444;" id="attAbsentCount">0</div>
+          <div style="font-size:.75rem;color:#ef4444;font-weight:600;text-transform:uppercase;">Absent</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.2);border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--clubly-gold);" id="attUnmarkedCount">0</div>
+          <div style="font-size:.75rem;color:var(--clubly-gold);font-weight:600;text-transform:uppercase;">Not Marked</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="attQuickActions" style="display:none;margin-bottom:16px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <button onclick="markAll(true)"
+        style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#16a34a;
+               padding:7px 18px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;
+               font-weight:700;font-size:.85rem;transition:all .2s;">
+        <i class="bi bi-check-all me-1"></i> Mark All Present
+      </button>
+      <button onclick="markAll(false)"
+        style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#dc2626;
+               padding:7px 18px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;
+               font-weight:700;font-size:.85rem;transition:all .2s;">
+        <i class="bi bi-x-lg me-1"></i> Mark All Absent
+      </button>
+      <span id="attDayInfo" style="font-size:.82rem;color:var(--muted);margin-left:8px;"></span>
+    </div>
+  </div>
+
+  <div class="card-clubly" style="padding:0;" id="attListCard">
+    <div id="attList" style="padding:60px 20px;text-align:center;color:var(--muted);">
+      <i class="bi bi-calendar-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+      <p style="font-weight:700;">Select a group and date to start</p>
+    </div>
+  </div>
+
+  <div id="attSummarySection" style="display:none;margin-top:24px;">
+    <div class="card-clubly">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border);">
+        <span style="font-weight:800;font-size:1rem;">
+          <i class="bi bi-bar-chart-fill me-2" style="color:var(--clubly-accent);"></i>Member Summary
+        </span>
+        <small style="color:var(--muted);">Click a member to see full history</small>
+      </div>
+      <div id="attSummaryList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Member History Modal -->
+<div class="modal fade" id="memberHistoryModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);" id="histModalTitle">Attendance History</h5>
+        <button data-bs-dismiss="modal" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body-cl">
+        <div class="row g-3 mb-4" id="histStats"></div>
+        <div style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:.82rem;font-weight:700;">
+            <span style="color:var(--muted);">Attendance Rate</span>
+            <span id="histRate" style="color:var(--clubly-accent);">0%</span>
+          </div>
+          <div style="background:var(--border);border-radius:10px;height:10px;overflow:hidden;">
+            <div id="histRateBar" style="height:100%;border-radius:10px;background:linear-gradient(90deg,var(--clubly-teal),#22c55e);transition:width .6s ease;width:0%;"></div>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Date</th><th style="text-align:center;">Status</th><th>Notes</th></tr></thead>
+            <tbody id="histRecords"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button data-bs-dismiss="modal" class="btn-secondary-cl">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </main>
+</div>
+
+<!-- ======= FOOTER ======= -->
+<footer class="clubly-footer">
+  <div class="footer-inner">
+    <div class="footer-col" style="max-width:220px">
+      <h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5>
+      <p style="font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.7">Your family's fitness journey starts here. Modern sports club management.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul class="footer-links">
+        <li><a onclick="showPage('dashboard')">Dashboard</a></li>
+        <li><a onclick="showPage('schedule')">Schedule</a></li>
+        <li><a onclick="showPage('members')">Members</a></li>
+        <li><a onclick="showPage('reports')">Reports</a></li>
+        <li><a onclick="showPage('profile')">Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact Us</h5>
+      <div class="footer-contact">
+        <div><i class="bi bi-geo-alt-fill"></i> 123 Fitness Street, City 12345</div>
+        <div><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</div>
+        <div><i class="bi bi-envelope-fill"></i> info@clubly.com</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Follow Us</h5>
+      <div class="footer-socials">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-twitter-x"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+</footer>
+
+<!-- ADD SESSION MODAL -->
+<div class="modal fade" id="addSessionModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);" id="sessionModalTitle">Add New Session</h5>
+        <button type="button" data-bs-dismiss="modal" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body-cl">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Session Name</label>
+              <input class="form-input" type="text" id="sessName" placeholder="e.g. Morning Yoga">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Type</label>
+              <select class="form-input" id="sessType">
+                <option value="yoga">Yoga</option>
+                <option value="crossfit">CrossFit</option>
+                <option value="pilates">Pilates</option>
+                <option value="swim">Swimming</option>
+                <option value="zumba">Zumba</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input class="form-input" type="date" id="sessDate">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Start Time</label>
+              <input class="form-input" type="time" id="sessStart" value="09:00">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">End Time</label>
+              <input class="form-input" type="time" id="sessEnd" value="10:00">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <select class="form-input" id="sessLocation">
+                <option>Studio A</option>
+                <option>Studio B</option>
+                <option>Main Hall</option>
+                <option>Olympic Pool</option>
+                <option>Gym Floor</option>
+                <option>Outdoor Court</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Max Capacity</label>
+              <input class="form-input" type="number" id="sessCap" value="15" min="1">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label class="form-label">Notes</label>
+              <textarea class="form-input" id="sessNotes" placeholder="Any special instructions or requirements..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-primary-cl" onclick="saveSession()"><i class="bi bi-check-lg"></i> Save Session</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ====== ADD GROUP MODAL (TRAINER) ====== -->
+<div class="modal fade" id="addTrainerGroupModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);">Add Activity Group</h5>
+        <button type="button" data-bs-dismiss="modal"
+          style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body-cl">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Group Name *</label>
+              <input class="form-input" type="text" id="tg_name" placeholder="e.g. Swimming G1">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Capacity *</label>
+              <input class="form-input" type="number" id="tg_capacity" min="1" placeholder="e.g. 10">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Group Code</label>
+              <input class="form-input" type="text" id="tg_code" placeholder="e.g. G1">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Activity *</label>
+              <select class="form-input" id="tg_activity" onchange="onTrainerGroupActivityChange('add')">
+                <option value="">Select activity...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Facility (auto)</label>
+              <input class="form-input" type="text" id="tg_facility" readonly
+                style="background:var(--bg);opacity:.8;">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Price (EGP)</label>
+              <input class="form-input" type="number" id="tg_price" min="0" placeholder="e.g. 500">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Duration (days)</label>
+              <input class="form-input" type="number" id="tg_duration" min="1" placeholder="e.g. 30">
+            </div>
+          </div>
+          <div class="col-md-4" style="display:flex;align-items:flex-end;padding-bottom:18px;">
+            <span id="tg_activityInfo"
+              style="font-size:.78rem;color:var(--muted);font-style:italic;">
+              Select an activity first
+            </span>
+          </div>
+          <!-- Time Slots -->
+          <div class="col-12">
+            <label class="form-label" style="color:var(--clubly-accent);">
+              Available Time Slots *
+            </label>
+            <div id="tg_slotsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
+            <button type="button" onclick="addTrainerGroupSlot('tg_slotsContainer')"
+              style="margin-top:10px;background:none;border:1px dashed var(--clubly-teal);
+                     color:var(--clubly-teal);padding:7px 18px;border-radius:50px;
+                     cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;
+                     font-size:.85rem;transition:all .2s;"
+              onmouseover="this.style.background='rgba(46,196,182,.1)'"
+              onmouseout="this.style.background='none'">
+              <i class="bi bi-plus-circle me-1"></i> Add Time Slot
+            </button>
+            <div id="tg_err" style="color:#ef4444;font-size:.82rem;margin-top:8px;display:none;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-primary-cl" onclick="saveTrainerGroup()">
+          <i class="bi bi-check-lg"></i> Save Group
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== EDIT GROUP MODAL (TRAINER) ====== -->
+<div class="modal fade" id="editTrainerGroupModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-content-cl">
+      <div class="modal-header-cl d-flex justify-content-between align-items-center">
+        <h5 style="font-weight:800;color:var(--text);">Edit Activity Group</h5>
+        <button type="button" data-bs-dismiss="modal"
+          style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body-cl">
+        <input type="hidden" id="etg_id">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Group Name *</label>
+              <input class="form-input" type="text" id="etg_name">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Capacity *</label>
+              <input class="form-input" type="number" id="etg_capacity" min="1">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="form-label">Group Code</label>
+              <input class="form-input" type="text" id="etg_code">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Activity *</label>
+              <select class="form-input" id="etg_activity" onchange="onTrainerGroupActivityChange('edit')">
+                <option value="">Select activity...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Facility (auto)</label>
+              <input class="form-input" type="text" id="etg_facility" readonly
+                style="background:var(--bg);opacity:.8;">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Price (EGP)</label>
+              <input class="form-input" type="number" id="etg_price" min="0">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Duration (days)</label>
+              <input class="form-input" type="number" id="etg_duration" min="1">
+            </div>
+          </div>
+          <!-- Time Slots -->
+          <div class="col-12">
+            <label class="form-label" style="color:var(--clubly-accent);">
+              Available Time Slots *
+            </label>
+            <div id="etg_slotsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
+            <button type="button" onclick="addTrainerGroupSlot('etg_slotsContainer')"
+              style="margin-top:10px;background:none;border:1px dashed var(--clubly-teal);
+                     color:var(--clubly-teal);padding:7px 18px;border-radius:50px;
+                     cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;
+                     font-size:.85rem;transition:all .2s;"
+              onmouseover="this.style.background='rgba(46,196,182,.1)'"
+              onmouseout="this.style.background='none'">
+              <i class="bi bi-plus-circle me-1"></i> Add Time Slot
+            </button>
+            <div id="etg_err" style="color:#ef4444;font-size:.82rem;margin-top:8px;display:none;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer-cl">
+        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-teal-cl" onclick="updateTrainerGroup()">
+          <i class="bi bi-check-lg"></i> Update Group
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  
+// ===== CONFIG =====
+const API = 'https://localhost:7132/api';
+const trainerId   = localStorage.getItem('userId');
+const trainerName = localStorage.getItem('fullName') || 'Trainer';
+
+const typeConfig = {
+  yoga:     { label:'Yoga',     color:'#3b82f6', bg:'rgba(59,130,246,.12)',  icon:'fas fa-spa' },
+  crossfit: { label:'CrossFit', color:'#e85d2f', bg:'rgba(232,93,47,.12)',   icon:'fas fa-dumbbell' },
+  pilates:  { label:'Pilates',  color:'#9333ea', bg:'rgba(147,51,234,.12)',  icon:'fas fa-heartbeat' },
+  swim:     { label:'Swimming', color:'#2ec4b6', bg:'rgba(46,196,182,.12)',  icon:'fas fa-swimmer' },
+  zumba:    { label:'Zumba',    color:'#d4a843', bg:'rgba(212,168,67,.12)',  icon:'fas fa-music' },
+};
+
+const AVATAR_COLORS = ['#3b82f6','#22c55e','#9333ea','#e85d2f','#2ec4b6','#d4a843','#ef4444'];
+
+function getInitials(name) {
+  return (name||'').split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+}
+
+// ===== SIDEBAR TOGGLE =====
+let sidebarOpen = true;
+document.getElementById('toggleBtn').addEventListener('click', () => {
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
+  document.getElementById('contentArea').classList.toggle('expanded', !sidebarOpen);
+});
+
+// ===== THEME =====
+let dark = false;
+document.getElementById('themeBtn').addEventListener('click', () => {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  document.getElementById('themeBtn').innerHTML = dark
+    ? '<i class="bi bi-sun"></i>'
+    : '<i class="bi bi-moon-stars"></i>';
+});
+function renderTrainerSessions(list) {
+  const data = list || _allBookings;
+
+  // حساب الـ stats
+  const now       = new Date();
+  const weekStart = new Date(now); 
+  weekStart.setDate(now.getDate() - now.getDay());
+  weekStart.setHours(0,0,0,0);
+  
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const thisWeek  = _allBookings.filter(b => new Date(b.startDate) >= weekStart).length;
+  const thisMonth = _allBookings.filter(b => new Date(b.startDate) >= monthStart).length;
+  const approved  = _allBookings.filter(b => (b.status||'').toLowerCase() === 'approved').length;
+  const pending   = _allBookings.filter(b => (b.status||'').toLowerCase() === 'pending').length;
+
+  const sw = document.getElementById('sess-week');
+  const sm = document.getElementById('sess-month');
+  const sa = document.getElementById('sess-approved');
+  const sp = document.getElementById('sess-pending');
+  if (sw) sw.textContent = thisWeek;
+  if (sm) sm.textContent = thisMonth;
+  if (sa) sa.textContent = approved;
+  if (sp) sp.textContent = pending;
+
+}
+// ===== NAVIGATION =====
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  const sb = document.getElementById('sb-' + name);
+  if (sb) sb.classList.add('active');
+  document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
+  const hn = document.getElementById('hn-' + name);
+  if (hn) hn.classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+    if (name === 'ratings') loadRatingsPage();
+
+}
+
+// ===== WEEK SCHEDULE (grid - بيستخدم الـ bookings الحقيقية) =====
+let weekOffset = 0;
+function getWeekStart(offset) {
+  const d = new Date();
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff + offset * 7);
+  d.setHours(0,0,0,0);
+  return d;
+}
+
+function renderWeekSchedule() {
+  const ws = getWeekStart(weekOffset);
+  const we = new Date(ws); we.setDate(we.getDate() + 6);
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const hours = ['07:00','08:00','09:00','10:00','11:00','12:00',
+                 '14:00','15:00','16:00','17:00','18:00','19:00'];
+
+  document.getElementById('weekLabel').textContent =
+    ws.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' – ' +
+    we.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  let html = `<div class="week-grid" style="min-width:600px;">`;
+  html += `<div class="wg-header"></div>`;
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(ws); d.setDate(d.getDate() + i);
+    const isToday = d.toDateString() === new Date().toDateString();
+    html += `<div class="wg-header" style="${isToday?'color:var(--clubly-accent);':''}">
+      ${days[i]}<br><span style="font-size:.7rem;font-weight:400;">${d.getDate()}</span>
+    </div>`;
+  }
+
+  hours.forEach(hr => {
+    html += `<div class="wg-time">${hr}</div>`;
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(ws); d.setDate(d.getDate() + i);
+      const dateStr = d.toISOString().slice(0,10);
+      const matched = _allBookings.filter(b => {
+        const bDate = b.startDate ? b.startDate.split('T')[0] : '';
+        return bDate === dateStr;
+      });
+      if (matched.length) {
+        html += `<div class="wg-cell" style="border:none;">`;
+        matched.forEach(b => {
+          html += `<div class="wg-session"
+            style="background:rgba(232,93,47,.15);color:var(--clubly-accent);
+                   border-left:3px solid var(--clubly-accent);"
+            title="${b.activityName||'Session'} · ${b.memberName||''}">
+            ${b.activityName||'Session'}
+          </div>`;
+        });
+        html += `</div>`;
+      } else {
+        html += `<div class="wg-cell"></div>`;
+      }
+    }
+  });
+
+  html += `</div>`;
+  document.getElementById('weekScheduleGrid').innerHTML = html;
+}
+
+document.getElementById('prevWeekBtn').addEventListener('click', () => { weekOffset--; renderWeekSchedule(); });
+document.getElementById('nextWeekBtn').addEventListener('click', () => { weekOffset++; renderWeekSchedule(); });
+
+// ===== REPORTS (static charts + real members) =====
+function renderReports() {
+  // ── Bar chart من الـ bookings الحقيقية ──
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const weekStart = new Date();
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay() + 1);
+  weekStart.setHours(0,0,0,0);
+
+  const weekData = days.map((label, i) => {
+    const d = new Date(weekStart);
+    d.setDate(d.getDate() + i);
+    const dateStr = d.toISOString().slice(0,10);
+    const val = _allBookings.filter(b => (b.startDate||'').split('T')[0] === dateStr).length;
+    return { label, val };
+  });
+
+  const max = Math.max(...weekData.map(d => d.val), 1);
+  document.getElementById('sessionsChart').innerHTML = `
+    <div class="bar-chart" style="margin-bottom:28px;">
+      ${weekData.map(d => {
+        const h = Math.round((d.val / max) * 80);
+        return `<div class="bar"
+          style="height:${Math.max(h,4)}px;background:linear-gradient(180deg,var(--clubly-accent),rgba(232,93,47,.3));">
+          <span class="bar-val">${d.val}</span>
+          <span class="bar-label">${d.label}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+
+  // ── Member progress من الـ bookings ──
+  const memberMap = {};
+  _allBookings.forEach(b => {
+    if (!b.memberId) return;
+    if (!memberMap[b.memberId]) memberMap[b.memberId] = { name: b.memberName||'Member', count: 0, activity: b.activityName||'—' };
+    memberMap[b.memberId].count++;
+  });
+  const members = Object.values(memberMap).slice(0, 6);
+
+  document.getElementById('progressTable').innerHTML = members.length
+    ? members.map((m, i) => `
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="m-avatar" style="background:${AVATAR_COLORS[i%AVATAR_COLORS.length]};width:30px;height:30px;font-size:.7rem;">
+                ${getInitials(m.name)}
+              </div>
+              <span style="font-weight:600;">${m.name}</span>
+            </div>
+          </td>
+          <td style="font-size:.82rem;color:var(--muted);">${m.activity}</td>
+          <td><strong>${m.count}</strong> bookings</td>
+          <td><span style="color:#22c55e;font-size:1.1rem;">↑</span></td>
+        </tr>`).join('')
+    : '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);">No data yet.</td></tr>';
+
+  // ── Monthly summary ──
+  document.getElementById('monthlySummary').innerHTML = [
+    { label:'Total Bookings', val: _allBookings.length,                                                                      icon:'bi-calendar-check', color:'var(--clubly-accent)' },
+    { label:'Approved',       val: _allBookings.filter(b=>(b.status||'').toLowerCase()==='approved').length,                 icon:'bi-check-circle',   color:'#22c55e' },
+    { label:'Pending',        val: _allBookings.filter(b=>(b.status||'').toLowerCase()==='pending').length,                  icon:'bi-clock',          color:'var(--clubly-gold)' },
+    { label:'Members',        val: new Set(_allBookings.map(b=>b.memberId).filter(Boolean)).size,                            icon:'bi-people',         color:'#3b82f6' },
+  ].map(i => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;
+                background:var(--bg);border-radius:10px;margin-bottom:10px;
+                border:1px solid var(--border);">
+      <div style="width:38px;height:38px;border-radius:9px;
+                  background:${i.color}22;color:${i.color};
+                  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">
+        <i class="bi ${i.icon}"></i>
+      </div>
+      <div style="flex:1;font-size:.78rem;color:var(--muted);">${i.label}</div>
+      <div style="font-weight:900;font-size:1.1rem;color:var(--text);">${i.val}</div>
+    </div>`).join('');
+
+  document.getElementById('reviewsList').innerHTML = `
+    <div style="text-align:center;padding:30px;color:var(--muted);">
+      <i class="bi bi-star" style="font-size:2rem;opacity:.3;display:block;margin-bottom:8px;"></i>
+      <p>Reviews coming soon.</p>
+    </div>`;
+}
+
+// ===== TRAINER NOTIFICATIONS =====
+const NOTIF_API_TRAINER = 'https://localhost:7132/api/Notifications';
+let _trainerNotifs = [];
+let _trainerNotifsFiltered = [];
+let _trainerNotifPage = 1;
+const _trainerNotifPageSize = 8;
+
+function updateTrainerUnreadBadge() {
+  const unread = _trainerNotifs.filter(n => !n.isRead).length;
+  const badge = document.getElementById('trainerUnreadBadge');
+  if (badge) {
+    badge.textContent = `${unread} unread`;
+    badge.style.background   = unread > 0 ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
+    badge.style.color        = unread > 0 ? '#b45309' : 'var(--muted)';
+    badge.style.borderColor  = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
+  }
+}
+async function markTrainerAsRead(id) {
+  const notif = _trainerNotifs.find(n => n.id === id);
+  if (notif && !notif.isRead) {
+    notif.isRead = true;
+    updateTrainerUnreadBadge();
+  }
+  try {
+    await fetch(`${NOTIF_API_TRAINER}/${id}/read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ trainerId: parseInt(trainerId) })
+    });
+  } catch(e) { console.warn('Could not mark as read:', e); }
+}
+
+async function markAllTrainerRead() {
+  try {
+    await fetch(`${NOTIF_API_TRAINER}/mark-all-read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ trainerId: parseInt(trainerId) })
+    });
+  } catch(e) { console.warn('Could not mark all read:', e); }
+  _trainerNotifs.forEach(n => n.isRead = true);
+  renderTrainerNotifList();
+  updateTrainerUnreadBadge();
+}
+
+async function loadTrainerNotifications() {
+  const listEl = document.getElementById('trainerNotifList');
+  if (listEl) listEl.innerHTML = `
+    <div style="text-align:center;padding:50px;color:var(--muted);">
+      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+    </div>`;
+  try {
+    const res = await fetch(`${NOTIF_API_TRAINER}/for-trainer/${trainerId}`);
+    _trainerNotifs = res.ok ? await res.json() : [];
+    updateTrainerUnreadBadge();
+    applyTrainerNotifFilters();
+  } catch(e) {
+    if (listEl) listEl.innerHTML = `
+      <div style="text-align:center;padding:50px;color:#ef4444;">
+        <i class="bi bi-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:10px;"></i>
+        Failed to load notifications
+      </div>`;
+  }
+}
+
+function applyTrainerNotifFilters() {
+  const q      = (document.getElementById('trainerNotifSearch')?.value||'').toLowerCase();
+  const type   = document.getElementById('trainerNotifType')?.value||'';
+  const status = document.getElementById('trainerNotifStatus')?.value||'';
+  _trainerNotifsFiltered = _trainerNotifs.filter(n => {
+    const matchQ = !q || (n.title||'').toLowerCase().includes(q) 
+                      || (n.description||'').toLowerCase().includes(q);
+    const matchT = !type || n.type === type;
+    const isRead = n.isRead === true;
+    const matchS = !status 
+      || (status==='unread' && !isRead) 
+      || (status==='read'   &&  isRead);
+    return matchQ && matchT && matchS;
+  });
+  _trainerNotifPage = 1;
+  renderTrainerNotifList();
+}
+
+function renderTrainerNotifList() {
+  const listEl = document.getElementById('trainerNotifList');
+  if (!listEl) return;
+
+  const total      = _trainerNotifsFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / _trainerNotifPageSize));
+  if (_trainerNotifPage > totalPages) _trainerNotifPage = totalPages;
+  const start = (_trainerNotifPage - 1) * _trainerNotifPageSize;
+  const items = _trainerNotifsFiltered.slice(start, start + _trainerNotifPageSize);
+
+  const infoEl = document.getElementById('trainerNotifInfo');
+  if (infoEl) infoEl.textContent = total
+    ? `Showing ${start+1}–${Math.min(start+_trainerNotifPageSize,total)} of ${total}` : '';
+
+  if (!items.length) {
+    listEl.innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+        <i class="bi bi-bell-slash" style="font-size:2.5rem;opacity:.35;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">No notifications</p>
+        <p style="font-size:.88rem;">Notifications sent to trainers will appear here</p>
+      </div>`;
+    document.getElementById('trainerNotifPagination').innerHTML = '';
+    return;
+  }
+
+  const nTypeConfig = {
+    'Info':    { icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.12)',  color:'#0590a8', pill:'rgba(13,202,240,.15)',  pillColor:'#0590a8' },
+    'Warning': { icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#a07700', pill:'rgba(255,193,7,.18)',   pillColor:'#a07700' },
+    'Success': { icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.12)',   color:'#198754', pill:'rgba(25,135,84,.15)',   pillColor:'#198754' },
+    'Urgent':  { icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.12)',   color:'#dc3545', pill:'rgba(220,53,69,.15)',   pillColor:'#dc3545' },
+    'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.12)', color:'#64748b', pill:'rgba(100,116,139,.15)', pillColor:'#64748b' },
+  };
+  const typeLabels = { 'Info':'ℹ Info','Warning':'⚠ Warning','Success':'✓ Success','Urgent':'🔴 Urgent' };
+
+  listEl.innerHTML = items.map(n => {
+const isRead = n.isRead === true;
+    const cfg    = nTypeConfig[n.type] || nTypeConfig['default'];
+const d = n.sentAt 
+  ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
+  : null;    let timeStr  = '—';
+    if (d) {
+      const diff = new Date()-d, mins=Math.floor(diff/60000), hours=Math.floor(diff/3600000), days=Math.floor(diff/86400000);
+      if (mins<1) timeStr='Just now';
+      else if (mins<60) timeStr=`${mins}m ago`;
+      else if (hours<24) timeStr=`${hours}h ago`;
+      else if (days<7) timeStr=`${days}d ago`;
+      else timeStr=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+    }
+    const fullDate = d
+      ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+        +' at '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) : '';
+    const shortDesc = (n.description||'').length>130 ? n.description.substring(0,130)+'…' : (n.description||'');
+    const thumbHtml = n.imageUrl
+      ? `<img src="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}"
+             style="width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;">` : '';
+
+    return `
+      <div onclick="openTrainerNotifDetail(${n.id})"
+        style="display:flex;align-items:flex-start;gap:14px;padding:18px 22px;
+               border-bottom:1px solid var(--border);cursor:pointer;
+               transition:background .15s;position:relative;
+               background:${isRead?'transparent':'rgba(232,93,47,.025)'};"
+        onmouseover="this.style.background='rgba(232,93,47,.04)'"
+        onmouseout="this.style.background='${isRead?'transparent':'rgba(232,93,47,.025)'}'">
+
+        ${!isRead?`<div style="position:absolute;left:0;top:0;bottom:0;width:4px;
+          background:var(--clubly-accent);border-radius:0 4px 4px 0;"></div>`:''}
+
+        <div style="width:46px;height:46px;border-radius:50%;flex-shrink:0;
+                    background:${cfg.bg};color:${cfg.color};margin-top:2px;
+                    display:flex;align-items:center;justify-content:center;font-size:20px;">
+          <i class="bi ${cfg.icon}"></i>
+        </div>
+
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px;">
+            <span style="font-size:.93rem;font-weight:${isRead?'600':'800'};
+                         color:${isRead?'var(--muted)':'var(--text)'};
+                         white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">
+              ${n.title||'—'}
+              ${!isRead?`<span style="display:inline-block;width:8px;height:8px;
+                background:var(--clubly-accent);border-radius:50%;margin-left:5px;vertical-align:middle;"></span>`:''}
+            </span>
+            <span style="font-size:.75rem;white-space:nowrap;flex-shrink:0;font-weight:600;
+                         color:${isRead?'var(--muted)':'var(--clubly-accent)'};"
+                  title="${fullDate}">${timeStr}</span>
+          </div>
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.5;margin-bottom:8px;
+                      overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">
+            ${shortDesc}
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;
+                         border-radius:50px;font-size:.72rem;font-weight:700;
+                         background:${cfg.pill};color:${cfg.pillColor};">
+              <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
+              ${typeLabels[n.type]||n.type||'Notification'}
+            </span>
+            ${isRead
+              ?`<span style="font-size:.72rem;color:var(--muted);"><i class="bi bi-check2-all me-1"></i>Read</span>`
+              :`<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;"><i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New</span>`}
+          </div>
+        </div>
+        ${thumbHtml}
+        <div style="color:var(--muted);font-size:14px;margin-top:14px;flex-shrink:0;">
+          <i class="bi bi-chevron-right"></i>
+        </div>
+      </div>`;
+  }).join('');
+
+  buildTrainerNotifPagination(totalPages);
+  updateTrainerUnreadBadge();
+}
+
+function buildTrainerNotifPagination(totalPages) {
+  const ul = document.getElementById('trainerNotifPagination');
+  if (!ul) return;
+  ul.innerHTML = '';
+  const li = (label, disabled, fn, active=false) => {
+    const el = document.createElement('li');
+    el.className = 'page-item'+(disabled?' disabled':'')+(active?' active':'');
+    el.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+    if (!disabled) el.onclick = e => { e.preventDefault(); fn(); };
+    return el;
+  };
+  ul.appendChild(li('«', _trainerNotifPage===1, ()=>{ _trainerNotifPage=1; renderTrainerNotifList(); }));
+  const s=Math.max(1,_trainerNotifPage-2), e=Math.min(totalPages,_trainerNotifPage+2);
+  for (let i=s;i<=e;i++) ul.appendChild(li(i,false,()=>{ _trainerNotifPage=i; renderTrainerNotifList(); },i===_trainerNotifPage));
+  ul.appendChild(li('»', _trainerNotifPage===totalPages, ()=>{ _trainerNotifPage=totalPages; renderTrainerNotifList(); }));
+}
+
+async function openTrainerNotifDetail(id) {
+  const n = _trainerNotifs.find(x => x.id === id);
+  if (!n) return;
+await markTrainerAsRead(id);
+renderTrainerNotifList();
+
+  const nTypeConfig = {
+    'Info':    { bg:'rgba(13,202,240,.15)',  color:'#0dcaf0', icon:'bi-info-circle-fill' },
+    'Warning': { bg:'rgba(255,193,7,.15)',   color:'#ffc107', icon:'bi-exclamation-triangle-fill' },
+    'Success': { bg:'rgba(25,135,84,.15)',   color:'#198754', icon:'bi-check-circle-fill' },
+    'Urgent':  { bg:'rgba(220,53,69,.15)',   color:'#dc3545', icon:'bi-exclamation-circle-fill' },
+    'default': { bg:'rgba(100,116,139,.15)', color:'#64748b', icon:'bi-bell-fill' },
+  };
+  const cfg = nTypeConfig[n.type] || nTypeConfig['default'];
+const d = n.sentAt 
+  ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
+  : null;  const fullDate = d
+    ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})
+      +' at '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) : '—';
+
+  let modal = document.getElementById('trainerNotifDetailModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'trainerNotifDetailModal';
+    modal.className = 'modal fade';
+    modal.tabIndex = -1;
+    document.body.appendChild(modal);
+  }
+
+modal.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content modal-content-cl" style="background:var(--card-bg);border-radius:16px;border:1px solid var(--border);">
+<div class="modal-header-cl" style="display:flex;align-items:center;gap:14px;
+             background:var(--clubly-dark);border-radius:16px 16px 0 0;">          <div style="width:46px;height:46px;border-radius:50%;background:${cfg.bg};color:${cfg.color};
+                      flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;">
+            <i class="bi ${cfg.icon}"></i>
+          </div>
+          <div style="flex:1;">
+           <h5 style="margin:0;font-weight:800;color:#fff;">${n.title||'—'}</h5>
+            <small style="color:rgba(255,255,255,.6);">${fullDate}</small>
+          </div>
+          <button data-bs-dismiss="modal" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;">✕</button>        </div>
+        <div class="modal-body-cl" style="min-height:200px;">
+          <div style="margin-bottom:14px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 16px;
+                         border-radius:50px;font-size:.88rem;font-weight:700;
+                         background:${cfg.bg};color:${cfg.color};">
+              <i class="bi ${cfg.icon}"></i>${n.type||'Notification'}
+            </span>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:16px;">
+            <p style="margin:0;white-space:pre-wrap;line-height:1.8;font-size:.95rem;color:var(--text);">${n.description||'—'}</p>
+          </div>
+          ${n.imageUrl?`
+          <div style="margin-bottom:16px;">
+            <a href="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}" target="_blank">
+              <img src="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}"
+                style="max-width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid var(--border);cursor:pointer;">
+            </a>
+          </div>`:''}
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="bi bi-clock" style="color:var(--muted);"></i>
+            <small style="color:var(--muted);">Sent:</small>
+            <span style="background:#d4edda;color:#155724;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:600;">${fullDate}</span>
+          </div>
+        </div>
+        <div class="modal-footer-cl">
+          <button data-bs-dismiss="modal"
+            style="background:var(--bg);border:1px solid var(--border);color:var(--text);
+                   padding:8px 20px;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+  new bootstrap.Modal(modal).show();
+}
+
+// ===== ADD SESSION MODAL =====
+function openAddSession() {
+  document.getElementById('sessDate').value = new Date().toISOString().slice(0,10);
+  new bootstrap.Modal(document.getElementById('addSessionModal')).show();
+}
+function saveSession() {
+  const name = document.getElementById('sessName').value.trim();
+  if (!name) { alert('Please enter a session name.'); return; }
+  bootstrap.Modal.getInstance(document.getElementById('addSessionModal')).hide();
+  document.getElementById('sessName').value = '';
+  alert('Session saved locally. Connect to API to persist.');
+}
+
+// ===== PROFILE =====
+document.getElementById('profileForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!trainerId) { alert('Not logged in.'); return; }
+
+  const fd = new FormData();
+  fd.append('FullName',
+    document.getElementById('pfFirstName').value.trim() + ' ' +
+    document.getElementById('pfLastName').value.trim());
+  fd.append('Phone',             document.getElementById('pfPhone').value.trim());
+  fd.append('YearsOfExperience', document.getElementById('pfExp').value);
+
+  const dob = document.getElementById('pfDob').value;
+  if (dob) fd.append('DateOfBirth', dob);
+
+  try {
+    const res = await fetch(`${API}/Trainers/${trainerId}`, { method:'PUT', body:fd });
+    if (res.ok) alert('Profile updated successfully!');
+    else        alert('Failed to update profile.');
+  } catch { alert('Cannot reach server.'); }
+});
+
+document.getElementById('passForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const np  = document.getElementById('newPass').value;
+  const cp  = document.getElementById('confPass').value;
+  const msg = document.getElementById('passMsg');
+  msg.innerHTML = '';
+  if (np !== cp) { msg.innerHTML='<span style="color:#ef4444">Passwords do not match.</span>'; return; }
+  if (np.length < 6) { msg.innerHTML='<span style="color:#ef4444">Min 6 characters.</span>'; return; }
+  if (!trainerId) return;
+  const ok = await fetch(`${API}/Trainers/${trainerId}/set-password`, {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(np)
+  });
+  if (ok.ok) {
+    msg.innerHTML='<span style="color:#22c55e">Password updated!</span>';
+    setTimeout(()=>{ msg.innerHTML=''; document.getElementById('passForm').reset(); }, 2000);
+  } else {
+    msg.innerHTML='<span style="color:#ef4444">Failed to update password.</span>';
+  }
+});
+
+document.getElementById('profileImgInput').addEventListener('change', function() {
+  if (this.files && this.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('profileImg');
+      img.src = e.target.result; img.style.display='block';
+      document.getElementById('profileInitials').style.display='none';
+    };
+    reader.readAsDataURL(this.files[0]);
+  }
+});
+
+// ===== SIGN OUT =====
+function handleSignOut() {
+  localStorage.clear();
+  window.location.href = '../BeforeSign/index.html';
+}
+
+// ===== DATA VARS =====
+let _allBookings = [];
+let _allApiMembers = [];
+
+// ===== LOAD PROFILE =====
+async function loadTrainerProfile() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${API}/Trainers/${trainerId}`);
+    if (!res.ok) throw new Error();
+    const t = await res.json();
+
+    const parts = (t.fullName || trainerName).split(' ');
+    const ini   = getInitials(t.fullName || trainerName);
+
+    // Header
+    document.querySelector('.trainer-name').textContent   = t.fullName || trainerName;
+    document.querySelector('.trainer-avatar').textContent = ini;
+
+    // Welcome
+    document.querySelector('#page-dashboard .page-title span').textContent =
+      (parts[0] || 'Trainer') + '!';
+
+    // Profile hero
+    document.querySelector('.profile-hero-name').textContent = t.fullName || '';
+    document.querySelector('.profile-hero-role').innerHTML =
+      `<i class="bi bi-shield-check me-1"></i>${t.activities || 'Trainer'} · ${t.yearsOfExperience || 0} Yrs Experience`;
+    document.getElementById('profileInitials').textContent = ini;
+
+    // Image
+    if (t.imageUrl) {
+      const img = document.getElementById('profileImg');
+      img.src = t.imageUrl.startsWith('http') ? t.imageUrl : 'https://localhost:7132' + t.imageUrl;
+      img.style.display = 'block';
+      document.getElementById('profileInitials').style.display = 'none';
+    }
+
+    // Spec tags
+    const heroInfo = document.querySelector('.profile-hero-info');
+    heroInfo.querySelectorAll('.spec-tag').forEach(el => el.remove());
+    if (t.activities) {
+      t.activities.split(',').forEach(act => {
+        const span = document.createElement('span');
+        span.className = 'spec-tag';
+        span.textContent = act.trim();
+        heroInfo.appendChild(span);
+      });
+    }
+
+  // ── Form fields ──
+document.getElementById('pfFirstName').value  = parts[0] || '';
+document.getElementById('pfLastName').value   = parts.slice(1).join(' ') || '';
+document.getElementById('pfEmail').value      = t.email || '';
+document.getElementById('pfPhone').value      = t.phone || '';
+document.getElementById('pfNationalId').value = t.nationalId || '';
+document.getElementById('pfGender').value     = t.gender || '';
+document.getElementById('pfExp').value        = t.yearsOfExperience || '';
+
+if (t.dateOfBirth) {
+  document.getElementById('pfDob').value = t.dateOfBirth.split('T')[0];
+}
+    if (t.joinDate) {
+      const jd = new Date(t.joinDate);
+    }
+
+
+  } catch(e) { console.warn('Profile load failed:', e); }
+}
+// ===== LOAD BOOKINGS =====
+async function loadTrainerBookings() {
+  if (!trainerId) return;
+  
+  try {
+    const res = await fetch(`${API}/ActivityBookings`);
+    const allBookings = res.ok ? await res.json() : [];
+    
+    console.log('Sample booking:', allBookings[0]); // شوف الـ fields
+    
+    // فلتر بالـ trainerId الأول
+    const myBookings = allBookings.filter(b => 
+      String(b.trainerId) === String(trainerId)
+    );
+
+    // تقسيم member vs guest
+    _allBookings = myBookings.map(b => ({
+      ...b,
+      _bookingType: b.guestId != null ? 'Guest' : 'Member'
+    }));
+    
+    console.log('My bookings:', _allBookings);
+    console.log('Members:', _allBookings.filter(b => b._bookingType === 'Member'));
+    console.log('Guests:', _allBookings.filter(b => b._bookingType === 'Guest'));
+
+  } catch(e) {
+    console.warn('Bookings load failed:', e);
+    _allBookings = [];
+  }
+
+  renderTrainerDashboard();
+  renderTrainerMembers();
+  renderTrainerSessions();
+  renderWeekSchedule();
+  renderReports();
+}
+// ===== DASHBOARD =====
+function renderTrainerDashboard() {
+  const today = new Date().toISOString().slice(0,10);
+  document.getElementById('todayDate').textContent =
+    new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  const todayBookings = _allBookings.filter(b => (b.startDate||'').split('T')[0] === today);
+  const approved      = _allBookings.filter(b=>(b.status||'').toLowerCase()==='approved').length;
+  const pending       = _allBookings.filter(b=>(b.status||'').toLowerCase()==='pending').length;
+const uniqueMembers = new Set(
+  _allBookings.filter(b => b._bookingType === 'Member').map(b => b.memberId).filter(Boolean)
+).size;
+const uniqueGuests = new Set(
+  _allBookings.filter(b => b._bookingType === 'Guest').map(b => b.guestId).filter(Boolean)
+).size;
+  const stats = document.querySelectorAll('.stat-val');
+document.getElementById('stat-today').textContent    = todayBookings.length;
+document.getElementById('stat-members').textContent  = uniqueMembers;
+document.getElementById('stat-guests').textContent   = uniqueGuests;
+loadTrainerRatings(); // سيتم تحديث stat-rating من الـ function
+document.getElementById('stat-total').textContent    = _allBookings.length;
+document.getElementById('stat-approved').textContent = approved;
+document.getElementById('stat-pending').textContent  = pending;
+
+  // Today's schedule
+  document.getElementById('todaySchedule').innerHTML = todayBookings.length
+    ? todayBookings.map(b => `
+        <div class="session-card" style="border-left-color:var(--clubly-accent);">
+          <div class="session-icon" style="background:rgba(232,93,47,.12);color:var(--clubly-accent);">
+            <i class="bi bi-calendar-check"></i>
+          </div>
+          <div class="session-info">
+            <div class="session-name">${b.activityName||'—'}</div>
+            <div class="session-meta">
+              <i class="bi bi-person me-1"></i>${b.memberName||'—'}
+              &nbsp;·&nbsp;
+              <span class="badge-cl ${(b.status||'').toLowerCase()==='approved'?'b-green':'b-gold'}">
+                ${b.status||'—'}
+              </span>
+            </div>
+          </div>
+          <div class="session-right">
+            <div class="session-time">${(b.startDate||'').split('T')[0]}</div>
+          </div>
+        </div>`).join('')
+    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions today.</p>';
+
+  // Top members
+  const memberMap = {};
+  _allBookings.forEach(b => {
+    if (!b.memberId) return;
+    if (!memberMap[b.memberId]) memberMap[b.memberId] = { name: b.memberName||'Member', count:0 };
+    memberMap[b.memberId].count++;
+  });
+  const top = Object.values(memberMap).sort((a,b)=>b.count-a.count).slice(0,5);
+
+  document.getElementById('topMembersList').innerHTML = top.length
+    ? top.map((m,i) => `
+        <div class="member-row">
+          <div class="m-avatar" style="background:${AVATAR_COLORS[i%AVATAR_COLORS.length]}">
+            ${getInitials(m.name)}
+          </div>
+          <div style="flex:1">
+            <div class="m-name">${m.name}</div>
+            <div class="m-detail">${m.count} bookings</div>
+          </div>
+        </div>`).join('')
+    : '<p style="color:var(--muted);text-align:center;padding:20px;">No members yet.</p>';
+}
+
+// ===== MEMBERS PAGE =====
+// ===== MEMBERS PAGE =====
+let _memberCurrentTab    = 'member';
+let _memberCurrentStatus = 'all';
+
+function switchMemberTab(tab, el) {
+  _memberCurrentTab = tab;
+  _memberCurrentStatus = 'all';
+
+  // Reset status filters
+  document.querySelectorAll('#page-members .day-filter-btn')
+    .forEach(b => b.classList.remove('active'));
+  document.querySelector('#page-members .day-filter-btn')
+    ?.classList.add('active');
+
+  // Update tab UI
+  document.querySelectorAll('#memberTypeTabs .nav-link')
+    .forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+
+  renderTrainerMembers();
+}
+
+function filterMemberStatus(status, el) {
+  _memberCurrentStatus = status;
+  document.querySelectorAll('#page-members .day-filter-btn')
+    .forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderTrainerMembers();
+}
+
+function filterMembers() {
+  renderTrainerMembers();
+}
+
+function renderTrainerMembers() {
+  const q = (document.getElementById('memberSearch')?.value || '').toLowerCase();
+
+  // فلتر بالـ tab (member or guest)
+  let list = _allBookings.filter(b =>
+    _memberCurrentTab === 'member'
+      ? b._bookingType === 'Member'
+      : b._bookingType === 'Guest'
+  );
+
+  // فلتر بالـ status
+  if (_memberCurrentStatus !== 'all') {
+    list = list.filter(b =>
+      (b.status || '').toLowerCase() === _memberCurrentStatus
+    );
+  }
+
+  // فلتر بالـ search
+  if (q) {
+    list = list.filter(b =>
+      (b.memberName || b.guestName || '').toLowerCase().includes(q)
+    );
+  }
+
+  // Update subtitle
+  const uniqueCount = new Set(list.map(b => b.memberId || b.guestId)).size;
+  const subtitleEl = document.getElementById('membersSubtitle');
+  if (subtitleEl) {
+    subtitleEl.textContent = `${uniqueCount} ${_memberCurrentTab === 'member' ? 'members' : 'guests'} under your training`;
+  }
+
+  const tbody = document.getElementById('membersTable');
+
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--muted);">
+      No ${_memberCurrentTab === 'member' ? 'members' : 'guests'} found.
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map((b, i) => {
+    const name = b.memberName || b.guestName || '—';
+    const isGuest = b._bookingType === 'Guest';
+    const statusClass = (b.status||'').toLowerCase() === 'approved' ? 'b-green'
+                      : (b.status||'').toLowerCase() === 'pending'  ? 'b-gold'
+                      : 'b-gray';
+
+    return `<tr>
+      <td>${i + 1}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="m-avatar"
+            style="background:${AVATAR_COLORS[i % AVATAR_COLORS.length]};
+                   width:34px;height:34px;font-size:.78rem;">
+            ${getInitials(name)}
+          </div>
+          <div style="font-weight:700;">${name}</div>
+        </div>
+      </td>
+      <td>
+        <span class="badge-cl ${isGuest ? 'b-teal' : 'b-blue'}">
+          <i class="bi bi-person${isGuest ? '' : '-check'} me-1"></i>
+          ${isGuest ? 'Guest' : 'Member'}
+        </span>
+      </td>
+      <td>${b.activityName || '—'}</td>
+      <td>${b.groupName || '—'}</td>
+      <td style="color:var(--muted);font-size:.85rem;">
+        ${b.startDate ? b.startDate.split('T')[0] : '—'}
+      </td>
+      <td style="color:var(--muted);font-size:.85rem;">
+        ${b.endDate ? b.endDate.split('T')[0] : '—'}
+      </td>
+      <td style="font-size:.85rem;">
+        ${b.timeSlots?.length ? b.timeSlots[0].startTime?.substring(0,5) : '—'}
+      </td>
+      <td style="font-size:.85rem;">
+        ${b.timeSlots?.length ? b.timeSlots[0].endTime?.substring(0,5) : '—'}
+      </td>
+      <td>
+        <span class="badge-cl ${statusClass}">
+          ${b.status || '—'}
+        </span>
+      </td>
+    </tr>`;
+  }).join('');
+}
+// ===== SESSIONS PAGE =====
+function renderTrainerSessions(list) {
+  const data = list || _allBookings;
+  document.getElementById('allSessionsList').innerHTML = data.length
+    ? data.map(b => {
+        const s = (b.status||'').toLowerCase();
+        return `
+          <div class="session-card" style="border-left-color:var(--clubly-accent);">
+            <div class="session-icon" style="background:rgba(232,93,47,.12);color:var(--clubly-accent);">
+              <i class="bi bi-calendar-check"></i>
+            </div>
+            <div class="session-info">
+              <div class="session-name">${b.activityName||'—'}</div>
+              <div class="session-meta">
+                <i class="bi bi-person me-1"></i>${b.memberName||'—'}
+                &nbsp;·&nbsp;
+                <i class="bi bi-people me-1"></i>${b.groupName||'—'}
+              </div>
+            </div>
+            <div class="session-right">
+              <div class="session-time">${(b.startDate||'').split('T')[0]}</div>
+              <span class="badge-cl ${s==='approved'?'b-green':s==='pending'?'b-gold':'b-gray'}" style="margin-top:4px;">${b.status||'—'}</span>
+            </div>
+          </div>`;
+      }).join('')
+    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions found.</p>';
+}
+
+function filterSessions(q) {
+  renderTrainerSessions(_allBookings.filter(b =>
+    (b.activityName||'').toLowerCase().includes(q.toLowerCase()) ||
+    (b.memberName||'').toLowerCase().includes(q.toLowerCase())
+  ));
+}
+// ===== MY GROUPS & SCHEDULE =====
+let _trainerGroups = [];
+let _scheduleCurrentDay = 'all';
+
+async function loadTrainerGroups() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${API}/ActivityGroups`);
+    const all = res.ok ? await res.json() : [];
+    // فلتر بالـ trainerId
+    _trainerGroups = all.filter(g => String(g.trainerId) === String(trainerId));
+  } catch { _trainerGroups = []; }
+  renderSchedulePage();
+  renderGroupsPage();
+}
+
+function filterScheduleDay(day, el) {
+  _scheduleCurrentDay = day;
+  document.querySelectorAll('.day-filter-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderSchedulePage();
+}
+
+function renderSchedulePage() {
+  const container = document.getElementById('scheduleGroupsList');
+  if (!container) return;
+
+  let groups = _trainerGroups;
+  if (_scheduleCurrentDay !== 'all') {
+    groups = groups.filter(g =>
+      g.timeSlots?.some(s => s.day === _scheduleCurrentDay)
+    );
+  }
+
+  if (!groups.length) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:80px 20px;color:var(--muted);">
+        <i class="bi bi-calendar-x" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;font-size:1rem;">No sessions found.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = groups.map(g => {
+    const slots = g.timeSlots || [];
+    const slotsHtml = slots.map(s => `
+      <span style="display:inline-flex;align-items:center;gap:4px;
+                   background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                   padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;margin:2px;">
+        <i class="bi bi-clock"></i> ${s.day||''} ${s.startTime?.substring(0,5)||''} → ${s.endTime?.substring(0,5)||''}
+      </span>`).join('');
+
+    return `
+      <div class="session-card" style="border-left-color:var(--clubly-teal);margin-bottom:12px;">
+        <div class="session-icon" style="background:rgba(46,196,182,.12);color:var(--clubly-teal);">
+          <i class="bi bi-people"></i>
+        </div>
+        <div class="session-info">
+          <div class="session-name">${g.name||'—'}</div>
+          <div class="session-meta" style="margin-top:4px;">
+            <i class="bi bi-lightning me-1" style="color:var(--clubly-accent);"></i>${g.activityName||'—'}
+            &nbsp;·&nbsp;
+            <i class="bi bi-building me-1" style="color:var(--muted);"></i>${g.facilityName||'—'}
+          </div>
+          <div style="margin-top:6px;">${slotsHtml}</div>
+        </div>
+        <div class="session-right">
+          <span style="font-size:.78rem;color:var(--muted);">Capacity</span>
+          <div style="font-weight:900;font-size:1.1rem;color:var(--text);">${g.capacity||'—'}</div>
+          <div style="font-size:.75rem;color:var(--muted);">members</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderGroupsPage() {
+  const q    = (document.getElementById('groupSearch')?.value||'').toLowerCase();
+  const actF = document.getElementById('groupActivityFilter')?.value||'';
+  const dayF = document.getElementById('groupDayFilter')?.value||'';
+
+  // Populate activity filter dropdown (once)
+  const actSel = document.getElementById('groupActivityFilter');
+  if (actSel && actSel.options.length <= 1) {
+    [...new Set(_trainerGroups.map(g=>g.activityName).filter(Boolean))].forEach(a => {
+      const o = document.createElement('option');
+      o.value = a; o.textContent = a;
+      actSel.appendChild(o);
+    });
+  }
+
+  const list = _trainerGroups.filter(g => {
+    const matchQ = !q || (g.name||'').toLowerCase().includes(q)
+                      || (g.activityName||'').toLowerCase().includes(q)
+                      || (g.code||'').toLowerCase().includes(q);
+    const matchA = !actF || g.activityName === actF;
+    const matchD = !dayF || g.timeSlots?.some(s => s.day === dayF);
+    return matchQ && matchA && matchD;
+  });
+
+  const container = document.getElementById('groupsListContainer');
+  if (!container) return;
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:80px 20px;color:var(--muted);">
+        <i class="bi bi-diagram-3" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;">No groups found.</p>
+        <button class="btn-primary-cl" style="margin-top:10px;" onclick="openAddTrainerGroupModal()">
+          <i class="bi bi-plus-lg"></i> Add Your First Group
+        </button>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="card-clubly" style="padding:0;">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Group Name</th>
+              <th>Activity</th>
+              <th>Facility</th>
+              <th style="text-align:center;">Capacity</th>
+              <th style="text-align:center;">Price</th>
+              <th>Time Slots</th>
+              <th style="text-align:center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map((g,i) => {
+              const slots = (g.timeSlots||[]).map(s =>
+                `<span style="display:inline-block;background:rgba(46,196,182,.1);
+                              color:var(--clubly-teal);padding:2px 8px;
+                              border-radius:10px;font-size:.72rem;font-weight:700;margin:1px;">
+                  ${s.day||''} ${s.startTime?.substring(0,5)||''}→${s.endTime?.substring(0,5)||''}
+                </span>`).join('');
+
+              return `
+                <tr>
+                  <td style="color:var(--muted);">${i+1}</td>
+                  <td>
+                    <strong>${g.name||'—'}</strong>
+                    ${g.code?`<br><span style="font-size:.75rem;color:var(--muted);">${g.code}</span>`:''}
+                  </td>
+                  <td>${g.activityName||'—'}</td>
+                  <td>${g.facilityName||'—'}</td>
+                  <td style="text-align:center;font-weight:700;">${g.capacity||'—'}</td>
+                  <td style="text-align:center;font-weight:700;color:var(--clubly-accent);">
+                    ${g.price||0} EGP
+                  </td>
+                  <td>${slots||'—'}</td>
+                  <td style="text-align:center;">
+                    <button onclick="openEditTrainerGroupModal(${g.id})"
+                      style="background:rgba(59,130,246,.1);border:none;color:#3b82f6;
+                             width:32px;height:32px;border-radius:8px;cursor:pointer;
+                             margin-right:4px;font-size:.9rem;"
+                      title="Edit">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button onclick="deleteTrainerGroup(${g.id}, '${(g.name||'').replace(/'/g,"\\'")}' )"
+                      style="background:rgba(239,68,68,.1);border:none;color:#ef4444;
+                             width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:.9rem;"
+                      title="Delete">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </td>
+                </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+}
+// ===================================================
+// ====== TRAINER GROUP CRUD =========================
+// ===================================================
+
+const groupsApiUrl = 'https://localhost:7132/api/ActivityGroups';
+
+// ── Load trainer's own activities ──────────────────
+let _trainerOwnActivities = [];
+
+async function loadTrainerOwnActivities() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${API}/Trainers/byActivity/0`);
+    // جيب كل الـ activities وفلترها بالـ trainerId
+    const allAct = await fetch(`${API}/Activities`).then(r => r.json());
+    // احنا محتاجين الـ activities اللي الـ trainer ده بيدرسها
+    // من الـ trainer profile
+    const trainerRes = await fetch(`${API}/Trainers/${trainerId}`);
+    const trainer = await trainerRes.json();
+    const trainerActIds = trainer.activityIds || [];
+    _trainerOwnActivities = allAct.filter(a =>
+      trainerActIds.includes(a.id) || trainerActIds.includes(String(a.id))
+    );
+  } catch(e) {
+    console.warn('Could not load trainer activities:', e);
+    _trainerOwnActivities = [];
+  }
+}
+
+// ── Populate activity selects ──────────────────────
+function populateTrainerGroupActivitySelects() {
+  ['tg_activity', 'etg_activity'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="">Select activity...</option>' +
+      _trainerOwnActivities.map(a =>
+        `<option value="${a.id}" data-facility="${a.facilityName||''}"
+          ${String(a.id) === String(current) ? 'selected' : ''}>
+          ${a.name}
+        </option>`
+      ).join('');
+    if (current) sel.value = current;
+  });
+}
+
+// ── Auto-fill facility when activity changes ───────
+function onTrainerGroupActivityChange(mode) {
+  const prefix = mode === 'add' ? 'tg' : 'etg';
+  const sel    = document.getElementById(`${prefix}_activity`);
+  const opt    = sel.selectedOptions[0];
+  document.getElementById(`${prefix}_facility`).value =
+    opt?.dataset?.facility || '';
+}
+
+// ── Slot row builder ───────────────────────────────
+function addTrainerGroupSlot(containerId, data = null) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'tg-slot-row';
+  div.style.cssText = `
+    background:var(--bg);border:1px solid var(--border);
+    border-radius:12px;padding:14px 16px;position:relative;
+  `;
+  div.innerHTML = `
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label">Duration (hrs)</label>
+        <input type="number" name="durationHrs" class="form-input"
+          placeholder="e.g. 2" value="${data?.durationHrs||''}">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Start Time</label>
+        <input type="time" name="startTime" class="form-input"
+          value="${data?.startTime ? data.startTime.substring(0,5) : ''}">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">End Time (auto)</label>
+        <input type="time" name="endTime" class="form-input" readonly
+          style="opacity:.7;"
+          value="${data?.endTime ? data.endTime.substring(0,5) : ''}">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Day</label>
+        <select name="day" class="form-input">
+          <option value="">Select day</option>
+          ${['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday']
+            .map(d => `<option ${d===(data?.day||'')?'selected':''} >${d}</option>`).join('')}
+        </select>
+      </div>
+      <div class="col-md-1 d-flex align-items-end">
+        <button type="button" onclick="this.closest('.tg-slot-row').remove()"
+          style="background:rgba(239,68,68,.1);border:none;color:#ef4444;
+                 width:36px;height:36px;border-radius:8px;cursor:pointer;
+                 display:flex;align-items:center;justify-content:center;font-size:1rem;"
+          title="Remove slot">
+          <i class="bi bi-trash3"></i>
+        </button>
+      </div>
+    </div>`;
+
+  // Auto-calc end time
+  div.addEventListener('change', e => {
+    const row  = e.target.closest('.tg-slot-row');
+    const st   = row.querySelector('[name="startTime"]').value;
+    const dur  = parseFloat(row.querySelector('[name="durationHrs"]').value);
+    if (st && dur) {
+      const [h,m] = st.split(':').map(Number);
+      const total = h*60 + m + dur*60;
+      const endH  = String(Math.floor(total/60)%24).padStart(2,'0');
+      const endM  = String(total%60).padStart(2,'0');
+      row.querySelector('[name="endTime"]').value = `${endH}:${endM}`;
+    }
+  });
+
+  container.appendChild(div);
+}
+
+// ── Get slots from container ───────────────────────
+function getTrainerGroupSlots(containerId) {
+  return [...document.getElementById(containerId).querySelectorAll('.tg-slot-row')]
+    .map(row => ({
+      startTime: (row.querySelector('[name="startTime"]').value || '') + ':00',
+      endTime:   (row.querySelector('[name="endTime"]').value   || '') + ':00',
+      day:       row.querySelector('[name="day"]').value,
+      durationHrs: parseFloat(row.querySelector('[name="durationHrs"]').value) || 0,
+    }))
+    .filter(s => s.startTime !== ':00' && s.day);
+}
+
+// ── Open Add Modal ─────────────────────────────────
+async function openAddTrainerGroupModal() {
+  await loadTrainerOwnActivities();
+  populateTrainerGroupActivitySelects();
+
+  // Reset fields
+  ['tg_name','tg_capacity','tg_code','tg_price','tg_duration',
+   'tg_facility','tg_activity'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('tg_slotsContainer').innerHTML = '';
+  document.getElementById('tg_err').style.display = 'none';
+  addTrainerGroupSlot('tg_slotsContainer'); // default 1 slot
+  new bootstrap.Modal(document.getElementById('addTrainerGroupModal')).show();
+}
+
+// ── Save (Add) ─────────────────────────────────────
+async function saveTrainerGroup() {
+  const errEl = document.getElementById('tg_err');
+  errEl.style.display = 'none';
+
+  const name     = document.getElementById('tg_name').value.trim();
+  const capacity = parseInt(document.getElementById('tg_capacity').value);
+  const actId    = document.getElementById('tg_activity').value;
+  const slots    = getTrainerGroupSlots('tg_slotsContainer');
+
+  if (!name || name.length < 2) {
+    errEl.textContent = 'Group name is required (min 2 chars).';
+    errEl.style.display = 'block'; return;
+  }
+  if (!capacity || capacity < 1) {
+    errEl.textContent = 'Capacity must be at least 1.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!actId) {
+    errEl.textContent = 'Please select an activity.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!slots.length) {
+    errEl.textContent = 'Please add at least one time slot.';
+    errEl.style.display = 'block'; return;
+  }
+
+  const payload = {
+    Name:       name,
+    Capacity:   capacity,
+    Code:       document.getElementById('tg_code').value.trim() || null,
+    ActivityId: parseInt(actId),
+    TrainerId:  parseInt(trainerId),
+    Price:      parseFloat(document.getElementById('tg_price').value) || 0,
+    DurationDays: parseInt(document.getElementById('tg_duration').value) || null,
+    Status:     'Active',
+    TimeSlots:  slots,
+  };
+
+  try {
+    const res = await fetch(groupsApiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    bootstrap.Modal.getInstance(
+      document.getElementById('addTrainerGroupModal')
+    ).hide();
+    // Show success
+    showTrainerGroupToast('Group added successfully! ✓', 'success');
+    await loadTrainerGroups();
+  } catch(e) {
+    errEl.textContent = 'Failed to save: ' + e.message;
+    errEl.style.display = 'block';
+  }
+}
+
+// ── Open Edit Modal ────────────────────────────────
+async function openEditTrainerGroupModal(id) {
+  await loadTrainerOwnActivities();
+  populateTrainerGroupActivitySelects();
+
+  try {
+    const res = await fetch(`${groupsApiUrl}/${id}`);
+    if (!res.ok) throw new Error();
+    const g = await res.json();
+
+    document.getElementById('etg_id').value       = g.id;
+    document.getElementById('etg_name').value     = g.name || '';
+    document.getElementById('etg_capacity').value = g.capacity || '';
+    document.getElementById('etg_code').value     = g.code || '';
+    document.getElementById('etg_price').value    = g.price || '';
+    document.getElementById('etg_duration').value = g.durationDays || '';
+    document.getElementById('etg_activity').value = g.activityId || '';
+    document.getElementById('etg_err').style.display = 'none';
+
+    // Auto-fill facility
+    const opt = document.getElementById('etg_activity').selectedOptions[0];
+    document.getElementById('etg_facility').value =
+      opt?.dataset?.facility || g.facilityName || '';
+
+    // Time slots
+    const sc = document.getElementById('etg_slotsContainer');
+    sc.innerHTML = '';
+    const slots = g.timeSlots || [];
+    if (slots.length) {
+      slots.forEach(s => addTrainerGroupSlot('etg_slotsContainer', s));
+    } else {
+      addTrainerGroupSlot('etg_slotsContainer');
+    }
+
+    new bootstrap.Modal(document.getElementById('editTrainerGroupModal')).show();
+  } catch(e) {
+    showTrainerGroupToast('Failed to load group.', 'error');
+  }
+}
+
+// ── Update ─────────────────────────────────────────
+async function updateTrainerGroup() {
+  const errEl = document.getElementById('etg_err');
+  errEl.style.display = 'none';
+
+  const id       = document.getElementById('etg_id').value;
+  const name     = document.getElementById('etg_name').value.trim();
+  const capacity = parseInt(document.getElementById('etg_capacity').value);
+  const actId    = document.getElementById('etg_activity').value;
+  const slots    = getTrainerGroupSlots('etg_slotsContainer');
+
+  if (!name || name.length < 2) {
+    errEl.textContent = 'Group name is required.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!capacity || capacity < 1) {
+    errEl.textContent = 'Capacity must be at least 1.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!slots.length) {
+    errEl.textContent = 'Please add at least one time slot.';
+    errEl.style.display = 'block'; return;
+  }
+
+  const payload = {
+    Name:       name,
+    Capacity:   capacity,
+    Code:       document.getElementById('etg_code').value.trim() || null,
+    ActivityId: parseInt(actId),
+    TrainerId:  parseInt(trainerId),
+    Price:      parseFloat(document.getElementById('etg_price').value) || 0,
+    DurationDays: parseInt(document.getElementById('etg_duration').value) || null,
+    Status:     'Active',
+    TimeSlots:  slots,
+  };
+
+  try {
+    const res = await fetch(`${groupsApiUrl}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(await res.text());
+    bootstrap.Modal.getInstance(
+      document.getElementById('editTrainerGroupModal')
+    ).hide();
+    showTrainerGroupToast('Group updated successfully! ✓', 'success');
+    await loadTrainerGroups();
+  } catch(e) {
+    errEl.textContent = 'Failed to update: ' + e.message;
+    errEl.style.display = 'block';
+  }
+}
+
+// ── Delete ─────────────────────────────────────────
+async function deleteTrainerGroup(id, name) {
+  if (!confirm(`Delete group "${name}"? This cannot be undone.`)) return;
+  try {
+    const res = await fetch(`${groupsApiUrl}/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error();
+    showTrainerGroupToast('Group deleted.', 'success');
+    await loadTrainerGroups();
+  } catch {
+    showTrainerGroupToast('Failed to delete group.', 'error');
+  }
+}
+
+// ── Toast helper ───────────────────────────────────
+function showTrainerGroupToast(msg, type = 'success') {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position:fixed;bottom:24px;right:24px;z-index:9999;
+    background:${type === 'success' ? '#22c55e' : '#ef4444'};
+    color:#fff;padding:12px 24px;border-radius:12px;
+    font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:slideInToast .3s ease;
+  `;
+  toast.textContent = msg;
+  if (!document.getElementById('trainerToastStyle')) {
+    const style = document.createElement('style');
+    style.id = 'trainerToastStyle';
+    style.textContent = `
+      @keyframes slideInToast {
+        from { transform: translateY(20px); opacity:0; }
+        to   { transform: translateY(0);   opacity:1; }
+      }`;
+    document.head.appendChild(style);
+  }
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+// ===================================================
+// ============== ATTENDANCE MODULE ==================
+// ===================================================
+const ATT_API = 'https://localhost:7132/api/Attendance';
+let _attData   = [];
+let _attGroups = [];
+
+async function loadAttendancePage() {
+  if (!trainerId) return;
+  try {
+    const res = await fetch(`${ATT_API}/groups/${trainerId}`);
+    _attGroups = res.ok ? await res.json() : [];
+    const sel = document.getElementById('attGroupSelect');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">— Select Group —</option>' +
+      _attGroups.map(g =>
+        `<option value="${g.id}">${g.name} · ${g.activityName}</option>`
+      ).join('');
+  } catch { _attGroups = []; }
+}
+
+function onAttGroupChange() {
+  const groupId = document.getElementById('attGroupSelect').value;
+  if (!groupId) return;
+  document.getElementById('attDate').value = new Date().toISOString().slice(0,10);
+  const group = _attGroups.find(g => String(g.id) === String(groupId));
+  if (group?.timeSlots?.length) {
+    const days = [...new Set(group.timeSlots.map(s => s.day))].join(', ');
+    document.getElementById('attDayInfo').textContent = `📅 Sessions: ${days}`;
+  }
+  loadAttendanceList();
+}
+
+async function loadAttendanceList() {
+  const groupId = document.getElementById('attGroupSelect').value;
+  const date    = document.getElementById('attDate').value;
+  if (!groupId || !date) return;
+
+  document.getElementById('attList').innerHTML = `
+    <div style="text-align:center;padding:40px;color:var(--muted);">
+      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+    </div>`;
+
+  try {
+    const res = await fetch(`${ATT_API}?groupId=${groupId}&date=${date}`);
+    _attData = res.ok ? await res.json() : [];
+    renderAttendanceList();
+    updateAttSummary();
+    loadMemberSummaries();
+    document.getElementById('attSummaryBar').style.display    = '';
+    document.getElementById('attQuickActions').style.display  = '';
+    document.getElementById('saveAllBtn').style.display       = '';
+    document.getElementById('attSummarySection').style.display = '';
+    const d = new Date(date);
+    document.getElementById('attSubtitle').textContent =
+      `${_attData.length} members · ${d.toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}`;
+  } catch {
+    document.getElementById('attList').innerHTML = `
+      <div style="text-align:center;padding:40px;color:#ef4444;">Failed to load.</div>`;
+  }
+}
+
+function renderAttendanceList() {
+  const filter = document.getElementById('attFilter').value;
+  let list = _attData.filter(m => {
+    if (filter === 'present')  return m.attended && (m._localPresent !== undefined ? m._localPresent : m.isPresent);
+    if (filter === 'absent')   return m.attended && !(m._localPresent !== undefined ? m._localPresent : m.isPresent);
+    if (filter === 'unmarked') return !m.attended && m._localPresent === undefined;
+    return true;
+  });
+
+  if (!list.length) {
+    document.getElementById('attList').innerHTML = `
+      <div style="text-align:center;padding:50px;color:var(--muted);">
+        <i class="bi bi-people" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
+        <p style="font-weight:700;">No members for this filter.</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('attList').innerHTML = list.map((m, i) => {
+    const initials  = getInitials(m.name || '?');
+    const color     = AVATAR_COLORS[i % AVATAR_COLORS.length];
+    const isPresent = m._localPresent !== undefined ? m._localPresent : m.isPresent;
+    const isMarked  = m.attended || m._localPresent !== undefined;
+
+    const statusHtml = isMarked
+      ? (isPresent
+          ? `<span style="background:rgba(34,197,94,.12);color:#16a34a;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">✓ Present</span>`
+          : `<span style="background:rgba(239,68,68,.12);color:#dc2626;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">✗ Absent</span>`)
+      : `<span style="background:rgba(212,168,67,.12);color:#b45309;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">— Not Marked</span>`;
+
+    return `
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 20px;
+                  border-bottom:1px solid var(--border);transition:background .15s;"
+           onmouseover="this.style.background='rgba(0,0,0,.02)'"
+           onmouseout="this.style.background='transparent'">
+        <div style="width:44px;height:44px;border-radius:50%;background:${color};
+                    display:flex;align-items:center;justify-content:center;
+                    color:#fff;font-weight:800;font-size:.88rem;flex-shrink:0;">
+          ${initials}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;color:var(--text);font-size:.93rem;">
+            ${m.name || '—'}
+            ${m.isGuest ? `<span style="background:rgba(46,196,182,.12);color:var(--clubly-teal);padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:700;margin-left:6px;">Guest</span>` : ''}
+          </div>
+          <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">
+            ${m.email || ''} &nbsp;·&nbsp;
+            <span style="color:var(--clubly-accent);">Ends: ${m.endDate || '—'}</span>
+          </div>
+        </div>
+        <div>${statusHtml}</div>
+        <div style="display:flex;gap:8px;flex-shrink:0;">
+          <button onclick="toggleAttendance(${m.bookingId}, true)"
+            style="background:${isMarked && isPresent ? 'rgba(34,197,94,.2)' : 'var(--bg)'};
+                   border:2px solid ${isMarked && isPresent ? '#22c55e' : 'var(--border)'};
+                   color:${isMarked && isPresent ? '#16a34a' : 'var(--muted)'};
+                   width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.1rem;
+                   transition:all .15s;display:flex;align-items:center;justify-content:center;">✓</button>
+          <button onclick="toggleAttendance(${m.bookingId}, false)"
+            style="background:${isMarked && !isPresent ? 'rgba(239,68,68,.2)' : 'var(--bg)'};
+                   border:2px solid ${isMarked && !isPresent ? '#ef4444' : 'var(--border)'};
+                   color:${isMarked && !isPresent ? '#dc2626' : 'var(--muted)'};
+                   width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.1rem;
+                   transition:all .15s;display:flex;align-items:center;justify-content:center;">✗</button>
+        </div>
+        <input type="text" id="note-${m.bookingId}" value="${m.notes || ''}"
+          placeholder="Note (optional)"
+          style="background:var(--bg);border:1px solid var(--border);border-radius:8px;
+                 padding:7px 12px;color:var(--text);font-family:'Cairo',sans-serif;
+                 font-size:.82rem;width:150px;outline:none;"
+          onfocus="this.style.borderColor='var(--clubly-accent)'"
+          onblur="this.style.borderColor='var(--border)'">
+      </div>`;
+  }).join('');
+
+  updateAttSummary();
+}
+
+function toggleAttendance(bookingId, isPresent) {
+  const m = _attData.find(x => x.bookingId === bookingId);
+  if (!m) return;
+  m._localPresent = isPresent;
+  m.attended = true;
+  renderAttendanceList();
+}
+
+function markAll(isPresent) {
+  _attData.forEach(m => { m._localPresent = isPresent; m.attended = true; });
+  renderAttendanceList();
+}
+
+function updateAttSummary() {
+  const total    = _attData.length;
+  const present  = _attData.filter(m => { const p = m._localPresent !== undefined ? m._localPresent : m.isPresent; return m.attended && p; }).length;
+  const absent   = _attData.filter(m => { const p = m._localPresent !== undefined ? m._localPresent : m.isPresent; return m.attended && !p; }).length;
+  const unmarked = _attData.filter(m => !m.attended && m._localPresent === undefined).length;
+  document.getElementById('attTotalCount').textContent    = total;
+  document.getElementById('attPresentCount').textContent  = present;
+  document.getElementById('attAbsentCount').textContent   = absent;
+  document.getElementById('attUnmarkedCount').textContent = unmarked;
+}
+
+async function saveAllAttendance() {
+  const date = document.getElementById('attDate').value;
+  if (!date) return;
+  const records = _attData
+    .filter(m => m.attended || m._localPresent !== undefined)
+    .map(m => ({
+      bookingId: m.bookingId,
+      isPresent: m._localPresent !== undefined ? m._localPresent : !!m.isPresent,
+      notes: document.getElementById(`note-${m.bookingId}`)?.value || m.notes || null
+    }));
+  if (!records.length) { showTrainerGroupToast('Mark at least one member first.', 'error'); return; }
+
+  const btn = document.getElementById('saveAllBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving…';
+  try {
+    const res = await fetch(`${ATT_API}/bulk`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date, records })
+    });
+    if (!res.ok) throw new Error();
+    showTrainerGroupToast(`✓ Saved for ${records.length} members!`, 'success');
+    await loadAttendanceList();
+  } catch { showTrainerGroupToast('Failed to save.', 'error'); }
+  finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-check2-all"></i> Save All';
+  }
+}
+
+async function loadMemberSummaries() {
+  const container = document.getElementById('attSummaryList');
+  container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);"><div class="spinner-border spinner-border-sm me-2"></div>Loading…</div>`;
+  const summaries = await Promise.all(
+    _attData.slice(0,10).map(async m => {
+      try { const r = await fetch(`${ATT_API}/summary/${m.bookingId}`); return r.ok ? await r.json() : null; }
+      catch { return null; }
+    })
+  );
+  const valid = summaries.filter(Boolean);
+  if (!valid.length) { container.innerHTML = `<p style="text-align:center;color:var(--muted);padding:20px;">No records yet.</p>`; return; }
+  container.innerHTML = valid.map((s, i) => {
+    const rate = s.attendanceRate || 0;
+    const rateColor = rate >= 80 ? '#22c55e' : rate >= 50 ? 'var(--clubly-gold)' : '#ef4444';
+    return `
+      <div onclick="openMemberHistory(${s.bookingId})"
+        style="display:flex;align-items:center;gap:14px;padding:14px 0;
+               border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .2s;"
+        onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        <div style="width:38px;height:38px;border-radius:50%;background:${AVATAR_COLORS[i%AVATAR_COLORS.length]};
+                    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.8rem;flex-shrink:0;">
+          ${getInitials(s.name)}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:.9rem;">${s.name}</div>
+          <div style="font-size:.76rem;color:var(--muted);">${s.totalPresent} present · ${s.totalAbsent} absent · ends ${s.endDate}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-weight:900;font-size:1.1rem;color:${rateColor};">${rate}%</div>
+          <div style="width:80px;background:var(--border);border-radius:10px;height:5px;margin-top:4px;overflow:hidden;">
+            <div style="width:${rate}%;height:100%;background:${rateColor};border-radius:10px;"></div>
+          </div>
+        </div>
+        <i class="bi bi-chevron-right" style="color:var(--muted);font-size:.8rem;"></i>
+      </div>`;
+  }).join('');
+}
+
+async function openMemberHistory(bookingId) {
+  try {
+    const res = await fetch(`${ATT_API}/summary/${bookingId}`);
+    if (!res.ok) throw new Error();
+    const s = await res.json();
+    document.getElementById('histModalTitle').textContent = `${s.name} — Attendance History`;
+    const rate = s.attendanceRate || 0;
+    document.getElementById('histRate').textContent = `${rate}%`;
+    document.getElementById('histRateBar').style.width = `${rate}%`;
+    document.getElementById('histStats').innerHTML = [
+      { label:'Expected', val: s.expectedSessions, color:'var(--muted)' },
+      { label:'Present',  val: s.totalPresent,     color:'#22c55e' },
+      { label:'Absent',   val: s.totalAbsent,      color:'#ef4444' },
+      { label:'Rate',     val: rate + '%',          color:'var(--clubly-accent)' },
+    ].map(item => `
+      <div class="col-3">
+        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;">
+          <div style="font-size:1.5rem;font-weight:900;color:${item.color};">${item.val}</div>
+          <div style="font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;">${item.label}</div>
+        </div>
+      </div>`).join('');
+    document.getElementById('histRecords').innerHTML = s.records?.length
+      ? s.records.map((r, i) => `
+          <tr>
+            <td style="color:var(--muted);">${i+1}</td>
+            <td style="font-weight:600;">${r.date}</td>
+            <td style="text-align:center;">
+              ${r.isPresent
+                ? `<span style="background:rgba(34,197,94,.12);color:#16a34a;padding:3px 12px;border-radius:10px;font-size:.8rem;font-weight:700;">✓ Present</span>`
+                : `<span style="background:rgba(239,68,68,.12);color:#dc2626;padding:3px 12px;border-radius:10px;font-size:.8rem;font-weight:700;">✗ Absent</span>`}
+            </td>
+            <td style="color:var(--muted);font-size:.85rem;">${r.notes || '—'}</td>
+          </tr>`).join('')
+      : `<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);">No records yet.</td></tr>`;
+    new bootstrap.Modal(document.getElementById('memberHistoryModal')).show();
+  } catch { showTrainerGroupToast('Failed to load history.', 'error'); }
+}
+// ===== TRAINER RATINGS =====
+async function loadTrainerRatings() {
+  if (!trainerId) return;
+  try {
+const res = await fetch(`${API}/TrainerRatings/trainer/${trainerId}`);
+    if (!res.ok) throw new Error();
+
+    // حساب الـ average
+  const data = await res.json();
+const ratings = data.ratings || [];
+const avg = data.averageRating;
+const total = data.totalRatings;
+
+    // حدّث الـ stat card
+    const statEl = document.getElementById('stat-rating');
+    if (statEl) {
+      statEl.innerHTML = avg
+        ? `${avg} <span class="stat-unit">/5</span>`
+        : `— <span class="stat-unit">/5</span>`;
+    }
+
+    // الـ subtitle
+    const sub = document.getElementById('ratingsSubtitle');
+    if (sub) sub.textContent = `${total} review${total !== 1 ? 's' : ''} · avg ${avg ?? '—'}/5`;
+
+    // عرض الـ list
+    const listEl = document.getElementById('trainerRatingsList');
+    if (!listEl) return;
+
+    if (!ratings.length) {
+      listEl.innerHTML = `
+        <div style="text-align:center;padding:40px;color:var(--muted);">
+          <i class="bi bi-star" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
+          <p style="font-weight:700;">No ratings yet from members.</p>
+        </div>`;
+      return;
+    }
+
+    const starsHtml = n =>
+      Array.from({length:5}, (_,i) =>
+        `<i class="bi bi-star${i < n ? '-fill' : ''}" style="color:${i < n ? 'var(--clubly-gold)' : 'var(--border)'};font-size:.9rem;"></i>`
+      ).join('');
+
+    listEl.innerHTML = ratings.slice(0, 10).map((r, i) => {
+      const name     = r.memberName || 'Member';
+      const initials = name.split(' ').slice(0,2).map(w => w[0]?.toUpperCase()||'').join('');
+      const color    = AVATAR_COLORS[i % AVATAR_COLORS.length];
+      const d        = r.createdAt ? new Date(r.createdAt.endsWith('Z') ? r.createdAt : r.createdAt + 'Z') : null;
+      const dateStr  = d
+        ? d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'})
+        : '—';
+
+      return `
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 0;
+                    border-bottom:1px solid var(--border);"
+             onmouseover="this.style.background='rgba(0,0,0,.02)'"
+             onmouseout="this.style.background='transparent'">
+          <div style="width:42px;height:42px;border-radius:50%;background:${color};
+                      display:flex;align-items:center;justify-content:center;
+                      color:#fff;font-weight:800;font-size:.85rem;flex-shrink:0;">
+            ${initials}
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:.9rem;color:var(--text);">${name}</div>
+         <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">
+  ${r.activityName || '—'}
+  ${r.groupName ? `<span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);padding:2px 8px;border-radius:8px;font-size:.72rem;font-weight:700;margin:0 4px;">${r.groupName}</span>` : ''}
+  · ${dateStr}
+</div>        
+            ${r.comment
+              ? `<div style="font-size:.82rem;color:var(--text);margin-top:5px;
+                             background:var(--bg);padding:6px 10px;border-radius:8px;
+                             border-left:3px solid var(--clubly-gold);
+                             font-style:italic;">
+                   "${r.comment}"
+                 </div>`
+              : ''}
+          </div>
+          <div style="text-align:center;flex-shrink:0;">
+            <div style="font-size:1.3rem;font-weight:900;color:var(--clubly-gold);">
+              ${r.rating || '—'}
+            </div>
+            <div>${starsHtml(r.rating || 0)}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+  } catch(e) {
+    const listEl = document.getElementById('trainerRatingsList');
+    if (listEl) listEl.innerHTML = `
+      <div style="text-align:center;padding:30px;color:var(--muted);">
+        <i class="bi bi-star" style="font-size:2rem;opacity:.3;display:block;margin-bottom:8px;"></i>
+        <p>Could not load ratings.</p>
+      </div>`;
+    console.warn('Ratings load failed:', e);
+  }
+}
+// ===== RATINGS PAGE =====
+let _allRatingsData   = [];
+let _filteredRatings  = [];
+let _ratingsPage      = 1;
+const _ratingsPerPage = 10;
+
+async function loadRatingsPage() {
+  if (!trainerId) return;
+
+  const listEl = document.getElementById('ratingsPageList');
+  if (listEl) listEl.innerHTML = `
+    <div style="text-align:center;padding:60px;color:var(--muted);">
+      <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+    </div>`;
+
+  try {
+    const res  = await fetch(`${API}/TrainerRatings/trainer/${trainerId}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+
+    _allRatingsData = data.ratings || [];
+    const avg       = data.averageRating ?? 0;
+    const total     = data.totalRatings  ?? 0;
+
+    // Subtitle
+    const sub = document.getElementById('ratingsPageSubtitle');
+    if (sub) sub.textContent = `${total} review${total !== 1 ? 's' : ''} · Average ${avg}/5`;
+
+    // Summary cards
+    const fiveStars  = _allRatingsData.filter(r => r.rating === 5).length;
+    const fourPlus   = _allRatingsData.filter(r => r.rating >= 4).length;
+    const withComment = _allRatingsData.filter(r => r.comment?.trim()).length;
+
+    document.getElementById('ratingsPageSummary').innerHTML = [
+      { label:'Total Reviews',    val: total,       icon:'bi-chat-square-text-fill', color:'var(--clubly-accent)' },
+      { label:'Average Rating',   val: avg + ' / 5',icon:'bi-star-fill',             color:'var(--clubly-gold)'   },
+      { label:'5-Star Reviews',   val: fiveStars,   icon:'bi-award-fill',            color:'#22c55e'              },
+      { label:'4★ and Above',    val: fourPlus,    icon:'bi-hand-thumbs-up-fill',   color:'#3b82f6'              },
+      { label:'With Comments',    val: withComment, icon:'bi-chat-left-text-fill',   color:'#9333ea'              },
+    ].map(item => `
+      <div class="col-6 col-xl">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:${item.color}18;color:${item.color};">
+            <i class="bi ${item.icon}"></i>
+          </div>
+          <div class="stat-label">${item.label}</div>
+          <div class="stat-val" style="font-size:1.6rem;color:${item.color};">${item.val}</div>
+        </div>
+      </div>`).join('');
+
+    // Populate activity filter
+    const actSel = document.getElementById('ratingsActivityFilter');
+    const uniqueActivities = [...new Set(
+      _allRatingsData.map(r => r.activityName).filter(Boolean)
+    )];
+    actSel.innerHTML = '<option value="">All Activities</option>' +
+      uniqueActivities.map(a => `<option value="${a}">${a}</option>`).join('');
+
+    applyRatingsFilter();
+
+  } catch(e) {
+    if (listEl) listEl.innerHTML = `
+      <div style="text-align:center;padding:60px;color:#ef4444;">
+        <i class="bi bi-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:10px;"></i>
+        <p>Could not load ratings.</p>
+      </div>`;
+  }
+}
+
+function applyRatingsFilter() {
+  const q    = (document.getElementById('ratingsSearch')?.value || '').toLowerCase();
+  const star = document.getElementById('ratingsStarFilter')?.value || '';
+  const act  = document.getElementById('ratingsActivityFilter')?.value || '';
+
+  _filteredRatings = _allRatingsData.filter(r => {
+    const matchQ = !q
+      || (r.memberName || '').toLowerCase().includes(q)
+      || (r.comment    || '').toLowerCase().includes(q);
+    const matchS = !star || String(r.rating) === star;
+    const matchA = !act  || r.activityName  === act;
+    return matchQ && matchS && matchA;
+  });
+
+  _ratingsPage = 1;
+  renderRatingsPage();
+}
+
+function renderRatingsPage() {
+  const listEl = document.getElementById('ratingsPageList');
+  if (!listEl) return;
+
+  const total      = _filteredRatings.length;
+  const totalPages = Math.max(1, Math.ceil(total / _ratingsPerPage));
+  if (_ratingsPage > totalPages) _ratingsPage = totalPages;
+
+  const start = (_ratingsPage - 1) * _ratingsPerPage;
+  const items = _filteredRatings.slice(start, start + _ratingsPerPage);
+
+  const infoEl = document.getElementById('ratingsPageInfo');
+  if (infoEl) infoEl.textContent = total
+    ? `Showing ${start+1}–${Math.min(start+_ratingsPerPage, total)} of ${total}` : '';
+
+  if (!items.length) {
+    listEl.innerHTML = `
+      <div style="text-align:center;padding:80px 20px;color:var(--muted);">
+        <i class="bi bi-star-slash" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;font-size:1rem;color:var(--text);">No ratings found</p>
+        <p style="font-size:.88rem;">Try adjusting your filters</p>
+      </div>`;
+    document.getElementById('ratingsPagination').innerHTML = '';
+    return;
+  }
+
+  const starsHtml = n =>
+    Array.from({length:5}, (_, i) =>
+      `<i class="bi bi-star${i < n ? '-fill' : ''}"
+          style="color:${i < n ? 'var(--clubly-gold)' : 'var(--border)'};font-size:.95rem;"></i>`
+    ).join('');
+
+  const ratingColor = n =>
+    n >= 4 ? '#22c55e' : n >= 3 ? 'var(--clubly-gold)' : '#ef4444';
+
+  listEl.innerHTML = items.map((r, i) => {
+    const name     = r.memberName || 'Member';
+    const initials = name.split(' ').slice(0,2).map(w => w[0]?.toUpperCase()||'').join('');
+    const color    = AVATAR_COLORS[(start + i) % AVATAR_COLORS.length];
+    const d        = r.createdAt
+      ? new Date(r.createdAt.endsWith('Z') ? r.createdAt : r.createdAt + 'Z') : null;
+    const dateStr  = d
+      ? d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'}) : '—';
+
+    return `
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:20px 24px;
+                  border-bottom:1px solid var(--border);transition:background .15s;"
+           onmouseover="this.style.background='rgba(232,93,47,.02)'"
+           onmouseout="this.style.background='transparent'">
+
+        <!-- Avatar -->
+        <div style="width:46px;height:46px;border-radius:50%;background:${color};
+                    display:flex;align-items:center;justify-content:center;
+                    color:#fff;font-weight:800;font-size:.9rem;flex-shrink:0;margin-top:2px;">
+          ${initials}
+        </div>
+
+        <!-- Content -->
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;
+                      flex-wrap:wrap;gap:8px;margin-bottom:6px;">
+            <div>
+              <span style="font-weight:800;font-size:.95rem;color:var(--text);">${name}</span>
+              <span style="font-size:.75rem;color:var(--muted);margin-left:10px;">
+                <i class="bi bi-clock me-1"></i>${dateStr}
+              </span>
+            </div>
+            <!-- Stars + Number -->
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div>${starsHtml(r.rating || 0)}</div>
+              <span style="font-size:1.4rem;font-weight:900;color:${ratingColor(r.rating)};">
+                ${r.rating || '—'}
+              </span>
+            </div>
+          </div>
+
+          <!-- Activity + Group tags -->
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+            ${r.activityName ? `
+              <span style="background:rgba(232,93,47,.1);color:var(--clubly-accent);
+                           padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;">
+                <i class="bi bi-lightning-fill me-1"></i>${r.activityName}
+              </span>` : ''}
+            ${r.groupName ? `
+              <span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                           padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;">
+                <i class="bi bi-people-fill me-1"></i>${r.groupName}
+              </span>` : ''}
+          </div>
+
+          <!-- Comment -->
+          ${r.comment ? `
+            <div style="background:var(--bg);border-left:3px solid var(--clubly-gold);
+                        border-radius:0 8px 8px 0;padding:10px 14px;
+                        font-size:.88rem;color:var(--text);font-style:italic;line-height:1.6;">
+              <i class="bi bi-quote me-1" style="color:var(--clubly-gold);"></i>
+              ${r.comment}
+            </div>` : `
+            <div style="font-size:.82rem;color:var(--muted);font-style:italic;">
+              No comment provided
+            </div>`}
+        </div>
+      </div>`;
+  }).join('');
+
+  // Pagination
+  const ul = document.getElementById('ratingsPagination');
+  ul.innerHTML = '';
+  if (totalPages > 1) {
+    const li = (label, disabled, fn, active=false) => {
+      const el = document.createElement('li');
+      el.className = 'page-item'+(disabled?' disabled':'')+(active?' active':'');
+      el.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+      if (!disabled) el.onclick = e => { e.preventDefault(); fn(); };
+      return el;
+    };
+    ul.appendChild(li('«', _ratingsPage===1, ()=>{ _ratingsPage=1; renderRatingsPage(); }));
+    const s=Math.max(1,_ratingsPage-2), e=Math.min(totalPages,_ratingsPage+2);
+    for (let p=s; p<=e; p++)
+      ul.appendChild(li(p, false, ()=>{ _ratingsPage=p; renderRatingsPage(); }, p===_ratingsPage));
+    ul.appendChild(li('»', _ratingsPage===totalPages, ()=>{ _ratingsPage=totalPages; renderRatingsPage(); }));
+  }
+}
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async () => {
+  const parts = trainerName.split(' ');
+  const ini   = getInitials(trainerName);
+  document.querySelector('.trainer-name').textContent    = trainerName;
+  document.querySelector('.trainer-avatar').textContent  = ini;
+  document.querySelector('.page-title span').textContent = (parts[0]||'Trainer') + '!';
+
+  await loadTrainerProfile();
+  await loadTrainerBookings();
+  await loadTrainerGroups(); 
+  loadAttendancePage();
+  loadTrainerNotifications();
+
+});
+</script>
+</body>
+</html>
