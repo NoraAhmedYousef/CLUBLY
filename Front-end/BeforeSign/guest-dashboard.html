@@ -1811,37 +1811,56 @@ let _guestNotifsFiltered = [];
 let _guestNotifPage = 1;
 const _guestNotifPageSize = 8;
 
-let _guestReadIds = new Set(
-  JSON.parse(localStorage.getItem('guestReadIds') || '[]').map(String)
-);
-
-function saveGuestReadState() {
-  localStorage.setItem('guestReadIds',
-    JSON.stringify([..._guestReadIds]));
-}
 function handleGuestSignOut() {
-  const readIds = localStorage.getItem('guestReadIds');
+  // مش محتاج تحفظ أي read IDs لأن كل حاجة في الـ DB
   localStorage.clear();
   sessionStorage.clear();
-  if (readIds) localStorage.setItem('guestReadIds', readIds);
-  window.location.href = 'index.html';
+  window.location.href = '../BeforeSign/index.html';
 }
-function markGuestAsRead(id) {
-  _guestReadIds.add(String(id));
-  saveGuestReadState();
-  updateGuestUnreadBadge();
-}
+async function markGuestAsRead(id) {
+  const guestId = localStorage.getItem('userId');
+  if (!guestId) return;
 
-function markAllGuestRead() {
-  _guestNotifs.forEach(n => _guestReadIds.add(String(n.id)));
-  saveGuestReadState();
+  // حدّث locally فوراً
+  const notif = _guestNotifs.find(n => n.id === id);
+  if (notif && !notif.isRead) {
+    notif.isRead = true;
+    updateGuestUnreadBadge();
+  }
+
+  // POST للـ API
+  try {
+    await fetch(`https://localhost:7132/api/Notifications/${id}/read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guestId: parseInt(guestId) })
+    });
+  } catch(e) {
+    console.warn('Could not mark as read:', e);
+  }
+}
+async function markAllGuestRead() {
+  const guestId = localStorage.getItem('userId');
+  if (!guestId) return;
+
+  try {
+    await fetch(`https://localhost:7132/api/Notifications/mark-all-read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guestId: parseInt(guestId) })
+    });
+  } catch(e) {
+    console.warn('Could not mark all read:', e);
+  }
+
+  _guestNotifs.forEach(n => n.isRead = true);
   renderGuestNotifList();
   updateGuestUnreadBadge();
 }
 
 function updateGuestUnreadBadge() {
-  const unread = _guestNotifs
-    .filter(n => !_guestReadIds.has(String(n.id))).length;
+   const unread = _guestNotifs.filter(n => !n.isRead).length;
+
   
   // badge in notifications page
   const badge = document.getElementById('guestUnreadBadge');
@@ -1874,11 +1893,10 @@ async function loadGuestNotifications() {
     </div>`;
 
   try {
-    const res = await fetch(NOTIF_API_GUEST);
-    const all = res.ok ? await res.json() : [];
-    _guestNotifs = all
-      .filter(n => n.toGuests === true || n.toGuests === 'true' || n.toGuests == 1)
-      .sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+  const guestId = localStorage.getItem('userId');
+const res = await fetch(`https://localhost:7132/api/Notifications/for-guest/${guestId}`);
+const data = res.ok ? await res.json() : [];
+_guestNotifs = data; // جاهز مع IsRead
     updateGuestUnreadBadge();
     applyGuestNotifFilters();
   } catch(e) {
@@ -1895,18 +1913,19 @@ function applyGuestNotifFilters() {
   const type   = document.getElementById('guestNotifType')?.value || '';
   const status = document.getElementById('guestNotifStatus')?.value || '';
 
-  _guestNotifsFiltered = _guestNotifs.filter(n => {
-    const matchQ = !q ||
-      (n.title||'').toLowerCase().includes(q) ||
-      (n.description||'').toLowerCase().includes(q);
-    const matchT = !type || n.type === type;
-    const isRead = _guestReadIds.has(String(n.id));
-    const matchS = !status
-      || (status === 'unread' && !isRead)
-      || (status === 'read'   &&  isRead);
-    return matchQ && matchT && matchS;
-  });
-
+_guestNotifsFiltered = _guestNotifs.filter(n => {
+  const matchQ = !q ||
+    (n.title||'').toLowerCase().includes(q) ||
+    (n.description||'').toLowerCase().includes(q);
+  const matchT = !type || n.type === type;
+  
+  // ✅ اعتمد على n.isRead مش _guestReadIds
+  const isRead = n.isRead === true;
+  const matchS = !status
+    || (status === 'unread' && !isRead)
+    || (status === 'read'   &&  isRead);
+  return matchQ && matchT && matchS;
+});
   _guestNotifPage = 1;
   renderGuestNotifList();
 }
@@ -1952,7 +1971,7 @@ function renderGuestNotifList() {
   };
 
   listEl.innerHTML = items.map(n => {
-    const isRead = _guestReadIds.has(String(n.id));
+const isRead = n.isRead === true;
     const cfg    = typeConfig[n.type] || typeConfig['default'];
 const d = n.sentAt 
   ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
@@ -2086,12 +2105,11 @@ function buildGuestNotifPagination(totalPages) {
   }));
 }
 
-function openGuestNotifDetail(id) {
+async function openGuestNotifDetail(id) {
   const n = _guestNotifs.find(x => x.id === id);
   if (!n) return;
-  markGuestAsRead(id);
+  await markGuestAsRead(id);
   renderGuestNotifList();
-
   const typeConfig = {
     'Info':    { bg:'rgba(13,202,240,.15)',  color:'#0dcaf0', icon:'bi-info-circle-fill'         },
     'Warning': { bg:'rgba(255,193,7,.15)',   color:'#ffc107', icon:'bi-exclamation-triangle-fill' },
@@ -2166,11 +2184,18 @@ modal.innerHTML = `
       </div>
     </div>`;
 
-  new bootstrap.Modal(modal).show();
+  const modalInstance = new bootstrap.Modal(modal);
+  
+  modal.addEventListener('hidden.bs.modal', () => {
+    renderGuestNotifList();
+  }, { once: true });  // ← نفس الـ fix
+  
+  modalInstance.show();
 }
+
 // ===== UPDATE STATS =====
 function updateStats() {
-  const unread  = state.notifications.filter(n => !n.isRead).length;
+const unread = _guestNotifs.filter(n => !n.isRead).length;
   const pending = state.bookings.filter(b => b.status === 'pending').length;
   const pendAmt = state.invoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
   const upcoming = state.bookings.filter(b => b.status === 'confirmed' || b.status === 'pending').length;

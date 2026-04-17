@@ -37,8 +37,19 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 .trainer-ava{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:#fff;margin:0 auto 14px;border:3px solid;}
 .trainer-name{font-weight:900;font-size:.95rem;color:var(--text);margin-bottom:4px;}
 .trainer-spec{font-size:.78rem;color:var(--muted);margin-bottom:10px;}
-.trainer-rating{color:#d4a843;font-size:.85rem;}
-.trainer-years{font-size:.72rem;color:var(--muted);margin-top:4px;}
+.trainer-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0 6px;
+  color: #d4a843;
+  font-size: .85rem;
+}
+.rating-num {
+  font-weight: 700;
+  color: var(--text, #1a202c);
+  font-size: .82rem;
+}.trainer-years{font-size:.72rem;color:var(--muted);margin-top:4px;}
 .clubly-footer{background:var(--clubly-dark);color:rgba(255,255,255,.65);}
 .footer-inner{display:flex;gap:60px;padding:50px 40px 30px;flex-wrap:wrap;}
 .footer-col h5{color:#fff;font-weight:700;margin-bottom:14px;}
@@ -346,8 +357,14 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
 
 let dark=false;
-document.getElementById('themeBtn').addEventListener('click',()=>{dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('themeBtn').innerHTML=dark?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';});
-window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
+document.addEventListener('click', e => {
+  if (e.target.closest('#themeBtn')) {
+    dark = !dark;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+    const btn = document.getElementById('themeBtn');
+    if (btn) btn.innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+  }
+});window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
 
 
 // ── Modal ────────────────────────────────────────────
@@ -382,6 +399,7 @@ function authSelectRole(el){
 }
 // init admin active styling
 document.addEventListener('DOMContentLoaded',()=>{
+
   const adminEl=document.querySelector('.auth-role-opt[data-role="admin"]');
   if(adminEl) authSelectRole(adminEl);
 });
@@ -514,8 +532,12 @@ localStorage.setItem('role',json.role);
 localStorage.setItem('fullName',json.fullName);
 localStorage.setItem('userId',json.id);
 authShowNotif(`Welcome back, ${json.fullName}!`);
-const urls={admin:'Admin.html',member:'index.html',trainer:'index.html',guest:'index.html'};
-setTimeout(()=>{window.location.href=urls[json.role]||'index.html';},1000);
+const urls = {
+  admin:   'Admin.html',
+  member:  'Member dashboard.html',
+  trainer: 'trainer-dashboard.html',  // ← كده صح
+  guest:   'guest-dashboard.html'
+};setTimeout(()=>{window.location.href=urls[json.role]||'index.html';},1000);
   }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
   finally{btn.disabled=false;btn.textContent='Sign In';}
 }
@@ -549,6 +571,112 @@ setTimeout(()=>{window.location.href='index.html';},1000);
   }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
   finally{btn.disabled=false;btn.textContent='Create Account';}
 }
+// ── Header Update Based on Role ──────────────────────
+function updateHeaderForRole() {
+  const role     = localStorage.getItem('role');
+  const fullName = localStorage.getItem('fullName');
+
+  const dashLink = document.querySelector('.header-nav a:first-child');
+  if (dashLink) {
+    const dashConfig = {
+      admin:   { label: '👑 Admin Dashboard',   href: 'Admin.html' },
+      member:  { label: '🎯 Member Dashboard',  href: 'Member dashboard.html' },
+      trainer: { label: '🏆 Trainer Dashboard', href: 'trainer-dashboard.html' },
+      guest:   { label: '🌟 Guest Dashboard',   href: 'guest-dashboard.html' },
+    };
+    if (role && dashConfig[role]) {
+      const cfg = dashConfig[role];
+      dashLink.innerHTML = `<i class="bi bi-speedometer2 me-1"></i>${cfg.label}`;
+      dashLink.href = cfg.href;
+      dashLink.style.cssText = 'color:var(--clubly-accent);font-weight:700;background:rgba(232,93,47,.1);border-radius:6px;';
+    }
+  }
+
+  const actionsEl = document.querySelector('.header-actions');
+  if (!actionsEl) return;
+
+  if (role && fullName) {
+    const initials = fullName.split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+    const roleColors = {
+      admin:   { bg:'#e85d2f', label:'Admin'   },
+      member:  { bg:'#7c5cfc', label:'Member'  },
+      trainer: { bg:'#00a896', label:'Trainer' },
+      guest:   { bg:'#f59e0b', label:'Guest'   },
+    };
+    const rc = roleColors[role] || { bg:'#64748b', label:role };
+    const dashHref = document.querySelector('.header-nav a:first-child')?.href || '#';
+
+    actionsEl.innerHTML = `
+      <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
+      <div id="userChip" onclick="toggleUserDropdown()" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:6px 14px 6px 8px;border-radius:50px;cursor:pointer;transition:all .2s;">
+        <div style="width:32px;height:32px;border-radius:50%;background:${rc.bg};color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;flex-shrink:0;">${initials}</div>
+        <div style="line-height:1.2;">
+          <div style="color:#fff;font-weight:700;font-size:.85rem;white-space:nowrap;">${fullName}</div>
+          <div style="color:rgba(255,255,255,.5);font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;">${rc.label}</div>
+        </div>
+        <i class="bi bi-chevron-down" id="chipChevron" style="color:rgba(255,255,255,.5);font-size:.75rem;margin-left:2px;transition:transform .2s;"></i>
+      </div>
+      <div id="userDropdown" style="display:none;position:absolute;top:calc(var(--header-h) + 6px);right:20px;background:var(--clubly-dark);border:1px solid rgba(255,255,255,.1);border-radius:14px;min-width:200px;box-shadow:0 12px 40px rgba(0,0,0,.4);overflow:hidden;z-index:3000;">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.07);">
+          <div style="font-weight:700;color:#fff;font-size:.9rem;">${fullName}</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.45);">${rc.label}</div>
+        </div>
+        <a href="${dashHref}" style="display:flex;align-items:center;gap:10px;padding:11px 16px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='transparent'">
+          <i class="bi bi-speedometer2" style="color:var(--clubly-accent);"></i> My Dashboard
+        </a>
+        <button onclick="handleSignOut()" style="display:flex;align-items:center;gap:10px;width:100%;padding:11px 16px;color:#ff6b6b;background:none;border:none;font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border-top:1px solid rgba(255,255,255,.07);transition:background .15s;" onmouseover="this.style.background='rgba(255,0,0,.06)'" onmouseout="this.style.background='transparent'">
+          <i class="bi bi-box-arrow-right"></i> Sign Out
+        </button>
+      </div>
+    `;
+
+    document.getElementById('themeBtn')?.addEventListener('click', () => {
+      dark = !dark;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+      document.getElementById('themeBtn').innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+    });
+  }
+}
+
+function toggleUserDropdown() {
+  const dd  = document.getElementById('userDropdown');
+  const chv = document.getElementById('chipChevron');
+  if (!dd) return;
+  const isOpen = dd.style.display === 'block';
+  dd.style.display = isOpen ? 'none' : 'block';
+  if (chv) chv.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#userChip') && !e.target.closest('#userDropdown')) {
+    const dd  = document.getElementById('userDropdown');
+    const chv = document.getElementById('chipChevron');
+    if (dd)  dd.style.display = 'none';
+    if (chv) chv.style.transform = '';
+  }
+});
+
+function handleSignOut() {
+  localStorage.clear();
+  window.location.reload();
+}
 </script>
+<div id="authNotif" style="
+  position:fixed;
+  bottom:28px;
+  right:28px;
+  background:#00a896;
+  color:#fff;
+  padding:12px 24px;
+  border-radius:50px;
+  font-weight:700;
+  font-size:.88rem;
+  opacity:0;
+  transition:all .3s;
+  z-index:9999;
+  pointer-events:none;
+  white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+"></div>
 </body>
 </html>

@@ -28,6 +28,8 @@
   --muted: #64748b;
   --border: #e2e8f0;
   --table-head: #f8fafc;
+  .hybrid-pill{background:rgba(232,93,47,.1);color:var(--clubly-accent);border:1px solid rgba(232,93,47,.25);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px;}
+.flex-1{flex:1;}
 }
 [data-theme="dark"] {
   --bg: #0a1628;
@@ -815,6 +817,32 @@ body {
   color: #ef4444;
   margin: 0 auto 16px;
 }
+/* ===== TRAINER RATING ===== */
+.star-rating { display: flex; gap: 6px; justify-content: center; margin: 12px 0; }
+.star-btn {
+  font-size: 2rem; cursor: pointer; transition: transform .15s;
+  background: none; border: none; padding: 0; line-height: 1;
+  filter: grayscale(1); opacity: .4;
+}
+.star-btn.active, .star-btn:hover { filter: none; opacity: 1; transform: scale(1.2); }
+.rate-trainer-btn {
+  background: linear-gradient(135deg, var(--clubly-gold), #b8860b);
+  color: #fff; border: none; padding: 5px 14px; border-radius: 20px;
+  font-size: .78rem; font-weight: 700; cursor: pointer;
+  transition: all .2s; display: inline-flex; align-items: center; gap: 5px;
+}
+.rate-trainer-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(212,168,67,.4); }
+.rate-trainer-btn:disabled {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  cursor: default; transform: none; box-shadow: none;
+}
+.badge-cl {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 20px; font-size: .78rem; font-weight: 700;
+}
+.b-green { background: rgba(34,197,94,.12);  color: #22c55e; border: 1px solid rgba(34,197,94,.25); }
+.b-red   { background: rgba(239,68,68,.12);  color: #ef4444; border: 1px solid rgba(239,68,68,.25); }
+.b-gold  { background: rgba(212,168,67,.12); color: var(--clubly-gold); border: 1px solid rgba(212,168,67,.25); }
 /* ===== MEMBER NOTIFICATIONS INBOX ===== */
 .member-notif-item {
   display: flex;
@@ -922,7 +950,52 @@ body {
   font-size: 32px;
   color: var(--muted);
 }
-
+/* ================================================================
+   SPORTS AI RECOMMENDER — CSS (Redesigned)
+   ================================================================ */
+.sai-label{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:5px;}
+.sai-input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;}
+.sai-input:focus{border-color:var(--clubly-accent);}
+.sai-tog{flex:1;padding:7px 0;background:var(--bg);border:1px solid var(--border);color:var(--muted);border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;transition:all .2s;text-align:center;}
+.sai-tog.active{background:rgba(232,93,47,.12);border-color:var(--clubly-accent);color:var(--clubly-accent);}
+.sai-rec-card{background:var(--card-bg);border:0.5px solid var(--border);border-radius:16px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;animation:fadeUp .4s ease both;}
+.sai-rec-card:hover{transform:translateY(-3px);border-color:rgba(232,93,47,.4);box-shadow:0 8px 24px rgba(0,0,0,.08);}
+.sai-rec-card.rank-1{border-color:rgba(232,93,47,.45);}
+.sai-rec-card.rank-1::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--clubly-accent),var(--clubly-gold));}
+.sai-rank{position:absolute;top:14px;left:14px;font-size:2.2rem;font-weight:900;color:var(--border);line-height:1;}
+.rank-1 .sai-rank{color:rgba(232,93,47,.18);}
+.sai-emoji{font-size:2rem;margin-bottom:6px;display:block;}
+.sai-sport-name{font-size:1.15rem;font-weight:900;color:var(--text);margin-bottom:8px;}
+.rank-1 .sai-sport-name{color:var(--clubly-accent);}
+.sai-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.sai-pill{font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;}
+.sai-pill-cat{background:var(--bg);color:var(--muted);border:0.5px solid var(--border);}
+.sai-pill-int{background:rgba(212,168,67,.1);color:var(--clubly-gold);border:1px solid rgba(212,168,67,.25);}
+.sai-pill-pref{background:rgba(46,196,182,.1);color:var(--clubly-teal);border:1px solid rgba(46,196,182,.25);}
+.sai-bar-wrap{margin-bottom:10px;}
+.sai-bar-lbl{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
+.sai-bar-val{font-size:1.05rem;font-weight:900;color:var(--text);}
+.rank-1 .sai-bar-val{color:var(--clubly-accent);}
+.sai-track{height:4px;background:var(--border);border-radius:4px;overflow:hidden;}
+.sai-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--clubly-accent),var(--clubly-gold));transition:width .9s cubic-bezier(.23,1,.32,1);}
+.sai-avail{display:flex;align-items:center;gap:7px;margin-top:10px;padding:8px 12px;border-radius:8px;font-size:.78rem;font-weight:700;}
+.sai-avail.yes{background:rgba(46,196,182,.08);border:1px solid rgba(46,196,182,.25);color:var(--clubly-teal);}
+.sai-avail.no{background:var(--bg);border:0.5px solid var(--border);color:var(--muted);}
+.sai-avail-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.sai-avail.yes .sai-avail-dot{background:var(--clubly-teal);box-shadow:0 0 5px var(--clubly-teal);animation:pulse2 2s infinite;}
+.sai-avail.no .sai-avail-dot{background:var(--muted);}
+.sai-facility{font-size:.75rem;opacity:.8;font-weight:500;}
+.sai-health-card{background:var(--card-bg);border:0.5px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;display:flex;align-items:center;gap:20px;}
+.sai-ring-wrap{position:relative;width:76px;height:76px;flex-shrink:0;}
+.sai-ring-wrap svg{position:absolute;top:0;left:0;transform:rotate(-90deg);}
+.sai-ring-score{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:900;color:var(--clubly-teal);}
+.sai-htag{background:var(--bg);border:0.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:.75rem;margin:3px;display:inline-block;}
+.sai-htag .k{color:var(--muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.5px;}
+.sai-htag .v{font-weight:700;color:var(--text);margin-top:1px;}
+.sai-sep{font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--clubly-accent);font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sai-sep::after{content:'';flex:1;height:1px;background:var(--border);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:.5}}
 /* Pagination for member portal */
 .pagination .page-link {
   color: var(--clubly-accent);
@@ -1021,6 +1094,10 @@ body {
       <i class="bi bi-robot"></i>
       <span>AI Assistant</span>
     </button>
+    <button class="sidebar-link" onclick="showPage('sports-ai')" id="sb-sports-ai" data-label="Sports AI">
+  <i class="bi bi-trophy"></i>
+  <span>AI Recommendation System</span>
+</button>
     <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile" data-label="Profile">
       <i class="bi bi-person-circle"></i>
       <span>Profile</span>
@@ -1731,7 +1808,78 @@ body {
         </div>
       </div>
     </div>
+<!-- ======== PAGE: SPORTS AI RECOMMENDER ======== -->
+<div class="page" id="page-sports-ai">
+  <div class="page-header-clubly">
+    <div>
+      <h1 class="page-title-clubly">🏆 Sports <span style="color:var(--clubly-accent)">AI</span> Recommender</h1>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:4px;">اكتشف الرياضة المناسبة لك بناءً على بياناتك الشخصية</p>
+    </div>
+    <span class="hybrid-pill">Hybrid AI Engine</span>
+  </div>
 
+  <div class="row g-3">
+    <!-- ===== LEFT: FORM ===== -->
+    <div class="col-lg-5">
+      <div class="content-card" style="position:sticky;top:80px;">
+
+        <div class="sai-sep">👤 بياناتك الشخصية</div>
+        <div class="row g-2 mb-3">
+          <div class="col-6"><label class="sai-label">العمر</label><input type="number" id="sai-age" class="sai-input" value="25" min="10" max="80"></div>
+          <div class="col-6"><label class="sai-label">الجنس</label><select id="sai-gender" class="sai-input"><option value="Male">ذكر</option><option value="Female">أنثى</option></select></div>
+          <div class="col-6"><label class="sai-label">الوزن (كجم)</label><input type="number" id="sai-weight" class="sai-input" value="75" min="30" max="200"></div>
+          <div class="col-6"><label class="sai-label">الطول (سم)</label><input type="number" id="sai-height" class="sai-input" value="175" min="100" max="230"></div>
+          <div class="col-12"><label class="sai-label">المشكلة الصحية</label><select id="sai-health" class="sai-input"><option value="None">لا يوجد</option><option value="Knee Pain">ألم الركبة</option><option value="Back Pain">ألم الظهر</option><option value="Asthma">الربو</option><option value="Heart Condition">مشكلة قلبية</option></select></div>
+        </div>
+
+        <div class="sai-sep">⚡ اللياقة وأسلوب الحياة</div>
+        <div class="row g-2 mb-3">
+          <div class="col-6"><label class="sai-label">مستوى النشاط</label><select id="sai-activity" class="sai-input"><option value="Sedentary">خامل</option><option value="Lightly Active">نشيط قليلاً</option><option value="Moderately Active" selected>نشيط معتدل</option><option value="Very Active">نشيط جداً</option></select></div>
+          <div class="col-6"><label class="sai-label">مستوى اللياقة</label><select id="sai-fitness" class="sai-input"><option value="Beginner">مبتدئ</option><option value="Intermediate" selected>متوسط</option><option value="Advanced">متقدم</option></select></div>
+          <div class="col-6"><label class="sai-label">الهدف</label><select id="sai-goal" class="sai-input"><option value="Get Fit">اللياقة البدنية</option><option value="Lose Weight">إنقاص الوزن</option><option value="Build Muscle">بناء العضلات</option><option value="Have Fun">الاستمتاع</option><option value="Reduce Stress">تقليل التوتر</option><option value="Compete Professionally" selected>المنافسة الاحترافية</option></select></div>
+          <div class="col-6"><label class="sai-label">الشخصية</label><select id="sai-personality" class="sai-input"><option value="Introvert">انطوائي</option><option value="Extrovert" selected>اجتماعي</option><option value="Ambivert">متوازن</option></select></div>
+          <div class="col-6"><label class="sai-label">ساعات / أسبوع</label><input type="number" id="sai-hours" class="sai-input" value="6" min="0.5" max="30" step="0.5"></div>
+          <div class="col-6"><label class="sai-label">الميزانية (جنيه/شهر)</label><input type="number" id="sai-budget" class="sai-input" value="50" min="0" max="500"></div>
+        </div>
+
+        <div class="d-flex gap-2 mb-3">
+          <div class="flex-1">
+            <div class="sai-label mb-1">يفضل الجماعية؟</div>
+            <div class="d-flex gap-2">
+              <button class="sai-tog active" id="tog-team-1" onclick="saiToggle('team',1,this)">نعم</button>
+              <button class="sai-tog" id="tog-team-0" onclick="saiToggle('team',0,this)">لا</button>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="sai-label mb-1">يفضل الخارج؟</div>
+            <div class="d-flex gap-2">
+              <button class="sai-tog" id="tog-out-1" onclick="saiToggle('outdoor',1,this)">نعم</button>
+              <button class="sai-tog active" id="tog-out-0" onclick="saiToggle('outdoor',0,this)">لا</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-clubly-primary w-100 justify-content-center"
+                style="padding:13px;font-size:1rem;border-radius:12px;"
+                onclick="saiSubmit()" id="sai-btn">
+          <i class="bi bi-lightning-charge-fill"></i>
+          <span id="sai-btn-text">احصل على توصياتي</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== RIGHT: RESULTS ===== -->
+    <div class="col-lg-7">
+      <div id="sai-results">
+        <div class="content-card text-center" style="padding:60px 30px;" id="sai-placeholder">
+          <div style="font-size:3.5rem;margin-bottom:14px;">🏆</div>
+          <div style="font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:8px;">اكتشف رياضتك المثالية</div>
+          <div style="color:var(--muted);font-size:.88rem;">أدخل بياناتك واضغط على الزر للحصول على توصيات مخصصة لك</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   </main>
 </div>
 
@@ -1837,7 +1985,57 @@ body {
   const API_BASE_URL = 'https://localhost:7132/api';
 const memberId = localStorage.getItem('userId');
 const memberName = localStorage.getItem('fullName') || 'Member';
-
+// ===== STATE =====
+const state = {
+  currentPage: 'dashboard',
+  calendar: { month: new Date().getMonth(), year: new Date().getFullYear() },
+  activityDates: [12, 15, 17, 18],
+  reservations: [
+    { name: "Zumba Class", date: "Dec 12, 2025", time: "5:00 PM", color: "#22c55e" },
+    { name: "Yoga Session", date: "Dec 12, 2025", time: "7:00 PM", color: "#3b82f6" },
+    { name: "Pilates Class", date: "Dec 15, 2025", time: "6:00 AM", color: "#9333ea" }
+  ],
+  scheduleDate: new Date(2023, 11, 11),
+  scheduleData: {
+    "2023-12-11": [
+      { id: 101, name: "Morning Yoga Practice", trainer: "Sara G.", location: "Studio A", time: "8:00 AM - 9:00 AM", status: "Confirmed", icon: "fas fa-clock", colorClass: "sched-blue" },
+      { id: 102, name: "Open Swimming Lane", location: "Olympic Pool | Lane 3", time: "10:30 AM - 11:30 AM", status: "Pending Approval", icon: "fas fa-tint", colorClass: "sched-orange" },
+      { id: 103, name: "Personal Training", trainer: "Mike T.", location: "Gym Floor", time: "3:00 PM - 4:00 PM", status: "Completed", icon: "fas fa-dumbbell", colorClass: "sched-gray" }
+    ],
+    "2023-12-12": [
+      { id: 201, name: "Cycling Class", trainer: "Ali K.", location: "Cycle Studio", time: "7:00 PM - 8:00 PM", status: "Confirmed", icon: "fas fa-bicycle", colorClass: "sched-blue" }
+    ],
+    "2023-12-10": [
+      { id: 301, name: "Evening Zumba", trainer: "Hana S.", location: "Main Hall", time: "7:00 PM - 8:00 PM", status: "Completed", icon: "fas fa-music", colorClass: "sched-gray" }
+    ]
+  },
+  notifications: [
+    { id: 1, message: "Yoga booking confirmed!", time: "5 minutes ago", type: "blue", icon: "fas fa-check-circle", isRead: false },
+    { id: 2, message: "One of your bookings has expired.", time: "2 hours ago", type: "red", icon: "fas fa-history", isRead: false },
+    { id: 3, message: "New personal training session added.", time: "Yesterday", type: "green", icon: "fas fa-plus", isRead: false },
+    { id: 4, message: "20% off all spa services this December!", time: "3 days ago", type: "green", icon: "fas fa-percent", isRead: true },
+    { id: 5, message: "Club closure notice on New Year's Day.", time: "4 days ago", type: "red", icon: "fas fa-exclamation-triangle", isRead: false },
+    { id: 6, message: "New Pilates instructor starting next week.", time: "5 days ago", type: "blue", icon: "fas fa-user-plus", isRead: true },
+    { id: 7, message: "Payment due reminder for next month.", time: "1 week ago", type: "yellow", icon: "fas fa-credit-card", isRead: false }
+  ],
+  membership: {
+    tier: "Platinum Tier",
+    status: "Active",
+    expiry: "12/25/2024",
+    id: "CBM-7890",
+    benefits: [
+      "Unlimited access to all fitness classes (Yoga, Pilates, etc.).",
+      "Two complimentary personal training sessions monthly.",
+      "15% discount on all spa and massage services.",
+      "Priority booking for events."
+    ],
+    payments: [
+      { type: "Annual Subscription", date: "12/25/2023", amount: "$1,200" },
+      { type: "Upgrade Fee", date: "11/10/2023", amount: "$50" },
+      { type: "Monthly Fee", date: "10/25/2022", amount: "$100" }
+    ]
+  }
+};
 // ── تحديث الاسم في الـ header والـ welcome
 document.addEventListener('DOMContentLoaded', async () => {
   // Header name
@@ -1921,57 +2119,7 @@ loadMembershipData();
 loadMemberNotifications(); 
 
 });
-// ===== STATE =====
-const state = {
-  currentPage: 'dashboard',
-  calendar: { month: new Date().getMonth(), year: new Date().getFullYear() },
-  activityDates: [12, 15, 17, 18],
-  reservations: [
-    { name: "Zumba Class", date: "Dec 12, 2025", time: "5:00 PM", color: "#22c55e" },
-    { name: "Yoga Session", date: "Dec 12, 2025", time: "7:00 PM", color: "#3b82f6" },
-    { name: "Pilates Class", date: "Dec 15, 2025", time: "6:00 AM", color: "#9333ea" }
-  ],
-  scheduleDate: new Date(2023, 11, 11),
-  scheduleData: {
-    "2023-12-11": [
-      { id: 101, name: "Morning Yoga Practice", trainer: "Sara G.", location: "Studio A", time: "8:00 AM - 9:00 AM", status: "Confirmed", icon: "fas fa-clock", colorClass: "sched-blue" },
-      { id: 102, name: "Open Swimming Lane", location: "Olympic Pool | Lane 3", time: "10:30 AM - 11:30 AM", status: "Pending Approval", icon: "fas fa-tint", colorClass: "sched-orange" },
-      { id: 103, name: "Personal Training", trainer: "Mike T.", location: "Gym Floor", time: "3:00 PM - 4:00 PM", status: "Completed", icon: "fas fa-dumbbell", colorClass: "sched-gray" }
-    ],
-    "2023-12-12": [
-      { id: 201, name: "Cycling Class", trainer: "Ali K.", location: "Cycle Studio", time: "7:00 PM - 8:00 PM", status: "Confirmed", icon: "fas fa-bicycle", colorClass: "sched-blue" }
-    ],
-    "2023-12-10": [
-      { id: 301, name: "Evening Zumba", trainer: "Hana S.", location: "Main Hall", time: "7:00 PM - 8:00 PM", status: "Completed", icon: "fas fa-music", colorClass: "sched-gray" }
-    ]
-  },
-  notifications: [
-    { id: 1, message: "Yoga booking confirmed!", time: "5 minutes ago", type: "blue", icon: "fas fa-check-circle", isRead: false },
-    { id: 2, message: "One of your bookings has expired.", time: "2 hours ago", type: "red", icon: "fas fa-history", isRead: false },
-    { id: 3, message: "New personal training session added.", time: "Yesterday", type: "green", icon: "fas fa-plus", isRead: false },
-    { id: 4, message: "20% off all spa services this December!", time: "3 days ago", type: "green", icon: "fas fa-percent", isRead: true },
-    { id: 5, message: "Club closure notice on New Year's Day.", time: "4 days ago", type: "red", icon: "fas fa-exclamation-triangle", isRead: false },
-    { id: 6, message: "New Pilates instructor starting next week.", time: "5 days ago", type: "blue", icon: "fas fa-user-plus", isRead: true },
-    { id: 7, message: "Payment due reminder for next month.", time: "1 week ago", type: "yellow", icon: "fas fa-credit-card", isRead: false }
-  ],
-  membership: {
-    tier: "Platinum Tier",
-    status: "Active",
-    expiry: "12/25/2024",
-    id: "CBM-7890",
-    benefits: [
-      "Unlimited access to all fitness classes (Yoga, Pilates, etc.).",
-      "Two complimentary personal training sessions monthly.",
-      "15% discount on all spa and massage services.",
-      "Priority booking for events."
-    ],
-    payments: [
-      { type: "Annual Subscription", date: "12/25/2023", amount: "$1,200" },
-      { type: "Upgrade Fee", date: "11/10/2023", amount: "$50" },
-      { type: "Monthly Fee", date: "10/25/2022", amount: "$100" }
-    ]
-  }
-};
+
 // ===== MEMBER BOOKING FILTERS =====
 let _memAllActivity = [];
 let _memAllFacility = [];
@@ -2423,34 +2571,41 @@ const _memberNotifPageSize = 8;
 
 
 
-function saveMemberReadState() {
-  localStorage.setItem(`memberReadNotifIds_${memberId}`, 
-    JSON.stringify([..._memberReadIds]));
+// وفي أول استخدام، حمّلها
+async function markMemberAsRead(id) {
+  const notif = _memberNotifs.find(n => n.id === id);
+  if (notif && !notif.isRead) {
+    notif.isRead = true;
+    updateMemberNotifUnreadCount();
+  }
+  try {
+    await fetch(`${NOTIF_API}/${id}/read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ memberId: parseInt(memberId) })
+    });
+  } catch(e) {
+    console.warn('markAsRead failed:', e);
+  }
 }
 
-// وعند التحميل:
-let _memberReadIds = new Set(
-  JSON.parse(
-    localStorage.getItem(`memberReadNotifIds_${memberId}`) || '[]'
-  ).map(String)
-);
-
-function markMemberAsRead(id) {
-  _memberReadIds.add(String(id)); // ← String()
-  saveMemberReadState();
+async function markAllMemberNotifsRead() {
+  _memberNotifs.forEach(n => n.isRead = true);
   updateMemberNotifUnreadCount();
-}
-
-function markAllMemberNotifsRead() {
-  _memberNotifs.forEach(n => _memberReadIds.add(String(n.id))); // ← String()
-  saveMemberReadState();
   renderMemberNotifList();
-  updateMemberNotifUnreadCount();
+  try {
+    await fetch(`${NOTIF_API}/mark-all-read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ memberId: parseInt(memberId) })
+    });
+  } catch(e) {
+    console.warn('markAllRead failed:', e);
+  }
 }
-
+// ✅ الكود الصح
 function updateMemberNotifUnreadCount() {
-  const unread = _memberNotifs.filter(n => !_memberReadIds.has(String(n.id))).length;
-  //                                                          ^^^^^^^^^^^^^^
+  const unread = _memberNotifs.filter(n => !n.isRead).length;
   const el = document.getElementById('memberNotifUnreadCount');
   if (el) {
     el.textContent = `${unread} unread`;
@@ -2461,7 +2616,6 @@ function updateMemberNotifUnreadCount() {
     el.style.padding  = '6px 14px';
   }
 }
-
 async function loadMemberNotifications() {
   const listEl = document.getElementById('memberNotifList');
   if (listEl) listEl.innerHTML = `
@@ -2470,20 +2624,17 @@ async function loadMemberNotifications() {
     </div>`;
 
   try {
-    const res  = await fetch(NOTIF_API);
-    const all  = res.ok ? await res.json() : [];
-
-    // فلتر: بس اللي فيها toMembers = true
-_memberNotifs = all.filter(n => n.toMembers === true || n.toMembers === 'true' || n.toMembers == 1);
+    // ← استخدم for-member زي الـ guest بالظبط
+    const res = await fetch(`${NOTIF_API}/for-member/${memberId}`);
+    const data = res.ok ? await res.json() : [];
+    _memberNotifs = data; // isRead بييجي من الـ DB
     _memberNotifs.sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
-
     updateMemberNotifUnreadCount();
     applyMemberNotifFilters();
   } catch(e) {
     if (listEl) listEl.innerHTML = `
       <div class="text-center py-5" style="color:#ef4444;">
-        <i class="bi bi-exclamation-circle" style="font-size:2rem;"></i>
-        <p class="mt-2">Failed to load notifications</p>
+        Failed to load notifications
       </div>`;
   }
 }
@@ -2497,7 +2648,7 @@ function applyMemberNotifFilters() {
     const matchQ  = !q || (n.title||'').toLowerCase().includes(q)
                        || (n.description||'').toLowerCase().includes(q);
     const matchT  = !type   || n.type === type;
-const isRead  = _memberReadIds.has(String(n.id));
+const isRead = n.isRead === true;
     const matchS  = !status
       || (status === 'unread' && !isRead)
       || (status === 'read'   &&  isRead);
@@ -2548,7 +2699,7 @@ function renderMemberNotifList() {
   };
 
   listEl.innerHTML = items.map(n => {
-const isRead = _memberReadIds.has(String(n.id));
+const isRead = n.isRead === true;
     const cfg    = typeConfig[n.type] || typeConfig['default'];
     const raw    = n.sentAt;
 const d = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
@@ -2950,11 +3101,9 @@ document.getElementById('passForm').addEventListener('submit', async e => {
 
 // وأضف الـ function
 function handleSignOut() {
-  // امسح بس بيانات الـ user مش الـ notifications
-  localStorage.removeItem('userId');
-  localStorage.removeItem('fullName');
+  localStorage.clear();
   sessionStorage.clear();
-  window.location.href = 'index.html';
+  window.location.href = '../BeforeSign/index.html';
 }
 async function loadMyBookings() {
   if (!memberId) return;
@@ -3417,28 +3566,50 @@ function renderMemAttRecords() {
   document.getElementById('memAttRecsCount').textContent =
     list.length ? list.length + ' record' + (list.length !== 1 ? 's' : '') : '';
   document.getElementById('memAttInfo').textContent =
-    _memAttRecords.length ? `${_memAttFiltered.length} of ${_memAttRecords.length} records` : '';
+    _memAttRecords.length
+      ? `${_memAttFiltered.length} of ${_memAttRecords.length} records`
+      : '';
 
   if (!list.length) {
     document.getElementById('memAttList').innerHTML = `
       <div style="text-align:center;padding:50px 20px;color:var(--muted);">
-        <i class="bi bi-calendar-x" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
+        <i class="bi bi-calendar-x" style="font-size:2.5rem;opacity:.3;
+           display:block;margin-bottom:10px;"></i>
         <p style="font-weight:700;">No records match this filter.</p>
       </div>`;
     return;
   }
 
   const statusConfig = {
-    present:  { label:'Present',    cls:'b-green',  icon:'bi-check-circle-fill' },
-    absent:   { label:'Absent',     cls:'b-red',    icon:'bi-x-circle-fill'     },
-    unmarked: { label:'Not Marked', cls:'b-gold',   icon:'bi-dash-circle'       },
+    present:  { label:'Present',    cls:'b-green', icon:'bi-check-circle-fill' },
+    absent:   { label:'Absent',     cls:'b-red',   icon:'bi-x-circle-fill'     },
+    unmarked: { label:'Not Marked', cls:'b-gold',  icon:'bi-dash-circle'       },
   };
 
-  document.getElementById('memAttList').innerHTML = list.map(r => {
-    const cfg = statusConfig[r.status] || statusConfig['unmarked'];
-    const d   = new Date(r.date);
+  // جيب الـ trainer من الـ group المختار
+  const currentGroup = _memAttGroups.find(
+    g => String(g.bookingId) === String(_memAttBookingId)
+  );
+  const hasTrainer = currentGroup && currentGroup.trainer &&
+                     currentGroup.trainer !== '—' &&
+                     currentGroup.trainer !== 'No Trainer';
+
+  document.getElementById('memAttList').innerHTML = list.map((r, idx) => {
+    const cfg     = statusConfig[r.status] || statusConfig['unmarked'];
+    const d       = new Date(r.date);
     const dateStr = isNaN(d) ? r.date
-      : d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+      : d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+
+    // زرار الـ Rating — بس للـ present records اللي فيها trainer
+    const rateBtn = (r.status === 'present' && hasTrainer)
+      ? `<button
+           class="rate-trainer-btn"
+           id="rateBtn_${idx}"
+           onclick="openRatingModal(${idx})"
+           style="margin-right:10px;">
+           <i class="bi bi-star-fill"></i> Rate Trainer
+         </button>`
+      : '';
 
     return `
       <div style="display:flex;align-items:center;gap:14px;padding:14px 20px;
@@ -3446,28 +3617,342 @@ function renderMemAttRecords() {
            onmouseover="this.style.background='rgba(0,0,0,.02)'"
            onmouseout="this.style.background='transparent'">
 
+        <!-- Date -->
         <div style="width:80px;flex-shrink:0;">
           <div style="font-weight:700;font-size:.88rem;color:var(--text);">${dateStr}</div>
           <div style="font-size:.75rem;color:var(--muted);">${r.weekday}</div>
         </div>
 
+        <!-- Time + notes -->
         <div style="flex:1;min-width:0;">
-          <div style="font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:4px;">
+          <div style="font-size:.85rem;color:var(--muted);
+                      display:flex;align-items:center;gap:4px;">
             <i class="bi bi-clock" style="font-size:.75rem;"></i>
-           ${formatTime12(r.startTime)}
-→
-${formatTime12(r.endTime)}
+            ${formatTime12(r.startTime)} → ${formatTime12(r.endTime)}
           </div>
-          ${r.notes ? `<div style="font-size:.78rem;color:var(--muted);margin-top:3px;">
-            <i class="bi bi-chat-left-text me-1"></i>${r.notes}
-          </div>` : ''}
+          ${r.notes
+            ? `<div style="font-size:.78rem;color:var(--muted);margin-top:3px;">
+                 <i class="bi bi-chat-left-text me-1"></i>${r.notes}
+               </div>`
+            : ''}
         </div>
 
-        <span class="badge-cl ${cfg.cls}" style="flex-shrink:0;">
-          <i class="bi ${cfg.icon} me-1"></i>${cfg.label}
-        </span>
+        <!-- Rate btn + Status badge -->
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+          ${rateBtn}
+          <span class="badge-cl ${cfg.cls}">
+            <i class="bi ${cfg.icon} me-1"></i>${cfg.label}
+          </span>
+        </div>
       </div>`;
   }).join('');
+
+  // بعد الرسم — تحقق من الـ ratings الموجودة
+  checkExistingRatings();
+}
+// ================================================================
+// SPORTS AI RECOMMENDER — JavaScript
+// ================================================================
+const SAI_API = 'https://mazinyaser0-sports-ai-recommendation-system.hf.space/api/recommend';
+const saiToggles = { team: 1, outdoor: 0 };
+
+function saiToggle(group, val, el) {
+  saiToggles[group] = val;
+  el.closest('.d-flex').querySelectorAll('.sai-tog').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function saiSel(id) { const s = document.getElementById(id); return s.options[s.selectedIndex].value; }
+
+async function saiSubmit() {
+  const btn = document.getElementById('sai-btn');
+  const btnTxt = document.getElementById('sai-btn-text');
+  btn.disabled = true;
+  btnTxt.textContent = 'جاري التحليل...';
+  document.getElementById('sai-placeholder') && (document.getElementById('sai-placeholder').style.display = 'none');
+
+  const payload = {
+    age: parseInt(document.getElementById('sai-age').value),
+    gender: saiSel('sai-gender'),
+    weight_kg: parseFloat(document.getElementById('sai-weight').value),
+    height_cm: parseFloat(document.getElementById('sai-height').value),
+    activity_level: saiSel('sai-activity'),
+    fitness_level: saiSel('sai-fitness'),
+    goal: saiSel('sai-goal'),
+    personality: saiSel('sai-personality'),
+    location: 'Urban',
+    hours_per_week: parseFloat(document.getElementById('sai-hours').value),
+    budget: parseFloat(document.getElementById('sai-budget').value),
+    health_issue: saiSel('sai-health'),
+    prefers_team: saiToggles.team,
+    prefers_outdoor: saiToggles.outdoor,
+    prefers_contact: 3, risk_tolerance: 3, competitive_level: 3,
+    coordination_level: 3, striking_preference: 3, grappling_preference: 2,
+    speed_agility: 3, endurance_level: 3, preferred_distance: 3,
+    top_n: 5
+  };
+
+  try {
+    const res = await fetch(SAI_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!res.ok) throw new Error('Server error ' + res.status);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    saiRenderResults(data);
+  } catch (err) {
+    document.getElementById('sai-results').innerHTML = `<div class="content-card text-center" style="padding:40px;"><div style="font-size:2rem;margin-bottom:12px;">⚠️</div><div style="color:var(--muted);">${err.message}</div></div>`;
+  } finally {
+    btn.disabled = false;
+    btnTxt.textContent = 'احصل على توصياتي';
+  }
+}
+
+function saiRenderResults(data) {
+  const h = data.health_assessment;
+  const recs = data.recommendations;
+  const circ = 2 * Math.PI * 32;
+  const dash = circ * (1 - h.health_score / 100);
+  const sc = h.health_score >= 70 ? 'var(--clubly-teal)' : h.health_score >= 45 ? 'var(--clubly-gold)' : '#ef4444';
+  const bmiC = { normal:'var(--clubly-teal)', underweight:'var(--clubly-gold)', overweight:'#f97316', obese:'#ef4444' };
+  const lbl = h.health_score >= 70 ? '— ممتاز' : h.health_score >= 45 ? '— مقبول' : '— يحتاج تحسين';
+
+  const healthHTML = `
+    <div class="sai-health-card">
+      <div class="sai-ring-wrap">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <circle cx="36" cy="36" r="32" fill="none" stroke="var(--border)" stroke-width="6"/>
+          <circle cx="36" cy="36" r="32" fill="none" stroke="${sc}" stroke-width="6"
+            stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${dash.toFixed(1)}" stroke-linecap="round"/>
+        </svg>
+        <div class="sai-ring-score" style="color:${sc}">${h.health_score}</div>
+      </div>
+      <div style="flex:1">
+        <div style="font-weight:900; font-size:.95rem; margin-bottom:8px; color:var(--text);">درجة الصحة <span style="color:${sc}">${lbl}</span></div>
+        <div>
+          <span class="sai-htag"><div class="k">BMI</div><div class="v" style="color:${bmiC[h.bmi_status]||'var(--text)'}">${h.bmi} — ${h.bmi_status.replace('_',' ')}</div></span>
+          <span class="sai-htag"><div class="k">الفئة</div><div class="v">${h.age_group}</div></span>
+          <span class="sai-htag"><div class="k">النشاط</div><div class="v">${h.activity_status.replace(/_/g,' ')}</div></span>
+          <span class="sai-htag"><div class="k">اللياقة</div><div class="v">${h.fitness_status}</div></span>
+        </div>
+        ${h.avoid_sports.length ? `<div style="margin-top:8px; font-size:.8rem; color:#ef4444; background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2); border-radius:8px; padding:6px 10px;">⚠️ تجنب: <strong>${h.avoid_sports.join(', ')}</strong></div>` : ''}
+        ${h.prefer_sports.length ? `<div style="margin-top:6px; font-size:.8rem; color:var(--clubly-teal); background:rgba(46,196,182,.08); border:1px solid rgba(46,196,182,.2); border-radius:8px; padding:6px 10px;">✅ موصى به: <strong>${h.prefer_sports.join(', ')}</strong></div>` : ''}
+      </div>
+    </div>`;
+
+  const maxScore = recs[0]?.score || 1;
+  const recsHTML = recs.map(r => {
+    const isAvail = r.available === true;
+    return `
+    <div class="sai-rec-card rank-${r.rank}" style="animation-delay:${r.rank * 0.08}s">
+      <div class="sai-rank">${String(r.rank).padStart(2,'0')}</div>
+      <span class="sai-emoji">${r.emoji}</span>
+      <div class="sai-sport-name">${r.sport}</div>
+      <div class="sai-pills">
+        <span class="sai-pill sai-pill-cat">${r.category}</span>
+        <span class="sai-pill sai-pill-int">${r.intensity}</span>
+        ${r.preferred ? '<span class="sai-pill sai-pill-pref">✓ موصى به</span>' : ''}
+      </div>
+      <div class="sai-bar-wrap">
+        <div class="sai-bar-lbl"><span>Match Score</span><span class="sai-bar-val">${r.score.toFixed(1)}%</span></div>
+        <div class="sai-track"><div class="sai-fill" style="width:${(r.score/maxScore*100).toFixed(1)}%"></div></div>
+      </div>
+      <div class="sai-avail ${isAvail ? 'yes' : 'no'}">
+        <div class="sai-avail-dot"></div>
+        <span>${isAvail ? 'متاحة في النادي' : 'غير متاحة'}</span>
+        ${isAvail && r.facility_name ? `<span class="sai-facility">· ${r.facility_name}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('sai-results').innerHTML = `
+    <div style="font-size:.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--clubly-accent); font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+      02 — تقييم الصحة <div style="flex:1; height:1px; background:var(--border);"></div>
+    </div>
+    ${healthHTML}
+    <div style="font-size:.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--clubly-accent); font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+      03 — الرياضات الموصى بها <div style="flex:1; height:1px; background:var(--border);"></div>
+    </div>
+    ${recsHTML}`;
+}
+// ===================================================
+// ============ TRAINER RATING SYSTEM ================
+// ===================================================
+const RATING_API = `${API_BASE_URL}/TrainerRatings`;
+
+let _currentRatingIdx      = null;  // index في _memAttFiltered
+let _selectedStarRating    = 0;
+const _starLabels = ['','Poor 😞','Fair 😐','Good 😊','Very Good 😃','Excellent 🤩'];
+
+function setStarRating(val) {
+  _selectedStarRating = val;
+  document.querySelectorAll('.star-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.val) <= val);
+  });
+  document.getElementById('starRatingLabel').textContent = _starLabels[val] || '';
+}
+
+async function checkExistingRatings() {
+  if (!memberId || !_memAttBookingId) return;
+
+  const presentIdxs = _memAttFiltered
+    .map((r, i) => r.status === 'present' ? i : null)
+    .filter(i => i !== null);
+
+  for (const idx of presentIdxs) {
+    const btn = document.getElementById(`rateBtn_${idx}`);
+    if (!btn) continue;
+
+    try {
+      const res = await fetch(
+        `${RATING_API}/check?memberId=${memberId}&bookingId=${_memAttBookingId}`
+      );
+      if (!res.ok) continue;
+      const data = await res.json();
+
+      if (data.hasRated) {
+        // عرض النجوم المعطاة
+        const stars = '⭐'.repeat(data.rating);
+        btn.disabled = true;
+        btn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Rated ${stars}`;
+        btn.title = data.comment
+          ? `Your comment: "${data.comment}"`
+          : 'You already rated this trainer';
+      }
+    } catch { /* skip */ }
+  }
+}
+
+async function openRatingModal(idx) {
+  _currentRatingIdx   = idx;
+  _selectedStarRating = 0;
+
+  // Reset UI
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('starRatingLabel').textContent = '';
+  document.getElementById('ratingComment').value = '';
+  document.getElementById('ratingMsg').innerHTML = '';
+  document.getElementById('submitRatingBtn').disabled = false;
+
+  // جيب بيانات الـ group
+  const group = _memAttGroups.find(
+    g => String(g.bookingId) === String(_memAttBookingId)
+  );
+
+  const trainerName = group?.trainer || 'Trainer';
+  const activity    = group?.activity || '—';
+  const initials    = trainerName.split(' ')
+    .slice(0, 2).map(w => w[0]?.toUpperCase() || '').join('');
+
+  document.getElementById('ratingTrainerName').textContent     = trainerName;
+  document.getElementById('ratingTrainerActivity').textContent = activity;
+  document.getElementById('ratingTrainerInitials').textContent = initials;
+  document.getElementById('ratingTrainerSubtitle').textContent =
+    `Session · ${_memAttFiltered[idx]?.date || ''}`;
+
+  // افتح الـ Modal
+  new bootstrap.Modal(document.getElementById('trainerRatingModal')).show();
+}
+
+async function submitTrainerRating() {
+  if (_selectedStarRating === 0) {
+    document.getElementById('ratingMsg').innerHTML =
+      `<div style="color:#ef4444;font-size:.85rem;font-weight:600;">
+         <i class="bi bi-exclamation-circle me-1"></i>Please select a star rating first.
+       </div>`;
+    return;
+  }
+
+  const group = _memAttGroups.find(
+    g => String(g.bookingId) === String(_memAttBookingId)
+  );
+
+  if (!group) {
+    document.getElementById('ratingMsg').innerHTML =
+      `<div style="color:#ef4444;font-size:.85rem;">Could not find group data.</div>`;
+    return;
+  }
+
+  // جيب trainerId من الـ booking
+  let trainerId = null;
+  try {
+    const bRes = await fetch(`${API_BASE_URL}/ActivityBookings/${_memAttBookingId}`);
+    if (bRes.ok) {
+      const booking = await bRes.json();
+      trainerId = booking.trainerId || null;
+    }
+  } catch { /* skip */ }
+
+  if (!trainerId) {
+    document.getElementById('ratingMsg').innerHTML =
+      `<div style="color:#ef4444;font-size:.85rem;">
+         <i class="bi bi-exclamation-circle me-1"></i>Trainer ID not found.
+       </div>`;
+    return;
+  }
+
+  const submitBtn = document.getElementById('submitRatingBtn');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span>Submitting...`;
+
+  const payload = {
+    trainerId:         trainerId,
+    memberId:          parseInt(memberId),
+    activityBookingId: parseInt(_memAttBookingId),
+    rating:            _selectedStarRating,
+    comment:           document.getElementById('ratingComment').value.trim() || null
+  };
+
+  try {
+    const res = await fetch(RATING_API, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+
+    if (res.status === 409) {
+      document.getElementById('ratingMsg').innerHTML =
+        `<div style="color:#f59e0b;font-size:.85rem;font-weight:600;">
+           <i class="bi bi-info-circle me-1"></i>
+           You have already rated this trainer for this booking.
+         </div>`;
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<i class="bi bi-star-fill"></i> Submit Rating`;
+      return;
+    }
+
+    if (!res.ok) throw new Error('Failed to submit rating.');
+
+    // نجاح ✓
+    document.getElementById('ratingMsg').innerHTML =
+      `<div style="background:rgba(34,197,94,.1);border:1px solid #22c55e;
+                   border-radius:8px;padding:10px;color:#16a34a;font-size:.88rem;">
+         <i class="bi bi-check-circle-fill me-1"></i>
+         Thank you! Your rating has been submitted successfully.
+       </div>`;
+
+    // حدّث الزرار في الـ list
+    const btn = document.getElementById(`rateBtn_${_currentRatingIdx}`);
+    if (btn) {
+      const stars = '⭐'.repeat(_selectedStarRating);
+      btn.disabled = true;
+      btn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Rated ${stars}`;
+    }
+
+    // أقفل الـ modal بعد ثانيتين
+    setTimeout(() => {
+      bootstrap.Modal.getInstance(
+        document.getElementById('trainerRatingModal')
+      )?.hide();
+      document.getElementById('ratingMsg').innerHTML = '';
+    }, 2000);
+
+  } catch (err) {
+    document.getElementById('ratingMsg').innerHTML =
+      `<div style="color:#ef4444;font-size:.85rem;">
+         <i class="bi bi-exclamation-circle me-1"></i>${err.message}
+       </div>`;
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = `<i class="bi bi-star-fill"></i> Submit Rating`;
+  }
 }
 // ===== INIT =====
 generateCalendar();
@@ -3476,5 +3961,83 @@ renderSchedule();
 renderMembership();
 
 </script>
+<!-- ===== TRAINER RATING MODAL ===== -->
+<div class="modal fade" id="trainerRatingModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-content-clubly">
+
+      <div style="background:#0d1b2a; border-radius:16px 16px 0 0;
+                  padding:18px 22px; display:flex; align-items:center; gap:12px;">
+        <div style="width:44px;height:44px;border-radius:50%;
+                    background:rgba(212,168,67,.15);color:var(--clubly-gold);
+                    display:flex;align-items:center;justify-content:center;font-size:20px;">
+          ⭐
+        </div>
+        <div style="flex:1;">
+          <h5 style="margin:0;font-weight:800;color:#fff;">Rate Your Trainer</h5>
+          <small style="color:rgba(255,255,255,.6);" id="ratingTrainerSubtitle">—</small>
+        </div>
+        <button data-bs-dismiss="modal"
+          style="background:none;border:none;color:rgba(255,255,255,.7);
+                 font-size:1.3rem;cursor:pointer;">✕</button>
+      </div>
+
+      <div class="modal-body-clubly">
+
+        <!-- Trainer Info -->
+        <div style="display:flex;align-items:center;gap:12px;padding:14px;
+                    background:var(--bg);border-radius:10px;border:1px solid var(--border);
+                    margin-bottom:18px;">
+          <div style="width:48px;height:48px;border-radius:50%;
+                      background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+                      display:flex;align-items:center;justify-content:center;
+                      font-size:1.2rem;font-weight:900;color:#fff;flex-shrink:0;"
+               id="ratingTrainerInitials">?</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);" id="ratingTrainerName">—</div>
+            <div style="font-size:.8rem;color:var(--muted);" id="ratingTrainerActivity">—</div>
+          </div>
+        </div>
+
+        <!-- Stars -->
+        <div style="text-align:center;margin-bottom:6px;">
+          <div style="font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:8px;">
+            How would you rate this trainer?
+          </div>
+          <div class="star-rating" id="starRatingContainer">
+            <button class="star-btn" data-val="1" onclick="setStarRating(1)">⭐</button>
+            <button class="star-btn" data-val="2" onclick="setStarRating(2)">⭐</button>
+            <button class="star-btn" data-val="3" onclick="setStarRating(3)">⭐</button>
+            <button class="star-btn" data-val="4" onclick="setStarRating(4)">⭐</button>
+            <button class="star-btn" data-val="5" onclick="setStarRating(5)">⭐</button>
+          </div>
+          <div id="starRatingLabel"
+            style="font-size:.9rem;font-weight:700;color:var(--clubly-gold);
+                   min-height:22px;margin-top:4px;"></div>
+        </div>
+
+        <!-- Comment -->
+        <div style="margin-top:14px;">
+          <label class="form-label-clubly">Comment (optional)</label>
+          <textarea id="ratingComment" class="form-control-clubly"
+            rows="3" placeholder="Share your experience with this trainer..."
+            style="resize:none;"></textarea>
+        </div>
+
+        <div id="ratingMsg" style="margin-top:10px;"></div>
+      </div>
+
+      <div class="modal-footer-clubly">
+        <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn-clubly-primary" id="submitRatingBtn"
+                onclick="submitTrainerRating()"
+                style="background:linear-gradient(135deg,var(--clubly-gold),#b8860b);">
+          <i class="bi bi-star-fill"></i> Submit Rating
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -512,6 +512,10 @@ textarea.form-input{resize:vertical;min-height:90px;}
   <i class="bi bi-person-check"></i>
   <span class="link-text">Attendance</span>
 </button>
+<button class="sidebar-link" onclick="showPage('ratings')" id="sb-ratings" data-label="Member Ratings">
+  <i class="bi bi-star-fill" style="color:var(--clubly-gold);"></i>
+  <span class="link-text">Member Ratings</span>
+</button>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Account</div>
     <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
@@ -543,42 +547,49 @@ textarea.form-input{resize:vertical;min-height:90px;}
 
       <!-- Stats -->
      <div class="row g-3 mb-4">
-  <div class="col-6 col-xl-2">
+<div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-orange"><i class="bi bi-calendar-check"></i></div>
       <div class="stat-label">Today's Sessions</div>
       <div class="stat-val" id="stat-today">—</div>
     </div>
   </div>
-  <div class="col-6 col-xl-2">
+<div class="col-6 col-xl">
     <div class="stat-card">
-      <div class="stat-icon si-teal"><i class="bi bi-people"></i></div>
+      <div class="stat-icon si-teal"><i class="bi bi-person-check"></i></div>
       <div class="stat-label">Active Members</div>
       <div class="stat-val" id="stat-members">—</div>
     </div>
   </div>
-  <div class="col-6 col-xl-2">
+<div class="col-6 col-xl">
+    <div class="stat-card">
+      <div class="stat-icon si-blue"><i class="bi bi-person"></i></div>
+      <div class="stat-label">Active Guests</div>
+      <div class="stat-val" id="stat-guests">—</div>
+    </div>
+  </div>
+<div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-gold"><i class="bi bi-star-fill"></i></div>
       <div class="stat-label">Rating</div>
       <div class="stat-val" id="stat-rating">—</div>
     </div>
   </div>
-  <div class="col-6 col-xl-2">
+<div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-blue"><i class="bi bi-receipt"></i></div>
       <div class="stat-label">Total Bookings</div>
       <div class="stat-val" id="stat-total">—</div>
     </div>
   </div>
-  <div class="col-6 col-xl-2">
+<div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-green"><i class="bi bi-check2-circle"></i></div>
       <div class="stat-label">Approved</div>
       <div class="stat-val" id="stat-approved">—</div>
     </div>
   </div>
-  <div class="col-6 col-xl-2">
+<div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-red"><i class="bi bi-clock"></i></div>
       <div class="stat-label">Pending</div>
@@ -608,6 +619,22 @@ textarea.form-input{resize:vertical;min-height:90px;}
           </div>
         </div>
       </div>
+      <!-- Member Ratings Section -->
+<div class="row g-3 mt-3">
+  <div class="col-12">
+    <div class="card-clubly">
+      <div class="card-title">
+        <span><i class="bi bi-star-fill me-2" style="color:var(--clubly-gold)"></i>Member Ratings</span>
+        <span style="font-size:.78rem;color:var(--muted);" id="ratingsSubtitle"></span>
+      </div>
+      <div id="trainerRatingsList">
+        <div style="text-align:center;padding:30px;color:var(--muted);">
+          <span class="spinner-border spinner-border-sm me-2"></span>Loading ratings...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
 
     <!-- ====== PAGE: SCHEDULE ====== -->
@@ -1063,6 +1090,62 @@ textarea.form-input{resize:vertical;min-height:90px;}
         </div>
       </div>
     </div>
+    <!-- ====== PAGE: RATINGS ====== -->
+<div class="page" id="page-ratings">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">
+        <i class="bi bi-star-fill me-2" style="color:var(--clubly-gold);"></i>Member Ratings
+      </h1>
+      <p class="page-subtitle" id="ratingsPageSubtitle">All reviews from your members</p>
+    </div>
+    <button class="btn-secondary-cl" onclick="loadRatingsPage()">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4" id="ratingsPageSummary"></div>
+
+  <!-- Filters -->
+  <div class="card-clubly mb-3" style="padding:14px 20px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <div class="search-bar" style="flex:1;min-width:200px;max-width:300px;">
+        <i class="bi bi-search" style="color:var(--muted);"></i>
+        <input type="text" id="ratingsSearch" placeholder="Search by member or comment..."
+          oninput="applyRatingsFilter()">
+      </div>
+      <select id="ratingsStarFilter" onchange="applyRatingsFilter()"
+        style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All Ratings</option>
+        <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+        <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+        <option value="3">⭐⭐⭐ 3 Stars</option>
+        <option value="2">⭐⭐ 2 Stars</option>
+        <option value="1">⭐ 1 Star</option>
+      </select>
+      <select id="ratingsActivityFilter" onchange="applyRatingsFilter()"
+        style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All Activities</option>
+      </select>
+      <small id="ratingsPageInfo" style="color:var(--muted);margin-left:auto;"></small>
+    </div>
+  </div>
+
+  <!-- Ratings List -->
+  <div class="card-clubly" style="padding:0;" id="ratingsPageList">
+    <div style="text-align:center;padding:60px;color:var(--muted);">
+      <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div style="display:flex;justify-content:center;margin-top:16px;">
+    <nav><ul class="pagination mb-0" id="ratingsPagination"></ul></nav>
+  </div>
+</div>
 <!-- ====== PAGE: ATTENDANCE ====== -->
 <div class="page" id="page-attendance">
   <div class="page-header">
@@ -1590,6 +1673,8 @@ function showPage(name) {
   const hn = document.getElementById('hn-' + name);
   if (hn) hn.classList.add('active');
   window.scrollTo({ top:0, behavior:'smooth' });
+    if (name === 'ratings') loadRatingsPage();
+
 }
 
 // ===== WEEK SCHEDULE (grid - بيستخدم الـ bookings الحقيقية) =====
@@ -1746,27 +1831,8 @@ let _trainerNotifsFiltered = [];
 let _trainerNotifPage = 1;
 const _trainerNotifPageSize = 8;
 
-const NOTIF_KEY = `trainerReadIds_${trainerId}`;
-let _trainerReadIds = new Set(
-  JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]').map(String)
-);
-
-function saveTrainerReadState() {
-  localStorage.setItem(NOTIF_KEY, JSON.stringify([..._trainerReadIds]));
-}
-function markTrainerAsRead(id) {
-  _trainerReadIds.add(String(id));
-  saveTrainerReadState();
-  updateTrainerUnreadBadge();
-}
-function markAllTrainerRead() {
-  _trainerNotifs.forEach(n => _trainerReadIds.add(String(n.id)));
-  saveTrainerReadState();
-  renderTrainerNotifList();
-  updateTrainerUnreadBadge();
-}
 function updateTrainerUnreadBadge() {
-  const unread = _trainerNotifs.filter(n => !_trainerReadIds.has(String(n.id))).length;
+  const unread = _trainerNotifs.filter(n => !n.isRead).length;
   const badge = document.getElementById('trainerUnreadBadge');
   if (badge) {
     badge.textContent = `${unread} unread`;
@@ -1774,6 +1840,33 @@ function updateTrainerUnreadBadge() {
     badge.style.color        = unread > 0 ? '#b45309' : 'var(--muted)';
     badge.style.borderColor  = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
   }
+}
+async function markTrainerAsRead(id) {
+  const notif = _trainerNotifs.find(n => n.id === id);
+  if (notif && !notif.isRead) {
+    notif.isRead = true;
+    updateTrainerUnreadBadge();
+  }
+  try {
+    await fetch(`${NOTIF_API_TRAINER}/${id}/read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ trainerId: parseInt(trainerId) })
+    });
+  } catch(e) { console.warn('Could not mark as read:', e); }
+}
+
+async function markAllTrainerRead() {
+  try {
+    await fetch(`${NOTIF_API_TRAINER}/mark-all-read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ trainerId: parseInt(trainerId) })
+    });
+  } catch(e) { console.warn('Could not mark all read:', e); }
+  _trainerNotifs.forEach(n => n.isRead = true);
+  renderTrainerNotifList();
+  updateTrainerUnreadBadge();
 }
 
 async function loadTrainerNotifications() {
@@ -1783,11 +1876,8 @@ async function loadTrainerNotifications() {
       <div class="spinner-border spinner-border-sm me-2"></div>Loading…
     </div>`;
   try {
-    const res = await fetch(NOTIF_API_TRAINER);
-    const all = res.ok ? await res.json() : [];
-    _trainerNotifs = all
-      .filter(n => n.toTrainers === true || n.toTrainers === 'true' || n.toTrainers == 1)
-      .sort((a,b) => new Date(b.sentAt) - new Date(a.sentAt));
+    const res = await fetch(`${NOTIF_API_TRAINER}/for-trainer/${trainerId}`);
+    _trainerNotifs = res.ok ? await res.json() : [];
     updateTrainerUnreadBadge();
     applyTrainerNotifFilters();
   } catch(e) {
@@ -1804,10 +1894,13 @@ function applyTrainerNotifFilters() {
   const type   = document.getElementById('trainerNotifType')?.value||'';
   const status = document.getElementById('trainerNotifStatus')?.value||'';
   _trainerNotifsFiltered = _trainerNotifs.filter(n => {
-    const matchQ = !q || (n.title||'').toLowerCase().includes(q) || (n.description||'').toLowerCase().includes(q);
+    const matchQ = !q || (n.title||'').toLowerCase().includes(q) 
+                      || (n.description||'').toLowerCase().includes(q);
     const matchT = !type || n.type === type;
-    const isRead = _trainerReadIds.has(String(n.id));
-    const matchS = !status || (status==='unread'&&!isRead) || (status==='read'&&isRead);
+    const isRead = n.isRead === true;
+    const matchS = !status 
+      || (status==='unread' && !isRead) 
+      || (status==='read'   &&  isRead);
     return matchQ && matchT && matchS;
   });
   _trainerNotifPage = 1;
@@ -1849,7 +1942,7 @@ function renderTrainerNotifList() {
   const typeLabels = { 'Info':'ℹ Info','Warning':'⚠ Warning','Success':'✓ Success','Urgent':'🔴 Urgent' };
 
   listEl.innerHTML = items.map(n => {
-    const isRead = _trainerReadIds.has(String(n.id));
+const isRead = n.isRead === true;
     const cfg    = nTypeConfig[n.type] || nTypeConfig['default'];
 const d = n.sentAt 
   ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
@@ -1945,11 +2038,11 @@ function buildTrainerNotifPagination(totalPages) {
   ul.appendChild(li('»', _trainerNotifPage===totalPages, ()=>{ _trainerNotifPage=totalPages; renderTrainerNotifList(); }));
 }
 
-function openTrainerNotifDetail(id) {
+async function openTrainerNotifDetail(id) {
   const n = _trainerNotifs.find(x => x.id === id);
   if (!n) return;
-  markTrainerAsRead(id);
-  renderTrainerNotifList();
+await markTrainerAsRead(id);
+renderTrainerNotifList();
 
   const nTypeConfig = {
     'Info':    { bg:'rgba(13,202,240,.15)',  color:'#0dcaf0', icon:'bi-info-circle-fill' },
@@ -2093,15 +2186,7 @@ document.getElementById('profileImgInput').addEventListener('change', function()
 
 // ===== SIGN OUT =====
 function handleSignOut() {
-  const keysToKeep = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('trainerReadIds_')) {
-      keysToKeep[key] = localStorage.getItem(key);
-    }
-  }
   localStorage.clear();
-  Object.entries(keysToKeep).forEach(([k, v]) => localStorage.setItem(k, v));
   window.location.href = '../BeforeSign/index.html';
 }
 
@@ -2218,12 +2303,17 @@ function renderTrainerDashboard() {
   const todayBookings = _allBookings.filter(b => (b.startDate||'').split('T')[0] === today);
   const approved      = _allBookings.filter(b=>(b.status||'').toLowerCase()==='approved').length;
   const pending       = _allBookings.filter(b=>(b.status||'').toLowerCase()==='pending').length;
-  const uniqueMembers = new Set(_allBookings.map(b=>b.memberId)).size;
-
+const uniqueMembers = new Set(
+  _allBookings.filter(b => b._bookingType === 'Member').map(b => b.memberId).filter(Boolean)
+).size;
+const uniqueGuests = new Set(
+  _allBookings.filter(b => b._bookingType === 'Guest').map(b => b.guestId).filter(Boolean)
+).size;
   const stats = document.querySelectorAll('.stat-val');
- document.getElementById('stat-today').textContent    = todayBookings.length;
+document.getElementById('stat-today').textContent    = todayBookings.length;
 document.getElementById('stat-members').textContent  = uniqueMembers;
-document.getElementById('stat-rating').innerHTML     = '— <span class="stat-unit">/5</span>';
+document.getElementById('stat-guests').textContent   = uniqueGuests;
+loadTrainerRatings(); // سيتم تحديث stat-rating من الـ function
 document.getElementById('stat-total').textContent    = _allBookings.length;
 document.getElementById('stat-approved').textContent = approved;
 document.getElementById('stat-pending').textContent  = pending;
@@ -3211,6 +3301,313 @@ async function openMemberHistory(bookingId) {
       : `<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);">No records yet.</td></tr>`;
     new bootstrap.Modal(document.getElementById('memberHistoryModal')).show();
   } catch { showTrainerGroupToast('Failed to load history.', 'error'); }
+}
+// ===== TRAINER RATINGS =====
+async function loadTrainerRatings() {
+  if (!trainerId) return;
+  try {
+const res = await fetch(`${API}/TrainerRatings/trainer/${trainerId}`);
+    if (!res.ok) throw new Error();
+
+    // حساب الـ average
+  const data = await res.json();
+const ratings = data.ratings || [];
+const avg = data.averageRating;
+const total = data.totalRatings;
+
+    // حدّث الـ stat card
+    const statEl = document.getElementById('stat-rating');
+    if (statEl) {
+      statEl.innerHTML = avg
+        ? `${avg} <span class="stat-unit">/5</span>`
+        : `— <span class="stat-unit">/5</span>`;
+    }
+
+    // الـ subtitle
+    const sub = document.getElementById('ratingsSubtitle');
+    if (sub) sub.textContent = `${total} review${total !== 1 ? 's' : ''} · avg ${avg ?? '—'}/5`;
+
+    // عرض الـ list
+    const listEl = document.getElementById('trainerRatingsList');
+    if (!listEl) return;
+
+    if (!ratings.length) {
+      listEl.innerHTML = `
+        <div style="text-align:center;padding:40px;color:var(--muted);">
+          <i class="bi bi-star" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
+          <p style="font-weight:700;">No ratings yet from members.</p>
+        </div>`;
+      return;
+    }
+
+    const starsHtml = n =>
+      Array.from({length:5}, (_,i) =>
+        `<i class="bi bi-star${i < n ? '-fill' : ''}" style="color:${i < n ? 'var(--clubly-gold)' : 'var(--border)'};font-size:.9rem;"></i>`
+      ).join('');
+
+    listEl.innerHTML = ratings.slice(0, 10).map((r, i) => {
+      const name     = r.memberName || 'Member';
+      const initials = name.split(' ').slice(0,2).map(w => w[0]?.toUpperCase()||'').join('');
+      const color    = AVATAR_COLORS[i % AVATAR_COLORS.length];
+      const d        = r.createdAt ? new Date(r.createdAt.endsWith('Z') ? r.createdAt : r.createdAt + 'Z') : null;
+      const dateStr  = d
+        ? d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'})
+        : '—';
+
+      return `
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 0;
+                    border-bottom:1px solid var(--border);"
+             onmouseover="this.style.background='rgba(0,0,0,.02)'"
+             onmouseout="this.style.background='transparent'">
+          <div style="width:42px;height:42px;border-radius:50%;background:${color};
+                      display:flex;align-items:center;justify-content:center;
+                      color:#fff;font-weight:800;font-size:.85rem;flex-shrink:0;">
+            ${initials}
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:.9rem;color:var(--text);">${name}</div>
+         <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">
+  ${r.activityName || '—'}
+  ${r.groupName ? `<span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);padding:2px 8px;border-radius:8px;font-size:.72rem;font-weight:700;margin:0 4px;">${r.groupName}</span>` : ''}
+  · ${dateStr}
+</div>        
+            ${r.comment
+              ? `<div style="font-size:.82rem;color:var(--text);margin-top:5px;
+                             background:var(--bg);padding:6px 10px;border-radius:8px;
+                             border-left:3px solid var(--clubly-gold);
+                             font-style:italic;">
+                   "${r.comment}"
+                 </div>`
+              : ''}
+          </div>
+          <div style="text-align:center;flex-shrink:0;">
+            <div style="font-size:1.3rem;font-weight:900;color:var(--clubly-gold);">
+              ${r.rating || '—'}
+            </div>
+            <div>${starsHtml(r.rating || 0)}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+  } catch(e) {
+    const listEl = document.getElementById('trainerRatingsList');
+    if (listEl) listEl.innerHTML = `
+      <div style="text-align:center;padding:30px;color:var(--muted);">
+        <i class="bi bi-star" style="font-size:2rem;opacity:.3;display:block;margin-bottom:8px;"></i>
+        <p>Could not load ratings.</p>
+      </div>`;
+    console.warn('Ratings load failed:', e);
+  }
+}
+// ===== RATINGS PAGE =====
+let _allRatingsData   = [];
+let _filteredRatings  = [];
+let _ratingsPage      = 1;
+const _ratingsPerPage = 10;
+
+async function loadRatingsPage() {
+  if (!trainerId) return;
+
+  const listEl = document.getElementById('ratingsPageList');
+  if (listEl) listEl.innerHTML = `
+    <div style="text-align:center;padding:60px;color:var(--muted);">
+      <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+    </div>`;
+
+  try {
+    const res  = await fetch(`${API}/TrainerRatings/trainer/${trainerId}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+
+    _allRatingsData = data.ratings || [];
+    const avg       = data.averageRating ?? 0;
+    const total     = data.totalRatings  ?? 0;
+
+    // Subtitle
+    const sub = document.getElementById('ratingsPageSubtitle');
+    if (sub) sub.textContent = `${total} review${total !== 1 ? 's' : ''} · Average ${avg}/5`;
+
+    // Summary cards
+    const fiveStars  = _allRatingsData.filter(r => r.rating === 5).length;
+    const fourPlus   = _allRatingsData.filter(r => r.rating >= 4).length;
+    const withComment = _allRatingsData.filter(r => r.comment?.trim()).length;
+
+    document.getElementById('ratingsPageSummary').innerHTML = [
+      { label:'Total Reviews',    val: total,       icon:'bi-chat-square-text-fill', color:'var(--clubly-accent)' },
+      { label:'Average Rating',   val: avg + ' / 5',icon:'bi-star-fill',             color:'var(--clubly-gold)'   },
+      { label:'5-Star Reviews',   val: fiveStars,   icon:'bi-award-fill',            color:'#22c55e'              },
+      { label:'4★ and Above',    val: fourPlus,    icon:'bi-hand-thumbs-up-fill',   color:'#3b82f6'              },
+      { label:'With Comments',    val: withComment, icon:'bi-chat-left-text-fill',   color:'#9333ea'              },
+    ].map(item => `
+      <div class="col-6 col-xl">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:${item.color}18;color:${item.color};">
+            <i class="bi ${item.icon}"></i>
+          </div>
+          <div class="stat-label">${item.label}</div>
+          <div class="stat-val" style="font-size:1.6rem;color:${item.color};">${item.val}</div>
+        </div>
+      </div>`).join('');
+
+    // Populate activity filter
+    const actSel = document.getElementById('ratingsActivityFilter');
+    const uniqueActivities = [...new Set(
+      _allRatingsData.map(r => r.activityName).filter(Boolean)
+    )];
+    actSel.innerHTML = '<option value="">All Activities</option>' +
+      uniqueActivities.map(a => `<option value="${a}">${a}</option>`).join('');
+
+    applyRatingsFilter();
+
+  } catch(e) {
+    if (listEl) listEl.innerHTML = `
+      <div style="text-align:center;padding:60px;color:#ef4444;">
+        <i class="bi bi-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:10px;"></i>
+        <p>Could not load ratings.</p>
+      </div>`;
+  }
+}
+
+function applyRatingsFilter() {
+  const q    = (document.getElementById('ratingsSearch')?.value || '').toLowerCase();
+  const star = document.getElementById('ratingsStarFilter')?.value || '';
+  const act  = document.getElementById('ratingsActivityFilter')?.value || '';
+
+  _filteredRatings = _allRatingsData.filter(r => {
+    const matchQ = !q
+      || (r.memberName || '').toLowerCase().includes(q)
+      || (r.comment    || '').toLowerCase().includes(q);
+    const matchS = !star || String(r.rating) === star;
+    const matchA = !act  || r.activityName  === act;
+    return matchQ && matchS && matchA;
+  });
+
+  _ratingsPage = 1;
+  renderRatingsPage();
+}
+
+function renderRatingsPage() {
+  const listEl = document.getElementById('ratingsPageList');
+  if (!listEl) return;
+
+  const total      = _filteredRatings.length;
+  const totalPages = Math.max(1, Math.ceil(total / _ratingsPerPage));
+  if (_ratingsPage > totalPages) _ratingsPage = totalPages;
+
+  const start = (_ratingsPage - 1) * _ratingsPerPage;
+  const items = _filteredRatings.slice(start, start + _ratingsPerPage);
+
+  const infoEl = document.getElementById('ratingsPageInfo');
+  if (infoEl) infoEl.textContent = total
+    ? `Showing ${start+1}–${Math.min(start+_ratingsPerPage, total)} of ${total}` : '';
+
+  if (!items.length) {
+    listEl.innerHTML = `
+      <div style="text-align:center;padding:80px 20px;color:var(--muted);">
+        <i class="bi bi-star-slash" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;font-size:1rem;color:var(--text);">No ratings found</p>
+        <p style="font-size:.88rem;">Try adjusting your filters</p>
+      </div>`;
+    document.getElementById('ratingsPagination').innerHTML = '';
+    return;
+  }
+
+  const starsHtml = n =>
+    Array.from({length:5}, (_, i) =>
+      `<i class="bi bi-star${i < n ? '-fill' : ''}"
+          style="color:${i < n ? 'var(--clubly-gold)' : 'var(--border)'};font-size:.95rem;"></i>`
+    ).join('');
+
+  const ratingColor = n =>
+    n >= 4 ? '#22c55e' : n >= 3 ? 'var(--clubly-gold)' : '#ef4444';
+
+  listEl.innerHTML = items.map((r, i) => {
+    const name     = r.memberName || 'Member';
+    const initials = name.split(' ').slice(0,2).map(w => w[0]?.toUpperCase()||'').join('');
+    const color    = AVATAR_COLORS[(start + i) % AVATAR_COLORS.length];
+    const d        = r.createdAt
+      ? new Date(r.createdAt.endsWith('Z') ? r.createdAt : r.createdAt + 'Z') : null;
+    const dateStr  = d
+      ? d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'}) : '—';
+
+    return `
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:20px 24px;
+                  border-bottom:1px solid var(--border);transition:background .15s;"
+           onmouseover="this.style.background='rgba(232,93,47,.02)'"
+           onmouseout="this.style.background='transparent'">
+
+        <!-- Avatar -->
+        <div style="width:46px;height:46px;border-radius:50%;background:${color};
+                    display:flex;align-items:center;justify-content:center;
+                    color:#fff;font-weight:800;font-size:.9rem;flex-shrink:0;margin-top:2px;">
+          ${initials}
+        </div>
+
+        <!-- Content -->
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;
+                      flex-wrap:wrap;gap:8px;margin-bottom:6px;">
+            <div>
+              <span style="font-weight:800;font-size:.95rem;color:var(--text);">${name}</span>
+              <span style="font-size:.75rem;color:var(--muted);margin-left:10px;">
+                <i class="bi bi-clock me-1"></i>${dateStr}
+              </span>
+            </div>
+            <!-- Stars + Number -->
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div>${starsHtml(r.rating || 0)}</div>
+              <span style="font-size:1.4rem;font-weight:900;color:${ratingColor(r.rating)};">
+                ${r.rating || '—'}
+              </span>
+            </div>
+          </div>
+
+          <!-- Activity + Group tags -->
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+            ${r.activityName ? `
+              <span style="background:rgba(232,93,47,.1);color:var(--clubly-accent);
+                           padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;">
+                <i class="bi bi-lightning-fill me-1"></i>${r.activityName}
+              </span>` : ''}
+            ${r.groupName ? `
+              <span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                           padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;">
+                <i class="bi bi-people-fill me-1"></i>${r.groupName}
+              </span>` : ''}
+          </div>
+
+          <!-- Comment -->
+          ${r.comment ? `
+            <div style="background:var(--bg);border-left:3px solid var(--clubly-gold);
+                        border-radius:0 8px 8px 0;padding:10px 14px;
+                        font-size:.88rem;color:var(--text);font-style:italic;line-height:1.6;">
+              <i class="bi bi-quote me-1" style="color:var(--clubly-gold);"></i>
+              ${r.comment}
+            </div>` : `
+            <div style="font-size:.82rem;color:var(--muted);font-style:italic;">
+              No comment provided
+            </div>`}
+        </div>
+      </div>`;
+  }).join('');
+
+  // Pagination
+  const ul = document.getElementById('ratingsPagination');
+  ul.innerHTML = '';
+  if (totalPages > 1) {
+    const li = (label, disabled, fn, active=false) => {
+      const el = document.createElement('li');
+      el.className = 'page-item'+(disabled?' disabled':'')+(active?' active':'');
+      el.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+      if (!disabled) el.onclick = e => { e.preventDefault(); fn(); };
+      return el;
+    };
+    ul.appendChild(li('«', _ratingsPage===1, ()=>{ _ratingsPage=1; renderRatingsPage(); }));
+    const s=Math.max(1,_ratingsPage-2), e=Math.min(totalPages,_ratingsPage+2);
+    for (let p=s; p<=e; p++)
+      ul.appendChild(li(p, false, ()=>{ _ratingsPage=p; renderRatingsPage(); }, p===_ratingsPage));
+    ul.appendChild(li('»', _ratingsPage===totalPages, ()=>{ _ratingsPage=totalPages; renderRatingsPage(); }));
+  }
 }
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {

@@ -907,6 +907,10 @@ body {
       <i class="bi bi-person-badge-fill"></i>
       <span class="link-text">Trainers</span>
     </a>
+    <a class="sidebar-link" onclick="showPage('trainer-ratings')" data-label="Trainer Ratings">
+  <i class="bi bi-star-fill"></i>
+  <span class="link-text">Trainer Ratings</span>
+</a>
     <a class="sidebar-link" onclick="showPage('membership')" data-label="Memberships">
       <i class="bi bi-card-checklist"></i>
       <span class="link-text">Memberships</span>
@@ -1185,7 +1189,79 @@ body {
       </div>
       <div class="position-fixed bottom-0 end-0 p-3" style="z-index:12000"><div id="toastContainer_t" class="toast-container"></div></div>
     </div>
+<!-- =============================== TRAINER RATINGS =============================== -->
+<div class="page" id="page-trainer-ratings">
+  <div class="page-header">
+    <div>
+      <h2 class="fw-bold m-0">
+        <i class="bi bi-star-fill me-2" style="color:var(--clubly-gold)"></i>Trainer Ratings
+      </h2>
+      <small class="text-muted">Member reviews and ratings for all trainers</small>
+    </div>
+    <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="loadTrainerRatingsAdmin()">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </div>
 
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4" id="trainerRatingsSummary"></div>
+
+  <!-- Filters -->
+  <div class="clubly-card p-3 mb-3">
+    <div class="row g-2 align-items-center controls">
+      <div class="col-auto">
+        <input id="ratingSearchTrainer" class="form-control" placeholder="Search by trainer or member..."
+          style="width:260px" oninput="applyRatingFilters()">
+      </div>
+      <div class="col-auto">
+        <select id="ratingFilterTrainer" class="form-select" style="width:200px" onchange="applyRatingFilters()">
+          <option value="">All Trainers</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <select id="ratingFilterStars" class="form-select" style="width:140px" onchange="applyRatingFilters()">
+          <option value="">All Ratings</option>
+          <option value="5">⭐⭐⭐⭐⭐ 5</option>
+          <option value="4">⭐⭐⭐⭐ 4</option>
+          <option value="3">⭐⭐⭐ 3</option>
+          <option value="2">⭐⭐ 2</option>
+          <option value="1">⭐ 1</option>
+        </select>
+      </div>
+      <div class="col-auto ms-auto">
+        <small class="text-muted" id="ratingInfo"></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="clubly-card p-0">
+    <div class="table-scroll">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Trainer</th>
+            <th>Member</th>
+            <th>Activity</th>
+            <th>Group</th>
+            <th class="text-center">Rating</th>
+            <th>Comment</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="trainerRatingsTable">
+          <tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center p-3 border-top">
+      <small id="ratingItemsInfo" class="text-muted"></small>
+      <nav><ul class="pagination mb-0" id="ratingPagination"></ul></nav>
+    </div>
+  </div>
+</div>
     <!-- =============================== FACILITY CATEGORIES =============================== -->
     <div class="page" id="page-category">
       <div class="page-header">
@@ -2831,7 +2907,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
-const pages = ['main','member','trainer','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs'];function showPage(name) {
+const pages = ['main','member','trainer','trainer-ratings','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs'];function showPage(name) {
   pages.forEach(p => {
     document.getElementById('page-' + p)?.classList.remove('active');
     const nav = document.getElementById('nav-' + p);
@@ -3392,6 +3468,11 @@ document.addEventListener('change', function(e) {
     document.getElementById(dayId).value = day;
   }
 });
+// Add this near the top of your script (after the helpers section)
+const AVATAR_COLORS = [
+  '#e85d2f','#2ec4b6','#d4a843','#3b82f6','#22c55e',
+  '#8b5cf6','#ef4444','#f59e0b','#06b6d4','#ec4899'
+];
 function getSlots(containerId) {
   return [...document.getElementById(containerId).querySelectorAll('.slot-row')]
     .map(row => ({
@@ -4202,37 +4283,16 @@ document.getElementById('notifSearchInput')?.addEventListener('input', () => {
 // ============== MY NOTIFICATIONS INBOX =============
 // ===================================================
 const myNotifApi = 'https://localhost:7132/api/Notifications';
-
-// Read state stored in localStorage
-let _readNotifIds = new Set(
-  JSON.parse(localStorage.getItem('readNotifIds') || '[]')
-);
+const adminId = localStorage.getItem('userId');
 
 let _myNotifs         = [];
 let _myNotifsFiltered = [];
 let _myNotifPage      = 1;
 const _myNotifPageSize = 10;
 
-function saveReadState() {
-  localStorage.setItem('readNotifIds', JSON.stringify([..._readNotifIds]));
-}
-
-function markAsRead(id) {
-  _readNotifIds.add(id);
-  saveReadState();
-  updateBellBadge();
-}
-
-function markAllMyNotifsRead() {
-  _myNotifs.forEach(n => _readNotifIds.add(n.id));
-  saveReadState();
-  updateBellBadge();
-  renderMyNotifList();
-  updateMyNotifUnreadCount();
-}
-
+// ✅ IsRead من الـ DB مباشرة — مش localStorage
 function updateBellBadge() {
-  const unread = _myNotifs.filter(n => n.toAdmins && !_readNotifIds.has(n.id)).length;
+  const unread = _myNotifs.filter(n => !n.isRead).length;
   const badge  = document.getElementById('notifBellBadge');
   if (!badge) return;
   if (unread > 0) {
@@ -4244,12 +4304,51 @@ function updateBellBadge() {
 }
 
 function updateMyNotifUnreadCount() {
-  const unread = _myNotifs.filter(n => n.toAdmins && !_readNotifIds.has(n.id)).length;
+  const unread = _myNotifs.filter(n => !n.isRead).length;
   const el = document.getElementById('myNotifUnreadCount');
   if (el) {
     el.textContent = `${unread} unread`;
     el.className = `badge rounded-pill px-3 py-2 ${unread > 0 ? 'bg-danger' : 'bg-secondary'}`;
     el.style.fontSize = '.85rem';
+  }
+}
+
+async function markAsRead(id) {
+  // حدّث locally فوراً
+  const notif = _myNotifs.find(n => n.id === id);
+  if (notif && !notif.isRead) {
+    notif.isRead = true;
+    updateBellBadge();
+    updateMyNotifUnreadCount();
+  }
+  // POST للـ API
+  try {
+    await fetch(`${myNotifApi}/${id}/read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: parseInt(adminId) })
+    });
+  } catch(e) {
+    console.warn('Could not mark notification as read:', e);
+  }
+}
+
+async function markAllMyNotifsRead() {
+  // حدّث locally
+  _myNotifs.forEach(n => n.isRead = true);
+  updateBellBadge();
+  updateMyNotifUnreadCount();
+  renderMyNotifList();
+
+  // POST للـ API
+  try {
+    await fetch(`${myNotifApi}/mark-all-read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminId: parseInt(adminId) })
+    });
+  } catch(e) {
+    console.warn('Could not mark all as read:', e);
   }
 }
 
@@ -4259,17 +4358,24 @@ async function loadMyNotifications() {
     '<div class="text-center py-5 text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Loading...</div>';
 
   try {
-    const res = await fetch(myNotifApi);
+    // ✅ استخدم for-admin endpoint اللي بيجيب isRead من الـ DB
+    const url = adminId
+      ? `${myNotifApi}/for-admin/${adminId}`
+      : myNotifApi;
+
+    const res = await fetch(url);
     const all = res.ok ? await res.json() : [];
 
-    // فلتر: بس اللي فيها toAdmins = true
-    _myNotifs = all.filter(n => n.toAdmins === true);
+    _myNotifs = adminId
+      ? all  // for-admin بيرجع بس الـ admin notifications مع isRead
+      : all.filter(n => n.toAdmins === true);
+
     _myNotifs.sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
 
     updateBellBadge();
     updateMyNotifUnreadCount();
     applyMyNotifFilters();
-  } catch (e) {
+  } catch(e) {
     if (listEl) listEl.innerHTML =
       '<div class="text-center py-5 text-danger">Failed to load notifications</div>';
   }
@@ -4281,10 +4387,13 @@ function applyMyNotifFilters() {
   const status = document.getElementById('myNotifFilterStatus')?.value || '';
 
   _myNotifsFiltered = _myNotifs.filter(n => {
-    const matchQ  = !q      || (n.title||'').toLowerCase().includes(q) || (n.description||'').toLowerCase().includes(q);
+    const matchQ  = !q      || (n.title||'').toLowerCase().includes(q)
+                             || (n.description||'').toLowerCase().includes(q);
     const matchT  = !type   || n.type === type;
-    const isRead  = _readNotifIds.has(n.id);
-    const matchS  = !status || (status === 'unread' && !isRead) || (status === 'read' && isRead);
+    // ✅ isRead من الـ object (DB)
+    const matchS  = !status
+      || (status === 'unread' && !n.isRead)
+      || (status === 'read'   &&  n.isRead);
     return matchQ && matchT && matchS;
   });
 
@@ -4304,15 +4413,12 @@ function renderMyNotifList() {
 
   const infoEl = document.getElementById('myNotifInfo');
   if (infoEl) infoEl.textContent = total
-    ? `Showing ${start+1}–${Math.min(start+_myNotifPageSize, total)} of ${total}`
-    : '';
+    ? `Showing ${start+1}–${Math.min(start+_myNotifPageSize, total)} of ${total}` : '';
 
   if (!items.length) {
     listEl.innerHTML = `
       <div class="notif-empty">
-        <div class="notif-empty-icon">
-          <i class="bi bi-bell-slash"></i>
-        </div>
+        <div class="notif-empty-icon"><i class="bi bi-bell-slash"></i></div>
         <p class="fw-semibold mb-0" style="color:var(--text);">No notifications yet</p>
         <p class="text-muted small mb-0">Notifications sent to Admins will appear here</p>
       </div>`;
@@ -4321,35 +4427,31 @@ function renderMyNotifList() {
   }
 
   const typeConfig = {
-    'Info':    { icon: 'bi-info-circle-fill',           bg: 'rgba(13,202,240,.12)',  color: '#0dcaf0',  pillBg: 'rgba(13,202,240,.15)',  pillColor: '#0590a8' },
-    'Warning': { icon: 'bi-exclamation-triangle-fill',  bg: 'rgba(255,193,7,.15)',   color: '#e6ac00',  pillBg: 'rgba(255,193,7,.18)',   pillColor: '#a07700' },
-    'Success': { icon: 'bi-check-circle-fill',          bg: 'rgba(25,135,84,.12)',   color: '#198754',  pillBg: 'rgba(25,135,84,.15)',   pillColor: '#198754' },
-    'Urgent':  { icon: 'bi-exclamation-circle-fill',    bg: 'rgba(220,53,69,.12)',   color: '#dc3545',  pillBg: 'rgba(220,53,69,.15)',   pillColor: '#dc3545' },
-    'default': { icon: 'bi-bell-fill',                  bg: 'rgba(100,116,139,.12)', color: '#64748b',  pillBg: 'rgba(100,116,139,.15)', pillColor: '#64748b' },
+    'Info':    { icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.12)',  color:'#0dcaf0',  pillBg:'rgba(13,202,240,.15)',  pillColor:'#0590a8' },
+    'Warning': { icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#e6ac00',  pillBg:'rgba(255,193,7,.18)',   pillColor:'#a07700' },
+    'Success': { icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.12)',   color:'#198754',  pillBg:'rgba(25,135,84,.15)',   pillColor:'#198754' },
+    'Urgent':  { icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.12)',   color:'#dc3545',  pillBg:'rgba(220,53,69,.15)',   pillColor:'#dc3545' },
+    'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.12)', color:'#64748b',  pillBg:'rgba(100,116,139,.15)', pillColor:'#64748b' },
   };
-
-  const typeLabels = {
-    'Info': 'ℹ Info', 'Warning': '⚠ Warning', 'Success': '✓ Success', 'Urgent': '🔴 Urgent'
-  };
+  const typeLabels = { 'Info':'ℹ Info', 'Warning':'⚠ Warning', 'Success':'✓ Success', 'Urgent':'🔴 Urgent' };
 
   listEl.innerHTML = items.map(n => {
-    const isRead = _readNotifIds.has(n.id);
+    // ✅ isRead من الـ DB
+    const isRead = n.isRead === true;
     const cfg    = typeConfig[n.type] || typeConfig['default'];
-   const raw    = n.sentAt || n.SentAt;
-const d      = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
+    const raw    = n.sentAt || n.SentAt;
+    const d      = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
 
-    // Smart time
     let timeStr = '—';
     if (d) {
-      const now   = new Date();
-      const diff  = now - d;
+      const diff  = new Date() - d;
       const mins  = Math.floor(diff / 60000);
       const hours = Math.floor(diff / 3600000);
       const days  = Math.floor(diff / 86400000);
-      if      (mins  < 1)   timeStr = 'Just now';
-      else if (mins  < 60)  timeStr = `${mins}m ago`;
-      else if (hours < 24)  timeStr = `${hours}h ago`;
-      else if (days  < 7)   timeStr = `${days}d ago`;
+      if      (mins  < 1)  timeStr = 'Just now';
+      else if (mins  < 60) timeStr = `${mins}m ago`;
+      else if (hours < 24) timeStr = `${hours}h ago`;
+      else if (days  < 7)  timeStr = `${days}d ago`;
       else timeStr = d.toLocaleDateString('en-GB', { day:'2-digit', month:'short' });
     }
 
@@ -4363,24 +4465,20 @@ const d      = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
       : escapeHtml(n.description || '');
 
     const thumbHtml = n.imageUrl
-      ? `<img src="${fixUrl(n.imageUrl)}" class="notif-thumb" alt="">`
-      : '';
+      ? `<img src="${fixUrl(n.imageUrl)}" class="notif-thumb" alt="">` : '';
 
     const unreadDot = !isRead
-      ? `<span class="unread-dot" title="Unread"></span>`
-      : '';
+      ? `<span class="unread-dot" title="Unread"></span>` : '';
 
     return `
       <div class="notif-inbox-item ${isRead ? '' : 'unread'}"
            onclick="openMyNotifDetail(${n.id})"
            title="${escapeHtml(n.title || '')} — ${fullDate}">
 
-        <!-- Left: type icon -->
         <div class="notif-type-icon" style="background:${cfg.bg};color:${cfg.color};">
           <i class="bi ${cfg.icon}"></i>
         </div>
 
-        <!-- Middle: content -->
         <div class="notif-inbox-body">
           <div class="notif-inbox-header">
             <span class="notif-inbox-title">${escapeHtml(n.title || '—')} ${unreadDot}</span>
@@ -4388,91 +4486,71 @@ const d      = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
           </div>
           <div class="notif-inbox-desc">${shortDesc}</div>
           <div class="notif-inbox-footer">
-            <span class="notif-type-pill"
-              style="background:${cfg.pillBg};color:${cfg.pillColor};">
+            <span class="notif-type-pill" style="background:${cfg.pillBg};color:${cfg.pillColor};">
               <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
               ${typeLabels[n.type] || n.type || 'Notification'}
             </span>
             ${isRead
               ? `<span style="font-size:.72rem;color:var(--muted);"><i class="bi bi-check2-all me-1"></i>Read</span>`
-              : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;"><i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New</span>`
-            }
+              : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;"><i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New</span>`}
           </div>
         </div>
 
-        <!-- Right: thumbnail if any -->
         ${thumbHtml}
-
-        <!-- Arrow -->
         <div style="color:var(--muted);font-size:14px;margin-top:14px;flex-shrink:0;">
           <i class="bi bi-chevron-right"></i>
         </div>
-
       </div>`;
   }).join('');
 
   makePagination('myNotifPagination', _myNotifPage, totalPages, p => {
-    _myNotifPage = p;
-    renderMyNotifList();
+    _myNotifPage = p; renderMyNotifList();
   });
-
   updateMyNotifUnreadCount();
 }
 
-function openMyNotifDetail(id) {
+async function openMyNotifDetail(id) {
   const n = _myNotifs.find(x => x.id === id);
   if (!n) return;
 
-  // Mark as read
-  markAsRead(id);
-
-  // Re-render to update unread state
+  // ✅ markAsRead بيعمل API call
+  await markAsRead(id);
   renderMyNotifList();
 
-  // Type config
+  // باقي كود الـ modal زي ما هو
   const typeColors = {
-    'Info':    { badge: 'bg-info text-dark',    icon: 'bi-info-circle-fill',  bg: 'rgba(13,202,240,.15)',  color: '#0dcaf0' },
-    'Warning': { badge: 'bg-warning text-dark', icon: 'bi-exclamation-triangle-fill', bg: 'rgba(255,193,7,.15)', color: '#ffc107' },
-    'Success': { badge: 'bg-success text-white',icon: 'bi-check-circle-fill', bg: 'rgba(25,135,84,.15)',   color: '#198754' },
-    'Urgent':  { badge: 'bg-danger text-white', icon: 'bi-exclamation-circle-fill', bg: 'rgba(220,53,69,.15)', color: '#dc3545' },
+    'Info':    { badge:'bg-info text-dark',     icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.15)',  color:'#0dcaf0' },
+    'Warning': { badge:'bg-warning text-dark',  icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#ffc107' },
+    'Success': { badge:'bg-success text-white', icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.15)',   color:'#198754' },
+    'Urgent':  { badge:'bg-danger text-white',  icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.15)',   color:'#dc3545' },
   };
-  const cfg = typeColors[n.type] || { badge: 'bg-secondary', icon: 'bi-bell-fill', bg: 'rgba(100,116,139,.15)', color: '#64748b' };
+  const cfg = typeColors[n.type] || { badge:'bg-secondary', icon:'bi-bell-fill', bg:'rgba(100,116,139,.15)', color:'#64748b' };
 
-  // Type icon in header
   const iconEl = document.getElementById('mnd_typeIcon');
   iconEl.style.background = cfg.bg;
   iconEl.style.color      = cfg.color;
   iconEl.innerHTML        = `<i class="bi ${cfg.icon}"></i>`;
 
-  // Title
   document.getElementById('mnd_title').textContent = n.title || '—';
-
-  // Type badge
   const typeBadgeEl = document.getElementById('mnd_typeBadge');
   typeBadgeEl.className   = `badge fs-6 px-3 py-2 ${cfg.badge}`;
-  typeBadgeEl.textContent = `${n.type || 'Info'}`;
-
-  // Status badge
+  typeBadgeEl.textContent = n.type || 'Info';
   document.getElementById('mnd_statusBadge').textContent = n.status || 'Sent';
 
-  // Meta line (date in header)
-const raw = n.sentAt || n.SentAt;
-const d   = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
+  const raw = n.sentAt || n.SentAt;
+  const d   = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
   document.getElementById('mnd_meta').textContent = d
     ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' }) +
       ' at ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' })
     : '—';
 
-  // Sent At pill
   document.getElementById('mnd_sentAt').textContent = d
     ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) +
       '  ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' })
     : '—';
 
-  // Description
   document.getElementById('mnd_description').textContent = n.description || '—';
 
-  // Image
   const imgWrap = document.getElementById('mnd_imageWrap');
   const imgEl   = document.getElementById('mnd_image');
   const imgLink = document.getElementById('mnd_imageLink');
@@ -4487,7 +4565,7 @@ const d   = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
   new bootstrap.Modal(document.getElementById('myNotifDetailModal')).show();
 }
 
-// ── Events ─────────────────────────────────────────────────────────────────────
+// Filter events
 document.getElementById('myNotifSearch')?.addEventListener('input', () => {
   clearTimeout(window.__tMyNotif);
   window.__tMyNotif = setTimeout(applyMyNotifFilters, 200);
@@ -4495,7 +4573,6 @@ document.getElementById('myNotifSearch')?.addEventListener('input', () => {
 ['myNotifFilterType','myNotifFilterStatus'].forEach(id =>
   document.getElementById(id)?.addEventListener('change', applyMyNotifFilters)
 );
-
 // ── Lazy load ──────────────────────────────────────────────────────────────────
 // أضف في الـ pageLoadFlags section:
 // if (name === 'my-notifications') loadMyNotifications();
@@ -4627,13 +4704,16 @@ window.addEventListener('DOMContentLoaded', async () => {
   await loadMemberShips();
   await loadMembers();
   // Don't auto-load other pages — lazy-load them
-   fetch('https://localhost:7132/api/Notifications')
+ // حط ده
+if (adminId) {
+  fetch(`${myNotifApi}/for-admin/${adminId}`)
     .then(r => r.ok ? r.json() : [])
     .then(all => {
-      _myNotifs = all.filter(n => n.toAdmins === true);
+      _myNotifs = all;
       updateBellBadge();
     })
     .catch(() => {});
+}
 });
 
 // Lazy-load data when switching pages
@@ -4653,6 +4733,7 @@ window.showPage = function(name) {
   if (pageLoadFlags[name]) return;
   pageLoadFlags[name] = true;
   if (name === 'trainer') { loadActivitiesForTrainers(); loadTrainers(); }
+  if (name === 'trainer-ratings') loadTrainerRatingsAdmin();
   if (name === 'category') fetchCategories();
   if (name === 'facility') { loadFacilityCategories(); loadFacilities(); }
   if (name === 'activity') { loadFacilitiesForAct(); loadActivities(); }
@@ -5943,6 +6024,217 @@ document.getElementById('adminFileInput')?.addEventListener('change', function()
     document.getElementById('adminProfileInitials').style.display = 'none';
   }
 });
+// ===================================================
+// ============== TRAINER RATINGS ADMIN ==============
+// ===================================================
+const trainerRatingsApi = 'https://localhost:7132/api/TrainerRatings';
+let _allRatings = [], _filteredRatings = [], _ratingPage = 1;
+const _ratingPageSize = 10;
+
+async function loadTrainerRatingsAdmin() {
+  document.getElementById('trainerRatingsTable').innerHTML =
+    '<tr><td colspan="9" class="text-center py-4 text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Loading...</td></tr>';
+
+  try {
+    // جيب كل الـ trainers الأول
+    const trainersRes = await fetch(trainersApiUrl);
+    const trainers = trainersRes.ok ? await trainersRes.json() : [];
+
+    // جيب ratings كل trainer
+    const allRatings = [];
+    await Promise.all(trainers.map(async t => {
+      try {
+        const res = await fetch(`${trainerRatingsApi}/trainer/${t.id}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        (data.ratings || []).forEach(r => {
+          allRatings.push({
+            ...r,
+             trainerName: t.fullName,   
+            trainerId:   t.id,
+                memberId: r.memberId,
+
+          });
+        });
+      } catch {}
+    }));
+
+    // Sort by newest
+    _allRatings = allRatings.sort((a, b) =>
+      new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    // Populate trainer filter dropdown
+    const trainerSel = document.getElementById('ratingFilterTrainer');
+    const uniqueTrainers = [...new Map(
+      _allRatings.map(r => [r.trainerId, r.trainerName])
+    ).entries()];
+    trainerSel.innerHTML = '<option value="">All Trainers</option>' +
+      uniqueTrainers.map(([id, name]) =>
+        `<option value="${id}">${escapeHtml(name)}</option>`
+      ).join('');
+
+    // Summary cards
+    renderRatingsSummary(trainers, allRatings);
+
+    applyRatingFilters();
+  } catch {
+    document.getElementById('trainerRatingsTable').innerHTML =
+      '<tr><td colspan="9" class="text-center text-danger py-4">Failed to load ratings</td></tr>';
+  }
+}
+
+function renderRatingsSummary(trainers, allRatings) {
+  const totalRatings = allRatings.length;
+  const avgAll = totalRatings
+    ? (allRatings.reduce((s, r) => s + r.rating, 0) / totalRatings).toFixed(1)
+    : '—';
+  const topTrainer = (() => {
+    const map = {};
+    allRatings.forEach(r => {
+      if (!map[r.trainerId]) map[r.trainerId] = { name: r.trainerName, sum: 0, count: 0 };
+      map[r.trainerId].sum   += r.rating;
+      map[r.trainerId].count += 1;
+    });
+    const entries = Object.values(map).filter(t => t.count > 0);
+    if (!entries.length) return '—';
+    entries.sort((a, b) => (b.sum / b.count) - (a.sum / a.count));
+    const best = entries[0];
+    return `${best.name} (${(best.sum / best.count).toFixed(1)}⭐)`;
+  })();
+  const fiveStars = allRatings.filter(r => r.rating === 5).length;
+
+  document.getElementById('trainerRatingsSummary').innerHTML = [
+    { label: 'Total Reviews',    val: totalRatings, icon: 'bi-chat-square-text-fill', color: 'var(--clubly-accent)' },
+    { label: 'Overall Avg',      val: avgAll + ' / 5', icon: 'bi-star-fill',          color: 'var(--clubly-gold)'   },
+    { label: '5-Star Reviews',   val: fiveStars,    icon: 'bi-award-fill',            color: '#22c55e'               },
+    { label: 'Top Trainer',      val: topTrainer,   icon: 'bi-trophy-fill',           color: '#3b82f6'               },
+  ].map(item => `
+    <div class="col-6 col-xl-3">
+      <div class="stats-card">
+        <div class="stat-icon mx-auto mb-2"
+          style="background:${item.color}22;color:${item.color};width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;">
+          <i class="bi ${item.icon}"></i>
+        </div>
+        <h3 style="color:${item.color};font-size:${item.label === 'Top Trainer' ? '1rem' : '2rem'}">
+          ${item.val}
+        </h3>
+        <p>${item.label}</p>
+      </div>
+    </div>`).join('');
+}
+
+function applyRatingFilters() {
+  const q         = (document.getElementById('ratingSearchTrainer')?.value || '').trim().toLowerCase();
+  const trainerId = document.getElementById('ratingFilterTrainer')?.value || '';
+  const stars     = document.getElementById('ratingFilterStars')?.value || '';
+
+  _filteredRatings = _allRatings.filter(r => {
+    const matchQ = !q
+      || (r.trainerName || '').toLowerCase().includes(q)
+      || (r.memberName  || '').toLowerCase().includes(q)
+      || (r.comment     || '').toLowerCase().includes(q);
+    const matchT = !trainerId || String(r.trainerId) === trainerId;
+    const matchS = !stars     || String(r.rating)    === stars;
+    return matchQ && matchT && matchS;
+  });
+
+  _ratingPage = 1;
+  renderRatingsTable();
+}
+
+function renderRatingsTable() {
+  const tbody = document.getElementById('trainerRatingsTable');
+  const total = _filteredRatings.length;
+  const totalPages = Math.max(1, Math.ceil(total / _ratingPageSize));
+  if (_ratingPage > totalPages) _ratingPage = totalPages;
+
+  const start = (_ratingPage - 1) * _ratingPageSize;
+  const items = _filteredRatings.slice(start, start + _ratingPageSize);
+
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="text-center py-5 text-muted">No ratings found</td></tr>';
+    document.getElementById('ratingItemsInfo').textContent = '';
+    document.getElementById('ratingPagination').innerHTML = '';
+    return;
+  }
+
+  const starsHtml = n => Array.from({ length: 5 }, (_, i) =>
+    `<i class="bi bi-star${i < n ? '-fill' : ''}"
+        style="color:${i < n ? 'var(--clubly-gold)' : 'var(--border)'};font-size:.85rem;"></i>`
+  ).join('');
+
+  tbody.innerHTML = items.map((r, i) => {
+    const d = r.createdAt
+      ? new Date(r.createdAt.endsWith('Z') ? r.createdAt : r.createdAt + 'Z')
+      : null;
+    const dateStr = d
+      ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' })
+      : '—';
+    const initials = (r.trainerName || '').split(' ').slice(0,2).map(w => w[0]?.toUpperCase() || '').join('');
+    const color    = AVATAR_COLORS[(i) % AVATAR_COLORS.length];
+    const shortComment = (r.comment || '').length > 60
+      ? escapeHtml(r.comment.substring(0, 60)) + '…'
+      : escapeHtml(r.comment || '<span class="text-muted">No comment</span>');
+
+    return `<tr>
+      <td class="text-muted">${start + i + 1}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:${color};
+                      display:flex;align-items:center;justify-content:center;
+                      color:#fff;font-weight:700;font-size:.78rem;flex-shrink:0;">
+            ${initials}
+          </div>
+          <span style="font-weight:600;">${escapeHtml(r.trainerName || '—')}</span>
+        </div>
+      </td>
+      <td>${escapeHtml(r.memberName || '—')}</td>
+      <td>${escapeHtml(r.activityName || '—')}</td>
+      <td>${escapeHtml(r.groupName || '—')}</td>
+      <td class="text-center">
+        <div style="font-size:1.1rem;font-weight:900;color:var(--clubly-gold);">${r.rating}</div>
+        <div>${starsHtml(r.rating)}</div>
+      </td>
+      <td style="max-width:200px;white-space:normal;font-size:.84rem;color:var(--muted);">
+        ${r.comment ? escapeHtml(r.comment.substring(0, 60)) + (r.comment.length > 60 ? '…' : '') : '<span class="text-muted">—</span>'}
+      </td>
+      <td class="text-center" style="font-size:.82rem;">${dateStr}</td>
+      <td class="text-center">
+        <button class="btn btn-link text-danger btn-sm p-1"
+          onclick="deleteTrainerRating(${r.id})" title="Delete">
+          <i class="bi bi-trash3-fill"></i>
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('ratingItemsInfo').textContent =
+    `Showing ${start+1}–${Math.min(start + _ratingPageSize, total)} of ${total}`;
+  makePagination('ratingPagination', _ratingPage, totalPages, p => {
+    _ratingPage = p; renderRatingsTable();
+  });
+}
+
+async function deleteTrainerRating(id) {
+  const r = await Swal.fire({
+    title: 'Delete this rating?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#e85d2f',
+    confirmButtonText: 'Yes, delete'
+  });
+  if (!r.isConfirmed) return;
+  try {
+    const res = await fetch(`${trainerRatingsApi}/${id}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error();
+    _allRatings = _allRatings.filter(x => x.id !== id);
+    applyRatingFilters();
+    showToast('Rating deleted', 'success');
+  } catch {
+    showToast('Failed to delete', 'error');
+  }
+}
 </script>
 </body>
 </html>
