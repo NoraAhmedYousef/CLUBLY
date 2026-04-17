@@ -3012,8 +3012,8 @@ function renderSkeletonRows(tbodyId, cols=7, rows=5) {
 // ===================================================
 // ============== MEMBERS MODULE ====================
 // ===================================================
-const membersApiUrl = 'https://localhost:7132/api/Members';
-const memberShipsApiUrl = 'https://localhost:7132/api/MemberShips';
+const membersApiUrl = 'http://clublywebsite.runasp.net/api/Members';
+const memberShipsApiUrl = 'http://clublywebsite.runasp.net/api/MemberShips';
 let members=[], filteredMembers=[], memberShipsData=[], currentPageM=1, pageSizeM=10;
 
 function showToast(msg, type='success') { showToastIn('toastContainer', msg, type); }
@@ -3068,8 +3068,8 @@ document.getElementById('refreshBtn')?.addEventListener('click',async()=>{ await
 // ===================================================
 // ============== TRAINERS MODULE ====================
 // ===================================================
-const trainersApiUrl = 'https://localhost:7132/api/Trainers';
-const activitiesForTrainersUrl = 'https://localhost:7132/api/Trainers/activities';
+const trainersApiUrl = 'http://clublywebsite.runasp.net/api/Trainers';
+const activitiesForTrainersUrl = 'http://clublywebsite.runasp.net/api/Trainers/activities';
 
 let trainersData=[], filteredTrainers=[], activitiesListT=[], currentPageT=1, pageSizeT=10;
 
@@ -3271,7 +3271,7 @@ await loadTrainers();
 // ===================================================
 // ============== FACILITY CATEGORIES ================
 // ===================================================
-const catApiUrl = 'https://localhost:7132/api/FacilityCategories';
+const catApiUrl = 'http://clublywebsite.runasp.net/api/FacilityCategories';
 let categoriesData=[], filteredCats=[], currentPageCat=1, pageSizeCat=10, searchCat='', sortCat='';
 function showAlertCat(msg,type='success'){const t=document.createElement('div');t.className=`position-fixed top-0 end-0 m-4 alert alert-${type} shadow`;t.style.zIndex=1080;t.innerText=msg;document.body.appendChild(t);setTimeout(()=>{t.classList.add('fade');setTimeout(()=>t.remove(),400);},1600);}
 async function fetchCategories(){
@@ -3317,7 +3317,7 @@ document.getElementById('refreshBtn_cat')?.addEventListener('click',fetchCategor
 // ===================================================
 // ============== FACILITIES MODULE ==================
 // ===================================================
-const facApiUrl='https://localhost:7132/api/Facilities'; const facCatsApi='https://localhost:7132/api/FacilityCategories';
+const facApiUrl='http://clublywebsite.runasp.net/api/Facilities'; const facCatsApi='http://clublywebsite.runasp.net/api/FacilityCategories';
 let facilitiesData=[], filteredFacilities=[], facilityCategories=[], currentPageF=1, pageSizeF=10;
 function showToastF(msg,type='success'){showToastIn('toastContainer_f',msg,type);}
 async function loadFacilityCategories(force=false){if(facilityCategories.length>0&&!force){populateFacilityCatOpts();return;}try{const res=await fetch(facCatsApi);if(!res.ok)throw new Error();facilityCategories=await res.json();populateFacilityCatOpts();}catch(e){showToastF('Failed loading categories','error');}}
@@ -3338,7 +3338,7 @@ document.getElementById('refreshBtn_f')?.addEventListener('click',async()=>{awai
 // ===================================================
 // ============== FACILITY SCHEDULE MODULE ==================
 
-const schedApi = 'https://localhost:7132/api/FacilitySchedules';
+const schedApi = 'http://clublywebsite.runasp.net/api/FacilitySchedules';
 let schedulesData   = [];
 let filteredScheds  = [];
 let schedPage       = 1;
@@ -3652,7 +3652,7 @@ window.showPage = function(name) {
 
 // ============== ACTIVITIES MODULE ==================
 // ===================================================
-const actApiUrl='https://localhost:7132/api/Activities'; const actFacilitiesUrl='https://localhost:7132/api/Facilities';
+const actApiUrl='http://clublywebsite.runasp.net/api/Activities'; const actFacilitiesUrl='http://clublywebsite.runasp.net/api/Facilities';
 let activitiesData=[], filteredActivities=[], facilitiesForAct=[], currentPageA=1, pageSizeA=10;
 function showToastA(msg,type='success'){showToastIn('toastContainer_a',msg,type);}
 async function loadFacilitiesForAct(force=false){if(facilitiesForAct.length>0&&!force){populateActFacilityOpts();return;}try{const res=await fetch(actFacilitiesUrl);if(!res.ok)throw new Error();facilitiesForAct=await res.json();populateActFacilityOpts();}catch(e){showToastA('Failed loading facilities','error');}}
@@ -3673,14 +3673,14 @@ document.getElementById('refreshBtn_a')?.addEventListener('click',async()=>{awai
 // ===================================================
 // ============== ACTIVITY GROUPS ====================
 // ===================================================
-const groupsApi='https://localhost:7132/api/ActivityGroups'; const activitiesForGroupApi='https://localhost:7132/api/Activities';
+const groupsApi='http://clublywebsite.runasp.net/api/ActivityGroups'; const activitiesForGroupApi='http://clublywebsite.runasp.net/api/Activities';
 let groupsCache=[], filteredGroups=[], activitiesForGroup=[], currentPageG=1, pageSizeG=10, sortFieldG=null, sortDirG='asc';
 function showToastG(msg,type='success'){showToastIn('toastContainer_g',msg,type);}
 async function loadActivitiesForGroups(){try{const res=await fetch(activitiesForGroupApi);if(!res.ok)throw new Error();activitiesForGroup=await res.json();['addActivity_g','editActivity_g','filterActivity_g'].forEach(id=>{const sel=document.getElementById(id);if(!sel)return;sel.innerHTML=`<option value="">${id.startsWith('filter')?'All Activities':'Select activity'}</option>`;activitiesForGroup.forEach(a=>{const o=document.createElement('option');o.value=a.id??a.Id;o.textContent=a.name??a.Name;if(a.facilityName)o.dataset.facilityName=a.facilityName;sel.appendChild(o);});});}catch(e){showToastG('Failed to load activities','error');}}
 async function loadGroups(){const tbody=document.getElementById('groupsTbody');tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr>';try{const res=await fetch(groupsApi);if(!res.ok)throw new Error();groupsCache=await res.json();currentPageG=1;applyGroupFilters();}catch(e){tbody.innerHTML='<tr><td colspan="9" class="text-center text-danger py-4">Failed to load groups</td></tr>';showToastG('Failed','error');}}
 function applyGroupFilters(){const q=(document.getElementById('searchInput_g')?.value||'').trim().toLowerCase();const act=document.getElementById('filterActivity_g')?.value||'';const day=document.getElementById('filterDay_g')?.value||'';pageSizeG=parseInt(document.getElementById('pageSize_g')?.value||'10');filteredGroups=groupsCache.filter(g=>{const name=(g.name||'').toLowerCase();const actId=g.activityId||(g.activity?.id);const dayVal=g.day||'';return(!q||name.includes(q))&&(!act||String(actId)===String(act))&&(!day||dayVal===day);});renderGroupTable();}
 function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',price=g.price||'',trainerName=g.trainerName||'—',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||'');const slots=g.timeSlots||[];if(slots.length)console.log('slot sample:',JSON.stringify(slots[0]));const slotsHtml=slots.length?slots.map(s=>{const d=s.day||s.Day||s.dayOfWeek||s.DayOfWeek||'';const st=s.startTime||s.StartTime||'';const et=s.endTime||s.EndTime||'';return`<div class="small mb-1">${d?`<span class="badge bg-secondary me-1">${d}</span>`:''} ${st}${et?' - '+et:''}</div>`;}).join(''):'—';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(trainerName)}</td><td class="text-center">${price} EGP</td><td class="text-center">${g.durationDays || '—'}</td><td class="text-center">${slotsHtml}</td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-g" data-id="${id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-g" data-id="${id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_g').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_g',currentPageG,totalPages,p=>{currentPageG=p;renderGroupTable();});attachGroupEvents();}
-function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editPrice_g').value=g.price||'';document.getElementById('editDurationDays_g').value=g.durationDays||'';document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');trainerSel.innerHTML='<option value="">-- No Trainer --</option>';trainerSel.disabled=false;try{const tr=await fetch(`https://localhost:7132/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.fullName;if(t.id===g.trainerId)o.selected=true;trainerSel.appendChild(o);});}catch(e){}const container=document.getElementById('editSlotsContainer_g');container.innerHTML='';const slots=g.timeSlots||g.slots||[];if(slots.length){slots.forEach(s=>addEditSlot(container,s));}else{addEditSlot(container,null);}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
+function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editPrice_g').value=g.price||'';document.getElementById('editDurationDays_g').value=g.durationDays||'';document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');trainerSel.innerHTML='<option value="">-- No Trainer --</option>';trainerSel.disabled=false;try{const tr=await fetch(`http://clublywebsite.runasp.net/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.fullName;if(t.id===g.trainerId)o.selected=true;trainerSel.appendChild(o);});}catch(e){}const container=document.getElementById('editSlotsContainer_g');container.innerHTML='';const slots=g.timeSlots||g.slots||[];if(slots.length){slots.forEach(s=>addEditSlot(container,s));}else{addEditSlot(container,null);}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
 function addEditSlot(container, data) {
   const div = document.createElement('div');
   div.className = 'slot-row border rounded-3 p-3 mb-2';
@@ -3726,7 +3726,7 @@ document.getElementById('editSlotsContainer_g').addEventListener('change',(e)=>{
   trainerSel.disabled = true;
   if (!actId) { trainerSel.innerHTML = '<option value="">Select activity first</option>'; return; }
   try {
-const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${actId}`);
+const res = await fetch(`http://clublywebsite.runasp.net/api/Trainers/byActivity/${actId}`);
     const trainers = await res.json();
     trainerSel.innerHTML = '<option value="">-- No Trainer --</option>';
     trainers.forEach(t => {
@@ -3750,7 +3750,7 @@ const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${actId}
   trainerSel.disabled = true;
   if (!actId) { trainerSel.innerHTML = '<option value="">Select activity first</option>'; return; }
   try {
-const res = await fetch(`https://localhost:7132/api/Trainers/byActivity/${actId}`);
+const res = await fetch(`http://clublywebsite.runasp.net/api/Trainers/byActivity/${actId}`);
     const trainers = await res.json();
     trainerSel.innerHTML = '<option value="">-- No Trainer --</option>';
     trainers.forEach(t => {
@@ -3873,7 +3873,7 @@ document.getElementById('slotsContainer_g').addEventListener('change', (e) => {
 // ===================================================
 // ============== MEMBERSHIP MODULE ==================
 // ===================================================
-const msApiUrl='https://localhost:7132/api/MemberShips';
+const msApiUrl='http://clublywebsite.runasp.net/api/MemberShips';
 const msModalEl=document.getElementById('membershipModal');
 const msModal=new bootstrap.Modal(msModalEl);
 function fetchMemberships(){document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>';fetch(msApiUrl).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(ms=>{document.getElementById('membershipTableBody').innerHTML='';ms.forEach(m=>{const tr=document.createElement('tr');tr.dataset.id=m.id;tr.innerHTML=`<td>${m.name}</td><td>${m.description??''}</td><td>${m.duration}</td><td>$${m.price}</td><td><span class="badge ${m.status==='Active'?'bg-success':'bg-secondary'}">${m.status}</span></td><td class="text-center"><button class=" btn btn-link text-primary edit-btn-ms"><i class="bi bi-pencil-square"></i></button><button class="btn btn-link text-danger  delete-btn-ms"><i class="bi bi-trash3-fill"></i></button></td>`;document.getElementById('membershipTableBody').appendChild(tr);});}).catch(e=>document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center text-danger py-4">Failed to load</td></tr>');}
@@ -3886,7 +3886,7 @@ function renderMembershipPage(page){const tbody=document.getElementById('members
 // ===================================================
 // ============== NOTIFICATIONS MODULE ===============
 // ===================================================
-const notifApiUrl = 'https://localhost:7132/api/Notifications';
+const notifApiUrl = 'http://clublywebsite.runasp.net/api/Notifications';
 let notifData = [], notifFiltered = [], notifPage = 1, notifPageSize = 10;
 
 function showToastNotif(msg, type = 'success') { showToastIn('toastContainer', msg, type); }
@@ -4282,7 +4282,7 @@ document.getElementById('notifSearchInput')?.addEventListener('input', () => {
 // ===================================================
 // ============== MY NOTIFICATIONS INBOX =============
 // ===================================================
-const myNotifApi = 'https://localhost:7132/api/Notifications';
+const myNotifApi = 'http://clublywebsite.runasp.net/api/Notifications';
 const adminId = localStorage.getItem('userId');
 
 let _myNotifs         = [];
@@ -4580,7 +4580,7 @@ document.getElementById('myNotifSearch')?.addEventListener('input', () => {
 // ============== Admins MODULE ===============
 // ===================================================
 
-const adminsApi = 'https://localhost:7132/api/Admin';
+const adminsApi = 'http://clublywebsite.runasp.net/api/Admin';
 let _admins = [];
 
 function autoFillAdminNID(mode) {
@@ -4752,7 +4752,7 @@ if (name === 'bookings') loadBookings();
 // ===================================================
 // ============== CONTACT MESSAGES ===================
 // ===================================================
-const contactApi = 'https://localhost:7132/api/ContactMessages';
+const contactApi = 'http://clublywebsite.runasp.net/api/ContactMessages';
 let _contactMsgs = [], _contactFiltered = [], _contactPage = 1;
 const _contactPageSize = 10;
 
@@ -5424,7 +5424,7 @@ document.querySelectorAll('.modal').forEach(modal => {
   });
 });
 // ===== BOOKINGS =====
-const API = 'https://localhost:7132/api';
+const API = 'http://clublywebsite.runasp.net/api';
 function switchBookingTab(tab) {
   _adminCurrentTab = tab;
   _adminCurrentStatus = 'all';
@@ -5673,7 +5673,7 @@ async function updateBooking(id, action, type) {
 // ===================================================
 // ============== FAQ MANAGEMENT =====================
 // ===================================================
-const faqApi = 'https://localhost:7132/api/FAQs';
+const faqApi = 'http://clublywebsite.runasp.net/api/FAQs';
 let _faqs = [], _faqsFiltered = [], _faqPage = 1;
 const _faqPageSize = 10;
 
@@ -5906,7 +5906,7 @@ async function loadAdminProfile() {
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
-      const res = await fetch('https://localhost:7132/api/Admin/me', {
+      const res = await fetch('http://clublywebsite.runasp.net/api/Admin/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -6027,7 +6027,7 @@ document.getElementById('adminFileInput')?.addEventListener('change', function()
 // ===================================================
 // ============== TRAINER RATINGS ADMIN ==============
 // ===================================================
-const trainerRatingsApi = 'https://localhost:7132/api/TrainerRatings';
+const trainerRatingsApi = 'http://clublywebsite.runasp.net/api/TrainerRatings';
 let _allRatings = [], _filteredRatings = [], _ratingPage = 1;
 const _ratingPageSize = 10;
 

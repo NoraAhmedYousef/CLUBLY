@@ -1,6 +1,6 @@
 // ── Trainer Page JS ─────────────────────────────────────────────────────────
-const TRAINER_API  = 'https://localhost:7132/api/Trainers';
-const ACTIVITY_API = 'https://localhost:7132/api/Activities';
+const TRAINER_API  = 'http://clublywebsite.runasp.net/api/Trainers';
+const ACTIVITY_API = 'http://clublywebsite.runasp.net/api/Activities';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadTrainers();
@@ -42,7 +42,7 @@ async function loadTrainers() {
  // ✅ جلب الـ ratings هنا — جوه loadTrainers اللي هي async
     const ratingsResults = await Promise.allSettled(
       activeTrainers.map(t =>
-        fetch(`https://localhost:7132/api/TrainerRatings/trainer/${t.Id || t.id}`)
+        fetch(`http://clublywebsite.runasp.net/api/TrainerRatings/trainer/${t.Id || t.id}`)
           .then(r => r.ok ? r.json() : null)
           .catch(() => null)
       )
@@ -331,7 +331,7 @@ async function handleBookTrainer(id) {
 
   let trainerGroups = [];
   try {
-    const res = await fetch('https://localhost:7132/api/ActivityGroups');
+    const res = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
     const all = res.ok ? await res.json() : [];
     trainerGroups = all.filter(g =>
       (g.trainerId || g.TrainerId) == id &&

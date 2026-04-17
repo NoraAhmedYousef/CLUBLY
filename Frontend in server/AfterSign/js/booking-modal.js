@@ -645,7 +645,7 @@ fd2.append('transactionId',      v('bpTx' + suf));
 fd2.append('price',              parseFloat(v('bpAmt' + suf)) || _formData.price);
 if (window._bpReceiptFile) fd2.append('receiptImage', window._bpReceiptFile);
 
-const facRes = await fetch('https://localhost:7132/api/FacilityBookings', {
+const facRes = await fetch('http://clublywebsite.runasp.net/api/FacilityBookings', {
   method: 'POST',
   body: fd2
 });
@@ -679,7 +679,7 @@ fd.append('transactionId',   v('bpTx' + suf));
 
 if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
 
-  const res = await fetch('https://localhost:7132/api/ActivityBookings', {
+  const res = await fetch('http://clublywebsite.runasp.net/api/ActivityBookings', {
     method: 'POST',
     body: fd   // بدون Content-Type header خالص
   });

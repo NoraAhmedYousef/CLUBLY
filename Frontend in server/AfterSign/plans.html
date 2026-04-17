@@ -330,7 +330,7 @@ if (userRole && dashboardUrls[userRole]) {
   if (navEl) navEl.insertAdjacentHTML('beforebegin',
     `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
 }
-const MS_API = 'https://localhost:7132/api/MemberShips';
+const MS_API = 'http://clublywebsite.runasp.net/api/MemberShips';
 const PLAN_ICONS = ['🥉','🥈','🥇','💎','🏅','⭐'];
 const PLAN_COLORS = ['#cd7f32','#94a3b8','#d4a843','#e85d2f','#7c5cfc','#2ec4b6'];
 const PLAN_BGS = ['rgba(205,127,50,.08)','rgba(148,163,184,.08)','rgba(212,168,67,.08)','rgba(232,93,47,.06)','rgba(124,92,252,.08)','rgba(46,196,182,.08)'];

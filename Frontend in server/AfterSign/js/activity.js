@@ -14,8 +14,8 @@ async function loadActivities() {
 
   try {
     const [actRes, trRes] = await Promise.all([
-      fetch("https://localhost:7132/api/Activities"),
-      fetch("https://localhost:7132/api/Trainers")
+      fetch("http://clublywebsite.runasp.net/api/Activities"),
+      fetch("http://clublywebsite.runasp.net/api/Trainers")
     ]);
 
     const data     = actRes.ok ? await actRes.json() : [];
@@ -200,7 +200,7 @@ onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${
   new bootstrap.Modal(document.getElementById('actPickerModal')).show();
 
   try {
-const res  = await fetch('https://localhost:7132/api/ActivityGroups');
+const res  = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
     const all  = res.ok ? await res.json() : [];
 
   const groups = all.filter(g => {

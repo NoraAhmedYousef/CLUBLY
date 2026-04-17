@@ -1601,7 +1601,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
 <script>
   
 // ===== CONFIG =====
-const API = 'https://localhost:7132/api';
+const API = 'http://clublywebsite.runasp.net/api';
 const trainerId   = localStorage.getItem('userId');
 const trainerName = localStorage.getItem('fullName') || 'Trainer';
 
@@ -1825,7 +1825,7 @@ function renderReports() {
 }
 
 // ===== TRAINER NOTIFICATIONS =====
-const NOTIF_API_TRAINER = 'https://localhost:7132/api/Notifications';
+const NOTIF_API_TRAINER = 'http://clublywebsite.runasp.net/api/Notifications';
 let _trainerNotifs = [];
 let _trainerNotifsFiltered = [];
 let _trainerNotifPage = 1;
@@ -2699,7 +2699,7 @@ function renderGroupsPage() {
 // ====== TRAINER GROUP CRUD =========================
 // ===================================================
 
-const groupsApiUrl = 'https://localhost:7132/api/ActivityGroups';
+const groupsApiUrl = 'http://clublywebsite.runasp.net/api/ActivityGroups';
 
 // ── Load trainer's own activities ──────────────────
 let _trainerOwnActivities = [];
@@ -3035,7 +3035,7 @@ function showTrainerGroupToast(msg, type = 'success') {
 // ===================================================
 // ============== ATTENDANCE MODULE ==================
 // ===================================================
-const ATT_API = 'https://localhost:7132/api/Attendance';
+const ATT_API = 'http://clublywebsite.runasp.net/api/Attendance';
 let _attData   = [];
 let _attGroups = [];
 

@@ -372,7 +372,7 @@ document.getElementById('contactForm').addEventListener('submit', async e => {
     const token = localStorage.getItem('token');
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch('https://localhost:7132/api/ContactMessages', {
+    const res = await fetch('http://clublywebsite.runasp.net/api/ContactMessages', {
       method: 'POST',
       headers,
       body: JSON.stringify(payload)

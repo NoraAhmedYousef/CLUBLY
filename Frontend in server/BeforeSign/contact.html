@@ -380,7 +380,7 @@ document.getElementById('contactForm').addEventListener('submit', async e => {
     const token = localStorage.getItem('token');
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
-    const res = await fetch('https://localhost:7132/api/ContactMessages', {
+    const res = await fetch('http://clublywebsite.runasp.net/api/ContactMessages', {
       method: 'POST',
       headers,
       body: JSON.stringify(payload)
@@ -411,7 +411,7 @@ document.addEventListener('click', e => {
 
 
 // ── Modal ────────────────────────────────────────────
-const API_BASE = 'https://localhost:7132/api/auth';
+const API_BASE = 'http://clublywebsite.runasp.net/api/auth';
 let authModalInstance;
 function openModal(page){
   if(!authModalInstance) authModalInstance=new bootstrap.Modal(document.getElementById('authModal'));

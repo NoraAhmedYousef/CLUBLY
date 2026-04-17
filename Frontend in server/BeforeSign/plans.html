@@ -316,7 +316,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-const MS_API = 'https://localhost:7132/api/MemberShips';
+const MS_API = 'http://clublywebsite.runasp.net/api/MemberShips';
 const PLAN_ICONS = ['🥉','🥈','🥇','💎','🏅','⭐'];
 const PLAN_COLORS = ['#cd7f32','#94a3b8','#d4a843','#e85d2f','#7c5cfc','#2ec4b6'];
 const PLAN_BGS = ['rgba(205,127,50,.08)','rgba(148,163,184,.08)','rgba(212,168,67,.08)','rgba(232,93,47,.06)','rgba(124,92,252,.08)','rgba(46,196,182,.08)'];
@@ -395,7 +395,7 @@ document.addEventListener('click', e => {
 
 
 // ── Modal ────────────────────────────────────────────
-const API_BASE = 'https://localhost:7132/api/auth';
+const API_BASE = 'http://clublywebsite.runasp.net/api/auth';
 let authModalInstance;
 function openModal(page){
   if(!authModalInstance) authModalInstance=new bootstrap.Modal(document.getElementById('authModal'));

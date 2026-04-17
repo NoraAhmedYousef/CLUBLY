@@ -14,8 +14,8 @@ async function loadActivities() {
 
   try {
     const [actRes, trRes] = await Promise.all([
-      fetch("https://localhost:7132/api/Activities"),
-      fetch("https://localhost:7132/api/Trainers")
+      fetch("http://clublywebsite.runasp.net/api/Activities"),
+      fetch("http://clublywebsite.runasp.net/api/Trainers")
     ]);
 
     const data     = actRes.ok ? await actRes.json() : [];

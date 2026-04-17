@@ -15,8 +15,8 @@ async function loadFacilities() {
 
   try {
     const [facRes, catRes] = await Promise.all([
-      fetch("https://localhost:7132/api/Facilities"),
-      fetch("https://localhost:7132/api/FacilityCategories")
+      fetch("http://clublywebsite.runasp.net/api/Facilities"),
+      fetch("http://clublywebsite.runasp.net/api/FacilityCategories")
     ]);
     if (!facRes.ok || !catRes.ok) throw new Error("Failed to fetch data");
 

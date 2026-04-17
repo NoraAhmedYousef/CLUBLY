@@ -323,7 +323,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <script>
 async function loadFAQs() {
   try {
-    const res = await fetch('https://localhost:7132/api/FAQs');
+    const res = await fetch('http://clublywebsite.runasp.net/api/FAQs');
     const faqs = res.ok ? await res.json() : [];
 
     const list = document.getElementById('faqList');
@@ -358,7 +358,7 @@ window.addEventListener('scroll',()=>{document.getElementById('mainHeader').clas
 
 
 // ── Modal ────────────────────────────────────────────
-const API_BASE = 'https://localhost:7132/api/auth';
+const API_BASE = 'http://clublywebsite.runasp.net/api/auth';
 let authModalInstance;
 function openModal(page){
   if(!authModalInstance) authModalInstance=new bootstrap.Modal(document.getElementById('authModal'));
