@@ -1,0 +1,2560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clubly — Guest Portal</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ===== CLUBLY BRAND COLORS ===== */
+:root {
+  --clubly-dark: #0d1b2a;
+  --clubly-navy: #122236;
+  --clubly-accent: #e85d2f;
+  --clubly-gold: #d4a843;
+  --clubly-teal: #2ec4b6;
+  --sidebar-w: 255px;
+  --header-h: 60px;
+  --bg: #f0f4f8;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --muted: #64748b;
+  --border: #e2e8f0;
+}
+[data-theme="dark"] {
+  --bg: #0a1628;
+  --card-bg: #0f1f35;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --border: #1e3a5f;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background .2s, color .2s;
+}
+
+/* ===== HEADER ===== */
+.clubly-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: var(--clubly-dark);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 2000;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  min-width: var(--sidebar-w);
+}
+.logo-icon { font-size: 26px; color: var(--clubly-accent); }
+.logo-text { font-size: 1.4rem; font-weight: 900; color: #fff; letter-spacing: .5px; }
+.logo-text span { color: var(--clubly-accent); }
+.header-nav { display: flex; gap: 4px; flex: 1; padding: 0 10px; }
+.header-nav a {
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  font-size: .9rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all .2s;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.header-nav a:hover, .header-nav a.active { color: #fff; background: rgba(255,255,255,.1); }
+.header-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.header-user { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,.85); font-size: .9rem; }
+.user-avatar {
+  background: linear-gradient(135deg, var(--clubly-teal), #1a9e94);
+  color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: .85rem;
+}
+.guest-badge {
+  background: rgba(46,196,182,.15);
+  color: var(--clubly-teal);
+  border: 1px solid rgba(46,196,182,.3);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+}
+.btn-theme-header {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border: none;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: background .2s;
+}
+.btn-theme-header:hover { background: rgba(255,255,255,.2); }
+.btn-upgrade {
+  background: linear-gradient(135deg, var(--clubly-teal), #1a9e94);
+  color: #fff;
+  border: none;
+  padding: 7px 18px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-upgrade:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(46,196,182,.45); }
+.btn-signout {
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.8);
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 7px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: .85rem;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-signout:hover { background: rgba(239,68,68,.2); color: #fff; border-color: rgba(239,68,68,.4); }
+
+/* ===== LAYOUT ===== */
+.layout-body { display: flex; margin-top: var(--header-h); flex: 1; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: linear-gradient(180deg, #0d1b2a 0%, #091423 100%);
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 1000;
+  padding: 16px 0 20px;
+  border-right: 1px solid rgba(255,255,255,.06);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.1) transparent;
+}
+
+/* Guest status card in sidebar */
+.sidebar-guest-card {
+  margin: 0 10px 16px;
+  background: linear-gradient(135deg, rgba(46,196,182,.15), rgba(46,196,182,.05));
+  border: 1px solid rgba(46,196,182,.2);
+  border-radius: 12px;
+  padding: 14px;
+}
+.guest-card-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--clubly-teal); margin-bottom: 4px; }
+.guest-card-name { font-size: .95rem; font-weight: 900; color: #fff; margin-bottom: 8px; }
+.guest-card-status { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: rgba(255,255,255,.6); }
+.guest-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
+.sidebar-upgrade-btn {
+  display: block;
+  margin: 4px 10px 0;
+  background: linear-gradient(135deg, var(--clubly-teal), #1a9e94);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all .2s;
+  width: calc(100% - 20px);
+}
+.sidebar-upgrade-btn:hover { opacity: .9; transform: translateY(-1px); }
+
+.sidebar-section {
+  padding: 8px 12px 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: rgba(255,255,255,.3);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  padding: 10px 16px;
+  margin: 2px 8px;
+  border-radius: 9px;
+  font-size: .9rem;
+  font-weight: 600;
+  transition: all .2s;
+  cursor: pointer;
+  white-space: nowrap;
+  border: none;
+  background: none;
+  width: calc(100% - 16px);
+  text-align: left;
+}
+.sidebar-link i { font-size: 18px; min-width: 20px; text-align: center; flex-shrink: 0; }
+.sidebar-link:hover { color: #fff; background: rgba(255,255,255,.08); transform: translateX(3px); }
+.sidebar-link.active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(232,93,47,.8), rgba(192,57,43,.8));
+  box-shadow: 0 4px 15px rgba(232,93,47,.3);
+}
+.sidebar-link .notif-badge {
+  margin-left: auto;
+  background: var(--clubly-accent);
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 900;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-divider { height: 1px; background: rgba(255,255,255,.06); margin: 10px 16px; }
+
+/* ===== CONTENT ===== */
+.content-area {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 28px;
+  min-height: calc(100vh - var(--header-h));
+}
+
+/* ===== PAGES ===== */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== CARDS ===== */
+.stat-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  transition: transform .2s, box-shadow .2s;
+  border: 1px solid var(--border);
+  height: 100%;
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+.stat-icon-box {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+.stat-label { color: var(--muted); font-size: .85rem; margin-bottom: 4px; }
+.stat-value { font-size: 2rem; font-weight: 900; color: var(--text); line-height: 1; }
+.stat-unit { font-size: 1rem; font-weight: 400; color: var(--muted); }
+.icon-blue   { background: #e6eeff; color: #3b5998; }
+.icon-green  { background: #e8f5e9; color: #2e7d32; }
+.icon-orange { background: #fff3e0; color: var(--clubly-accent); }
+.icon-teal   { background: #e0f7f5; color: var(--clubly-teal); }
+.icon-amber  { background: #fffbeb; color: #b45309; }
+.icon-purple { background: #f3e8ff; color: #7c3aed; }
+
+.content-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  border: 1px solid var(--border);
+}
+.card-title-clubly {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.page-header-clubly {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.page-title-clubly { font-size: 1.6rem; font-weight: 900; color: var(--text); }
+.btn-clubly-primary {
+  background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cairo', sans-serif;
+}
+.btn-clubly-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(232,93,47,.4); }
+.btn-clubly-teal {
+  background: linear-gradient(135deg, var(--clubly-teal), #1a9e94);
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cairo', sans-serif;
+}
+.btn-clubly-teal:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(46,196,182,.4); }
+
+/* ===== BOOKINGS TABLE ===== */
+.bookings-table { width: 100%; border-collapse: collapse; }
+.bookings-table th {
+  background: #f8fafc;
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+[data-theme="dark"] .bookings-table th { background: #122236; }
+.bookings-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: .88rem;
+  color: var(--text);
+  vertical-align: middle;
+}
+.bookings-table tr:last-child td { border-bottom: none; }
+.bookings-table tr:hover td { background: rgba(232,93,47,.02); }
+.booking-type-icon {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+  flex-shrink: 0;
+}
+.status-pill {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: .75rem;
+  font-weight: 700;
+}
+.pill-confirmed  { background: #d4edda; color: #155724; }
+.pill-pending    { background: #fff3cd; color: #856404; }
+.pill-cancelled  { background: #fde8e8; color: #991b1b; }
+.pill-completed  { background: #e2e3e5; color: #495057; }
+.pill-approved   { background: #dbeafe; color: #1d4ed8; }
+
+/* ===== PAYMENT SECTION ===== */
+.payment-card {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 100%);
+  border-radius: 16px;
+  padding: 26px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  margin-bottom: 20px;
+}
+.payment-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  background: rgba(46,196,182,.12);
+  border-radius: 50%;
+}
+.payment-card::after {
+  content: '';
+  position: absolute;
+  bottom: -50px; left: -20px;
+  width: 140px; height: 140px;
+  background: rgba(232,93,47,.08);
+  border-radius: 50%;
+}
+.payment-card-label { font-size: .72rem; text-transform: uppercase; letter-spacing: 1px; opacity: .65; margin-bottom: 4px; }
+.payment-card-value { font-size: 1.5rem; font-weight: 900; position: relative; z-index: 1; }
+.payment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(245,158,11,.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245,158,11,.35);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+.payment-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; }
+
+.invoice-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.invoice-item:last-child { border-bottom: none; }
+.invoice-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(232,93,47,.1);
+  color: var(--clubly-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.invoice-info { flex: 1; }
+.invoice-name { font-weight: 700; font-size: .9rem; color: var(--text); }
+.invoice-date { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+.invoice-amount { font-weight: 900; font-size: 1rem; color: var(--text); }
+.invoice-amount.paid { color: #22c55e; }
+.invoice-amount.pending { color: #f59e0b; }
+
+/* Pay button */
+.btn-pay {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  border: none;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  transition: all .2s;
+}
+.btn-pay:hover { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(34,197,94,.4); }
+
+/* ===== SCHEDULE / UPCOMING ===== */
+.schedule-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--clubly-accent);
+  transition: all .2s;
+}
+.schedule-item:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+.schedule-item.teal  { border-left-color: var(--clubly-teal); }
+.schedule-item.gold  { border-left-color: var(--clubly-gold); }
+.schedule-item.blue  { border-left-color: #3b82f6; }
+.sched-icon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  border: 2px solid;
+}
+.sched-orange { border-color: var(--clubly-accent); color: var(--clubly-accent); }
+.sched-teal   { border-color: var(--clubly-teal);   color: var(--clubly-teal); }
+.sched-gold   { border-color: var(--clubly-gold);   color: var(--clubly-gold); }
+.sched-blue   { border-color: #3b82f6; color: #3b82f6; }
+.sched-details { flex: 1; }
+.sched-name { font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.sched-info { font-size: .8rem; color: var(--muted); }
+.sched-time-status { text-align: right; flex-shrink: 0; }
+.sched-time { font-weight: 700; font-size: .9rem; color: var(--text); }
+.sched-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: .72rem;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.badge-confirmed { background: #d4edda; color: #155724; }
+.badge-pending   { background: #fff3cd; color: #856404; }
+.badge-approved  { background: #dbeafe; color: #1d4ed8; }
+
+/* ===== NOTIFICATIONS ===== */
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border);
+  border-left: 4px solid transparent;
+  transition: all .2s;
+  cursor: pointer;
+}
+.notif-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(0,0,0,.07); }
+.notif-item.unread { border-left-color: var(--clubly-accent); }
+.notif-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .95rem;
+  flex-shrink: 0;
+}
+.ni-blue   { border-color: #3b82f6; color: #3b82f6; background: rgba(59,130,246,.06); }
+.ni-red    { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,.06); }
+.ni-green  { border-color: #22c55e; color: #22c55e; background: rgba(34,197,94,.06); }
+.ni-yellow { border-color: var(--clubly-gold); color: var(--clubly-gold); background: rgba(212,168,67,.06); }
+.ni-teal   { border-color: var(--clubly-teal); color: var(--clubly-teal); background: rgba(46,196,182,.06); }
+.notif-content { flex: 1; }
+.notif-msg  { font-weight: 600; font-size: .9rem; color: var(--text); line-height: 1.4; }
+.notif-sub  { font-size: .8rem; color: var(--muted); margin-top: 3px; }
+.notif-time { font-size: .75rem; color: var(--muted); margin-top: 4px; }
+.unread-dot { width: 8px; height: 8px; background: var(--clubly-accent); border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+
+.search-bar-clubly {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex; align-items: center;
+  padding: 8px 14px;
+  gap: 8px;
+  transition: border-color .2s;
+}
+.search-bar-clubly:focus-within { border-color: var(--clubly-accent); }
+.search-bar-clubly input {
+  border: none; outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: .9rem;
+  flex: 1;
+}
+
+/* Notif filter tabs */
+.notif-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.notif-tab {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;
+}
+.notif-tab.active, .notif-tab:hover {
+  background: var(--clubly-accent);
+  color: #fff;
+  border-color: var(--clubly-accent);
+}
+
+/* ===== UPGRADE BANNER ===== */
+.upgrade-banner {
+  background: linear-gradient(135deg, #0d1b2a, #1a3a5c);
+  border-radius: 14px;
+  padding: 24px 28px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.upgrade-banner::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 150px; height: 150px;
+  background: rgba(46,196,182,.12);
+  border-radius: 50%;
+}
+.upgrade-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 30%;
+  width: 120px; height: 120px;
+  background: rgba(232,93,47,.08);
+  border-radius: 50%;
+}
+.upgrade-banner-text { position: relative; z-index: 1; }
+.upgrade-banner-title { font-size: 1.2rem; font-weight: 900; margin-bottom: 4px; }
+.upgrade-banner-sub { font-size: .85rem; opacity: .75; }
+.upgrade-banner-btn {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, var(--clubly-teal), #1a9e94);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: 'Cairo', sans-serif;
+  white-space: nowrap;
+}
+.upgrade-banner-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,196,182,.45); }
+
+/* ===== CALENDAR ===== */
+.calendar-grid-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+.cal-day-name {
+  font-size: .78rem; font-weight: 700;
+  color: var(--muted); padding: 6px 0;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.cal-date {
+  padding: 8px 4px; border-radius: 8px;
+  cursor: pointer; font-size: .88rem; font-weight: 600;
+  position: relative; transition: all .15s; color: var(--text);
+}
+.cal-date:hover { background: rgba(232,93,47,.1); color: var(--clubly-accent); }
+.cal-date.has-booking::after {
+  content: '';
+  position: absolute;
+  bottom: 3px; left: 50%; transform: translateX(-50%);
+  width: 5px; height: 5px;
+  background: var(--clubly-accent); border-radius: 50%;
+}
+.cal-date.today {
+  background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+  color: #fff;
+}
+.cal-nav-btn {
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text); width: 32px; height: 32px;
+  border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.cal-nav-btn:hover { background: var(--clubly-accent); color: #fff; border-color: var(--clubly-accent); }
+
+/* Upcoming list item */
+.upcoming-item {
+  display: flex; align-items: center;
+  gap: 12px; padding: 11px 12px;
+  border-radius: 10px; margin-bottom: 8px;
+  border: 1px solid var(--border);
+  transition: all .2s;
+  background: var(--bg);
+}
+.upcoming-item:hover { transform: translateX(3px); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.upcoming-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.upcoming-name { font-weight: 700; font-size: .88rem; color: var(--text); }
+.upcoming-time { font-size: .78rem; color: var(--muted); }
+
+/* ===== MODALS ===== */
+.modal-content-clubly {
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.modal-header-clubly { border-bottom: 1px solid var(--border); padding: 20px 24px; }
+.modal-body-clubly { padding: 24px; }
+.modal-footer-clubly {
+  border-top: 1px solid var(--border); padding: 16px 24px;
+  display: flex; gap: 10px; justify-content: flex-end;
+}
+.btn-cancel {
+  background: var(--bg); border: 1px solid var(--border);
+  color: var(--text); padding: 8px 20px; border-radius: 8px;
+  cursor: pointer; font-family: inherit; font-weight: 600;
+}
+
+/* ===== SIGN OUT ===== */
+.signout-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(239,68,68,.1); border: 3px solid rgba(239,68,68,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: #ef4444; margin: 0 auto 16px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted);
+}
+.empty-state i { font-size: 2.5rem; opacity: .4; margin-bottom: 12px; display: block; }
+.empty-state p { font-size: .9rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .content-area { margin-left: 0; padding: 16px; }
+  .header-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="clubly-header">
+  <a class="header-logo" href="index.html">
+    <i class="bi bi-lightning-charge-fill logo-icon"></i>
+    <span class="logo-text">Cl<span>u</span>bly</span>
+  </a>
+  <nav class="header-nav">
+  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+  <a href="../AfterSign/index.html">Home</a>
+  <a href="../AfterSign/activities.html">Activities</a>
+  <a href="../AfterSign/facilities.html">Facilities</a>
+  <a href="../AfterSign/trainers.html">Trainers</a>
+  <a href="../AfterSign/plans.html">Membership Plans</a>
+  <a href="../AfterSign/about.html">About Us</a>
+  <a href="../AfterSign/faq.html">FAQ</a>
+  <a href="../AfterSign/contact.html">Contact</a>
+
+  </nav>
+  <div class="header-actions">
+    <button class="btn-theme-header" id="themeToggle" title="Toggle Theme">
+      <i class="bi bi-moon-stars"></i>
+    </button>
+  <div class="header-user">
+  <span id="headerName">Ahmed Guest</span>
+  <div class="user-avatar" id="headerAvatar">AG</div>
+</div>
+    <button class="btn-signout" onclick="document.getElementById('signoutModal').style.display='flex'">Sign Out</button>
+  </div>
+</header>
+
+<!-- ===== LAYOUT BODY ===== -->
+<div class="layout-body">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <!-- Guest card -->
+    <div class="sidebar-guest-card">
+      <div class="guest-card-title">Guest Account</div>
+      <div class="guest-card-name" id="sidebarName">Ahmed Guest</div>
+      <div class="guest-card-status">
+      </div>
+    </div>
+    <button class="sidebar-upgrade-btn" onclick="showPage('upgrade')">⭐ Upgrade to Member</button>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">My Portal</div>
+
+    <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard">
+      <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('bookings')" id="sb-bookings">
+      <i class="bi bi-calendar-check"></i><span>My Bookings</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('schedule')" id="sb-schedule">
+      <i class="bi bi-clock-history"></i><span>Schedule</span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">Finance</div>
+
+    <button class="sidebar-link" onclick="showPage('payments')" id="sb-payments">
+      <i class="bi bi-credit-card"></i><span>Payments</span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">Account</div>
+
+    <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications">
+      <i class="bi bi-bell"></i><span>Notifications</span>
+      <span class="notif-badge" id="notifBadge">3</span>
+    </button>
+    <button class="sidebar-link" onclick="showPage('upgrade')" id="sb-upgrade" style="color:rgba(46,196,182,.9);">
+      <i class="bi bi-star-fill"></i><span>Upgrade Plan</span>
+    </button>
+
+    <div class="sidebar-divider"></div>
+    <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile">
+  <i class="bi bi-person-circle"></i><span>Profile</span>
+</button>
+    <button class="sidebar-link" onclick="document.getElementById('signoutModal').style.display='flex'"
+            style="color:rgba(239,68,68,.8);">
+      <i class="bi bi-box-arrow-right"></i><span>Sign Out</span>
+    </button>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="content-area" id="contentArea">
+
+    <!-- ======== PAGE: DASHBOARD ======== -->
+    <div class="page active" id="page-dashboard">
+
+      <!-- Upgrade banner -->
+      <div class="upgrade-banner">
+        <div class="upgrade-banner-text">
+          <div class="upgrade-banner-title">🌟 You're on a Guest Account</div>
+          <div class="upgrade-banner-sub">Upgrade to Member to unlock full access — unlimited bookings, sessions & more.</div>
+        </div>
+        <button class="upgrade-banner-btn" onclick="showPage('upgrade')">Upgrade Now →</button>
+      </div>
+
+      <div class="page-header-clubly">
+        <div>
+          <h1 class="page-title-clubly">Welcome, <span style="color:var(--clubly-accent)" id="dashName">Ahmed!</span></h1>
+          <p style="color:var(--muted); margin-top:4px; font-size:.9rem;">Here's a summary of your guest activity.</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon-box icon-orange"><i class="bi bi-calendar-check"></i></div>
+            <div class="stat-label">Total Bookings</div>
+            <div class="stat-value" id="dash-bookings">4</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon-box icon-teal"><i class="bi bi-clock-history"></i></div>
+            <div class="stat-label">Upcoming Sessions</div>
+            <div class="stat-value" id="dash-upcoming">2</div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon-box icon-amber"><i class="bi bi-credit-card"></i></div>
+            <div class="stat-label">Pending Payment</div>
+            <div class="stat-value" id="dash-pending" style="font-size:1.4rem;">700 <span class="stat-unit">EGP</span></div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="stat-card">
+            <div class="stat-icon-box icon-purple"><i class="bi bi-bell"></i></div>
+            <div class="stat-label">Unread Notifications</div>
+            <div class="stat-value" id="dash-notifs">3</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar + Upcoming -->
+      <div class="row g-3">
+        <div class="col-lg-7">
+          <div class="content-card h-100">
+            <div class="card-title-clubly">
+              <span>Booking Calendar</span>
+              <div class="d-flex align-items-center gap-2">
+                <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button>
+                <span id="calMonthLabel" style="font-weight:700; font-size:.92rem; color:var(--text); min-width:110px; text-align:center;"></span>
+                <button class="cal-nav-btn" onclick="changeMonth(1)"><i class="bi bi-chevron-right"></i></button>
+              </div>
+            </div>
+            <div id="calendarContainer"></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="content-card h-100">
+            <div class="card-title-clubly">Upcoming Bookings</div>
+            <div id="upcomingList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======== PAGE: BOOKINGS ======== -->
+   <div class="page" id="page-bookings">
+  <div class="page-header-clubly">
+    <div>
+      <h1 class="page-title-clubly">My Bookings</h1>
+      <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your activity and facility reservations</p>
+    </div>
+   
+  </div>
+
+  <!-- تاب Activity / Facility -->
+<ul class="nav nav-tabs mb-3" id="bookingTypeTabs">
+  <li class="nav-item">
+    <button class="nav-link active" onclick="switchBookingType('activity', this)">
+      <i class="bi bi-calendar-check me-1"></i>Activity Bookings
+    </button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" onclick="switchBookingType('facility', this)">
+      <i class="bi bi-building me-1"></i>Facility Bookings
+    </button>
+  </li>
+</ul>
+
+  <!-- Activity Bookings -->
+  <div id="activityBookingsSection">
+    <div class="notif-tabs mb-3">
+      <button class="notif-tab active" onclick="filterBookings('all', this)">All</button>
+      <button class="notif-tab" onclick="filterBookings('confirmed', this)">Confirmed</button>
+      <button class="notif-tab" onclick="filterBookings('pending', this)">Pending</button>
+      <button class="notif-tab" onclick="filterBookings('completed', this)">Completed</button>
+      <button class="notif-tab" onclick="filterBookings('cancelled', this)">Cancelled</button>
+    </div>
+    <div class="content-card">
+      <div class="table-responsive">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Activity / Facility</th>
+              <th>Trainer</th>
+              <th>Group</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Price</th>
+              <th>Payment</th>
+              <th>Transaction ID</th>
+              <th>Receipt</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTbody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="bookingsEmpty" style="display:none;">
+        <i class="bi bi-calendar-x"></i>
+        <p>No bookings found.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Facility Bookings -->
+  <div id="facilityBookingsSection" style="display:none;">
+    <div class="notif-tabs mb-3">
+      <button class="notif-tab active" onclick="filterFacilityBookings('all', this)">All</button>
+      <button class="notif-tab" onclick="filterFacilityBookings('approved', this)">Approved</button>
+      <button class="notif-tab" onclick="filterFacilityBookings('pending', this)">Pending</button>
+      <button class="notif-tab" onclick="filterFacilityBookings('cancelled', this)">Cancelled</button>
+    </div>
+    <div class="content-card">
+      <div class="table-responsive">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Facility</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Participants</th>
+              <th>Price</th>
+              <th>Payment</th>
+              <th>Transaction ID</th>
+              <th>Receipt</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="facilityBookingsTbody"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="facilityBookingsEmpty" style="display:none;">
+        <i class="bi bi-building"></i>
+        <p>No facility bookings found.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ======== PAGE: SCHEDULE ======== -->
+    <div class="page" id="page-schedule">
+      <div class="page-header-clubly">
+        <div>
+          <h1 class="page-title-clubly">My Schedule</h1>
+          <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your upcoming sessions</p>
+        </div>
+      </div>
+
+      <div class="content-card">
+       <!-- Switch Tabs -->
+<ul class="nav nav-tabs mb-3" id="scheduleTypeTabs">
+  <li class="nav-item">
+    <button class="nav-link active" onclick="switchScheduleType('activity', this)">
+      <i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i>Activity Sessions
+    </button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" onclick="switchScheduleType('facility', this)">
+      <i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i>Facility Bookings
+    </button>
+  </li>
+</ul>
+
+<!-- Activity Section -->
+<div id="activityScheduleSection">
+  <div class="content-card">
+    <div id="scheduleList"></div>
+    <div class="empty-state" id="schedEmpty" style="display:none;">
+      <i class="bi bi-calendar-check"></i>
+      <p>No activity sessions.</p>
+    </div>
+  </div>
+</div>
+<!-- Facility Section -->
+<div id="facilityScheduleSection" style="display:none;">
+  <div class="content-card">
+    <div id="facilityScheduleList"></div>
+    <div class="empty-state" id="facilitySchedEmpty" style="display:none;">
+      <i class="bi bi-building"></i>
+      <p>No facility bookings.</p>
+    </div>
+  </div>
+</div>
+
+      </div><!-- close content-card wrapper -->
+    </div><!-- close page-schedule -->
+
+    <!-- ======== PAGE: PAYMENTS ======== -->
+    <div class="page" id="page-payments">
+      <div class="page-header-clubly">
+        <h1 class="page-title-clubly">Payments</h1>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <div class="payment-card">
+            <div class="payment-card-label">Total Paid</div>
+            <div class="payment-card-value" id="pay-total">600 EGP</div>
+          </div>
+          <div class="payment-card" style="background:linear-gradient(135deg,#4a1010,#7c2d12);">
+            <div class="payment-card-label">Pending Amount</div>
+            <div class="payment-card-value" id="pay-pending">700 EGP</div>
+            <div style="margin-top:10px; position:relative; z-index:1;">
+              <span class="payment-status-badge"><div class="payment-status-dot"></div> Awaiting Payment</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="content-card">
+            <div class="card-title-clubly">
+              <span>Invoice History</span>
+              <span style="font-size:.78rem; color:var(--muted); font-weight:400;" id="invoiceCount"></span>
+            </div>
+            <div id="invoiceList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- ======== PAGE: NOTIFICATIONS ======== -->
+<div class="page" id="page-notifications">
+
+  <div class="page-header-clubly">
+    <div>
+      <h1 class="page-title-clubly">
+        <i class="bi bi-bell-fill me-2" style="color:var(--clubly-accent);"></i>
+        Notifications
+      </h1>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:4px;">
+        Messages sent to guest accounts
+      </p>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <span id="guestUnreadBadge"
+        style="background:rgba(245,158,11,.12);color:#b45309;
+               border:1px solid rgba(245,158,11,.3);
+               padding:5px 14px;border-radius:20px;
+               font-size:.82rem;font-weight:700;">
+        0 unread
+      </span>
+      <button class="btn-clubly-primary"
+        style="background:linear-gradient(135deg,#22c55e,#16a34a);"
+        onclick="markAllGuestRead()">
+        <i class="bi bi-check2-all"></i> Mark all read
+      </button>
+      <button class="btn-clubly-primary" onclick="loadGuestNotifications()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="content-card mb-3" style="padding:14px 20px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <div class="search-bar-clubly" style="flex:1;min-width:200px;max-width:300px;">
+        <i class="bi bi-search" style="color:var(--muted);"></i>
+        <input type="text" id="guestNotifSearch" placeholder="Search notifications…"/>
+      </div>
+      <select id="guestNotifType"
+        style="background:var(--card-bg);border:1px solid var(--border);
+               border-radius:9px;padding:9px 14px;color:var(--text);
+               font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All types</option>
+        <option value="Info">ℹ️ Info</option>
+        <option value="Warning">⚠️ Warning</option>
+        <option value="Success">✅ Success</option>
+        <option value="Urgent">🔴 Urgent</option>
+      </select>
+      <select id="guestNotifStatus"
+        style="background:var(--card-bg);border:1px solid var(--border);
+               border-radius:9px;padding:9px 14px;color:var(--text);
+               font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
+        <option value="">All</option>
+        <option value="unread">Unread</option>
+        <option value="read">Read</option>
+      </select>
+      <small id="guestNotifInfo" style="color:var(--muted);margin-left:auto;"></small>
+    </div>
+  </div>
+
+  <!-- List -->
+  <div class="content-card" style="padding:0;">
+    <div id="guestNotifList">
+      <div style="text-align:center;padding:50px;color:var(--muted);">
+        <i class="bi bi-bell" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p>Loading…</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div style="display:flex;justify-content:center;margin-top:16px;">
+    <nav><ul class="pagination mb-0" id="guestNotifPagination"></ul></nav>
+  </div>
+
+</div>
+
+   <!-- ======== PAGE: UPGRADE ======== -->
+<div class="page" id="page-upgrade">
+  <div class="page-header-clubly">
+    <h1 class="page-title-clubly">Upgrade Your Plan</h1>
+    <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Choose a membership plan to unlock full access.</p>
+  </div>
+  <div class="row g-4" id="upgradePlansGrid">
+    <div class="col-12 text-center py-5">
+      <div class="spinner-border" style="color:var(--clubly-accent);"></div>
+      <p class="mt-3" style="color:var(--muted);">Loading plans…</p>
+    </div>
+  </div>
+</div>
+<!-- ======== PAGE: PROFILE ======== -->
+<div class="page" id="page-profile">
+  <div class="page-header-clubly">
+    <h1 class="page-title-clubly">My Profile</h1>
+  </div>
+  <div class="row g-4">
+    <!-- Avatar card -->
+    <div class="col-lg-4">
+      <div class="content-card text-center">
+        <div style="width:110px;height:110px;border-radius:50%;
+          background:linear-gradient(135deg,var(--clubly-teal),#1a9e94);
+          display:flex;align-items:center;justify-content:center;
+          font-size:2.5rem;font-weight:900;color:#fff;
+          margin:0 auto 14px;border:4px solid var(--clubly-teal);">
+          <span id="guestProfileInitials">AG</span>
+        </div>
+        <h5 class="fw-bold mb-1" id="guestProfileName">Guest</h5>
+        <p style="color:var(--muted);font-size:.85rem;" id="guestProfileEmail">—</p>
+        <span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);
+          padding:4px 14px;border-radius:20px;font-size:.82rem;font-weight:700;">
+          🌟 Guest Account
+        </span>
+        <div class="mt-3">
+          <button onclick="showPage('upgrade')"
+            style="background:linear-gradient(135deg,var(--clubly-teal),#1a9e94);
+            color:#fff;border:none;padding:8px 20px;border-radius:50px;
+            font-weight:700;cursor:pointer;font-family:inherit;">
+            ⭐ Upgrade to Member
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info + Password -->
+    <div class="col-lg-8">
+      <!-- Personal Info -->
+      <div class="content-card mb-3">
+        <h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
+          <i class="bi bi-person-fill me-2" style="color:var(--clubly-teal);"></i>
+          Personal Information
+        </h6>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Full Name</label>
+            <input type="text" id="guestProfName" class="form-control" placeholder="Full Name">
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Email</label>
+            <input type="email" id="guestProfEmail" class="form-control" disabled>
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Phone</label>
+            <input type="tel" id="guestProfPhone" class="form-control" placeholder="Phone">
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">National ID</label>
+            <input type="text" id="guestProfNID" class="form-control" disabled>
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Gender</label>
+            <input type="text" id="guestProfGender" class="form-control" disabled>
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Date of Birth</label>
+            <input type="text" id="guestProfDOB" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="mt-3">
+          <button onclick="saveGuestProfile()"
+            style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+            border:none;padding:9px 24px;border-radius:50px;font-weight:700;
+            cursor:pointer;font-family:inherit;">
+            <i class="bi bi-check-lg me-1"></i> Save Changes
+          </button>
+        </div>
+      </div>
+
+      <!-- Change Password -->
+      <div class="content-card">
+        <h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
+          <i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i>
+          Change Password
+        </h6>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">New Password</label>
+            <input type="password" id="guestNewPass" class="form-control" placeholder="Min 6 characters">
+          </div>
+          <div class="col-md-6">
+            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Confirm Password</label>
+            <input type="password" id="guestConfirmPass" class="form-control" placeholder="Confirm password">
+          </div>
+          <div id="guestPassMsg" class="col-12"></div>
+        </div>
+        <div class="mt-3">
+          <button onclick="saveGuestPassword()"
+            style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;
+            border:none;padding:9px 24px;border-radius:50px;font-weight:700;
+            cursor:pointer;font-family:inherit;">
+            <i class="bi bi-shield-lock me-1"></i> Update Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </main>
+</div>
+
+<!-- Sign Out Modal -->
+<div id="signoutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div style="background:var(--card-bg); border-radius:16px; padding:32px; max-width:380px; width:90%; text-align:center; border:1px solid var(--border);">
+    <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
+    <h5 style="font-weight:900; font-size:1.1rem; color:var(--text); margin-bottom:8px;">Sign Out?</h5>
+    <p style="color:var(--muted); font-size:.88rem; margin-bottom:24px;">Are you sure you want to sign out of your guest account?</p>
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <button class="btn-cancel" onclick="document.getElementById('signoutModal').style.display='none'">Cancel</button>
+      <button style="background:linear-gradient(135deg,#ef4444,#b91c1c); color:#fff; border:none; padding:8px 24px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif;" onclick="handleGuestSignOut()">Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../AfterSign/booking-modal.js"></script>
+
+<script>
+// ===== STATE =====
+const guestName = localStorage.getItem('fullName') || 'Ahmed Guest';
+const firstName  = guestName.split(' ')[0];
+const initials   = guestName.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+
+document.getElementById('headerName').textContent  = guestName;
+document.getElementById('headerAvatar').textContent = initials;
+document.getElementById('sidebarName').textContent  = guestName;
+document.getElementById('dashName').textContent     = firstName + '!';
+
+// ===== MOCK DATA =====
+const state = {
+   facilityBookings: [],
+  bookings: [
+    { id:1, name:'Football Training', type:'activity', icon:'bi bi-dribbble', color:'#e85d2f', date:'Mar 1, 2026', time:'5:00 PM', trainer:'Menna Mohamed', price:100, status:'confirmed' },
+    { id:2, name:'Swimming Pool',     type:'facility', icon:'bi bi-water',    color:'#2ec4b6', date:'Mar 3, 2026', time:'8:00 AM', trainer:'—',            price:300, status:'pending'   },
+    { id:3, name:'Hand Ball',         type:'activity', icon:'bi bi-trophy',   color:'#d4a843', date:'Feb 28, 2026',time:'6:00 PM', trainer:'Nora Ahmed',   price:300, status:'completed' },
+    { id:4, name:'Court Booking',     type:'facility', icon:'bi bi-building', color:'#7c5cfc', date:'Mar 10, 2026',time:'4:00 PM', trainer:'—',            price:400, status:'pending'   },
+  ],
+  schedule: {
+    '2026-02-28': [
+      { name:'Hand Ball',  icon:'bi bi-trophy',   colorClass:'sched-gold',   trainer:'Nora Ahmed',  location:'Gym',          time:'6:00 PM', status:'Completed' },
+    ],
+    '2026-03-01': [
+      { name:'Football Training', icon:'bi bi-dribbble', colorClass:'sched-orange', trainer:'Menna Mohamed', location:'Court',   time:'5:00 PM', status:'Confirmed' },
+    ],
+    '2026-03-03': [
+      { name:'Swimming Pool', icon:'bi bi-water',   colorClass:'sched-teal',  trainer:'—',           location:'Pool',         time:'8:00 AM', status:'Pending' },
+    ],
+    '2026-03-10': [
+      { name:'Court Booking', icon:'bi bi-building',colorClass:'sched-blue',  trainer:'—',           location:'Court2',       time:'4:00 PM', status:'Pending' },
+    ],
+  },
+  invoices: [
+    { id:'INV-001', name:'Football Training', date:'Feb 28, 2026', amount: 100, paid:true  },
+    { id:'INV-002', name:'Hand Ball Session', date:'Feb 28, 2026', amount: 300, paid:true  },
+    { id:'INV-003', name:'Swimming Pool',     date:'Mar 3, 2026',  amount: 300, paid:false },
+    { id:'INV-004', name:'Court Booking',     date:'Mar 10, 2026', amount: 400, paid:false },
+  ],
+  notifications: [
+    { id:1, type:'green',  icon:'bi bi-check-circle-fill', category:'booking', message:'Your Football Training booking has been confirmed!',       sub:'Booking ID: #BK-1001',    time:'2 hours ago',  isRead:false },
+    { id:2, type:'yellow', icon:'bi bi-credit-card',       category:'payment', message:'Payment of 300 EGP is due for your Swimming Pool session.', sub:'Due: Mar 3, 2026',        time:'5 hours ago',  isRead:false },
+    { id:3, type:'blue',   icon:'bi bi-info-circle-fill',  category:'system',  message:'Your guest account is pending admin approval.',             sub:'You will be notified soon.',time:'1 day ago',  isRead:false },
+    { id:4, type:'teal',   icon:'bi bi-calendar-check',    category:'booking', message:'Reminder: Hand Ball session tomorrow at 6:00 PM.',          sub:'Trainer: Nora Ahmed',     time:'1 day ago',    isRead:true  },
+    { id:5, type:'yellow', icon:'bi bi-star-fill',         category:'system',  message:'Upgrade to Member for unlimited bookings & sessions!',      sub:'Special offer available', time:'2 days ago',   isRead:true  },
+  ],
+  calendar: { month: new Date().getMonth(), year: new Date().getFullYear() },
+  bookingDates: [1, 3, 10],
+  scheduleDate: new Date(),
+  currentNotifFilter: 'all',
+  currentBookingFilter: 'all',
+};
+
+// ===== PAGE NAVIGATION =====
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link, .header-nav a').forEach(l => l.classList.remove('active'));
+  document.getElementById('page-' + id)?.classList.add('active');
+  document.getElementById('sb-' + id)?.classList.add('active');
+  document.getElementById('hn-' + id)?.classList.add('active');
+  if (id === 'bookings')      renderBookings();
+  if (id === 'schedule')      renderSchedule();
+  if (id === 'payments')      renderPayments();
+  if (id === 'notifications') loadGuestNotifications();
+  if (id === 'profile')       loadGuestProfile();
+  if (id === 'upgrade')       loadUpgradePlans(); // ← أضيفي السطر ده
+}
+
+// ===== THEME =====
+let dark = false;
+document.getElementById('themeToggle').addEventListener('click', () => {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  document.getElementById('themeToggle').innerHTML = dark
+    ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+});
+
+// ===== CALENDAR =====
+function generateCalendar() {
+  const { month, year } = state.calendar;
+  const today = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonthLabel').textContent = months[month] + ' ' + year;
+
+  const days = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  let html = `<div class="calendar-grid-days mb-2">`;
+  days.forEach(d => html += `<div class="cal-day-name">${d}</div>`);
+  html += '</div><div class="calendar-grid-days">';
+
+  const firstDay    = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) html += `<div></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    let cls = 'cal-date';
+    const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+    if (isToday) cls += ' today';
+    if (state.bookingDates.includes(d) && month === 2) cls += ' has-booking';
+    html += `<div class="${cls}">${d}</div>`;
+  }
+  html += '</div>';
+  document.getElementById('calendarContainer').innerHTML = html;
+}
+function changeMonth(delta) {
+  state.calendar.month += delta;
+  if (state.calendar.month < 0)  { state.calendar.month = 11; state.calendar.year--; }
+  if (state.calendar.month > 11) { state.calendar.month = 0;  state.calendar.year++; }
+  generateCalendar();
+}
+
+// ===== UPCOMING (Dashboard) =====
+function renderUpcoming() {
+  const colors  = ['#e85d2f','#2ec4b6','#d4a843','#7c5cfc'];
+  const upcoming = state.bookings.filter(b => b.status === 'confirmed' || b.status === 'pending');
+  const el = document.getElementById('upcomingList');
+  if (!upcoming.length) {
+    el.innerHTML = '<div class="empty-state"><i class="bi bi-calendar"></i><p>No upcoming bookings.</p></div>';
+    return;
+  }
+  el.innerHTML = upcoming.map((b, i) => `
+    <div class="upcoming-item">
+      <div class="upcoming-dot" style="background:${colors[i % colors.length]};"></div>
+      <div>
+        <div class="upcoming-name">${b.name}</div>
+        <div class="upcoming-time">${b.date} — ${b.time}</div>
+      </div>
+      <span class="status-pill ${b.status === 'confirmed' ? 'pill-confirmed' : 'pill-pending'}" style="margin-left:auto;">
+        ${b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+      </span>
+    </div>`).join('');
+}
+// ===== SWITCH BOOKING TYPE =====
+function switchBookingType(type, el) {
+  document.querySelectorAll('#bookingTypeTabs .nav-link')
+    .forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  
+  if (type === 'activity') {
+    document.getElementById('activityBookingsSection').style.display = 'block';
+    document.getElementById('facilityBookingsSection').style.display = 'none';
+  } else {
+    document.getElementById('activityBookingsSection').style.display = 'none';
+    document.getElementById('facilityBookingsSection').style.display = 'block';
+    renderFacilityBookings();
+  }
+}
+
+// ===== FACILITY BOOKINGS TABLE =====
+function renderFacilityBookings(filter) {
+  const f = filter || 'all';
+  const list = f === 'all'
+    ? state.facilityBookings
+    : state.facilityBookings.filter(b => b.status.toLowerCase() === f);
+
+  const tbody = document.getElementById('facilityBookingsTbody');
+  const empty = document.getElementById('facilityBookingsEmpty');
+
+  if (!list.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const statusMap = {
+    approved:  'pill-approved',
+    pending:   'pill-pending',
+    cancelled: 'pill-cancelled',
+    confirmed: 'pill-confirmed'
+  };
+
+  tbody.innerHTML = list.map((b, i) => `
+    <tr>
+      <td style="padding:12px 16px;">${i + 1}</td>
+      <td style="padding:12px 16px; font-weight:700;">${b.facilityName}</td>
+      <td style="padding:12px 16px;">${b.bookingDate}</td>
+      <td style="padding:12px 16px; font-weight:600;">
+        ${b.startTime ? b.startTime.substring(0,5) : '—'} → ${b.endTime ? b.endTime.substring(0,5) : '—'}
+      </td>
+      <td style="padding:12px 16px;">${b.participants}</td>
+      <td style="padding:12px 16px; font-weight:700;">${b.price} EGP</td>
+      <td style="padding:12px 16px;">
+        ${b.paymentMethod
+          ? `<span class="status-pill pill-approved">${b.paymentMethod}</span>`
+          : '—'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.transactionId
+          ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
+          : '—'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.receiptImageUrl
+          ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
+               <img src="https://localhost:7132${b.receiptImageUrl}"
+                 style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
+             </a>`
+          : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        <span class="status-pill ${statusMap[b.status?.toLowerCase()] || 'pill-pending'}">
+          ${b.status}
+        </span>
+      </td>
+    </tr>`).join('');
+}
+
+function filterFacilityBookings(filter, el) {
+  document.querySelectorAll('#facilityBookingsSection .notif-tab')
+    .forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderFacilityBookings(filter);
+}
+// ===== BOOKINGS TABLE =====
+function renderBookings(filter) {
+  const f = filter || state.currentBookingFilter;
+  state.currentBookingFilter = f;
+  const list = f === 'all' ? state.bookings : state.bookings.filter(b => b.status === f);
+  const tbody = document.getElementById('bookingsTbody');
+  const empty = document.getElementById('bookingsEmpty');
+
+  if (!list.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const statusMap = {
+    confirmed: 'pill-confirmed',
+    pending:   'pill-pending',
+    cancelled: 'pill-cancelled',
+    completed: 'pill-completed'
+  };
+
+  tbody.innerHTML = list.map((b, i) => `
+    <tr data-status="${b.status}">
+      <td style="padding:12px 16px;">${i + 1}</td>
+      <td style="padding:12px 16px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="booking-type-icon" style="background:${b.color}18; color:${b.color};">
+            <i class="${b.icon}"></i>
+          </div>
+          <div>
+            <div style="font-weight:700;">${b.name}</div>
+            <div style="font-size:.75rem; color:var(--muted); text-transform:capitalize;">${b.type}</div>
+          </div>
+        </div>
+      </td>
+      <td style="padding:12px 16px; color:var(--muted);">${b.trainer}</td>
+      <td style="padding:12px 16px; color:var(--muted);">${b.group || '—'}</td>
+      <td style="padding:12px 16px;">${b.startDate || b.date || '—'}</td>
+      <td style="padding:12px 16px;">${b.endDate || '—'}</td>
+      <td style="padding:12px 16px;">
+        ${b.timeSlots && b.timeSlots.length
+          ? b.timeSlots.map(s => `
+              <div style="font-size:.82rem; margin-bottom:3px;">
+                <span class="status-pill pill-approved" style="margin-right:4px;">${s.day || ''}</span>
+                <span style="font-weight:600;">${s.startTime || '—'}</span>
+              </div>`).join('')
+          : `<span style="font-weight:600;">${b.time || '—'}</span>`}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.timeSlots && b.timeSlots.length
+          ? b.timeSlots.map(s => `
+              <div style="font-size:.82rem; font-weight:600; margin-bottom:3px;">${s.endTime || '—'}</div>`).join('')
+          : '—'}
+      </td>
+      <td style="padding:12px 16px; font-weight:700;">${b.price} EGP</td>
+      <td style="padding:12px 16px;">
+        ${b.paymentMethod
+          ? `<span class="status-pill pill-approved">${b.paymentMethod}</span>`
+          : '<span style="color:var(--muted); font-size:.8rem;">—</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.transactionId
+          ? `<code style="font-size:.8rem; background:var(--bg); padding:2px 8px; border-radius:4px; color:var(--clubly-teal);">${b.transactionId}</code>`
+          : '<span style="color:var(--muted); font-size:.8rem;">—</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        ${b.receiptImageUrl
+          ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank">
+               <img src="https://localhost:7132${b.receiptImageUrl}"
+                    style="width:48px; height:36px; object-fit:cover; border-radius:6px; cursor:pointer;">
+             </a>`
+          : '<span style="color:var(--muted); font-size:.8rem;">No receipt</span>'}
+      </td>
+      <td style="padding:12px 16px;">
+        <span class="status-pill ${statusMap[b.status]}">
+          ${b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+        </span>
+      </td>
+
+    </tr>`).join('');
+}
+
+function filterBookings(filter, el) {
+  document.querySelectorAll('.notif-tabs .notif-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderBookings(filter);
+}
+
+function payBooking(id) {
+  const b = state.bookings.find(x => x.id === id);
+  if (b && confirm(`Pay ${b.price} EGP for "${b.name}"?`)) {
+    b.status = 'confirmed';
+    renderBookings();
+    renderPayments();
+    updateStats();
+  }
+}
+function cancelBooking(id) {
+  const b = state.bookings.find(x => x.id === id);
+  if (b && confirm(`Cancel "${b.name}" booking?`)) {
+    b.status = 'cancelled';
+    renderBookings();
+    updateStats();
+  }
+}
+
+// ===== SCHEDULE =====
+function switchScheduleType(type, el) {
+  document.querySelectorAll('#scheduleTypeTabs .nav-link')
+    .forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  if (type === 'activity') {
+    document.getElementById('activityScheduleSection').style.display = 'block';
+    document.getElementById('facilityScheduleSection').style.display = 'none';
+  } else {
+    document.getElementById('activityScheduleSection').style.display = 'none';
+    document.getElementById('facilityScheduleSection').style.display = 'block';
+  }
+}
+
+function renderSchedule() {
+  const badgeMap = {
+    Confirmed:'badge-confirmed', Pending:'badge-pending',
+    Completed:'pill-completed',  Approved:'badge-approved',
+    confirmed:'badge-confirmed', pending:'badge-pending',
+    completed:'pill-completed',  approved:'badge-approved'
+  };
+
+  // ── Activity Sessions ──
+  const allActItems = Object.values(state.schedule || {}).flat();
+  const actEl   = document.getElementById('scheduleList');
+  const actEmpty = document.getElementById('schedEmpty');
+
+  if (!allActItems.length) {
+    actEl.innerHTML = '';
+    actEmpty.style.display = 'block';
+  } else {
+    actEmpty.style.display = 'none';
+    actEl.innerHTML = allActItems.map(r => `
+      <div class="schedule-item" style="border-left-color:var(--clubly-accent); margin-bottom:10px;">
+        <div class="sched-icon sched-orange">
+          <i class="${r.icon || 'bi bi-calendar-check'}"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${r.name}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${r.trainer && r.trainer !== '—'
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-person-fill" style="color:var(--clubly-teal);"></i>${r.trainer}
+                 </span>` : ''}
+            ${r.location && r.location !== '—'
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-people-fill" style="color:var(--clubly-gold);"></i>${r.location}
+                 </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>${r.time}
+          </div>
+          <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">${r.status}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // ── Facility Bookings ──
+  const allFacItems = Object.values(state.facilitySchedule || {}).flat();
+  const facEl    = document.getElementById('facilityScheduleList');
+  const facEmpty = document.getElementById('facilitySchedEmpty');
+
+  if (!allFacItems.length) {
+    facEl.innerHTML = '';
+    facEmpty.style.display = 'block';
+  } else {
+    facEmpty.style.display = 'none';
+    facEl.innerHTML = allFacItems.map(r => `
+      <div class="schedule-item teal" style="border-left-color:var(--clubly-teal); margin-bottom:10px;">
+        <div class="sched-icon sched-teal">
+          <i class="bi bi-building"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${r.name}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${r.participants
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-people-fill" style="color:var(--clubly-teal);"></i>${r.participants} participants
+                 </span>` : ''}
+            ${r.price
+              ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                   <i class="bi bi-tag-fill" style="color:var(--clubly-gold);"></i>${r.price} EGP
+                 </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>${r.time}
+          </div>
+          <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">${r.status}</span>
+        </div>
+      </div>`).join('');
+  }
+}
+// ===== PAYMENTS =====
+function renderPayments() {
+  // دمج الـ activity + facility invoices
+  const actInvoices = state.invoices || [];
+  const facInvoices = (state.facilityBookings || []).map((b, i) => ({
+    id:     'FAC-' + String(i+1).padStart(3,'0'),
+    name:   b.facilityName || '—',
+    date:   b.bookingDate  || '—',
+    amount: b.price        || 0,
+    paid:   (b.status || '').toLowerCase() === 'approved',
+    type:   'facility'
+  }));
+  const allInvoices = [...actInvoices, ...facInvoices];
+
+  const paid    = allInvoices.filter(i => i.paid).reduce((s, i) => s + i.amount, 0);
+  const pending = allInvoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
+  document.getElementById('pay-total').textContent    = paid    + ' EGP';
+  document.getElementById('pay-pending').textContent  = pending + ' EGP';
+  document.getElementById('invoiceCount').textContent = allInvoices.length + ' invoices';
+
+  if (!allInvoices.length) {
+    document.getElementById('invoiceList').innerHTML = `
+      <div class="empty-state">
+        <i class="bi bi-receipt"></i>
+        <p>No invoices yet.</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('invoiceList').innerHTML = allInvoices.map(inv => `
+    <div class="invoice-item">
+      <div class="invoice-icon">
+        <i class="bi ${inv.type === 'facility' ? 'bi-building' : 'bi-receipt'}"></i>
+      </div>
+      <div class="invoice-info">
+        <div class="invoice-name">
+          ${inv.type === 'facility'
+            ? `<span style="font-size:.7rem;background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">Facility</span>`
+            : `<span style="font-size:.7rem;background:rgba(232,93,47,.1);color:var(--clubly-accent);
+                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">Activity</span>`}
+          ${inv.name}
+        </div>
+        <div class="invoice-date">${inv.id} · ${inv.date}</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="invoice-amount ${inv.paid ? 'paid' : 'pending'}">${inv.amount} EGP</div>
+     ${inv.paid
+          ? `<span style="font-size:.78rem;color:#22c55e;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;">
+               <i class="bi bi-check-circle-fill"></i>Paid
+             </span>`
+          : `<span style="font-size:.78rem;color:#f59e0b;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;
+                          background:rgba(245,158,11,.1);padding:3px 10px;
+                          border-radius:20px;border:1px solid rgba(245,158,11,.3);">
+               <i class="bi bi-clock-history"></i>Awaiting Approval
+             </span>`}
+      </div>
+    </div>`).join('');
+}
+
+function payInvoice(invId) {
+  // ابحث في الـ activity أو الـ facility
+  const actInvoices = state.invoices || [];
+  const facInvoices = (state.facilityBookings || []).map((b, i) => ({
+    id: 'FAC-' + String(i+1).padStart(3,'0'), name: b.facilityName || '—',
+    date: b.bookingDate || '—', amount: b.price || 0,
+    paid: (b.status||'').toLowerCase() === 'approved', type: 'facility', _idx: i
+  }));
+  const inv = [...actInvoices, ...facInvoices].find(i => i.id === invId);
+if (inv && confirm(`Pay ${inv.amount} EGP for "${inv.name}"?`)) {
+    if (inv.type === 'facility') {
+      // حدث الـ facility booking
+      const fb = state.facilityBookings[inv._idx];
+      if (fb) fb.status = 'Approved';
+    } else {
+      inv.paid = true;
+      const booking = state.bookings.find(b => b.name === inv.name);
+      if (booking) booking.status = 'confirmed';
+    }
+    renderPayments();
+    renderBookings();
+    updateStats();
+  }
+}
+
+// ===== GUEST NOTIFICATIONS =====
+const NOTIF_API_GUEST = 'https://localhost:7132/api/Notifications';
+let _guestNotifs = [];
+let _guestNotifsFiltered = [];
+let _guestNotifPage = 1;
+const _guestNotifPageSize = 8;
+
+function handleGuestSignOut() {
+  // مش محتاج تحفظ أي read IDs لأن كل حاجة في الـ DB
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.href = '../BeforeSign/index.html';
+}
+async function markGuestAsRead(id) {
+  const guestId = localStorage.getItem('userId');
+  if (!guestId) return;
+
+  // حدّث locally فوراً
+  const notif = _guestNotifs.find(n => n.id === id);
+  if (notif && !notif.isRead) {
+    notif.isRead = true;
+    updateGuestUnreadBadge();
+  }
+
+  // POST للـ API
+  try {
+    await fetch(`https://localhost:7132/api/Notifications/${id}/read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guestId: parseInt(guestId) })
+    });
+  } catch(e) {
+    console.warn('Could not mark as read:', e);
+  }
+}
+async function markAllGuestRead() {
+  const guestId = localStorage.getItem('userId');
+  if (!guestId) return;
+
+  try {
+    await fetch(`https://localhost:7132/api/Notifications/mark-all-read`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guestId: parseInt(guestId) })
+    });
+  } catch(e) {
+    console.warn('Could not mark all read:', e);
+  }
+
+  _guestNotifs.forEach(n => n.isRead = true);
+  renderGuestNotifList();
+  updateGuestUnreadBadge();
+}
+
+function updateGuestUnreadBadge() {
+   const unread = _guestNotifs.filter(n => !n.isRead).length;
+
+  
+  // badge in notifications page
+  const badge = document.getElementById('guestUnreadBadge');
+  if (badge) {
+    badge.textContent = `${unread} unread`;
+    badge.style.background = unread > 0
+      ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
+    badge.style.color = unread > 0 ? '#b45309' : 'var(--muted)';
+    badge.style.borderColor = unread > 0
+      ? 'rgba(245,158,11,.3)' : 'var(--border)';
+  }
+
+  // sidebar badge
+  const sbBadge = document.getElementById('notifBadge');
+  if (sbBadge) {
+    sbBadge.textContent = unread;
+    sbBadge.style.display = unread > 0 ? 'flex' : 'none';
+  }
+
+  // dashboard stat
+  const dashEl = document.getElementById('dash-notifs');
+  if (dashEl) dashEl.textContent = unread;
+}
+
+async function loadGuestNotifications() {
+  const listEl = document.getElementById('guestNotifList');
+  if (listEl) listEl.innerHTML = `
+    <div style="text-align:center;padding:50px;color:var(--muted);">
+      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+    </div>`;
+
+  try {
+  const guestId = localStorage.getItem('userId');
+const res = await fetch(`https://localhost:7132/api/Notifications/for-guest/${guestId}`);
+const data = res.ok ? await res.json() : [];
+_guestNotifs = data; // جاهز مع IsRead
+    updateGuestUnreadBadge();
+    applyGuestNotifFilters();
+  } catch(e) {
+    if (listEl) listEl.innerHTML = `
+      <div style="text-align:center;padding:50px;color:#ef4444;">
+        <i class="bi bi-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:10px;"></i>
+        Failed to load notifications
+      </div>`;
+  }
+}
+
+function applyGuestNotifFilters() {
+  const q      = (document.getElementById('guestNotifSearch')?.value || '').toLowerCase();
+  const type   = document.getElementById('guestNotifType')?.value || '';
+  const status = document.getElementById('guestNotifStatus')?.value || '';
+
+_guestNotifsFiltered = _guestNotifs.filter(n => {
+  const matchQ = !q ||
+    (n.title||'').toLowerCase().includes(q) ||
+    (n.description||'').toLowerCase().includes(q);
+  const matchT = !type || n.type === type;
+  
+  // ✅ اعتمد على n.isRead مش _guestReadIds
+  const isRead = n.isRead === true;
+  const matchS = !status
+    || (status === 'unread' && !isRead)
+    || (status === 'read'   &&  isRead);
+  return matchQ && matchT && matchS;
+});
+  _guestNotifPage = 1;
+  renderGuestNotifList();
+}
+
+function renderGuestNotifList() {
+  const listEl = document.getElementById('guestNotifList');
+  if (!listEl) return;
+
+  const total      = _guestNotifsFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / _guestNotifPageSize));
+  if (_guestNotifPage > totalPages) _guestNotifPage = totalPages;
+
+  const start = (_guestNotifPage - 1) * _guestNotifPageSize;
+  const items = _guestNotifsFiltered.slice(start, start + _guestNotifPageSize);
+
+  const infoEl = document.getElementById('guestNotifInfo');
+  if (infoEl) infoEl.textContent = total
+    ? `Showing ${start+1}–${Math.min(start+_guestNotifPageSize,total)} of ${total}`
+    : '';
+
+  if (!items.length) {
+    listEl.innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+        <i class="bi bi-bell-slash" style="font-size:2.5rem;opacity:.35;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">No notifications</p>
+        <p style="font-size:.88rem;">Notifications sent to guests will appear here</p>
+      </div>`;
+    document.getElementById('guestNotifPagination').innerHTML = '';
+    return;
+  }
+
+  const typeConfig = {
+    'Info':    { icon:'bi-info-circle-fill',          bg:'rgba(13,202,240,.12)',  color:'#0590a8',  pill:'rgba(13,202,240,.15)',  pillColor:'#0590a8'  },
+    'Warning': { icon:'bi-exclamation-triangle-fill', bg:'rgba(255,193,7,.15)',   color:'#a07700',  pill:'rgba(255,193,7,.18)',   pillColor:'#a07700'  },
+    'Success': { icon:'bi-check-circle-fill',         bg:'rgba(25,135,84,.12)',   color:'#198754',  pill:'rgba(25,135,84,.15)',   pillColor:'#198754'  },
+    'Urgent':  { icon:'bi-exclamation-circle-fill',   bg:'rgba(220,53,69,.12)',   color:'#dc3545',  pill:'rgba(220,53,69,.15)',   pillColor:'#dc3545'  },
+    'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.12)', color:'#64748b',  pill:'rgba(100,116,139,.15)', pillColor:'#64748b'  },
+  };
+
+  const typeLabels = {
+    'Info':'ℹ Info', 'Warning':'⚠ Warning',
+    'Success':'✓ Success', 'Urgent':'🔴 Urgent'
+  };
+
+  listEl.innerHTML = items.map(n => {
+const isRead = n.isRead === true;
+    const cfg    = typeConfig[n.type] || typeConfig['default'];
+const d = n.sentAt 
+  ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
+  : null;
+    let timeStr = '—';
+    if (d) {
+      const diff  = new Date() - d;
+      const mins  = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+      const days  = Math.floor(diff / 86400000);
+      if      (mins  < 1)  timeStr = 'Just now';
+      else if (mins  < 60) timeStr = `${mins}m ago`;
+      else if (hours < 24) timeStr = `${hours}h ago`;
+      else if (days  < 7)  timeStr = `${days}d ago`;
+      else timeStr = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+    }
+
+    const fullDate = d
+      ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})
+        + ' at ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+      : '';
+
+    const shortDesc = (n.description||'').length > 130
+      ? n.description.substring(0,130) + '…'
+      : (n.description||'');
+
+    const thumbHtml = n.imageUrl
+      ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
+              style="width:64px;height:48px;object-fit:cover;border-radius:8px;
+                     border:1px solid var(--border);flex-shrink:0;">`
+      : '';
+
+    return `
+      <div onclick="openGuestNotifDetail(${n.id})"
+        style="display:flex;align-items:flex-start;gap:14px;
+               padding:18px 22px;border-bottom:1px solid var(--border);
+               cursor:pointer;transition:background .15s;position:relative;
+               background:${isRead ? 'transparent' : 'rgba(232,93,47,.025)'};"
+        onmouseover="this.style.background='rgba(232,93,47,.04)'"
+        onmouseout="this.style.background='${isRead ? 'transparent' : 'rgba(232,93,47,.025)'}'">
+
+        ${!isRead ? `<div style="position:absolute;left:0;top:0;bottom:0;width:4px;
+          background:var(--clubly-accent);border-radius:0 4px 4px 0;"></div>` : ''}
+
+        <!-- Type icon -->
+        <div style="width:46px;height:46px;border-radius:50%;flex-shrink:0;
+                    background:${cfg.bg};color:${cfg.color};margin-top:2px;
+                    display:flex;align-items:center;justify-content:center;font-size:20px;">
+          <i class="bi ${cfg.icon}"></i>
+        </div>
+
+        <!-- Content -->
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;
+                      gap:12px;margin-bottom:5px;">
+            <span style="font-size:.93rem;font-weight:${isRead?'600':'800'};
+                         color:${isRead?'var(--muted)':'var(--text)'};
+                         white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;">
+              ${n.title||'—'}
+              ${!isRead ? `<span style="display:inline-block;width:8px;height:8px;
+                background:var(--clubly-accent);border-radius:50%;margin-left:5px;
+                vertical-align:middle;"></span>` : ''}
+            </span>
+            <span style="font-size:.75rem;color:${isRead?'var(--muted)':'var(--clubly-accent)'};
+                         white-space:nowrap;flex-shrink:0;font-weight:600;"
+                  title="${fullDate}">${timeStr}</span>
+          </div>
+
+          <div style="font-size:.84rem;color:var(--muted);line-height:1.5;
+                      margin-bottom:8px;overflow:hidden;display:-webkit-box;
+                      -webkit-line-clamp:2;-webkit-box-orient:vertical;">
+            ${shortDesc}
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span style="display:inline-flex;align-items:center;gap:4px;
+                         padding:3px 10px;border-radius:50px;font-size:.72rem;
+                         font-weight:700;background:${cfg.pill};color:${cfg.pillColor};">
+              <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
+              ${typeLabels[n.type] || n.type || 'Notification'}
+            </span>
+            ${isRead
+              ? `<span style="font-size:.72rem;color:var(--muted);">
+                   <i class="bi bi-check2-all me-1"></i>Read
+                 </span>`
+              : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;">
+                   <i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New
+                 </span>`}
+          </div>
+        </div>
+
+        ${thumbHtml}
+
+        <div style="color:var(--muted);font-size:14px;margin-top:14px;flex-shrink:0;">
+          <i class="bi bi-chevron-right"></i>
+        </div>
+      </div>`;
+  }).join('');
+
+  buildGuestNotifPagination(totalPages);
+  updateGuestUnreadBadge();
+}
+
+function buildGuestNotifPagination(totalPages) {
+  const ul = document.getElementById('guestNotifPagination');
+  if (!ul) return;
+  ul.innerHTML = '';
+
+  const li = (label, disabled, fn, active=false) => {
+    const el = document.createElement('li');
+    el.className = 'page-item'
+      + (disabled ? ' disabled' : '')
+      + (active   ? ' active'   : '');
+    el.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+    if (!disabled) el.onclick = e => { e.preventDefault(); fn(); };
+    return el;
+  };
+
+  ul.appendChild(li('«', _guestNotifPage === 1, () => {
+    _guestNotifPage = 1; renderGuestNotifList();
+  }));
+  const s = Math.max(1, _guestNotifPage - 2);
+  const e = Math.min(totalPages, _guestNotifPage + 2);
+  for (let i = s; i <= e; i++) {
+    ul.appendChild(li(i, false, () => {
+      _guestNotifPage = i; renderGuestNotifList();
+    }, i === _guestNotifPage));
+  }
+  ul.appendChild(li('»', _guestNotifPage === totalPages, () => {
+    _guestNotifPage = totalPages; renderGuestNotifList();
+  }));
+}
+
+async function openGuestNotifDetail(id) {
+  const n = _guestNotifs.find(x => x.id === id);
+  if (!n) return;
+  await markGuestAsRead(id);
+  renderGuestNotifList();
+  const typeConfig = {
+    'Info':    { bg:'rgba(13,202,240,.15)',  color:'#0dcaf0', icon:'bi-info-circle-fill'         },
+    'Warning': { bg:'rgba(255,193,7,.15)',   color:'#ffc107', icon:'bi-exclamation-triangle-fill' },
+    'Success': { bg:'rgba(25,135,84,.15)',   color:'#198754', icon:'bi-check-circle-fill'         },
+    'Urgent':  { bg:'rgba(220,53,69,.15)',   color:'#dc3545', icon:'bi-exclamation-circle-fill'   },
+    'default': { bg:'rgba(100,116,139,.15)', color:'#64748b', icon:'bi-bell-fill'                 },
+  };
+  const cfg = typeConfig[n.type] || typeConfig['default'];
+const d = n.sentAt 
+  ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z') 
+  : null;  const fullDate = d
+    ? d.toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})
+      + ' at ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+    : '—';
+
+  // بناء modal ديناميكي
+  let modal = document.getElementById('guestNotifDetailModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'guestNotifDetailModal';
+    modal.className = 'modal fade';
+    modal.tabIndex = -1;
+    document.body.appendChild(modal);
+  }
+
+modal.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content modal-content-clubly" style="background:var(--card-bg);border-radius:16px;border:1px solid var(--border);">
+        <div class="modal-header-clubly" style="display:flex;align-items:center;gap:14px;
+             background:#0d1b2a;border-radius:16px 16px 0 0;padding:20px 24px;">
+          <div style="width:46px;height:46px;border-radius:50%;background:${cfg.bg};color:${cfg.color};
+                      flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;">
+            <i class="bi ${cfg.icon}"></i>
+          </div>
+          <div style="flex:1;">
+            <h5 style="margin:0;font-weight:800;color:#fff;">${n.title||'—'}</h5>
+            <small style="color:rgba(255,255,255,.6);">${fullDate}</small>
+          </div>
+          <button data-bs-dismiss="modal" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:1.3rem;cursor:pointer;">✕</button>
+        </div>
+        <div style="padding:24px;min-height:200px;">
+          <div style="margin-bottom:14px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 16px;
+                         border-radius:50px;font-size:.88rem;font-weight:700;
+                         background:${cfg.bg};color:${cfg.color};">
+              <i class="bi ${cfg.icon}"></i>${n.type||'Notification'}
+            </span>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:16px;">
+            <p style="margin:0;white-space:pre-wrap;line-height:1.8;font-size:.95rem;color:var(--text);">${n.description||'—'}</p>
+          </div>
+          ${n.imageUrl?`
+          <div style="margin-bottom:16px;">
+            <a href="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}" target="_blank">
+              <img src="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}"
+                style="max-width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid var(--border);cursor:pointer;">
+            </a>
+          </div>`:''}
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="bi bi-clock" style="color:var(--muted);"></i>
+            <small style="color:var(--muted);">Sent:</small>
+            <span style="background:#d4edda;color:#155724;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:600;">${fullDate}</span>
+          </div>
+        </div>
+        <div style="padding:14px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
+          <button data-bs-dismiss="modal"
+            style="background:var(--bg);border:1px solid var(--border);color:var(--text);
+                   padding:8px 20px;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>`;
+
+  const modalInstance = new bootstrap.Modal(modal);
+  
+  modal.addEventListener('hidden.bs.modal', () => {
+    renderGuestNotifList();
+  }, { once: true });  // ← نفس الـ fix
+  
+  modalInstance.show();
+}
+
+// ===== UPDATE STATS =====
+function updateStats() {
+const unread = _guestNotifs.filter(n => !n.isRead).length;
+  const pending = state.bookings.filter(b => b.status === 'pending').length;
+  const pendAmt = state.invoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
+  const upcoming = state.bookings.filter(b => b.status === 'confirmed' || b.status === 'pending').length;
+
+  document.getElementById('dash-bookings').textContent = state.bookings.length;
+  document.getElementById('dash-upcoming').textContent = upcoming;
+  document.getElementById('dash-pending').textContent  = pendAmt + ' ';
+  document.getElementById('dash-notifs').textContent   = unread;
+
+  const badge = document.getElementById('notifBadge');
+  badge.textContent    = unread;
+  badge.style.display  = unread > 0 ? 'flex' : 'none';
+}
+
+// ===== BENEFIT ITEM STYLE (for upgrade page) =====
+const styleEl = document.createElement('style');
+styleEl.textContent = `.benefit-item { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); color:var(--text); font-size:.88rem; } .benefit-item:last-child { border-bottom:none; } .benefit-item i { font-size:.95rem; margin-top:2px; flex-shrink:0; }`;
+document.head.appendChild(styleEl);
+// ===== GUEST PROFILE =====
+const guestApiUrl = 'https://localhost:7132/api/Guests'; // غيري لو الـ endpoint مختلف
+const guestId = localStorage.getItem('userId');
+
+async function loadGuestProfile() {
+  if (!guestId) return;
+  try {
+    const res = await fetch(`${guestApiUrl}/${guestId}`);
+    if (!res.ok) throw new Error();
+    const g = await res.json();
+
+    const initials = (g.fullName || 'G').split(' ').slice(0,2)
+      .map(w => w[0]?.toUpperCase() || '').join('');
+
+    document.getElementById('guestProfileInitials').textContent = initials;
+    document.getElementById('guestProfileName').textContent = g.fullName || '—';
+    document.getElementById('guestProfileEmail').textContent = g.email || '—';
+    document.getElementById('guestProfName').value   = g.fullName || '';
+    document.getElementById('guestProfEmail').value  = g.email || '';
+    document.getElementById('guestProfPhone').value  = g.phone || '';
+    document.getElementById('guestProfNID').value    = g.nationalId || '';
+    document.getElementById('guestProfGender').value = g.gender || '';
+    document.getElementById('guestProfDOB').value    = g.dateOfBirth
+      ? g.dateOfBirth.split('T')[0] : '';
+  } catch {
+    console.warn('Could not load guest profile');
+  }
+}
+
+async function saveGuestProfile() {
+  if (!guestId) return;
+  const fullNameVal = document.getElementById('guestProfName').value.trim();
+  const parts = fullNameVal.split(' ');
+  const fd = new FormData();
+  fd.append('FirstName', parts[0] || '');
+  fd.append('LastName',  parts.slice(1).join(' ') || '');
+  fd.append('Phone',     document.getElementById('guestProfPhone').value);
+  try {
+    const res = await fetch(`${guestApiUrl}/${guestId}`, { method:'PUT', body:fd });
+    if (!res.ok) throw new Error();
+    alert('Profile updated!');
+    loadGuestProfile();
+  } catch {
+    alert('Failed to save.');
+  }
+}
+
+async function saveGuestPassword() {
+  const np  = document.getElementById('guestNewPass').value;
+  const cp  = document.getElementById('guestConfirmPass').value;
+  const msg = document.getElementById('guestPassMsg');
+  msg.innerHTML = '';
+  if (!np || np.length < 6) {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Min 6 characters.</span>';
+    return;
+  }
+  if (np !== cp) {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords don\'t match.</span>';
+    return;
+  }
+  const fd = new FormData();
+  fd.append('NewPassword', np);
+  try {
+    const res = await fetch(`${guestApiUrl}/${guestId}`, { method:'PUT', body:fd });
+    if (!res.ok) throw new Error();
+    msg.innerHTML = '<span style="color:#22c55e;font-size:.85rem;">✓ Password updated!</span>';
+    document.getElementById('guestNewPass').value   = '';
+    document.getElementById('guestConfirmPass').value = '';
+  } catch {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Failed to update.</span>';
+  }
+}
+// ===== LOAD GUEST DATA FROM API =====
+const API = 'https://localhost:7132/api';
+function formatTime12Guest(t) {
+  if (!t || t === '—') return '—';
+  const [h, m] = String(t).substring(0,5).split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hour = h % 12 || 12;
+  return `${hour}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+async function initGuestPortal() {
+  if (!guestId) return;
+
+  try {
+    const res = await fetch(`${API}/Guests/${guestId}`);
+    if (!res.ok) throw new Error();
+    const g = await res.json();
+
+    // Header + Sidebar
+    const fullName = g.fullName || guestName;
+    const parts    = fullName.split(' ');
+    const ini      = parts.slice(0,2).map(w => w[0]?.toUpperCase()||'').join('');
+
+    document.getElementById('headerName').textContent   = fullName;
+    document.getElementById('headerAvatar').textContent = ini;
+    document.getElementById('sidebarName').textContent  = fullName;
+    document.getElementById('dashName').textContent     = (parts[0]||'Guest') + '!';
+
+    // حفظ في localStorage
+    localStorage.setItem('fullName', fullName);
+
+  } catch(e) {
+    console.warn('Could not load guest data:', e);
+  }
+
+  // جيب الـ Activity Bookings
+  try {
+const res2 = await fetch(`${API}/ActivityBookings/by-guest/${guestId}`);
+    if (!res2.ok) throw new Error();
+    const bookings = await res2.json();
+
+    // حول الـ bookings للـ state format
+state.bookings = bookings.map(b => ({
+  id:             b.id,
+  name:           b.activityName || '—',
+  type:           'activity',
+  icon:           'bi bi-calendar-check',
+  color:          '#e85d2f',
+  date:           b.startDate ? b.startDate.split('T')[0] : '—',
+  startDate:      b.startDate ? b.startDate.split('T')[0] : '—',
+  endDate:        b.endDate   ? b.endDate.split('T')[0]   : '—',
+  time:           b.timeSlots?.length ? b.timeSlots[0].startTime?.substring(0,5) : '—',
+  timeSlots:      b.timeSlots || [],
+  trainer:        b.trainerName || '—',
+  group:          b.groupName   || '—',
+  price:          b.totalPrice  || 0,
+  paymentMethod:  b.paymentMethod  || '',
+  transactionId:  b.transactionId  || '',
+  receiptImageUrl: b.receiptImageUrl || '',
+  status:         (b.status || '').toLowerCase()
+}));
+
+    // حدث الـ schedule data
+    state.schedule = {};
+    state.bookingDates = [];
+bookings.forEach(b => {
+  const start = b.startDate?.split('T')[0];
+  if (!start) return;
+
+  // أضف الـ booking مرة واحدة بس في الـ schedule
+  const key = start; // استخدم startDate كـ key فقط
+  if (!state.schedule[key]) state.schedule[key] = [];
+
+  // تجنب التكرار
+  const exists = state.schedule[key].find(x => x.bookingId === b.id);
+  if (!exists) {
+    state.schedule[key].push({
+      bookingId:  b.id,
+      name:       b.activityName || '—',
+      icon:       'bi bi-calendar-check',
+      colorClass: b.status?.toLowerCase() === 'approved' ? 'sched-blue' :
+                  b.status?.toLowerCase() === 'pending'  ? 'sched-orange' : 'sched-gold',
+      trainer:    b.trainerName || '—',
+      location:   b.groupName || '—',
+     time: b.timeSlots?.length
+  ? b.timeSlots[0].day + ' · ' + formatTime12Guest(b.timeSlots[0].startTime) + ' → ' + formatTime12Guest(b.timeSlots[0].endTime)
+  : '—',
+      status:     b.status || '—'
+    });
+  }
+
+  // Calendar dot للـ startDate فقط
+  const d = new Date(start).getDate();
+  if (!state.bookingDates.includes(d)) state.bookingDates.push(d);
+});
+// حدث الـ invoices من الـ bookings
+    state.invoices = bookings.map((b, i) => ({
+      id:     'INV-' + String(i+1).padStart(3,'0'),
+      name:   b.activityName || '—',
+      date:   b.startDate?.split('T')[0] || '—',
+      amount: b.totalPrice || 0,
+      paid:   (b.status || '').toLowerCase() === 'approved'
+    }));
+
+    // ← هنا أضيفي الكود ده ↓
+
+    // Re-render كل حاجة
+    renderUpcoming();
+    renderBookings();
+    renderSchedule();
+    renderPayments();
+    updateStats();
+    generateCalendar();
+
+  } catch(e) {
+    console.warn('Could not load bookings:', e);
+  }
+
+  // جيب الـ Facility Bookings
+  try {
+    const res3 = await fetch(`${API}/FacilityBookings`);
+    if (!res3.ok) throw new Error();
+    const allFacility = await res3.json();
+    const facilityBookings = allFacility.filter(b => String(b.guestId) === String(guestId));
+
+    state.facilityBookings = facilityBookings.map(b => ({
+      facilityName:    b.facilityName   || '—',
+      bookingDate:     b.bookingDate    || '—',
+      startTime:       b.startTime,
+      endTime:         b.endTime,
+      participants:    b.participants   || 1,
+      price:           b.price          || 0,
+      paymentMethod:   b.paymentMethod  || '',
+      transactionId:   b.transactionId  || '',
+      receiptImageUrl: b.receiptImageUrl|| '',
+      status:          b.status         || 'Pending'
+    }));
+
+    // ===== بناء facilitySchedule =====
+    state.facilitySchedule = {};
+    facilityBookings.forEach(b => {
+    const key = b.bookingDate
+  ? String(b.bookingDate).split('T')[0]
+  : null;
+      if (!key) return;
+      if (!state.facilitySchedule[key]) state.facilitySchedule[key] = [];
+      state.facilitySchedule[key].push({
+        name:         b.facilityName || '—',
+    time: (b.bookingDate 
+  ? new Date(b.bookingDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) + ' · ' 
+  : '') + formatTime12Guest(b.startTime) + ' → ' + formatTime12Guest(b.endTime),
+        participants: b.participants || 1,
+        price:        b.price || 0,
+        status:       b.status || 'Pending'
+      });
+
+      // Calendar dots للـ facility
+      const day = new Date(key).getDate();
+      if (!state.bookingDates.includes(day)) state.bookingDates.push(day);
+    });
+
+    generateCalendar();
+    renderSchedule();
+
+  } catch(e) {
+    console.warn('Could not load facility bookings:', e);
+  }
+}
+// ===== UPGRADE PLANS =====
+const PLAN_ICONS_UP  = ['🥉','🥈','🥇','💎','🏅','⭐'];
+const PLAN_COLORS_UP = ['#cd7f32','#94a3b8','#d4a843','#e85d2f','#7c5cfc','#2ec4b6'];
+const PLAN_BGS_UP    = [
+  'rgba(205,127,50,.08)','rgba(148,163,184,.08)',
+  'rgba(212,168,67,.08)','rgba(232,93,47,.06)',
+  'rgba(124,92,252,.08)','rgba(46,196,182,.08)'
+];
+
+async function loadUpgradePlans() {
+  const grid = document.getElementById('upgradePlansGrid');
+  if (!grid) return;
+
+  try {
+    const res   = await fetch(`${API}/MemberShips`);
+    const data  = res.ok ? await res.json() : [];
+    const plans = data.filter(p => (p.status || '').toLowerCase() === 'active');
+
+    if (!plans.length) {
+      grid.innerHTML = `<div class="col-12 text-center py-5" style="color:var(--muted);">No plans available right now.</div>`;
+      return;
+    }
+
+    grid.innerHTML = plans.map((p, i) => {
+      const name     = p.name     || '';
+      const desc     = p.description || '';
+      const price    = p.price    || 0;
+      const duration = p.duration || 1;
+      const featured = i === 0;
+      const color    = PLAN_COLORS_UP[i % PLAN_COLORS_UP.length];
+      const bg       = PLAN_BGS_UP[i % PLAN_BGS_UP.length];
+      const icon     = PLAN_ICONS_UP[i % PLAN_ICONS_UP.length];
+
+      return `
+      <div class="col-sm-6 col-lg-3">
+        <div style="background:${bg};border-radius:20px;padding:28px 22px;
+                    position:relative;overflow:hidden;transition:all .3s;
+                    border:2px solid ${featured ? color : 'var(--border)'};
+                    box-shadow:${featured ? '0 12px 40px rgba(232,93,47,.2)' : '0 2px 12px rgba(0,0,0,.06)'};
+                    transform:${featured ? 'translateY(-6px)' : 'none'};">
+
+          ${featured ? `<div style="position:absolute;top:14px;right:14px;
+            background:${color};color:#fff;padding:3px 12px;
+            border-radius:20px;font-size:.72rem;font-weight:700;">🏆 Popular</div>` : ''}
+
+          <div style="width:50px;height:50px;border-radius:12px;
+                      background:rgba(255,255,255,0.15);color:${color};
+                      display:flex;align-items:center;justify-content:center;
+                      font-size:1.5rem;margin-bottom:14px;">${icon}</div>
+
+          <div style="font-size:1rem;font-weight:900;color:var(--text);margin-bottom:6px;">${name}</div>
+
+          <div style="font-size:2.2rem;font-weight:900;color:${color};line-height:1;margin-bottom:4px;">
+            ${price} <span style="font-size:.9rem;font-weight:400;color:var(--muted);">EGP</span>
+          </div>
+
+          <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">
+            ${duration} month${duration > 1 ? 's' : ''} membership
+          </div>
+
+          ${desc ? `
+          <div style="display:flex;align-items:flex-start;gap:8px;
+                      font-size:.85rem;color:var(--text);margin-bottom:16px;">
+            <i class="bi bi-check-circle-fill" style="color:#22c55e;flex-shrink:0;margin-top:2px;"></i>
+            <span>${desc}</span>
+          </div>` : ''}
+
+          <button onclick="requestUpgrade(${p.id}, '${name}')"
+            style="width:100%;border:none;padding:11px;border-radius:50px;
+                   font-weight:700;font-size:.9rem;cursor:pointer;
+                   font-family:'Cairo',sans-serif;transition:all .2s;
+                   background:${featured ? `linear-gradient(135deg,${color},${color}cc)` : 'transparent'};
+                   color:${featured ? '#fff' : color};
+                   border:${featured ? 'none' : `2px solid ${color}`};"
+            onmouseover="this.style.opacity='.85'"
+            onmouseout="this.style.opacity='1'">
+            Get Started ${featured ? '🚀' : '→'}
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+
+  } catch(e) {
+    grid.innerHTML = `<div class="col-12 text-center py-5" style="color:#ef4444;">Failed to load plans.</div>`;
+  }
+}
+
+function requestUpgrade(planId, planName) {
+  if (confirm(`Request upgrade to "${planName}"?\nAdmin will review your request.`)) {
+    alert(`✅ Upgrade request sent for "${planName}"!\nAdmin will contact you soon.`);
+  }
+}
+
+// ===== INIT =====
+generateCalendar();
+renderUpcoming();
+renderBookings();
+renderSchedule();
+renderPayments();
+loadGuestNotifications();
+updateStats();
+initGuestPortal();
+</script>
+</body>
+</html>

@@ -14,8 +14,8 @@ async function loadActivities() {
 
   try {
     const [actRes, trRes] = await Promise.all([
-      fetch("http://clublywebsite.runasp.net/api/Activities"),
-      fetch("http://clublywebsite.runasp.net/api/Trainers")
+      fetch("https://localhost:7132/api/Activities"),
+      fetch("https://localhost:7132/api/Trainers")
     ]);
 
     const data     = actRes.ok ? await actRes.json() : [];
@@ -73,7 +73,7 @@ function renderActivities(list) {
     const imgUrl  = a.ImageUrl    || a.imageUrl    || null;
 
     const imgStyle = imgUrl
-      ? `background-image:url('http://clublywebsite.runasp.net${imgUrl}');`
+      ? `background-image:url('https://localhost:7132${imgUrl}');`
       : `background:linear-gradient(135deg,#0d1b2a,#1e3a5f);`;
 
     const priceBadge = price != null

@@ -629,8 +629,12 @@ endTime:   formatTime(_formData.endTime),
    const fd2 = new FormData();
 fd2.append('facilityId',         _ctx.id);
 if (_ctx.scheduleId) fd2.append('facilityScheduleId', _ctx.scheduleId);
-fd2.append('memberId',           memberId);
-fd2.append('bookedByName',       localStorage.getItem('fullName') || 'Guest');
+const userRole = localStorage.getItem('role') || 'guest';
+if (userRole === 'member') {
+  fd2.append('memberId', memberId);
+} else {
+  fd2.append('guestId', memberId);
+}fd2.append('bookedByName',       localStorage.getItem('fullName') || 'Guest');
 fd2.append('bookedByEmail', localStorage.getItem('email') || 'guest@clubly.com');
 fd2.append('bookingDate',        _formData.date);
 fd2.append('startTime',          formatTime(_formData.time));
@@ -641,7 +645,7 @@ fd2.append('transactionId',      v('bpTx' + suf));
 fd2.append('price',              parseFloat(v('bpAmt' + suf)) || _formData.price);
 if (window._bpReceiptFile) fd2.append('receiptImage', window._bpReceiptFile);
 
-const facRes = await fetch('http://clublywebsite.runasp.net/api/FacilityBookings', {
+const facRes = await fetch('https://localhost:7132/api/FacilityBookings', {
   method: 'POST',
   body: fd2
 });
@@ -655,24 +659,35 @@ const facRes = await fetch('http://clublywebsite.runasp.net/api/FacilityBookings
 
     // ... داخل ميثود bpPay ...
 } else {
-  const fd = new FormData();
-  fd.append('activityId',      window._actPickerActivityId || 0);
-  fd.append('activityGroupId', _ctx.id);
-  fd.append('memberId',        memberId);
-  fd.append('startDate',       _formData.date);
-  fd.append('participants',    parseInt(_formData.participants) || 1);
-  fd.append('paymentMethod',   suf === 'I' ? 'InstaPay' : 'EWallet');
-  fd.append('transactionId',   v('bpTx' + suf));
-  if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
+const fd = new FormData();
+fd.append('activityId',      window._actPickerActivityId || 0);
+fd.append('activityGroupId', _ctx.id);
 
-  const res = await fetch('http://clublywebsite.runasp.net/api/ActivityBookings', {
+// ✅ التعديل هنا
+const userRole = localStorage.getItem('role') || 'guest';
+if (userRole === 'member') {
+  fd.append('memberId', memberId);
+} else {
+  fd.append('guestId', memberId);
+}
+
+fd.append('trainerId',       window._actPickerTrainerId || '');
+fd.append('startDate',       _formData.date);
+fd.append('participants',    parseInt(_formData.participants) || 1);
+fd.append('paymentMethod',   suf === 'I' ? 'InstaPay' : 'EWallet');
+fd.append('transactionId',   v('bpTx' + suf));
+
+if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
+
+  const res = await fetch('https://localhost:7132/api/ActivityBookings', {
     method: 'POST',
     body: fd   // بدون Content-Type header خالص
   });
 // ...
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          showErr(err.message || 'Booking failed. Please try again.');
+if (!res.ok) {
+  const errText = await res.text();
+  console.log('Booking error:', errText);
+  showErr(errText || 'Booking failed. Please try again.');
           btn.disabled = false; btn.innerHTML = 'Complete Payment';
           return;
         }

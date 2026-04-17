@@ -1,6 +1,6 @@
 // ── Trainer Page JS ─────────────────────────────────────────────────────────
-const TRAINER_API  = 'http://clublywebsite.runasp.net/api/Trainers';
-const ACTIVITY_API = 'http://clublywebsite.runasp.net/api/Activities';
+const TRAINER_API  = 'https://localhost:7132/api/Trainers';
+const ACTIVITY_API = 'https://localhost:7132/api/Activities';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadTrainers();
@@ -40,7 +40,22 @@ async function loadTrainers() {
       return;
     }
 
-    window._trainersData  = activeTrainers;
+    // ✅ جلب الـ ratings هنا — جوه loadTrainers اللي هي async
+    const ratingsResults = await Promise.allSettled(
+      activeTrainers.map(t =>
+        fetch(`https://localhost:7132/api/TrainerRatings/trainer/${t.Id || t.id}`)
+          .then(r => r.ok ? r.json() : null)
+          .catch(() => null)
+      )
+    );
+
+    ratingsResults.forEach((result, i) => {
+      if (result.status === 'fulfilled' && result.value) {
+        activeTrainers[i].rating = result.value.averageRating ?? null;
+      }
+    });
+
+    window._trainersData   = activeTrainers;
     window._activitiesData = activeActs;
 
     // Populate activity filter dropdown
@@ -65,8 +80,7 @@ async function loadTrainers() {
       setTimeout(() => {
         const target = document.querySelector(hash);
         if (target) {
-          // Open accordion first
-          const grid = target.querySelector('.trainer-section-grid');
+          const grid    = target.querySelector('.trainer-section-grid');
           const chevron = target.querySelector('.section-chevron');
           if (grid && grid.style.display === 'none') {
             grid.style.display = '';
@@ -93,13 +107,13 @@ function renderSections(activities, trainers, filtered = null) {
   const container = document.getElementById('activities-container');
   container.innerHTML = '';
 
-  const palette = ['#e85d2f','#2ec4b6','#d4a843','#7c5cfc','#e53e3e','#00a896'];
+  const palette  = ['#e85d2f','#2ec4b6','#d4a843','#7c5cfc','#e53e3e','#00a896'];
   const workList = filtered ?? trainers;
 
   const sections = [];
   activities.forEach(act => {
-    const actId   = act.Id   || act.id;
-    const actName = act.Name || act.name || '';
+    const actId       = act.Id   || act.id;
+    const actName     = act.Name || act.name || '';
     const actTrainers = workList.filter(t => {
       const ids = t.ActivityIds || t.activityIds || [];
       return ids.includes(actId) || ids.includes(Number(actId));
@@ -112,7 +126,6 @@ function renderSections(activities, trainers, filtered = null) {
   let html = '';
 
   sections.forEach((sec, si) => {
-    const isOpen = si === 0; // first section open by default
     html += buildSection(
       `activity-${sec.actId}`,
       sec.actName,
@@ -120,7 +133,7 @@ function renderSections(activities, trainers, filtered = null) {
       'Activity',
       sec.trainers,
       palette,
-      isOpen
+      si === 0
     );
   });
 
@@ -210,16 +223,17 @@ function toggleSection(id) {
 
 // ── Trainer card HTML ─────────────────────────────────────────────────────────
 function trainerCardHtml(t, i, palette) {
-  const fullName  = t.FullName || t.fullName || '—';
+  const fullName   = t.FullName || t.fullName || '—';
   const activities = t.Activities || t.activities || '';
-  const exp       = t.YearsOfExperience ?? t.yearsOfExperience ?? null;
-  const email     = t.Email  || t.email  || null;
-  const phone     = t.Phone  || t.phone  || null;
-  const imgSrc    = (t.ImageUrl || t.imageUrl) ? 'http://clublywebsite.runasp.net' + (t.ImageUrl || t.imageUrl) : null;
-  const rating    = (t.Rating || t.rating) ? parseFloat(t.Rating || t.rating) : null;
-  const color     = palette[i % palette.length];
-  const initials  = fullName.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
-  const id        = t.Id || t.id || i;
+  const exp        = t.YearsOfExperience ?? t.yearsOfExperience ?? null;
+  const email      = t.Email  || t.email  || null;
+  const phone      = t.Phone  || t.phone  || null;
+  const imgSrc     = (t.ImageUrl || t.imageUrl) ? 'https://localhost:7132' + (t.ImageUrl || t.imageUrl) : null;
+  const rating     = t.rating ?? null;   // ✅ مش await — جاهز من loadTrainers
+
+  const color    = palette[i % palette.length];
+  const initials = fullName.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+  const id       = t.Id || t.id || i;
 
   return `
   <div class="col-sm-6 col-md-4 col-lg-3 trainer-item"
@@ -237,7 +251,7 @@ function trainerCardHtml(t, i, palette) {
       </div>
       <div class="trainer-card-body">
         <div class="trainer-name">${fullName}</div>
-        ${rating ? `<div class="trainer-rating">${renderStars(rating)}<span class="rating-num">${rating.toFixed(1)}</span></div>` : ''}
+        ${rating !== null ? `<div class="trainer-rating">${renderStars(rating)}<span class="rating-num">${rating.toFixed(1)}</span></div>` : ''}
         ${exp !== null ? `<div class="trainer-info-row"><i class="bi bi-clock-history"></i><span>${exp} years experience</span></div>` : ''}
         ${email ? `<div class="trainer-info-row"><i class="bi bi-envelope-fill"></i><span>${email}</span></div>` : ''}
         ${phone ? `<div class="trainer-info-row"><i class="bi bi-telephone-fill"></i><span>${phone}</span></div>` : ''}
@@ -251,24 +265,24 @@ function trainerCardHtml(t, i, palette) {
 
 // ── Bind all filters ──────────────────────────────────────────────────────────
 function bindFilters() {
-  document.getElementById('searchInput')?.addEventListener('input',  applyTrainerFilters);
+  document.getElementById('searchInput')?.addEventListener('input',   applyTrainerFilters);
   document.getElementById('activityFilter')?.addEventListener('change', applyTrainerFilters);
-  document.getElementById('expFilter')?.addEventListener('change',   applyTrainerFilters);
+  document.getElementById('expFilter')?.addEventListener('change',    applyTrainerFilters);
 }
 
 function applyTrainerFilters() {
-  const search  = (document.getElementById('searchInput')?.value   || '').toLowerCase().trim();
-  const actVal  = (document.getElementById('activityFilter')?.value || '').toLowerCase().trim();
-  const expVal  =  document.getElementById('expFilter')?.value      || '';
+  const search = (document.getElementById('searchInput')?.value    || '').toLowerCase().trim();
+  const actVal = (document.getElementById('activityFilter')?.value || '').toLowerCase().trim();
+  const expVal =  document.getElementById('expFilter')?.value       || '';
 
   document.querySelectorAll('.trainer-section').forEach(section => {
     const items = section.querySelectorAll('.trainer-item');
     let hits = 0;
 
     items.forEach(item => {
-      const name    = item.dataset.name     || '';
-      const act     = item.dataset.activity || '';
-      const expNum  = parseInt(item.dataset.exp || '0');
+      const name   = item.dataset.name     || '';
+      const act    = item.dataset.activity || '';
+      const expNum = parseInt(item.dataset.exp || '0');
 
       let show = (!search || name.includes(search) || act.includes(search))
               && (!actVal || act.includes(actVal));
@@ -281,10 +295,8 @@ function applyTrainerFilters() {
       if (show) hits++;
     });
 
-    // Show/hide section
     section.style.display = hits > 0 ? '' : 'none';
 
-    // Auto-open section if has results and filters active
     if (hits > 0 && (search || actVal || expVal)) {
       const grid    = section.querySelector('.trainer-section-grid');
       const chevron = section.querySelector('.section-chevron');
@@ -298,7 +310,7 @@ function applyTrainerFilters() {
 }
 
 function clearTrainerFilters() {
-  ['searchInput','activityFilter','expFilter'].forEach(id => {
+  ['searchInput', 'activityFilter', 'expFilter'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -340,6 +352,6 @@ function showSignInToast(label) {
 
 function renderStars(r) {
   return [1,2,3,4,5].map(i =>
-    r>=i ? '<i class="bi bi-star-fill"></i>' : r>=i-.5 ? '<i class="bi bi-star-half"></i>' : '<i class="bi bi-star"></i>'
+    r >= i ? '<i class="bi bi-star-fill"></i>' : r >= i - .5 ? '<i class="bi bi-star-half"></i>' : '<i class="bi bi-star"></i>'
   ).join('');
 }

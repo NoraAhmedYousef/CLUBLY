@@ -15,8 +15,8 @@ async function loadFacilities() {
 
   try {
     const [facRes, catRes] = await Promise.all([
-      fetch("http://clublywebsite.runasp.net/api/Facilities"),
-      fetch("http://clublywebsite.runasp.net/api/FacilityCategories")
+      fetch("https://localhost:7132/api/Facilities"),
+      fetch("https://localhost:7132/api/FacilityCategories")
     ]);
     if (!facRes.ok) console.warn("Facilities API:", facRes.status);
     if (!catRes.ok)  console.warn("FacilityCategories API:", catRes.status);
@@ -128,7 +128,7 @@ function facilityCardHtml(fac, catName) {
   const fImgUrl = fac.ImageUrl    || fac.imageUrl    || null;
 
   const imgHTML = fImgUrl
-    ? `<img src="http://clublywebsite.runasp.net${fImgUrl}" alt="${fName}"
+    ? `<img src="https://localhost:7132${fImgUrl}" alt="${fName}"
             onerror="this.parentElement.innerHTML='<div class=placeholder-img><i class=bi bi-image style=font-size:2rem;opacity:.4></i></div>'">`
     : `<div class="placeholder-img"><i class="bi bi-image" style="font-size:2rem;opacity:.4;"></i></div>`;
 
@@ -301,7 +301,7 @@ async function openSchedulePicker(facilityId, facilityName) {
   modal.show();
 
   try {
-    const res  = await fetch('http://clublywebsite.runasp.net/api/FacilitySchedules');
+    const res  = await fetch('https://localhost:7132/api/FacilitySchedules');
     const all  = res.ok ? await res.json() : [];
 
     const scheds = all.filter(s => {

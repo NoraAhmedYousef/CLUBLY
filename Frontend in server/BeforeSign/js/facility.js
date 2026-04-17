@@ -15,8 +15,8 @@ async function loadFacilities() {
 
   try {
     const [facRes, catRes] = await Promise.all([
-      fetch("http://clublywebsite.runasp.net/api/Facilities"),
-      fetch("http://clublywebsite.runasp.net/api/FacilityCategories")
+      fetch("https://localhost:7132/api/Facilities"),
+      fetch("https://localhost:7132/api/FacilityCategories")
     ]);
     if (!facRes.ok || !catRes.ok) throw new Error("Failed to fetch data");
 
@@ -122,7 +122,7 @@ function facilityCardHtml(fac, catName) {
   const fImgUrl = fac.ImageUrl    || fac.imageUrl    || null;
 
   const imgHTML = fImgUrl
-    ? `<img src="http://clublywebsite.runasp.net${fImgUrl}" alt="${fName}"
+    ? `<img src="https://localhost:7132${fImgUrl}" alt="${fName}"
             onerror="this.parentElement.innerHTML='<div class=placeholder-img><i class=bi bi-image style=font-size:2rem;opacity:.4></i></div>'">`
     : `<div class="placeholder-img"><i class="bi bi-image" style="font-size:2rem;opacity:.4;"></i></div>`;
 
@@ -245,11 +245,9 @@ function clearFacilityFilters() {
 // ── Book ──────────────────────────────────────────────────────────────────────
 function handleBookFacility(id) {
   if (!localStorage.getItem('token')) { showSignInToast('facility'); return; }
-  const fac   = window._allFacilities?.find(f => (f.Id || f.id) == id);
-  const name  = fac?.Name  || fac?.name  || 'Facility';
-  const price = fac?.Price || fac?.price || 0;
-  openBookingModal('facility', id, name, price);
+  window.location.href = `booking.html?facility=${id}`;
 }
+
 function showSignInToast(label) {
   let t = document.getElementById('signin-toast');
   if (!t) {

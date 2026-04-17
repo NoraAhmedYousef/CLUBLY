@@ -14,8 +14,8 @@ async function loadActivities() {
 
   try {
     const [actRes, trRes] = await Promise.all([
-      fetch("http://clublywebsite.runasp.net/api/Activities"),
-      fetch("http://clublywebsite.runasp.net/api/Trainers")
+      fetch("https://localhost:7132/api/Activities"),
+      fetch("https://localhost:7132/api/Trainers")
     ]);
 
     const data     = actRes.ok ? await actRes.json() : [];
@@ -76,7 +76,7 @@ function renderActivities(list) {
     const imgUrl  = a.ImageUrl    || a.imageUrl    || null;
 
     const imgStyle = imgUrl
-      ? `background-image:url('http://clublywebsite.runasp.net${imgUrl}');`
+      ? `background-image:url('https://localhost:7132${imgUrl}');`
       : `background:linear-gradient(135deg,#0d1b2a,#1e3a5f);`;
 
     const priceBadge = price != null
@@ -187,6 +187,7 @@ async function openActivityGroupPicker(activityId, activityName) {
       <div class="spinner-border spinner-border-sm" style="color:#e85d2f"></div>
       <p class="mt-2 small text-muted">Loading groups…</p>
     </div>`;
+onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${fromDate}','','',${price},'${encodeURIComponent(trainer)}',${g.durationDays||0},${g.trainerId||g.TrainerId||'null'})"
 
   const confirmBtn = document.getElementById('actPickerConfirm');
   confirmBtn.style.opacity = '.4';
@@ -199,7 +200,7 @@ async function openActivityGroupPicker(activityId, activityName) {
   new bootstrap.Modal(document.getElementById('actPickerModal')).show();
 
   try {
-const res  = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
+const res  = await fetch('https://localhost:7132/api/ActivityGroups');
     const all  = res.ok ? await res.json() : [];
 
   const groups = all.filter(g => {
@@ -237,7 +238,7 @@ const dateRange = fromDate === toDate
 const btnId = `actgrp_${gid}`;
 html += `
 <button class="act-slot-btn" id="${btnId}"
-onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${fromDate}','','',${price},'${encodeURIComponent(trainer)}',${g.durationDays||0})"  style="width:100%;text-align:left;border:2px solid var(--border,#e2e8f0);background:var(--bg,#f0f4f8);border-radius:14px;padding:14px 16px;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .18s;">
+onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${fromDate}','','',${price},'${encodeURIComponent(trainer)}',${g.durationDays||0},${g.trainerId||g.TrainerId||'null'})"  style="width:100%;text-align:left;border:2px solid var(--border,#e2e8f0);background:var(--bg,#f0f4f8);border-radius:14px;padding:14px 16px;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .18s;">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
     <span style="font-size:.95rem;font-weight:900;color:var(--text,#1a202c);">${gname}</span>
     ${price > 0
@@ -276,7 +277,7 @@ return `<span style="font-size:.75rem;font-weight:700;padding:4px 10px;border-ra
   }
 }
 
-function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime, price, trainer, durationDays) {
+function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime, price, trainer, durationDays, trainerId) {
     document.querySelectorAll('.act-slot-btn').forEach(btn => {
     btn.style.borderColor = 'var(--border,#e2e8f0)';
     btn.style.background  = 'var(--bg,#f0f4f8)';
@@ -292,7 +293,8 @@ function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime,
   }
 window._actPickerChoice = { 
   groupId, groupName, date, startTime, endTime, price, trainer, durationDays,
-  activityId: window._currentActivityId || 0
+  activityId: window._currentActivityId || 0,
+  trainerId: trainerId || null 
 };  document.getElementById('actPickerSelected').innerHTML =
     `<i class="bi bi-check-circle-fill" style="color:#2ec4b6"></i> <strong>${groupName}</strong> &nbsp; ${date} &nbsp; ${startTime} → ${endTime}`;
 
@@ -307,7 +309,7 @@ function actPickerConfirm() {
 
   const c = window._actPickerChoice;
     window._actPickerActivityId = c.activityId || window._currentActivityId || 0;
-
+ window._actPickerTrainerId  = c.trainerId || null;
   openBookingModal('activity', c.groupId, window._actPickerActivityName, c.price);
 
  setTimeout(() => {

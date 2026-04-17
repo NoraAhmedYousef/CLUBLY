@@ -1,6 +1,6 @@
 // ── Trainer Page JS ─────────────────────────────────────────────────────────
-const TRAINER_API  = 'http://clublywebsite.runasp.net/api/Trainers';
-const ACTIVITY_API = 'http://clublywebsite.runasp.net/api/Activities';
+const TRAINER_API  = 'https://localhost:7132/api/Trainers';
+const ACTIVITY_API = 'https://localhost:7132/api/Activities';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadTrainers();
@@ -39,7 +39,20 @@ async function loadTrainers() {
       container.innerHTML = `<p class="text-center text-muted py-5">No trainers available right now.</p>`;
       return;
     }
+ // ✅ جلب الـ ratings هنا — جوه loadTrainers اللي هي async
+    const ratingsResults = await Promise.allSettled(
+      activeTrainers.map(t =>
+        fetch(`https://localhost:7132/api/TrainerRatings/trainer/${t.Id || t.id}`)
+          .then(r => r.ok ? r.json() : null)
+          .catch(() => null)
+      )
+    );
 
+    ratingsResults.forEach((result, i) => {
+      if (result.status === 'fulfilled' && result.value) {
+        activeTrainers[i].rating = result.value.averageRating ?? null;
+      }
+    });
     window._trainersData  = activeTrainers;
     window._activitiesData = activeActs;
 
@@ -220,8 +233,9 @@ function trainerCardHtml(t, i, palette) {
   const exp       = t.YearsOfExperience ?? t.yearsOfExperience ?? null;
   const email     = t.Email  || t.email  || null;
   const phone     = t.Phone  || t.phone  || null;
-  const imgSrc    = (t.ImageUrl || t.imageUrl) ? 'http://clublywebsite.runasp.net' + (t.ImageUrl || t.imageUrl) : null;
-  const rating    = (t.Rating || t.rating) ? parseFloat(t.Rating || t.rating) : null;
+  const imgSrc    = (t.ImageUrl || t.imageUrl) ? 'https://localhost:7132' + (t.ImageUrl || t.imageUrl) : null;
+const ratingRaw = t.Rating ?? t.rating ?? null;
+const rating = ratingRaw !== null && ratingRaw !== '' ? parseFloat(ratingRaw) : null;
   const color     = palette[i % palette.length];
   const initials  = fullName.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
   const id        = t.Id || t.id || i;
@@ -242,7 +256,7 @@ function trainerCardHtml(t, i, palette) {
       </div>
       <div class="trainer-card-body">
         <div class="trainer-name">${fullName}</div>
-        ${rating ? `<div class="trainer-rating">${renderStars(rating)}<span class="rating-num">${rating.toFixed(1)}</span></div>` : ''}
+        ${rating !== null ? `<div class="trainer-rating">${renderStars(rating)}<span class="rating-num">${rating.toFixed(1)}</span></div>` : ''}
         ${exp !== null ? `<div class="trainer-info-row"><i class="bi bi-clock-history"></i><span>${exp} years experience</span></div>` : ''}
         ${email ? `<div class="trainer-info-row"><i class="bi bi-envelope-fill"></i><span>${email}</span></div>` : ''}
         ${phone ? `<div class="trainer-info-row"><i class="bi bi-telephone-fill"></i><span>${phone}</span></div>` : ''}
@@ -317,7 +331,7 @@ async function handleBookTrainer(id) {
 
   let trainerGroups = [];
   try {
-    const res = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
+    const res = await fetch('https://localhost:7132/api/ActivityGroups');
     const all = res.ok ? await res.json() : [];
     trainerGroups = all.filter(g =>
       (g.trainerId || g.TrainerId) == id &&
