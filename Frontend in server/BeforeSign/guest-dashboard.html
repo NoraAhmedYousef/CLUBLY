@@ -2215,7 +2215,7 @@ const styleEl = document.createElement('style');
 styleEl.textContent = `.benefit-item { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); color:var(--text); font-size:.88rem; } .benefit-item:last-child { border-bottom:none; } .benefit-item i { font-size:.95rem; margin-top:2px; flex-shrink:0; }`;
 document.head.appendChild(styleEl);
 // ===== GUEST PROFILE =====
-const guestApiUrl = 'http://clublywebsite.runasp.net/Guests'; // غيري لو الـ endpoint مختلف
+const guestApiUrl = 'http://clublywebsite.runasp.net/api/Guests'; // غيري لو الـ endpoint مختلف
 const guestId = localStorage.getItem('userId');
 
 async function loadGuestProfile() {
