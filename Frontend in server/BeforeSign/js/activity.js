@@ -73,7 +73,7 @@ function renderActivities(list) {
     const imgUrl  = a.ImageUrl    || a.imageUrl    || null;
 
     const imgStyle = imgUrl
-      ? `background-image:url('https://localhost:7132${imgUrl}');`
+      ? `background-image:url('http://clublywebsite.runasp.net${imgUrl}');`
       : `background:linear-gradient(135deg,#0d1b2a,#1e3a5f);`;
 
     const priceBadge = price != null

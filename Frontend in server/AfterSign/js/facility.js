@@ -128,7 +128,7 @@ function facilityCardHtml(fac, catName) {
   const fImgUrl = fac.ImageUrl    || fac.imageUrl    || null;
 
   const imgHTML = fImgUrl
-    ? `<img src="https://localhost:7132${fImgUrl}" alt="${fName}"
+    ? `<img src="http://clublywebsite.runasp.net${fImgUrl}" alt="${fName}"
             onerror="this.parentElement.innerHTML='<div class=placeholder-img><i class=bi bi-image style=font-size:2rem;opacity:.4></i></div>'">`
     : `<div class="placeholder-img"><i class="bi bi-image" style="font-size:2rem;opacity:.4;"></i></div>`;
 

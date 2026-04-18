@@ -1960,7 +1960,7 @@ const d = n.sentAt
         +' at '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}) : '';
     const shortDesc = (n.description||'').length>130 ? n.description.substring(0,130)+'…' : (n.description||'');
     const thumbHtml = n.imageUrl
-      ? `<img src="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}"
+      ? `<img src="${n.imageUrl.startsWith('http')?n.imageUrl:'http://clublywebsite.runasp.net'+n.imageUrl}"
              style="width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;">` : '';
 
     return `
@@ -2068,7 +2068,7 @@ const d = n.sentAt
   }
 
 modal.innerHTML = `
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
       <div class="modal-content modal-content-cl" style="background:var(--card-bg);border-radius:16px;border:1px solid var(--border);">
 <div class="modal-header-cl" style="display:flex;align-items:center;gap:14px;
              background:var(--clubly-dark);border-radius:16px 16px 0 0;">          <div style="width:46px;height:46px;border-radius:50%;background:${cfg.bg};color:${cfg.color};
@@ -2093,8 +2093,8 @@ modal.innerHTML = `
           </div>
           ${n.imageUrl?`
           <div style="margin-bottom:16px;">
-            <a href="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}" target="_blank">
-              <img src="${n.imageUrl.startsWith('http')?n.imageUrl:'https://localhost:7132'+n.imageUrl}"
+            <a href="${n.imageUrl.startsWith('http')?n.imageUrl:'http://clublywebsite.runasp.net'+n.imageUrl}" target="_blank">
+              <img src="${n.imageUrl.startsWith('http')?n.imageUrl:'http://clublywebsite.runasp.net'+n.imageUrl}"
                 style="max-width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid var(--border);cursor:pointer;">
             </a>
           </div>`:''}
@@ -2222,7 +2222,7 @@ async function loadTrainerProfile() {
     // Image
     if (t.imageUrl) {
       const img = document.getElementById('profileImg');
-      img.src = t.imageUrl.startsWith('http') ? t.imageUrl : 'https://localhost:7132' + t.imageUrl;
+      img.src = t.imageUrl.startsWith('http') ? t.imageUrl : 'http://clublywebsite.runasp.net' + t.imageUrl;
       img.style.display = 'block';
       document.getElementById('profileInitials').style.display = 'none';
     }

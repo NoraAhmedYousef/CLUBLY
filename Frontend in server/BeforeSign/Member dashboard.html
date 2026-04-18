@@ -1423,7 +1423,7 @@ body {
 
 <!-- ===== MEMBER NOTIFICATION DETAIL MODAL ===== -->
 <div class="modal fade" id="memberNotifDetailModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
     <div class="modal-content modal-content-clubly">
 
       <div class="modal-header-clubly d-flex align-items-center gap-3">
@@ -2095,7 +2095,7 @@ if (m.memberShipNumber)  document.getElementById('membershipNumber').value = 'CB
     // Profile image
     if (m.imageUrl) {
       const img = document.getElementById('profileImg');
-      img.src = m.imageUrl.startsWith('http') ? m.imageUrl : 'https://localhost:7132' + m.imageUrl;
+      img.src = m.imageUrl.startsWith('http') ? m.imageUrl : 'http://clublywebsite.runasp.net' + m.imageUrl;
       img.style.display = 'block';
       document.getElementById('profileInitials').style.display = 'none';
     }
@@ -2728,7 +2728,7 @@ const d = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
       : (n.description || '');
 
     const thumbHtml = n.imageUrl
-      ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
+      ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'http://clublywebsite.runasp.net' + n.imageUrl}"
               class="mn-thumb" alt="">`
       : '';
 
@@ -2885,8 +2885,8 @@ function openMemberNotifDetail(id) {
           </div>
           ${n.imageUrl ? `
           <div style="margin-bottom:16px;">
-            <a href="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}" target="_blank">
-              <img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://localhost:7132' + n.imageUrl}"
+            <a href="${n.imageUrl.startsWith('http') ? n.imageUrl : 'http://clublywebsite.runasp.net' + n.imageUrl}" target="_blank">
+              <img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'http://clublywebsite.runasp.net' + n.imageUrl}"
                 style="max-width:100%;max-height:260px;object-fit:cover;
                        border-radius:12px;border:1px solid var(--border);cursor:pointer;">
             </a>

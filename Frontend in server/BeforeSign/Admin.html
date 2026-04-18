@@ -2389,7 +2389,7 @@ body {
 </div>
 <!-- ===== MY NOTIFICATION DETAIL MODAL ===== -->
 <div class="modal fade" id="myNotifDetailModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
     <div class="modal-content rounded-4">
 
     <div class="modal-header border-0" style="background:#0d1b2a;border-radius:16px 16px 0 0;padding:20px 24px;">
@@ -2404,39 +2404,34 @@ body {
 </div>
 
       <div class="modal-body px-4 pb-2">
-
-        <!-- Type Badge -->
-        <div class="mb-3">
-          <span id="mnd_typeBadge" class="badge fs-6 px-3 py-2 me-2"></span>
-          <span id="mnd_statusBadge" class="badge bg-secondary fs-6 px-3 py-2"></span>
-        </div>
-
+<div class="mb-3">
+  <span id="mnd_typeBadge" class="badge px-3 py-2" 
+    style="background:rgba(13,202,240,.15);color:#0590a8;border:1px solid rgba(13,202,240,.3);font-size:.85rem;border-radius:20px;">
+  </span>
+</div>
         <!-- Description -->
         <div class="clubly-card p-3 mb-3">
           <p id="mnd_description" class="mb-0" style="white-space:pre-wrap;line-height:1.8;font-size:.95rem;"></p>
         </div>
 
         <!-- Image -->
-        <div id="mnd_imageWrap" class="mb-3" style="display:none">
-          <label class="form-label text-muted">
-            <i class="bi bi-image me-1"></i>Attached Image
-          </label>
-          <div>
-            <a id="mnd_imageLink" href="#" target="_blank">
-              <img id="mnd_image"
-                style="max-width:100%;max-height:280px;object-fit:cover;
-                border-radius:12px;border:1px solid var(--border);cursor:pointer;">
-            </a>
-          </div>
-        </div>
+   <div id="mnd_imageWrap"
+       style="display:none; flex-shrink:0; width:200px; order:-1;">
+    <a id="mnd_imageLink" href="#" target="_blank">
+      <img id="mnd_image"
+        style="width:350px;height:250px;object-fit:cover;
+        border-radius:12px;border:1px solid var(--border);
+        cursor:pointer;display:block;">
+  </a>
+</div>
 
         <!-- Sent At -->
-        <div class="d-flex align-items-center gap-2 mt-2">
-          <i class="bi bi-clock text-muted"></i>
-          <small class="text-muted">Sent:</small>
-          <span id="mnd_sentAt" class="badge bg-light text-dark border px-3 py-1"
-            style="font-size:.8rem;font-weight:600;"></span>
-        </div>
+    <div class="d-flex align-items-center gap-2 mt-2">
+  <i class="bi bi-clock text-muted"></i>
+  <small class="text-muted">Sent:</small>
+  <span id="mnd_sentAt" class="badge px-3 py-1"
+    style="font-size:.8rem;font-weight:600;background:rgba(25,135,84,.15);color:#198754;border:1px solid rgba(25,135,84,.3);border-radius:20px;"></span>
+</div>
       </div>
 
       <div class="modal-footer border-0">
@@ -2974,8 +2969,12 @@ function showToastIn(containerId, msg, type='success') {
 // ===================================================
 // HELPER FUNCTIONS
 // ===================================================
-function fixUrl(url) { if(!url) return ''; return url.startsWith('http') ? url : 'https://localhost:7132' + url; }
-function escapeHtml(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fixUrl(url) {
+  if (!url) return '';
+  if (url.startsWith('http')) return url;
+  // غيّر الـ base URL لو الـ API على سيرفر تاني
+  return 'http://clublywebsite.runasp.net' + url;
+}function escapeHtml(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function extractFromNationalId(nid) {
   if(!/^\d{14}$/.test(nid)) return null;
   const century = nid[0], year = nid.substr(1,2), month = nid.substr(3,2), day = nid.substr(5,2), genderDigit = parseInt(nid[12]);
@@ -3643,12 +3642,7 @@ async function deleteSchedule(id) {
   });
 }
 
-// ── Auto-load when facility page opens ───────────────────────────────────────
-const _origShowPage = window.showPage;
-window.showPage = function(name) {
-  if (typeof _origShowPage === 'function') _origShowPage(name);
-  if (name === 'facility') setTimeout(loadSchedules, 300);
-};
+
 
 // ============== ACTIVITIES MODULE ==================
 // ===================================================
@@ -4464,9 +4458,11 @@ function renderMyNotifList() {
       ? escapeHtml(n.description.substring(0, 140)) + '…'
       : escapeHtml(n.description || '');
 
-    const thumbHtml = n.imageUrl
-      ? `<img src="${fixUrl(n.imageUrl)}" class="notif-thumb" alt="">` : '';
-
+ const thumbHtml = n.imageUrl
+  ? `<img src="${fixUrl(n.imageUrl)}" class="notif-thumb" alt=""
+       onerror="this.style.display='none'"
+       style="width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border);flex-shrink:0;">` 
+  : '';
     const unreadDot = !isRead
       ? `<span class="unread-dot" title="Unread"></span>` : '';
 
@@ -4535,7 +4531,6 @@ async function openMyNotifDetail(id) {
   const typeBadgeEl = document.getElementById('mnd_typeBadge');
   typeBadgeEl.className   = `badge fs-6 px-3 py-2 ${cfg.badge}`;
   typeBadgeEl.textContent = n.type || 'Info';
-  document.getElementById('mnd_statusBadge').textContent = n.status || 'Sent';
 
   const raw = n.sentAt || n.SentAt;
   const d   = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
@@ -4730,12 +4725,16 @@ window.showPage = function(name) {
     if (l.getAttribute('onclick')?.includes("'" + name + "'")) l.classList.add('active');
   });
   window.scrollTo(0, 0);
-  if (pageLoadFlags[name]) return;
-  pageLoadFlags[name] = true;
+if (pageLoadFlags[name]) {
+  // أعد تحميل الـ schedules كل مرة بتدخل صفحة facility
+  if (name === 'facility') loadSchedules();
+  return;
+}  pageLoadFlags[name] = true;
+if (name === 'facility') { loadFacilityCategories(); loadFacilities(); loadSchedules(); }
+
   if (name === 'trainer') { loadActivitiesForTrainers(); loadTrainers(); }
   if (name === 'trainer-ratings') loadTrainerRatingsAdmin();
   if (name === 'category') fetchCategories();
-  if (name === 'facility') { loadFacilityCategories(); loadFacilities(); }
   if (name === 'activity') { loadFacilitiesForAct(); loadActivities(); }
   if (name === 'group') { loadActivitiesForGroups(); loadGroups(); }
   if (name === 'membership') fetchMemberships();
@@ -5546,7 +5545,7 @@ function renderAdminActivityTable(data) {
         <td>${b.totalPrice} EGP</td>
         <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
         <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="http://clublywebsite.runasp.net${b.receiptImageUrl}" target="_blank"><img src="http://clublywebsite.runasp.net${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
         <td>${getStatusBadge(b.status)}</td>
         <td style="min-width:200px;">${getActionButtons(b.id, b.status, 'activity')}</td>
       </tr>`).join('')
@@ -5567,7 +5566,7 @@ function renderAdminFacilityTable(data) {
         <td>${b.price} EGP</td>
         <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
         <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="http://clublywebsite.runasp.net${b.receiptImageUrl}" target="_blank"><img src="http://clublywebsite.runasp.net${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
         <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
         <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
       </tr>`).join('')
@@ -5592,7 +5591,7 @@ function renderAdminGuestActTable(data) {
         <td>${b.totalPrice} EGP</td>
         <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
         <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="http://clublywebsite.runasp.net${b.receiptImageUrl}" target="_blank"><img src="http://clublywebsite.runasp.net${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
         <td>${getStatusBadge(b.status)}</td>
         <td>${getActionButtons(b.id, b.status, 'activity')}</td>
       </tr>`).join('')
@@ -5615,7 +5614,7 @@ function renderAdminGuestFacTable(data) {
         <td>${b.price} EGP</td>
         <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
         <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
-        <td>${b.receiptImageUrl ? `<a href="https://localhost:7132${b.receiptImageUrl}" target="_blank"><img src="https://localhost:7132${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="http://clublywebsite.runasp.net${b.receiptImageUrl}" target="_blank"><img src="http://clublywebsite.runasp.net${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : '<span class="text-muted small">No receipt</span>'}</td>
         <td class="sticky-col-2">${getStatusBadge(b.status)}</td>
         <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
       </tr>`).join('')

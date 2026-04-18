@@ -233,7 +233,7 @@ function trainerCardHtml(t, i, palette) {
   const exp       = t.YearsOfExperience ?? t.yearsOfExperience ?? null;
   const email     = t.Email  || t.email  || null;
   const phone     = t.Phone  || t.phone  || null;
-  const imgSrc    = (t.ImageUrl || t.imageUrl) ? 'https://localhost:7132' + (t.ImageUrl || t.imageUrl) : null;
+  const imgSrc    = (t.ImageUrl || t.imageUrl) ? 'http://clublywebsite.runasp.net' + (t.ImageUrl || t.imageUrl) : null;
 const ratingRaw = t.Rating ?? t.rating ?? null;
 const rating = ratingRaw !== null && ratingRaw !== '' ? parseFloat(ratingRaw) : null;
   const color     = palette[i % palette.length];
