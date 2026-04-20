@@ -60,3 +60,4 @@ wwwroot\receipts\11f1f98e-5a63-4910-8141-ba9af4374efd.png
 wwwroot\receipts\73a2036c-4dbe-43cd-bb4d-39655ecb3863.png
 wwwroot\receipts\8296d9aa-ea84-4aae-a7b8-389e0df9f5ae.png
 wwwroot\receipts\1b609ae7-f2c0-432e-905d-4b5c269b2b52.png
+wwwroot\Uploads\notifications\8a6d27f8-4492-4dbd-9949-788d804407b6.png

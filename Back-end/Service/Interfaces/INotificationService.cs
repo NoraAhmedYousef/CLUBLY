@@ -1,4 +1,5 @@
 ﻿using Clubly.DTO;
+using Clubly.Model;
 
 namespace Clubly.Service.Interfaces
 {
@@ -9,5 +10,9 @@ namespace Clubly.Service.Interfaces
         Task<NotificationResponseDto> CreateAsync(NotificationDto dto);
         Task<NotificationResponseDto?> UpdateAsync(int id, NotificationDto dto);
         Task<bool> DeleteAsync(int id);
+        Task MarkReadAsync(int notifId, MarkReadDto dto);
+        Task MarkAllReadAsync(MarkReadDto dto);
+        Task<DateTime> GetUserCreatedAtAsync(string role, int userId);
+        Task<IEnumerable<NotificationResponseDto>> GetForRoleAsync(string role, int userId, DateTime userCreatedAt);
     }
 }

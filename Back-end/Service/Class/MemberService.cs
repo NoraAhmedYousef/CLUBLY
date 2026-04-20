@@ -119,11 +119,13 @@ namespace SignUp.Service.Classes
             // -------- update password ----------
             if (!string.IsNullOrEmpty(dto.NewPassword))
             {
-                if (string.IsNullOrEmpty(dto.CurrentPassword))
-                    throw new Exception("Current password is required");
-
-                if (!VerifyPassword(dto.CurrentPassword, m.PasswordHash, m.PasswordSalt))
-                    throw new Exception("Current password is incorrect");
+                // لو في CurrentPassword - verify it
+                // لو مفيش (admin dashboard) - just update directly
+                if (!string.IsNullOrEmpty(dto.CurrentPassword))
+                {
+                    if (!VerifyPassword(dto.CurrentPassword, m.PasswordHash, m.PasswordSalt))
+                        throw new Exception("Current password is incorrect");
+                }
 
                 CreatePasswordHash(dto.NewPassword, out string hash, out string salt);
                 m.PasswordHash = hash;

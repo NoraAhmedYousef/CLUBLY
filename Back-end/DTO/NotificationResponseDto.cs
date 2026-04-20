@@ -13,7 +13,7 @@
         public bool ToGuests { get; set; }
         public string? Type { get; set; }
         public string? ImageUrl { get; set; }
-
+        public bool IsRead { get; set; }
         public List<string> Recipients
         {
             get

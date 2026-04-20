@@ -18,6 +18,8 @@ namespace Clubly.Repository.Class
         {
             return await _db.Guests
                 .Include(g => g.ActivityBookings)
+                .Include(g => g.FacilityBookings)  // ← أضفها
+                .OrderByDescending(g => g.CreatedAt) // ← أحدث أول
                 .ToListAsync();
         }
 
@@ -25,11 +27,17 @@ namespace Clubly.Repository.Class
         {
             return await _db.Guests
                 .Include(g => g.ActivityBookings)
+                .Include(g => g.FacilityBookings)  // ← أضفها
                 .FirstOrDefaultAsync(g => g.Id == id);
         }
 
         public async Task AddAsync(Guest guest)
         {
+            // تحقق إن الإيميل مش موجود
+            var exists = await _db.Guests.AnyAsync(g => g.Email == guest.Email);
+            if (exists)
+                throw new Exception("Email already registered");
+
             _db.Guests.Add(guest);
             await _db.SaveChangesAsync();
         }

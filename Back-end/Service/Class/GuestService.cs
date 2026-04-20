@@ -59,17 +59,32 @@ namespace Clubly.Service.Class
 
             if (!string.IsNullOrWhiteSpace(dto.FirstName)) g.FirstName = dto.FirstName;
             if (!string.IsNullOrWhiteSpace(dto.LastName)) g.LastName = dto.LastName;
+            if (!string.IsNullOrWhiteSpace(dto.Email)) g.Email = dto.Email;
             if (!string.IsNullOrWhiteSpace(dto.Phone)) g.Phone = dto.Phone;
+            if (!string.IsNullOrWhiteSpace(dto.NationalId)) g.NationalId = dto.NationalId;
+            if (!string.IsNullOrWhiteSpace(dto.Gender)) g.Gender = dto.Gender;
+            if (dto.DateOfBirth.HasValue) g.DateOfBirth = dto.DateOfBirth.Value;
 
-            // Password update
+            // Image
+            if (dto.Image != null && dto.Image.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "guests");
+                Directory.CreateDirectory(uploadsFolder);
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(dto.Image.FileName)}";
+                var filePath = Path.Combine(uploadsFolder, fileName);
+                using var stream = new FileStream(filePath, FileMode.Create);
+                await dto.Image.CopyToAsync(stream);
+                g.ImageUrl = $"/uploads/guests/{fileName}";
+            }
+
+            // Password
             if (!string.IsNullOrWhiteSpace(dto.NewPassword))
             {
-                if (string.IsNullOrWhiteSpace(dto.CurrentPassword))
-                    throw new Exception("Current password is required");
-
-                if (!VerifyPassword(dto.CurrentPassword, g.PasswordHash, g.PasswordSalt))
-                    throw new Exception("Current password is incorrect");
-
+                if (!string.IsNullOrWhiteSpace(dto.CurrentPassword))
+                {
+                    if (!VerifyPassword(dto.CurrentPassword, g.PasswordHash, g.PasswordSalt))
+                        throw new Exception("Current password is incorrect");
+                }
                 CreatePasswordHash(dto.NewPassword, out string hash, out string salt);
                 g.PasswordHash = hash;
                 g.PasswordSalt = salt;
@@ -78,7 +93,6 @@ namespace Clubly.Service.Class
             await _repo.UpdateAsync(g);
             return ToDto(g);
         }
-
         // DELETE
         public async Task<bool> DeleteAsync(int id)
         {
@@ -101,6 +115,8 @@ namespace Clubly.Service.Class
             NationalId = g.NationalId,
             Gender = g.Gender,
             DateOfBirth = g.DateOfBirth,
+            ImageUrl = g.ImageUrl,   // ← أضفها
+
             CreatedAt = g.CreatedAt
         };
 

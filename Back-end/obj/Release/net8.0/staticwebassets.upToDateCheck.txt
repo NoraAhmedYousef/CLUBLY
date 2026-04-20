@@ -60,3 +60,4 @@ wwwroot\receipts\d0b3cf7d-d3c6-45c1-beb5-aef173ef1244.png
 wwwroot\receipts\d1f31fcf-ed27-4882-ab81-116560843380.png
 wwwroot\receipts\ecc53bf1-336d-4613-813c-568baecec1b5.png
 wwwroot\Uploads\Trainers\8c60db2d-b8d1-43f1-a449-f0fb46e4f02c.png
+wwwroot\Uploads\notifications\8a6d27f8-4492-4dbd-9949-788d804407b6.png

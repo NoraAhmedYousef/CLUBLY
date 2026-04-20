@@ -2331,14 +2331,31 @@
                   "LastName": {
                     "type": "string"
                   },
+                  "Email": {
+                    "type": "string"
+                  },
                   "Phone": {
                     "type": "string"
+                  },
+                  "NationalId": {
+                    "type": "string"
+                  },
+                  "Gender": {
+                    "type": "string"
+                  },
+                  "DateOfBirth": {
+                    "type": "string",
+                    "format": "date-time"
                   },
                   "CurrentPassword": {
                     "type": "string"
                   },
                   "NewPassword": {
                     "type": "string"
+                  },
+                  "Image": {
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               },
@@ -2349,13 +2366,28 @@
                 "LastName": {
                   "style": "form"
                 },
+                "Email": {
+                  "style": "form"
+                },
                 "Phone": {
+                  "style": "form"
+                },
+                "NationalId": {
+                  "style": "form"
+                },
+                "Gender": {
+                  "style": "form"
+                },
+                "DateOfBirth": {
                   "style": "form"
                 },
                 "CurrentPassword": {
                   "style": "form"
                 },
                 "NewPassword": {
+                  "style": "form"
+                },
+                "Image": {
                   "style": "form"
                 }
               }
@@ -3011,6 +3043,171 @@
         }
       }
     },
+    "/api/Notifications/{id}/read": {
+      "post": {
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notifications/mark-all-read": {
+      "post": {
+        "tags": [
+          "Notifications"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notifications/for-guest/{guestId}": {
+      "get": {
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "guestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notifications/for-member/{memberId}": {
+      "get": {
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "memberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notifications/for-trainer/{trainerId}": {
+      "get": {
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "trainerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Notifications/for-admin/{adminId}": {
+      "get": {
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "adminId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/TrainerRatings": {
       "post": {
         "tags": [
@@ -3518,9 +3715,15 @@
         "additionalProperties": false
       },
       "AttendanceRecord": {
+        "required": [
+          "bookingId",
+          "isPresent"
+        ],
         "type": "object",
         "properties": {
           "bookingId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
@@ -3528,6 +3731,8 @@
             "type": "boolean"
           },
           "notes": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           }
@@ -3789,15 +3994,17 @@
           },
           "question": {
             "maxLength": 300,
-            "minLength": 1,
+            "minLength": 10,
             "type": "string"
           },
           "answer": {
             "maxLength": 2000,
-            "minLength": 1,
+            "minLength": 10,
             "type": "string"
           },
           "displayOrder": {
+            "maximum": 10000,
+            "minimum": 0,
             "type": "integer",
             "format": "int32"
           },
@@ -3830,7 +4037,34 @@
           },
           "role": {
             "minLength": 1,
+            "pattern": "^(admin|member|trainer|guest)$",
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MarkReadDto": {
+        "type": "object",
+        "properties": {
+          "guestId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "memberId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "trainerId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "adminId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3845,37 +4079,49 @@
         "type": "object",
         "properties": {
           "firstName": {
-            "minLength": 1,
+            "maxLength": 50,
+            "minLength": 2,
             "type": "string"
           },
           "lastName": {
-            "minLength": 1,
+            "maxLength": 50,
+            "minLength": 2,
             "type": "string"
           },
           "email": {
-            "minLength": 1,
+            "maxLength": 150,
+            "minLength": 0,
             "type": "string",
             "format": "email"
           },
           "password": {
-            "minLength": 6,
+            "maxLength": 100,
+            "minLength": 8,
+            "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
             "type": "string"
           },
           "phone": {
+            "maxLength": 20,
+            "minLength": 0,
             "type": "string",
+            "format": "tel",
             "nullable": true
           },
           "nationalId": {
+            "maxLength": 20,
+            "minLength": 5,
+            "pattern": "^[A-Za-z0-9]+$",
             "type": "string",
             "nullable": true
           },
           "gender": {
+            "pattern": "^(Male|Female|Other)$",
             "type": "string",
             "nullable": true
           },
           "dateOfBirth": {
             "type": "string",
-            "format": "date-time",
+            "format": "date",
             "nullable": true
           }
         },
