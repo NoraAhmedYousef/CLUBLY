@@ -2068,7 +2068,7 @@ const d = n.sentAt
   }
 
 modal.innerHTML = `
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
       <div class="modal-content modal-content-cl" style="background:var(--card-bg);border-radius:16px;border:1px solid var(--border);">
 <div class="modal-header-cl" style="display:flex;align-items:center;gap:14px;
              background:var(--clubly-dark);border-radius:16px 16px 0 0;">          <div style="width:46px;height:46px;border-radius:50%;background:${cfg.bg};color:${cfg.color};
@@ -3055,7 +3055,26 @@ async function loadAttendancePage() {
 
 function onAttGroupChange() {
   const groupId = document.getElementById('attGroupSelect').value;
-  if (!groupId) return;
+
+  // ✅ لو رجع لـ "Select Group" → reset كل حاجة
+  if (!groupId) {
+    _attData = [];
+    document.getElementById('attSummaryBar').style.display    = 'none';
+    document.getElementById('attQuickActions').style.display  = 'none';
+    document.getElementById('saveAllBtn').style.display       = 'none';
+    document.getElementById('attSummarySection').style.display = 'none';
+    document.getElementById('attDayInfo').textContent         = '';
+    document.getElementById('attSubtitle').textContent        = 'Select a group and date to take attendance';
+    document.getElementById('attDate').value                  = '';
+    document.getElementById('attList').innerHTML = `
+      <div style="padding:60px 20px;text-align:center;color:var(--muted);">
+        <i class="bi bi-calendar-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;">Select a group and date to start</p>
+      </div>`;
+    return;
+  }
+
+  // لو فيه group مختار → زي ما كان
   document.getElementById('attDate').value = new Date().toISOString().slice(0,10);
   const group = _attGroups.find(g => String(g.id) === String(groupId));
   if (group?.timeSlots?.length) {
@@ -3075,25 +3094,113 @@ async function loadAttendanceList() {
       <div class="spinner-border spinner-border-sm me-2"></div>Loading…
     </div>`;
 
-  try {
+  // Check valid day
+  const group = _attGroups.find(g => String(g.id) === String(groupId));
+  let isValidDay = true;
+  let validDays  = [];
+  if (group?.timeSlots?.length) {
+    const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
+    validDays  = group.timeSlots.map(s => s.day);
+    isValidDay = validDays.includes(dayName);
+  }
+
+try {
     const res = await fetch(`${ATT_API}?groupId=${groupId}&date=${date}`);
-    _attData = res.ok ? await res.json() : [];
-    renderAttendanceList();
-    updateAttSummary();
-    loadMemberSummaries();
-    document.getElementById('attSummaryBar').style.display    = '';
-    document.getElementById('attQuickActions').style.display  = '';
-    document.getElementById('saveAllBtn').style.display       = '';
-    document.getElementById('attSummarySection').style.display = '';
+    const allData = res.ok ? await res.json() : [];
+    
+    // ✅ فلتر: شيل الـ members اللي خلصت subscriptions بتاعتهم
+    _attData = allData.filter(m => {
+      if (!m.endDate) return true; // لو مفيش endDate خليه
+      return new Date(m.endDate) >= new Date(date);
+    });
+
     const d = new Date(date);
     document.getElementById('attSubtitle').textContent =
-      `${_attData.length} members · ${d.toLocaleDateString('en-GB',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}`;
+      `${_attData.length} members · ${d.toLocaleDateString('en-GB',
+        {weekday:'long', day:'2-digit', month:'long', year:'numeric'})}`;
+
+    updateAttSummary();
+    document.getElementById('attSummaryBar').style.display = '';
+    document.getElementById('attSummarySection').style.display = '';
+    loadMemberSummaries();
+
+    if (!isValidDay) {
+      // ── يوم غلط: بانر + read-only ──
+      document.getElementById('attQuickActions').style.display = 'none';
+      document.getElementById('saveAllBtn').style.display      = 'none';
+
+      // بانر التحذير
+      const banner = `
+        <div style="background:rgba(239,68,68,.06);border-bottom:1px solid rgba(239,68,68,.15);
+                    padding:16px 22px;display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(239,68,68,.12);
+                      color:#ef4444;font-size:1.2rem;flex-shrink:0;
+                      display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-calendar-x-fill"></i>
+          </div>
+          <div>
+            <div style="font-weight:800;color:#ef4444;font-size:.9rem;">Invalid Session Day — View Only</div>
+            <div style="font-size:.82rem;color:var(--muted);margin-top:2px;">
+              Sessions only on:
+              ${validDays.map(d =>
+                `<span style="background:rgba(46,196,182,.12);color:var(--clubly-teal);
+                              padding:2px 9px;border-radius:20px;font-weight:700;
+                              font-size:.76rem;margin:0 3px;">${d}</span>`
+              ).join('')}
+            </div>
+          </div>
+        </div>`;
+
+      // Read-only rows (بدون أزرار)
+      const rows = _attData.length
+        ? _attData.map((m, i) => {
+            const initials  = getInitials(m.name || '?');
+            const color     = AVATAR_COLORS[i % AVATAR_COLORS.length];
+            const isPresent = m.isPresent;
+            const isMarked  = m.attended;
+            const statusHtml = isMarked
+              ? (isPresent
+                  ? `<span style="background:rgba(34,197,94,.12);color:#16a34a;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">✓ Present</span>`
+                  : `<span style="background:rgba(239,68,68,.12);color:#dc2626;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">✗ Absent</span>`)
+              : `<span style="background:rgba(212,168,67,.12);color:#b45309;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;">— Not Marked</span>`;
+
+            return `
+              <div style="display:flex;align-items:center;gap:14px;padding:16px 20px;
+                          border-bottom:1px solid var(--border);">
+                <div style="width:44px;height:44px;border-radius:50%;background:${color};
+                            display:flex;align-items:center;justify-content:center;
+                            color:#fff;font-weight:800;font-size:.88rem;flex-shrink:0;">
+                  ${initials}
+                </div>
+                <div style="flex:1;">
+                  <div style="font-weight:700;color:var(--text);font-size:.93rem;">${m.name || '—'}</div>
+                  <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">
+                    ${m.email || ''} · <span style="color:var(--clubly-accent);">Ends: ${m.endDate || '—'}</span>
+                  </div>
+                </div>
+                <div>${statusHtml}</div>
+                ${m.notes ? `<div style="font-size:.8rem;color:var(--muted);font-style:italic;background:var(--bg);padding:5px 10px;border-radius:8px;">${m.notes}</div>` : ''}
+              </div>`;
+          }).join('')
+        : `<div style="text-align:center;padding:50px;color:var(--muted);">
+             <i class="bi bi-calendar-check" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
+             <p>No attendance records for this date.</p>
+           </div>`;
+
+      document.getElementById('attList').innerHTML = banner + rows;
+      return;
+    }
+
+    // ── يوم صح: عادي ──
+    document.getElementById('attQuickActions').style.display  = '';
+    document.getElementById('saveAllBtn').style.display       = '';
+    renderAttendanceList();
+
   } catch {
     document.getElementById('attList').innerHTML = `
       <div style="text-align:center;padding:40px;color:#ef4444;">Failed to load.</div>`;
   }
 }
-
 function renderAttendanceList() {
   const filter = document.getElementById('attFilter').value;
   let list = _attData.filter(m => {
@@ -3171,7 +3278,6 @@ function renderAttendanceList() {
 
   updateAttSummary();
 }
-
 function toggleAttendance(bookingId, isPresent) {
   const m = _attData.find(x => x.bookingId === bookingId);
   if (!m) return;

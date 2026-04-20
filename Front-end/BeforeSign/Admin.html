@@ -969,6 +969,7 @@ body {
 <a class="sidebar-link" onclick="showPage('admins')" data-label="Admins">
   <i class="bi bi-shield-lock"></i><span class="link-text">Admins</span>
 </a>
+
 <a class="sidebar-link" onclick="showPage('profile')" data-label="My Profile">
   <i class="bi bi-person-circle"></i>
   <span class="link-text">My Profile</span>
@@ -2389,7 +2390,7 @@ body {
 </div>
 <!-- ===== MY NOTIFICATION DETAIL MODAL ===== -->
 <div class="modal fade" id="myNotifDetailModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
     <div class="modal-content rounded-4">
 
     <div class="modal-header border-0" style="background:#0d1b2a;border-radius:16px 16px 0 0;padding:20px 24px;">
@@ -2404,39 +2405,34 @@ body {
 </div>
 
       <div class="modal-body px-4 pb-2">
-
-        <!-- Type Badge -->
-        <div class="mb-3">
-          <span id="mnd_typeBadge" class="badge fs-6 px-3 py-2 me-2"></span>
-          <span id="mnd_statusBadge" class="badge bg-secondary fs-6 px-3 py-2"></span>
-        </div>
-
+<div class="mb-3">
+  <span id="mnd_typeBadge" class="badge px-3 py-2" 
+    style="background:rgba(13,202,240,.15);color:#0590a8;border:1px solid rgba(13,202,240,.3);font-size:.85rem;border-radius:20px;">
+  </span>
+</div>
         <!-- Description -->
         <div class="clubly-card p-3 mb-3">
           <p id="mnd_description" class="mb-0" style="white-space:pre-wrap;line-height:1.8;font-size:.95rem;"></p>
         </div>
 
         <!-- Image -->
-        <div id="mnd_imageWrap" class="mb-3" style="display:none">
-          <label class="form-label text-muted">
-            <i class="bi bi-image me-1"></i>Attached Image
-          </label>
-          <div>
-            <a id="mnd_imageLink" href="#" target="_blank">
-              <img id="mnd_image"
-                style="max-width:100%;max-height:280px;object-fit:cover;
-                border-radius:12px;border:1px solid var(--border);cursor:pointer;">
-            </a>
-          </div>
-        </div>
+   <div id="mnd_imageWrap"
+       style="display:none; flex-shrink:0; width:200px; order:-1;">
+    <a id="mnd_imageLink" href="#" target="_blank">
+      <img id="mnd_image"
+        style="width:350px;height:250px;object-fit:cover;
+        border-radius:12px;border:1px solid var(--border);
+        cursor:pointer;display:block;">
+  </a>
+</div>
 
         <!-- Sent At -->
-        <div class="d-flex align-items-center gap-2 mt-2">
-          <i class="bi bi-clock text-muted"></i>
-          <small class="text-muted">Sent:</small>
-          <span id="mnd_sentAt" class="badge bg-light text-dark border px-3 py-1"
-            style="font-size:.8rem;font-weight:600;"></span>
-        </div>
+    <div class="d-flex align-items-center gap-2 mt-2">
+  <i class="bi bi-clock text-muted"></i>
+  <small class="text-muted">Sent:</small>
+  <span id="mnd_sentAt" class="badge px-3 py-1"
+    style="font-size:.8rem;font-weight:600;background:rgba(25,135,84,.15);color:#198754;border:1px solid rgba(25,135,84,.3);border-radius:20px;"></span>
+</div>
       </div>
 
       <div class="modal-footer border-0">
@@ -2652,7 +2648,11 @@ body {
             <div class="col-md-6"><input name="FullName" id="addFullName_a" class="form-control" placeholder="Full Name" required></div>
             <div class="col-md-6"><input name="Email" id="addEmail_a" class="form-control" type="email" placeholder="Email" required></div>
             <div class="col-md-6"><input name="Phone" id="addPhone_a" class="form-control" placeholder="Phone Number" required></div>
-            <div class="col-md-6"><input name="Password" id="addPassword_a" class="form-control" type="password" placeholder="Password" required></div>
+  <div class="col-md-6"><input name="Password" id="addPassword_a" class="form-control" type="password" placeholder="Password" required></div>
+<div class="col-md-6">
+  <input type="password" id="addConfirmPassword" class="form-control" placeholder="Confirm Password">
+  <div id="addConfirmErr" style="display:none;font-size:11px;color:red;margin-top:4px;"></div>
+</div>
             <div class="col-md-6">
               <div class="input-group">
                 <input name="NationalId" id="addNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14" oninput="autoFillAdminNID('add')">
@@ -2690,7 +2690,13 @@ body {
             <div class="col-md-6"><input name="FullName" id="editFullName_a" class="form-control" placeholder="Full Name" required></div>
             <div class="col-md-6"><input name="Email" id="editEmail_a" class="form-control" type="email" placeholder="Email" required></div>
             <div class="col-md-6"><input name="Phone" id="editPhone_a" class="form-control" placeholder="Phone Number"></div>
-            <div class="col-md-6"><input name="Password" id="editPassword_a" class="form-control" type="password" placeholder="New Password (leave blank to keep)"></div>
+<div class="col-md-6">
+  <input name="Password" id="editPassword_a" class="form-control" type="password" placeholder="New Password (leave blank to keep)">
+</div>
+<div class="col-md-6">
+  <input type="password" id="editConfirmPassword" class="form-control" placeholder="Confirm Password">
+  <div id="editConfirmErr" style="display:none;font-size:11px;color:red;margin-top:4px;"></div>
+</div>
             <div class="col-md-6">
               <div class="input-group">
                 <input name="NationalId" id="editNationalId_a" class="form-control" placeholder="National ID (14 digits)" maxlength="14" oninput="autoFillAdminNID('edit')">
@@ -2907,6 +2913,7 @@ body {
 // ===================================================
 // NAVIGATION
 // ===================================================
+
 const pages = ['main','member','trainer','trainer-ratings','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs'];function showPage(name) {
   pages.forEach(p => {
     document.getElementById('page-' + p)?.classList.remove('active');
@@ -3643,12 +3650,7 @@ async function deleteSchedule(id) {
   });
 }
 
-// ── Auto-load when facility page opens ───────────────────────────────────────
-const _origShowPage = window.showPage;
-window.showPage = function(name) {
-  if (typeof _origShowPage === 'function') _origShowPage(name);
-  if (name === 'facility') setTimeout(loadSchedules, 300);
-};
+
 
 // ============== ACTIVITIES MODULE ==================
 // ===================================================
@@ -4533,9 +4535,9 @@ async function openMyNotifDetail(id) {
 
   document.getElementById('mnd_title').textContent = n.title || '—';
   const typeBadgeEl = document.getElementById('mnd_typeBadge');
-  typeBadgeEl.className   = `badge fs-6 px-3 py-2 ${cfg.badge}`;
-  typeBadgeEl.textContent = n.type || 'Info';
-  document.getElementById('mnd_statusBadge').textContent = n.status || 'Sent';
+typeBadgeEl.className = 'badge px-3 py-2';
+typeBadgeEl.style.cssText = 'background:rgba(13,202,240,.15);color:#0590a8;border:1px solid rgba(13,202,240,.3);font-size:.85rem;border-radius:20px;';
+typeBadgeEl.innerHTML = `<i class="bi bi-info-circle-fill me-1"></i>${n.type || 'Info'}`;
 
   const raw = n.sentAt || n.SentAt;
   const d   = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
@@ -4634,16 +4636,35 @@ function renderAdmins() {
 
 async function saveAdmin() {
   const form = document.getElementById('addAdminForm');
+  const pass = document.getElementById('addPassword_a').value;
+  const confirm = document.getElementById('addConfirmPassword').value;
+
+  if (!pass || pass.length < 8) {
+    alert('Password must be at least 8 characters');
+    return;
+  }
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(pass)) {
+    alert('Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+    return;
+  }
+  if (pass !== confirm) {
+    document.getElementById('addConfirmErr').textContent = 'Passwords do not match';
+    document.getElementById('addConfirmErr').style.display = 'block';
+    return;
+  }
+  document.getElementById('addConfirmErr').style.display = 'none';
+
   const fd = new FormData();
   fd.append('FullName', form.FullName.value);
   fd.append('Email', form.Email.value);
   fd.append('Phone', form.Phone.value);
-  fd.append('Password', form.Password.value);
+  fd.append('Password', pass);
   fd.append('NationalId', form.NationalId.value);
   fd.append('Gender', form.Gender.value);
-fd.append('DateOfBirth', document.getElementById('addBirthDate_a').value);
+  fd.append('DateOfBirth', document.getElementById('addBirthDate_a').value);
   const img = document.getElementById('addImage_a').files[0];
   if (img) fd.append('Image', img);
+
   try {
     const res = await fetch(adminsApi, { method: 'POST', body: fd });
     if (!res.ok) throw new Error();
@@ -4652,7 +4673,6 @@ fd.append('DateOfBirth', document.getElementById('addBirthDate_a').value);
     loadAdmins();
   } catch { showToast('Failed to add admin', 'error'); }
 }
-
 async function openEditAdmin(id) {
   const a = _admins.find(x => x.id === id);
   if (!a) return;
@@ -4674,8 +4694,24 @@ async function updateAdmin() {
   fd.append('FullName', form.FullName.value);
   fd.append('Email', form.Email.value);
   fd.append('Phone', form.Phone.value);
-  if (form.Password.value) fd.append('Password', form.Password.value);
-  fd.append('NationalId', form.NationalId.value);
+  if (editPass) {
+  if (editPass.length < 8) {
+    alert('Password must be at least 8 characters');
+    return;
+  }
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(editPass)) {
+    alert('Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+    return;
+  }
+}
+const editPass = document.getElementById('editPassword_a').value;
+const editConfirm = document.getElementById('editConfirmPassword').value;
+if (editPass && editPass !== editConfirm) {
+  document.getElementById('editConfirmErr').textContent = 'Passwords do not match';
+  document.getElementById('editConfirmErr').style.display = 'block';
+  return;
+}
+document.getElementById('editConfirmErr').style.display = 'none';fd.append('NationalId', form.NationalId.value);
   fd.append('Gender', form.Gender.value);
 fd.append('DateOfBirth', document.getElementById('editBirthDate_a').value);  const img = document.getElementById('editImage_a').files[0];
   if (img) fd.append('Image', img);
@@ -4730,12 +4766,15 @@ window.showPage = function(name) {
     if (l.getAttribute('onclick')?.includes("'" + name + "'")) l.classList.add('active');
   });
   window.scrollTo(0, 0);
-  if (pageLoadFlags[name]) return;
-  pageLoadFlags[name] = true;
+if (pageLoadFlags[name]) {
+  if (name === 'facility') loadSchedules();
+  return;
+}
+pageLoadFlags[name] = true;
+if (name === 'facility') { loadFacilityCategories(); loadFacilities(); loadSchedules(); }
   if (name === 'trainer') { loadActivitiesForTrainers(); loadTrainers(); }
   if (name === 'trainer-ratings') loadTrainerRatingsAdmin();
   if (name === 'category') fetchCategories();
-  if (name === 'facility') { loadFacilityCategories(); loadFacilities(); }
   if (name === 'activity') { loadFacilitiesForAct(); loadActivities(); }
   if (name === 'group') { loadActivitiesForGroups(); loadGroups(); }
   if (name === 'membership') fetchMemberships();
@@ -5097,182 +5136,636 @@ wireNationalIdAutoFill('editNationalId_t', 'editDOB_t', 'editGender_t');
 // ENHANCED MEMBER SAVE — Add password validation
 // ===================================================
 // Override the saveAddBtn click to include password validation
+// ===================================================
+// ENHANCED MEMBER SAVE — Add
+// ===================================================
 document.getElementById('saveAddBtn').onclick = async () => {
   const form = document.getElementById('addMemberForm');
   clearFormErrors(form);
   let valid = true;
 
   const f = {
-    fullName: form.querySelector('[name="FullName"]'),
-    email: form.querySelector('[name="Email"]'),
-    phone: form.querySelector('[name="Phone"]'),
-    nationalId: form.querySelector('[name="NationalId"]'),
-    gender: form.querySelector('[name="Gender"]'),
-    birthDate: form.querySelector('[name="BirthDate"]'),
+    fullName:         form.querySelector('[name="FullName"]'),
+    email:            form.querySelector('[name="Email"]'),
+    phone:            form.querySelector('[name="Phone"]'),
+    nationalId:       form.querySelector('[name="NationalId"]'),
+    gender:           form.querySelector('[name="Gender"]'),
+    birthDate:        form.querySelector('[name="BirthDate"]'),
     memberShipNumber: form.querySelector('[name="MemberShipNumber"]'),
-    joinDate: form.querySelector('[name="JoinDate"]'),
-    memberShipId: form.querySelector('[name="MemberShipId"]'),
-    memberType: form.querySelector('[name="MemberType"]'),
-    image: form.querySelector('[name="Image"]'),
-    password: form.querySelector('[name="Password"]'),
-    confirmPassword: form.querySelector('[name="ConfirmPassword"]'),
+    joinDate:         form.querySelector('[name="JoinDate"]'),
+    memberShipId:     form.querySelector('[name="MemberShipId"]'),
+    memberType:       form.querySelector('[name="MemberType"]'),
+    image:            form.querySelector('[name="Image"]'),
+    password:         form.querySelector('[name="Password"]'),
+    confirmPassword:  form.querySelector('[name="ConfirmPassword"]'),
   };
 
-  if (!f.fullName.value.trim() || f.fullName.value.length < 5) { showFieldError(f.fullName, 'Full name must be at least 5 characters'); valid = false; }
-  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) { showFieldError(f.email, 'Valid email address required'); valid = false; }
-  if (!f.phone.value || !/^01[0125][0-9]{8}$/.test(f.phone.value)) { showFieldError(f.phone, 'Valid Egyptian mobile number required (e.g. 01xxxxxxxxx)'); valid = false; }
-  if (!extractFromNationalId(f.nationalId.value)) { showFieldError(f.nationalId, 'Valid 14-digit Egyptian National ID required'); valid = false; }
-  if (!f.gender.value) { showFieldError(f.gender, 'Please select a gender'); valid = false; }
-  if (!f.birthDate.value) { showFieldError(f.birthDate, 'Birth date is required'); valid = false; }
-  if (!f.memberShipNumber.value) { showFieldError(f.memberShipNumber, 'Membership number is required'); valid = false; }
-  if (!f.joinDate.value) { showFieldError(f.joinDate, 'Join date is required'); valid = false; }
-  if (!f.memberShipId.value) { showFieldError(f.memberShipId, 'Please select a membership plan'); valid = false; }
-  if (!f.memberType.value.trim()) { showFieldError(f.memberType, 'Member type is required'); valid = false; }
-  if (!f.password.value || f.password.value.length < 6) { showFieldError(f.password, 'Password must be at least 6 characters'); valid = false; }
-  if (f.confirmPassword.value !== f.password.value) { showFieldError(f.confirmPassword, 'Passwords do not match'); valid = false; }
-  if (!f.image.files || !f.image.files[0]) { showFieldError(f.image, 'Member photo is required'); valid = false; }
+  // ── Full Name ──────────────────────────────────────
+  if (!f.fullName.value.trim() || f.fullName.value.trim().length < 2) {
+    showFieldError(f.fullName, 'Full name must be at least 2 characters');
+    valid = false;
+  }
+
+  // ── Email ─────────────────────────────────────────
+  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) {
+    showFieldError(f.email, 'Valid email address required');
+    valid = false;
+  }
+
+  // ── Phone (Egyptian) ──────────────────────────────
+  if (!f.phone.value || !/^01[0125][0-9]{8}$/.test(f.phone.value)) {
+    showFieldError(f.phone, 'Valid Egyptian mobile number required (e.g. 01xxxxxxxxx)');
+    valid = false;
+  }
+
+  // ── National ID ───────────────────────────────────
+  const nidInfo = extractFromNationalId(f.nationalId.value);
+  if (!nidInfo) {
+    showFieldError(f.nationalId, 'Valid 14-digit Egyptian National ID required');
+    valid = false;
+  }
+
+  // ── Gender ────────────────────────────────────────
+  const allowedGenders = ['Male', 'Female', 'Other'];
+  if (!f.gender.value || !allowedGenders.includes(f.gender.value)) {
+    showFieldError(f.gender, 'Please select a valid gender');
+    valid = false;
+  }
+
+  // ── Birth Date ────────────────────────────────────
+  if (!f.birthDate.value) {
+    showFieldError(f.birthDate, 'Birth date is required');
+    valid = false;
+  } else {
+    const birth = new Date(f.birthDate.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (birth > today) {
+      showFieldError(f.birthDate, 'Birth date cannot be in the future');
+      valid = false;
+    } else {
+      let age = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+
+      if (age < 5) {
+        showFieldError(f.birthDate, 'Member must be at least 5 years old');
+        valid = false;
+      } else if (age > 120) {
+        showFieldError(f.birthDate, 'Birth date is not realistic');
+        valid = false;
+      }
+    }
+  }
+
+  // ── Membership Number ─────────────────────────────
+  if (!f.memberShipNumber.value || isNaN(f.memberShipNumber.value) || +f.memberShipNumber.value < 1) {
+    showFieldError(f.memberShipNumber, 'Membership number must be greater than zero');
+    valid = false;
+  }
+
+  // ── Join Date ─────────────────────────────────────
+  if (!f.joinDate.value) {
+    showFieldError(f.joinDate, 'Join date is required');
+    valid = false;
+  } else {
+    const join  = new Date(f.joinDate.value);
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+
+    if (join > today) {
+      showFieldError(f.joinDate, 'Join date cannot be in the future');
+      valid = false;
+    } else if (f.birthDate.value && join < new Date(f.birthDate.value)) {
+      showFieldError(f.joinDate, 'Join date cannot be before birth date');
+      valid = false;
+    }
+  }
+
+  // ── Membership Plan ───────────────────────────────
+  if (!f.memberShipId.value) {
+    showFieldError(f.memberShipId, 'Please select a membership plan');
+    valid = false;
+  }
+
+  // ── Member Type ───────────────────────────────────
+  const allowedTypes = ['Main', 'Spouse', 'Child'];
+  if (!f.memberType.value || !allowedTypes.includes(f.memberType.value)) {
+    showFieldError(f.memberType, 'Please select a valid member type');
+    valid = false;
+  }
+
+  // ── Password ──────────────────────────────────────
+if (!f.password.value || f.password.value.length < 8) {
+    showFieldError(f.password, 'Password must be at least 8 characters');
+    valid = false;
+  } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
+    showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+    valid = false;
+  }
+
+  // ── Confirm Password ──────────────────────────────
+  if (f.confirmPassword.value !== f.password.value) {
+    showFieldError(f.confirmPassword, 'Passwords do not match');
+    valid = false;
+  }
+
+  // ── Image ─────────────────────────────────────────
+  if (!f.image.files || !f.image.files[0]) {
+    showFieldError(f.image, 'Member photo is required');
+    valid = false;
+  } else {
+    const file     = f.image.files[0];
+    const maxSize  = 5 * 1024 * 1024; // 5MB
+    const allowed  = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+      showFieldError(f.image, 'Image must be JPG, PNG, or WebP');
+      valid = false;
+    } else if (file.size > maxSize) {
+      showFieldError(f.image, 'Image size must not exceed 5MB');
+      valid = false;
+    }
+  }
+
   if (!valid) return;
 
   const fd = new FormData(form);
+  fd.delete('ConfirmPassword');
+
   try {
     const res = await fetch(membersApiUrl, { method: 'POST', body: fd });
-    if (!res.ok) throw new Error(await res.text() || 'Failed');
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      // ── Handle duplicate email from API ───────────
+      if (err?.message?.toLowerCase().includes('email')) {
+        showFieldError(f.email, 'This email is already registered');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to add member');
+    }
     Swal.fire({ title: 'Success!', text: 'Member added successfully.', icon: 'success', timer: 1800, showConfirmButton: false });
     bootstrap.Modal.getInstance(document.getElementById('addMemberModal')).hide();
     await loadMembers();
-  } catch(e) { Swal.fire('Error', e.message, 'error'); }
+  } catch(e) {
+    Swal.fire('Error', e.message, 'error');
+  }
 };
 
-// Override Edit Member save with password validation
+// ===================================================
+// ENHANCED MEMBER SAVE — Edit
+// ===================================================
 document.getElementById('saveEditBtn').onclick = async () => {
   const form = document.getElementById('editMemberForm');
   clearFormErrors(form);
   let valid = true;
 
   const f = {
-    id: form.querySelector('[name="id"]'),
-    fullName: form.querySelector('[name="FullName"]'),
-    email: form.querySelector('[name="Email"]'),
-    phone: form.querySelector('[name="Phone"]'),
-    password: form.querySelector('[name="Password"]'),
-    confirmPassword: form.querySelector('[name="ConfirmPassword"]'),
+    id:               form.querySelector('[name="id"]'),
+    fullName:         form.querySelector('[name="FullName"]'),
+    email:            form.querySelector('[name="Email"]'),
+    phone:            form.querySelector('[name="Phone"]'),
+    nationalId:       form.querySelector('[name="NationalId"]'),
+    gender:           form.querySelector('[name="Gender"]'),
+    birthDate:        form.querySelector('[name="BirthDate"]'),
+    memberShipNumber: form.querySelector('[name="MemberShipNumber"]'),
+    joinDate:         form.querySelector('[name="JoinDate"]'),
+    memberShipId:     form.querySelector('[name="MemberShipId"]'),
+    memberType:       form.querySelector('[name="MemberType"]'),
+    password:         form.querySelector('[name="Password"]'),
+    confirmPassword:  form.querySelector('[name="ConfirmPassword"]'),
   };
 
-  if (!f.fullName.value.trim() || f.fullName.value.length < 5) { showFieldError(f.fullName, 'Full name must be at least 5 characters'); valid = false; }
-  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) { showFieldError(f.email, 'Valid email address required'); valid = false; }
-  if (f.phone.value && !/^01[0125][0-9]{8}$/.test(f.phone.value)) { showFieldError(f.phone, 'Valid Egyptian mobile number required'); valid = false; }
-  // Password only validated if provided
-  if (f.password.value) {
-    if (f.password.value.length < 6) { showFieldError(f.password, 'Password must be at least 6 characters'); valid = false; }
-    if (f.confirmPassword.value !== f.password.value) { showFieldError(f.confirmPassword, 'Passwords do not match'); valid = false; }
+  // ── Full Name ──────────────────────────────────────
+  if (!f.fullName.value.trim() || f.fullName.value.trim().length < 2) {
+    showFieldError(f.fullName, 'Full name must be at least 2 characters');
+    valid = false;
   }
-  if (!valid) return;
 
-  const fd = new FormData(form);
-  // Remove confirmPassword — not sent to API
-  fd.delete('ConfirmPassword');
+  // ── Email ─────────────────────────────────────────
+  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) {
+    showFieldError(f.email, 'Valid email address required');
+    valid = false;
+  }
+
+  // ── Phone ─────────────────────────────────────────
+  if (f.phone.value && !/^01[0125][0-9]{8}$/.test(f.phone.value)) {
+    showFieldError(f.phone, 'Valid Egyptian mobile number required (e.g. 01xxxxxxxxx)');
+    valid = false;
+  }
+
+  // ── National ID ───────────────────────────────────
+  if (f.nationalId.value && !extractFromNationalId(f.nationalId.value)) {
+    showFieldError(f.nationalId, 'Valid 14-digit Egyptian National ID required');
+    valid = false;
+  }
+
+  // ── Gender ────────────────────────────────────────
+  if (f.gender.value && !['Male', 'Female', 'Other'].includes(f.gender.value)) {
+    showFieldError(f.gender, 'Please select a valid gender');
+    valid = false;
+  }
+
+  // ── Birth Date ────────────────────────────────────
+  if (f.birthDate.value) {
+    const birth = new Date(f.birthDate.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (birth > today) {
+      showFieldError(f.birthDate, 'Birth date cannot be in the future');
+      valid = false;
+    } else {
+      let age = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+      if (age < 5)   { showFieldError(f.birthDate, 'Member must be at least 5 years old'); valid = false; }
+      if (age > 120) { showFieldError(f.birthDate, 'Birth date is not realistic');          valid = false; }
+    }
+  }
+
+  // ── Membership Number ─────────────────────────────
+  if (f.memberShipNumber.value && +f.memberShipNumber.value < 1) {
+    showFieldError(f.memberShipNumber, 'Membership number must be greater than zero');
+    valid = false;
+  }
+
+  // ── Join Date ─────────────────────────────────────
+  if (f.joinDate.value) {
+    const join  = new Date(f.joinDate.value);
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+    if (join > today) {
+      showFieldError(f.joinDate, 'Join date cannot be in the future');
+      valid = false;
+    } else if (f.birthDate.value && join < new Date(f.birthDate.value)) {
+      showFieldError(f.joinDate, 'Join date cannot be before birth date');
+      valid = false;
+    }
+  }
+
+  // ── Member Type ───────────────────────────────────
+  if (f.memberType.value && !['Main', 'Spouse', 'Child'].includes(f.memberType.value)) {
+    showFieldError(f.memberType, 'Please select a valid member type');
+    valid = false;
+  }
+
+  // ── Password (optional in edit) ───────────────────
+if (f.password.value.length < 8) {
+      showFieldError(f.password, 'Password must be at least 8 characters');
+      valid = false;
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
+      showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+      valid = false;
+    }
+
+  if (!valid) return;
+const fd = new FormData(form);
+fd.delete('ConfirmPassword');
+const pw = f.password.value;
+fd.delete('Password');
+if (pw) {
+    fd.append('NewPassword', pw);
+}
+
+
   try {
     const res = await fetch(`${membersApiUrl}/${f.id.value}`, { method: 'PUT', body: fd });
-    if (!res.ok) throw new Error(await res.text() || 'Failed');
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('email')) {
+        showFieldError(f.email, 'This email is already registered');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to update member');
+    }
     Swal.fire({ title: 'Updated!', text: 'Member updated successfully.', icon: 'success', timer: 1800, showConfirmButton: false });
     bootstrap.Modal.getInstance(document.getElementById('editMemberModal')).hide();
     await loadMembers();
-  } catch(e) { Swal.fire('Error', e.message, 'error'); }
+  } catch(e) {
+    Swal.fire('Error', e.message, 'error');
+  }
 };
 
 // ===================================================
-// ENHANCED TRAINER SAVE — with full validations
+// ENHANCED TRAINER SAVE — Add
 // ===================================================
-// Override trainer add save
-const _origSaveAddBtnT = document.getElementById('saveAddBtn_t');
-_origSaveAddBtnT.onclick = async () => {
+document.getElementById('saveAddBtn_t').onclick = async () => {
   const form = document.getElementById('addTrainerForm');
   clearFormErrors(form);
   let valid = true;
 
   const f = {
-    fullName: form.querySelector('[name="FullName"]'),
-    email: form.querySelector('[name="Email"]'),
-    phone: form.querySelector('[name="Phone"]'),
-    nationalId: form.querySelector('[name="NationalId"]'),
-    password: form.querySelector('[name="Password"]'),
-    confirmPassword: form.querySelector('[name="ConfirmPassword"]'),
-    yearsOfExp: form.querySelector('[name="YearsOfExperience"]'),
+    fullName:    form.querySelector('[name="FullName"]'),
+    email:       form.querySelector('[name="Email"]'),
+    phone:       form.querySelector('[name="Phone"]'),
+    nationalId:  form.querySelector('[name="NationalId"]'),
+    dateOfBirth: form.querySelector('[name="DateOfBirth"]'),
+    gender:      form.querySelector('[name="Gender"]'),
+    yearsOfExp:  form.querySelector('[name="YearsOfExperience"]'),
+    password:    form.querySelector('[name="Password"]'),
+    confirmPw:   form.querySelector('[name="ConfirmPassword"]'),
+    image:       form.querySelector('[name="Image"]'),
   };
 
-  if (!f.fullName.value.trim() || f.fullName.value.length < 3) { showFieldError(f.fullName, 'Full name must be at least 3 characters'); valid = false; }
-  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) { showFieldError(f.email, 'Valid email address required'); valid = false; }
-  if (f.phone.value && !/^01[0125][0-9]{8}$/.test(f.phone.value)) { showFieldError(f.phone, 'Valid Egyptian mobile number (e.g. 01xxxxxxxxx)'); valid = false; }
-  if (f.nationalId.value && !extractFromNationalId(f.nationalId.value)) { showFieldError(f.nationalId, 'Valid 14-digit National ID required'); valid = false; }
-  if (f.yearsOfExp.value && (isNaN(f.yearsOfExp.value) || Number(f.yearsOfExp.value) < 0 || Number(f.yearsOfExp.value) > 60)) { showFieldError(f.yearsOfExp, 'Years of experience must be 0–60'); valid = false; }
-  if (!f.password.value || f.password.value.length < 6) { showFieldError(f.password, 'Password must be at least 6 characters'); valid = false; }
-  if (f.confirmPassword.value !== f.password.value) { showFieldError(f.confirmPassword, 'Passwords do not match'); valid = false; }
+  // ── Full Name ──────────────────────────────────────
+  if (!f.fullName.value.trim() || f.fullName.value.trim().length < 2) {
+    showFieldError(f.fullName, 'Full name must be at least 2 characters');
+    valid = false;
+  }
+
+  // ── Email ─────────────────────────────────────────
+  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) {
+    showFieldError(f.email, 'Valid email address required');
+    valid = false;
+  }
+
+  // ── Phone (Egyptian) ──────────────────────────────
+  if (!f.phone.value || !/^01[0125][0-9]{8}$/.test(f.phone.value)) {
+    showFieldError(f.phone, 'Valid Egyptian mobile number required (e.g. 01xxxxxxxxx)');
+    valid = false;
+  }
+
+  // ── National ID ───────────────────────────────────
+  const nidInfo = extractFromNationalId(f.nationalId.value);
+  if (!nidInfo) {
+    showFieldError(f.nationalId, 'Valid 14-digit Egyptian National ID required');
+    valid = false;
+  }
+
+  // ── Date of Birth ─────────────────────────────────
+  if (!f.dateOfBirth.value) {
+    showFieldError(f.dateOfBirth, 'Date of birth is required');
+    valid = false;
+  } else {
+    const birth = new Date(f.dateOfBirth.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (birth > today) {
+      showFieldError(f.dateOfBirth, 'Date of birth cannot be in the future');
+      valid = false;
+    } else {
+      let age = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+
+      if (age < 18) {
+        showFieldError(f.dateOfBirth, 'Trainer must be at least 18 years old');
+        valid = false;
+      } else if (age > 120) {
+        showFieldError(f.dateOfBirth, 'Date of birth is not realistic');
+        valid = false;
+      } else if (f.yearsOfExp.value) {
+        // ── Cross-field: experience vs age ────────────
+        const maxExp = age - 16;
+        if (+f.yearsOfExp.value > maxExp) {
+          showFieldError(f.yearsOfExp,
+            `Years of experience cannot exceed ${maxExp} based on date of birth`);
+          valid = false;
+        }
+      }
+    }
+  }
+
+  // ── Gender ────────────────────────────────────────
+  if (f.gender.value && !['Male', 'Female', 'Other'].includes(f.gender.value)) {
+    showFieldError(f.gender, 'Please select a valid gender');
+    valid = false;
+  }
+
+  // ── Years of Experience ───────────────────────────
+  if (f.yearsOfExp.value !== '') {
+    const exp = +f.yearsOfExp.value;
+    if (isNaN(exp) || exp < 0) {
+      showFieldError(f.yearsOfExp, 'Years of experience must be 0 or more');
+      valid = false;
+    } else if (exp > 60) {
+      showFieldError(f.yearsOfExp, 'Years of experience cannot exceed 60');
+      valid = false;
+    }
+  }
+
+  // ── Password ──────────────────────────────────────
+if (!f.password.value || f.password.value.length < 8) {
+    showFieldError(f.password, 'Password must be at least 8 characters');
+    valid = false;
+  } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
+    showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+    valid = false;
+  }
+  // ── Confirm Password ──────────────────────────────
+  if (f.confirmPw.value !== f.password.value) {
+    showFieldError(f.confirmPw, 'Passwords do not match');
+    valid = false;
+  }
+
+  // ── Image ─────────────────────────────────────────
+  if (f.image.files && f.image.files[0]) {
+    const file    = f.image.files[0];
+    const maxSize = 5 * 1024 * 1024;
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+      showFieldError(f.image, 'Image must be JPG, PNG, or WebP');
+      valid = false;
+    } else if (file.size > maxSize) {
+      showFieldError(f.image, 'Image size must not exceed 5MB');
+      valid = false;
+    }
+  }
+
   if (!valid) return;
 
+  // ── Build FormData ────────────────────────────────
   const fd = new FormData(form);
   fd.delete('ConfirmPassword');
-  const sel = Array.from(document.getElementById('addActivitiesSelect').selectedOptions).map(o => o.value);
-  sel.forEach(id => fd.append('ActivityIds', id));
+
+  // Activities multi-select
+  fd.delete('Activities');
+  Array.from(document.getElementById('addActivitiesSelect').selectedOptions)
+    .forEach(o => fd.append('ActivityIds', o.value));
+
   fd.set('IsActive', document.getElementById('addIsActive').checked);
 
   try {
     const res = await fetch(trainersApiUrl, { method: 'POST', body: fd });
-    if (!res.ok) throw new Error(await res.text());
-    Swal.fire({ title: 'Success!', text: 'Trainer added successfully.', icon: 'success', timer: 1800, showConfirmButton: false });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('email')) {
+        showFieldError(f.email, 'This email is already registered');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to add trainer');
+    }
+    Swal.fire({
+      title: 'Success!',
+      text: 'Trainer added successfully.',
+      icon: 'success',
+      timer: 1800,
+      showConfirmButton: false
+    });
     bootstrap.Modal.getInstance(document.getElementById('addTrainerModal')).hide();
     await loadTrainers();
-  } catch(e) { showToastT('Add failed: ' + (e.message || 'error'), 'error'); }
+  } catch(e) {
+    Swal.fire('Error', e.message, 'error');
+  }
 };
 
-// Override trainer edit save
+// ===================================================
+// ENHANCED TRAINER SAVE — Edit
+// ===================================================
 document.getElementById('saveEditBtn_t').onclick = async () => {
   const form = document.getElementById('editTrainerForm');
   clearFormErrors(form);
   let valid = true;
-  const id = form.id.value;
+
+  const id = form.querySelector('[name="id"]')?.value;
 
   const f = {
-    fullName: form.querySelector('[name="FullName"]'),
-    email: form.querySelector('[name="Email"]'),
-    phone: form.querySelector('[name="Phone"]'),
-    nationalId: form.querySelector('[name="NationalId"]'),
-    password: form.querySelector('[name="Password"]'),
-    confirmPassword: form.querySelector('[name="ConfirmPassword"]'),
-    yearsOfExp: form.querySelector('[name="YearsOfExperience"]'),
+    fullName:    form.querySelector('[name="FullName"]'),
+    email:       form.querySelector('[name="Email"]'),
+    phone:       form.querySelector('[name="Phone"]'),
+    nationalId:  form.querySelector('[name="NationalId"]'),
+    dateOfBirth: form.querySelector('[name="DateOfBirth"]'),
+    gender:      form.querySelector('[name="Gender"]'),
+    yearsOfExp:  form.querySelector('[name="YearsOfExperience"]'),
+    password:    form.querySelector('[name="Password"]'),
+    confirmPw:   form.querySelector('[name="ConfirmPassword"]'),
+    image:       form.querySelector('[name="Image"]'),
   };
 
-  if (!f.fullName.value.trim() || f.fullName.value.length < 3) { showFieldError(f.fullName, 'Full name must be at least 3 characters'); valid = false; }
-  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) { showFieldError(f.email, 'Valid email address required'); valid = false; }
-  if (f.phone.value && !/^01[0125][0-9]{8}$/.test(f.phone.value)) { showFieldError(f.phone, 'Valid Egyptian mobile number required'); valid = false; }
-  if (f.nationalId.value && !extractFromNationalId(f.nationalId.value)) { showFieldError(f.nationalId, 'Valid 14-digit National ID required'); valid = false; }
-  if (f.yearsOfExp.value && (isNaN(f.yearsOfExp.value) || Number(f.yearsOfExp.value) < 0)) { showFieldError(f.yearsOfExp, 'Must be a positive number'); valid = false; }
-  if (f.password.value) {
-    if (f.password.value.length < 6) { showFieldError(f.password, 'Password must be at least 6 characters'); valid = false; }
-    if (f.confirmPassword.value !== f.password.value) { showFieldError(f.confirmPassword, 'Passwords do not match'); valid = false; }
+  // ── Full Name ──────────────────────────────────────
+  if (!f.fullName.value.trim() || f.fullName.value.trim().length < 2) {
+    showFieldError(f.fullName, 'Full name must be at least 2 characters');
+    valid = false;
   }
+
+  // ── Email ─────────────────────────────────────────
+  if (!f.email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)) {
+    showFieldError(f.email, 'Valid email address required');
+    valid = false;
+  }
+
+  // ── Phone (optional in edit) ──────────────────────
+  if (f.phone.value && !/^01[0125][0-9]{8}$/.test(f.phone.value)) {
+    showFieldError(f.phone, 'Valid Egyptian mobile number required (e.g. 01xxxxxxxxx)');
+    valid = false;
+  }
+
+  // ── National ID (optional in edit) ────────────────
+  if (f.nationalId.value && !extractFromNationalId(f.nationalId.value)) {
+    showFieldError(f.nationalId, 'Valid 14-digit Egyptian National ID required');
+    valid = false;
+  }
+
+  // ── Date of Birth (optional in edit) ─────────────
+  if (f.dateOfBirth.value) {
+    const birth = new Date(f.dateOfBirth.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (birth > today) {
+      showFieldError(f.dateOfBirth, 'Date of birth cannot be in the future');
+      valid = false;
+    } else {
+      let age = today.getFullYear() - birth.getFullYear();
+      const m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+
+      if (age < 18) {
+        showFieldError(f.dateOfBirth, 'Trainer must be at least 18 years old');
+        valid = false;
+      } else if (age > 120) {
+        showFieldError(f.dateOfBirth, 'Date of birth is not realistic');
+        valid = false;
+      } else if (f.yearsOfExp.value) {
+        const maxExp = age - 16;
+        if (+f.yearsOfExp.value > maxExp) {
+          showFieldError(f.yearsOfExp,
+            `Years of experience cannot exceed ${maxExp} based on date of birth`);
+          valid = false;
+        }
+      }
+    }
+  }
+
+  // ── Years of Experience ───────────────────────────
+  if (f.yearsOfExp.value !== '') {
+    const exp = +f.yearsOfExp.value;
+    if (isNaN(exp) || exp < 0) {
+      showFieldError(f.yearsOfExp, 'Years of experience must be 0 or more');
+      valid = false;
+    } else if (exp > 60) {
+      showFieldError(f.yearsOfExp, 'Years of experience cannot exceed 60');
+      valid = false;
+    }
+  }
+
+  // ── Password (optional in edit) ───────────────────
+if (f.password.value.length < 8) {
+      showFieldError(f.password, 'Password must be at least 8 characters');
+      valid = false;
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
+      showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+      valid = false;
+    }
+
+  // ── Image (optional in edit) ──────────────────────
+  if (f.image.files && f.image.files[0]) {
+    const file    = f.image.files[0];
+    const maxSize = 5 * 1024 * 1024;
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+      showFieldError(f.image, 'Image must be JPG, PNG, or WebP');
+      valid = false;
+    } else if (file.size > maxSize) {
+      showFieldError(f.image, 'Image size must not exceed 5MB');
+      valid = false;
+    }
+  }
+
   if (!valid) return;
 
+  // ── Build FormData ────────────────────────────────
   const fd = new FormData();
-  fd.append('FullName', f.fullName.value);
+  fd.append('FullName', f.fullName.value.trim());
+  fd.append('Email',    f.email.value.trim());
   fd.append('IsActive', document.getElementById('editIsActive').checked);
-  if (f.phone.value) fd.append('Phone', f.phone.value);
-  if (f.password.value) fd.append('Password', f.password.value);
-  if (f.email.value) fd.append('Email', f.email.value);
-  if (form.YearsOfExperience?.value) fd.append('YearsOfExperience', form.YearsOfExperience.value);
-  if (f.nationalId.value) fd.append('NationalId', f.nationalId.value);
-  if (form.DateOfBirth?.value) fd.append('DateOfBirth', form.DateOfBirth.value);
-  if (form.Gender?.value) fd.append('Gender', form.Gender.value);
-  Array.from(document.getElementById('editActivitiesSelect').selectedOptions).forEach(o => fd.append('ActivityIds', o.value));
-  const fi = document.getElementById('editImageInput_t');
-  if (fi.files[0]) fd.append('Image', fi.files[0]);
+
+  if (f.phone.value)       fd.append('Phone',             f.phone.value);
+if (f.password.value) fd.append('NewPassword', f.password.value);
+  if (f.yearsOfExp.value)  fd.append('YearsOfExperience', f.yearsOfExp.value);
+  if (f.nationalId.value)  fd.append('NationalId',        f.nationalId.value);
+  if (f.dateOfBirth.value) fd.append('DateOfBirth',       f.dateOfBirth.value);
+  if (f.gender.value)      fd.append('Gender',            f.gender.value);
+
+  Array.from(document.getElementById('editActivitiesSelect').selectedOptions)
+    .forEach(o => fd.append('ActivityIds', o.value));
+
+  if (f.image.files[0]) fd.append('Image', f.image.files[0]);
 
   try {
     const res = await fetch(`${trainersApiUrl}/${id}`, { method: 'PUT', body: fd });
-    if (!res.ok) throw new Error(await res.text());
-    Swal.fire({ title: 'Updated!', text: 'Trainer updated successfully.', icon: 'success', timer: 1800, showConfirmButton: false });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('email')) {
+        showFieldError(f.email, 'This email is already registered');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to update trainer');
+    }
+    Swal.fire({
+      title: 'Updated!',
+      text: 'Trainer updated successfully.',
+      icon: 'success',
+      timer: 1800,
+      showConfirmButton: false
+    });
     bootstrap.Modal.getInstance(document.getElementById('editTrainerModal')).hide();
     await loadTrainers();
-  } catch(e) { showToastT('Update failed', 'error'); }
+  } catch(e) {
+    Swal.fire('Error', e.message, 'error');
+  }
 };
 
 // ===================================================
@@ -5280,129 +5773,454 @@ document.getElementById('saveEditBtn_t').onclick = async () => {
 // ===================================================
 
 // Category form validation
-const _origSaveCategoryBtn = document.getElementById('saveCategoryBtn');
-if (_origSaveCategoryBtn) {
-  const oldCatHandler = _origSaveCategoryBtn.onclick;
-  _origSaveCategoryBtn.onclick = async () => {
-    const nameEl = document.getElementById('cat_name');
-    const name = nameEl.value.trim();
-    nameEl.classList.remove('is-invalid', 'is-valid');
-    if (!name || name.length < 3) {
-      nameEl.classList.add('is-invalid');
-      let fb = nameEl.nextElementSibling;
-      if (!fb || !fb.classList.contains('invalid-feedback')) {
-        fb = document.createElement('div');
-        fb.className = 'invalid-feedback';
-        nameEl.after(fb);
-      }
-      fb.textContent = 'Category name must be at least 3 characters';
-      return;
-    }
+document.getElementById('saveCategoryBtn').onclick = async () => {
+  const nameEl = document.getElementById('cat_name');
+  const descEl = document.getElementById('cat_description');
+  const statEl = document.getElementById('cat_status');
+
+  // Clear previous errors
+  [nameEl, descEl, statEl].forEach(el => {
+    el.classList.remove('is-invalid', 'is-valid');
+    const fb = el.parentElement.querySelector('.invalid-feedback');
+    if (fb) fb.remove();
+  });
+
+  let valid = true;
+
+  // ── Name ──────────────────────────────────────────
+  if (!nameEl.value.trim() || nameEl.value.trim().length < 2) {
+    nameEl.classList.add('is-invalid');
+    const fb = document.createElement('div');
+    fb.className = 'invalid-feedback';
+    fb.textContent = 'Category name must be at least 2 characters';
+    nameEl.after(fb);
+    valid = false;
+  } else if (nameEl.value.trim().length > 150) {
+    nameEl.classList.add('is-invalid');
+    const fb = document.createElement('div');
+    fb.className = 'invalid-feedback';
+    fb.textContent = 'Category name cannot exceed 150 characters';
+    nameEl.after(fb);
+    valid = false;
+  } else {
     nameEl.classList.add('is-valid');
-    // Call original
-    const id = document.getElementById('categoryId').value;
-    const description = document.getElementById('cat_description').value.trim();
-    const status = document.getElementById('cat_status').value;
-    const payload = { name, description, status };
-    const url = id ? `${catApiUrl}/${id}` : catApiUrl;
-    const method = id ? 'PUT' : 'POST';
-    try {
-      await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-      bootstrap.Modal.getOrCreateInstance(document.getElementById('categoryModal')).hide();
-      showAlertCat(id ? 'Category updated' : 'Category created');
-      fetchCategories();
-    } catch(e) { showAlertCat('Failed to save', 'danger'); }
+  }
+
+  // ── Description (optional) ────────────────────────
+  if (descEl.value.trim().length > 1000) {
+    descEl.classList.add('is-invalid');
+    const fb = document.createElement('div');
+    fb.className = 'invalid-feedback';
+    fb.textContent = 'Description cannot exceed 1000 characters';
+    descEl.after(fb);
+    valid = false;
+  }
+
+  // ── Status ────────────────────────────────────────
+  if (!['Active', 'Inactive'].includes(statEl.value)) {
+    statEl.classList.add('is-invalid');
+    const fb = document.createElement('div');
+    fb.className = 'invalid-feedback';
+    fb.textContent = 'Status must be Active or Inactive';
+    statEl.after(fb);
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  const id          = document.getElementById('categoryId').value;
+  const payload     = {
+    name:        nameEl.value.trim(),
+    description: descEl.value.trim(),
+    status:      statEl.value
   };
-}
+  const url    = id ? `${catApiUrl}/${id}` : catApiUrl;
+  const method = id ? 'PUT' : 'POST';
+
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('name')) {
+        nameEl.classList.add('is-invalid');
+        nameEl.classList.remove('is-valid');
+        const fb = document.createElement('div');
+        fb.className = 'invalid-feedback';
+        fb.textContent = 'This category name already exists';
+        nameEl.after(fb);
+        return;
+      }
+      throw new Error(err?.message || 'Failed to save category');
+    }
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById('categoryModal')
+    ).hide();
+    showAlertCat(id ? 'Category updated successfully' : 'Category created successfully');
+    fetchCategories();
+  } catch(e) {
+    showAlertCat(e.message || 'Failed to save', 'danger');
+  }
+};
+
+
 
 // Membership form validation
-const _origSaveMsBtn = document.getElementById('saveMembershipBtn');
-if (_origSaveMsBtn) {
-  _origSaveMsBtn.onclick = async () => {
-    let valid = true;
-    const fields = [
-      { el: document.getElementById('ms_name'), msg: 'Name is required' },
-      { el: document.getElementById('ms_duration'), msg: 'Duration (months) is required', extra: v => isNaN(v) || +v < 1 ? 'Duration must be at least 1 month' : null },
-      { el: document.getElementById('ms_price'), msg: 'Price is required', extra: v => isNaN(v) || +v < 0 ? 'Price must be 0 or more' : null },
-      { el: document.getElementById('ms_status'), msg: 'Status is required' },
-    ];
-    fields.forEach(({ el, msg, extra }) => {
-      el.classList.remove('is-invalid', 'is-valid');
-      const val = el.value.trim();
-      let errMsg = null;
-      if (!val) errMsg = msg;
-      else if (extra) errMsg = extra(val);
-      if (errMsg) {
-        el.classList.add('is-invalid');
-        valid = false;
-        let fb = el.nextElementSibling;
-        if (!fb || !fb.classList.contains('invalid-feedback')) { fb = document.createElement('div'); fb.className = 'invalid-feedback'; el.after(fb); }
-        fb.textContent = errMsg;
-      } else { el.classList.add('is-valid'); }
-    });
-    if (!valid) return;
-    const id = document.getElementById('membershipIdHidden').value;
-    const data = {
-      name: document.getElementById('ms_name').value,
-      description: document.getElementById('ms_description').value,
-      duration: parseInt(document.getElementById('ms_duration').value),
-      price: parseFloat(document.getElementById('ms_price').value),
-      status: document.getElementById('ms_status').value
-    };
-    const method = id ? 'PUT' : 'POST';
-    const url = id ? `${msApiUrl}/${id}` : msApiUrl;
-    try {
-      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      if (!res.ok) throw new Error();
-      msModal.hide();
-      fetchMemberships();
-    } catch(e) { alert('Failed to save membership'); }
-  };
-}
+document.getElementById('saveMembershipBtn').onclick = async () => {
+  const nameEl = document.getElementById('ms_name');
+  const descEl = document.getElementById('ms_description');
+  const durEl  = document.getElementById('ms_duration');
+  const priceEl= document.getElementById('ms_price');
+  const statEl = document.getElementById('ms_status');
 
-// Activity form validation
+  // Clear previous errors
+  [nameEl, descEl, durEl, priceEl, statEl].forEach(el => {
+    el.classList.remove('is-invalid', 'is-valid');
+    const fb = el.parentElement.querySelector('.invalid-feedback');
+    if (fb) fb.remove();
+  });
+
+  let valid = true;
+
+  // helper
+  function msErr(el, msg) {
+    el.classList.add('is-invalid');
+    const fb = document.createElement('div');
+    fb.className = 'invalid-feedback';
+    fb.textContent = msg;
+    el.after(fb);
+    valid = false;
+  }
+
+  // ── Name ──────────────────────────────────────────
+  if (!nameEl.value.trim() || nameEl.value.trim().length < 2) {
+    msErr(nameEl, 'Membership name must be at least 2 characters');
+  } else if (nameEl.value.trim().length > 100) {
+    msErr(nameEl, 'Membership name cannot exceed 100 characters');
+  } else {
+    nameEl.classList.add('is-valid');
+  }
+
+  // ── Description (optional) ────────────────────────
+  if (descEl.value.trim().length > 500) {
+    msErr(descEl, 'Description cannot exceed 500 characters');
+  }
+
+  // ── Duration ──────────────────────────────────────
+  if (!durEl.value && durEl.value !== '0') {
+    msErr(durEl, 'Duration is required');
+  } else if (isNaN(durEl.value) || +durEl.value < 1) {
+    msErr(durEl, 'Duration must be at least 1 month');
+  } else if (+durEl.value > 120) {
+    msErr(durEl, 'Duration cannot exceed 120 months (10 years)');
+  } else {
+    durEl.classList.add('is-valid');
+  }
+
+  // ── Price ─────────────────────────────────────────
+  if (priceEl.value === '' || priceEl.value === null) {
+    msErr(priceEl, 'Price is required');
+  } else if (isNaN(priceEl.value) || +priceEl.value < 0) {
+    msErr(priceEl, 'Price must be 0 or more');
+  } else if (+priceEl.value > 100000) {
+    msErr(priceEl, 'Price cannot exceed 100,000');
+  } else {
+    priceEl.classList.add('is-valid');
+  }
+
+  // ── Status ────────────────────────────────────────
+  const allowedMsStatus = ['Active', 'Paused', 'Expired'];
+  if (!statEl.value || !allowedMsStatus.includes(statEl.value)) {
+    msErr(statEl, 'Please select a valid status');
+  } else {
+    statEl.classList.add('is-valid');
+  }
+
+  if (!valid) return;
+
+  const id   = document.getElementById('membershipIdHidden').value;
+  const data = {
+    name:        nameEl.value.trim(),
+    description: descEl.value.trim(),
+    duration:    parseInt(durEl.value),
+    price:       parseFloat(priceEl.value),
+    status:      statEl.value
+  };
+  const method = id ? 'PUT' : 'POST';
+  const url    = id ? `${msApiUrl}/${id}` : msApiUrl;
+
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('name')) {
+        msErr(nameEl, 'A membership plan with this name already exists');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to save membership');
+    }
+    msModal.hide();
+    Swal.fire({
+      title: id ? 'Updated!' : 'Created!',
+      text:  id ? 'Membership plan updated.' : 'Membership plan created.',
+      icon:  'success',
+      timer: 1800,
+      showConfirmButton: false
+    });
+    fetchMemberships();
+  } catch(e) {
+    Swal.fire('Error', e.message || 'Failed to save membership', 'error');
+  }
+};
+
+// ===================================================
+// ACTIVITY FORM VALIDATOR (shared Add + Edit)
+// ===================================================
 function validateActivityForm(formId) {
   const form = document.getElementById(formId);
   clearFormErrors(form);
   let valid = true;
-  const nameEl = form.querySelector('[name="name"]');
-  const facilityEl = form.querySelector('[name="facilityId"]');
-  if (!nameEl.value.trim() || nameEl.value.length < 2) { showFieldError(nameEl, 'Activity name is required (min 2 chars)'); valid = false; }
-  if (!facilityEl.value) { showFieldError(facilityEl, 'Please select a facility'); valid = false; }
+
+  const nameEl   = form.querySelector('[name="name"]');
+  const descEl   = form.querySelector('[name="description"]');
+  const facEl    = form.querySelector('[name="facilityId"]');
+  const statEl   = form.querySelector('[name="status"]');
+  const imageEl  = form.querySelector('[name="image"]');
+
+  // ── Name ──────────────────────────────────────────
+  if (!nameEl.value.trim() || nameEl.value.trim().length < 3) {
+    showFieldError(nameEl, 'Activity name must be at least 3 characters');
+    valid = false;
+  } else if (nameEl.value.trim().length > 100) {
+    showFieldError(nameEl, 'Activity name cannot exceed 100 characters');
+    valid = false;
+  }
+
+  // ── Description (optional) ────────────────────────
+  if (descEl && descEl.value.trim().length > 500) {
+    showFieldError(descEl, 'Description cannot exceed 500 characters');
+    valid = false;
+  }
+
+  // ── Facility ──────────────────────────────────────
+  if (!facEl.value) {
+    showFieldError(facEl, 'Please select a facility');
+    valid = false;
+  }
+
+  // ── Status ────────────────────────────────────────
+  if (!['Active', 'Inactive', 'Pending'].includes(statEl.value)) {
+    showFieldError(statEl, 'Please select a valid status');
+    valid = false;
+  }
+
+  // ── Image (optional — validate only if provided) ──
+  if (imageEl && imageEl.files && imageEl.files[0]) {
+    const file    = imageEl.files[0];
+    const maxSize = 5 * 1024 * 1024;
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+      showFieldError(imageEl, 'Image must be JPG, PNG, or WebP');
+      valid = false;
+    } else if (file.size > maxSize) {
+      showFieldError(imageEl, 'Image size must not exceed 5MB');
+      valid = false;
+    }
+  }
+
   return valid;
 }
 
-// Override activity saves
+// ── Add Activity ──────────────────────────────────────
 document.getElementById('saveAddBtn_a').onclick = async () => {
   if (!validateActivityForm('addActivityForm')) return;
-  await saveActivityForm('addActivityForm', 'addActivityModal', actApiUrl, 'POST');
-};
-document.getElementById('saveEditBtn_a').onclick = async () => {
-  if (!validateActivityForm('editActivityForm')) return;
-  await saveActivityForm('editActivityForm', 'editActivityModal', `${actApiUrl}/${document.getElementById('editActivityForm').id.value}`, 'PUT');
+
+  const form = document.getElementById('addActivityForm');
+  const fd   = new FormData(form);
+
+  try {
+    const res = await fetch(actApiUrl, { method: 'POST', body: fd });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('name')) {
+        showFieldError(form.querySelector('[name="name"]'),
+          'An activity with this name already exists');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to add activity');
+    }
+    showToastA('Activity added successfully');
+    bootstrap.Modal.getInstance(
+      document.getElementById('addActivityModal')
+    ).hide();
+    await loadActivities();
+  } catch(e) {
+    showToastA(e.message || 'Failed to add activity', 'error');
+  }
 };
 
-// Facility form validation
+// ── Edit Activity ─────────────────────────────────────
+document.getElementById('saveEditBtn_a').onclick = async () => {
+  if (!validateActivityForm('editActivityForm')) return;
+
+  const form = document.getElementById('editActivityForm');
+  const id   = form.querySelector('[name="id"]').value;
+  const fd   = new FormData(form);
+
+  try {
+    const res = await fetch(`${actApiUrl}/${id}`, { method: 'PUT', body: fd });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('name')) {
+        showFieldError(form.querySelector('[name="name"]'),
+          'An activity with this name already exists');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to update activity');
+    }
+    showToastA('Activity updated successfully');
+    bootstrap.Modal.getInstance(
+      document.getElementById('editActivityModal')
+    ).hide();
+    await loadActivities();
+  } catch(e) {
+    showToastA(e.message || 'Failed to update activity', 'error');
+  }
+};
+// ===================================================
+// FACILITY FORM VALIDATOR (shared Add + Edit)
+// ===================================================
 function validateFacilityForm(formId) {
   const form = document.getElementById(formId);
   clearFormErrors(form);
   let valid = true;
-  const nameEl = form.querySelector('[name="name"]');
-  const capEl = form.querySelector('[name="capacity"]');
-  const catEl = form.querySelector('[name="facilityCategoryId"]');
-  if (!nameEl.value.trim() || nameEl.value.length < 2) { showFieldError(nameEl, 'Facility name is required (min 2 chars)'); valid = false; }
-  if (!capEl.value || isNaN(capEl.value) || +capEl.value < 1) { showFieldError(capEl, 'Capacity must be at least 1'); valid = false; }
-  if (!catEl.value) { showFieldError(catEl, 'Please select a category'); valid = false; }
+
+  const nameEl  = form.querySelector('[name="name"]');
+  const descEl  = form.querySelector('[name="description"]');
+  const catEl   = form.querySelector('[name="facilityCategoryId"]');
+  const capEl   = form.querySelector('[name="capacity"]');
+  const statEl  = form.querySelector('[name="status"]');
+  const imageEl = form.querySelector('[name="image"]');
+
+  // ── Name ──────────────────────────────────────────
+  if (!nameEl.value.trim() || nameEl.value.trim().length < 2) {
+    showFieldError(nameEl, 'Facility name must be at least 2 characters');
+    valid = false;
+  } else if (nameEl.value.trim().length > 150) {
+    showFieldError(nameEl, 'Facility name cannot exceed 150 characters');
+    valid = false;
+  }
+
+  // ── Description (optional) ────────────────────────
+  if (descEl && descEl.value.trim().length > 1000) {
+    showFieldError(descEl, 'Description cannot exceed 1000 characters');
+    valid = false;
+  }
+
+  // ── Category ──────────────────────────────────────
+  if (!catEl.value) {
+    showFieldError(catEl, 'Please select a category');
+    valid = false;
+  }
+
+  // ── Capacity ──────────────────────────────────────
+  if (!capEl.value || isNaN(capEl.value)) {
+    showFieldError(capEl, 'Capacity is required');
+    valid = false;
+  } else if (+capEl.value < 1) {
+    showFieldError(capEl, 'Capacity must be at least 1');
+    valid = false;
+  } else if (+capEl.value > 100000) {
+    showFieldError(capEl, 'Capacity cannot exceed 100,000');
+    valid = false;
+  }
+
+  // ── Status ────────────────────────────────────────
+  const allowedStatuses = ['Active', 'Under Maintenance', 'Closed'];
+  if (!statEl.value || !allowedStatuses.includes(statEl.value)) {
+    showFieldError(statEl, 'Please select a valid status');
+    valid = false;
+  }
+
+  // ── Image (optional — validate only if provided) ──
+  if (imageEl && imageEl.files && imageEl.files[0]) {
+    const file    = imageEl.files[0];
+    const maxSize = 5 * 1024 * 1024;
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+      showFieldError(imageEl, 'Image must be JPG, PNG, or WebP');
+      valid = false;
+    } else if (file.size > maxSize) {
+      showFieldError(imageEl, 'Image size must not exceed 5MB');
+      valid = false;
+    }
+  }
+
   return valid;
 }
 
+// ── Add Facility ──────────────────────────────────────
 document.getElementById('saveAddBtn_f').onclick = async () => {
   if (!validateFacilityForm('addFacilityForm')) return;
-  await saveFacilityForm('addFacilityForm', 'addFacilityModal', facApiUrl, 'POST');
+
+  const form = document.getElementById('addFacilityForm');
+  const fd   = new FormData(form);
+
+  try {
+    const res = await fetch(facApiUrl, { method: 'POST', body: fd });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('name')) {
+        const nameEl = form.querySelector('[name="name"]');
+        showFieldError(nameEl, 'A facility with this name already exists');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to add facility');
+    }
+    showToastF('Facility added successfully');
+    bootstrap.Modal.getInstance(
+      document.getElementById('addFacilityModal')
+    ).hide();
+    await loadFacilities();
+  } catch(e) {
+    showToastF(e.message || 'Failed to add facility', 'error');
+  }
 };
+
+// ── Edit Facility ─────────────────────────────────────
 document.getElementById('saveEditBtn_f').onclick = async () => {
   if (!validateFacilityForm('editFacilityForm')) return;
-  await saveFacilityForm('editFacilityForm', 'editFacilityModal', `${facApiUrl}/${document.getElementById('editFacilityForm').id.value}`, 'PUT');
+
+  const form = document.getElementById('editFacilityForm');
+  const id   = form.querySelector('[name="id"]').value;
+  const fd   = new FormData(form);
+
+  try {
+    const res = await fetch(`${facApiUrl}/${id}`, { method: 'PUT', body: fd });
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      if (err?.message?.toLowerCase().includes('name')) {
+        const nameEl = form.querySelector('[name="name"]');
+        showFieldError(nameEl, 'A facility with this name already exists');
+        return;
+      }
+      throw new Error(err?.message || 'Failed to update facility');
+    }
+    showToastF('Facility updated successfully');
+    bootstrap.Modal.getInstance(
+      document.getElementById('editFacilityModal')
+    ).hide();
+    await loadFacilities();
+  } catch(e) {
+    showToastF(e.message || 'Failed to update facility', 'error');
+  }
 };
 
 
@@ -5981,8 +6799,12 @@ async function saveAdminPassword() {
     msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>';
     return;
   }
-  if (!newPass || newPass.length < 6) {
-    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 6 characters.</span>';
+if (!newPass || newPass.length < 8) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 8 characters.</span>';
+    return;
+  }
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(newPass)) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%).</span>';
     return;
   }
   if (newPass !== confPass) {

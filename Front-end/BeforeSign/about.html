@@ -216,14 +216,12 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <!-- AUTH MODAL (v3) -->
 <div class="modal fade" id="authModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:500px;">
-    <div class="modal-content" style="border-radius:24px;border:none;overflow:hidden;background:#f0f4f8;">
-      <div style="position:absolute;top:12px;right:14px;z-index:20;">
+<div class="modal-content" style="border-radius:24px;border:none;overflow:visible;background:#f0f4f8;">      <div style="position:absolute;top:12px;right:14px;z-index:20;">
         <button type="button" data-bs-dismiss="modal" style="background:rgba(0,0,0,.07);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#64748b;">✕</button>
       </div>
 
       <!-- AUTH INNER PAGES -->
-      <div style="padding:0;">
-
+<div style="padding:0; overflow-y:auto; max-height:80vh;">
         <!-- SIGN IN PAGE -->
         <div id="authLoginPage" class="auth-inner-page" style="padding:30px 30px 24px;">
           <div style="text-align:center;margin-bottom:20px;">
@@ -368,7 +366,8 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
           <div style="margin-bottom:6px;">
             <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Password</label>
             <div style="position:relative;">
-              <input type="password" id="suPassword" placeholder="Min. 6 characters"
+              <input type="password" id="suPassword" placeholder="Min. 8 chars, A-Z, 0-9, symbol"
+
                 oninput="authValidatePassword('suPassword','suPassErr'); authCheckStrength('suPassword')"
                 style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 40px 10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
               <button type="button" onclick="authToggleEye('suPassword',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
@@ -503,7 +502,11 @@ function authValidatePhone(iId,eId){
 function authValidatePassword(iId,eId){
   const v=document.getElementById(iId).value;
   if(!v) return authSetField(iId,eId,false,'Password is required');
-  if(v.length<6) return authSetField(iId,eId,false,'Password must be at least 6 characters');
+  if(v.length<8) return authSetField(iId,eId,false,'Password must be at least 8 characters');
+  if(!/[A-Z]/.test(v)) return authSetField(iId,eId,false,'Must contain an uppercase letter (A-Z)');
+  if(!/[a-z]/.test(v)) return authSetField(iId,eId,false,'Must contain a lowercase letter (a-z)');
+  if(!/[0-9]/.test(v)) return authSetField(iId,eId,false,'Must contain a number (0-9)');
+  if(!/[^A-Za-z0-9]/.test(v)) return authSetField(iId,eId,false,'Must contain a special character (!@#$...)');
   return authSetField(iId,eId,true);
 }
 
@@ -525,8 +528,8 @@ function authCheckStrength(id){
   if(!val){wrap.style.display='none';return;}
   wrap.style.display='block';
   let score=0;
-  if(val.length>=6)score++;
-  if(val.length>=10)score++;
+  if(val.length>=8)score++;
+  if(val.length>=12)score++;
   if(/[A-Z]/.test(val)&&/[a-z]/.test(val))score++;
   if(/[0-9]/.test(val)&&/[^A-Za-z0-9]/.test(val))score++;
   const levels=[{color:'#e53e3e',label:'Weak'},{color:'#f59e0b',label:'Fair'},{color:'#00d4aa',label:'Good'},{color:'#00a896',label:'Strong'}];
@@ -593,7 +596,13 @@ const urls = {
   }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
   finally{btn.disabled=false;btn.textContent='Sign In';}
 }
-
+function convertBirthDate(birth) {
+  const months = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',
+                  Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+  const parts = birth.split(' ');
+  if (parts.length !== 3) return birth;
+  return `${parts[2]}-${months[parts[1]]}-${parts[0].padStart(2,'0')}`;
+}
 // ── Signup ───────────────────────────────────────────
 async function authHandleSignup(){
   const firstOk=authValidateMinLen('suFirst','suFirstErr','First name',2);
@@ -612,14 +621,25 @@ async function authHandleSignup(){
   btn.disabled=true;btn.textContent='Please wait…';
   try{
   const res=await fetch(`${API_BASE}/register`,{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({firstName:document.getElementById('suFirst').value.trim(),lastName:document.getElementById('suLast').value.trim(),nationalId:nid,dateOfBirth:birth,gender,email:document.getElementById('suEmail').value.trim(),phone:document.getElementById('suPhone').value.trim(),password:document.getElementById('suPassword').value})});
+  body:JSON.stringify({firstName:document.getElementById('suFirst').value.trim(),lastName:document.getElementById('suLast').value.trim(),nationalId:nid,dateOfBirth:convertBirthDate(birth),gender,email:document.getElementById('suEmail').value.trim(),phone:document.getElementById('suPhone').value.trim(),password:document.getElementById('suPassword').value})});
 const json=await res.json();
 if(!res.ok){authShowNotif(json||'Registration failed','error');return;}
-localStorage.setItem('token',json.token);
-localStorage.setItem('role',json.role);
-localStorage.setItem('fullName',json.fullName);
-authShowNotif('Account created successfully! ✅');
-setTimeout(()=>{window.location.href='index.html';},1000);
+authShowNotif('Account created successfully! Please sign in to continue ✅');
+setTimeout(() => {
+  authShowPage('authLoginPage');
+  document.getElementById('siEmail').value = document.getElementById('suEmail').value;
+  document.getElementById('suFirst').value  = '';
+  document.getElementById('suLast').value   = '';
+  document.getElementById('suNID').value    = '';
+  document.getElementById('suBirth').value  = '';
+  document.getElementById('suGender').value = '';
+  document.getElementById('suEmail').value  = '';
+  document.getElementById('suPhone').value  = '';
+  document.getElementById('suPassword').value = '';
+  document.getElementById('suStrengthWrap').style.display = 'none';
+  document.getElementById('nidPills').style.display = 'none';
+  document.getElementById('nidStatus').textContent = '';
+}, 1500);
   }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
   finally{btn.disabled=false;btn.textContent='Create Account';}
 }

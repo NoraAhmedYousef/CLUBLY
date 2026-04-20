@@ -1423,7 +1423,7 @@ body {
 
 <!-- ===== MEMBER NOTIFICATION DETAIL MODAL ===== -->
 <div class="modal fade" id="memberNotifDetailModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
     <div class="modal-content modal-content-clubly">
 
       <div class="modal-header-clubly d-flex align-items-center gap-3">
@@ -2176,21 +2176,27 @@ async function loadMembershipData() {
       if (!res2.ok) throw new Error();
       const plan = await res2.json();
 
-      // ── حساب تاريخ الانتهاء من joinDate + duration ──
-      if (m.joinDate && plan.duration) {
-        const expiry = new Date(m.joinDate);
-        expiry.setMonth(expiry.getMonth() + plan.duration);
-        document.getElementById('mem-expiry').textContent =
-          expiry.toLocaleDateString('en-GB', {
-            day: '2-digit', month: 'short', year: 'numeric'
-          });
+// داخل loadMembershipData() بعد ما تحسب الـ expiry
+if (m.joinDate && plan.duration) {
+  const expiry = new Date(m.joinDate);
+  expiry.setMonth(expiry.getMonth() + plan.duration);
+  
+  // ✅ احسب الأيام المتبقية
+  const today = new Date();
+  const daysLeft = Math.max(0, Math.ceil((expiry - today) / (1000 * 60 * 60 * 24)));
+  document.getElementById('dash-days').innerHTML =
+    `${daysLeft} <span class="stat-unit">days</span>`;
 
-        // ── Status بناءً على التاريخ ──
-        const isActive = expiry > new Date();
-        const statusEl = document.getElementById('mem-status');
-        statusEl.textContent = isActive ? 'Active' : 'Expired';
-        statusEl.style.color  = isActive ? '#22c55e' : '#ef4444';
-      }
+  document.getElementById('mem-expiry').textContent =
+    expiry.toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    });
+
+  const isActive = expiry > today;
+  const statusEl = document.getElementById('mem-status');
+  statusEl.textContent = isActive ? 'Active' : 'Expired';
+  statusEl.style.color  = isActive ? '#22c55e' : '#ef4444';
+}
 
       // ── Benefits من description ──
       const benefitsEl = document.getElementById('benefitsList');
@@ -3112,48 +3118,51 @@ async function loadMyBookings() {
     if (!res.ok) throw new Error();
     const bookings = await res.json();
 
-    // Update stats
+    // ✅ Total bookings
     document.getElementById('dash-bookings').textContent = bookings.length;
 
-    // Update upcoming reservations
-    state.reservations = bookings
-      .filter(b => b.status.toLowerCase() !== 'cancelled')
-      .slice(0, 5)
-      .map(b => ({
-        name: b.activityName + ' — ' + b.groupName,
-        date: b.startDate,
-        time: b.status,
-        color: b.status.toLowerCase() === 'approved' ? '#22c55e' :
-               b.status.toLowerCase() === 'pending'  ? '#f59e0b' : '#94a3b8'
-      }));
+    // ✅ Activities joined (unique activities)
+    const uniqueActivities = new Set(bookings.map(b => b.activityName).filter(Boolean));
+    document.getElementById('dash-activities').textContent = uniqueActivities.size;
 
-    renderUpcoming();
-
-    // Update schedule data from bookings
-    bookings.forEach(b => {
-      const key = b.startDate?.split('T')[0] || b.startDate;
-      if (!key) return;
-      if (!state.scheduleData[key]) state.scheduleData[key] = [];
-      const exists = state.scheduleData[key].find(x => x.id === b.id);
-      if (!exists) {
-        state.scheduleData[key].push({
-          id: b.id,
-          name: b.activityName,
-          trainer: b.memberName || '',
-          location: b.groupName,
-          time: b.startDate + ' → ' + b.endDate,
-          status: b.status === 'Approved' ? 'Confirmed' :
-                  b.status === 'Pending'  ? 'Pending Approval' : 'Completed',
-          icon: 'fas fa-running',
-          colorClass: b.status === 'Approved' ? 'sched-blue' :
-                      b.status === 'Pending'  ? 'sched-orange' : 'sched-gray'
+    // ✅ Hours this month (من الـ timeSlots)
+    const now = new Date();
+    const thisMonth = bookings.filter(b => {
+      const d = new Date(b.startDate);
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    });
+    const totalHours = thisMonth.reduce((sum, b) => {
+      if (b.timeSlots?.length) {
+        b.timeSlots.forEach(s => {
+          if (s.startTime && s.endTime) {
+            const [sh, sm] = s.startTime.split(':').map(Number);
+            const [eh, em] = s.endTime.split(':').map(Number);
+            sum += ((eh * 60 + em) - (sh * 60 + sm)) / 60;
+          }
         });
       }
-    });
+      return sum;
+    }, 0);
+    document.getElementById('dash-hours').innerHTML =
+      `${Math.round(totalHours)} <span class="stat-unit">hrs</span>`;
 
-    // Highlight activity dates in calendar
+    // ✅ Upcoming reservations
+    state.reservations = bookings
+      .filter(b => (b.status || '').toLowerCase() !== 'cancelled')
+      .slice(0, 5)
+      .map(b => ({
+        name:  b.activityName + (b.groupName ? ' — ' + b.groupName : ''),
+        date:  b.startDate ? b.startDate.split('T')[0] : '—',
+        time:  b.status,
+        color: (b.status||'').toLowerCase() === 'approved' ? '#22c55e'
+             : (b.status||'').toLowerCase() === 'pending'  ? '#f59e0b'
+             : '#94a3b8'
+      }));
+    renderUpcoming();
+
+    // ✅ Calendar dots
     state.activityDates = [...new Set(bookings.map(b => {
-      const d = b.startDate?.split('T')[0] || b.startDate;
+      const d = b.startDate?.split('T')[0];
       return d ? new Date(d).getDate() : null;
     }).filter(Boolean))];
     generateCalendar();
