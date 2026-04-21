@@ -25,6 +25,8 @@
   --text: #1a202c;
   --muted: #64748b;
   --border: #e2e8f0;
+  --footer-h: 62px;
+
 }
 [data-theme="dark"] {
   --bg: #0a1628;
@@ -45,7 +47,6 @@ body {
   overflow-x: hidden;
   transition: background .2s, color .2s;
 }
-
 /* ===== HEADER ===== */
 .clubly-header {
   position: fixed;
@@ -140,8 +141,12 @@ body {
 .btn-signout:hover { background: rgba(239,68,68,.2); color: #fff; border-color: rgba(239,68,68,.4); }
 
 /* ===== LAYOUT ===== */
-.layout-body { display: flex; margin-top: var(--header-h); flex: 1; }
-
+.layout-body { 
+  display: flex; 
+  margin-top: var(--header-h);
+  flex: 1;
+  min-height: calc(100vh - var(--header-h) - var(--footer-h));
+}
 /* ===== SIDEBAR ===== */
 .sidebar {
   width: var(--sidebar-w);
@@ -150,7 +155,7 @@ body {
   position: fixed;
   top: var(--header-h);
   left: 0;
-  bottom: 0;
+  height: calc(100vh - var(--header-h)); /* ← بدل bottom:0 */
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 1000;
@@ -243,7 +248,6 @@ body {
   margin-left: var(--sidebar-w);
   flex: 1;
   padding: 28px;
-  min-height: calc(100vh - var(--header-h));
 }
 
 /* ===== PAGES ===== */
@@ -711,7 +715,41 @@ body {
   color: var(--text); padding: 8px 20px; border-radius: 8px;
   cursor: pointer; font-family: inherit; font-weight: 600;
 }
-
+.clubly-footer {
+  background: var(--clubly-dark);
+  color: rgba(255,255,255,.65);
+  width: 100%;
+  position: relative;
+  z-index: 1500;
+  margin-left: 0 !important;
+  clear: both;
+}
+.footer-inner{display:flex;gap:60px;padding:30px 50px 20px;flex-wrap:wrap;}
+.footer-col h5{color:#fff;font-weight:700;margin-bottom:14px;font-size:1rem;}
+.footer-links{list-style:none;padding:0;}
+.footer-links li{margin-bottom:6px;}
+.footer-links a{
+  color:rgba(255,255,255,.6);text-decoration:none;
+  font-size:.88rem;transition:color .2s;
+  cursor:pointer;background:none;border:none;
+}
+.footer-links a:hover{color:var(--clubly-accent);}
+.footer-contact{font-size:.88rem;line-height:2;}
+.footer-contact i{color:var(--clubly-teal);margin-right:6px;}
+.footer-socials{display:flex;gap:12px;margin-top:10px;}
+.footer-socials a{
+  color:rgba(255,255,255,.6);font-size:18px;
+  transition:color .2s,transform .2s;text-decoration:none;
+}
+.footer-socials a:hover{color:var(--clubly-accent);transform:translateY(-2px);}
+.footer-bottom{
+  text-align:center;padding:12px;
+  border-top:1px solid rgba(255,255,255,.08);
+  font-size:.82rem;color:rgba(255,255,255,.4);
+}
+@media(max-width:768px){
+  .footer-inner{gap:30px;padding:20px 24px;}
+}
 /* ===== SIGN OUT ===== */
 .signout-icon {
   width: 80px; height: 80px; border-radius: 50%;
@@ -730,10 +768,46 @@ body {
 .empty-state p { font-size: .9rem; }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .sidebar { display: none; }
-  .content-area { margin-left: 0; padding: 16px; }
+.hamburger-btn {
+  display: none;
+  background: rgba(255,255,255,.1);
+  border: none; color: #fff;
+  width: 38px; height: 38px;
+  border-radius: 8px; cursor: pointer;
+  align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.55); z-index: 999;
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.active { display: block; }
+@media (max-width: 992px) {
   .header-nav { display: none; }
+}
+@media (max-width: 768px) {
+  .hamburger-btn { display: flex; }
+  .sidebar {
+    display: block !important;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 1100;
+    width: var(--sidebar-w) !important;
+    min-width: var(--sidebar-w) !important;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .content-area { margin-left: 0 !important; padding: 16px; }
+  .header-logo { min-width: auto; }
+  .header-user span { display: none; }
+  .btn-upgrade { padding: 6px 12px; font-size: .8rem; }
+  .btn-signout { padding: 6px 12px; font-size: .8rem; }
+  .page-title-clubly { font-size: 1.25rem; }
+  .page-header-clubly { flex-direction: column; align-items: flex-start; }
+  .upgrade-banner { flex-direction: column; }
+}
+@media (max-width: 360px) {
+  .logo-text { display: none; }
 }
 </style>
 </head>
@@ -745,6 +819,9 @@ body {
     <i class="bi bi-lightning-charge-fill logo-icon"></i>
     <span class="logo-text">Cl<span>u</span>bly</span>
   </a>
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileSidebar()">
+  <i class="bi bi-list"></i>
+</button>
   <nav class="header-nav">
   <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
   <a href="../AfterSign/index.html">Home</a>
@@ -773,7 +850,7 @@ body {
 <div class="layout-body">
 
   <!-- ===== SIDEBAR ===== -->
-  <aside class="sidebar">
+<aside class="sidebar" id="sidebar">
     <!-- Guest card -->
     <div class="sidebar-guest-card">
       <div class="guest-card-title">Guest Account</div>
@@ -1248,38 +1325,64 @@ body {
         </div>
       </div>
 
-      <!-- Change Password -->
-      <div class="content-card">
-        <h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
-          <i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i>
-          Change Password
-        </h6>
-        <div class="row g-3">
-          <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">New Password</label>
-            <input type="password" id="guestNewPass" class="form-control" placeholder="Min 6 characters">
-          </div>
-          <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Confirm Password</label>
-            <input type="password" id="guestConfirmPass" class="form-control" placeholder="Confirm password">
-          </div>
-          <div id="guestPassMsg" class="col-12"></div>
-        </div>
-        <div class="mt-3">
-          <button onclick="saveGuestPassword()"
-            style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;
-            border:none;padding:9px 24px;border-radius:50px;font-weight:700;
-            cursor:pointer;font-family:inherit;">
-            <i class="bi bi-shield-lock me-1"></i> Update Password
-          </button>
-        </div>
-      </div>
-    </div>
+<!-- Change Password -->
+<div class="content-card">
+  <h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
+    <i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i>
+    Change Password
+  </h6>
+  <p style="color:var(--muted); font-size:.88rem; margin-bottom:16px;">
+    Keep your account secure by updating your password regularly.
+  </p>
+  <button data-bs-toggle="modal" data-bs-target="#guestPassModal"
+    style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;border:none;
+    padding:9px 24px;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;">
+    <i class="bi bi-shield-lock me-1"></i> Change Password
+  </button>
+</div>
+
   </div>
 </div>
   </main>
+  
 </div>
-
+<!-- ======= FOOTER ======= -->
+<footer class="clubly-footer">
+  <div class="footer-inner">
+    <div class="footer-col" style="max-width:220px">
+      <h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5>
+      <p style="font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.7">Your family's fitness journey starts here. Modern sports club management.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Quick Links</h5>
+      <ul class="footer-links">
+        <li><a onclick="showPage('dashboard')">Dashboard</a></li>
+        <li><a onclick="showPage('bookings')">My Bookings</a></li>
+        <li><a onclick="showPage('schedule')">Schedule</a></li>
+        <li><a onclick="showPage('payments')">Payments</a></li>
+        <li><a onclick="showPage('profile')">Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact Us</h5>
+      <div class="footer-contact">
+        <div><i class="bi bi-geo-alt-fill"></i> 123 Fitness Street, City 12345</div>
+        <div><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</div>
+        <div><i class="bi bi-envelope-fill"></i> info@clubly.com</div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Follow Us</h5>
+      <div class="footer-socials">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-twitter-x"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Clubly. All rights reserved.</div>
+</footer>
 <!-- Sign Out Modal -->
 <div id="signoutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
   <div style="background:var(--card-bg); border-radius:16px; padding:32px; max-width:380px; width:90%; text-align:center; border:1px solid var(--border);">
@@ -1352,6 +1455,8 @@ const state = {
 
 // ===== PAGE NAVIGATION =====
 function showPage(id) {
+    closeMobileSidebar(); 
+
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sidebar-link, .header-nav a').forEach(l => l.classList.remove('active'));
   document.getElementById('page-' + id)?.classList.add('active');
@@ -2261,29 +2366,50 @@ async function saveGuestProfile() {
   }
 }
 
-async function saveGuestPassword() {
-  const np  = document.getElementById('guestNewPass').value;
-  const cp  = document.getElementById('guestConfirmPass').value;
-  const msg = document.getElementById('guestPassMsg');
-  msg.innerHTML = '';
-  if (!np || np.length < 6) {
-    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Min 6 characters.</span>';
+async function saveGuestPasswordModal() {
+  const currPass = document.getElementById('guestCurrPass').value;
+  const newPass  = document.getElementById('guestNewPassModal').value;
+  const confPass = document.getElementById('guestConfirmPassModal').value;
+  const msgEl    = document.getElementById('guestPassModalMsg');
+  msgEl.innerHTML = '';
+
+  if (!currPass) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>';
     return;
   }
-  if (np !== cp) {
-    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords don\'t match.</span>';
+  if (!newPass || newPass.length < 8) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 8 characters.</span>';
     return;
   }
-  const fd = new FormData();
-  fd.append('NewPassword', np);
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(newPass)) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%).</span>';
+    return;
+  }
+  if (newPass !== confPass) {
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords do not match.</span>';
+    return;
+  }
+
   try {
-    const res = await fetch(`${guestApiUrl}/${guestId}`, { method:'PUT', body:fd });
-    if (!res.ok) throw new Error();
-    msg.innerHTML = '<span style="color:#22c55e;font-size:.85rem;">✓ Password updated!</span>';
-    document.getElementById('guestNewPass').value   = '';
-    document.getElementById('guestConfirmPass').value = '';
+    const fd = new FormData();
+    fd.append('CurrentPassword', currPass);
+    fd.append('NewPassword', newPass);
+    const res = await fetch(`${guestApiUrl}/${guestId}`, { method: 'PUT', body: fd });
+    if (!res.ok) {
+      const err = await res.text();
+      msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${err || 'Failed to update password.'}</span>`;
+      return;
+    }
+    msgEl.innerHTML = '<span style="color:#22c55e;font-size:.85rem;">✓ Password updated successfully!</span>';
+    document.getElementById('guestCurrPass').value        = '';
+    document.getElementById('guestNewPassModal').value    = '';
+    document.getElementById('guestConfirmPassModal').value = '';
+    setTimeout(() => {
+      bootstrap.Modal.getInstance(document.getElementById('guestPassModal')).hide();
+      msgEl.innerHTML = '';
+    }, 1500);
   } catch {
-    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Failed to update.</span>';
+    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Failed to update password.</span>';
   }
 }
 // ===== LOAD GUEST DATA FROM API =====
@@ -2545,7 +2671,23 @@ function requestUpgrade(planId, planName) {
     alert(`✅ Upgrade request sent for "${planName}"!\nAdmin will contact you soon.`);
   }
 }
-
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.toggle-pw');
+  if (!btn) return;
+  const input = btn.closest('.input-group')?.querySelector('input[type="password"], input[type="text"]');
+  if (!input) return;
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  btn.innerHTML = isHidden ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+});
+function toggleMobileSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
 // ===== INIT =====
 generateCalendar();
 renderUpcoming();
@@ -2556,5 +2698,53 @@ loadGuestNotifications();
 updateStats();
 initGuestPortal();
 </script>
+<!-- ===== GUEST CHANGE PASSWORD MODAL ===== -->
+<div class="modal fade" id="guestPassModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background:var(--card-bg);color:var(--text);border-radius:16px;border:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;align-items:center;
+                  padding:18px 22px 12px;background:linear-gradient(135deg,#0d1b2a,#122236);
+                  border-radius:16px 16px 0 0;">
+        <h5 style="margin:0;color:#fff;font-weight:700;">Change Password</h5>
+        <button class="btn-close" data-bs-dismiss="modal" style="filter:invert(1);"></button>
+      </div>
+      <div style="padding:20px 22px;">
+        <form id="guestPassForm">
+          <div class="mb-3">
+            <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;">Current Password</label>
+            <div class="input-group">
+              <input type="password" id="guestCurrPass" class="form-control" placeholder="Current password">
+              <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;">New Password</label>
+            <div class="input-group">
+              <input type="password" id="guestNewPassModal" class="form-control" placeholder="New password (min 8 chars)">
+              <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;">Confirm New Password</label>
+            <div class="input-group">
+              <input type="password" id="guestConfirmPassModal" class="form-control" placeholder="Confirm new password">
+              <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <div id="guestPassModalMsg" class="mt-2"></div>
+        </form>
+      </div>
+      <div style="padding:14px 22px;background:var(--bg);border-radius:0 0 16px 16px;
+                  border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;">
+        <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-success rounded-pill px-4" onclick="saveGuestPasswordModal()">
+          <i class="bi bi-check-lg me-1"></i> Save Password
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+
 </body>
 </html>

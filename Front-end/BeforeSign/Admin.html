@@ -265,7 +265,6 @@ body {
   width: 100%;
   position: relative;
   z-index: 1500;
-  margin-left: 0 !important;
   clear: both;
 }
 .footer-inner {
@@ -484,14 +483,45 @@ body {
 .accent-text { color: var(--clubly-accent); }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .header-nav { display: none; }
-  .sidebar { left: calc(-1 * var(--sidebar-w)); }
-  .sidebar.mobile-open { left: 0; }
-  .content-area { margin-left: 0 !important; }
-  .footer-inner { padding: 20px 24px; gap: 30px; }
+.hamburger-btn {
+  display: none;
+  background: rgba(255,255,255,.1);
+  border: none; color: #fff;
+  width: 38px; height: 38px;
+  border-radius: 8px; cursor: pointer;
+  align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
 }
-
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.55); z-index: 999;
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.active { display: block; }
+@media (max-width: 992px) {
+  .header-nav { display: none; }
+}
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .3s ease, width .3s ease !important;
+    left: 0 !important;
+    z-index: 1100;
+    width: var(--sidebar-w) !important;
+    min-width: var(--sidebar-w) !important;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar.closed { transform: translateX(-100%); }
+  .content-area { margin-left: 0 !important; padding: 16px; }
+  .content-area.expanded { margin-left: 0 !important; }
+  .footer-inner { padding: 20px 24px; gap: 30px; }
+  .page-header h2 { font-size: 1.1rem; }
+}
+@media (max-width: 480px) {
+  .content-area { padding: 12px; }
+  .welcome-banner { padding: 18px 20px; }
+  .welcome-banner h1 { font-size: 1.3rem; }
+}
 /* ===== ENHANCED FORM STYLES ===== */
 .form-control, .form-select {
   border-radius: 8px;
@@ -851,7 +881,9 @@ body {
   <button class="toggle-sidebar-btn me-2" onclick="toggleSidebar()" title="Toggle Sidebar">
     <i class="bi bi-list"></i>
   </button>
-
+<button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileSidebar()">
+  <i class="bi bi-list"></i>
+</button>
   <a class="header-logo" href="#">
     <i class="bi bi-lightning-charge-fill logo-icon"></i>
     <span class="logo-text">Cl<span>u</span>bly</span>
@@ -969,7 +1001,10 @@ body {
 <a class="sidebar-link" onclick="showPage('admins')" data-label="Admins">
   <i class="bi bi-shield-lock"></i><span class="link-text">Admins</span>
 </a>
-
+<a class="sidebar-link" onclick="showPage('guest')" data-label="Guests">
+  <i class="bi bi-person-fill"></i>
+  <span class="link-text">Guests</span>
+</a>
 <a class="sidebar-link" onclick="showPage('profile')" data-label="My Profile">
   <i class="bi bi-person-circle"></i>
   <span class="link-text">My Profile</span>
@@ -2721,7 +2756,241 @@ body {
   </div>
  
 </div> <!-- ======= نهاية page-admins ======= -->
- 
+ <!-- =============================== GUESTS =============================== -->
+<div class="page" id="page-guest">
+  <div class="page-header">
+    <div>
+      <h2 class="fw-bold m-0">Guests Management</h2>
+      <small class="text-muted">Registered guests — View / Delete</small>
+    </div>
+    <button class="btn btn-outline-primary rounded-pill px-3" onclick="loadGuests()">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3">
+      <div class="stats-card">
+        <div class="stat-icon" style="background:rgba(232,93,47,.12);color:var(--clubly-accent)"><i class="bi bi-person-fill"></i></div>
+        <h3 id="guestStatTotal" style="color:var(--clubly-accent)">—</h3>
+        <p>Total Guests</p>
+      </div>
+    </div>
+    <div class="col-6 col-xl-3">
+      <div class="stats-card">
+        <div class="stat-icon" style="background:rgba(46,196,182,.12);color:var(--clubly-teal)"><i class="bi bi-calendar-check-fill"></i></div>
+        <h3 id="guestStatBooked" style="color:var(--clubly-teal)">—</h3>
+        <p>With Bookings</p>
+      </div>
+    </div>
+    <div class="col-6 col-xl-3">
+      <div class="stats-card">
+        <div class="stat-icon" style="background:rgba(212,168,67,.12);color:var(--clubly-gold)"><i class="bi bi-gender-ambiguous"></i></div>
+        <h3 id="guestStatMale" style="color:var(--clubly-gold)">—</h3>
+        <p>Male Guests</p>
+      </div>
+    </div>
+    <div class="col-6 col-xl-3">
+      <div class="stats-card">
+        <div class="stat-icon" style="background:rgba(139,92,246,.12);color:#8b5cf6"><i class="bi bi-person-heart"></i></div>
+        <h3 id="guestStatFemale" style="color:#8b5cf6">—</h3>
+        <p>Female Guests</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="clubly-card p-3 mb-3">
+    <div class="row g-2 align-items-center controls">
+      <div class="col-auto">
+        <input id="searchInput_gst" class="form-control" placeholder="Search by name, email, phone..." style="width:260px" oninput="applyGuestFilters()">
+      </div>
+      <div class="col-auto">
+        <select id="genderFilter_gst" class="form-select" onchange="applyGuestFilters()">
+          <option value="">Any gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <select id="sortBy_gst" class="form-select" onchange="applyGuestFilters()">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="name_asc">Name A→Z</option>
+          <option value="name_desc">Name Z→A</option>
+        </select>
+      </div>
+      <div class="col-auto">
+        <select id="pageSize_gst" class="form-select" onchange="applyGuestFilters()">
+          <option value="5">5 / page</option>
+          <option value="10" selected>10 / page</option>
+          <option value="25">25 / page</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="clubly-card p-0">
+    <div class="table-scroll">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>#</th><th>Guest</th><th>Email</th><th>Phone</th>
+            <th>National ID</th><th class="text-center">Gender</th>
+            <th class="text-center">Date of Birth</th>
+            <th class="text-center">Activity Bookings</th>
+            <th class="text-center">Facility Bookings</th>
+            <th class="text-center">Joined</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="guestsTable">
+          <tr><td colspan="11" class="text-center py-4 text-muted">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-between align-items-center p-3 border-top">
+      <small id="itemsInfo_gst" class="text-muted"></small>
+      <nav><ul class="pagination mb-0" id="pagination_gst"></ul></nav>
+    </div>
+  </div>
+</div>
+<!-- View Guest Modal -->
+<div class="modal fade" id="viewGuestModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">
+          <i class="bi bi-person-fill me-2" style="color:var(--clubly-accent)"></i>Guest Details
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body px-4">
+        <div class="d-flex align-items-center gap-3 mb-4 p-3 rounded-3" style="background:var(--table-head)">
+          <div id="vg_avatar" style="width:54px;height:54px;border-radius:50%;
+            background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.3rem;font-weight:900;color:#fff;flex-shrink:0;"></div>
+          <div>
+            <div class="fw-bold fs-5" id="vg_name"></div>
+            <div class="text-muted small" id="vg_email"></div>
+            <div class="text-muted small" id="vg_phone"></div>
+          </div>
+          <div class="ms-auto text-end">
+            <span class="badge bg-secondary px-3 py-2" id="vg_gender"></span>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label text-muted small fw-semibold">National ID</label>
+            <div id="vg_nid" class="fw-semibold" style="font-family:monospace;font-size:.95rem"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted small fw-semibold">Date of Birth</label>
+            <div id="vg_dob" class="fw-semibold"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted small fw-semibold">Activity Bookings</label>
+            <div id="vg_actCount"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted small fw-semibold">Facility Bookings</label>
+            <div id="vg_facCount"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted small fw-semibold">Joined</label>
+            <div id="vg_joined" class="text-muted small"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0 justify-content-between">
+        <button class="btn btn-outline-primary rounded-pill px-4" id="vg_editBtn">
+          <i class="bi bi-pencil-square me-1"></i>Edit
+        </button>
+        <button class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Guest Modal -->
+<div class="modal fade" id="editGuestModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">
+          <i class="bi bi-pencil-square me-2" style="color:var(--clubly-accent)"></i>Edit Guest
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body px-4">
+        <form id="editGuestForm" autocomplete="off">
+          <input type="hidden" id="editGuestId">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+              <input type="text" id="eg_fullName" class="form-control" placeholder="Full name">
+              <div class="invalid-feedback">Full name required (min 2 chars)</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Email</label>
+              <input type="email" id="eg_email" class="form-control" placeholder="Email address">
+              <div class="invalid-feedback">Valid email required</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Phone</label>
+              <input type="text" id="eg_phone" class="form-control" placeholder="e.g. 01xxxxxxxxx">
+              <div class="invalid-feedback">Valid Egyptian mobile number required</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">National ID</label>
+              <div class="input-group">
+                <input type="text" id="eg_nid" class="form-control" placeholder="14-digit National ID" maxlength="14">
+                <span class="input-group-text" title="Auto-fills DOB & Gender">
+                  <i class="bi bi-magic text-primary"></i>
+                </span>
+              </div>
+              <div class="invalid-feedback">Valid 14-digit National ID required</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">Gender</label>
+              <select id="eg_gender" class="form-select">
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">Date of Birth</label>
+              <input type="date" id="eg_dob" class="form-control">
+              <div class="invalid-feedback">Invalid date of birth</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">New Password <span class="text-muted small">(optional)</span></label>
+              <div class="input-group">
+                <input type="password" id="eg_password" class="form-control" placeholder="Leave blank to keep">
+                <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" id="eg_pwErr">Min 8 chars with uppercase, lowercase, number & symbol</div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer border-0">
+        <button class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-warning text-white rounded-pill px-5 fw-bold" onclick="saveEditGuest()">
+          <i class="bi bi-check-lg me-1"></i>Update Guest
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- =============================== ADMIN PROFILE =============================== -->
 <div class="page" id="page-profile">
   <div class="page-header">
@@ -2764,10 +3033,14 @@ body {
       <div class="clubly-card p-4 mb-3">
         <h6 class="fw-bold mb-3 pb-2 border-bottom"><i class="bi bi-person-fill me-2 text-primary"></i>Personal Information</h6>
         <div class="row g-3">
-          <div class="col-md-6">
-            <label class="form-label">Full Name</label>
-            <input type="text" id="adminProfName" class="form-control" placeholder="Full Name">
-          </div>
+        <div class="col-md-6">
+  <label class="form-label">First Name</label>
+  <input type="text" id="adminProfFirstName" class="form-control" placeholder="First Name">
+</div>
+<div class="col-md-6">
+  <label class="form-label">Last Name</label>
+  <input type="text" id="adminProfLastName" class="form-control" placeholder="Last Name">
+</div>
           <div class="col-md-6">
             <label class="form-label">Email Address</label>
             <input type="email" id="adminProfEmail" class="form-control" disabled>
@@ -2914,7 +3187,7 @@ body {
 // NAVIGATION
 // ===================================================
 
-const pages = ['main','member','trainer','trainer-ratings','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs'];function showPage(name) {
+const pages = ['main','member','trainer','trainer-ratings','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs','guest'];function showPage(name) {
   pages.forEach(p => {
     document.getElementById('page-' + p)?.classList.remove('active');
     const nav = document.getElementById('nav-' + p);
@@ -4785,7 +5058,7 @@ if (name === 'faqs') loadFaqsAdmin();
   if (name === 'admins') loadAdmins();
 if (name === 'profile') loadAdminProfile();
 if (name === 'bookings') loadBookings();
-
+if (name === 'guest') loadGuests();
 
 };
 // ===================================================
@@ -5050,32 +5323,20 @@ document.getElementById('contactSearch')?.addEventListener('input', () => {
 // ===================================================
 // SIGN OUT
 // ===================================================
+// ===================================================
+// SIGN OUT
+// ===================================================
+// ===================================================
+// SIGN OUT
+// ===================================================
 function handleSignOut() {
-  Swal.fire({
-    title: 'Sign Out?',
-    text: 'Are you sure you want to sign out of Clubly?',
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonColor: '#e85d2f',
-    cancelButtonColor: '#6c757d',
-    confirmButtonText: '<i class="bi bi-box-arrow-right me-1"></i>Yes, Sign Out',
-    cancelButtonText: 'Cancel'
-  }).then(result => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: 'Signed Out',
-        text: 'You have been signed out successfully.',
-        icon: 'success',
-        timer: 1500,
-        showConfirmButton: false
-      }).then(() => {
-        // Clear any stored auth tokens
-    localStorage.clear();
-sessionStorage.clear();
-        // Redirect to login page (adjust URL as needed)
-window.location.href = '../BeforeSign/index.html';     });
-    }
-  });
+  document.getElementById('adminSignoutModal').style.display = 'flex';
+}
+
+function confirmAdminSignOut() {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.href = '../BeforeSign/index.html';
 }
 
 // ===================================================
@@ -6748,29 +7009,44 @@ async function loadAdminProfile() {
 }
 
 function fillProfileData(a) {
-  const initials = (a.fullName || 'A').split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+  const parts    = (a.fullName || '').split(' ');
+  const firstName = parts[0] || '';
+  const lastName  = parts.slice(1).join(' ') || '';
+  const initials  = parts.slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+
   document.getElementById('adminProfileInitials').textContent = initials;
-  document.getElementById('adminProfileName').textContent = a.fullName || '—';
-  document.getElementById('adminProfileEmail').textContent = a.email || '—';
+  document.getElementById('adminProfileName').textContent     = a.fullName || '—';
+  document.getElementById('adminProfileEmail').textContent    = a.email    || '—';
   if (a.imageUrl) {
     const img = document.getElementById('adminProfileImg');
     img.src = fixUrl(a.imageUrl);
     img.style.display = 'block';
     document.getElementById('adminProfileInitials').style.display = 'none';
   }
-  document.getElementById('adminProfName').value   = a.fullName || '';
-  document.getElementById('adminProfEmail').value  = a.email || '';
-  document.getElementById('adminProfPhone').value  = a.phone || '';
-  document.getElementById('adminProfNID').value    = a.nationalId || '';
-  document.getElementById('adminProfGender').value = a.gender || '';
-  document.getElementById('adminProfDOB').value    = a.dateOfBirth ? a.dateOfBirth.split('T')[0] : '';
+  document.getElementById('adminProfFirstName').value = firstName;
+  document.getElementById('adminProfLastName').value  = lastName;
+  document.getElementById('adminProfEmail').value     = a.email  || '';
+  document.getElementById('adminProfPhone').value     = a.phone  || '';
+  document.getElementById('adminProfNID').value       = a.nationalId || '';
+  document.getElementById('adminProfGender').value    = a.gender     || '';
+  document.getElementById('adminProfDOB').value       = a.dateOfBirth ? a.dateOfBirth.split('T')[0] : '';
 }
 
 async function saveAdminProfile() {
   const userId = localStorage.getItem('userId');
   if (!userId) return;
+
+  const firstName = document.getElementById('adminProfFirstName').value.trim();
+  const lastName  = document.getElementById('adminProfLastName').value.trim();
+  const fullName  = (firstName + ' ' + lastName).trim();
+
+  if (!firstName || firstName.length < 2) {
+    Swal.fire('Validation', 'First name must be at least 2 characters.', 'warning');
+    return;
+  }
+
   const fd = new FormData();
-  fd.append('FullName', document.getElementById('adminProfName').value);
+  fd.append('FullName', fullName);
   fd.append('Phone',    document.getElementById('adminProfPhone').value);
   const img = document.getElementById('adminFileInput').files[0];
   if (img) fd.append('Image', img);
@@ -7057,6 +7333,337 @@ async function deleteTrainerRating(id) {
     showToast('Failed to delete', 'error');
   }
 }
+const guestApiUrl = 'https://localhost:7132/api/Guests';
+let _guestsAll = [], _guestsFiltered = [], _guestPage = 1, _guestPageSize = 10;
+
+async function loadGuests() {
+  renderSkeletonRows('guestsTable', 11);
+  try {
+    const res = await fetch(guestApiUrl);
+    if (!res.ok) throw new Error();
+    _guestsAll = await res.json();
+    console.log('Guests:', _guestsAll);
+    
+    // Stats
+    const totalEl = document.getElementById('guestStatTotal');
+    const maleEl = document.getElementById('guestStatMale');
+    const femaleEl = document.getElementById('guestStatFemale');
+    const bookedEl = document.getElementById('guestStatBooked');
+    if (totalEl) totalEl.textContent = _guestsAll.length;
+    if (maleEl) maleEl.textContent = _guestsAll.filter(g => g.gender === 'Male').length;
+    if (femaleEl) femaleEl.textContent = _guestsAll.filter(g => g.gender === 'Female').length;
+    if (bookedEl) bookedEl.textContent = 0;
+    
+    applyGuestFilters();
+  } catch(e) {
+    console.error(e);
+    document.getElementById('guestsTable').innerHTML =
+      '<tr><td colspan="11" class="text-center text-danger py-4">Failed to load guests</td></tr>';
+  }
+}
+
+function applyGuestFilters() {
+  const q = (document.getElementById('searchInput_gst')?.value || '').trim().toLowerCase();
+  const gender = document.getElementById('genderFilter_gst')?.value || '';
+  const sortBy = document.getElementById('sortBy_gst')?.value || 'newest';
+  _guestPageSize = parseInt(document.getElementById('pageSize_gst')?.value || '10');
+
+  _guestsFiltered = _guestsAll.filter(g =>
+    (!q || [g.fullName, g.firstName, g.lastName, g.email, g.phone]
+      .some(v => v && v.toLowerCase().includes(q))) &&
+    (!gender || g.gender === gender)
+  );
+
+  _guestsFiltered.sort((a, b) => {
+    switch (sortBy) {
+      case 'newest': return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+      case 'oldest': return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+      case 'name_asc': return (a.fullName || a.firstName || '').localeCompare(b.fullName || b.firstName || '');
+      case 'name_desc': return (b.fullName || b.firstName || '').localeCompare(a.fullName || a.firstName || '');
+      default: return 0;
+    }
+  });
+
+  _guestPage = 1;
+  renderGuestPage();
+}
+
+function renderGuestPage() {
+  const tbody = document.getElementById('guestsTable');
+  const total = _guestsFiltered.length;
+  const totalPages = Math.max(1, Math.ceil(total / _guestPageSize));
+  if (_guestPage > totalPages) _guestPage = totalPages;
+  const start = (_guestPage - 1) * _guestPageSize;
+  const items = _guestsFiltered.slice(start, start + _guestPageSize);
+
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="11" class="text-center py-5 text-muted">No guests found</td></tr>';
+    document.getElementById('itemsInfo_gst').textContent = '';
+    document.getElementById('pagination_gst').innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = items.map((g, i) => {
+    const fullName = g.fullName || `${g.firstName || ''} ${g.lastName || ''}`.trim() || '—';
+    const dob = g.dateOfBirth ? g.dateOfBirth.split('T')[0] : '—';
+    const joined = g.createdAt ? new Date(g.createdAt).toLocaleDateString('en-GB') : '—';
+    const actCount = g.activityBookings?.length || 0;
+    const facCount = g.facilityBookings?.length || 0;
+
+    return `<tr>
+      <td>${start + i + 1}</td>
+      <td><strong>${escapeHtml(fullName)}</strong></td>
+      <td>${escapeHtml(g.email || '—')}</td>
+      <td>${escapeHtml(g.phone || '—')}</td>
+      <td style="font-family:monospace;font-size:.82rem">${g.nationalId || '—'}</td>
+      <td class="text-center">${g.gender || '—'}</td>
+      <td class="text-center">${dob}</td>
+      <td class="text-center">${actCount > 0 ? `<span class="badge bg-success">${actCount}</span>` : '0'}</td>
+      <td class="text-center">${facCount > 0 ? `<span class="badge bg-primary">${facCount}</span>` : '0'}</td>
+      <td class="text-center">${joined}</td>
+     <td class="text-center">
+  <button class="btn btn-link text-info p-1" onclick="viewGuest(${g.id})" title="View">
+    <i class="bi bi-eye-fill"></i>
+  </button>
+  <button class="btn btn-link text-primary p-1" onclick="openEditGuest(${g.id})" title="Edit">
+    <i class="bi bi-pencil-square"></i>
+  </button>
+  <button class="btn btn-link text-danger p-1" onclick="deleteGuest(${g.id})" title="Delete">
+    <i class="bi bi-trash3-fill"></i>
+  </button>
+</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('itemsInfo_gst').textContent =
+    `Showing ${start+1}–${Math.min(start+_guestPageSize, total)} of ${total}`;
+  makePagination('pagination_gst', _guestPage, totalPages, p => {
+    _guestPage = p; renderGuestPage();
+  });
+}
+
+async function deleteGuest(id) {
+  const r = await Swal.fire({
+    title: 'Delete this guest?', icon: 'warning',
+    showCancelButton: true, confirmButtonColor: '#e85d2f',
+    confirmButtonText: 'Yes, delete'
+  });
+  if (!r.isConfirmed) return;
+  try {
+    await fetch(`${guestApiUrl}/${id}`, { method: 'DELETE' });
+    _guestsAll = _guestsAll.filter(g => g.id !== id);
+    applyGuestFilters();
+    showToast('Guest deleted');
+  } catch { showToast('Failed to delete', 'error'); }
+}
+// ===================================================
+// GUEST — VIEW / EDIT
+// ===================================================
+
+function viewGuest(id) {
+  const g = _guestsAll.find(x => x.id === id);
+  if (!g) return;
+
+  const fullName = g.fullName || `${g.firstName || ''} ${g.lastName || ''}`.trim() || '—';
+  const initials = fullName.split(' ').slice(0,2).map(w => w[0]?.toUpperCase() || '').join('');
+
+  document.getElementById('vg_avatar').textContent  = initials;
+  document.getElementById('vg_name').textContent    = fullName;
+  document.getElementById('vg_email').textContent   = g.email  || '—';
+  document.getElementById('vg_phone').textContent   = g.phone  || '—';
+  document.getElementById('vg_gender').textContent  = g.gender || '—';
+  document.getElementById('vg_nid').textContent     = g.nationalId || '—';
+  document.getElementById('vg_dob').textContent     = g.dateOfBirth ? g.dateOfBirth.split('T')[0] : '—';
+  document.getElementById('vg_actCount').innerHTML  = (g.activityBookings?.length || 0) > 0
+    ? `<span class="badge bg-success px-3">${g.activityBookings.length} bookings</span>`
+    : '<span class="text-muted">None</span>';
+  document.getElementById('vg_facCount').innerHTML  = (g.facilityBookings?.length || 0) > 0
+    ? `<span class="badge bg-primary px-3">${g.facilityBookings.length} bookings</span>`
+    : '<span class="text-muted">None</span>';
+  document.getElementById('vg_joined').textContent  = g.createdAt
+    ? new Date(g.createdAt).toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' })
+    : '—';
+
+  document.getElementById('vg_editBtn').onclick = () => {
+    bootstrap.Modal.getInstance(document.getElementById('viewGuestModal')).hide();
+    openEditGuest(id);
+  };
+
+  new bootstrap.Modal(document.getElementById('viewGuestModal')).show();
+}
+
+function openEditGuest(id) {
+  const g = _guestsAll.find(x => x.id === id);
+  if (!g) return;
+
+  document.getElementById('editGuestId').value = g.id;
+  document.getElementById('eg_fullName').value = g.fullName || `${g.firstName || ''} ${g.lastName || ''}`.trim();
+  document.getElementById('eg_email').value    = g.email        || '';
+  document.getElementById('eg_phone').value    = g.phone        || '';
+  document.getElementById('eg_nid').value      = g.nationalId   || '';
+  document.getElementById('eg_gender').value   = g.gender       || '';
+  document.getElementById('eg_dob').value      = g.dateOfBirth  ? g.dateOfBirth.split('T')[0] : '';
+  document.getElementById('eg_password').value = '';
+
+  // Clear validation
+  document.getElementById('editGuestForm').querySelectorAll('.is-invalid, .is-valid')
+    .forEach(el => el.classList.remove('is-invalid', 'is-valid'));
+
+  new bootstrap.Modal(document.getElementById('editGuestModal')).show();
+}
+
+// National ID auto-fill for Edit Guest
+document.getElementById('eg_nid')?.addEventListener('input', function () {
+  if (this.value.length === 14) {
+    const info = extractFromNationalId(this.value);
+    if (info) {
+      document.getElementById('eg_dob').value    = info.birthDate;
+      document.getElementById('eg_gender').value = info.gender;
+      this.classList.add('is-valid');
+      this.classList.remove('is-invalid');
+    } else {
+      this.classList.add('is-invalid');
+      this.classList.remove('is-valid');
+    }
+  } else {
+    this.classList.remove('is-valid', 'is-invalid');
+  }
+});
+
+async function saveEditGuest() {
+  const id = document.getElementById('editGuestId').value;
+  const form = document.getElementById('editGuestForm');
+  let valid = true;
+
+  // Clear previous errors
+  form.querySelectorAll('.is-invalid, .is-valid').forEach(el => el.classList.remove('is-invalid', 'is-valid'));
+
+  const fullName = document.getElementById('eg_fullName').value.trim();
+  const email    = document.getElementById('eg_email').value.trim();
+  const phone    = document.getElementById('eg_phone').value.trim();
+  const nid      = document.getElementById('eg_nid').value.trim();
+  const gender   = document.getElementById('eg_gender').value;
+  const dob      = document.getElementById('eg_dob').value;
+  const password = document.getElementById('eg_password').value;
+
+  const fnEl  = document.getElementById('eg_fullName');
+  const emEl  = document.getElementById('eg_email');
+  const phEl  = document.getElementById('eg_phone');
+  const nidEl = document.getElementById('eg_nid');
+  const dobEl = document.getElementById('eg_dob');
+  const pwEl  = document.getElementById('eg_password');
+  const pwErr = document.getElementById('eg_pwErr');
+
+  // Full Name
+  if (!fullName || fullName.length < 2) {
+    fnEl.classList.add('is-invalid'); valid = false;
+  } else fnEl.classList.add('is-valid');
+
+  // Email (optional but validate if filled)
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emEl.classList.add('is-invalid'); valid = false;
+  } else if (email) emEl.classList.add('is-valid');
+
+  // Phone (optional but validate if filled)
+  if (phone && !/^01[0125][0-9]{8}$/.test(phone)) {
+    phEl.classList.add('is-invalid'); valid = false;
+  } else if (phone) phEl.classList.add('is-valid');
+
+  // National ID (optional but validate if filled)
+  if (nid && !extractFromNationalId(nid)) {
+    nidEl.classList.add('is-invalid'); valid = false;
+  } else if (nid) nidEl.classList.add('is-valid');
+
+  // Date of Birth
+  if (dob) {
+    const birth = new Date(dob);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    if (birth > today || age > 120) {
+      dobEl.classList.add('is-invalid'); valid = false;
+    }
+  }
+
+  // Password (optional but validate if filled)
+  if (password) {
+    if (password.length < 8 || !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(password)) {
+      pwEl.classList.add('is-invalid');
+      pwErr.style.display = 'block';
+      valid = false;
+    } else {
+      pwEl.classList.add('is-valid');
+      pwErr.style.display = 'none';
+    }
+  }
+
+  if (!valid) return;
+
+  const payload = { fullName, email, phone, nationalId: nid, gender, dateOfBirth: dob || null };
+  if (password) payload.password = password;
+
+  try {
+    const res = await fetch(`${guestApiUrl}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error(await res.text() || 'Failed');
+
+    // Update local cache
+    const idx = _guestsAll.findIndex(g => g.id == id);
+    if (idx !== -1) _guestsAll[idx] = { ..._guestsAll[idx], ...payload };
+
+    bootstrap.Modal.getInstance(document.getElementById('editGuestModal')).hide();
+    Swal.fire({ title: 'Updated!', icon: 'success', timer: 1500, showConfirmButton: false });
+    await loadGuests();
+  } catch (e) {
+    Swal.fire('Error', e.message || 'Failed to update guest', 'error');
+  }
+}
+function toggleSidebar() {
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('active');
+  } else {
+    sidebarOpen = !sidebarOpen;
+    document.getElementById('sidebar').classList.toggle('closed', !sidebarOpen);
+    document.getElementById('contentArea').classList.toggle('expanded', !sidebarOpen);
+  }
+}
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
 </script>
+<!-- ===== ADMIN SIGN OUT MODAL ===== -->
+<div id="adminSignoutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div style="background:var(--card-bg); border-radius:16px; padding:32px; max-width:380px; width:90%; text-align:center; border:1px solid var(--border);">
+    <div style="width:80px;height:80px;border-radius:50%;
+      background:rgba(239,68,68,.1);border:3px solid rgba(239,68,68,.3);
+      display:flex;align-items:center;justify-content:center;
+      font-size:2rem;color:#ef4444;margin:0 auto 16px;">
+      <i class="bi bi-box-arrow-right"></i>
+    </div>
+    <h5 style="font-weight:900;font-size:1.1rem;color:var(--text);margin-bottom:8px;">Sign Out?</h5>
+    <p style="color:var(--muted);font-size:.88rem;margin-bottom:24px;">Are you sure you want to sign out of your admin account?</p>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button onclick="document.getElementById('adminSignoutModal').style.display='none'"
+        style="background:var(--bg);border:1px solid var(--border);color:var(--text);
+        padding:8px 20px;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
+        Cancel
+      </button>
+      <button onclick="confirmAdminSignOut()"
+        style="background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;border:none;
+        padding:8px 24px;border-radius:8px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;">
+        Sign Out
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+
 </body>
 </html>

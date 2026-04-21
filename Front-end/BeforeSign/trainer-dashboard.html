@@ -440,16 +440,98 @@ textarea.form-input{resize:vertical;min-height:90px;}
   color: #fff;
   border-color: var(--clubly-teal);
 }
+
 /* signout */
 .signout-icon{width:80px;height:80px;border-radius:50%;background:rgba(239,68,68,.1);border:3px solid rgba(239,68,68,.3);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#ef4444;margin:0 auto 16px;}
 
-@media(max-width:768px){
-  .sidebar{display:none;}
-  .content-area{margin-left:0;padding:16px;}
-  .header-nav{display:none;}
-  .trainer-name,.trainer-role{display:none;}
+/* ══ HAMBURGER ══ */
+.hamburger-btn {
+  display: none;
+  background: rgba(255,255,255,.1);
+  border: none;
+  color: #fff;
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: background .2s;
+}
+.hamburger-btn:hover { background: rgba(255,255,255,.2); }
+
+/* ══ OVERLAY ══ */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.active { display: block; }
+
+/* ══ TABLET 992px ══ */
+@media (max-width: 992px) {
+  .header-nav { display: none; }
+  .content-area { padding: 20px; }
 }
 
+/* ══ MOBILE 768px ══ */
+@media (max-width: 768px) {
+  .hamburger-btn { display: flex; }
+  .toggle-btn { display: none; }
+
+  .sidebar {
+    display: block !important;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 1100;
+    width: var(--sidebar-w) !important;
+    min-width: var(--sidebar-w) !important;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar.collapsed { transform: translateX(-100%); }
+
+  .content-area {
+    margin-left: 0 !important;
+    padding: 16px;
+  }
+  .content-area.expanded { margin-left: 0 !important; }
+
+  .trainer-name, .trainer-role { display: none; }
+  .trainer-badge { padding: 4px 8px 4px 6px; }
+
+  .page-title { font-size: 1.25rem; }
+  .page-header { flex-direction: column; align-items: flex-start; }
+
+  .stat-card { padding: 14px; }
+  .stat-val { font-size: 1.5rem; }
+
+  .session-card { flex-wrap: wrap; gap: 10px; }
+  .session-right { text-align: left !important; }
+
+  .week-grid { min-width: 500px; }
+
+  .footer-inner { gap: 30px; padding: 20px 24px; }
+}
+
+/* ══ SMALL MOBILE 480px ══ */
+@media (max-width: 480px) {
+  .content-area { padding: 12px; }
+  .card-clubly { padding: 14px; border-radius: 10px; }
+  .logo-text { font-size: 1.1rem; }
+  .btn-signout { padding: 6px 12px; font-size: .8rem; }
+  .modal-body-cl { padding: 16px; }
+  .tbl-wrap { font-size: .78rem; }
+}
+
+/* ══ VERY SMALL 360px ══ */
+@media (max-width: 360px) {
+  .logo-text { display: none; }
+  .btn-signout { display: none; }
+}
 </style>
 </head>
 <body>
@@ -459,6 +541,9 @@ textarea.form-input{resize:vertical;min-height:90px;}
   <button class="toggle-btn" id="toggleBtn" title="Toggle Sidebar">
     <i class="bi bi-list"></i>
   </button>
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileSidebar()">
+  <i class="bi bi-list"></i>
+</button>
   <a class="header-logo" href="#">
     <i class="bi bi-lightning-charge-fill logo-icon"></i>
     <span class="logo-text">Cl<span>u</span>bly</span>
@@ -895,127 +980,191 @@ textarea.form-input{resize:vertical;min-height:90px;}
 
 </div>
 
-    <!-- ====== PAGE: PROFILE ====== -->
-    <div class="page" id="page-profile">
-      <div class="page-header">
-        <h1 class="page-title">My Profile</h1>
-        <button class="btn-primary-cl" onclick="document.getElementById('profileForm').requestSubmit()">
-          <i class="bi bi-check-lg"></i> Save Changes
-        </button>
-      </div>
+   <!-- ====== PAGE: PROFILE ====== -->
+<div class="page" id="page-profile">
+  <div class="page-header">
+    <h1 class="page-title">My Profile</h1>
+  </div>
 
-      <div class="profile-hero">
-        <div class="trainer-avatar-big" id="profileAvatarBig">
+  <div class="row g-3">
+    <!-- Left: Avatar Card -->
+    <div class="col-lg-4">
+      <div class="card-clubly text-center">
+        <div class="trainer-avatar-big" id="profileAvatarBig" style="margin:0 auto 14px;">
           <img id="profileImg" src="" alt="">
           <span id="profileInitials">AK</span>
         </div>
-        <div class="profile-hero-info">
-          <div class="profile-hero-name">Ahmed Karim</div>
-          <div class="profile-hero-role"><i class="bi bi-shield-check me-1"></i>Senior Trainer · 5 Years Experience</div>
-      
-          <div style="margin-top:10px;">
-            <span class="spec-tag">Yoga</span>
-            <span class="spec-tag">CrossFit</span>
-            <span class="spec-tag">Pilates</span>
-            <span class="spec-tag">Nutrition</span>
-          </div>
-        </div>
-        <div style="margin-left:auto;z-index:1;">
-          <input type="file" id="profileImgInput" accept="image/*" style="display:none">
-          <button onclick="document.getElementById('profileImgInput').click()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.82rem;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">
-            <i class="bi bi-camera me-1"></i>Edit Photo
+        <h4 style="font-weight:900; color:var(--text); margin-bottom:4px;" id="profileNameDisplay">Ahmed Karim</h4>
+        <p style="color:var(--muted); font-size:.85rem; margin-bottom:10px;" id="profileEmailDisplay"></p>
+        <span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                     padding:4px 14px;border-radius:20px;font-size:.82rem;font-weight:600;">
+          <i class="bi bi-shield-check me-1"></i>Trainer
+        </span>
+        <div id="profileSpecTags" style="margin-top:10px;"></div>
+        <div style="margin-top:14px;">
+          <input type="file" id="profileImgInput" accept="image/*" style="display:none;">
+          <button onclick="document.getElementById('profileImgInput').click()"
+            style="background:none;border:1px solid var(--clubly-teal);color:var(--clubly-teal);
+                   padding:6px 18px;border-radius:20px;cursor:pointer;font-family:inherit;
+                   font-weight:600;font-size:.85rem;">
+            <i class="bi bi-camera me-1"></i> Edit Photo
           </button>
         </div>
       </div>
-
-      <div class="row g-3">
-        <div class="col-lg-8">
-          <div class="card-clubly">
-            <div class="card-title"><span>Personal Information</span></div>
-            <form id="profileForm">
-  <div class="row g-3">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">First Name</label>
-        <input class="form-input" type="text" id="pfFirstName">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">Last Name</label>
-        <input class="form-input" type="text" id="pfLastName">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" id="pfEmail" disabled>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed here.</div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">Phone</label>
-        <input class="form-input" type="tel" id="pfPhone">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">National ID</label>
-        <input class="form-input" type="text" id="pfNationalId" disabled>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed.</div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">Gender</label>
-        <input class="form-input" type="text" id="pfGender" disabled>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">Date of Birth</label>
-        <input class="form-input" type="date" id="pfDob">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label class="form-label">Years of Experience</label>
-        <input class="form-input" type="number" id="pfExp" min="0">
-      </div>
     </div>
 
+    <!-- Right: Forms -->
+    <div class="col-lg-8">
+
+      <!-- Personal Information Card -->
+      <div class="card-clubly mb-3">
+        <div class="card-title">
+          <span><i class="bi bi-person-fill me-2" style="color:#3b82f6;"></i>Personal Information</span>
+        </div>
+        <form id="profileForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">First Name</label>
+              <input class="form-input" type="text" id="pfFirstName" placeholder="First Name">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" type="text" id="pfLastName" placeholder="Last Name">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" id="pfEmail" disabled>
+              <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed here.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input class="form-input" type="tel" id="pfPhone" placeholder="Phone Number">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">National ID</label>
+              <input class="form-input" type="text" id="pfNationalId" disabled>
+              <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Gender</label>
+              <input class="form-input" type="text" id="pfGender" disabled>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Date of Birth</label>
+              <input class="form-input" type="date" id="pfDob">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Years of Experience</label>
+              <input class="form-input" type="number" id="pfExp" min="0" placeholder="e.g. 5">
+            </div>
+          </div>
+          <button type="submit" class="btn-primary-cl mt-3">
+            <i class="bi bi-check-lg"></i> Save Changes
+          </button>
+        </form>
+      </div>
+
+      <!-- Change Password Card -->
+      <div class="card-clubly">
+        <div class="card-title">
+          <span><i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i>Change Password</span>
+        </div>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px;">
+          Keep your account secure by updating your password regularly.
+        </p>
+        <button data-bs-toggle="modal" data-bs-target="#trainerPassModal"
+          style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+                 color:#fff;border:none;padding:9px 24px;border-radius:50px;
+                 font-weight:700;cursor:pointer;font-family:inherit;">
+          <i class="bi bi-shield-lock me-1"></i> Change Password
+        </button>
+      </div>
+
+    </div>
   </div>
-  <button type="submit" class="btn-primary-cl mt-3">
-    <i class="bi bi-check-lg"></i> Save Changes
-  </button>
-</form>
-          </div>
-        </div>
-        <div class="col-lg-4">
+</div>
+<!-- ===== TRAINER CHANGE PASSWORD MODAL ===== -->
+<div class="modal fade" id="trainerPassModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
 
-          <div class="card-clubly">
-            <div class="card-title"><span>Change Password</span></div>
-            <form id="passForm">
-              <div class="form-group">
-                <label class="form-label">Current Password</label>
-                <input class="form-input" type="password" id="currPass">
-              </div>
-              <div class="form-group">
-                <label class="form-label">New Password</label>
-                <input class="form-input" type="password" id="newPass">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Confirm Password</label>
-                <input class="form-input" type="password" id="confPass">
-              </div>
-              <div id="passMsg" style="font-size:.82rem;margin-bottom:10px;"></div>
-              <button type="submit" class="btn-teal-cl" style="width:100%;justify-content:center;">Update Password</button>
-            </form>
-          </div>
-        </div>
+      <div class="modal-header border-0"
+        style="background:linear-gradient(135deg,#0d1b2a,#122236);
+               border-radius:16px 16px 0 0 !important;padding:18px 22px 12px;">
+        <h5 style="color:#fff;font-weight:700;font-size:1.05rem;margin:0;">
+          <i class="bi bi-shield-lock me-2" style="color:var(--clubly-teal);"></i>
+          Change Password
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"
+          style="filter:invert(1);opacity:.7;"></button>
       </div>
+
+      <div class="modal-body" style="padding:20px 22px;background:var(--card-bg);">
+        <form id="passForm" autocomplete="off">
+
+          <div class="mb-3">
+            <label style="font-weight:600;font-size:.84rem;color:var(--muted);
+                          display:block;margin-bottom:6px;">Current Password</label>
+            <div style="display:flex;">
+              <input type="password" id="currPass" class="form-input"
+                placeholder="Enter current password"
+                style="border-radius:9px 0 0 9px;border-right:none;">
+              <button type="button" class="toggle-pw-trainer"
+                style="background:var(--bg);border:1px solid var(--border);
+                       border-radius:0 9px 9px 0;padding:0 14px;cursor:pointer;
+                       color:var(--muted);transition:all .2s;">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label style="font-weight:600;font-size:.84rem;color:var(--muted);
+                          display:block;margin-bottom:6px;">New Password</label>
+            <div style="display:flex;">
+              <input type="password" id="newPass" class="form-input"
+                placeholder="Min 8 chars — upper, lower, number, symbol"
+                style="border-radius:9px 0 0 9px;border-right:none;">
+              <button type="button" class="toggle-pw-trainer"
+                style="background:var(--bg);border:1px solid var(--border);
+                       border-radius:0 9px 9px 0;padding:0 14px;cursor:pointer;
+                       color:var(--muted);transition:all .2s;">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label style="font-weight:600;font-size:.84rem;color:var(--muted);
+                          display:block;margin-bottom:6px;">Confirm New Password</label>
+            <div style="display:flex;">
+              <input type="password" id="confPass" class="form-input"
+                placeholder="Repeat new password"
+                style="border-radius:9px 0 0 9px;border-right:none;">
+              <button type="button" class="toggle-pw-trainer"
+                style="background:var(--bg);border:1px solid var(--border);
+                       border-radius:0 9px 9px 0;padding:0 14px;cursor:pointer;
+                       color:var(--muted);transition:all .2s;">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <div id="passMsg" style="font-size:.82rem;margin-bottom:8px;"></div>
+        </form>
+      </div>
+
+      <div class="modal-footer border-0"
+        style="background:var(--bg);border-radius:0 0 16px 16px;padding:14px 22px;">
+        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" form="passForm" class="btn-teal-cl">
+          <i class="bi bi-check-lg me-1"></i> Save Password
+        </button>
+      </div>
+
     </div>
+  </div>
+</div>
 <!-- ====== PAGE: SCHEDULE (NEW) ====== -->
 <div class="page" id="page-schedule-new">
   <div class="page-header">
@@ -1664,6 +1813,7 @@ function renderTrainerSessions(list) {
 }
 // ===== NAVIGATION =====
 function showPage(name) {
+  closeMobileSidebar();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
@@ -2159,8 +2309,14 @@ document.getElementById('passForm').addEventListener('submit', async e => {
   const msg = document.getElementById('passMsg');
   msg.innerHTML = '';
   if (np !== cp) { msg.innerHTML='<span style="color:#ef4444">Passwords do not match.</span>'; return; }
-  if (np.length < 6) { msg.innerHTML='<span style="color:#ef4444">Min 6 characters.</span>'; return; }
-  if (!trainerId) return;
+if (!np || np.length < 8) {
+  msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Password must be at least 8 characters.</span>';
+  return;
+}
+if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(np)) {
+  msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Must contain uppercase, lowercase, number, and symbol.</span>';
+  return;
+}  if (!trainerId) return;
   const ok = await fetch(`${API}/Trainers/${trainerId}/set-password`, {
     method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(np)
   });
@@ -2247,7 +2403,19 @@ document.getElementById('pfPhone').value      = t.phone || '';
 document.getElementById('pfNationalId').value = t.nationalId || '';
 document.getElementById('pfGender').value     = t.gender || '';
 document.getElementById('pfExp').value        = t.yearsOfExperience || '';
+// Update display name + email in left card
+document.getElementById('profileNameDisplay').textContent = t.fullName || trainerName;
+document.getElementById('profileEmailDisplay').textContent = t.email || '';
 
+// Spec tags
+const tagsEl = document.getElementById('profileSpecTags');
+if (tagsEl && t.activities) {
+  tagsEl.innerHTML = t.activities.split(',').map(a =>
+    `<span style="display:inline-block;background:rgba(46,196,182,.1);color:var(--clubly-teal);
+                  padding:3px 12px;border-radius:20px;font-size:.78rem;font-weight:600;margin:3px 2px;">
+      ${a.trim()}
+    </span>`).join('');
+}
 if (t.dateOfBirth) {
   document.getElementById('pfDob').value = t.dateOfBirth.split('T')[0];
 }
@@ -3715,6 +3883,28 @@ function renderRatingsPage() {
     ul.appendChild(li('»', _ratingsPage===totalPages, ()=>{ _ratingsPage=totalPages; renderRatingsPage(); }));
   }
 }
+// Toggle password — trainer modal
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.toggle-pw-trainer');
+  if (!btn) return;
+  const wrap  = btn.parentElement;
+  const input = wrap.querySelector('input[type="password"], input[type="text"]');
+  if (!input) return;
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  btn.innerHTML = isHidden ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+});
+function toggleMobileSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('active');
+}
+
+function closeMobileSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', async () => {
   const parts = trainerName.split(' ');
@@ -3731,5 +3921,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 });
 </script>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+
 </body>
+
 </html>

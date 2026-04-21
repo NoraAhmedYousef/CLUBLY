@@ -1009,18 +1009,122 @@ body {
 }
 .pagination .page-item.disabled .page-link { color: var(--muted); }
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  .sidebar { display: none; }
-  .content-area { margin-left: 0; padding: 16px; }
-  .header-nav { display: none; }
-  .footer-inner { gap: 30px; padding: 20px 24px; }
+/* ══ HAMBURGER ══ */
+.hamburger-btn {
+  display: none;
+  background: rgba(255,255,255,.1);
+  border: none;
+  color: #fff;
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: background .2s;
 }
+.hamburger-btn:hover { background: rgba(255,255,255,.2); }
+
+/* ══ SIDEBAR OVERLAY ══ */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.active { display: block; }
+
+/* ══ TABLET 992px ══ */
+@media (max-width: 992px) {
+  .header-nav { display: none; }
+  .content-area { padding: 20px; }
+}
+
+/* ══ MOBILE 768px ══ */
+@media (max-width: 768px) {
+  .hamburger-btn { display: flex; }
+
+  .sidebar {
+    display: block !important;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    z-index: 1100;
+    width: var(--sidebar-w) !important;
+    min-width: var(--sidebar-w) !important;
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .content-area { margin-left: 0 !important; padding: 16px; }
+  .footer-inner { gap: 30px; padding: 20px 24px; }
+
+  .clubly-header { padding: 0 12px; gap: 8px; }
+  .header-logo { min-width: auto; }
+  .header-user span { display: none; }
+  .btn-signout { padding: 6px 14px; font-size: .8rem; }
+
+  .page-title-clubly { font-size: 1.25rem; }
+  .stat-card { padding: 14px; }
+  .stat-value { font-size: 1.5rem; }
+  .stat-icon-box { width: 40px; height: 40px; font-size: 1rem; }
+
+  .chat-area { height: calc(100vh - var(--header-h) - 160px); }
+
+  .profile-avatar-big { width: 90px; height: 90px; font-size: 2rem; }
+
+  .membership-card-bg { padding: 18px; }
+  .membership-tier { font-size: 1.2rem; }
+
+  .schedule-item { flex-wrap: wrap; gap: 10px; }
+  .sched-time-status { text-align: left !important; }
+
+  .page-header-clubly { flex-direction: column; align-items: flex-start; }
+
+  .notif-tabs { gap: 4px; }
+  .notif-tab { padding: 4px 12px; font-size: .78rem; }
+
+  .footer-col { min-width: 140px; }
+}
+
+/* ══ SMALL MOBILE 480px ══ */
+@media (max-width: 480px) {
+  .logo-text { font-size: 1.1rem; }
+  .content-area { padding: 12px; }
+  .content-card { padding: 14px; border-radius: 10px; }
+
+  .cal-date { padding: 5px 2px; font-size: .78rem; }
+  .cal-day-name { font-size: .68rem; }
+
+  .sai-rec-card { padding: 14px; }
+  .sai-sport-name { font-size: 1rem; }
+
+  .membership-card-bg .row > div { margin-bottom: 8px; }
+
+  .modal-body-clubly { padding: 16px; }
+  .modal-header-clubly { padding: 14px 16px; }
+
+  .msg-bubble { max-width: 90%; font-size: .88rem; }
+}
+
+/* ══ VERY SMALL 360px ══ */
+@media (max-width: 360px) {
+  .logo-text { display: none; }
+  .btn-signout { display: none; }
+  .user-avatar { width: 30px; height: 30px; font-size: .7rem; }
+
+}
+
 </style>
 </head>
 <body>
 
 <!-- ===== HEADER ===== -->
 <header class="clubly-header">
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
+  <i class="bi bi-list"></i>
+</button>
   <a class="header-logo" href="#">
     <i class="bi bi-lightning-charge-fill logo-icon"></i>
     <span class="logo-text">Cl<span>u</span>bly</span>
@@ -1028,6 +1132,7 @@ body {
 
   <nav class="header-nav">
   <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+  
   <a href="../AfterSign/index.html">Home</a>
   <a href="../AfterSign/activities.html">Activities</a>
   <a href="../AfterSign/facilities.html">Facilities</a>
@@ -1047,7 +1152,7 @@ body {
       <span>Sara Ali</span>
       <div class="user-avatar">SA</div>
     </div>
-    <button class="btn-signout" onclick="showPage('signout')">Sign Out</button>
+<button class="btn-signout" onclick="handleSignOut()">Sign Out</button>
   </div>
 </header>
 
@@ -1103,10 +1208,10 @@ body {
       <span>Profile</span>
     </button>
     <div class="sidebar-divider"></div>
-    <button class="sidebar-link" onclick="showPage('signout')" id="sb-signout" style="color:rgba(239,68,68,.8);" data-label="Sign Out">
-      <i class="bi bi-box-arrow-right"></i>
-      <span>Sign Out</span>
-    </button>
+   <button class="sidebar-link" onclick="handleSignOut()" id="sb-signout" style="color:rgba(239,68,68,.8);" data-label="Sign Out">
+  <i class="bi bi-box-arrow-right"></i>
+  <span>Sign Out</span>
+</button>
   </aside>
 
   <!-- ===== MAIN CONTENT ===== -->
@@ -1580,7 +1685,7 @@ body {
     <!-- ======== PAGE: PROFILE ======== -->
     <div class="page" id="page-profile">
       <div class="page-header-clubly">
-        <h1 class="page-title-clubly">Profile & Settings</h1>
+        <h1 class="page-title-clubly">My Profile</h1>
       </div>
       <div class="row g-3">
         <div class="col-lg-4">
@@ -1668,12 +1773,27 @@ body {
 
     <div class="d-flex gap-3 align-items-center flex-wrap">
       <button type="submit" class="save-btn-clubly">Save Changes</button>
-      <button type="button" data-bs-toggle="modal" data-bs-target="#passModal" 
-        style="background:none; border:none; color:#ef4444; font-weight:700; cursor:pointer; font-family:inherit;">
-        Change Password
-      </button>
+  
     </div>
+    
   </form>
+  
+</div>
+</br>
+<!-- Change Password Card -->
+<div class="content-card">
+  <div class="card-title-clubly">
+    <i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i>Change Password
+  </div>
+  <p style="color:var(--muted); font-size:.88rem; margin-bottom:16px;">
+    Keep your account secure by updating your password regularly.
+  </p>
+  <button data-bs-toggle="modal" data-bs-target="#passModal"
+    style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+           color:#fff; border:none; padding:9px 24px; border-radius:50px;
+           font-weight:700; cursor:pointer; font-family:inherit;">
+    <i class="bi bi-shield-lock me-1"></i> Change Password
+  </button>
 </div>
         </div>
       </div>
@@ -1951,35 +2071,90 @@ body {
 <!-- ===== CHANGE PASSWORD MODAL ===== -->
 <div class="modal fade" id="passModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content modal-content-clubly">
-      <div class="modal-header-clubly">
-        <h5 style="font-weight:800; color:var(--text);">Change Password</h5>
+    <div class="modal-content rounded-4">
+
+      <div class="modal-header border-0"
+        style="background:linear-gradient(135deg,#0d1b2a 0%,#122236 100%);
+               border-radius:16px 16px 0 0 !important; padding:18px 22px 12px;">
+        <h5 class="modal-title" style="color:#fff; font-weight:700; font-size:1.05rem;">
+          <i class="bi bi-shield-lock me-2" style="color:var(--clubly-accent);"></i>
+          Change Password
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"
+          style="filter:invert(1); opacity:.7;"></button>
       </div>
-      <div class="modal-body-clubly">
-        <form id="passForm">
+
+      <div class="modal-body" style="padding:20px 22px; background:var(--card-bg);">
+        <form id="passForm" autocomplete="off">
+
           <div class="mb-3">
-            <label class="form-label-clubly">Current Password</label>
-            <input class="form-control-clubly" type="password" id="currPass" required>
+            <label class="form-label"
+              style="font-weight:600; font-size:0.84rem; color:var(--muted); margin-bottom:4px;">
+              Current Password
+            </label>
+            <div class="input-group">
+              <input type="password" id="currPass" class="form-control"
+                placeholder="Enter current password" required
+                style="border-color:var(--border); background:var(--card-bg); color:var(--text);">
+              <button type="button" class="btn btn-outline-secondary toggle-pw-mem"
+                style="border-color:var(--border); background:var(--table-head); color:var(--muted);">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
           </div>
+
           <div class="mb-3">
-            <label class="form-label-clubly">New Password</label>
-            <input class="form-control-clubly" type="password" id="newPass" required>
+            <label class="form-label"
+              style="font-weight:600; font-size:0.84rem; color:var(--muted); margin-bottom:4px;">
+              New Password
+            </label>
+            <div class="input-group">
+              <input type="password" id="newPass" class="form-control"
+                placeholder="Min 8 chars — upper, lower, number, symbol" required
+                style="border-color:var(--border); background:var(--card-bg); color:var(--text);">
+              <button type="button" class="btn btn-outline-secondary toggle-pw-mem"
+                style="border-color:var(--border); background:var(--table-head); color:var(--muted);">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
           </div>
+
           <div class="mb-3">
-            <label class="form-label-clubly">Confirm New Password</label>
-            <input class="form-control-clubly" type="password" id="confirmPass" required>
+            <label class="form-label"
+              style="font-weight:600; font-size:0.84rem; color:var(--muted); margin-bottom:4px;">
+              Confirm New Password
+            </label>
+            <div class="input-group">
+              <input type="password" id="confirmPass" class="form-control"
+                placeholder="Repeat new password" required
+                style="border-color:var(--border); background:var(--card-bg); color:var(--text);">
+              <button type="button" class="btn btn-outline-secondary toggle-pw-mem"
+                style="border-color:var(--border); background:var(--table-head); color:var(--muted);">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
           </div>
+
           <div id="passMsg" class="mt-2"></div>
+
         </form>
       </div>
-      <div class="modal-footer-clubly">
-        <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-        <button class="save-btn-clubly" type="submit" form="passForm">Save Password</button>
+
+      <div class="modal-footer border-0"
+        style="background:var(--table-head); border-radius:0 0 16px 16px;
+               padding:14px 22px;">
+        <button class="btn btn-light rounded-pill px-4"
+          data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" form="passForm"
+          class="btn rounded-pill px-4 fw-bold"
+          style="background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; border:none;">
+          <i class="bi bi-check-lg me-1"></i> Save Password
+        </button>
       </div>
+
     </div>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   const API_BASE_URL = 'https://localhost:7132/api';
@@ -2083,7 +2258,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 if (m.gender)            document.getElementById('gender').value = m.gender;
 if (m.memberType)        document.getElementById('memberType').value = m.memberType;
 if (m.membershipName)    document.getElementById('membershipPlan').value = m.membershipName;
-if (m.memberShipNumber)  document.getElementById('membershipNumber').value = 'CBM-' + m.memberShipNumber;
+if (m.memberShipNumber)  document.getElementById('membershipNumber').value =  m.memberShipNumber;
     
     // Join date
     if (m.joinDate) {
@@ -2397,6 +2572,7 @@ function getMemStatusBadge(status) {
 }
 // ===== PAGE NAVIGATION =====
 function showPage(name) {
+    closeSidebar(); 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
 
@@ -3077,9 +3253,22 @@ document.getElementById('passForm').addEventListener('submit', async e => {
   const msg  = document.getElementById('passMsg');
   msg.innerHTML = '';
 
-  if (!curr) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>'; return; }
-  if (!np || np.length < 6) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 6 characters.</span>'; return; }
-  if (np !== cp) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords do not match.</span>'; return; }
+  if (!curr) {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>';
+    return;
+  }
+  if (!np || np.length < 8) {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Password must be at least 8 characters.</span>';
+    return;
+  }
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(np)) {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%).</span>';
+    return;
+  }
+  if (np !== cp) {
+    msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords do not match.</span>';
+    return;
+  }
 
   const fd = new FormData();
   fd.append('CurrentPassword', curr);
@@ -3105,8 +3294,11 @@ document.getElementById('passForm').addEventListener('submit', async e => {
   }
 });
 
-// وأضف الـ function
 function handleSignOut() {
+  document.getElementById('memberSignoutModal').style.display = 'flex';
+}
+
+function confirmMemberSignOut() {
   localStorage.clear();
   sessionStorage.clear();
   window.location.href = '../BeforeSign/index.html';
@@ -3963,6 +4155,29 @@ async function submitTrainerRating() {
     submitBtn.innerHTML = `<i class="bi bi-star-fill"></i> Submit Rating`;
   }
 }
+// Toggle password visibility — member portal
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.toggle-pw-mem');
+  if (!btn) return;
+  const input = btn.closest('.input-group')?.querySelector('input[type="password"], input[type="text"]');
+  if (!input) return;
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  btn.innerHTML = isHidden
+    ? '<i class="bi bi-eye-slash"></i>'
+    : '<i class="bi bi-eye"></i>';
+});
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('active');
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+}
 // ===== INIT =====
 generateCalendar();
 renderUpcoming();
@@ -4048,5 +4263,27 @@ renderMembership();
     </div>
   </div>
 </div>
+<!-- ===== MEMBER SIGN OUT MODAL ===== -->
+<div id="memberSignoutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
+  <div style="background:var(--card-bg); border-radius:16px; padding:32px; max-width:380px; width:90%; text-align:center; border:1px solid var(--border);">
+    <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
+    <h5 style="font-weight:900; font-size:1.1rem; color:var(--text); margin-bottom:8px;">Sign Out?</h5>
+    <p style="color:var(--muted); font-size:.88rem; margin-bottom:24px;">Are you sure you want to sign out of your member account?</p>
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <button onclick="document.getElementById('memberSignoutModal').style.display='none'"
+        style="background:var(--bg);border:1px solid var(--border);color:var(--text);
+        padding:8px 20px;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
+        Cancel
+      </button>
+      <button onclick="confirmMemberSignOut()"
+        style="background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;border:none;
+        padding:8px 24px;border-radius:8px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;">
+        Sign Out
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
 </body>
 </html>
