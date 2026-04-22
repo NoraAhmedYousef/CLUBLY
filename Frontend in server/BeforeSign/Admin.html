@@ -4983,18 +4983,24 @@ async function updateAdmin() {
   fd.append('FullName', form.FullName.value);
   fd.append('Email', form.Email.value);
   fd.append('Phone', form.Phone.value);
-  if (editPass) {
-  if (editPass.length < 8) {
-    alert('Password must be at least 8 characters');
-    return;
-  }
-  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(editPass)) {
-    alert('Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
-    return;
-  }
-}
 const editPass = document.getElementById('editPassword_a').value;
-const editConfirm = document.getElementById('editConfirmPassword').value;
+  const editConfirm = document.getElementById('editConfirmPassword').value;
+  if (editPass) {
+    if (editPass.length < 8) {
+      alert('Password must be at least 8 characters');
+      return;
+    }
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(editPass)) {
+      alert('Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+      return;
+    }
+    if (editPass !== editConfirm) {
+      document.getElementById('editConfirmErr').textContent = 'Passwords do not match';
+      document.getElementById('editConfirmErr').style.display = 'block';
+      return;
+    }
+  }
+  document.getElementById('editConfirmErr').style.display = 'none';
 if (editPass && editPass !== editConfirm) {
   document.getElementById('editConfirmErr').textContent = 'Passwords do not match';
   document.getElementById('editConfirmErr').style.display = 'block';
@@ -5688,14 +5694,20 @@ document.getElementById('saveEditBtn').onclick = async () => {
   }
 
   // ── Password (optional in edit) ───────────────────
-if (f.password.value.length < 8) {
+if (f.password.value) {
+    if (f.password.value.length < 8) {
       showFieldError(f.password, 'Password must be at least 8 characters');
-      valid = false;
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
-      showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
-      valid = false;
+      return;
     }
-
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
+      showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+      return;
+    }
+    if (f.confirmPassword.value !== f.password.value) {
+      showFieldError(f.confirmPassword, 'Passwords do not match');
+      return;
+    }
+  }
   if (!valid) return;
 const fd = new FormData(form);
 fd.delete('ConfirmPassword');
@@ -5979,13 +5991,16 @@ document.getElementById('saveEditBtn_t').onclick = async () => {
   }
 
   // ── Password (optional in edit) ───────────────────
-if (f.password.value.length < 8) {
+if (f.password.value) {
+    if (f.password.value.length < 8) {
       showFieldError(f.password, 'Password must be at least 8 characters');
-      valid = false;
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
-      showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
-      valid = false;
+      return;
     }
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(f.password.value)) {
+      showFieldError(f.password, 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%)');
+      return;
+    }
+  }
 
   // ── Image (optional in edit) ──────────────────────
   if (f.image.files && f.image.files[0]) {
@@ -7551,7 +7566,6 @@ async function saveEditGuest() {
   const form = document.getElementById('editGuestForm');
   let valid = true;
 
-  // Clear previous errors
   form.querySelectorAll('.is-invalid, .is-valid').forEach(el => el.classList.remove('is-invalid', 'is-valid'));
 
   const fullName = document.getElementById('eg_fullName').value.trim();
@@ -7570,27 +7584,22 @@ async function saveEditGuest() {
   const pwEl  = document.getElementById('eg_password');
   const pwErr = document.getElementById('eg_pwErr');
 
-  // Full Name
   if (!fullName || fullName.length < 2) {
     fnEl.classList.add('is-invalid'); valid = false;
   } else fnEl.classList.add('is-valid');
 
-  // Email (optional but validate if filled)
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     emEl.classList.add('is-invalid'); valid = false;
   } else if (email) emEl.classList.add('is-valid');
 
-  // Phone (optional but validate if filled)
   if (phone && !/^01[0125][0-9]{8}$/.test(phone)) {
     phEl.classList.add('is-invalid'); valid = false;
   } else if (phone) phEl.classList.add('is-valid');
 
-  // National ID (optional but validate if filled)
   if (nid && !extractFromNationalId(nid)) {
     nidEl.classList.add('is-invalid'); valid = false;
   } else if (nid) nidEl.classList.add('is-valid');
 
-  // Date of Birth
   if (dob) {
     const birth = new Date(dob);
     const today = new Date();
@@ -7603,7 +7612,6 @@ async function saveEditGuest() {
     }
   }
 
-  // Password (optional but validate if filled)
   if (password) {
     if (password.length < 8 || !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(password)) {
       pwEl.classList.add('is-invalid');
@@ -7617,20 +7625,23 @@ async function saveEditGuest() {
 
   if (!valid) return;
 
-  const payload = { fullName, email, phone, nationalId: nid, gender, dateOfBirth: dob || null };
-  if (password) payload.password = password;
+  // ✅ FormData بدل JSON
+  const fd = new FormData();
+const nameParts = fullName.split(' ');
+fd.append('FirstName', nameParts[0] || '');
+fd.append('LastName', nameParts.slice(1).join(' ') || '');  fd.append('Email', email);
+  fd.append('Phone', phone);
+  fd.append('NationalId', nid);
+  fd.append('Gender', gender);
+  if (dob) fd.append('DateOfBirth', dob);
+  if (password) fd.append('NewPassword', password);
 
   try {
     const res = await fetch(`${guestApiUrl}/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: fd
     });
     if (!res.ok) throw new Error(await res.text() || 'Failed');
-
-    // Update local cache
-    const idx = _guestsAll.findIndex(g => g.id == id);
-    if (idx !== -1) _guestsAll[idx] = { ..._guestsAll[idx], ...payload };
 
     bootstrap.Modal.getInstance(document.getElementById('editGuestModal')).hide();
     Swal.fire({ title: 'Updated!', icon: 'success', timer: 1500, showConfirmButton: false });
