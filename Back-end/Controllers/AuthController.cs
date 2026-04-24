@@ -155,5 +155,144 @@ namespace Clubly.Controllers
             return Convert.ToBase64String(
                        hmac.ComputeHash(Encoding.UTF8.GetBytes(password))) == hash;
         }
-    }
-}
+    
+
+    // ── FORGOT PASSWORD ───────────────────────────────
+[HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto dto)
+        {
+            var email = dto.Email.ToLower().Trim();
+            var otp = new Random().Next(100000, 999999).ToString();
+            var expiry = DateTime.UtcNow.AddMinutes(10);
+            bool found = false;
+
+            var admin = await _context.Admins.FirstOrDefaultAsync(u => u.Email == email);
+            if (admin != null) { admin.OtpCode = otp; admin.OtpExpiry = expiry; found = true; }
+
+            var member = await _context.Members.FirstOrDefaultAsync(u => u.Email == email);
+            if (member != null) { member.OtpCode = otp; member.OtpExpiry = expiry; found = true; }
+
+            var trainer = await _context.Trainers.FirstOrDefaultAsync(u => u.Email == email);
+            if (trainer != null) { trainer.OtpCode = otp; trainer.OtpExpiry = expiry; found = true; }
+
+            var guest = await _context.Guests.FirstOrDefaultAsync(u => u.Email == email);
+            if (guest != null) { guest.OtpCode = otp; guest.OtpExpiry = expiry; found = true; }
+
+            if (!found) return NotFound("Email not found.");
+
+            await _context.SaveChangesAsync();
+            await SendOtpEmail(email, otp);
+
+            return Ok("OTP sent.");
+        }
+
+        // ── VERIFY OTP ────────────────────────────────────
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpDto dto)
+        {
+            var email = dto.Email.ToLower().Trim();
+            var now = DateTime.UtcNow;
+
+            bool valid =
+                await _context.Admins.AnyAsync(u =>
+                    u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now) ||
+                await _context.Members.AnyAsync(u =>
+                    u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now) ||
+                await _context.Trainers.AnyAsync(u =>
+                    u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now) ||
+                await _context.Guests.AnyAsync(u =>
+                    u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now);
+
+            if (!valid) return BadRequest("Invalid or expired OTP.");
+
+            // ← غير ده
+            return Ok(new { message = "OTP verified.", otp = dto.Otp });
+        }
+        // ── RESET PASSWORD ────────────────────────────────
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto dto)
+        {
+            var email = dto.Email.ToLower().Trim();
+            var now = DateTime.UtcNow;
+            bool done = false;
+
+            CreatePasswordHash(dto.NewPassword, out string hash, out string salt);
+
+            var admin = await _context.Admins.FirstOrDefaultAsync(u =>
+                u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now);
+            if (admin != null)
+            {
+                admin.PasswordHash = hash; admin.PasswordSalt = salt;
+                admin.OtpCode = null; admin.OtpExpiry = null;
+                done = true;
+            }
+
+            var member = await _context.Members.FirstOrDefaultAsync(u =>
+                u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now);
+            if (member != null)
+            {
+                member.PasswordHash = hash; member.PasswordSalt = salt;
+                member.OtpCode = null; member.OtpExpiry = null;
+                done = true;
+            }
+
+            var trainer = await _context.Trainers.FirstOrDefaultAsync(u =>
+                u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now);
+            if (trainer != null)
+            {
+                trainer.PasswordHash = hash; trainer.PasswordSalt = salt;
+                trainer.OtpCode = null; trainer.OtpExpiry = null;
+                done = true;
+            }
+
+            var guest = await _context.Guests.FirstOrDefaultAsync(u =>
+                u.Email == email && u.OtpCode == dto.Otp && u.OtpExpiry > now);
+            if (guest != null)
+            {
+                guest.PasswordHash = hash; guest.PasswordSalt = salt;
+                guest.OtpCode = null; guest.OtpExpiry = null;
+                done = true;
+            }
+
+            if (!done) return BadRequest("Invalid or expired OTP.");
+
+            await _context.SaveChangesAsync();
+            return Ok("Password reset successfully.");
+        }
+
+        // ── SEND OTP EMAIL ────────────────────────────────
+        private async Task SendOtpEmail(string toEmail, string otp)
+        {
+            var from = _config["Email:From"]!;
+            var password = _config["Email:Password"]!;
+            var host = _config["Email:Host"] ?? "smtp.gmail.com";
+            var port = int.Parse(_config["Email:Port"] ?? "587");
+
+            var message = new System.Net.Mail.MailMessage();
+            message.From = new System.Net.Mail.MailAddress(from, "Clubly");
+            message.To.Add(toEmail);
+            message.Subject = "🔑 Your Clubly Password Reset Code";
+            message.IsBodyHtml = true;
+            message.Body = $@"
+        <div style='font-family:Cairo,sans-serif;max-width:480px;margin:0 auto;
+                    background:#0d1b2a;border-radius:16px;padding:32px;color:#fff;'>
+            <h2 style='color:#e85d2f;margin-bottom:8px;'>Clubly Password Reset</h2>
+            <p style='color:rgba(255,255,255,.7);margin-bottom:24px;'>
+                Use the code below to reset your password. Valid for 10 minutes.
+            </p>
+            <div style='background:#122236;border-radius:12px;padding:20px;
+                        text-align:center;letter-spacing:12px;font-size:32px;
+                        font-weight:900;color:#2ec4b6;margin-bottom:24px;'>
+                {otp}
+            </div>
+            <p style='color:rgba(255,255,255,.4);font-size:12px;'>
+                If you didn't request this, ignore this email.
+            </p>
+        </div>";
+
+            using var smtp = new System.Net.Mail.SmtpClient(host, port);
+            smtp.EnableSsl = true;
+            smtp.Credentials = new System.Net.NetworkCredential(from, password);
+            await smtp.SendMailAsync(message);
+        }
+    } }

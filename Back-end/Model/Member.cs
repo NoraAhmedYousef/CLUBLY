@@ -79,6 +79,8 @@ namespace SignUp.Model
 
         [Required]
         public string PasswordSalt { get; set; } = "";
+        public string? OtpCode { get; set; }
+        public DateTime? OtpExpiry { get; set; }
 
         // ── Navigation ────────────────────────────────
         public ICollection<ActivityBooking> ActivityBookings { get; set; }

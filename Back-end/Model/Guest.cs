@@ -67,7 +67,8 @@ namespace Clubly.Model
 
         // ── Audit ─────────────────────────────────────
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
+        public string? OtpCode { get; set; }
+        public DateTime? OtpExpiry { get; set; }
 
         // ── Navigation ────────────────────────────────
 

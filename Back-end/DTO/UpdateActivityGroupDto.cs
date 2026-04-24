@@ -12,7 +12,8 @@ namespace SignUp.DTO
      
         public string? Status { get; set; } = "Active";
         public int? DurationDays { get; set; }
-
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public List<CreateActivityTimeSlotDto>? TimeSlots { get; set; }
         public decimal? Price { get; set; }
 

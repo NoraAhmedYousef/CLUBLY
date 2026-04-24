@@ -62,8 +62,8 @@ namespace SignUp.Model
 
         // ── Status ────────────────────────────────────
         [Required(ErrorMessage = "Status is required.")]
-        [RegularExpression(@"^(Pending|Confirmed|Cancelled)$",
-            ErrorMessage = "Status must be: Pending, Confirmed, or Cancelled.")]
+        [RegularExpression(@"^(Pending|Approved|Cancelled)$",
+            ErrorMessage = "Status must be: Pending, Approved, or Cancelled.")]
         [MaxLength(50)]
         public string Status { get; set; } = "Pending";
 

@@ -61,3 +61,7 @@ wwwroot\receipts\73a2036c-4dbe-43cd-bb4d-39655ecb3863.png
 wwwroot\receipts\8296d9aa-ea84-4aae-a7b8-389e0df9f5ae.png
 wwwroot\receipts\1b609ae7-f2c0-432e-905d-4b5c269b2b52.png
 wwwroot\Uploads\notifications\8a6d27f8-4492-4dbd-9949-788d804407b6.png
+wwwroot\Uploads\Admins\6a44095a-ad66-4470-90be-9006c6968e1f.png
+wwwroot\receipts\8d1af5ff-3f9e-4fc9-9f6d-b34c0a9e8d7a.png
+wwwroot\Uploads\members\74bcef2b-2708-4161-a8e5-1cea5e370dea_Screenshot 2026-03-26 185432.png
+wwwroot\Uploads\members\71a31736-e98e-4a41-8834-1ec8423e5906_Screenshot 2026-03-26 185432.png

@@ -70,8 +70,8 @@ namespace Clubly.Model
         public decimal TotalPrice { get; set; }
 
         [Required(ErrorMessage = "Status is required.")]
-        [RegularExpression(@"^(Pending|Confirmed|Cancelled|Completed)$",
-            ErrorMessage = "Status must be: Pending, Confirmed, Cancelled, or Completed.")]
+        [RegularExpression(@"^(Pending|Approved|Cancelled|Completed)$",
+            ErrorMessage = "Status must be: Pending, Approved, Cancelled, or Completed.")]
         [MaxLength(50)]
         public string Status { get; set; } = "Pending";
 

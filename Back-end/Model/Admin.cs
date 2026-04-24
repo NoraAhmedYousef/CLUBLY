@@ -53,6 +53,8 @@ namespace SignUp.Model
         [Required]
         public string PasswordSalt { get; set; } = "";
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public string? OtpCode { get; set; }
+        public DateTime? OtpExpiry { get; set; }
         // ── Cross-field validation ────────────────────
         public IEnumerable<ValidationResult> Validate(ValidationContext ctx)
         {

@@ -42,6 +42,8 @@ namespace SignUp.Service.Class
                 TrainerId = dto.TrainerId,
                 Price = dto.Price,
                 DurationDays = dto.DurationDays,
+                StartDate = dto.StartDate,
+                EndDate = dto.EndDate,
                 Status = dto.Status ?? "Active",
                 TimeSlots = dto.TimeSlots.Select(s => new ActivityGroupTimeSlot
                 {
@@ -68,7 +70,8 @@ namespace SignUp.Service.Class
         
             if (dto.Price.HasValue) group.Price = dto.Price.Value;
             if (dto.DurationDays.HasValue) group.DurationDays = dto.DurationDays.Value;
-
+            if (dto.StartDate.HasValue) group.StartDate = dto.StartDate.Value;
+            if (dto.EndDate.HasValue) group.EndDate = dto.EndDate.Value;
 
             if (dto.Status != null) group.Status = dto.Status;
 
@@ -114,6 +117,8 @@ namespace SignUp.Service.Class
           
             Price = g.Price,
             DurationDays = g.DurationDays,
+            StartDate = g.StartDate,
+            EndDate = g.EndDate,
             Status = g.Status,
             TimeSlots = g.TimeSlots.Select(s => new ActivityTimeSlotDto
             {

@@ -14,7 +14,8 @@ namespace SignUp.DTO
         public string? ActivityName { get; set; }
         public string? FacilityName { get; set; }
         public string? Duration { get; set; }
-
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string? Day { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public int? DurationDays { get; set; }

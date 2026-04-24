@@ -57,7 +57,8 @@ namespace SignUp.Model
             ErrorMessage = "Status must be: Active, Inactive, Full, or Cancelled.")]
         [MaxLength(20)]
         public string Status { get; set; } = "Active";
-
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         // ── Navigation ────────────────────────────────
         public ICollection<ActivityGroupTimeSlot> TimeSlots { get; set; }
             = new List<ActivityGroupTimeSlot>();
