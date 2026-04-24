@@ -290,20 +290,27 @@ function activityForm() {
   }
 
   /* ── Trainer ───────────────────────────────────────────────────────────── */
-  function trainerForm() {
+function trainerForm() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const groupOptions = (_ctx.trainerGroups || []).map(g => {
-    const slots = g.timeSlots || [];
+    const slots = g.timeSlots || g.TimeSlots || [];
     const slotsData = JSON.stringify(slots.map(s => ({
       day:   s.day || s.Day || '',
       start: (s.startTime || '').substring(0, 5),
       end:   (s.endTime   || '').substring(0, 5)
     })));
+    const isExpired = g._isExpired || false;
+
     return `<option value="${g.id}"
       data-slots='${slotsData}'
       data-duration="${g.durationDays || ''}"
       data-price="${g.price || 0}"
-      data-name="${esc(g.name || '')}">
-      ${g.name}${g.price ? ' — ' + g.price + ' EGP' : ''}
+      data-name="${esc(g.name || '')}"
+      data-expired="${isExpired}"
+      ${isExpired ? 'disabled style="color:#94a3b8;"' : ''}>
+      ${isExpired ? '🔒 ' : ''}${g.name}${g.price ? ' — ' + g.price + ' EGP' : ''}${isExpired ? ' (Expired)' : ''}
     </option>`;
   }).join('');
 
@@ -363,6 +370,32 @@ window.bpTrainerGroupChange = function() {
   const sel = document.getElementById('bpTrainerGroup');
   const opt = sel?.selectedOptions[0];
   if (!opt || !opt.value) return;
+
+  // ✅ تحقق لو expired
+  const isExpired = opt.dataset.expired === 'true';
+  if (isExpired) {
+    // إعادة تعطيل الـ Confirm
+    const confirmBtn = document.querySelector('.bp-btn-primary');
+    if (confirmBtn) {
+      confirmBtn.style.opacity      = '.4';
+      confirmBtn.style.pointerEvents = 'none';
+    }
+    // إظهار رسالة خطأ
+    const errEl = document.getElementById('bpErr');
+    if (errEl) {
+      errEl.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i>
+        This group has already ended — booking is no longer available.`;
+      errEl.style.display = 'block';
+    }
+    // إخفاء الـ slots display
+    const slotsDisplay = document.getElementById('bpSlotsDisplay');
+    if (slotsDisplay) slotsDisplay.style.display = 'none';
+    return; // ⛔ وقف هنا
+  }
+
+  // ✅ لو مش expired امسح الـ error وكمّل عادي
+  const errEl = document.getElementById('bpErr');
+  if (errEl) errEl.style.display = 'none';
 
   const slots    = JSON.parse(opt.dataset.slots    || '[]');
   const duration = opt.dataset.duration || '';
@@ -441,7 +474,7 @@ if (!isFacility && !isActivity && !dur) { showErr('Please select a duration.'); 
   group:       v('bpGroup')       || '',
   sessionType: v('bpSessionType') || '',
   groupName:   _ctx.groupName     || '',
-  endDate:     document.getElementById('bpEndDate')?.value || '',
+  endDate:     document.getElementById('bpEndDate')?.value || '',date: document.getElementById('bpDate')?.value || date,
   slots:       _ctx.slots         || [],
   price: (_ctx.slotPrice || 0) > 0
     ? (_ctx.slotPrice || 0) * pax
@@ -552,7 +585,7 @@ const rows = [
       </div>
     </div>
     <div class="bp-field" style="margin-bottom:4px;">
-      <label class="bp-label">Upload Receipt</label>
+<label class="bp-label">Upload Receipt <span style="color:#e53e3e">*</span></label>
       <label class="bp-upload" id="bpUL${suf}">
         <input type="file" accept="image/*,application/pdf"
                onchange="bpFile(this,'${suf}')">
@@ -599,7 +632,10 @@ window.bpPay = async function () {
     const suf = document.getElementById('tabI').classList.contains('active') ? 'I' : 'W';
     if (!v('bpAmt' + suf)) { showErr('Please enter the amount.');         return; }
     if (!v('bpTx'  + suf)) { showErr('Please enter the Transaction ID.'); return; }
-
+if (!window._bpReceiptFile) { 
+  showErr('Please upload the receipt.'); 
+  return; 
+}
     const btn = document.getElementById('bpPayBtn');
     btn.disabled  = true;
     btn.innerHTML = '⏳ Processing…';
@@ -643,8 +679,7 @@ fd2.append('participants',       parseInt(_formData.participants) || 1);
 fd2.append('paymentMethod',      suf === 'I' ? 'InstaPay' : 'E-Wallet');
 fd2.append('transactionId',      v('bpTx' + suf));
 fd2.append('price',              parseFloat(v('bpAmt' + suf)) || _formData.price);
-if (window._bpReceiptFile) fd2.append('receiptImage', window._bpReceiptFile);
-
+fd2.append('receiptImage', window._bpReceiptFile);
 const facRes = await fetch('https://localhost:7132/api/FacilityBookings', {
   method: 'POST',
   body: fd2

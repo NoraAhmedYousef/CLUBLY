@@ -2370,9 +2370,14 @@ async function loadTrainerProfile() {
       (parts[0] || 'Trainer') + '!';
 
     // Profile hero
-    document.querySelector('.profile-hero-name').textContent = t.fullName || '';
-    document.querySelector('.profile-hero-role').innerHTML =
-      `<i class="bi bi-shield-check me-1"></i>${t.activities || 'Trainer'} · ${t.yearsOfExperience || 0} Yrs Experience`;
+    // ✅ خليها كده بس
+document.querySelector('.trainer-name').textContent = t.fullName || trainerName;
+document.querySelector('.trainer-avatar').textContent = ini;
+document.querySelector('#page-dashboard .page-title span').textContent = (parts[0] || 'Trainer') + '!';
+document.getElementById('profileInitials').textContent = ini;
+document.getElementById('profileNameDisplay').textContent = t.fullName || trainerName;
+document.getElementById('profileEmailDisplay').textContent = t.email || '';
+// باقي الـ form fields...
     document.getElementById('profileInitials').textContent = ini;
 
     // Image
@@ -2383,17 +2388,6 @@ async function loadTrainerProfile() {
       document.getElementById('profileInitials').style.display = 'none';
     }
 
-    // Spec tags
-    const heroInfo = document.querySelector('.profile-hero-info');
-    heroInfo.querySelectorAll('.spec-tag').forEach(el => el.remove());
-    if (t.activities) {
-      t.activities.split(',').forEach(act => {
-        const span = document.createElement('span');
-        span.className = 'spec-tag';
-        span.textContent = act.trim();
-        heroInfo.appendChild(span);
-      });
-    }
 
   // ── Form fields ──
 document.getElementById('pfFirstName').value  = parts[0] || '';

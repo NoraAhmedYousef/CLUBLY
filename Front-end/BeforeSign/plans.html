@@ -424,12 +424,11 @@ function authSelectRole(el){
   authSelectedRole=role;
 }
 // init admin active styling
-document.addEventListener('DOMContentLoaded',()=>{
-
-  const adminEl=document.querySelector('.auth-role-opt[data-role="admin"]');
-  if(adminEl) authSelectRole(adminEl);
+document.addEventListener('DOMContentLoaded', () => {
+  updateHeaderForRole();
+  const adminEl = document.querySelector('.auth-role-opt[data-role="admin"]');
+  if (adminEl) authSelectRole(adminEl);
 });
-
 // ── Toast ────────────────────────────────────────────
 function authShowNotif(msg,type='success'){
   const n=document.getElementById('authNotif');

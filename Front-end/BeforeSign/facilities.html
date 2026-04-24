@@ -203,8 +203,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
           </div>
 
           <div style="text-align:right;margin-bottom:14px;">
-            <a href="#" style="font-size:11.5px;color:#00a896;font-weight:600;text-decoration:none;">Forgot password?</a>
-          </div>
+<a onclick="authShowPage('authForgotPage')" style="font-size:11.5px;color:#00a896;font-weight:600;text-decoration:none;cursor:pointer;">Forgot password?</a>          </div>
 
           <button id="signinBtn" data-label="Sign In" onclick="authHandleLogin()"
             style="width:100%;background:linear-gradient(135deg,#00d4aa,#00a896);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:2px;">
@@ -332,7 +331,105 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
             Already have an account? <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Sign In</a>
           </div>
         </div>
+<!-- FORGOT PASSWORD PAGE -->
+<div id="authForgotPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="width:58px;height:58px;background:linear-gradient(135deg,#0d1b2a,#122236);border:1px solid rgba(255,255,255,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(59,130,246,0.25);">🔑</div>
+    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Forgot Password?</h2>
+    <p style="color:#64748b;font-size:12.5px;">Enter your email and we'll send you a reset code</p>
+  </div>
+  <div style="margin-bottom:16px;">
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+    <input type="email" id="fpEmail" placeholder="example@gmail.com"
+      oninput="authValidateEmail('fpEmail','fpEmailErr')"
+      onblur="authValidateEmail('fpEmail','fpEmailErr')"
+      style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+    <div id="fpEmailErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+  </div>
+  <button id="fpSendBtn" onclick="authHandleForgot()"
+   style="width:100%;background:linear-gradient(135deg,#0d1b2a,#1a3a5c);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;box-shadow:0 4px 15px rgba(13,27,42,.3);">
+    Send Reset Code
+  </button>
+  <div style="text-align:center;font-size:12.5px;color:#64748b;">
+    Remember your password? <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Sign In</a>
+  </div>
+</div>
 
+<!-- OTP PAGE -->
+<div id="authOtpPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="width:58px;height:58px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(139,92,246,0.25);">📨</div>
+    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Check Your Email</h2>
+    <p id="otpSubtitle" style="color:#64748b;font-size:12.5px;">We sent a 6-digit code to <strong id="otpEmailDisplay"></strong></p>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;" id="otpInputs">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,0)" onkeydown="otpHandleKey(event,0)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,1)" onkeydown="otpHandleKey(event,1)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,2)" onkeydown="otpHandleKey(event,2)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,3)" onkeydown="otpHandleKey(event,3)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,4)" onkeydown="otpHandleKey(event,4)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,5)" onkeydown="otpHandleKey(event,5)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+  </div>
+  <div id="otpErr" style="display:none;text-align:center;font-size:11px;font-weight:600;color:#e53e3e;margin-bottom:12px;"></div>
+  <button id="otpVerifyBtn" onclick="authHandleVerifyOtp()"
+    style="width:100%;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;">
+    Verify Code
+  </button>
+  <div style="text-align:center;font-size:12.5px;color:#64748b;">
+    Didn't receive it?
+    <span id="resendTimer" style="color:#94a3b8;font-weight:600;"></span>
+    <a id="resendLink" onclick="authResendOtp()" style="display:none;color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Resend Code</a>
+  </div>
+  <div style="text-align:center;margin-top:10px;">
+    <a onclick="authShowPage('authForgotPage')" style="font-size:12px;color:#94a3b8;cursor:pointer;text-decoration:none;">← Change Email</a>
+  </div>
+</div>
+
+<!-- RESET PASSWORD PAGE -->
+<div id="authResetPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="width:58px;height:58px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(34,197,94,0.25);">🔒</div>
+    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Set New Password</h2>
+    <p style="color:#64748b;font-size:12.5px;">Choose a strong password for your account</p>
+  </div>
+  <div style="margin-bottom:13px;">
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">New Password</label>
+    <div style="position:relative;">
+      <input type="password" id="rpNew" placeholder="Min. 8 characters"
+        oninput="authValidatePassword('rpNew','rpNewErr'); authCheckStrengthReset('rpNew')"
+        style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 40px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+      <button type="button" onclick="authToggleEye('rpNew',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div id="rpNewErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+    <div id="rpStrengthWrap" style="display:none;margin-top:6px;">
+      <div style="display:flex;gap:4px;">
+        <div id="rpsb1" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+        <div id="rpsb2" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+        <div id="rpsb3" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+        <div id="rpsb4" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+      </div>
+      <div id="rpStrengthLabel" style="font-size:11px;font-weight:600;color:#64748b;margin-top:3px;"></div>
+    </div>
+  </div>
+  <div style="margin-bottom:16px;">
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Confirm Password</label>
+    <div style="position:relative;">
+      <input type="password" id="rpConfirm" placeholder="Repeat new password"
+        oninput="authValidateConfirm()"
+        style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 40px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+      <button type="button" onclick="authToggleEye('rpConfirm',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div id="rpConfirmErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+  </div>
+  <button id="rpSubmitBtn" onclick="authHandleResetPassword()"
+    style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;">
+    Reset Password
+  </button>
+</div>
       </div><!-- end AUTH INNER PAGES -->
     </div>
   </div>
@@ -684,6 +781,188 @@ document.addEventListener('click', e => {
 function handleSignOut() {
   localStorage.clear();
   window.location.reload();
+}
+// ── Forgot Password State ─────────────────────────
+let _fpEmail = '';
+let _fpOtp   = '';
+let _resendInterval = null;
+
+async function authHandleForgot() {
+  const ok = authValidateEmail('fpEmail', 'fpEmailErr');
+  if (!ok) return;
+  const btn = document.getElementById('fpSendBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  _fpEmail = document.getElementById('fpEmail').value.trim();
+  try {
+    const res = await fetch(`${API_BASE}/forgot-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _fpEmail })
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      authShowNotif(j?.message || 'Email not found', 'error'); return;
+    }
+    document.getElementById('otpEmailDisplay').textContent = _fpEmail;
+    authShowPage('authOtpPage');
+    clearOtpInputs();
+    startResendTimer(60);
+    authShowNotif('Code sent! Check your inbox ✉️');
+  } catch {
+    authShowNotif('Cannot reach server. Try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Send Reset Code';
+  }
+}
+
+async function authHandleVerifyOtp() {
+  const boxes = document.querySelectorAll('.otp-box');
+  const otp   = [...boxes].map(b => b.value).join('');
+  const errEl = document.getElementById('otpErr');
+  if (otp.length < 6) {
+    errEl.textContent = '⚠ Please enter the full 6-digit code';
+    errEl.style.display = 'block';
+    boxes.forEach(b => b.style.borderColor = '#e53e3e');
+    return;
+  }
+  errEl.style.display = 'none';
+  const btn = document.getElementById('otpVerifyBtn');
+  btn.disabled = true; btn.textContent = 'Verifying…';
+  try {
+    const res = await fetch(`${API_BASE}/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _fpEmail, otp })
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      errEl.textContent = '⚠ ' + (j?.message || 'Invalid or expired code');
+      errEl.style.display = 'block';
+      boxes.forEach(b => { b.style.borderColor = '#e53e3e'; b.style.background = '#fff8f8'; });
+      return;
+    }
+    const json = await res.json();
+    _fpOtp = json.otp;
+    boxes.forEach(b => { b.style.borderColor = '#22c55e'; b.style.background = '#f6fdfb'; });
+    authShowNotif('Code verified! Set your new password ✅');
+    setTimeout(() => authShowPage('authResetPage'), 700);
+  } catch {
+    authShowNotif('Cannot reach server. Try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Verify Code';
+  }
+}
+
+async function authHandleResetPassword() {
+  const newOk  = authValidatePassword('rpNew', 'rpNewErr');
+  const confOk = authValidateConfirm();
+  if (!newOk || !confOk) return;
+  const btn = document.getElementById('rpSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    const newPassword = document.getElementById('rpNew').value;
+    const res = await fetch(`${API_BASE}/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email:           _fpEmail,
+        otp:             _fpOtp,
+        newPassword:     newPassword,
+        confirmPassword: newPassword
+      })
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      authShowNotif(j?.message || 'Reset failed. Try again.', 'error'); return;
+    }
+    authShowNotif('Password reset successfully! Please sign in 🎉');
+    setTimeout(() => {
+      authShowPage('authLoginPage');
+      document.getElementById('siEmail').value = _fpEmail;
+      _fpEmail = ''; _fpOtp = '';
+    }, 1200);
+  } catch {
+    authShowNotif('Cannot reach server. Try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Reset Password';
+  }
+}
+
+function otpMoveNext(el, idx) {
+  el.value = el.value.replace(/\D/g, '');
+  el.style.borderColor = el.value ? '#8b5cf6' : '#e2e8f0';
+  el.style.background  = el.value ? 'rgba(139,92,246,.06)' : '#f8fafc';
+  if (el.value && idx < 5) document.querySelectorAll('.otp-box')[idx + 1].focus();
+}
+function otpHandleKey(e, idx) {
+  if (e.key === 'Backspace') {
+    const boxes = document.querySelectorAll('.otp-box');
+    if (!boxes[idx].value && idx > 0) boxes[idx - 1].focus();
+  }
+}
+function clearOtpInputs() {
+  document.querySelectorAll('.otp-box').forEach(b => {
+    b.value = ''; b.style.borderColor = '#e2e8f0'; b.style.background = '#f8fafc';
+  });
+  document.getElementById('otpErr').style.display = 'none';
+}
+function startResendTimer(seconds) {
+  clearInterval(_resendInterval);
+  const timerEl  = document.getElementById('resendTimer');
+  const resendEl = document.getElementById('resendLink');
+  resendEl.style.display = 'none';
+  let remaining = seconds;
+  timerEl.textContent = `Resend in ${remaining}s`;
+  _resendInterval = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(_resendInterval);
+      timerEl.textContent = '';
+      resendEl.style.display = 'inline';
+    } else {
+      timerEl.textContent = `Resend in ${remaining}s`;
+    }
+  }, 1000);
+}
+async function authResendOtp() {
+  const res = await fetch(`${API_BASE}/forgot-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: _fpEmail })
+  });
+  if (res.ok) { clearOtpInputs(); startResendTimer(60); authShowNotif('New code sent! ✉️'); }
+  else { authShowNotif('Could not resend. Try again.', 'error'); }
+}
+function authValidateConfirm() {
+  const np = document.getElementById('rpNew').value;
+  const cp = document.getElementById('rpConfirm').value;
+  if (!cp) return authSetField('rpConfirm', 'rpConfirmErr', false, 'Please confirm your password');
+  if (np !== cp) return authSetField('rpConfirm', 'rpConfirmErr', false, 'Passwords do not match');
+  return authSetField('rpConfirm', 'rpConfirmErr', true);
+}
+function authCheckStrengthReset(id) {
+  const val  = document.getElementById(id).value;
+  const wrap = document.getElementById('rpStrengthWrap');
+  const lbl  = document.getElementById('rpStrengthLabel');
+  if (!val) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  let score = 0;
+  if (val.length >= 8)  score++;
+  if (val.length >= 12) score++;
+  if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+  if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) score++;
+  const levels = [
+    { color:'#e53e3e', label:'Weak'   },
+    { color:'#f59e0b', label:'Fair'   },
+    { color:'#00d4aa', label:'Good'   },
+    { color:'#00a896', label:'Strong' },
+  ];
+  const lvl = levels[score - 1] || levels[0];
+  ['rpsb1','rpsb2','rpsb3','rpsb4'].forEach((bid, i) => {
+    document.getElementById(bid).style.background = i < score ? lvl.color : '#e2e8f0';
+  });
+  lbl.textContent = lvl.label;
+  lbl.style.color = lvl.color;
 }
 </script>
 <div id="authNotif" style="

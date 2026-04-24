@@ -281,7 +281,6 @@ function buildScheduleModal() {
 }
 
 let _schedPickerChoice = null;
-
 async function openSchedulePicker(facilityId, facilityName) {
   buildScheduleModal();
   _schedPickerChoice = null;
@@ -319,6 +318,10 @@ async function openSchedulePicker(facilityId, facilityName) {
       return;
     }
 
+    // ✅ today بدون وقت للمقارنة
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     // Group by date
     const grouped = {};
     scheds.forEach(s => {
@@ -329,12 +332,26 @@ async function openSchedulePicker(facilityId, facilityName) {
 
     let html = '';
     Object.keys(grouped).sort().forEach(date => {
+
+      // ✅ تحقق من التاريخ
+      const slotDate  = new Date(date + 'T00:00:00');
+      const isExpired = slotDate < today;
+
       const d = new Date(date + 'T00:00:00');
       const dateLabel = d.toLocaleDateString('en-GB', { weekday:'long', day:'2-digit', month:'short', year:'numeric' });
+
       html += `
-      <div style="margin-bottom:20px;">
-        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted,#64748b);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border,#e2e8f0);">
-          <i class="bi bi-calendar3 me-1" style="color:#e85d2f"></i>${dateLabel}
+      <div style="margin-bottom:20px;${isExpired ? 'opacity:.55;' : ''}">
+        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;
+          color:${isExpired ? '#e53e3e' : 'var(--muted,#64748b)'};
+          margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border,#e2e8f0);">
+          <i class="bi ${isExpired ? 'bi-calendar-x' : 'bi-calendar3'} me-1"
+             style="color:${isExpired ? '#e53e3e' : '#e85d2f'}"></i>
+          ${dateLabel}
+          ${isExpired ? `<span style="font-size:.68rem;font-weight:800;background:#fee2e2;color:#e53e3e;
+            padding:2px 8px;border-radius:20px;margin-left:6px;">
+            <i class="bi bi-clock-history"></i> Expired
+          </span>` : ''}
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">`;
 
@@ -345,13 +362,29 @@ async function openSchedulePicker(facilityId, facilityName) {
           const start  = (sl.startTime || sl.StartTime || '').substring(0, 5);
           const end    = (sl.endTime   || sl.EndTime   || '').substring(0, 5);
           const slotId = `slot_${s.id || s.Id}_${start.replace(':', '')}`;
+          const price  = sl.price || sl.Price || 0;
+
           html += `
           <button class="sched-slot-btn" id="${slotId}"
-onclick="selectScheduleSlot('${slotId}',${s.id||s.Id},${facilityId},'${date}','${day}','${start}','${end}',${sl.price||sl.Price||0})"            style="border:2px solid var(--border,#e2e8f0);background:var(--bg,#f0f4f8);border-radius:12px;padding:9px 16px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;color:var(--text,#1a202c);transition:all .18s;display:inline-flex;align-items:center;gap:6px;">
-            <i class="bi bi-clock" style="color:#e85d2f;font-size:.8rem"></i>
+            onclick="${isExpired
+              ? `schedShowExpiredMsg('${slotId}','${date}')`
+              : `selectScheduleSlot('${slotId}',${s.id||s.Id},${facilityId},'${date}','${day}','${start}','${end}',${price})`
+            }"
+            style="border:2px solid ${isExpired ? '#fecaca' : 'var(--border,#e2e8f0)'};
+              background:${isExpired ? 'rgba(229,62,62,.04)' : 'var(--bg,#f0f4f8)'};
+              border-radius:12px;padding:9px 16px;
+              cursor:${isExpired ? 'not-allowed' : 'pointer'};
+              font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;
+              color:${isExpired ? '#e53e3e' : 'var(--text,#1a202c)'};
+              transition:all .18s;display:inline-flex;align-items:center;gap:6px;">
+            <i class="bi ${isExpired ? 'bi-x-circle' : 'bi-clock'}"
+               style="color:${isExpired ? '#e53e3e' : '#e85d2f'};font-size:.8rem"></i>
             ${start} → ${end}
-${day ? `<span style="font-size:.68rem;font-weight:600;color:var(--muted,#64748b)">${day}</span>` : ''}
-${(sl.price||sl.Price||0) > 0 ? `<span style="font-size:.72rem;font-weight:800;color:#2ec4b6;margin-left:4px;">${sl.price||sl.Price} EGP</span>` : `<span style="font-size:.68rem;color:#94a3b8">Free</span>`}          </button>`;
+            ${day ? `<span style="font-size:.68rem;font-weight:600;color:${isExpired ? '#e53e3e' : 'var(--muted,#64748b)'}">${day}</span>` : ''}
+            ${price > 0
+              ? `<span style="font-size:.72rem;font-weight:800;color:${isExpired ? '#94a3b8' : '#2ec4b6'};margin-left:4px;">${price} EGP</span>`
+              : `<span style="font-size:.68rem;color:#94a3b8">Free</span>`}
+          </button>`;
         });
       });
 
@@ -367,6 +400,27 @@ ${(sl.price||sl.Price||0) > 0 ? `<span style="font-size:.72rem;font-weight:800;c
       </div>`;
   }
 }
+
+// ✅ دالة لما يضغط على slot منتهي
+window.schedShowExpiredMsg = function(slotId, date) {
+  document.querySelectorAll('.sched-slot-btn').forEach(btn => {
+    btn.style.boxShadow = '';
+  });
+  const btn = document.getElementById(slotId);
+  if (btn) btn.style.boxShadow = '0 0 0 3px rgba(229,62,62,.25)';
+
+  document.getElementById('schedPickerSelected').innerHTML =
+    `<i class="bi bi-x-circle-fill" style="color:#e53e3e"></i>
+     <span style="color:#e53e3e;font-weight:700;">
+       This slot (${date}) has already passed — booking unavailable.
+     </span>`;
+
+  // Confirm يفضل معطل
+  const confirmBtn = document.getElementById('schedPickerConfirm');
+  confirmBtn.style.opacity      = '.4';
+  confirmBtn.style.pointerEvents = 'none';
+  _schedPickerChoice = null;
+};
 
 function selectScheduleSlot(slotId, scheduleId, facilityId, date, day, startTime, endTime, slotPrice = 0) {  document.querySelectorAll('.sched-slot-btn').forEach(btn => {
     btn.style.borderColor  = 'var(--border,#e2e8f0)';
