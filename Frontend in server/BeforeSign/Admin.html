@@ -1685,7 +1685,7 @@ body {
       <div class="clubly-card p-0">
         <div class="table-scroll">
           <table class="table table-hover align-middle mb-0">
-<thead class="table-light"><tr><th class="sortable" data-field="name">Name</th><th class="sortable" data-field="activity">Activity</th><th class="sortable" data-field="facility">Facility</th><th class="sortable text-center" data-field="capacity">Capacity</th><th class="sortable text-center" data-field="trainerName">Trainer</th><th class="sortable text-center" data-field="price">Price</th><th class="text-center">Duration (Days)</th><th class="text-center">Time Slots</th><th class="text-center">Actions</th></tr></thead>
+<thead class="table-light"><tr><th class="sortable" data-field="name">Name</th><th class="sortable" data-field="activity">Activity</th><th class="sortable" data-field="facility">Facility</th><th class="sortable text-center" data-field="capacity">Capacity</th><th class="sortable text-center" data-field="trainerName">Trainer</th><th class="sortable text-center" data-field="price">Price</th><th class="text-center">Duration (Days)</th><th class="text-center">Start Date</th><th class="text-center">End Date</th><th class="text-center">Time Slots</th><th class="text-center">Actions</th></tr></thead>
             <tbody id="groupsTbody"><tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr></tbody>
           </table>
         </div>
@@ -1717,6 +1717,16 @@ body {
 </div>
 <div class="col-md-3"><label class="form-label">Duration (days)</label>
   <input id="addDurationDays_g" name="durationDays" type="number" min="1" class="form-control" placeholder="e.g. 30"/>
+</div>
+<div class="col-md-3">
+  <label class="form-label">Start Date <span class="text-danger">*</span></label>
+  <input type="date" id="addStartDate_g" class="form-control">
+</div>
+<div class="col-md-3">
+  <label class="form-label">End Date (auto)</label>
+  <input type="date" id="addEndDate_g" class="form-control" readonly
+    style="background:#f8f9fa;color:#64748b;cursor:not-allowed;">
+  <div id="addEndDateNote_g" style="font-size:.68rem;color:#e85d2f;margin-top:3px;"></div>
 </div>
 <div class="col-12">
   <label class="form-label fw-semibold text-danger">Available Time Slots <span class="text-danger">*</span></label>
@@ -1780,6 +1790,16 @@ body {
           <div class="col-md-3"><label class="form-label">Duration (days)</label>
             <input id="editDurationDays_g" name="durationDays" type="number" min="1" class="form-control" placeholder="e.g. 30"/>
           </div>
+          <div class="col-md-3">
+  <label class="form-label">Start Date</label>
+  <input type="date" id="editStartDate_g" class="form-control">
+</div>
+<div class="col-md-3">
+  <label class="form-label">End Date (auto)</label>
+  <input type="date" id="editEndDate_g" class="form-control" readonly
+    style="background:#f8f9fa;color:#64748b;cursor:not-allowed;">
+  <div id="editEndDateNote_g" style="font-size:.68rem;color:#e85d2f;margin-top:3px;"></div>
+</div>
           <div class="col-12">
             <label class="form-label fw-semibold text-danger">Available Time Slots <span class="text-danger">*</span></label>
             <div id="editSlotsContainer_g" class="border rounded-3 p-3">
@@ -3304,7 +3324,47 @@ function renderSkeletonRows(tbodyId, cols=7, rows=5) {
   tbody.innerHTML = '';
   for(let r=0;r<rows;r++) { const tr=document.createElement('tr'); tr.innerHTML=`<td colspan="${cols}"><div class="d-flex gap-3 p-2">${Array.from({length:4}).map(()=>'<div style="flex:1"><div class="skeleton"></div></div>').join('')}</div></td>`; tbody.appendChild(tr); }
 }
+// ── حساب End Date تلقائياً لـ Add ──
+function recalcAddEndDate() {
+  const startDate  = document.getElementById('addStartDate_g').value;
+  const duration   = parseInt(document.getElementById('addDurationDays_g').value) || 0;
+  const endDateEl  = document.getElementById('addEndDate_g');
+  const noteEl     = document.getElementById('addEndDateNote_g');
 
+  if (startDate && duration > 0) {
+    const d = new Date(startDate + 'T00:00:00');
+    d.setDate(d.getDate() + duration);
+    endDateEl.value = d.toISOString().split('T')[0];
+    noteEl.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> ${startDate} + ${duration} days`;
+  } else {
+    endDateEl.value = '';
+    noteEl.textContent = '';
+  }
+}
+
+// ── حساب End Date تلقائياً لـ Edit ──
+function recalcEditEndDate() {
+  const startDate  = document.getElementById('editStartDate_g').value;
+  const duration   = parseInt(document.getElementById('editDurationDays_g').value) || 0;
+  const endDateEl  = document.getElementById('editEndDate_g');
+  const noteEl     = document.getElementById('editEndDateNote_g');
+
+  if (startDate && duration > 0) {
+    const d = new Date(startDate + 'T00:00:00');
+    d.setDate(d.getDate() + duration);
+    endDateEl.value = d.toISOString().split('T')[0];
+    noteEl.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> ${startDate} + ${duration} days`;
+  } else {
+    endDateEl.value = '';
+    noteEl.textContent = '';
+  }
+}
+
+// ── Event Listeners ──
+document.getElementById('addStartDate_g')?.addEventListener('change', recalcAddEndDate);
+document.getElementById('addDurationDays_g')?.addEventListener('input', recalcAddEndDate);
+document.getElementById('editStartDate_g')?.addEventListener('change', recalcEditEndDate);
+document.getElementById('editDurationDays_g')?.addEventListener('input', recalcEditEndDate);
 // ===================================================
 // ============== MEMBERS MODULE ====================
 // ===================================================
@@ -3970,8 +4030,27 @@ function showToastG(msg,type='success'){showToastIn('toastContainer_g',msg,type)
 async function loadActivitiesForGroups(){try{const res=await fetch(activitiesForGroupApi);if(!res.ok)throw new Error();activitiesForGroup=await res.json();['addActivity_g','editActivity_g','filterActivity_g'].forEach(id=>{const sel=document.getElementById(id);if(!sel)return;sel.innerHTML=`<option value="">${id.startsWith('filter')?'All Activities':'Select activity'}</option>`;activitiesForGroup.forEach(a=>{const o=document.createElement('option');o.value=a.id??a.Id;o.textContent=a.name??a.Name;if(a.facilityName)o.dataset.facilityName=a.facilityName;sel.appendChild(o);});});}catch(e){showToastG('Failed to load activities','error');}}
 async function loadGroups(){const tbody=document.getElementById('groupsTbody');tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr>';try{const res=await fetch(groupsApi);if(!res.ok)throw new Error();groupsCache=await res.json();currentPageG=1;applyGroupFilters();}catch(e){tbody.innerHTML='<tr><td colspan="9" class="text-center text-danger py-4">Failed to load groups</td></tr>';showToastG('Failed','error');}}
 function applyGroupFilters(){const q=(document.getElementById('searchInput_g')?.value||'').trim().toLowerCase();const act=document.getElementById('filterActivity_g')?.value||'';const day=document.getElementById('filterDay_g')?.value||'';pageSizeG=parseInt(document.getElementById('pageSize_g')?.value||'10');filteredGroups=groupsCache.filter(g=>{const name=(g.name||'').toLowerCase();const actId=g.activityId||(g.activity?.id);const dayVal=g.day||'';return(!q||name.includes(q))&&(!act||String(actId)===String(act))&&(!day||dayVal===day);});renderGroupTable();}
-function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',price=g.price||'',trainerName=g.trainerName||'—',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||'');const slots=g.timeSlots||[];if(slots.length)console.log('slot sample:',JSON.stringify(slots[0]));const slotsHtml=slots.length?slots.map(s=>{const d=s.day||s.Day||s.dayOfWeek||s.DayOfWeek||'';const st=s.startTime||s.StartTime||'';const et=s.endTime||s.EndTime||'';return`<div class="small mb-1">${d?`<span class="badge bg-secondary me-1">${d}</span>`:''} ${st}${et?' - '+et:''}</div>`;}).join(''):'—';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(trainerName)}</td><td class="text-center">${price} EGP</td><td class="text-center">${g.durationDays || '—'}</td><td class="text-center">${slotsHtml}</td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-g" data-id="${id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-g" data-id="${id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_g').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_g',currentPageG,totalPages,p=>{currentPageG=p;renderGroupTable();});attachGroupEvents();}
-function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editPrice_g').value=g.price||'';document.getElementById('editDurationDays_g').value=g.durationDays||'';document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');trainerSel.innerHTML='<option value="">-- No Trainer --</option>';trainerSel.disabled=false;try{const tr=await fetch(`http://clublywebsite.runasp.net/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.fullName;if(t.id===g.trainerId)o.selected=true;trainerSel.appendChild(o);});}catch(e){}const container=document.getElementById('editSlotsContainer_g');container.innerHTML='';const slots=g.timeSlots||g.slots||[];if(slots.length){slots.forEach(s=>addEditSlot(container,s));}else{addEditSlot(container,null);}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
+function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',price=g.price||'',trainerName=g.trainerName||'—',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||'');const slots=g.timeSlots||[];if(slots.length)console.log('slot sample:',JSON.stringify(slots[0]));const slotsHtml=slots.length?slots.map(s=>{const d=s.day||s.Day||s.dayOfWeek||s.DayOfWeek||'';const st=s.startTime||s.StartTime||'';const et=s.endTime||s.EndTime||'';return`<div class="small mb-1">${d?`<span class="badge bg-secondary me-1">${d}</span>`:''} ${st}${et?' - '+et:''}</div>`;}).join(''):'—';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(trainerName)}</td><td class="text-center">${price} EGP</td>
+<td class="text-center">${g.durationDays || '—'}</td>
+<td class="text-center">${g.startDate ? new Date(g.startDate).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—'}</td>
+<td class="text-center">${g.endDate ? new Date(g.endDate).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) : '—'}</td>
+<td class="text-center">${slotsHtml}</td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-g" data-id="${id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-g" data-id="${id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_g').textContent=`Showing ${start+1}-${end} of ${total}`;makePagination('pagination_g',currentPageG,totalPages,p=>{currentPageG=p;renderGroupTable();});attachGroupEvents();}
+function attachGroupEvents(){document.querySelectorAll('#groupsTbody .edit-btn-g').forEach(btn=>{btn.onclick=async()=>{try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`);const g=await res.json();document.getElementById('editId_g').value=g.id;document.getElementById('editName_g').value=g.name||'';document.getElementById('editCapacity_g').value=g.capacity||'';document.getElementById('editCode_g').value=g.code||'';document.getElementById('editPrice_g').value=g.price||'';document.getElementById('editDurationDays_g').value=g.durationDays||'';// ✅ امْلأ الـ dates عند فتح Edit
+// ✅ بعد التعديل
+function safeDate(val) {
+  if (!val) return '';
+  const d = new Date(val);
+  if (isNaN(d.getTime())) return '';
+  return d.toISOString().split('T')[0];
+}
+
+document.getElementById('editStartDate_g').value = safeDate(g.startDate || g.StartDate || g.start_date);
+document.getElementById('editEndDate_g').value   = safeDate(g.endDate   || g.EndDate   || g.end_date);
+
+// لو في startDate و duration بس مفيش endDate احسبه
+if (g.startDate && g.durationDays && !g.endDate) {
+  recalcEditEndDate();
+}document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');trainerSel.innerHTML='<option value="">-- No Trainer --</option>';trainerSel.disabled=false;try{const tr=await fetch(`http://clublywebsite.runasp.net/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.fullName;if(t.id===g.trainerId)o.selected=true;trainerSel.appendChild(o);});}catch(e){}const container=document.getElementById('editSlotsContainer_g');container.innerHTML='';const slots=g.timeSlots||g.slots||[];if(slots.length){slots.forEach(s=>addEditSlot(container,s));}else{addEditSlot(container,null);}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
 function addEditSlot(container, data) {
   const div = document.createElement('div');
   div.className = 'slot-row border rounded-3 p-3 mb-2';
@@ -4058,7 +4137,11 @@ const res = await fetch(`http://clublywebsite.runasp.net/api/Trainers/byActivity
   }
 });
 document.getElementById('addSaveBtn_g').onclick=async()=>{const f={name:document.getElementById('addName_g'),capacity:document.getElementById('addCapacity_g'),code:document.getElementById('addCode_g'),activity:document.getElementById('addActivity_g')};let valid=true;if(!f.name.value.trim()||f.name.value.length<3){showFieldError(f.name,'Name ≥ 3 chars');valid=false;}if(!f.capacity.value||parseInt(f.capacity.value)<1){showFieldError(f.capacity,'Capacity ≥ 1');
-valid=false;}if(!f.activity.value){showFieldError(f.activity,'Select activity');valid=false;}if(!valid)return;const slots=Array.from(document.querySelectorAll('#slotsContainer_g .slot-row')).map(row=>({startTime:row.querySelector('[name="startTime"]').value,endTime:row.querySelector('[name="endTime"]').value,day:row.querySelector('[name="day"]').value}));try{const res=await fetch(groupsApi,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({Name:f.name.value.trim(),Capacity:+f.capacity.value,Code:f.code.value.trim()||null,ActivityId:+f.activity.value,TrainerId:+document.getElementById('addTrainer_g').value||null,Price:+document.getElementById('addPrice_g').value||0,DurationDays:+document.getElementById('addDurationDays_g').value||null,Status:'Active',TimeSlots:slots})});if(!res.ok)throw new Error();bootstrap.Modal.getInstance(document.getElementById('addModal_g')).hide();showToastG('Added');await loadGroups();}catch(e){showToastG('Add failed','error');}};
+valid=false;}if(!f.activity.value){showFieldError(f.activity,'Select activity');valid=false;}if(!valid)return;const slots=Array.from(document.querySelectorAll('#slotsContainer_g .slot-row')).map(row=>({startTime:row.querySelector('[name="startTime"]').value,endTime:row.querySelector('[name="endTime"]').value,day:row.querySelector('[name="day"]').value}));try{const res=await fetch(groupsApi,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({Name:f.name.value.trim(),Capacity:+f.capacity.value,Code:f.code.value.trim()||null,ActivityId:+f.activity.value,TrainerId:+document.getElementById('addTrainer_g').value||null,Price:+document.getElementById('addPrice_g').value||0,  DurationDays: +document.getElementById('addDurationDays_g').value || null,
+  StartDate: document.getElementById('addStartDate_g').value || null,
+  EndDate:   document.getElementById('addEndDate_g').value   || null,
+  Status: 'Active',
+  TimeSlots: slots})});if(!res.ok)throw new Error();bootstrap.Modal.getInstance(document.getElementById('addModal_g')).hide();showToastG('Added');await loadGroups();}catch(e){showToastG('Add failed','error');}};
 document.getElementById('editSaveBtn_g').onclick = async () => {
   const id = document.getElementById('editId_g').value;
   const name = document.getElementById('editName_g').value.trim();
@@ -4080,7 +4163,9 @@ body: JSON.stringify({
   ActivityId: +document.getElementById('editActivity_g').value,
   TrainerId: +document.getElementById('editTrainer_g').value || null,
  Price: +document.getElementById('editPrice_g').value || 0,
-  DurationDays: +document.getElementById('editDurationDays_g').value || null,
+   DurationDays: +document.getElementById('editDurationDays_g').value || null,
+  StartDate: document.getElementById('editStartDate_g').value || null,
+  EndDate:   document.getElementById('editEndDate_g').value   || null,
   Status: 'Active',
   TimeSlots: slots
 })
