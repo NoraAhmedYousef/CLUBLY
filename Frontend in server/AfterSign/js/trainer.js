@@ -333,15 +333,28 @@ async function handleBookTrainer(id) {
   try {
     const res = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
     const all = res.ok ? await res.json() : [];
+
+    // ✅ جلب كل groups الـ trainer سواء active أو لا
     trainerGroups = all.filter(g =>
       (g.trainerId || g.TrainerId) == id &&
       (g.status || g.Status || '').toLowerCase() === 'active'
     );
+
+    // ✅ تحديد الـ expired
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    trainerGroups = trainerGroups.map(g => {
+      const slots    = g.timeSlots || g.TimeSlots || [];
+      const dates    = slots.map(sl => sl.date || sl.Date || '').filter(Boolean).sort();
+      const fromDate = dates[0] || '';
+      const isExpired = fromDate ? new Date(fromDate + 'T00:00:00') < today : false;
+      return { ...g, _isExpired: isExpired };
+    });
+
   } catch(e) {}
 
   openBookingModal('trainer', id, name, 0, [], trainerGroups);
 }
-
 function renderStars(r) {
   return [1,2,3,4,5].map(i =>
     r>=i ? '<i class="bi bi-star-fill"></i>' : r>=i-.5 ? '<i class="bi bi-star-half"></i>' : '<i class="bi bi-star"></i>'

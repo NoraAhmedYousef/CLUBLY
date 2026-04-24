@@ -180,14 +180,12 @@ function handleBookActivity(id) {
 }
 
 async function openActivityGroupPicker(activityId, activityName) {
-  // Set modal title
   document.getElementById('actPickerTitle').textContent = activityName;
   document.getElementById('actPickerBody').innerHTML = `
     <div class="text-center py-4">
       <div class="spinner-border spinner-border-sm" style="color:#e85d2f"></div>
       <p class="mt-2 small text-muted">Loading groups…</p>
     </div>`;
-onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${fromDate}','','',${price},'${encodeURIComponent(trainer)}',${g.durationDays||0},${g.trainerId||g.TrainerId||'null'})"
 
   const confirmBtn = document.getElementById('actPickerConfirm');
   confirmBtn.style.opacity = '.4';
@@ -200,14 +198,14 @@ onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${
   new bootstrap.Modal(document.getElementById('actPickerModal')).show();
 
   try {
-const res  = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
+    const res  = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
     const all  = res.ok ? await res.json() : [];
 
-  const groups = all.filter(g => {
-  const aid    = g.activityId || g.ActivityId;
-  const status = (g.status || g.Status || '').toLowerCase();
-  return String(aid) === String(activityId) && status === 'active';
-});
+    const groups = all.filter(g => {
+      const aid    = g.activityId || g.ActivityId;
+      const status = (g.status || g.Status || '').toLowerCase();
+      return String(aid) === String(activityId) && status === 'active';
+    });
 
     if (!groups.length) {
       document.getElementById('actPickerBody').innerHTML = `
@@ -218,6 +216,10 @@ const res  = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
       return;
     }
 
+    // ✅ today بدون وقت للمقارنة
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     let html = '';
     groups.forEach(g => {
       const gid      = g.id || g.Id;
@@ -227,44 +229,96 @@ const res  = await fetch('http://clublywebsite.runasp.net/api/ActivityGroups');
       const capacity = g.capacity || g.Capacity || '';
       const slots    = g.timeSlots || g.TimeSlots || [];
 
-    // حساب أول وآخر تاريخ
-const dates = slots.map(sl => sl.date || sl.Date || '').filter(Boolean).sort();
-const fromDate = dates[0] || '';
-const toDate   = dates[dates.length - 1] || '';
-const dateRange = fromDate === toDate
-  ? fromDate
-  : `${fromDate} → ${toDate}`;
+      const dates    = slots.map(sl => sl.date || sl.Date || '').filter(Boolean).sort();
+      const fromDate = dates[0] || '';
+      const toDate   = dates[dates.length - 1] || '';
 
-const btnId = `actgrp_${gid}`;
-html += `
+
+const calcEndDate = (() => {
+  const start = g.startDate || fromDate;
+  if (start && g.durationDays) {
+    const d = new Date(start.split('T')[0] + 'T00:00:00');
+    d.setDate(d.getDate() + g.durationDays);
+    return d.toISOString().split('T')[0];
+  }
+  return g.endDate || '';
+})();
+
+const groupEndDate = calcEndDate ? new Date(calcEndDate + 'T00:00:00') : null;
+const isExpired = groupEndDate ? groupEndDate < today : false;
+
+const hasStarted = (g.startDate || fromDate)
+  ? new Date((g.startDate || fromDate).split('T')[0] + 'T00:00:00') < today
+  : false;
+      const btnId = `actgrp_${gid}`;
+
+      html += `
 <button class="act-slot-btn" id="${btnId}"
-onclick="selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${fromDate}','','',${price},'${encodeURIComponent(trainer)}',${g.durationDays||0},${g.trainerId||g.TrainerId||'null'})"  style="width:100%;text-align:left;border:2px solid var(--border,#e2e8f0);background:var(--bg,#f0f4f8);border-radius:14px;padding:14px 16px;cursor:pointer;font-family:'Cairo',sans-serif;transition:all .18s;">
+  onclick="${isExpired
+    ? `bpShowExpiredMsg('${btnId}')`
+:`selectActivitySlot('${btnId}',${gid},'${encodeURIComponent(gname)}','${g.startDate||fromDate}','','',${price},'${encodeURIComponent(trainer)}',${g.durationDays||0},${g.trainerId||g.TrainerId||'null'},'${calcEndDate}'
+)`
+ }"
+  style="width:100%;text-align:left;
+    border:2px solid ${isExpired ? '#fecaca' : 'var(--border,#e2e8f0)'};
+    background:${isExpired ? 'rgba(229,62,62,.04)' : 'var(--bg,#f0f4f8)'};
+    border-radius:14px;padding:14px 16px;
+    cursor:${isExpired ? 'not-allowed' : 'pointer'};
+    opacity:${isExpired ? '.6' : '1'};
+    font-family:'Cairo',sans-serif;transition:all .18s;">
+
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-    <span style="font-size:.95rem;font-weight:900;color:var(--text,#1a202c);">${gname}</span>
+    <span style="font-size:.95rem;font-weight:900;color:${isExpired ? '#e53e3e' : 'var(--text,#1a202c)'};">
+      ${gname}
+      ${isExpired ? `<span style="font-size:.72rem;font-weight:800;background:#fee2e2;color:#e53e3e;
+        padding:2px 8px;border-radius:20px;margin-left:6px;">
+        <i class="bi bi-clock-history"></i> Expired
+      </span>` : ''}
+    </span>
     ${price > 0
-      ? `<span style="font-size:.82rem;font-weight:800;color:#fff;background:#2ec4b6;padding:3px 12px;border-radius:20px;">${price} EGP</span>`
+      ? `<span style="font-size:.82rem;font-weight:800;color:#fff;
+           background:${isExpired ? '#94a3b8' : '#2ec4b6'};
+           padding:3px 12px;border-radius:20px;">${price} EGP</span>`
       : `<span style="font-size:.78rem;color:#94a3b8;font-weight:700;">Free</span>`}
   </div>
+
   <div style="font-size:.78rem;color:var(--muted,#64748b);display:flex;flex-wrap:wrap;gap:10px;">
-    ${trainer ? `<span><i class="bi bi-person-fill" style="color:#e85d2f"></i> ${trainer}</span>` : ''}
+    ${trainer  ? `<span><i class="bi bi-person-fill" style="color:#e85d2f"></i> ${trainer}</span>` : ''}
     ${capacity ? `<span><i class="bi bi-people-fill" style="color:#2ec4b6"></i> Capacity: ${capacity}</span>` : ''}
 ${g.durationDays ? `<span><i class="bi bi-hourglass-split" style="color:#7c3aed"></i> ${g.durationDays} days</span>` : ''}
-  </div>
+${g.startDate ? `<span><i class="bi bi-calendar-check" style="color:#2ec4b6"></i> From: ${new Date(g.startDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}
+${g.endDate ? `<span><i class="bi bi-calendar-x" style="color:#e85d2f"></i> To: ${new Date(g.endDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}  </div>
+
   ${slots.length ? `
   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
     ${slots.map(sl => {
       const date  = (sl.date  || sl.Date  || '').split('T')[0];
       const start = (sl.startTime || sl.StartTime || '').substring(0, 5);
       const end   = (sl.endTime   || sl.EndTime   || '').substring(0, 5);
-const dayName = date ? new Date(date + 'T00:00:00').toLocaleDateString('en-GB', {weekday:'long'}) : '';
-const day = sl.day || sl.Day || '';
-return `<span style="font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px;background:rgba(232,93,47,.08);color:#e85d2f;border:1px solid rgba(232,93,47,.2);">
-  <i class="bi bi-clock" style="font-size:.65rem"></i> ${day ? day+' · ' : ''} ${start} → ${end}
-</span>`;
+      const day   = sl.day || sl.Day || '';
+      return `<span style="font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:20px;
+        background:${isExpired ? 'rgba(229,62,62,.06)' : 'rgba(232,93,47,.08)'};
+        color:${isExpired ? '#e53e3e' : '#e85d2f'};
+        border:1px solid ${isExpired ? 'rgba(229,62,62,.2)' : 'rgba(232,93,47,.2)'};">
+        <i class="bi bi-clock" style="font-size:.65rem"></i> ${day ? day + ' · ' : ''} ${start} → ${end}
+      </span>`;
     }).join('')}
   </div>` : ''}
-</button>`;  
 
+  ${isExpired ? `
+  <div style="margin-top:10px;font-size:.78rem;font-weight:700;color:#e53e3e;
+    background:rgba(229,62,62,.06);border-radius:8px;padding:6px 10px;">
+    <i class="bi bi-x-circle-fill me-1"></i>
+    This group has already ended — booking is no longer available.
+  </div>` : ''}
+${!isExpired && hasStarted ? `
+  <div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#f59e0b;
+    background:rgba(245,158,11,.08);border-radius:8px;padding:5px 10px;
+    border:1px solid rgba(245,158,11,.2);">
+    <i class="bi bi-info-circle-fill me-1"></i>
+    Group already started — you can still join!
+  </div>` : ''}
+</button>`;
     });
 
     document.getElementById('actPickerBody').innerHTML = html;
@@ -277,13 +331,68 @@ return `<span style="font-size:.75rem;font-weight:700;padding:4px 10px;border-ra
   }
 }
 
-function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime, price, trainer, durationDays, trainerId) {
-    document.querySelectorAll('.act-slot-btn').forEach(btn => {
+// ✅ دالة صغيرة لو ضغط على expired group
+window.bpShowExpiredMsg = function(btnId) {
+  document.querySelectorAll('.act-slot-btn').forEach(btn => {
+    btn.style.boxShadow = '';
+  });
+  const btn = document.getElementById(btnId);
+  if (btn) btn.style.boxShadow = '0 0 0 3px rgba(229,62,62,.25)';
+
+  document.getElementById('actPickerSelected').innerHTML =
+    `<i class="bi bi-x-circle-fill" style="color:#e53e3e"></i>
+     <span style="color:#e53e3e;font-weight:700;">
+       This group has already ended — booking is no longer available.
+     </span>`;
+
+  // Confirm يفضل معطل
+  const confirmBtn = document.getElementById('actPickerConfirm');
+  confirmBtn.style.opacity      = '.4';
+  confirmBtn.style.pointerEvents = 'none';
+  window._actPickerChoice = null;
+};
+
+function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime, price, trainer, durationDays, trainerId, endDate) {
+
+const checkDate = (endDate && endDate !== 'undefined' && endDate !== '') ? endDate : null;  if (checkDate) {
+    const groupDate = new Date(checkDate.split('T')[0] + 'T00:00:00');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (groupDate < today) {
+      document.querySelectorAll('.act-slot-btn').forEach(btn => {
+        btn.style.borderColor = 'var(--border,#e2e8f0)';
+        btn.style.background  = 'var(--bg,#f0f4f8)';
+        btn.style.color       = 'var(--text,#1a202c)';
+        btn.style.boxShadow   = '';
+      });
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.style.borderColor = '#e53e3e';
+        btn.style.background  = 'rgba(229,62,62,.06)';
+        btn.style.color       = '#e53e3e';
+        btn.style.boxShadow   = '0 0 0 3px rgba(229,62,62,.15)';
+      }
+      document.getElementById('actPickerSelected').innerHTML =
+        `<i class="bi bi-x-circle-fill" style="color:#e53e3e"></i>
+         <span style="color:#e53e3e;font-weight:700;">
+           This group has already ended — booking unavailable.
+         </span>`;
+      const confirmBtn = document.getElementById('actPickerConfirm');
+      confirmBtn.style.opacity       = '.4';
+      confirmBtn.style.pointerEvents = 'none';
+      window._actPickerChoice = null;
+      return;
+    }
+  }
+
+  document.querySelectorAll('.act-slot-btn').forEach(btn => {
     btn.style.borderColor = 'var(--border,#e2e8f0)';
     btn.style.background  = 'var(--bg,#f0f4f8)';
     btn.style.color       = 'var(--text,#1a202c)';
     btn.style.boxShadow   = '';
   });
+
   const btn = document.getElementById(btnId);
   if (btn) {
     btn.style.borderColor = '#e85d2f';
@@ -291,18 +400,28 @@ function selectActivitySlot(btnId, groupId, groupName, date, startTime, endTime,
     btn.style.color       = '#e85d2f';
     btn.style.boxShadow   = '0 0 0 3px rgba(232,93,47,.15)';
   }
-window._actPickerChoice = { 
-  groupId, groupName, date, startTime, endTime, price, trainer, durationDays,
-  activityId: window._currentActivityId || 0,
-  trainerId: trainerId || null 
-};  document.getElementById('actPickerSelected').innerHTML =
-    `<i class="bi bi-check-circle-fill" style="color:#2ec4b6"></i> <strong>${groupName}</strong> &nbsp; ${date} &nbsp; ${startTime} → ${endTime}`;
+
+  window._actPickerChoice = {
+    groupId, groupName: decodeURIComponent(groupName),
+    date, startTime, endTime, price, trainer, durationDays,
+    activityId: window._currentActivityId || 0,
+    trainerId: trainerId || null
+  };
+
+// ✅ صح
+const displayDate = (endDate && endDate !== 'undefined' && endDate !== '') 
+  ? endDate.split('T')[0] 
+  : (date ? date.split('T')[0] : '');
+
+document.getElementById('actPickerSelected').innerHTML =
+  `<i class="bi bi-check-circle-fill" style="color:#2ec4b6"></i>
+   <strong>${decodeURIComponent(groupName)}</strong>
+   ${displayDate ? '&nbsp; 📅 ' + displayDate : ''}`;
 
   const confirmBtn = document.getElementById('actPickerConfirm');
-  confirmBtn.style.opacity = '1';
+  confirmBtn.style.opacity       = '1';
   confirmBtn.style.pointerEvents = 'auto';
 }
-
 function actPickerConfirm() {
   if (!window._actPickerChoice) return;
   bootstrap.Modal.getInstance(document.getElementById('actPickerModal')).hide();
@@ -318,18 +437,16 @@ function actPickerConfirm() {
     const timeEl = document.getElementById('bpTime');
     const endEl  = document.getElementById('bpEndTime');
 
-    // default date = today
-    const today = new Date().toISOString().split('T')[0];
-    if (dateEl) dateEl.value = today;
+const rawDate = c.date || '';
+const groupStartDate = rawDate ? rawDate.split('T')[0] : new Date().toISOString().split('T')[0];if (dateEl) dateEl.value = groupStartDate;
     if (timeEl) timeEl.value = c.startTime || '';
     if (endEl)  endEl.value  = c.endTime   || '';
 
     // إضافة end date field إذا في durationDays
     if (c.durationDays) {
-      const endDate = new Date();
-      endDate.setDate(endDate.getDate() + c.durationDays);
-      const endDateStr = endDate.toISOString().split('T')[0];
-      // ابحث عن حقل End Time وضيف بعده End Date
+    const startBase = new Date(groupStartDate + 'T00:00:00');
+startBase.setDate(startBase.getDate() + c.durationDays);
+const endDateStr = startBase.toISOString().split('T')[0];
       const endField = endEl?.closest('.bp-field');
   const endDateEl = document.getElementById('bpEndDate');
 const endDateWrap = document.getElementById('bpEndDateWrap');
