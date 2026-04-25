@@ -1,0 +1,5300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clubly — Member Portal</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== CLUBLY BRAND COLORS ===== */
+    :root {
+      --clubly-dark: #0d1b2a;
+      --clubly-navy: #122236;
+      --clubly-accent: #e85d2f;
+      --clubly-gold: #d4a843;
+      --clubly-teal: #2ec4b6;
+      --sidebar-w: 255px;
+      --sidebar-mini: 68px;
+      --header-h: 60px;
+      --footer-h: 62px;
+      --bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --text: #1a202c;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --table-head: #f8fafc;
+
+      .hybrid-pill {
+        background: rgba(232, 93, 47, .1);
+        color: var(--clubly-accent);
+        border: 1px solid rgba(232, 93, 47, .25);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .5px;
+      }
+
+      .flex-1 {
+        flex: 1;
+      }
+    }
+
+    [data-theme="dark"] {
+      --bg: #0a1628;
+      --card-bg: #0f1f35;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #1e3a5f;
+      --table-head: #122236;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background .2s, color .2s;
+    }
+
+    /* ===== HEADER ===== */
+    .clubly-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-h);
+      background: var(--clubly-dark);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 2000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      min-width: var(--sidebar-w);
+      transition: min-width .3s;
+    }
+
+    .logo-icon {
+      font-size: 26px;
+      color: var(--clubly-accent);
+    }
+
+    .logo-text {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: .5px;
+    }
+
+    .logo-text span {
+      color: var(--clubly-accent);
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      padding: 0 10px;
+    }
+
+    .header-nav a {
+      color: rgba(255, 255, 255, .75);
+      text-decoration: none;
+      font-size: .9rem;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all .2s;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active {
+      color: #fff;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, .85);
+      font-size: .9rem;
+    }
+
+    .user-avatar {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .85rem;
+    }
+
+    .btn-theme-header {
+      background: rgba(255, 255, 255, .1);
+      color: #fff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: background .2s;
+    }
+
+    .btn-theme-header:hover {
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .btn-signout {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      color: #fff;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-signout:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(232, 93, 47, .4);
+    }
+
+    /* ===== LAYOUT ===== */
+    .layout-body {
+      display: flex;
+      margin-top: var(--header-h);
+      flex: 1;
+      min-height: calc(100vh - var(--header-h) - var(--footer-h));
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: linear-gradient(180deg, #0d1b2a 0%, #091423 100%);
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      transition: width .3s ease, min-width .3s ease;
+      z-index: 1000;
+      padding: 16px 0 20px;
+      border-right: 1px solid rgba(255, 255, 255, .06);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, .1) transparent;
+    }
+
+    .sidebar-section {
+      padding: 8px 12px 4px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255, 255, 255, .3);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255, 255, 255, .7);
+      text-decoration: none;
+      padding: 10px 16px;
+      margin: 2px 8px;
+      border-radius: 9px;
+      font-size: .9rem;
+      font-weight: 600;
+      transition: all .2s;
+      cursor: pointer;
+      white-space: nowrap;
+      border: none;
+      background: none;
+      width: calc(100% - 16px);
+      text-align: left;
+    }
+
+    .sidebar-link i {
+      font-size: 18px;
+      min-width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sidebar-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, .08);
+      transform: translateX(3px);
+    }
+
+    .sidebar-link.active {
+      color: #fff;
+      background: linear-gradient(135deg, rgba(232, 93, 47, .8), rgba(192, 57, 43, .8));
+      box-shadow: 0 4px 15px rgba(232, 93, 47, .3);
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, .06);
+      margin: 10px 16px;
+    }
+
+    /* ===== CONTENT ===== */
+    .content-area {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 28px;
+      min-height: calc(100vh - var(--header-h));
+      transition: margin-left .3s;
+    }
+
+    /* ===== PAGES ===== */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ===== FOOTER ===== */
+    .clubly-footer {
+      background: var(--clubly-dark);
+      color: rgba(255, 255, 255, .65);
+      width: 100%;
+      position: relative;
+      z-index: 1500;
+      margin-left: 0 !important;
+      clear: both;
+    }
+
+    .footer-inner {
+      display: flex;
+      gap: 60px;
+      padding: 30px 50px 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-col h5 {
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 14px;
+      font-size: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 6px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, .6);
+      text-decoration: none;
+      font-size: .88rem;
+      transition: color .2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--clubly-accent);
+    }
+
+    .footer-contact {
+      font-size: .88rem;
+      line-height: 2;
+    }
+
+    .footer-contact i {
+      color: var(--clubly-teal);
+      margin-right: 6px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .footer-socials a {
+      color: rgba(255, 255, 255, .6);
+      font-size: 18px;
+      transition: color .2s, transform .2s;
+      text-decoration: none;
+    }
+
+    .footer-socials a:hover {
+      color: var(--clubly-accent);
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      font-size: .82rem;
+      color: rgba(255, 255, 255, .4);
+    }
+
+    /* ===== CARDS ===== */
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+      transition: transform .2s, box-shadow .2s;
+      border: 1px solid var(--border);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
+    }
+
+    .stat-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-unit {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .icon-blue {
+      background: #e6eeff;
+      color: #3b5998;
+    }
+
+    .icon-green {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .icon-orange {
+      background: #fff3e0;
+      color: var(--clubly-accent);
+    }
+
+    .icon-teal {
+      background: #e0f7f5;
+      color: var(--clubly-teal);
+    }
+
+    .content-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+      border: 1px solid var(--border);
+    }
+
+    .card-title-clubly {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .page-header-clubly {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .page-title-clubly {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .btn-clubly-primary {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-clubly-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(232, 93, 47, .4);
+    }
+
+    /* ===== CALENDAR ===== */
+    .calendar-grid-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+
+    .cal-day-name {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--muted);
+      padding: 6px 0;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .cal-date {
+      padding: 8px 4px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: .88rem;
+      font-weight: 600;
+      position: relative;
+      transition: all .15s;
+      color: var(--text);
+    }
+
+    .cal-date:hover {
+      background: rgba(232, 93, 47, .1);
+      color: var(--clubly-accent);
+    }
+
+    .cal-date.has-activity::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      background: var(--clubly-accent);
+      border-radius: 50%;
+    }
+
+    .cal-date.today {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      color: #fff;
+    }
+
+    .cal-date.today:hover {
+      opacity: .9;
+    }
+
+    .cal-date.inactive {
+      color: var(--muted);
+      opacity: .4;
+    }
+
+    .cal-nav-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+
+    .cal-nav-btn:hover {
+      background: var(--clubly-accent);
+      color: #fff;
+      border-color: var(--clubly-accent);
+    }
+
+    /* ===== RESERVATION ITEMS ===== */
+    .reservation-item-dash {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: all .2s;
+      border: 1px solid var(--border);
+    }
+
+    .reservation-item-dash:hover {
+      transform: translateX(4px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+    }
+
+    .res-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .res-name {
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--text);
+    }
+
+    .res-time-sm {
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* ===== SCHEDULE ITEMS ===== */
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+      border: 1px solid var(--border);
+      border-left: 4px solid transparent;
+      transition: all .2s;
+    }
+
+    .schedule-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+    }
+
+    .sched-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .sched-blue {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .sched-orange {
+      border-color: var(--clubly-accent);
+      color: var(--clubly-accent);
+    }
+
+    .sched-gray {
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+
+    .sched-details {
+      flex: 1;
+    }
+
+    .sched-name {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .sched-info {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .sched-time-status {
+      text-align: right;
+    }
+
+    .sched-time {
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--text);
+    }
+
+    .sched-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .badge-confirmed {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .badge-completed {
+      background: #e2e3e5;
+      color: #495057;
+    }
+
+    /* ===== FILTER TABS ===== */
+    .notif-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .notif-tab {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-family: 'Cairo', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .notif-tab.active,
+    .notif-tab:hover {
+      background: var(--clubly-accent);
+      color: #fff;
+      border-color: var(--clubly-accent);
+    }
+
+    /* ===== NOTIFICATIONS ===== */
+    .notif-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      border-left: 4px solid transparent;
+      transition: all .2s;
+      cursor: pointer;
+    }
+
+    .notif-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .07);
+    }
+
+    .notif-item.unread {
+      background: var(--card-bg);
+    }
+
+    .notif-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      flex-shrink: 0;
+    }
+
+    .ni-blue {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .ni-red {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+
+    .ni-green {
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    .ni-yellow {
+      border-color: var(--clubly-gold);
+      color: var(--clubly-gold);
+    }
+
+    .notif-msg {
+      font-weight: 600;
+      font-size: .9rem;
+      color: var(--text);
+    }
+
+    .notif-time {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .unread-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--clubly-accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .search-bar-clubly {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      padding: 8px 14px;
+      gap: 8px;
+      transition: border-color .2s;
+    }
+
+    .search-bar-clubly:focus-within {
+      border-color: var(--clubly-accent);
+    }
+
+    .search-bar-clubly input {
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: .9rem;
+      flex: 1;
+    }
+
+    /* ===== MEMBERSHIP ===== */
+    .membership-card-bg {
+      background: linear-gradient(135deg, var(--clubly-dark) 0%, #1a3a5c 100%);
+      border-radius: 16px;
+      padding: 28px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .2);
+    }
+
+    .membership-card-bg::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 200px;
+      height: 200px;
+      background: rgba(232, 93, 47, .15);
+      border-radius: 50%;
+    }
+
+    .membership-card-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -20px;
+      width: 160px;
+      height: 160px;
+      background: rgba(46, 196, 182, .08);
+      border-radius: 50%;
+    }
+
+    .membership-tier {
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+      letter-spacing: .5px;
+    }
+
+    .membership-meta {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: .7;
+      margin-bottom: 4px;
+    }
+
+    .membership-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .renew-btn-clubly {
+      background: #fff;
+      color: var(--clubly-dark);
+      border: none;
+      padding: 8px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .renew-btn-clubly:hover {
+      background: var(--clubly-accent);
+      color: #fff;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-size: .9rem;
+    }
+
+    .benefit-item:last-child {
+      border-bottom: none;
+    }
+
+    .benefit-item i {
+      color: #22c55e;
+      font-size: 1rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .payment-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .payment-item:last-child {
+      border-bottom: none;
+    }
+
+    .payment-type {
+      font-weight: 600;
+      color: var(--text);
+      font-size: .9rem;
+    }
+
+    .payment-date {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    .payment-amount {
+      font-weight: 700;
+      color: #22c55e;
+    }
+
+    /* ===== PROFILE ===== */
+    .profile-avatar-big {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 auto 12px;
+      border: 4px solid var(--clubly-accent);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .profile-avatar-big img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .form-control-clubly {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: .9rem;
+      width: 100%;
+      transition: border-color .2s;
+    }
+
+    .form-control-clubly:focus {
+      outline: none;
+      border-color: var(--clubly-accent);
+    }
+
+    .form-control-clubly:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .form-label-clubly {
+      font-weight: 600;
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .save-btn-clubly {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .save-btn-clubly:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(34, 197, 94, .4);
+    }
+
+    .member-since-tag {
+      display: inline-block;
+      background: rgba(232, 93, 47, .1);
+      color: var(--clubly-accent);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    /* ===== AI ASSISTANT ===== */
+    .chat-area {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - var(--header-h) - 200px);
+      min-height: 400px;
+    }
+
+    .chat-history {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scrollbar-width: thin;
+    }
+
+    .msg-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .msg-row.user-row {
+      flex-direction: row-reverse;
+    }
+
+    .msg-row.bot-row {
+      flex-direction: row;
+    }
+
+    .msg-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .msg-avatar.bot-av {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+    }
+
+    .msg-avatar.user-av {
+      background: #e2e8f0;
+    }
+
+    .msg-bubble {
+      max-width: 72%;
+      padding: 11px 16px;
+      border-radius: 16px;
+      font-size: .95rem;
+      font-weight: 600;
+      line-height: 1.8;
+      word-break: break-word;
+    }
+
+    .msg-user {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      text-align: right;
+    }
+
+    .msg-assistant {
+      background: var(--card-bg);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+      border: 1px solid var(--border);
+      text-align: right;
+      direction: rtl;
+    }
+
+    .msg-assistant ul,
+    .msg-assistant ol {
+      padding-right: 18px;
+      margin: 4px 0;
+    }
+
+    .msg-assistant li {
+      margin: 3px 0;
+    }
+
+    /* Typing dots */
+    .typing-dots {
+      display: flex;
+      gap: 5px;
+      padding: 4px 2px;
+      align-items: center;
+    }
+
+    .typing-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--clubly-accent);
+      animation: typingBounce 1.2s infinite;
+      opacity: 0.6;
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: .4s;
+    }
+
+    @keyframes typingBounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+        opacity: .6;
+      }
+
+      30% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+    }
+
+    .quick-prompt {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .2s;
+      color: var(--text);
+      font-family: inherit;
+    }
+
+    .quick-prompt:hover {
+      background: var(--clubly-accent);
+      color: #fff;
+      border-color: var(--clubly-accent);
+    }
+
+    .chat-input-bar {
+      display: flex;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .chat-input-bar input:focus {
+      border-color: var(--clubly-accent);
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .send-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(232, 93, 47, .4);
+    }
+
+    /* ===== MODALS ===== */
+    .modal-content-clubly {
+      background: var(--card-bg);
+      color: var(--text);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .modal-header-clubly {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+    }
+
+    .modal-body-clubly {
+      padding: 24px;
+    }
+
+    .modal-footer-clubly {
+      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-cancel {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: 8px;
+    }
+
+    .radio-option:has(input:checked) {
+      border-color: var(--clubly-accent);
+      background: rgba(232, 93, 47, .05);
+    }
+
+    .radio-option input[type=radio] {
+      accent-color: var(--clubly-accent);
+    }
+
+    /* ===== SIGN OUT MODAL ===== */
+    .signout-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, .1);
+      border: 3px solid rgba(239, 68, 68, .3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #ef4444;
+      margin: 0 auto 16px;
+    }
+
+    /* ===== TRAINER RATING ===== */
+    .star-rating {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 12px 0;
+    }
+
+    .star-btn {
+      font-size: 2rem;
+      cursor: pointer;
+      transition: transform .15s;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+      filter: grayscale(1);
+      opacity: .4;
+    }
+
+    .star-btn.active,
+    .star-btn:hover {
+      filter: none;
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .rate-trainer-btn {
+      background: linear-gradient(135deg, var(--clubly-gold), #b8860b);
+      color: #fff;
+      border: none;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .rate-trainer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(212, 168, 67, .4);
+    }
+
+    .rate-trainer-btn:disabled {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .badge-cl {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .b-green {
+      background: rgba(34, 197, 94, .12);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, .25);
+    }
+
+    .b-red {
+      background: rgba(239, 68, 68, .12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, .25);
+    }
+
+    .b-gold {
+      background: rgba(212, 168, 67, .12);
+      color: var(--clubly-gold);
+      border: 1px solid rgba(212, 168, 67, .25);
+    }
+
+    /* ===== MEMBER NOTIFICATIONS INBOX ===== */
+    .member-notif-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background .15s;
+      position: relative;
+    }
+
+    .member-notif-item:last-child {
+      border-bottom: none;
+    }
+
+    .member-notif-item:hover {
+      background: rgba(232, 93, 47, .04);
+    }
+
+    .member-notif-item.unread {
+      background: rgba(232, 93, 47, .03);
+    }
+
+    .member-notif-item.unread::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--clubly-accent);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .mn-type-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .mn-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mn-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 5px;
+    }
+
+    .mn-title {
+      font-size: .93rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .member-notif-item:not(.unread) .mn-title {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .mn-time {
+      font-size: .75rem;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+
+    .member-notif-item.unread .mn-time {
+      color: var(--clubly-accent);
+    }
+
+    .mn-desc {
+      font-size: .84rem;
+      color: var(--muted);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .mn-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mn-type-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+
+    .mn-thumb {
+      width: 64px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .mn-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      gap: 12px;
+    }
+
+    .mn-empty-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(100, 116, 139, .1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: var(--muted);
+    }
+
+    /* ================================================================
+   SPORTS AI RECOMMENDER — CSS (Redesigned)
+   ================================================================ */
+    .sai-label {
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .sai-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-family: 'Cairo', sans-serif;
+      font-size: .85rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .sai-input:focus {
+      border-color: var(--clubly-accent);
+    }
+
+    .sai-tog {
+      flex: 1;
+      padding: 7px 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      transition: all .2s;
+      text-align: center;
+    }
+
+    .sai-tog.active {
+      background: rgba(232, 93, 47, .12);
+      border-color: var(--clubly-accent);
+      color: var(--clubly-accent);
+    }
+
+    .sai-rec-card {
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      animation: fadeUp .4s ease both;
+    }
+
+    .sai-rec-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(232, 93, 47, .4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    }
+
+    .sai-rec-card.rank-1 {
+      border-color: rgba(232, 93, 47, .45);
+    }
+
+    .sai-rec-card.rank-1::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--clubly-accent), var(--clubly-gold));
+    }
+
+    .sai-rank {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+    }
+
+    .rank-1 .sai-rank {
+      color: rgba(232, 93, 47, .18);
+    }
+
+    .sai-emoji {
+      font-size: 2rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .sai-sport-name {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .rank-1 .sai-sport-name {
+      color: var(--clubly-accent);
+    }
+
+    .sai-pills {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .sai-pill {
+      font-size: .68rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .sai-pill-cat {
+      background: var(--bg);
+      color: var(--muted);
+      border: 0.5px solid var(--border);
+    }
+
+    .sai-pill-int {
+      background: rgba(212, 168, 67, .1);
+      color: var(--clubly-gold);
+      border: 1px solid rgba(212, 168, 67, .25);
+    }
+
+    .sai-pill-pref {
+      background: rgba(46, 196, 182, .1);
+      color: var(--clubly-teal);
+      border: 1px solid rgba(46, 196, 182, .25);
+    }
+
+    .sai-bar-wrap {
+      margin-bottom: 10px;
+    }
+
+    .sai-bar-lbl {
+      display: flex;
+      justify-content: space-between;
+      font-size: .72rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .sai-bar-val {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .rank-1 .sai-bar-val {
+      color: var(--clubly-accent);
+    }
+
+    .sai-track {
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .sai-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--clubly-accent), var(--clubly-gold));
+      transition: width .9s cubic-bezier(.23, 1, .32, 1);
+    }
+
+    .sai-avail {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .sai-avail.yes {
+      background: rgba(46, 196, 182, .08);
+      border: 1px solid rgba(46, 196, 182, .25);
+      color: var(--clubly-teal);
+    }
+
+    .sai-avail.no {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      color: var(--muted);
+    }
+
+    .sai-avail-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .sai-avail.yes .sai-avail-dot {
+      background: var(--clubly-teal);
+      box-shadow: 0 0 5px var(--clubly-teal);
+      animation: pulse2 2s infinite;
+    }
+
+    .sai-avail.no .sai-avail-dot {
+      background: var(--muted);
+    }
+
+    .sai-facility {
+      font-size: .75rem;
+      opacity: .8;
+      font-weight: 500;
+    }
+
+    .sai-health-card {
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .sai-ring-wrap {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      flex-shrink: 0;
+    }
+
+    .sai-ring-wrap svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: rotate(-90deg);
+    }
+
+    .sai-ring-score {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--clubly-teal);
+    }
+
+    .sai-htag {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: .75rem;
+      margin: 3px;
+      display: inline-block;
+    }
+
+    .sai-htag .k {
+      color: var(--muted);
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .sai-htag .v {
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 1px;
+    }
+
+    .sai-sep {
+      font-size: .68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--clubly-accent);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .sai-sep::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes pulse2 {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: .5
+      }
+    }
+
+    /* ===== MEDICAL AI ===== */
+    .medical-ai-header {
+      background: linear-gradient(135deg, var(--clubly-dark) 0%, var(--clubly-navy) 100%);
+      border-radius: 16px 16px 0 0;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .medical-ai-header::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 140px;
+      height: 140px;
+      background: rgba(232, 93, 47, .15);
+      border-radius: 50%;
+    }
+
+    .medical-ai-header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: -20px;
+      width: 120px;
+      height: 120px;
+      background: rgba(232, 93, 47, .08);
+      border-radius: 50%;
+    }
+
+    .medical-ai-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(232, 93, 47, .4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .medical-ai-title {
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 900;
+      position: relative;
+      z-index: 1;
+    }
+
+    .medical-ai-subtitle {
+      color: rgba(255, 255, 255, .65);
+      font-size: .82rem;
+      margin-top: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .medical-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(232, 93, 47, .2);
+      border: 1px solid rgba(232, 93, 47, .4);
+      color: var(--clubly-accent);
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: .72rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+      margin-top: 6px;
+    }
+
+    .medical-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--clubly-accent);
+      animation: pulse2 2s infinite;
+    }
+
+    .med-chat-area {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - var(--header-h) - 220px);
+      min-height: 400px;
+    }
+
+    .med-msg-assistant {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      text-align: left;
+      direction: ltr;
+    }
+
+    .med-bot-av {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b) !important;
+    }
+
+    .med-quick-prompt {
+      background: rgba(232, 93, 47, .08);
+      border: 1px solid rgba(232, 93, 47, .25);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: .82rem;
+      cursor: pointer;
+      transition: all .2s;
+      color: var(--clubly-accent);
+      font-family: inherit;
+      font-weight: 700;
+    }
+
+    .med-quick-prompt:hover {
+      background: var(--clubly-accent);
+      color: #fff;
+      border-color: var(--clubly-accent);
+    }
+
+    .med-send-btn {
+      background: linear-gradient(135deg, var(--clubly-accent), #c0392b);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .med-send-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(232, 93, 47, .4);
+    }
+
+    .med-send-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Pagination for member portal */
+    .pagination .page-link {
+      color: var(--clubly-accent);
+      border-color: var(--border);
+      background: var(--card-bg);
+    }
+
+    .pagination .page-item.active .page-link {
+      background: var(--clubly-accent);
+      border-color: var(--clubly-accent);
+      color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link {
+      color: var(--muted);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .content-area {
+        margin-left: 0;
+        padding: 16px;
+      }
+
+      .header-nav {
+        display: none;
+      }
+
+      .footer-inner {
+        gap: 30px;
+        padding: 20px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="clubly-header">
+    <a class="header-logo" href="#">
+      <i class="bi bi-lightning-charge-fill logo-icon"></i>
+      <span class="logo-text">Cl<span>u</span>bly</span>
+    </a>
+
+    <nav class="header-nav">
+      <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i
+          class="bi bi-speedometer2 me-1"></i>Dashboard</a>
+      <a href="../AfterSign/home.html">Home</a>
+      <a href="../AfterSign/activities.html">Activities</a>
+      <a href="../AfterSign/facilities.html">Facilities</a>
+      <a href="../AfterSign/trainers.html">Trainers</a>
+      <a href="../AfterSign/plans.html">Membership Plans</a>
+      <a href="../AfterSign/about.html">About Us</a>
+      <a href="../AfterSign/faq.html">FAQ</a>
+      <a href="../AfterSign/contact.html">Contact</a>
+    </nav>
+
+
+    <div class="header-actions">
+      <button class="btn-theme-header" id="themeToggle" title="Toggle Theme">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+      <div class="header-user">
+        <span>Sara Ali</span>
+        <div class="user-avatar">SA</div>
+      </div>
+      <button class="btn-signout" onclick="showPage('signout')">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- ===== LAYOUT BODY ===== -->
+  <div class="layout-body">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">My Portal</div>
+      <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard" data-label="Dashboard">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('reservations')" id="sb-reservations" data-label="Reservations">
+        <i class="bi bi-calendar-check"></i>
+        <span>Reservations</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('schedule')" id="sb-schedule" data-label="Schedule">
+        <i class="bi bi-clock-history"></i>
+        <span>Schedule</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('attendance')" id="sb-attendance" data-label="Attendance">
+        <i class="bi bi-person-check"></i>
+        <span>Attendance</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('payments')" id="sb-payments" data-label="Payments">
+        <i class="bi bi-receipt"></i>
+        <span>Payments</span>
+      </button>
+
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">Account</div>
+      <button class="sidebar-link" onclick="showPage('membership')" id="sb-membership" data-label="Membership">
+        <i class="bi bi-credit-card"></i>
+        <span>Membership</span>
+      </button>
+
+
+      <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
+        <i class="bi bi-bell"></i>
+        <span>Notifications</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('ai')" id="sb-ai" data-label="AI Assistant">
+        <i class="bi bi-robot"></i>
+        <span>AI Assistant</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('sports-ai')" id="sb-sports-ai" data-label="Sports AI">
+        <i class="bi bi-trophy"></i>
+        <span>AI Recommendation System</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('medical-ai')" id="sb-medical-ai" data-label="Medical AI">
+        <i class="bi bi-heart-pulse-fill" style="color:#10b981;"></i>
+        <span>Medical AI</span>
+      </button>
+      <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile" data-label="Profile">
+        <i class="bi bi-person-circle"></i>
+        <span>Profile</span>
+      </button>
+      <div class="sidebar-divider"></div>
+      <button class="sidebar-link" onclick="showPage('signout')" id="sb-signout" style="color:rgba(239,68,68,.8);"
+        data-label="Sign Out">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Sign Out</span>
+      </button>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="content-area" id="contentArea">
+
+      <!-- ======== PAGE: DASHBOARD ======== -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">Welcome back, <span style="color:var(--clubly-accent)">Sara!</span></h1>
+            <p style="color:var(--muted); margin-top:4px; font-size:.9rem;">Here's what's happening with your
+              membership.</p>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-blue"><i class="fas fa-book-open"></i></div>
+              <div class="stat-label">My Bookings</div>
+              <div class="stat-value" id="dash-bookings">5</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-green"><i class="fas fa-running"></i></div>
+              <div class="stat-label">Activities Joined</div>
+              <div class="stat-value" id="dash-activities">12</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-orange"><i class="fas fa-clock"></i></div>
+              <div class="stat-label">Membership Days Left</div>
+              <div class="stat-value" id="dash-days">156 <span class="stat-unit">days</span></div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-teal"><i class="fas fa-hourglass-half"></i></div>
+              <div class="stat-label">Hours This Month</div>
+              <div class="stat-value" id="dash-hours">24 <span class="stat-unit">hrs</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar + Upcoming -->
+        <div class="row g-3">
+          <div class="col-lg-8">
+            <div class="content-card h-100">
+              <div class="card-title-clubly d-flex justify-content-between align-items-center">
+                <span>Monthly Activity Calendar</span>
+                <div class="d-flex align-items-center gap-2">
+                  <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button>
+                  <span id="calMonthLabel"
+                    style="font-weight:700; font-size:.95rem; color:var(--text); min-width:110px; text-align:center;"></span>
+                  <button class="cal-nav-btn" onclick="changeMonth(1)"><i class="bi bi-chevron-right"></i></button>
+                </div>
+              </div>
+              <div id="calendarContainer"></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="content-card h-100">
+              <div class="card-title-clubly">Upcoming Reservations</div>
+              <div id="upcomingResList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== PAGE: RESERVATIONS ======== -->
+      <div class="page" id="page-reservations">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">My Bookings</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">View all your activity and facility
+              reservations</p>
+          </div>
+          <button class="btn-clubly-primary" onclick="loadMemberBookings()">
+            <i class="bi bi-arrow-clockwise"></i> Refresh
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-3" id="memberBookingTabs">
+          <li class="nav-item">
+            <button class="nav-link active" onclick="switchMemberTab('activity')">
+              <i class="bi bi-calendar-check me-1"></i> Activity Bookings
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" onclick="switchMemberTab('facility')">
+              <i class="bi bi-building me-1"></i> Facility Bookings
+            </button>
+          </li>
+        </ul>
+        <!-- فلاتر الحالة -->
+        <div class="notif-tabs mb-3" id="memberStatusTabs">
+          <button class="notif-tab active" onclick="filterMemberStatus('all', this)">All</button>
+          <button class="notif-tab" onclick="filterMemberStatus('approved', this)">Approved</button>
+          <button class="notif-tab" onclick="filterMemberStatus('pending', this)">Pending</button>
+          <button class="notif-tab" onclick="filterMemberStatus('cancelled', this)">Cancelled</button>
+        </div>
+        <!-- Activity Bookings -->
+        <div id="mem-tab-activity">
+          <div class="content-card p-0">
+            <div style="overflow-x:auto;">
+              <table class="table table-hover align-middle mb-0" style="min-width:900px; font-size:.88rem;">
+                <thead style="background:var(--table-head);">
+                  <tr>
+                    <th style="padding:12px 16px;">#</th>
+                    <th style="padding:12px 16px;">Activity</th>
+                    <th>Trainer</th>
+                    <th style="padding:12px 16px;">Group</th>
+                    <th style="padding:12px 16px;">Start Date</th>
+                    <th style="padding:12px 16px;">End Date</th>
+                    <th style="padding:12px 16px;">Start Time</th>
+                    <th style="padding:12px 16px;">End Time</th>
+                    <th style="padding:12px 16px;">Price</th>
+                    <th style="padding:12px 16px;">Payment</th>
+                    <th style="padding:12px 16px;">Transaction ID</th>
+                    <th style="padding:12px 16px;">Receipt</th>
+                    <th style="padding:12px 16px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="mem-activity-body">
+                  <tr>
+                    <td colspan="9" class="text-center py-4" style="color:var(--muted);">Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Facility Bookings -->
+        <div id="mem-tab-facility" style="display:none;">
+          <div class="content-card p-0">
+            <div style="overflow-x:auto;">
+              <table class="table table-hover align-middle mb-0" style="min-width:900px; font-size:.88rem;">
+                <thead style="background:var(--table-head);">
+                  <tr>
+                    <th style="padding:12px 16px;">#</th>
+                    <th style="padding:12px 16px;">Facility</th>
+                    <th style="padding:12px 16px;">Date</th>
+                    <th style="padding:12px 16px;">Time</th>
+                    <th style="padding:12px 16px;">Participants</th>
+                    <th style="padding:12px 16px;">Price</th>
+                    <th style="padding:12px 16px;">Payment</th>
+                    <th style="padding:12px 16px;">Transaction ID</th>
+
+                    <th style="padding:12px 16px;">Receipt</th>
+                    <th style="padding:12px 16px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="mem-facility-body">
+                  <tr>
+                    <td colspan="9" class="text-center py-4" style="color:var(--muted);">Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: SCHEDULE ======== -->
+      <div class="page" id="page-schedule">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">My Schedule</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your upcoming sessions</p>
+          </div>
+        </div>
+
+        <ul class="nav nav-tabs mb-3" id="memberScheduleTabs">
+          <li class="nav-item">
+            <button class="nav-link active" onclick="switchMemberScheduleType('activity', this)">
+              <i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i>Activity Sessions
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" onclick="switchMemberScheduleType('facility', this)">
+              <i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i>Facility Bookings
+            </button>
+          </li>
+        </ul>
+
+        <!-- Activity Section -->
+        <div id="memberActivityScheduleSection">
+          <div class="content-card">
+            <div id="memberActivityScheduleList"></div>
+            <div class="empty-state" id="memberActivitySchedEmpty" style="display:none;">
+              <i class="bi bi-calendar-check"></i>
+              <p>No activity sessions found.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Facility Section -->
+        <div id="memberFacilityScheduleSection" style="display:none;">
+          <div class="content-card">
+            <div id="memberFacilityScheduleList"></div>
+            <div class="empty-state" id="memberFacilitySchedEmpty" style="display:none;">
+              <i class="bi bi-building"></i>
+              <p>No facility bookings found.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: MEMBERSHIP ======== -->
+      <div class="page" id="page-membership">
+        <div class="page-header-clubly">
+          <h1 class="page-title-clubly">Membership Status</h1>
+        </div>
+        <div class="row g-3">
+          <div class="col-lg-8">
+            <div class="membership-card-bg mb-3">
+              <div class="membership-tier" id="mem-tier">Platinum Tier</div>
+              <div class="row">
+                <div class="col-4">
+                  <div class="membership-meta">Status</div>
+                  <div class="membership-value" id="mem-status">Active</div>
+                </div>
+                <div class="col-4">
+                  <div class="membership-meta">Expires On</div>
+                  <div class="membership-value" id="mem-expiry">12/25/2024</div>
+                </div>
+                <div class="col-4">
+                  <div class="membership-meta">Member ID</div>
+                  <div class="membership-value" id="mem-id">CBM-7890</div>
+                </div>
+              </div>
+              <button class="renew-btn-clubly" data-bs-toggle="modal" data-bs-target="#renewModal">Renew
+                Membership</button>
+            </div>
+
+            <div class="content-card">
+              <div class="card-title-clubly">Your Benefits</div>
+              <div id="benefitsList"></div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="content-card">
+              <div class="card-title-clubly">Payment History</div>
+              <div id="paymentList"></div>
+              <div class="text-center mt-3">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: NOTIFICATIONS ======== -->
+      <div class="page" id="page-notifications">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">Notifications</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">
+              Notifications sent to members
+            </p>
+          </div>
+          <div class="d-flex gap-2 align-items-center">
+            <span id="memberNotifUnreadCount" class="sched-badge badge-pending"
+              style="font-size:.85rem; padding:6px 14px;">0 unread</span>
+            <button class="btn-clubly-primary" style="background:linear-gradient(135deg,#22c55e,#16a34a);"
+              onclick="markAllMemberNotifsRead()">
+              <i class="bi bi-check2-all"></i> Mark all read
+            </button>
+            <button class="btn-clubly-primary" onclick="loadMemberNotifications()">
+              <i class="bi bi-arrow-clockwise"></i> Refresh
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="content-card mb-3" style="padding:14px 20px;">
+          <div class="d-flex flex-wrap gap-3 align-items-center">
+            <div class="search-bar-clubly" style="flex:1; min-width:200px; max-width:320px;">
+              <i class="bi bi-search" style="color:var(--muted);"></i>
+              <input type="text" id="memberNotifSearch" placeholder="Search notifications..." />
+            </div>
+            <select id="memberNotifFilterType" style="background:var(--card-bg);border:1px solid var(--border);
+               border-radius:8px;padding:9px 14px;color:var(--text);
+               font-family:inherit;font-size:.88rem;cursor:pointer;">
+              <option value="">All types</option>
+              <option value="Info">ℹ️ Info</option>
+              <option value="Warning">⚠️ Warning</option>
+              <option value="Success">✅ Success</option>
+              <option value="Urgent">🔴 Urgent</option>
+            </select>
+            <select id="memberNotifFilterStatus" style="background:var(--card-bg);border:1px solid var(--border);
+               border-radius:8px;padding:9px 14px;color:var(--text);
+               font-family:inherit;font-size:.88rem;cursor:pointer;">
+              <option value="">All</option>
+              <option value="unread">Unread</option>
+              <option value="read">Read</option>
+            </select>
+            <small id="memberNotifInfo" style="color:var(--muted);"></small>
+          </div>
+        </div>
+
+        <!-- Notifications List -->
+        <div class="content-card" style="padding:0;" id="memberNotifListCard">
+          <div id="memberNotifList">
+            <div class="text-center py-5" style="color:var(--muted);">
+              <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-3">
+          <nav>
+            <ul class="pagination" id="memberNotifPagination"></ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ===== MEMBER NOTIFICATION DETAIL MODAL ===== -->
+      <div class="modal fade" id="memberNotifDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+          <div class="modal-content modal-content-clubly">
+
+            <div class="modal-header-clubly d-flex align-items-center gap-3">
+              <div id="mnd2_typeIcon" style="width:46px;height:46px;border-radius:50%;
+                 display:flex;align-items:center;justify-content:center;
+                 font-size:20px;flex-shrink:0;">
+              </div>
+              <div style="flex:1;">
+                <h5 class="mb-0 fw-bold" id="mnd2_title" style="color:var(--text);">—</h5>
+                <small style="color:var(--muted);" id="mnd2_meta">—</small>
+              </div>
+              <button class="btn-cancel" data-bs-dismiss="modal" style="border-radius:50%;width:32px;height:32px;
+                 display:flex;align-items:center;justify-content:center;
+                 padding:0;">✕</button>
+            </div>
+
+            <div class="modal-body-clubly">
+
+              <!-- Badge -->
+              <div class="mb-3">
+                <span id="mnd2_typeBadge" class="sched-badge" style="font-size:.9rem;padding:5px 16px;"></span>
+              </div>
+
+              <!-- Description -->
+              <div style="background:var(--bg);border-radius:10px;padding:16px;
+                    border:1px solid var(--border);margin-bottom:16px;">
+                <p id="mnd2_description" class="mb-0" style="white-space:pre-wrap;line-height:1.8;font-size:.95rem;
+                   color:var(--text);"></p>
+              </div>
+
+              <!-- Image -->
+              <div id="mnd2_imageWrap" style="display:none; margin-bottom:16px;">
+                <label class="form-label-clubly">
+                  <i class="bi bi-image me-1"></i>Attached Image
+                </label>
+                <div>
+                  <a id="mnd2_imageLink" href="#" target="_blank">
+                    <img id="mnd2_image" style="max-width:100%;max-height:260px;object-fit:cover;
+                       border-radius:12px;border:1px solid var(--border);
+                       cursor:pointer;">
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sent At -->
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-clock" style="color:var(--muted);"></i>
+                <small style="color:var(--muted);">Sent:</small>
+                <span id="mnd2_sentAt" class="sched-badge badge-confirmed" style="font-size:.8rem;"></span>
+              </div>
+            </div>
+
+            <div class="modal-footer-clubly">
+              <button class="btn-cancel" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: PAYMENTS ======== -->
+      <div class="page" id="page-payments">
+        <div class="page-header-clubly">
+          <h1 class="page-title-clubly">Payments</h1>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="payment-card" style="background:linear-gradient(135deg,#0d1b2a,#1a3a5c);
+               border-radius:16px;padding:26px;color:#fff;position:relative;
+               overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);margin-bottom:20px;">
+              <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;
+                    background:rgba(46,196,182,.12);border-radius:50%;"></div>
+              <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
+                    opacity:.65;margin-bottom:4px;">Total Paid</div>
+              <div style="font-size:1.5rem;font-weight:900;position:relative;z-index:1;" id="mem-pay-total">— EGP</div>
+            </div>
+
+            <div style="background:linear-gradient(135deg,#4a1010,#7c2d12);
+                  border-radius:16px;padding:26px;color:#fff;position:relative;
+                  overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);">
+              <div style="position:absolute;bottom:-50px;left:-20px;width:140px;height:140px;
+                    background:rgba(232,93,47,.08);border-radius:50%;"></div>
+              <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
+                    opacity:.65;margin-bottom:4px;">Pending Amount</div>
+              <div style="font-size:1.5rem;font-weight:900;position:relative;z-index:1;" id="mem-pay-pending">— EGP
+              </div>
+              <div style="margin-top:10px;position:relative;z-index:1;">
+                <span style="display:inline-flex;align-items:center;gap:5px;
+                       background:rgba(245,158,11,.2);color:#f59e0b;
+                       border:1px solid rgba(245,158,11,.35);
+                       padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;">
+                  <span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;
+                         display:inline-block;"></span>
+                  Awaiting Payment
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="content-card">
+              <div class="card-title-clubly" style="display:flex;align-items:center;
+             justify-content:space-between;">
+                <span>Invoice History</span>
+                <span style="font-size:.78rem;color:var(--muted);font-weight:400;" id="mem-invoice-count"></span>
+              </div>
+              <div id="mem-invoice-list">
+                <div class="text-center py-4" style="color:var(--muted);">
+                  <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: AI ASSISTANT ======== -->
+      <div class="page" id="page-ai">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">AI Assistant</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Ask anything about your membership or
+              activities</p>
+          </div>
+        </div>
+        <div class="content-card">
+          <div class="chat-area">
+            <div class="chat-history" id="chatHistory"></div>
+            <div id="quickPrompts" style="display:flex; flex-wrap:wrap; gap:8px; padding:12px 0;">
+              <button class="quick-prompt" data-prompt="إيه الأنشطة المتاحة؟">الأنشطة المتاحة</button>
+              <button class="quick-prompt" data-prompt="مين المدربين المتاحين؟">المدربين</button>
+              <button class="quick-prompt" data-prompt="إيه المجموعات التدريبية المتاحة؟">المجموعات</button>
+              <button class="quick-prompt" data-prompt="أفضل رياضة لخسارة الوزن؟">خسارة الوزن</button>
+            </div>
+            <div class="chat-input-bar">
+              <input type="text" id="chatInput" placeholder="Ask the assistant anything..." />
+              <button class="send-btn" id="sendBtn">
+                <i class="bi bi-send-fill"></i> Send
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== PAGE: MEDICAL AI ======== -->
+      <div class="page" id="page-medical-ai">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">🩺 Medical <span style="color:var(--clubly-accent);">AI Assistant</span></h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Your personal AI-powered medical advisor</p>
+          </div>
+        </div>
+
+        <div class="content-card" style="padding:0; overflow:hidden;">
+          <!-- Header -->
+          <div class="medical-ai-header">
+            <div class="medical-ai-icon">🩺</div>
+            <div>
+              <div class="medical-ai-title">Medical AI Advisor</div>
+              <div class="medical-ai-subtitle">Powered by advanced medical knowledge base</div>
+              <div class="medical-status-pill">
+                <span class="medical-status-dot"></span>
+                Online &amp; Ready
+              </div>
+            </div>
+          </div>
+
+          <div style="padding: 20px 24px;">
+
+            <!-- Chat Area -->
+            <div class="med-chat-area">
+              <div class="chat-history" id="medChatHistory"></div>
+
+              <!-- Quick Prompts -->
+              <div id="medQuickPrompts" style="display:flex; flex-wrap:wrap; gap:8px; padding:12px 0;">
+                <button class="med-quick-prompt" data-prompt="What are the symptoms of diabetes?">Diabetes
+                  symptoms</button>
+                <button class="med-quick-prompt" data-prompt="How to improve heart health through exercise?">Heart
+                  health</button>
+                <button class="med-quick-prompt" data-prompt="What is a healthy BMI range?">Healthy BMI</button>
+                <button class="med-quick-prompt"
+                  data-prompt="Tips to recover faster after intense workout?">Post-workout recovery</button>
+                <button class="med-quick-prompt" data-prompt="What foods boost the immune system?">Immune
+                  system</button>
+                <button class="med-quick-prompt" data-prompt="How much sleep does an adult need?">Sleep needs</button>
+              </div>
+
+              <!-- Input Bar -->
+              <div class="chat-input-bar">
+                <input type="text" id="medChatInput" placeholder="Ask your medical question..." />
+                <button class="med-send-btn" id="medSendBtn">
+                  <i class="bi bi-send-fill"></i> Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======== PAGE: PROFILE ======== -->
+      <div class="page" id="page-profile">
+        <div class="page-header-clubly">
+          <h1 class="page-title-clubly">Profile & Settings</h1>
+        </div>
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="content-card text-center">
+              <div class="profile-avatar-big" id="profileAvatarBig">
+                <img id="profileImg" src="" alt="">
+                <span id="profileInitials">SA</span>
+              </div>
+              <h4 style="font-weight:900; color:var(--text);" id="profileNameDisplay">Sara Ali</h4>
+              <p style="color:var(--muted); margin-bottom:10px;" id="profileEmailDisplay"><a
+                  href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                  data-cfemail="9ae9fbe8fbb4fbf6f3daffe2fbf7eaf6ffb4f9f5f7">[email&#160;protected]</a></p>
+              <span class="member-since-tag">Member Since <span id="memberSinceDisplay">Jan 2022</span></span>
+              <div class="mt-3">
+                <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                <button onclick="document.getElementById('fileInput').click()"
+                  style="background:none; border:1px solid var(--clubly-accent); color:var(--clubly-accent); padding:6px 18px; border-radius:20px; cursor:pointer; font-family:inherit; font-weight:600; font-size:.85rem;">
+                  <i class="bi bi-camera"></i> Edit Photo
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="content-card">
+              <div class="card-title-clubly">Personal Information</div>
+              <form id="profileForm">
+                <!-- Row 1: First + Last Name -->
+                <div class="row g-3 mb-3">
+                  <div class="col-6">
+                    <label class="form-label-clubly">First Name</label>
+                    <input class="form-control-clubly" type="text" id="firstName" value="Sara">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label-clubly">Last Name</label>
+                    <input class="form-control-clubly" type="text" id="lastName" value="Ali">
+                  </div>
+                </div>
+
+                <!-- Row 2: Email + Phone -->
+                <div class="row g-3 mb-3">
+                  <div class="col-6">
+                    <label class="form-label-clubly">Email Address</label>
+                    <input class="form-control-clubly" type="email" id="emailAddress" value="sara.ali@example.com"
+                      disabled>
+                    <div style="font-size:.78rem; color:var(--muted); margin-top:4px;">Email cannot be changed here.
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label-clubly">Phone Number</label>
+                    <input class="form-control-clubly" type="tel" id="phoneNumber" value="+20 01234567890">
+                  </div>
+                </div>
+
+                <!-- Row 3: National ID + Gender -->
+                <div class="row g-3 mb-3">
+                  <div class="col-6">
+                    <label class="form-label-clubly">National ID</label>
+                    <input class="form-control-clubly" type="text" id="nationalId" disabled>
+                    <div style="font-size:.78rem; color:var(--muted); margin-top:4px;">Cannot be changed.</div>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label-clubly">Gender</label>
+                    <input class="form-control-clubly" type="text" id="gender" disabled>
+                  </div>
+                </div>
+
+                <!-- Row 4: Date of Birth + Member Type -->
+                <div class="row g-3 mb-3">
+                  <div class="col-6">
+                    <label class="form-label-clubly">Date of Birth</label>
+                    <input class="form-control-clubly" type="date" id="dateOfBirth" value="1995-05-20">
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label-clubly">Member Type</label>
+                    <input class="form-control-clubly" type="text" id="memberType" disabled>
+                  </div>
+                </div>
+
+                <!-- Row 5: Membership Name + Membership Number -->
+                <div class="row g-3 mb-4">
+                  <div class="col-6">
+                    <label class="form-label-clubly">Membership Plan</label>
+                    <input class="form-control-clubly" type="text" id="membershipPlan" disabled>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label-clubly">Membership Number</label>
+                    <input class="form-control-clubly" type="text" id="membershipNumber" disabled>
+                  </div>
+                </div>
+
+                <div class="d-flex gap-3 align-items-center flex-wrap">
+                  <button type="submit" class="save-btn-clubly">Save Changes</button>
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#passModal"
+                    style="background:none; border:none; color:#ef4444; font-weight:700; cursor:pointer; font-family:inherit;">
+                    Change Password
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: ATTENDANCE ======== -->
+      <div class="page" id="page-attendance">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">
+              <i class="bi bi-person-check-fill me-2" style="color:var(--clubly-teal);"></i>
+              My Attendance
+            </h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">
+              Track your attendance across all your groups
+            </p>
+          </div>
+          <button class="btn-clubly-primary" onclick="loadMemberAttendance()">
+            <i class="bi bi-arrow-clockwise"></i> Refresh
+          </button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-4" id="attSummaryCards">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-blue"><i class="bi bi-calendar3"></i></div>
+              <div class="stat-label">Total Sessions</div>
+              <div class="stat-value" id="mem-att-total">—</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-green"><i class="bi bi-check-circle-fill"></i></div>
+              <div class="stat-label">Present</div>
+              <div class="stat-value" id="mem-att-present" style="color:#22c55e;">—</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-orange"><i class="bi bi-x-circle-fill"></i></div>
+              <div class="stat-label">Absent</div>
+              <div class="stat-value" id="mem-att-absent" style="color:#ef4444;">—</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card">
+              <div class="stat-icon-box icon-teal"><i class="bi bi-percent"></i></div>
+              <div class="stat-label">Attendance Rate</div>
+              <div class="stat-value" id="mem-att-rate" style="color:var(--clubly-teal);">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="content-card mb-3" style="padding:14px 20px;">
+          <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+            <select id="memAttGroupSel" onchange="onMemAttGroupChange()" style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;
+               font-size:.87rem;cursor:pointer;min-width:200px;">
+              <option value="">— Select Group —</option>
+            </select>
+            <select id="memAttMonthSel" onchange="applyMemAttFilters()" style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
+               padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;
+               font-size:.87rem;cursor:pointer;">
+              <option value="">All Months</option>
+            </select>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="notif-tab active" onclick="setMemAttStatus('all',this)">All</button>
+              <button class="notif-tab" onclick="setMemAttStatus('present',this)">Present</button>
+              <button class="notif-tab" onclick="setMemAttStatus('absent',this)">Absent</button>
+              <button class="notif-tab" onclick="setMemAttStatus('unmarked',this)">Not Marked</button>
+            </div>
+            <small id="memAttInfo" style="color:var(--muted);margin-left:auto;font-size:.8rem;"></small>
+          </div>
+        </div>
+
+        <!-- Rate Bar per Group -->
+        <div id="memAttRateBar" style="display:none;" class="mb-3">
+          <div class="content-card">
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+              <div id="memAttRateCircle" style="width:72px;height:72px;border-radius:50%;
+                 display:flex;align-items:center;justify-content:center;
+                 font-size:1.2rem;font-weight:900;flex-shrink:0;
+                 background:rgba(46,196,182,.12);color:var(--clubly-teal);
+                 border:3px solid rgba(46,196,182,.3);">
+                0%
+              </div>
+              <div style="flex:1;">
+                <div id="memAttGroupName" style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">—
+                </div>
+                <div id="memAttGroupSub" style="font-size:.82rem;color:var(--muted);margin-bottom:8px;">—</div>
+                <div style="background:var(--border);border-radius:10px;height:8px;overflow:hidden;">
+                  <div id="memAttRateFill" style="height:100%;border-radius:10px;
+                     background:linear-gradient(90deg,var(--clubly-teal),#22c55e);
+                     transition:width .5s ease;width:0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Records Table -->
+        <div class="content-card" style="padding:0;">
+          <div style="padding:14px 20px;border-bottom:1px solid var(--border);
+                display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-weight:700;font-size:.95rem;">Session Records</span>
+            <span id="memAttRecsCount" style="font-size:.8rem;color:var(--muted);"></span>
+          </div>
+          <div id="memAttList">
+            <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+              <i class="bi bi-person-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+              <p style="font-weight:700;">Select a group to view your attendance</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: SIGN OUT ======== -->
+      <div class="page" id="page-signout">
+        <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
+          <div class="content-card text-center" style="max-width:420px; width:100%;">
+            <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
+            <h4 style="font-weight:900; color:var(--text); margin-bottom:8px;">Confirm Sign Out</h4>
+            <p style="color:var(--muted); margin-bottom:24px;">You will need to sign in again to access your dashboard
+              and reservations.</p>
+            <div class="d-flex gap-3 justify-content-center">
+              <button class="btn-cancel" onclick="showPage('dashboard')">Cancel</button>
+              <button class="btn-clubly-primary" style="background:linear-gradient(135deg,#ef4444,#dc2626);"
+                onclick="handleSignOut()"> <i class="bi bi-box-arrow-right"></i> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ======== PAGE: SPORTS AI RECOMMENDER ======== -->
+      <div class="page" id="page-sports-ai">
+        <div class="page-header-clubly">
+          <div>
+            <h1 class="page-title-clubly">🏆 Sports <span style="color:var(--clubly-accent)">AI</span> Recommender</h1>
+            <p style="color:var(--muted);font-size:.9rem;margin-top:4px;">اكتشف الرياضة المناسبة لك بناءً على بياناتك
+              الشخصية</p>
+          </div>
+          <span class="hybrid-pill">Hybrid AI Engine</span>
+        </div>
+
+        <div class="row g-3">
+          <!-- ===== LEFT: FORM ===== -->
+          <div class="col-lg-5">
+            <div class="content-card" style="position:sticky;top:80px;">
+
+              <div class="sai-sep">👤 بياناتك الشخصية</div>
+              <div class="row g-2 mb-3">
+                <div class="col-6"><label class="sai-label">العمر</label><input type="number" id="sai-age"
+                    class="sai-input" value="25" min="10" max="80"></div>
+                <div class="col-6"><label class="sai-label">الجنس</label><select id="sai-gender" class="sai-input">
+                    <option value="Male">ذكر</option>
+                    <option value="Female">أنثى</option>
+                  </select></div>
+                <div class="col-6"><label class="sai-label">الوزن (كجم)</label><input type="number" id="sai-weight"
+                    class="sai-input" value="75" min="30" max="200"></div>
+                <div class="col-6"><label class="sai-label">الطول (سم)</label><input type="number" id="sai-height"
+                    class="sai-input" value="175" min="100" max="230"></div>
+                <div class="col-12"><label class="sai-label">المشكلة الصحية</label><select id="sai-health"
+                    class="sai-input">
+                    <option value="None">لا يوجد</option>
+                    <option value="Knee Pain">ألم الركبة</option>
+                    <option value="Back Pain">ألم الظهر</option>
+                    <option value="Asthma">الربو</option>
+                    <option value="Heart Condition">مشكلة قلبية</option>
+                  </select></div>
+              </div>
+
+              <div class="sai-sep">⚡ اللياقة وأسلوب الحياة</div>
+              <div class="row g-2 mb-3">
+                <div class="col-6"><label class="sai-label">مستوى النشاط</label><select id="sai-activity"
+                    class="sai-input">
+                    <option value="Sedentary">خامل</option>
+                    <option value="Lightly Active">نشيط قليلاً</option>
+                    <option value="Moderately Active" selected>نشيط معتدل</option>
+                    <option value="Very Active">نشيط جداً</option>
+                  </select></div>
+                <div class="col-6"><label class="sai-label">مستوى اللياقة</label><select id="sai-fitness"
+                    class="sai-input">
+                    <option value="Beginner">مبتدئ</option>
+                    <option value="Intermediate" selected>متوسط</option>
+                    <option value="Advanced">متقدم</option>
+                  </select></div>
+                <div class="col-6"><label class="sai-label">الهدف</label><select id="sai-goal" class="sai-input">
+                    <option value="Get Fit">اللياقة البدنية</option>
+                    <option value="Lose Weight">إنقاص الوزن</option>
+                    <option value="Build Muscle">بناء العضلات</option>
+                    <option value="Have Fun">الاستمتاع</option>
+                    <option value="Reduce Stress">تقليل التوتر</option>
+                    <option value="Compete Professionally" selected>المنافسة الاحترافية</option>
+                  </select></div>
+                <div class="col-6"><label class="sai-label">الشخصية</label><select id="sai-personality"
+                    class="sai-input">
+                    <option value="Introvert">انطوائي</option>
+                    <option value="Extrovert" selected>اجتماعي</option>
+                    <option value="Ambivert">متوازن</option>
+                  </select></div>
+                <div class="col-6"><label class="sai-label">ساعات / أسبوع</label><input type="number" id="sai-hours"
+                    class="sai-input" value="6" min="0.5" max="30" step="0.5"></div>
+                <div class="col-6"><label class="sai-label">الميزانية (جنيه/شهر)</label><input type="number"
+                    id="sai-budget" class="sai-input" value="50" min="0" max="500"></div>
+              </div>
+
+              <div class="d-flex gap-2 mb-3">
+                <div class="flex-1">
+                  <div class="sai-label mb-1">يفضل الجماعية؟</div>
+                  <div class="d-flex gap-2">
+                    <button class="sai-tog active" id="tog-team-1" onclick="saiToggle('team',1,this)">نعم</button>
+                    <button class="sai-tog" id="tog-team-0" onclick="saiToggle('team',0,this)">لا</button>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <div class="sai-label mb-1">يفضل الخارج؟</div>
+                  <div class="d-flex gap-2">
+                    <button class="sai-tog" id="tog-out-1" onclick="saiToggle('outdoor',1,this)">نعم</button>
+                    <button class="sai-tog active" id="tog-out-0" onclick="saiToggle('outdoor',0,this)">لا</button>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn-clubly-primary w-100 justify-content-center"
+                style="padding:13px;font-size:1rem;border-radius:12px;" onclick="saiSubmit()" id="sai-btn">
+                <i class="bi bi-lightning-charge-fill"></i>
+                <span id="sai-btn-text">احصل على توصياتي</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ===== RIGHT: RESULTS ===== -->
+          <div class="col-lg-7">
+            <div id="sai-results">
+              <div class="content-card text-center" style="padding:60px 30px;" id="sai-placeholder">
+                <div style="font-size:3.5rem;margin-bottom:14px;">🏆</div>
+                <div style="font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:8px;">اكتشف رياضتك
+                  المثالية</div>
+                <div style="color:var(--muted);font-size:.88rem;">أدخل بياناتك واضغط على الزر للحصول على توصيات مخصصة لك
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="clubly-footer">
+    <div class="footer-inner">
+      <div class="footer-col" style="max-width:220px">
+        <h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5>
+        <p style="font-size:.85rem; color:rgba(255,255,255,.55); line-height:1.7">Your family's fitness journey starts
+          here. Modern sports club management with comprehensive safety features.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a onclick="showPage('dashboard')">Home</a></li>
+          <li><a onclick="showPage('reservations')">Reservations</a></li>
+          <li><a onclick="showPage('schedule')">Schedule</a></li>
+
+          <li><a onclick="showPage('membership')">Membership</a></li>
+          <li><a onclick="showPage('notifications')">Notifications</a></li>
+          <li><a onclick="showPage('profile')">Profile</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact Us</h5>
+        <div class="footer-contact">
+          <div><i class="bi bi-geo-alt-fill"></i> 123 Fitness Street, City, State 12345</div>
+          <div><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</div>
+          <div><i class="bi bi-envelope-fill"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+              data-cfemail="99f0f7fff6d9faf5ecfbf5e0b7faf6f4">[email&#160;protected]</a></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Follow Us</h5>
+        <div class="footer-socials">
+          <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+  </footer>
+
+  <!-- ===== RENEW MODAL ===== -->
+  <div class="modal fade" id="renewModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-clubly">
+        <div class="modal-header-clubly">
+          <h5 style="font-weight:800; color:var(--text);">Renew Membership</h5>
+        </div>
+        <div class="modal-body-clubly">
+          <p style="color:var(--muted); margin-bottom:16px;">Select your renewal period for <strong
+              id="renewTierName">Platinum Tier</strong>:</p>
+          <!-- بعد -->
+          <div id="renewPlansList">
+            <div class="text-center py-3" style="color:var(--muted);">
+              <i class="bi bi-arrow-repeat"></i> Loading plans...
+            </div>
+          </div>
+          <div id="renewMsg" class="mt-3"></div>
+        </div>
+        <div class="modal-footer-clubly">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-clubly-primary" id="confirmRenewBtn">Proceed to Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CHANGE PASSWORD MODAL ===== -->
+  <div class="modal fade" id="passModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-clubly">
+        <div class="modal-header-clubly">
+          <h5 style="font-weight:800; color:var(--text);">Change Password</h5>
+        </div>
+        <div class="modal-body-clubly">
+          <form id="passForm">
+            <div class="mb-3">
+              <label class="form-label-clubly">Current Password</label>
+              <input class="form-control-clubly" type="password" id="currPass" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label-clubly">New Password</label>
+              <input class="form-control-clubly" type="password" id="newPass" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label-clubly">Confirm New Password</label>
+              <input class="form-control-clubly" type="password" id="confirmPass" required>
+            </div>
+            <div id="passMsg" class="mt-2"></div>
+          </form>
+        </div>
+        <div class="modal-footer-clubly">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="save-btn-clubly" type="submit" form="passForm">Save Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const API_BASE_URL = 'https://clublywebsite.runasp.net/api';
+    const memberId = localStorage.getItem('userId');
+    const memberName = localStorage.getItem('fullName') || 'Member';
+    // ===== STATE =====
+    const state = {
+      currentPage: 'dashboard',
+      calendar: { month: new Date().getMonth(), year: new Date().getFullYear() },
+      activityDates: [12, 15, 17, 18],
+      reservations: [
+        { name: "Zumba Class", date: "Dec 12, 2025", time: "5:00 PM", color: "#22c55e" },
+        { name: "Yoga Session", date: "Dec 12, 2025", time: "7:00 PM", color: "#3b82f6" },
+        { name: "Pilates Class", date: "Dec 15, 2025", time: "6:00 AM", color: "#9333ea" }
+      ],
+      scheduleDate: new Date(2023, 11, 11),
+      scheduleData: {
+        "2023-12-11": [
+          { id: 101, name: "Morning Yoga Practice", trainer: "Sara G.", location: "Studio A", time: "8:00 AM - 9:00 AM", status: "Confirmed", icon: "fas fa-clock", colorClass: "sched-blue" },
+          { id: 102, name: "Open Swimming Lane", location: "Olympic Pool | Lane 3", time: "10:30 AM - 11:30 AM", status: "Pending Approval", icon: "fas fa-tint", colorClass: "sched-orange" },
+          { id: 103, name: "Personal Training", trainer: "Mike T.", location: "Gym Floor", time: "3:00 PM - 4:00 PM", status: "Completed", icon: "fas fa-dumbbell", colorClass: "sched-gray" }
+        ],
+        "2023-12-12": [
+          { id: 201, name: "Cycling Class", trainer: "Ali K.", location: "Cycle Studio", time: "7:00 PM - 8:00 PM", status: "Confirmed", icon: "fas fa-bicycle", colorClass: "sched-blue" }
+        ],
+        "2023-12-10": [
+          { id: 301, name: "Evening Zumba", trainer: "Hana S.", location: "Main Hall", time: "7:00 PM - 8:00 PM", status: "Completed", icon: "fas fa-music", colorClass: "sched-gray" }
+        ]
+      },
+      notifications: [
+        { id: 1, message: "Yoga booking confirmed!", time: "5 minutes ago", type: "blue", icon: "fas fa-check-circle", isRead: false },
+        { id: 2, message: "One of your bookings has expired.", time: "2 hours ago", type: "red", icon: "fas fa-history", isRead: false },
+        { id: 3, message: "New personal training session added.", time: "Yesterday", type: "green", icon: "fas fa-plus", isRead: false },
+        { id: 4, message: "20% off all spa services this December!", time: "3 days ago", type: "green", icon: "fas fa-percent", isRead: true },
+        { id: 5, message: "Club closure notice on New Year's Day.", time: "4 days ago", type: "red", icon: "fas fa-exclamation-triangle", isRead: false },
+        { id: 6, message: "New Pilates instructor starting next week.", time: "5 days ago", type: "blue", icon: "fas fa-user-plus", isRead: true },
+        { id: 7, message: "Payment due reminder for next month.", time: "1 week ago", type: "yellow", icon: "fas fa-credit-card", isRead: false }
+      ],
+      membership: {
+        tier: "Platinum Tier",
+        status: "Active",
+        expiry: "12/25/2024",
+        id: "CBM-7890",
+        benefits: [
+          "Unlimited access to all fitness classes (Yoga, Pilates, etc.).",
+          "Two complimentary personal training sessions monthly.",
+          "15% discount on all spa and massage services.",
+          "Priority booking for events."
+        ],
+        payments: [
+          { type: "Annual Subscription", date: "12/25/2023", amount: "$1,200" },
+          { type: "Upgrade Fee", date: "11/10/2023", amount: "$50" },
+          { type: "Monthly Fee", date: "10/25/2022", amount: "$100" }
+        ]
+      }
+    };
+    // ── تحديث الاسم في الـ header والـ welcome
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Header name
+      const nameParts = memberName.split(' ');
+      const firstName = nameParts[0] || 'Member';
+      const initials = nameParts.slice(0, 2).map(w => w[0]?.toUpperCase() || '').join('');
+
+      document.querySelector('.header-user span').textContent = memberName;
+      document.querySelector('.user-avatar').textContent = initials;
+      document.getElementById('profileNameDisplay').textContent = memberName;
+      document.getElementById('profileInitials').textContent = initials;
+      document.getElementById('profileEmailDisplay').textContent = '';
+
+      // Welcome message
+      document.querySelector('.page-title-clubly span').textContent = firstName + '!';
+
+      if (!memberId) return;
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/Members/${memberId}`);
+        if (!res.ok) throw new Error();
+        const m = await res.json();
+
+        // Header
+        document.querySelector('.header-user span').textContent = m.fullName || memberName;
+        const parts = (m.fullName || '').split(' ');
+        const ini = parts.slice(0, 2).map(w => w[0]?.toUpperCase() || '').join('');
+        document.querySelector('.user-avatar').textContent = ini;
+
+        // Welcome
+        document.querySelector('#page-dashboard .page-title-clubly span').textContent =
+          (parts[0] || 'Member') + '!';
+
+        // Profile page
+        document.getElementById('profileNameDisplay').textContent = m.fullName || '';
+        document.getElementById('profileEmailDisplay').textContent = m.email || '';
+        document.getElementById('profileInitials').textContent = ini;
+
+        const nameSplit = (m.fullName || '').split(' ');
+        document.getElementById('firstName').value = nameSplit[0] || '';
+        document.getElementById('lastName').value = nameSplit.slice(1).join(' ') || '';
+        document.getElementById('emailAddress').value = m.email || '';
+        document.getElementById('phoneNumber').value = m.phone || '';
+        if (m.nationalId) document.getElementById('nationalId').value = m.nationalId;
+        if (m.gender) document.getElementById('gender').value = m.gender;
+        if (m.memberType) document.getElementById('memberType').value = m.memberType;
+        if (m.membershipName) document.getElementById('membershipPlan').value = m.membershipName;
+        if (m.memberShipNumber) document.getElementById('membershipNumber').value = 'CBM-' + m.memberShipNumber;
+
+        // Join date
+        if (m.joinDate) {
+          const jd = new Date(m.joinDate);
+          document.getElementById('memberSinceDisplay').textContent =
+            jd.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+        }
+
+        // Profile image
+        if (m.imageUrl) {
+          const img = document.getElementById('profileImg');
+          img.src = m.imageUrl.startsWith('http') ? m.imageUrl : 'https://clublywebsite.runasp.net' + m.imageUrl;
+          img.style.display = 'block';
+          document.getElementById('profileInitials').style.display = 'none';
+        }
+
+        // Membership info
+        if (m.membershipName) {
+          document.getElementById('mem-tier').textContent = m.membershipName;
+          document.getElementById('renewTierName').textContent = m.membershipName;
+          state.membership.tier = m.membershipName;
+        }
+        if (m.memberShipNumber) {
+          document.getElementById('mem-id').textContent = 'CBM-' + m.memberShipNumber;
+        }
+
+      } catch (e) {
+        console.warn('Could not load member data:', e);
+      }
+      loadMyBookings();
+      loadMemberBookings();
+      loadMembershipData();
+      loadMemberNotifications();
+
+    });
+
+    // ===== MEMBER BOOKING FILTERS =====
+    let _memAllActivity = [];
+    let _memAllFacility = [];
+    let _memCurrentTab = 'activity';
+    let _memCurrentStatus = 'all';
+    function switchMemberTab(tab) {
+      _memCurrentTab = tab;
+      document.getElementById('mem-tab-activity').style.display = tab === 'activity' ? '' : 'none';
+      document.getElementById('mem-tab-facility').style.display = tab === 'facility' ? '' : 'none';
+      document.querySelectorAll('#memberBookingTabs .nav-link').forEach((btn, i) => {
+        btn.classList.toggle('active',
+          (tab === 'activity' && i === 0) || (tab === 'facility' && i === 1));
+      });
+      applyMemberBookingFilter();
+    }
+
+    function filterMemberStatus(status, el) {
+      _memCurrentStatus = status;
+      document.querySelectorAll('#memberStatusTabs .notif-tab').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      applyMemberBookingFilter();
+    }
+
+    function applyMemberBookingFilter() {
+      if (_memCurrentTab === 'activity') {
+        const filtered = _memCurrentStatus === 'all'
+          ? _memAllActivity
+          : _memAllActivity.filter(b => (b.status || '').toLowerCase() === _memCurrentStatus);
+        renderMemActivityTable(filtered);
+      } else {
+        const filtered = _memCurrentStatus === 'all'
+          ? _memAllFacility
+          : _memAllFacility.filter(b => (b.status || '').toLowerCase() === _memCurrentStatus);
+        renderMemFacilityTable(filtered);
+      }
+    }
+    async function loadMembershipData() {
+      if (!memberId) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/Members/${memberId}`);
+        if (!res.ok) throw new Error();
+        const m = await res.json();
+
+        // ── اسم الـ plan ──
+        const planName = m.membershipName || 'N/A';
+        document.getElementById('mem-tier').textContent = planName;
+        document.getElementById('renewTierName').textContent = planName;
+        document.getElementById('mem-id').textContent =
+          m.memberShipNumber ? + m.memberShipNumber : '—';
+
+        // ── جيبي تفاصيل الـ plan ──
+        if (m.memberShipId) {
+          const res2 = await fetch(`${API_BASE_URL}/MemberShips/${m.memberShipId}`);
+          if (!res2.ok) throw new Error();
+          const plan = await res2.json();
+
+          // ── حساب تاريخ الانتهاء من joinDate + duration ──
+          if (m.joinDate && plan.duration) {
+            const expiry = new Date(m.joinDate);
+            expiry.setMonth(expiry.getMonth() + plan.duration);
+            document.getElementById('mem-expiry').textContent =
+              expiry.toLocaleDateString('en-GB', {
+                day: '2-digit', month: 'short', year: 'numeric'
+              });
+
+            // ── Status بناءً على التاريخ ──
+            const isActive = expiry > new Date();
+            const statusEl = document.getElementById('mem-status');
+            statusEl.textContent = isActive ? 'Active' : 'Expired';
+            statusEl.style.color = isActive ? '#22c55e' : '#ef4444';
+          }
+
+          // ── Benefits من description ──
+          const benefitsEl = document.getElementById('benefitsList');
+          if (plan.description && plan.description.trim()) {
+            benefitsEl.innerHTML = plan.description
+              .split('.')
+              .map(s => s.trim())
+              .filter(s => s.length > 2)
+              .map(b => `
+            <div class="benefit-item">
+              <i class="fas fa-check-circle"></i>${b}.
+            </div>`).join('');
+          } else {
+            benefitsEl.innerHTML = `
+          <div class="benefit-item">
+            <i class="fas fa-check-circle"></i>Access to all club facilities.
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-check-circle"></i>Duration: ${plan.duration} months.
+          </div>`;
+          }
+
+          // ── Payment History ──
+          document.getElementById('paymentList').innerHTML = `
+        <div class="payment-item">
+          <div>
+            <div class="payment-type">${plan.name}</div>
+            <div class="payment-date">
+              Joined: ${m.joinDate
+              ? new Date(m.joinDate).toLocaleDateString('en-GB',
+                { day: '2-digit', month: 'short', year: 'numeric' })
+              : '—'}
+            </div>
+          </div>
+          <div class="payment-amount">${plan.price ?? '—'} EGP</div>
+        </div>`;
+        }
+
+      } catch (e) {
+        console.warn('Could not load membership data:', e);
+      }
+    }
+    async function loadRenewPlans(currentPlanId) {
+      const container = document.getElementById('renewPlansList');
+      try {
+        const res = await fetch(`${API_BASE_URL}/MemberShips`);
+        if (!res.ok) throw new Error();
+        const plans = await res.json();
+
+        const activePlans = plans.filter(p => p.status === 'Active');
+
+        if (!activePlans.length) {
+          container.innerHTML = '<p style="color:var(--muted);font-size:.88rem;">No plans available.</p>';
+          return;
+        }
+
+        container.innerHTML = activePlans.map((p, i) => `
+      <label class="radio-option">
+        <input type="radio" name="renewPlan" value="${p.id}"
+               data-name="${p.name}" data-price="${p.price}" data-duration="${p.duration}"
+               ${p.id === currentPlanId || i === 0 ? 'checked' : ''}>
+        <div>
+          <div style="font-weight:700; color:var(--text);">
+            ${p.name} — ${p.price} EGP
+            ${p.id === currentPlanId
+            ? '<span style="background:rgba(232,93,47,.1);color:var(--clubly-accent);padding:2px 8px;border-radius:10px;font-size:.75rem;margin-left:8px;">Current</span>'
+            : ''}
+          </div>
+          <div style="font-size:.8rem; color:var(--muted);">
+            ${p.duration} month${p.duration > 1 ? 's' : ''}
+            ${p.description ? ' · ' + p.description.substring(0, 50) + '...' : ''}
+          </div>
+        </div>
+      </label>`).join('');
+
+      } catch (e) {
+        container.innerHTML = '<p style="color:#ef4444;font-size:.88rem;">Failed to load plans.</p>';
+      }
+    }
+    async function loadMemberBookings() {
+      if (!memberId) return;
+
+      document.getElementById('mem-activity-body').innerHTML =
+        '<tr><td colspan="13" class="text-center py-4" style="color:var(--muted);"><div class="spinner-border spinner-border-sm me-2"></div>Loading...</td></tr>';
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+        if (!res.ok) throw new Error();
+        _memAllActivity = await res.json();
+      } catch {
+        _memAllActivity = [];
+        document.getElementById('mem-activity-body').innerHTML =
+          '<tr><td colspan="13" class="text-center py-4" style="color:#ef4444;">Failed to load.</td></tr>';
+      }
+
+      try {
+        const res2 = await fetch(`${API_BASE_URL}/FacilityBookings`);
+        if (!res2.ok) throw new Error();
+        const all = await res2.json();
+        _memAllFacility = all.filter(b => String(b.memberId) === String(memberId));
+      } catch {
+        _memAllFacility = [];
+      }
+
+      applyMemberBookingFilter();
+    }
+
+    function renderMemActivityTable(data) {
+      const tbody = document.getElementById('mem-activity-body');
+      tbody.innerHTML = data.length
+        ? data.map((b, i) => `
+        <tr>
+          <td style="padding:12px 16px;">${i + 1}</td>
+          <td style="padding:12px 16px;">${b.activityName || '—'}</td>
+          <td style="padding:12px 16px;">${b.trainerName || '<span style="color:var(--muted);">No Trainer</span>'}</td>
+          <td style="padding:12px 16px;">${b.groupName || '—'}</td>
+          <td style="padding:12px 16px;">${b.startDate || '—'}</td>
+          <td style="padding:12px 16px;">${b.endDate || '—'}</td>
+          <td style="padding:12px 16px;">
+            ${b.timeSlots && b.timeSlots.length
+            ? b.timeSlots.map(s => `
+                  <div style="font-size:.82rem; margin-bottom:3px;">
+                    <span class="sched-badge badge-confirmed" style="margin-right:4px;">${s.day || ''}</span>
+                    <span style="font-weight:600;">${s.startTime || '—'}</span>
+                  </div>`).join('')
+            : '—'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.timeSlots && b.timeSlots.length
+            ? b.timeSlots.map(s => `
+                  <div style="font-size:.82rem; font-weight:600; margin-bottom:3px;">${s.endTime || '—'}</div>`).join('')
+            : '—'}
+          </td>
+          <td style="padding:12px 16px;">${b.totalPrice ?? b.price ?? '—'} EGP</td>
+          <td style="padding:12px 16px;">
+            ${b.paymentMethod
+            ? `<span class="sched-badge badge-confirmed">${b.paymentMethod}</span>`
+            : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.transactionId
+            ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
+            : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.receiptImageUrl
+            ? `<a href="${API_BASE_URL.replace('/api', '')}${b.receiptImageUrl}" target="_blank">
+                   <img src="${API_BASE_URL.replace('/api', '')}${b.receiptImageUrl}"
+                        style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
+                 </a>`
+            : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
+          </td>
+          <td style="padding:12px 16px;">${getMemStatusBadge(b.status)}</td>
+        </tr>`).join('')
+        : '<tr><td colspan="13" class="text-center py-4" style="color:var(--muted);">No bookings found.</td></tr>';
+    }
+
+    function renderMemFacilityTable(data) {
+      const tbody = document.getElementById('mem-facility-body');
+      tbody.innerHTML = data.length
+        ? data.map((b, i) => `
+        <tr>
+          <td style="padding:12px 16px;">${i + 1}</td>
+          <td style="padding:12px 16px;">${b.facilityName || '—'}</td>
+          <td style="padding:12px 16px;">${b.bookingDate ? b.bookingDate.split('T')[0] : '—'}</td>
+          <td style="padding:12px 16px;">${b.startTime || '—'} → ${b.endTime || '—'}</td>
+          <td style="padding:12px 16px;">${b.participants ?? '—'}</td>
+          <td style="padding:12px 16px;">${b.price ?? '—'} EGP</td>
+          <td style="padding:12px 16px;">
+            ${b.paymentMethod
+            ? `<span class="sched-badge badge-confirmed">${b.paymentMethod}</span>`
+            : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.transactionId
+            ? `<code style="font-size:.8rem;background:var(--bg);padding:2px 8px;border-radius:4px;color:var(--clubly-teal);">${b.transactionId}</code>`
+            : '<span style="color:var(--muted);font-size:.8rem;">—</span>'}
+          </td>
+          <td style="padding:12px 16px;">
+            ${b.receiptImageUrl
+            ? `<a href="${API_BASE_URL.replace('/api', '')}${b.receiptImageUrl}" target="_blank">
+                   <img src="${API_BASE_URL.replace('/api', '')}${b.receiptImageUrl}"
+                        style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
+                 </a>`
+            : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
+          </td>
+          <td style="padding:12px 16px;">${getMemStatusBadge(b.status)}</td>
+        </tr>`).join('')
+        : '<tr><td colspan="10" class="text-center py-4" style="color:var(--muted);">No bookings found.</td></tr>';
+    }
+
+    function getMemStatusBadge(status) {
+      const s = (status || '').toLowerCase();
+      if (s === 'pending') return '<span class="sched-badge badge-pending">Pending</span>';
+      if (s === 'approved' || s === 'confirmed') return '<span class="sched-badge badge-confirmed">Approved</span>';
+      if (s === 'cancelled') return '<span class="sched-badge badge-completed">Cancelled</span>';
+      return `<span class="sched-badge badge-completed">${status || '—'}</span>`;
+    }
+    // ===== PAGE NAVIGATION =====
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+
+      // Sidebar
+      document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+      const sb = document.getElementById('sb-' + name);
+      if (sb) sb.classList.add('active');
+
+      // Header nav
+      document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
+      const hn = document.getElementById('hn-' + name);
+      if (hn) hn.classList.add('active');
+      if (name === 'schedule') loadMemberSchedule();
+      if (name === 'payments') loadMemberPayments();
+      if (name === 'attendance') loadMemberAttendance();
+      if (name === 'medical-ai') initMedWelcome();
+
+      state.currentPage = name;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===== THEME =====
+    let dark = false;
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      dark = !dark;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+      document.getElementById('themeToggle').innerHTML = dark
+        ? '<i class="bi bi-sun"></i>'
+        : '<i class="bi bi-moon-stars"></i>';
+    });
+
+    // ===== CALENDAR =====
+    function generateCalendar() {
+      const { month, year } = state.calendar;
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const today = new Date();
+
+      document.getElementById('calMonthLabel').textContent = months[month] + ' ' + year;
+
+      let html = `<div class="calendar-grid-days mb-2">`;
+      days.forEach(d => html += `<div class="cal-day-name">${d}</div>`);
+      html += '</div><div class="calendar-grid-days">';
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) html += `<div></div>`;
+      for (let d = 1; d <= daysInMonth; d++) {
+        let cls = 'cal-date';
+        const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+        if (isToday) cls += ' today';
+        if (state.activityDates.includes(d)) cls += ' has-activity';
+        html += `<div class="${cls}">${d}</div>`;
+      }
+      html += '</div>';
+      document.getElementById('calendarContainer').innerHTML = html;
+    }
+
+    function changeMonth(delta) {
+      state.calendar.month += delta;
+      if (state.calendar.month < 0) { state.calendar.month = 11; state.calendar.year--; }
+      if (state.calendar.month > 11) { state.calendar.month = 0; state.calendar.year++; }
+      generateCalendar();
+    }
+
+    // ===== UPCOMING RESERVATIONS (Dashboard) =====
+    function renderUpcoming() {
+      const colors = ["#22c55e", "#3b82f6", "#9333ea"];
+      const container = document.getElementById('upcomingResList');
+      container.innerHTML = state.reservations.map((r, i) => `
+    <div class="reservation-item-dash">
+      <div class="res-dot" style="background:${colors[i % colors.length]};"></div>
+      <div>
+        <div class="res-name">${r.name}</div>
+        <div class="res-time-sm">${r.date} — ${r.time}</div>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    // ===== SCHEDULE (Reservations page) =====
+    function renderSchedule() {
+      const d = state.scheduleDate;
+      const key = d.toISOString().slice(0, 10);
+      const items = state.scheduleData[key] || [];
+      const opts = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+      const resLabel = document.getElementById('resDateLabel');
+      if (resLabel) resLabel.textContent = d.toLocaleDateString('en-US', opts);
+      if (items.length === 0) {
+        document.getElementById('scheduleList').innerHTML = '';
+        document.getElementById('emptySchedule').style.display = 'block';
+        return;
+      }
+      document.getElementById('emptySchedule').style.display = 'none';
+
+      const badgeMap = { 'Confirmed': 'badge-confirmed', 'Pending Approval': 'badge-pending', 'Completed': 'badge-completed' };
+      document.getElementById('scheduleList').innerHTML = items.map(r => `
+    <div class="schedule-item">
+      <div class="sched-icon ${r.colorClass}"><i class="${r.icon}"></i></div>
+      <div class="sched-details">
+        <div class="sched-name">${r.name}</div>
+        <div class="sched-info">${r.trainer ? 'Trainer: ' + r.trainer + ' | ' : ''}${r.location}</div>
+      </div>
+      <div class="sched-time-status">
+        <div class="sched-time">${r.time}</div>
+        <span class="sched-badge ${badgeMap[r.status] || ''}">${r.status}</span>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    document.getElementById('prevDayBtn')?.addEventListener('click', () => {
+      state.scheduleDate.setDate(state.scheduleDate.getDate() - 1);
+      renderSchedule();
+    });
+    document.getElementById('nextDayBtn')?.addEventListener('click', () => {
+      state.scheduleDate.setDate(state.scheduleDate.getDate() + 1);
+      renderSchedule();
+    });
+    // ===== MEMBERSHIP =====
+    function renderMembership() {
+      const m = state.membership;
+      document.getElementById('mem-tier').textContent = m.tier;
+      document.getElementById('mem-status').textContent = m.status;
+      document.getElementById('mem-expiry').textContent = m.expiry;
+      document.getElementById('mem-id').textContent = m.id;
+      document.getElementById('renewTierName').textContent = m.tier;
+      document.getElementById('benefitsList').innerHTML = m.benefits.map(b => `
+    <div class="benefit-item"><i class="fas fa-check-circle"></i>${b}</div>
+  `).join('');
+      document.getElementById('paymentList').innerHTML = m.payments.map(p => `
+    <div class="payment-item">
+      <div>
+        <div class="payment-type">${p.type}</div>
+        <div class="payment-date">Paid on: ${p.date}</div>
+      </div>
+      <div class="payment-amount">${p.amount}</div>
+    </div>
+  `).join('');
+    }
+    document.getElementById('confirmRenewBtn').addEventListener('click', () => {
+      const selected = document.querySelector('input[name="renewPlan"]:checked');
+      if (!selected) return;
+
+      const planName = selected.dataset.name;
+      const planPrice = selected.dataset.price;
+      const planDuration = selected.dataset.duration;
+      const msg = document.getElementById('renewMsg');
+
+      msg.innerHTML = `
+    <div style="background:rgba(59,130,246,.1);border:1px solid #3b82f6;
+                border-radius:8px;padding:10px;color:#3b82f6;font-size:.85rem;">
+      Processing renewal for <strong>${planName}</strong>...
+    </div>`;
+
+      setTimeout(() => {
+        msg.innerHTML = `
+      <div style="background:rgba(34,197,94,.1);border:1px solid #22c55e;
+                  border-radius:8px;padding:10px;color:#16a34a;font-size:.85rem;">
+        ✓ Renewal request submitted for <strong>${planName}</strong> — ${planPrice} EGP
+      </div>`;
+        setTimeout(() => {
+          bootstrap.Modal.getInstance(document.getElementById('renewModal')).hide();
+          msg.innerHTML = '';
+        }, 2000);
+      }, 1500);
+    });
+
+    // ===================================================
+    // ============== MEMBER NOTIFICATIONS ===============
+    // ===================================================
+    const NOTIF_API = 'https://clublywebsite.runasp.net/api/Notifications';
+
+    let _memberNotifs = [];
+    let _memberNotifsFiltered = [];
+    let _memberNotifPage = 1;
+    const _memberNotifPageSize = 8;
+
+
+
+    // وفي أول استخدام، حمّلها
+    async function markMemberAsRead(id) {
+      const notif = _memberNotifs.find(n => n.id === id);
+      if (notif && !notif.isRead) {
+        notif.isRead = true;
+        updateMemberNotifUnreadCount();
+      }
+      try {
+        await fetch(`${NOTIF_API}/${id}/read`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ memberId: parseInt(memberId) })
+        });
+      } catch (e) {
+        console.warn('markAsRead failed:', e);
+      }
+    }
+
+    async function markAllMemberNotifsRead() {
+      _memberNotifs.forEach(n => n.isRead = true);
+      updateMemberNotifUnreadCount();
+      renderMemberNotifList();
+      try {
+        await fetch(`${NOTIF_API}/mark-all-read`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ memberId: parseInt(memberId) })
+        });
+      } catch (e) {
+        console.warn('markAllRead failed:', e);
+      }
+    }
+    // ✅ الكود الصح
+    function updateMemberNotifUnreadCount() {
+      const unread = _memberNotifs.filter(n => !n.isRead).length;
+      const el = document.getElementById('memberNotifUnreadCount');
+      if (el) {
+        el.textContent = `${unread} unread`;
+        el.className = unread > 0
+          ? 'sched-badge badge-pending'
+          : 'sched-badge badge-completed';
+        el.style.fontSize = '.85rem';
+        el.style.padding = '6px 14px';
+      }
+    }
+    async function loadMemberNotifications() {
+      const listEl = document.getElementById('memberNotifList');
+      if (listEl) listEl.innerHTML = `
+    <div class="text-center py-5" style="color:var(--muted);">
+      <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+    </div>`;
+
+      try {
+        // ← استخدم for-member زي الـ guest بالظبط
+        const res = await fetch(`${NOTIF_API}/for-member/${memberId}`);
+        const data = res.ok ? await res.json() : [];
+        _memberNotifs = data; // isRead بييجي من الـ DB
+        _memberNotifs.sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+        updateMemberNotifUnreadCount();
+        applyMemberNotifFilters();
+      } catch (e) {
+        if (listEl) listEl.innerHTML = `
+      <div class="text-center py-5" style="color:#ef4444;">
+        Failed to load notifications
+      </div>`;
+      }
+    }
+
+    function applyMemberNotifFilters() {
+      const q = (document.getElementById('memberNotifSearch')?.value || '').trim().toLowerCase();
+      const type = document.getElementById('memberNotifFilterType')?.value || '';
+      const status = document.getElementById('memberNotifFilterStatus')?.value || '';
+
+      _memberNotifsFiltered = _memberNotifs.filter(n => {
+        const matchQ = !q || (n.title || '').toLowerCase().includes(q)
+          || (n.description || '').toLowerCase().includes(q);
+        const matchT = !type || n.type === type;
+        const isRead = n.isRead === true;
+        const matchS = !status
+          || (status === 'unread' && !isRead)
+          || (status === 'read' && isRead);
+        return matchQ && matchT && matchS;
+      });
+
+      _memberNotifPage = 1;
+      renderMemberNotifList();
+    }
+
+    function renderMemberNotifList() {
+      const listEl = document.getElementById('memberNotifList');
+      if (!listEl) return;
+
+      const total = _memberNotifsFiltered.length;
+      const totalPages = Math.max(1, Math.ceil(total / _memberNotifPageSize));
+      if (_memberNotifPage > totalPages) _memberNotifPage = totalPages;
+      const start = (_memberNotifPage - 1) * _memberNotifPageSize;
+      const items = _memberNotifsFiltered.slice(start, start + _memberNotifPageSize);
+
+      const infoEl = document.getElementById('memberNotifInfo');
+      if (infoEl) infoEl.textContent = total
+        ? `Showing ${start + 1}–${Math.min(start + _memberNotifPageSize, total)} of ${total}`
+        : '';
+
+      if (!items.length) {
+        listEl.innerHTML = `
+      <div class="mn-empty">
+        <div class="mn-empty-icon"><i class="bi bi-bell-slash"></i></div>
+        <p style="font-weight:700;color:var(--text);margin:0;">No notifications yet</p>
+        <p style="color:var(--muted);font-size:.88rem;margin:0;">
+          Notifications sent to members will appear here
+        </p>
+      </div>`;
+        document.getElementById('memberNotifPagination').innerHTML = '';
+        return;
+      }
+
+      const typeConfig = {
+        'Info': { icon: 'bi-info-circle-fill', bg: 'rgba(13,202,240,.12)', color: '#0590a8', pillBg: 'rgba(13,202,240,.15)', pillColor: '#0590a8' },
+        'Warning': { icon: 'bi-exclamation-triangle-fill', bg: 'rgba(255,193,7,.15)', color: '#a07700', pillBg: 'rgba(255,193,7,.18)', pillColor: '#a07700' },
+        'Success': { icon: 'bi-check-circle-fill', bg: 'rgba(25,135,84,.12)', color: '#198754', pillBg: 'rgba(25,135,84,.15)', pillColor: '#198754' },
+        'Urgent': { icon: 'bi-exclamation-circle-fill', bg: 'rgba(220,53,69,.12)', color: '#dc3545', pillBg: 'rgba(220,53,69,.15)', pillColor: '#dc3545' },
+        'default': { icon: 'bi-bell-fill', bg: 'rgba(100,116,139,.12)', color: '#64748b', pillBg: 'rgba(100,116,139,.15)', pillColor: '#64748b' },
+      };
+      const typeLabels = {
+        'Info': 'ℹ Info', 'Warning': '⚠ Warning', 'Success': '✓ Success', 'Urgent': '🔴 Urgent'
+      };
+
+      listEl.innerHTML = items.map(n => {
+        const isRead = n.isRead === true;
+        const cfg = typeConfig[n.type] || typeConfig['default'];
+        const raw = n.sentAt;
+        const d = raw ? new Date(raw.endsWith('Z') ? raw : raw + 'Z') : null;
+        // Smart time
+        let timeStr = '—';
+        if (d) {
+          const now = new Date();
+          const diff = now - d;
+          const mins = Math.floor(diff / 60000);
+          const hours = Math.floor(diff / 3600000);
+          const days = Math.floor(diff / 86400000);
+          if (mins < 1) timeStr = 'Just now';
+          else if (mins < 60) timeStr = `${mins}m ago`;
+          else if (hours < 24) timeStr = `${hours}h ago`;
+          else if (days < 7) timeStr = `${days}d ago`;
+          else timeStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+        }
+
+        const fullDate = d
+          ? d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+          + ' at ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+          : '';
+
+        const shortDesc = (n.description || '').length > 140
+          ? (n.description.substring(0, 140)) + '…'
+          : (n.description || '');
+
+        const thumbHtml = n.imageUrl
+          ? `<img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://clublywebsite.runasp.net' + n.imageUrl}"
+              class="mn-thumb" alt="">`
+          : '';
+
+        const unreadDot = !isRead
+          ? `<span style="width:9px;height:9px;background:var(--clubly-accent);
+                      border-radius:50%;display:inline-block;flex-shrink:0;
+                      margin-left:4px;"></span>`
+          : '';
+
+        return `
+      <div class="member-notif-item ${isRead ? '' : 'unread'}"
+           onclick="openMemberNotifDetail(${n.id})"
+           title="${(n.title || '').replace(/"/g, "'")} — ${fullDate}">
+
+        <div class="mn-type-icon"
+          style="background:${cfg.bg};color:${cfg.color};">
+          <i class="bi ${cfg.icon}"></i>
+        </div>
+
+        <div class="mn-body">
+          <div class="mn-header">
+            <span class="mn-title">${n.title || '—'} ${unreadDot}</span>
+            <span class="mn-time" title="${fullDate}">${timeStr}</span>
+          </div>
+          <div class="mn-desc">${shortDesc}</div>
+          <div class="mn-footer">
+            <span class="mn-type-pill"
+              style="background:${cfg.pillBg};color:${cfg.pillColor};">
+              <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
+              ${typeLabels[n.type] || n.type || 'Notification'}
+            </span>
+            ${isRead
+            ? `<span style="font-size:.72rem;color:var(--muted);">
+                   <i class="bi bi-check2-all me-1"></i>Read
+                 </span>`
+            : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;">
+                   <i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New
+                 </span>`
+          }
+          </div>
+        </div>
+
+        ${thumbHtml}
+
+        <div style="color:var(--muted);font-size:14px;margin-top:14px;flex-shrink:0;">
+          <i class="bi bi-chevron-right"></i>
+        </div>
+      </div>`;
+      }).join('');
+
+      // Pagination
+      buildMemberNotifPagination(totalPages);
+      updateMemberNotifUnreadCount();
+    }
+
+    function buildMemberNotifPagination(totalPages) {
+      const ul = document.getElementById('memberNotifPagination');
+      if (!ul) return;
+      ul.innerHTML = '';
+
+      const li = (label, disabled, fn, active = false) => {
+        const el = document.createElement('li');
+        el.className = 'page-item'
+          + (disabled ? ' disabled' : '')
+          + (active ? ' active' : '');
+        el.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+        if (!disabled) el.onclick = e => { e.preventDefault(); fn(); };
+        return el;
+      };
+
+      ul.appendChild(li('«', _memberNotifPage === 1, () => {
+        _memberNotifPage = 1; renderMemberNotifList();
+      }));
+      const s = Math.max(1, _memberNotifPage - 2);
+      const e = Math.min(totalPages, _memberNotifPage + 2);
+      for (let i = s; i <= e; i++) {
+        ul.appendChild(li(i, false, () => {
+          _memberNotifPage = i; renderMemberNotifList();
+        }, i === _memberNotifPage));
+      }
+      ul.appendChild(li('»', _memberNotifPage === totalPages, () => {
+        _memberNotifPage = totalPages; renderMemberNotifList();
+      }));
+    }
+
+    function openMemberNotifDetail(id) {
+      const n = _memberNotifs.find(x => x.id === id);
+      if (!n) return;
+
+      markMemberAsRead(id);
+      renderMemberNotifList();
+      updateMemberNotifUnreadCount();
+
+      const typeConfig = {
+        'Info': { icon: 'bi-info-circle-fill', bg: 'rgba(13,202,240,.15)', color: '#0dcaf0' },
+        'Warning': { icon: 'bi-exclamation-triangle-fill', bg: 'rgba(255,193,7,.15)', color: '#ffc107' },
+        'Success': { icon: 'bi-check-circle-fill', bg: 'rgba(25,135,84,.15)', color: '#198754' },
+        'Urgent': { icon: 'bi-exclamation-circle-fill', bg: 'rgba(220,53,69,.15)', color: '#dc3545' },
+        'default': { icon: 'bi-bell-fill', bg: 'rgba(100,116,139,.15)', color: '#64748b' },
+      };
+      const cfg = typeConfig[n.type] || typeConfig['default'];
+      const typeLabels = { 'Info': 'Info', 'Warning': 'Warning', 'Success': 'Success', 'Urgent': 'Urgent' };
+
+      const d = n.sentAt
+        ? new Date(n.sentAt.endsWith('Z') ? n.sentAt : n.sentAt + 'Z')
+        : null;
+      const fullDate = d
+        ? d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })
+        + ' at ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+        : '—';
+
+      let modal = document.getElementById('memberNotifDetailModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'memberNotifDetailModal';
+        modal.className = 'modal fade';
+        modal.tabIndex = -1;
+        document.body.appendChild(modal);
+      }
+
+      modal.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content modal-content-clubly">
+
+        <div style="display:flex;align-items:center;gap:14px;padding:18px 22px;
+                    background:#0d1b2a;border-radius:16px 16px 0 0;">
+          <div style="width:46px;height:46px;border-radius:50%;
+                      background:${cfg.bg};color:${cfg.color};
+                      flex-shrink:0;display:flex;align-items:center;
+                      justify-content:center;font-size:20px;">
+            <i class="bi ${cfg.icon}"></i>
+          </div>
+          <div style="flex:1;">
+            <h5 style="margin:0;font-weight:800;color:#fff;">${n.title || '—'}</h5>
+            <small style="color:rgba(255,255,255,.6);">${fullDate}</small>
+          </div>
+          <button data-bs-dismiss="modal"
+            style="background:none;border:none;color:rgba(255,255,255,.7);
+                   font-size:1.3rem;cursor:pointer;">✕</button>
+        </div>
+
+        <div class="modal-body-clubly" style="min-height:200px;">
+          <div style="margin-bottom:14px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;
+                         padding:5px 16px;border-radius:50px;font-size:.88rem;font-weight:700;
+                         background:${cfg.bg};color:${cfg.color};">
+              <i class="bi ${cfg.icon}"></i>${typeLabels[n.type] || n.type || 'Notification'}
+            </span>
+          </div>
+          <div style="background:var(--bg);border-radius:10px;padding:16px;
+                      border:1px solid var(--border);margin-bottom:16px;">
+            <p style="margin:0;white-space:pre-wrap;line-height:1.8;
+                      font-size:.95rem;color:var(--text);">${n.description || '—'}</p>
+          </div>
+          ${n.imageUrl ? `
+          <div style="margin-bottom:16px;">
+            <a href="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://clublywebsite.runasp.net' + n.imageUrl}" target="_blank">
+              <img src="${n.imageUrl.startsWith('http') ? n.imageUrl : 'https://clublywebsite.runasp.net' + n.imageUrl}"
+                style="max-width:100%;max-height:260px;object-fit:cover;
+                       border-radius:12px;border:1px solid var(--border);cursor:pointer;">
+            </a>
+          </div>` : ''}
+          <div style="display:flex;align-items:center;gap:8px;">
+            <i class="bi bi-clock" style="color:var(--muted);"></i>
+            <small style="color:var(--muted);">Sent:</small>
+            <span style="background:#d4edda;color:#155724;padding:3px 12px;
+                         border-radius:20px;font-size:.8rem;font-weight:600;">${fullDate}</span>
+          </div>
+        </div>
+
+        <div class="modal-footer-clubly">
+          <button data-bs-dismiss="modal" class="btn-cancel">Close</button>
+        </div>
+      </div>
+    </div>`;
+
+      new bootstrap.Modal(modal).show();
+    }
+    // ── Filter events ──────────────────────────────────────────────────────────────
+    document.getElementById('memberNotifSearch')?.addEventListener('input', () => {
+      clearTimeout(window.__tMN);
+      window.__tMN = setTimeout(applyMemberNotifFilters, 200);
+    });
+    ['memberNotifFilterType', 'memberNotifFilterStatus'].forEach(id =>
+      document.getElementById(id)?.addEventListener('change', applyMemberNotifFilters)
+    );
+
+    // ===== AI CHAT — Clubly Chatbot (HF Space) =====
+    const CHATBOT_API = 'https://mazinyaser0-sports-chatbot.hf.space/sports-chat';
+    const SESSION_ID = 'dash_' + Math.random().toString(36).slice(2, 9);
+
+    // ===== MEDICAL AI CHAT =====
+    const MEDICAL_API = 'https://mazinyaser0-medical.hf.space/medical-chat';
+
+    const MED_SESSION_ID = 'med_' + Math.random().toString(36).slice(2, 9);
+    let isMedLoading = false;
+    let medWelcomeDone = false;
+    let isLoadingMsg = false;
+
+    function appendMsg(text, sender) {
+      const isUser = sender === 'user';
+      const row = document.createElement('div');
+      row.className = 'msg-row ' + (isUser ? 'user-row' : 'bot-row');
+
+      const avatar = document.createElement('div');
+      avatar.className = 'msg-avatar ' + (isUser ? 'user-av' : 'bot-av');
+      avatar.textContent = isUser ? '👤' : '🤖';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble ' + (isUser ? 'msg-user' : 'msg-assistant');
+      bubble.innerHTML = isUser ? escapeHtml(text) : formatBotText(text);
+
+      row.appendChild(avatar);
+      row.appendChild(bubble);
+      document.getElementById('chatHistory').appendChild(row);
+      document.getElementById('chatHistory').scrollTop = 9999;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function showTyping() {
+      const row = document.createElement('div');
+      row.className = 'msg-row bot-row';
+      row.id = 'typingIndicator';
+
+      const avatar = document.createElement('div');
+      avatar.className = 'msg-avatar bot-av';
+      avatar.textContent = '🤖';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble msg-assistant';
+      bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+
+      row.appendChild(avatar);
+      row.appendChild(bubble);
+      document.getElementById('chatHistory').appendChild(row);
+      document.getElementById('chatHistory').scrollTop = 9999;
+    }
+
+    function removeTyping() {
+      const el = document.getElementById('typingIndicator');
+      if (el) el.remove();
+    }
+
+    function formatBotText(text) {
+      // escape HTML first
+      let t = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      // headers
+      t = t.replace(/^### (.+)$/gm, '<div style="font-weight:800;font-size:.95rem;color:var(--clubly-accent);margin:10px 0 4px">$1</div>');
+      t = t.replace(/^## (.+)$/gm, '<div style="font-weight:700;font-size:.92rem;margin:8px 0 3px;border-bottom:1px solid var(--border);padding-bottom:3px">$1</div>');
+      // bold
+      t = t.replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--clubly-accent)">$1</strong>');
+      // numbered list
+      t = t.replace(/^(\d+)\. (.+)$/gm, '<div style="margin:4px 0;padding-right:4px"><span style="color:var(--clubly-accent);font-weight:700">$1.</span> $2</div>');
+      // bullet list
+      t = t.replace(/^[\-\*] (.+)$/gm, '<div style="margin:4px 0;padding-right:4px">• $1</div>');
+      // newlines
+      t = t.replace(/\n{2,}/g, '<br><br>');
+      t = t.replace(/\n/g, '<br>');
+      return t;
+    }
+
+    async function sendToBot(message) {
+      if (isLoadingMsg) return;
+      isLoadingMsg = true;
+      document.getElementById('sendBtn').disabled = true;
+
+      showTyping();
+      try {
+        const res = await fetch(CHATBOT_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, session_id: SESSION_ID })
+        });
+        removeTyping();
+        if (!res.ok) throw new Error('Server error');
+        const data = await res.json();
+        appendMsg(data.reply || 'حدث خطأ، حاول مرة أخرى.', 'assistant');
+      } catch (e) {
+        removeTyping();
+        appendMsg('⚠️ مش قادر أتصل بالسيرفر، حاول تاني.', 'assistant');
+      }
+      isLoadingMsg = false;
+      document.getElementById('sendBtn').disabled = false;
+    }
+
+    function hideQuickPrompts() {
+      const qp = document.getElementById('quickPrompts');
+      if (qp) { qp.style.display = 'none'; qp.style.visibility = 'hidden'; qp.style.height = '0'; qp.style.padding = '0'; }
+    }
+
+    document.getElementById('sendBtn').addEventListener('click', sendChat);
+    document.getElementById('chatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendChat(); });
+    function sendChat() {
+      const v = document.getElementById('chatInput').value.trim();
+      if (!v || isLoadingMsg) return;
+      appendMsg(v, 'user');
+      document.getElementById('chatInput').value = '';
+      // Hide quick prompts after first message
+      hideQuickPrompts();
+      sendToBot(v);
+    }
+
+    document.getElementById('quickPrompts').addEventListener('click', e => {
+      if (e.target.classList.contains('quick-prompt')) {
+        const p = e.target.dataset.prompt;
+        appendMsg(p, 'user');
+        hideQuickPrompts();
+        sendToBot(p);
+      }
+    });
+
+    // Welcome message
+    setTimeout(() => {
+      appendMsg('أهلاً! أنا Clubly AI Coach 💪 اسألني عن أي رياضة أو الأنشطة المتاحة في النادي.', 'assistant');
+    }, 300);
+
+    // ===== MEDICAL AI LOGIC =====
+    function medAppendMsg(text, sender) {
+      const isUser = sender === 'user';
+      const row = document.createElement('div');
+      row.className = 'msg-row ' + (isUser ? 'user-row' : 'bot-row');
+
+      const avatar = document.createElement('div');
+      avatar.className = 'msg-avatar ' + (isUser ? 'user-av' : 'bot-av med-bot-av');
+      avatar.textContent = isUser ? '👤' : '🩺';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble ' + (isUser ? 'msg-user' : 'msg-assistant med-msg-assistant');
+      bubble.innerHTML = isUser ? escapeHtml(text) : formatBotText(text);
+
+      row.appendChild(avatar);
+      row.appendChild(bubble);
+      const hist = document.getElementById('medChatHistory');
+      hist.appendChild(row);
+      hist.scrollTop = 9999;
+    }
+
+    function medShowTyping() {
+      const row = document.createElement('div');
+      row.className = 'msg-row bot-row';
+      row.id = 'medTypingIndicator';
+
+      const avatar = document.createElement('div');
+      avatar.className = 'msg-avatar bot-av med-bot-av';
+      avatar.textContent = '🩺';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'msg-bubble msg-assistant med-msg-assistant';
+      bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+
+      row.appendChild(avatar);
+      row.appendChild(bubble);
+      const hist = document.getElementById('medChatHistory');
+      hist.appendChild(row);
+      hist.scrollTop = 9999;
+    }
+
+    function medRemoveTyping() {
+      const el = document.getElementById('medTypingIndicator');
+      if (el) el.remove();
+    }
+
+    function hideMedQuickPrompts() {
+      const qp = document.getElementById('medQuickPrompts');
+      if (qp) { qp.style.display = 'none'; qp.style.height = '0'; qp.style.padding = '0'; }
+    }
+
+    async function sendToMedBot(message) {
+      if (isMedLoading) return;
+      isMedLoading = true;
+      document.getElementById('medSendBtn').disabled = true;
+
+      medShowTyping();
+      try {
+        const res = await fetch(MEDICAL_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, session_id: MED_SESSION_ID })
+        });
+        medRemoveTyping();
+        if (!res.ok) throw new Error('Server error');
+        const data = await res.json();
+        medAppendMsg(data.reply || data.response || data.answer || 'Sorry, I could not understand the response.', 'assistant');
+      } catch (e) {
+        medRemoveTyping();
+        medAppendMsg('⚠️ Unable to connect to Medical AI server. Please try again.', 'assistant');
+      }
+      isMedLoading = false;
+      document.getElementById('medSendBtn').disabled = false;
+    }
+
+    function sendMedChat() {
+      const inp = document.getElementById('medChatInput');
+      const v = inp.value.trim();
+      if (!v || isMedLoading) return;
+      medAppendMsg(v, 'user');
+      inp.value = '';
+      hideMedQuickPrompts();
+      sendToMedBot(v);
+    }
+
+    document.getElementById('medSendBtn').addEventListener('click', sendMedChat);
+    document.getElementById('medChatInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMedChat(); });
+
+    document.getElementById('medQuickPrompts').addEventListener('click', e => {
+      if (e.target.classList.contains('med-quick-prompt')) {
+        const p = e.target.dataset.prompt;
+        medAppendMsg(p, 'user');
+        hideMedQuickPrompts();
+        sendToMedBot(p);
+      }
+    });
+
+    // Show medical welcome when page is first visited
+    const _origShowPage = window.showPage || function () { };
+    function initMedWelcome() {
+      if (!medWelcomeDone) {
+        medWelcomeDone = true;
+        setTimeout(() => {
+          medAppendMsg('👋 Hello! I am your **Medical AI Advisor**. I can help you with general health questions, nutrition tips, workout recovery, and more. How can I assist you today?', 'assistant');
+        }, 300);
+      }
+    }
+
+    // ===== PROFILE =====
+    document.getElementById('profileForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const fn = document.getElementById('firstName').value;
+      const ln = document.getElementById('lastName').value;
+      document.getElementById('profileNameDisplay').textContent = fn + ' ' + ln;
+      document.getElementById('profileInitials').textContent = (fn[0] + ln[0]).toUpperCase();
+      alert('Profile updated successfully!');
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function () {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = document.getElementById('profileImg');
+          img.src = e.target.result;
+          img.style.display = 'block';
+          document.getElementById('profileInitials').style.display = 'none';
+        };
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+    document.getElementById('passForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const curr = document.getElementById('currPass').value;
+      const np = document.getElementById('newPass').value;
+      const cp = document.getElementById('confirmPass').value;
+      const msg = document.getElementById('passMsg');
+      msg.innerHTML = '';
+
+      if (!curr) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>'; return; }
+      if (!np || np.length < 6) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 6 characters.</span>'; return; }
+      if (np !== cp) { msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords do not match.</span>'; return; }
+
+      const fd = new FormData();
+      fd.append('CurrentPassword', curr);
+      fd.append('NewPassword', np);
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/Members/${memberId}`, { method: 'PUT', body: fd });
+        if (!res.ok) {
+          const err = await res.text();
+          msg.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${err || 'Failed to update password.'}</span>`;
+          return;
+        }
+        msg.innerHTML = '<span style="color:#22c55e;font-size:.85rem;">✓ Password updated successfully!</span>';
+        setTimeout(() => {
+          bootstrap.Modal.getInstance(document.getElementById('passModal')).hide();
+          msg.innerHTML = '';
+          document.getElementById('currPass').value = '';
+          document.getElementById('newPass').value = '';
+          document.getElementById('confirmPass').value = '';
+        }, 1500);
+      } catch {
+        msg.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Failed to connect to server.</span>';
+      }
+    });
+
+    // وأضف الـ function
+    function handleSignOut() {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = '../index.html';
+    }
+    async function loadMyBookings() {
+      if (!memberId) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+        if (!res.ok) throw new Error();
+        const bookings = await res.json();
+
+        // Update stats
+        document.getElementById('dash-bookings').textContent = bookings.length;
+
+        // Update upcoming reservations
+        state.reservations = bookings
+          .filter(b => b.status.toLowerCase() !== 'cancelled')
+          .slice(0, 5)
+          .map(b => ({
+            name: b.activityName + ' — ' + b.groupName,
+            date: b.startDate,
+            time: b.status,
+            color: b.status.toLowerCase() === 'approved' ? '#22c55e' :
+              b.status.toLowerCase() === 'pending' ? '#f59e0b' : '#94a3b8'
+          }));
+
+        renderUpcoming();
+
+        // Update schedule data from bookings
+        bookings.forEach(b => {
+          const key = b.startDate?.split('T')[0] || b.startDate;
+          if (!key) return;
+          if (!state.scheduleData[key]) state.scheduleData[key] = [];
+          const exists = state.scheduleData[key].find(x => x.id === b.id);
+          if (!exists) {
+            state.scheduleData[key].push({
+              id: b.id,
+              name: b.activityName,
+              trainer: b.memberName || '',
+              location: b.groupName,
+              time: b.startDate + ' → ' + b.endDate,
+              status: b.status === 'Approved' ? 'Confirmed' :
+                b.status === 'Pending' ? 'Pending Approval' : 'Completed',
+              icon: 'fas fa-running',
+              colorClass: b.status === 'Approved' ? 'sched-blue' :
+                b.status === 'Pending' ? 'sched-orange' : 'sched-gray'
+            });
+          }
+        });
+
+        // Highlight activity dates in calendar
+        state.activityDates = [...new Set(bookings.map(b => {
+          const d = b.startDate?.split('T')[0] || b.startDate;
+          return d ? new Date(d).getDate() : null;
+        }).filter(Boolean))];
+        generateCalendar();
+
+      } catch (e) {
+        console.warn('Could not load bookings:', e);
+      }
+    }
+    // ===== MEMBER SCHEDULE =====
+    let _memberScheduleActivity = [];
+    let _memberScheduleFacility = [];
+
+    function switchMemberScheduleType(type, el) {
+      document.querySelectorAll('#memberScheduleTabs .nav-link')
+        .forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      if (type === 'activity') {
+        document.getElementById('memberActivityScheduleSection').style.display = 'block';
+        document.getElementById('memberFacilityScheduleSection').style.display = 'none';
+      } else {
+        document.getElementById('memberActivityScheduleSection').style.display = 'none';
+        document.getElementById('memberFacilityScheduleSection').style.display = 'block';
+      }
+    }
+
+    function renderMemberSchedule() {
+      const badgeMap = {
+        confirmed: 'badge-confirmed', approved: 'badge-confirmed',
+        pending: 'badge-pending', completed: 'badge-completed',
+        cancelled: 'badge-completed'
+      };
+
+      // ── Activity ──
+      const actEl = document.getElementById('memberActivityScheduleList');
+      const actEmpty = document.getElementById('memberActivitySchedEmpty');
+
+      if (!_memberScheduleActivity.length) {
+        actEl.innerHTML = '';
+        actEmpty.style.display = 'block';
+      } else {
+        actEmpty.style.display = 'none';
+        actEl.innerHTML = _memberScheduleActivity.map(b => `
+      <div class="schedule-item" style="border-left-color:var(--clubly-accent); margin-bottom:10px;">
+        <div class="sched-icon sched-orange">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${b.activityName || '—'}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${b.trainerName ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-person-fill" style="color:var(--clubly-teal);"></i>${b.trainerName}
+              </span>` : ''}
+            ${b.groupName ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-people-fill" style="color:var(--clubly-gold);"></i>${b.groupName}
+              </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>
+         ${b.timeSlots?.length
+            ? b.timeSlots[0].day + ' · ' + formatTime12(b.timeSlots[0].startTime) + ' → ' + formatTime12(b.timeSlots[0].endTime)
+            : '—'}
+          </div>
+          <span class="sched-badge ${badgeMap[(b.status || '').toLowerCase()] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">
+            ${b.status || '—'}
+          </span>
+        </div>
+      </div>`).join('');
+      }
+
+      // ── Facility ──
+      const facEl = document.getElementById('memberFacilityScheduleList');
+      const facEmpty = document.getElementById('memberFacilitySchedEmpty');
+
+      if (!_memberScheduleFacility.length) {
+        facEl.innerHTML = '';
+        facEmpty.style.display = 'block';
+      } else {
+        facEmpty.style.display = 'none';
+        facEl.innerHTML = _memberScheduleFacility.map(b => `
+      <div class="schedule-item" style="border-left-color:var(--clubly-teal); margin-bottom:10px;">
+        <div class="sched-icon sched-blue">
+          <i class="bi bi-building"></i>
+        </div>
+        <div class="sched-details">
+          <div class="sched-name">${b.facilityName || '—'}</div>
+          <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            ${b.participants ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-people-fill" style="color:var(--clubly-teal);"></i>${b.participants} participants
+              </span>` : ''}
+            ${b.price ? `
+              <span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
+                <i class="bi bi-tag-fill" style="color:var(--clubly-gold);"></i>${b.price} EGP
+              </span>` : ''}
+          </div>
+        </div>
+        <div class="sched-time-status" style="text-align:right;">
+          <div style="font-weight:800;font-size:.95rem;color:var(--text);
+                      display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+            <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>
+${b.bookingDate
+            ? new Date(b.bookingDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' · '
+            : ''} ${formatTime12(b.startTime)} → ${formatTime12(b.endTime)}          </div>
+          <span class="sched-badge ${badgeMap[(b.status || '').toLowerCase()] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">
+            ${b.status || '—'}
+          </span>
+        </div>
+      </div>`).join('');
+      }
+    }
+
+    async function loadMemberSchedule() {
+      if (!memberId) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+        _memberScheduleActivity = res.ok ? await res.json() : [];
+      } catch { _memberScheduleActivity = []; }
+
+      try {
+        const res2 = await fetch(`${API_BASE_URL}/FacilityBookings`);
+        const all = res2.ok ? await res2.json() : [];
+        _memberScheduleFacility = all.filter(b => String(b.memberId) === String(memberId));
+      } catch { _memberScheduleFacility = []; }
+
+      renderMemberSchedule();
+    }
+    // ===== PAYMENTS PAGE =====
+    async function loadMemberPayments() {
+      if (!memberId) return;
+
+      let actInvoices = [];
+      let facInvoices = [];
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+        if (res.ok) {
+          const bookings = await res.json();
+          actInvoices = bookings.map((b, i) => ({
+            id: 'INV-' + String(i + 1).padStart(3, '0'),
+            name: b.activityName || '—',
+            date: b.startDate ? b.startDate.split('T')[0] : '—',
+            amount: b.totalPrice || b.price || 0,
+            paid: (b.status || '').toLowerCase() === 'approved',
+            type: 'activity'
+          }));
+        }
+      } catch { actInvoices = []; }
+
+      try {
+        const res2 = await fetch(`${API_BASE_URL}/FacilityBookings`);
+        if (res2.ok) {
+          const all = await res2.json();
+          const myFac = all.filter(b => String(b.memberId) === String(memberId));
+          facInvoices = myFac.map((b, i) => ({
+            id: 'FAC-' + String(i + 1).padStart(3, '0'),
+            name: b.facilityName || '—',
+            date: b.bookingDate ? b.bookingDate.split('T')[0] : '—',
+            amount: b.price || 0,
+            paid: (b.status || '').toLowerCase() === 'approved',
+            type: 'facility'
+          }));
+        }
+      } catch { facInvoices = []; }
+
+      const allInvoices = [...actInvoices, ...facInvoices];
+      const paid = allInvoices.filter(i => i.paid).reduce((s, i) => s + i.amount, 0);
+      const pending = allInvoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
+
+      document.getElementById('mem-pay-total').textContent = paid + ' EGP';
+      document.getElementById('mem-pay-pending').textContent = pending + ' EGP';
+      document.getElementById('mem-invoice-count').textContent =
+        allInvoices.length + ' invoice' + (allInvoices.length !== 1 ? 's' : '');
+
+      const listEl = document.getElementById('mem-invoice-list');
+      if (!allInvoices.length) {
+        listEl.innerHTML = `
+      <div class="text-center py-4" style="color:var(--muted);">
+        <i class="bi bi-receipt" style="font-size:2rem;opacity:.3;display:block;margin-bottom:8px;"></i>
+        <p>No invoices yet.</p>
+      </div>`;
+        return;
+      }
+
+      listEl.innerHTML = allInvoices.map(inv => `
+    <div style="display:flex;align-items:center;gap:14px;padding:14px 0;
+                border-bottom:1px solid var(--border);">
+      <div style="width:40px;height:40px;border-radius:10px;
+                  background:rgba(232,93,47,.1);color:var(--clubly-accent);
+                  display:flex;align-items:center;justify-content:center;
+                  font-size:1rem;flex-shrink:0;">
+        <i class="bi ${inv.type === 'facility' ? 'bi-building' : 'bi-receipt'}"></i>
+      </div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:.9rem;color:var(--text);">
+          <span style="font-size:.7rem;padding:1px 7px;border-radius:10px;
+                       margin-right:6px;font-weight:700;
+                       background:${inv.type === 'facility'
+          ? 'rgba(46,196,182,.1);color:var(--clubly-teal)'
+          : 'rgba(232,93,47,.1);color:var(--clubly-accent)'};">
+            ${inv.type === 'facility' ? 'Facility' : 'Activity'}
+          </span>
+          ${inv.name}
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);margin-top:2px;">
+          ${inv.id} · ${inv.date}
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-weight:900;font-size:1rem;color:${inv.paid ? '#22c55e' : '#f59e0b'};">
+          ${inv.amount} EGP
+        </div>
+        ${inv.paid
+          ? `<span style="font-size:.78rem;color:#22c55e;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;">
+               <i class="bi bi-check-circle-fill"></i>Paid
+             </span>`
+          : `<span style="font-size:.78rem;color:#f59e0b;font-weight:700;
+                          display:inline-flex;align-items:center;gap:4px;
+                          background:rgba(245,158,11,.1);padding:3px 10px;
+                          border-radius:20px;border:1px solid rgba(245,158,11,.3);">
+               <i class="bi bi-clock-history"></i>Awaiting Approval
+             </span>`}
+      </div>
+    </div>`).join('');
+    }
+    // ===================================================
+    // ============ MEMBER ATTENDANCE ====================
+    // ===================================================
+    const MEM_ATT_API = 'https://clublywebsite.runasp.net/api/Attendance';
+    let _memAttGroups = [];
+    let _memAttRecords = [];
+    let _memAttFiltered = [];
+    let _memAttStatus = 'all';
+    let _memAttBookingId = null;
+
+    async function loadMemberAttendance() {
+      if (!memberId) return;
+
+      // جيب الـ groups من الـ bookings
+      try {
+        const res = await fetch(`${API_BASE_URL}/ActivityBookings/by-member/${memberId}`);
+        const bookings = res.ok ? await res.json() : [];
+
+        // كل booking = group
+        _memAttGroups = bookings.map(b => ({
+          bookingId: b.id,
+          name: b.groupName || '—',
+          activity: b.activityName || '—',
+          trainer: b.trainerName || '—',
+        }));
+
+        const sel = document.getElementById('memAttGroupSel');
+        sel.innerHTML = '<option value="">— Select Group —</option>' +
+          _memAttGroups.map(g =>
+            `<option value="${g.bookingId}">${g.name} · ${g.activity}</option>`
+          ).join('');
+
+      } catch (e) {
+        console.warn('Could not load groups for attendance:', e);
+        _memAttGroups = [];
+      }
+
+      // reset
+      _memAttRecords = [];
+      _memAttFiltered = [];
+      updateMemAttSummary([]);
+      document.getElementById('memAttRateBar').style.display = 'none';
+      document.getElementById('memAttList').innerHTML = `
+    <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+      <i class="bi bi-person-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+      <p style="font-weight:700;">Select a group to view your attendance</p>
+    </div>`;
+    }
+
+    async function onMemAttGroupChange() {
+      const bookingId = document.getElementById('memAttGroupSel').value;
+      _memAttBookingId = bookingId || null;
+
+      if (!bookingId) {
+        _memAttRecords = [];
+        _memAttFiltered = [];
+        updateMemAttSummary([]);
+        document.getElementById('memAttRateBar').style.display = 'none';
+        document.getElementById('memAttList').innerHTML = `
+      <div style="text-align:center;padding:60px 20px;color:var(--muted);">
+        <i class="bi bi-person-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
+        <p style="font-weight:700;">Select a group to view your attendance</p>
+      </div>`;
+        return;
+      }
+
+      document.getElementById('memAttList').innerHTML = `
+    <div style="text-align:center;padding:40px;color:var(--muted);">
+      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+    </div>`;
+
+      try {
+        const [attRes, bookRes] = await Promise.all([
+          fetch(`${MEM_ATT_API}/summary/${bookingId}`),
+          fetch(`${API_BASE_URL}/ActivityBookings/${bookingId}`)
+        ]);
+        if (!attRes.ok) throw new Error();
+        const s = await attRes.json();
+        const booking = bookRes.ok ? await bookRes.json() : null;
+
+        const slot = booking?.timeSlots?.[0];
+        const startTime = slot?.startTime ? slot.startTime.substring(0, 5) : '—';
+        const endTime = slot?.endTime ? slot.endTime.substring(0, 5) : '—';
+
+        _memAttRecords = (s.records || []).map(r => ({
+          date: r.date || '—',
+          weekday: r.date ? new Date(r.date).toLocaleDateString('en-US', { weekday: 'long' }) : '—',
+          startTime: r.startTime ? String(r.startTime).substring(0, 5) : startTime,
+          endTime: r.endTime ? String(r.endTime).substring(0, 5) : endTime,
+          status: r.isPresent === true ? 'present'
+            : r.isPresent === false ? 'absent'
+              : 'unmarked',
+          notes: r.notes || '',
+        })).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // Populate months filter
+        const months = [...new Set(_memAttRecords.map(r => r.date.substring(0, 7)))].sort().reverse();
+        const mSel = document.getElementById('memAttMonthSel');
+        mSel.innerHTML = '<option value="">All Months</option>' +
+          months.map(m => {
+            const d = new Date(m + '-01');
+            const label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            return `<option value="${m}">${label}</option>`;
+          }).join('');
+
+        // Rate bar
+        const group = _memAttGroups.find(g => String(g.bookingId) === String(bookingId));
+        const rate = s.attendanceRate || 0;
+        document.getElementById('memAttRateBar').style.display = '';
+        document.getElementById('memAttRateCircle').textContent = rate + '%';
+        document.getElementById('memAttRateCircle').style.color =
+          rate >= 80 ? '#22c55e' : rate >= 50 ? 'var(--clubly-gold)' : '#ef4444';
+        document.getElementById('memAttRateCircle').style.background =
+          rate >= 80 ? 'rgba(34,197,94,.12)' : rate >= 50 ? 'rgba(212,168,67,.12)' : 'rgba(239,68,68,.12)';
+        document.getElementById('memAttRateCircle').style.borderColor =
+          rate >= 80 ? 'rgba(34,197,94,.3)' : rate >= 50 ? 'rgba(212,168,67,.3)' : 'rgba(239,68,68,.3)';
+        document.getElementById('memAttGroupName').textContent = group?.name || '—';
+        document.getElementById('memAttGroupSub').textContent =
+          (group?.activity || '') + (group?.trainer ? '  ·  Trainer: ' + group.trainer : '');
+        document.getElementById('memAttRateFill').style.width = rate + '%';
+        document.getElementById('memAttRateFill').style.background =
+          rate >= 80 ? 'linear-gradient(90deg,var(--clubly-teal),#22c55e)'
+            : rate >= 50 ? 'linear-gradient(90deg,var(--clubly-gold),#f59e0b)'
+              : 'linear-gradient(90deg,#ef4444,#dc2626)';
+
+        applyMemAttFilters();
+
+      } catch (e) {
+        document.getElementById('memAttList').innerHTML = `
+      <div style="text-align:center;padding:40px;color:#ef4444;">
+        Failed to load attendance records.
+      </div>`;
+      }
+    }
+
+    function setMemAttStatus(status, el) {
+      _memAttStatus = status;
+      document.querySelectorAll('#page-attendance .notif-tab')
+        .forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      applyMemAttFilters();
+    }
+
+    function applyMemAttFilters() {
+      const month = document.getElementById('memAttMonthSel').value;
+
+      _memAttFiltered = _memAttRecords.filter(r => {
+        const matchM = !month || r.date.startsWith(month);
+        const matchS = _memAttStatus === 'all' || r.status === _memAttStatus;
+        return matchM && matchS;
+      });
+
+      updateMemAttSummary(_memAttFiltered.length ? _memAttFiltered : _memAttRecords);
+      renderMemAttRecords();
+    }
+
+    function updateMemAttSummary(records) {
+      const total = records.length;
+      const present = records.filter(r => r.status === 'present').length;
+      const absent = records.filter(r => r.status === 'absent').length;
+      const marked = present + absent;
+      const rate = marked ? Math.round((present / marked) * 100) : 0;
+
+      document.getElementById('mem-att-total').textContent = total || '—';
+      document.getElementById('mem-att-present').textContent = present || '—';
+      document.getElementById('mem-att-absent').textContent = absent || '—';
+      document.getElementById('mem-att-rate').textContent = marked ? rate + '%' : '—';
+    }
+    function formatTime12(t) {
+      if (!t || t === '—') return '—';
+      const [h, m] = t.substring(0, 5).split(':').map(Number);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const hour = h % 12 || 12;
+      return `${hour}:${String(m).padStart(2, '0')} ${ampm}`;
+    }
+    function renderMemAttRecords() {
+      const list = _memAttFiltered;
+      document.getElementById('memAttRecsCount').textContent =
+        list.length ? list.length + ' record' + (list.length !== 1 ? 's' : '') : '';
+      document.getElementById('memAttInfo').textContent =
+        _memAttRecords.length
+          ? `${_memAttFiltered.length} of ${_memAttRecords.length} records`
+          : '';
+
+      if (!list.length) {
+        document.getElementById('memAttList').innerHTML = `
+      <div style="text-align:center;padding:50px 20px;color:var(--muted);">
+        <i class="bi bi-calendar-x" style="font-size:2.5rem;opacity:.3;
+           display:block;margin-bottom:10px;"></i>
+        <p style="font-weight:700;">No records match this filter.</p>
+      </div>`;
+        return;
+      }
+
+      const statusConfig = {
+        present: { label: 'Present', cls: 'b-green', icon: 'bi-check-circle-fill' },
+        absent: { label: 'Absent', cls: 'b-red', icon: 'bi-x-circle-fill' },
+        unmarked: { label: 'Not Marked', cls: 'b-gold', icon: 'bi-dash-circle' },
+      };
+
+      // جيب الـ trainer من الـ group المختار
+      const currentGroup = _memAttGroups.find(
+        g => String(g.bookingId) === String(_memAttBookingId)
+      );
+      const hasTrainer = currentGroup && currentGroup.trainer &&
+        currentGroup.trainer !== '—' &&
+        currentGroup.trainer !== 'No Trainer';
+
+      document.getElementById('memAttList').innerHTML = list.map((r, idx) => {
+        const cfg = statusConfig[r.status] || statusConfig['unmarked'];
+        const d = new Date(r.date);
+        const dateStr = isNaN(d) ? r.date
+          : d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+        // زرار الـ Rating — بس للـ present records اللي فيها trainer
+        const rateBtn = (r.status === 'present' && hasTrainer)
+          ? `<button
+           class="rate-trainer-btn"
+           id="rateBtn_${idx}"
+           onclick="openRatingModal(${idx})"
+           style="margin-right:10px;">
+           <i class="bi bi-star-fill"></i> Rate Trainer
+         </button>`
+          : '';
+
+        return `
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 20px;
+                  border-bottom:1px solid var(--border);transition:background .15s;"
+           onmouseover="this.style.background='rgba(0,0,0,.02)'"
+           onmouseout="this.style.background='transparent'">
+
+        <!-- Date -->
+        <div style="width:80px;flex-shrink:0;">
+          <div style="font-weight:700;font-size:.88rem;color:var(--text);">${dateStr}</div>
+          <div style="font-size:.75rem;color:var(--muted);">${r.weekday}</div>
+        </div>
+
+        <!-- Time + notes -->
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.85rem;color:var(--muted);
+                      display:flex;align-items:center;gap:4px;">
+            <i class="bi bi-clock" style="font-size:.75rem;"></i>
+            ${formatTime12(r.startTime)} → ${formatTime12(r.endTime)}
+          </div>
+          ${r.notes
+            ? `<div style="font-size:.78rem;color:var(--muted);margin-top:3px;">
+                 <i class="bi bi-chat-left-text me-1"></i>${r.notes}
+               </div>`
+            : ''}
+        </div>
+
+        <!-- Rate btn + Status badge -->
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+          ${rateBtn}
+          <span class="badge-cl ${cfg.cls}">
+            <i class="bi ${cfg.icon} me-1"></i>${cfg.label}
+          </span>
+        </div>
+      </div>`;
+      }).join('');
+
+      // بعد الرسم — تحقق من الـ ratings الموجودة
+      checkExistingRatings();
+    }
+    // ================================================================
+    // SPORTS AI RECOMMENDER — JavaScript
+    // ================================================================
+    const SAI_API = 'https://mazinyaser0-sports-ai-recommendation-system.hf.space/api/recommend';
+    const saiToggles = { team: 1, outdoor: 0 };
+
+    function saiToggle(group, val, el) {
+      saiToggles[group] = val;
+      el.closest('.d-flex').querySelectorAll('.sai-tog').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function saiSel(id) { const s = document.getElementById(id); return s.options[s.selectedIndex].value; }
+
+    async function saiSubmit() {
+      const btn = document.getElementById('sai-btn');
+      const btnTxt = document.getElementById('sai-btn-text');
+      btn.disabled = true;
+      btnTxt.textContent = 'جاري التحليل...';
+      document.getElementById('sai-placeholder') && (document.getElementById('sai-placeholder').style.display = 'none');
+
+      const payload = {
+        age: parseInt(document.getElementById('sai-age').value),
+        gender: saiSel('sai-gender'),
+        weight_kg: parseFloat(document.getElementById('sai-weight').value),
+        height_cm: parseFloat(document.getElementById('sai-height').value),
+        activity_level: saiSel('sai-activity'),
+        fitness_level: saiSel('sai-fitness'),
+        goal: saiSel('sai-goal'),
+        personality: saiSel('sai-personality'),
+        location: 'Urban',
+        hours_per_week: parseFloat(document.getElementById('sai-hours').value),
+        budget: parseFloat(document.getElementById('sai-budget').value),
+        health_issue: saiSel('sai-health'),
+        prefers_team: saiToggles.team,
+        prefers_outdoor: saiToggles.outdoor,
+        prefers_contact: 3, risk_tolerance: 3, competitive_level: 3,
+        coordination_level: 3, striking_preference: 3, grappling_preference: 2,
+        speed_agility: 3, endurance_level: 3, preferred_distance: 3,
+        top_n: 5
+      };
+
+      try {
+        const res = await fetch(SAI_API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        if (!res.ok) throw new Error('Server error ' + res.status);
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        saiRenderResults(data);
+      } catch (err) {
+        document.getElementById('sai-results').innerHTML = `<div class="content-card text-center" style="padding:40px;"><div style="font-size:2rem;margin-bottom:12px;">⚠️</div><div style="color:var(--muted);">${err.message}</div></div>`;
+      } finally {
+        btn.disabled = false;
+        btnTxt.textContent = 'احصل على توصياتي';
+      }
+    }
+
+    function saiRenderResults(data) {
+      const h = data.health_assessment;
+      const recs = data.recommendations;
+      const circ = 2 * Math.PI * 32;
+      const dash = circ * (1 - h.health_score / 100);
+      const sc = h.health_score >= 70 ? 'var(--clubly-teal)' : h.health_score >= 45 ? 'var(--clubly-gold)' : '#ef4444';
+      const bmiC = { normal: 'var(--clubly-teal)', underweight: 'var(--clubly-gold)', overweight: '#f97316', obese: '#ef4444' };
+      const lbl = h.health_score >= 70 ? '— ممتاز' : h.health_score >= 45 ? '— مقبول' : '— يحتاج تحسين';
+
+      const healthHTML = `
+    <div class="sai-health-card">
+      <div class="sai-ring-wrap">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <circle cx="36" cy="36" r="32" fill="none" stroke="var(--border)" stroke-width="6"/>
+          <circle cx="36" cy="36" r="32" fill="none" stroke="${sc}" stroke-width="6"
+            stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${dash.toFixed(1)}" stroke-linecap="round"/>
+        </svg>
+        <div class="sai-ring-score" style="color:${sc}">${h.health_score}</div>
+      </div>
+      <div style="flex:1">
+        <div style="font-weight:900; font-size:.95rem; margin-bottom:8px; color:var(--text);">درجة الصحة <span style="color:${sc}">${lbl}</span></div>
+        <div>
+          <span class="sai-htag"><div class="k">BMI</div><div class="v" style="color:${bmiC[h.bmi_status] || 'var(--text)'}">${h.bmi} — ${h.bmi_status.replace('_', ' ')}</div></span>
+          <span class="sai-htag"><div class="k">الفئة</div><div class="v">${h.age_group}</div></span>
+          <span class="sai-htag"><div class="k">النشاط</div><div class="v">${h.activity_status.replace(/_/g, ' ')}</div></span>
+          <span class="sai-htag"><div class="k">اللياقة</div><div class="v">${h.fitness_status}</div></span>
+        </div>
+        ${h.avoid_sports.length ? `<div style="margin-top:8px; font-size:.8rem; color:#ef4444; background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2); border-radius:8px; padding:6px 10px;">⚠️ تجنب: <strong>${h.avoid_sports.join(', ')}</strong></div>` : ''}
+        ${h.prefer_sports.length ? `<div style="margin-top:6px; font-size:.8rem; color:var(--clubly-teal); background:rgba(46,196,182,.08); border:1px solid rgba(46,196,182,.2); border-radius:8px; padding:6px 10px;">✅ موصى به: <strong>${h.prefer_sports.join(', ')}</strong></div>` : ''}
+      </div>
+    </div>`;
+
+      const maxScore = recs[0]?.score || 1;
+      const recsHTML = recs.map(r => {
+        const isAvail = r.available === true;
+        return `
+    <div class="sai-rec-card rank-${r.rank}" style="animation-delay:${r.rank * 0.08}s">
+      <div class="sai-rank">${String(r.rank).padStart(2, '0')}</div>
+      <span class="sai-emoji">${r.emoji}</span>
+      <div class="sai-sport-name">${r.sport}</div>
+      <div class="sai-pills">
+        <span class="sai-pill sai-pill-cat">${r.category}</span>
+        <span class="sai-pill sai-pill-int">${r.intensity}</span>
+        ${r.preferred ? '<span class="sai-pill sai-pill-pref">✓ موصى به</span>' : ''}
+      </div>
+      <div class="sai-bar-wrap">
+        <div class="sai-bar-lbl"><span>Match Score</span><span class="sai-bar-val">${r.score.toFixed(1)}%</span></div>
+        <div class="sai-track"><div class="sai-fill" style="width:${(r.score / maxScore * 100).toFixed(1)}%"></div></div>
+      </div>
+      <div class="sai-avail ${isAvail ? 'yes' : 'no'}">
+        <div class="sai-avail-dot"></div>
+        <span>${isAvail ? 'متاحة في النادي' : 'غير متاحة'}</span>
+        ${isAvail && r.facility_name ? `<span class="sai-facility">· ${r.facility_name}</span>` : ''}
+      </div>
+    </div>`;
+      }).join('');
+
+      document.getElementById('sai-results').innerHTML = `
+    <div style="font-size:.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--clubly-accent); font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+      02 — تقييم الصحة <div style="flex:1; height:1px; background:var(--border);"></div>
+    </div>
+    ${healthHTML}
+    <div style="font-size:.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--clubly-accent); font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+      03 — الرياضات الموصى بها <div style="flex:1; height:1px; background:var(--border);"></div>
+    </div>
+    ${recsHTML}`;
+    }
+    // ===================================================
+    // ============ TRAINER RATING SYSTEM ================
+    // ===================================================
+    const RATING_API = `${API_BASE_URL}/TrainerRatings`;
+
+    let _currentRatingIdx = null;  // index في _memAttFiltered
+    let _selectedStarRating = 0;
+    const _starLabels = ['', 'Poor 😞', 'Fair 😐', 'Good 😊', 'Very Good 😃', 'Excellent 🤩'];
+
+    function setStarRating(val) {
+      _selectedStarRating = val;
+      document.querySelectorAll('.star-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.val) <= val);
+      });
+      document.getElementById('starRatingLabel').textContent = _starLabels[val] || '';
+    }
+
+    async function checkExistingRatings() {
+      if (!memberId || !_memAttBookingId) return;
+
+      const presentIdxs = _memAttFiltered
+        .map((r, i) => r.status === 'present' ? i : null)
+        .filter(i => i !== null);
+
+      for (const idx of presentIdxs) {
+        const btn = document.getElementById(`rateBtn_${idx}`);
+        if (!btn) continue;
+
+        try {
+          const res = await fetch(
+            `${RATING_API}/check?memberId=${memberId}&bookingId=${_memAttBookingId}`
+          );
+          if (!res.ok) continue;
+          const data = await res.json();
+
+          if (data.hasRated) {
+            // عرض النجوم المعطاة
+            const stars = '⭐'.repeat(data.rating);
+            btn.disabled = true;
+            btn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Rated ${stars}`;
+            btn.title = data.comment
+              ? `Your comment: "${data.comment}"`
+              : 'You already rated this trainer';
+          }
+        } catch { /* skip */ }
+      }
+    }
+
+    async function openRatingModal(idx) {
+      _currentRatingIdx = idx;
+      _selectedStarRating = 0;
+
+      // Reset UI
+      document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('starRatingLabel').textContent = '';
+      document.getElementById('ratingComment').value = '';
+      document.getElementById('ratingMsg').innerHTML = '';
+      document.getElementById('submitRatingBtn').disabled = false;
+
+      // جيب بيانات الـ group
+      const group = _memAttGroups.find(
+        g => String(g.bookingId) === String(_memAttBookingId)
+      );
+
+      const trainerName = group?.trainer || 'Trainer';
+      const activity = group?.activity || '—';
+      const initials = trainerName.split(' ')
+        .slice(0, 2).map(w => w[0]?.toUpperCase() || '').join('');
+
+      document.getElementById('ratingTrainerName').textContent = trainerName;
+      document.getElementById('ratingTrainerActivity').textContent = activity;
+      document.getElementById('ratingTrainerInitials').textContent = initials;
+      document.getElementById('ratingTrainerSubtitle').textContent =
+        `Session · ${_memAttFiltered[idx]?.date || ''}`;
+
+      // افتح الـ Modal
+      new bootstrap.Modal(document.getElementById('trainerRatingModal')).show();
+    }
+
+    async function submitTrainerRating() {
+      if (_selectedStarRating === 0) {
+        document.getElementById('ratingMsg').innerHTML =
+          `<div style="color:#ef4444;font-size:.85rem;font-weight:600;">
+         <i class="bi bi-exclamation-circle me-1"></i>Please select a star rating first.
+       </div>`;
+        return;
+      }
+
+      const group = _memAttGroups.find(
+        g => String(g.bookingId) === String(_memAttBookingId)
+      );
+
+      if (!group) {
+        document.getElementById('ratingMsg').innerHTML =
+          `<div style="color:#ef4444;font-size:.85rem;">Could not find group data.</div>`;
+        return;
+      }
+
+      // جيب trainerId من الـ booking
+      let trainerId = null;
+      try {
+        const bRes = await fetch(`${API_BASE_URL}/ActivityBookings/${_memAttBookingId}`);
+        if (bRes.ok) {
+          const booking = await bRes.json();
+          trainerId = booking.trainerId || null;
+        }
+      } catch { /* skip */ }
+
+      if (!trainerId) {
+        document.getElementById('ratingMsg').innerHTML =
+          `<div style="color:#ef4444;font-size:.85rem;">
+         <i class="bi bi-exclamation-circle me-1"></i>Trainer ID not found.
+       </div>`;
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitRatingBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span>Submitting...`;
+
+      const payload = {
+        trainerId: trainerId,
+        memberId: parseInt(memberId),
+        activityBookingId: parseInt(_memAttBookingId),
+        rating: _selectedStarRating,
+        comment: document.getElementById('ratingComment').value.trim() || null
+      };
+
+      try {
+        const res = await fetch(RATING_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.status === 409) {
+          document.getElementById('ratingMsg').innerHTML =
+            `<div style="color:#f59e0b;font-size:.85rem;font-weight:600;">
+           <i class="bi bi-info-circle me-1"></i>
+           You have already rated this trainer for this booking.
+         </div>`;
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i class="bi bi-star-fill"></i> Submit Rating`;
+          return;
+        }
+
+        if (!res.ok) throw new Error('Failed to submit rating.');
+
+        // نجاح ✓
+        document.getElementById('ratingMsg').innerHTML =
+          `<div style="background:rgba(34,197,94,.1);border:1px solid #22c55e;
+                   border-radius:8px;padding:10px;color:#16a34a;font-size:.88rem;">
+         <i class="bi bi-check-circle-fill me-1"></i>
+         Thank you! Your rating has been submitted successfully.
+       </div>`;
+
+        // حدّث الزرار في الـ list
+        const btn = document.getElementById(`rateBtn_${_currentRatingIdx}`);
+        if (btn) {
+          const stars = '⭐'.repeat(_selectedStarRating);
+          btn.disabled = true;
+          btn.innerHTML = `<i class="bi bi-check-circle-fill"></i> Rated ${stars}`;
+        }
+
+        // أقفل الـ modal بعد ثانيتين
+        setTimeout(() => {
+          bootstrap.Modal.getInstance(
+            document.getElementById('trainerRatingModal')
+          )?.hide();
+          document.getElementById('ratingMsg').innerHTML = '';
+        }, 2000);
+
+      } catch (err) {
+        document.getElementById('ratingMsg').innerHTML =
+          `<div style="color:#ef4444;font-size:.85rem;">
+         <i class="bi bi-exclamation-circle me-1"></i>${err.message}
+       </div>`;
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="bi bi-star-fill"></i> Submit Rating`;
+      }
+    }
+    // ===== INIT =====
+    generateCalendar();
+    renderUpcoming();
+    renderSchedule();
+    renderMembership();
+
+  </script>
+  <!-- ===== TRAINER RATING MODAL ===== -->
+  <div class="modal fade" id="trainerRatingModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-clubly">
+
+        <div style="background:#0d1b2a; border-radius:16px 16px 0 0;
+                  padding:18px 22px; display:flex; align-items:center; gap:12px;">
+          <div style="width:44px;height:44px;border-radius:50%;
+                    background:rgba(212,168,67,.15);color:var(--clubly-gold);
+                    display:flex;align-items:center;justify-content:center;font-size:20px;">
+            ⭐
+          </div>
+          <div style="flex:1;">
+            <h5 style="margin:0;font-weight:800;color:#fff;">Rate Your Trainer</h5>
+            <small style="color:rgba(255,255,255,.6);" id="ratingTrainerSubtitle">—</small>
+          </div>
+          <button data-bs-dismiss="modal" style="background:none;border:none;color:rgba(255,255,255,.7);
+                 font-size:1.3rem;cursor:pointer;">✕</button>
+        </div>
+
+        <div class="modal-body-clubly">
+
+          <!-- Trainer Info -->
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;
+                    background:var(--bg);border-radius:10px;border:1px solid var(--border);
+                    margin-bottom:18px;">
+            <div style="width:48px;height:48px;border-radius:50%;
+                      background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
+                      display:flex;align-items:center;justify-content:center;
+                      font-size:1.2rem;font-weight:900;color:#fff;flex-shrink:0;" id="ratingTrainerInitials">?</div>
+            <div>
+              <div style="font-weight:700;color:var(--text);" id="ratingTrainerName">—</div>
+              <div style="font-size:.8rem;color:var(--muted);" id="ratingTrainerActivity">—</div>
+            </div>
+          </div>
+
+          <!-- Stars -->
+          <div style="text-align:center;margin-bottom:6px;">
+            <div style="font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:8px;">
+              How would you rate this trainer?
+            </div>
+            <div class="star-rating" id="starRatingContainer">
+              <button class="star-btn" data-val="1" onclick="setStarRating(1)">⭐</button>
+              <button class="star-btn" data-val="2" onclick="setStarRating(2)">⭐</button>
+              <button class="star-btn" data-val="3" onclick="setStarRating(3)">⭐</button>
+              <button class="star-btn" data-val="4" onclick="setStarRating(4)">⭐</button>
+              <button class="star-btn" data-val="5" onclick="setStarRating(5)">⭐</button>
+            </div>
+            <div id="starRatingLabel" style="font-size:.9rem;font-weight:700;color:var(--clubly-gold);
+                   min-height:22px;margin-top:4px;"></div>
+          </div>
+
+          <!-- Comment -->
+          <div style="margin-top:14px;">
+            <label class="form-label-clubly">Comment (optional)</label>
+            <textarea id="ratingComment" class="form-control-clubly" rows="3"
+              placeholder="Share your experience with this trainer..." style="resize:none;"></textarea>
+          </div>
+
+          <div id="ratingMsg" style="margin-top:10px;"></div>
+        </div>
+
+        <div class="modal-footer-clubly">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-clubly-primary" id="submitRatingBtn" onclick="submitTrainerRating()"
+            style="background:linear-gradient(135deg,var(--clubly-gold),#b8860b);">
+            <i class="bi bi-star-fill"></i> Submit Rating
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="js/lang.js"></script>
+</body>
+
+</html>

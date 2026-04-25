@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clubly — About Us</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--clubly-dark:#0d1b2a;--clubly-accent:#e85d2f;--clubly-teal:#2ec4b6;--clubly-gold:#d4a843;--header-h:64px;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--muted:#64748b;--border:#e2e8f0;}
+[data-theme="dark"]{--bg:#0a1628;--card-bg:#0f1f35;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .25s,color .25s;}
+.clubly-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--clubly-dark);display:flex;align-items:center;padding:0 40px;z-index:2000;box-shadow:0 2px 24px rgba(0,0,0,.45);transition:all .3s;}
+.clubly-header.scrolled{background:rgba(13,27,42,.97);backdrop-filter:blur(12px);}
+.header-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;}
+.logo-icon{font-size:28px;color:var(--clubly-accent);}
+.logo-text{font-size:1.5rem;font-weight:900;color:#fff;}
+.logo-text span{color:var(--clubly-accent);}
+.header-nav{display:flex;gap:4px;flex:1;justify-content:center;padding:0 20px;}
+.header-nav a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.9rem;padding:7px 14px;border-radius:6px;transition:all .2s;white-space:nowrap;}
+.header-nav a:hover,.header-nav a.active{color:#fff;background:rgba(255,255,255,.1);}
+.header-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.btn-theme{background:rgba(255,255,255,.1);color:#fff;border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:background .2s;}
+.btn-signin{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:8px 22px;border-radius:50px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;}
+.btn-join{background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;border:none;padding:9px 24px;border-radius:50px;font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;}
+.btn-join:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,93,47,.5);}
+.clubly-footer{background:var(--clubly-dark);color:rgba(255,255,255,.65);}
+.footer-inner{display:flex;gap:60px;padding:50px 40px 30px;flex-wrap:wrap;}
+.footer-col h5{color:#fff;font-weight:700;margin-bottom:14px;}
+.footer-links{list-style:none;padding:0;}
+.footer-links li{margin-bottom:8px;}
+.footer-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.88rem;transition:color .2s;}
+.footer-links a:hover{color:var(--clubly-accent);}
+.footer-contact{font-size:.85rem;line-height:2.2;}
+.footer-contact i{color:var(--clubly-teal);margin-right:8px;}
+.footer-socials{display:flex;gap:14px;margin-top:12px;}
+.footer-socials a{color:rgba(255,255,255,.55);font-size:20px;transition:color .2s,transform .2s;text-decoration:none;}
+.footer-socials a:hover{color:var(--clubly-accent);transform:translateY(-2px);}
+.footer-bottom{text-align:center;padding:16px;border-top:1px solid rgba(255,255,255,.07);font-size:.82rem;color:rgba(255,255,255,.35);}
+.back-top{position:fixed;bottom:28px;right:28px;width:44px;height:44px;border-radius:50%;background:var(--clubly-accent);color:#fff;border:none;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;z-index:1500;opacity:0;transform:translateY(20px);transition:all .3s;box-shadow:0 4px 16px rgba(232,93,47,.4);}
+.back-top.show{opacity:1;transform:translateY(0);}
+.modal-content-cl{background:var(--card-bg);color:var(--text);border-radius:20px;border:1px solid var(--border);overflow:hidden;}
+.modal-tabs{display:flex;border-bottom:2px solid var(--border);}
+.modal-tab{flex:1;padding:16px;text-align:center;font-weight:700;cursor:pointer;color:var(--muted);transition:all .2s;border:none;background:none;font-family:inherit;font-size:.9rem;}
+.modal-tab.active{color:var(--clubly-accent);border-bottom:2px solid var(--clubly-accent);margin-bottom:-2px;}
+.modal-form{padding:28px;}
+.form-label-cl{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block;}
+.form-input-cl{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:inherit;font-size:.9rem;outline:none;margin-bottom:14px;transition:border-color .2s;}
+.form-input-cl:focus{border-color:var(--clubly-accent);}
+.btn-form-submit{width:100%;background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;border:none;padding:13px;border-radius:50px;font-weight:900;font-size:.95rem;cursor:pointer;transition:all .2s;font-family:inherit;}
+.divider-or{text-align:center;color:var(--muted);font-size:.8rem;margin:14px 0;position:relative;}
+.divider-or::before,.divider-or::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);}
+.divider-or::before{left:0;}.divider-or::after{right:0;}
+.role-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px;}
+.role-option{border:2px solid var(--border);border-radius:13px;padding:11px 6px;text-align:center;cursor:pointer;transition:all .22s;background:#f8fafc;}
+.role-option .role-icon{font-size:21px;margin-bottom:4px;display:block;}
+.role-option span{display:block;font-size:10.5px;font-weight:700;color:var(--muted);}
+.role-option.active{border-color:var(--clubly-accent);background:rgba(232,93,47,.06);}
+.role-option.active span{color:var(--clubly-accent);}
+@media(max-width:768px){.header-nav{display:none;}.clubly-header{padding:0 16px;}.footer-inner{gap:30px;padding:30px 20px;}}
+</style>
+</head>
+<body>
+<header class="clubly-header" id="mainHeader">
+  <a class="header-logo" href="../index.html"><i class="bi bi-lightning-charge-fill logo-icon"></i><span class="logo-text">Cl<span>u</span>bly</span></a>
+  <nav class="header-nav">
+    <a href="../index.html">Home</a>
+    <a href="activities.html">Activities</a>
+    <a href="facilities.html">Facilities</a>
+    <a href="trainers.html">Trainers</a>
+    <a href="plans.html">Membership Plans</a>
+    <a href="about.html" class="active">About Us</a>
+    <a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
+    <button class="btn-signin" onclick="openModal('signin')">Sign In</button>
+    <a href="plans.html" class="btn-join">Join Now <i class="bi bi-arrow-right ms-1"></i></a>
+  </div>
+</header>
+
+<div style="margin-top:var(--header-h);">
+
+  <!-- HERO BANNER -->
+  <div style="background:linear-gradient(135deg,var(--clubly-dark) 0%,#1a3a5c 60%,#0d2a1f 100%);padding:90px 24px 70px;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-80px;left:-80px;width:320px;height:320px;background:rgba(232,93,47,.08);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-60px;right:-60px;width:260px;height:260px;background:rgba(46,196,182,.07);border-radius:50%;"></div>
+    <div style="position:relative;z-index:1;max-width:680px;margin:0 auto;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(232,93,47,.15);border:1px solid rgba(232,93,47,.3);border-radius:30px;padding:6px 18px;margin-bottom:20px;"><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent);font-size:.85rem;"></i><span style="color:var(--clubly-accent);font-size:.82rem;font-weight:700;letter-spacing:.5px;">OUR STORY</span></div>
+      <h1 style="font-size:clamp(2rem,5vw,3.2rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:18px;">CLUBLY <br><span style="color:var(--clubly-accent);">Community</span></h1>
+      <p style="color:rgba(255,255,255,.65);font-size:1.05rem;line-height:1.8;max-width:560px;margin:0 auto;">Founded in 2018, Clubly was built on one belief: fitness should be accessible, inspiring, and fun for everyone — from first-timers to elite athletes.</p>
+    </div>
+  </div>
+
+  <!-- MISSION + VISION + VALUES -->
+  <section style="padding:70px 24px;background:var(--bg);">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div style="background:var(--card-bg);border-radius:16px;padding:32px 28px;height:100%;border:1px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 10px 30px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 14px rgba(0,0,0,.05)'">
+            <div style="width:54px;height:54px;border-radius:14px;background:rgba(232,93,47,.12);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i class="bi bi-bullseye" style="font-size:1.5rem;color:var(--clubly-accent);"></i></div>
+            <h3 style="font-size:1.2rem;font-weight:900;color:var(--text);margin-bottom:12px;">Our Mission</h3>
+            <p style="color:var(--muted);font-size:.92rem;line-height:1.8;">To empower every individual to reach their peak physical and mental fitness through world-class coaching, cutting-edge facilities, and a supportive community that celebrates every milestone.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div style="background:var(--card-bg);border-radius:16px;padding:32px 28px;height:100%;border:1px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 10px 30px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 14px rgba(0,0,0,.05)'">
+            <div style="width:54px;height:54px;border-radius:14px;background:rgba(46,196,182,.12);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i class="bi bi-eye" style="font-size:1.5rem;color:var(--clubly-teal);"></i></div>
+            <h3 style="font-size:1.2rem;font-weight:900;color:var(--text);margin-bottom:12px;">Our Vision</h3>
+            <p style="color:var(--muted);font-size:.92rem;line-height:1.8;">To become Egypt's most loved sports community — where fitness technology, human connection, and expert guidance come together to transform lives one session at a time.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div style="background:var(--card-bg);border-radius:16px;padding:32px 28px;height:100%;border:1px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 10px 30px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 14px rgba(0,0,0,.05)'">
+            <div style="width:54px;height:54px;border-radius:14px;background:rgba(212,168,67,.12);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><i class="bi bi-stars" style="font-size:1.5rem;color:var(--clubly-gold);"></i></div>
+            <h3 style="font-size:1.2rem;font-weight:900;color:var(--text);margin-bottom:12px;">Our Values</h3>
+            <p style="color:var(--muted);font-size:.92rem;line-height:1.8;">Community first. Integrity always. Innovation in everything. We believe in inclusive fitness, honest coaching, and continuously pushing the boundaries of what a sports club can be.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section style="background:linear-gradient(135deg,var(--clubly-dark),#1a3a5c);padding:56px 24px;">
+    <div style="max-width:1000px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px;">
+        <div style="text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,.08);"><div style="font-size:2.8rem;font-weight:900;color:var(--clubly-accent);line-height:1;">5,000+</div><div style="color:rgba(255,255,255,.6);font-size:.88rem;margin-top:6px;font-weight:600;">Happy Members</div></div>
+        <div style="text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,.08);"><div style="font-size:2.8rem;font-weight:900;color:var(--clubly-teal);line-height:1;">80+</div><div style="color:rgba(255,255,255,.6);font-size:.88rem;margin-top:6px;font-weight:600;">Expert Trainers</div></div>
+        <div style="text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,.08);"><div style="font-size:2.8rem;font-weight:900;color:var(--clubly-gold);line-height:1;">30+</div><div style="color:rgba(255,255,255,.6);font-size:.88rem;margin-top:6px;font-weight:600;">Activities Offered</div></div>
+        <div style="text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,.08);"><div style="font-size:2.8rem;font-weight:900;color:#e2e8f0;line-height:1;">7</div><div style="color:rgba(255,255,255,.6);font-size:.88rem;margin-top:6px;font-weight:600;">Years of Excellence</div></div>
+        <div style="text-align:center;padding:24px 16px;"><div style="font-size:2.8rem;font-weight:900;color:#22c55e;line-height:1;">4.9★</div><div style="color:rgba(255,255,255,.6);font-size:.88rem;margin-top:6px;font-weight:600;">Average Rating</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section style="padding:80px 24px;background:var(--bg);">
+    <div style="max-width:800px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:52px;"><h2 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:var(--text);">Our Journey</h2><p style="color:var(--muted);margin-top:10px;font-size:.95rem;">From a small vision to Egypt's premier fitness destination.</p></div>
+      <div style="position:relative;padding-left:40px;border-left:3px solid var(--border);">
+        <div style="position:relative;margin-bottom:40px;">
+          <div style="position:absolute;left:-52px;top:2px;width:22px;height:22px;border-radius:50%;background:var(--clubly-accent);border:4px solid var(--bg);box-shadow:0 0 0 3px var(--clubly-accent);"></div>
+          <div style="background:var(--card-bg);border-radius:14px;padding:22px 24px;border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);"><div style="font-size:.78rem;font-weight:700;color:var(--clubly-accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;">2018 — The Beginning</div><h4 style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:6px;">Clubly Opens Its Doors</h4><p style="color:var(--muted);font-size:.88rem;line-height:1.7;">Started with a single branch in Maadi, Cairo, 12 trainers, and a dream to change how Egyptians experience fitness. Our first 200 members became our founding family.</p></div>
+        </div>
+        <div style="position:relative;margin-bottom:40px;">
+          <div style="position:absolute;left:-52px;top:2px;width:22px;height:22px;border-radius:50%;background:var(--clubly-teal);border:4px solid var(--bg);box-shadow:0 0 0 3px var(--clubly-teal);"></div>
+          <div style="background:var(--card-bg);border-radius:14px;padding:22px 24px;border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);"><div style="font-size:.78rem;font-weight:700;color:var(--clubly-teal);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;">2020 — Growth</div><h4 style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:6px;">Digital Transformation</h4><p style="color:var(--muted);font-size:.88rem;line-height:1.7;">Launched the Clubly digital platform, enabling online bookings, virtual classes, and AI-powered fitness recommendations — keeping our community active through challenging times.</p></div>
+        </div>
+        <div style="position:relative;margin-bottom:40px;">
+          <div style="position:absolute;left:-52px;top:2px;width:22px;height:22px;border-radius:50%;background:var(--clubly-gold);border:4px solid var(--bg);box-shadow:0 0 0 3px var(--clubly-gold);"></div>
+          <div style="background:var(--card-bg);border-radius:14px;padding:22px 24px;border:1px solid var(--border);box-shadow:0 2px 10px rgba(0,0,0,.04);"><div style="font-size:.78rem;font-weight:700;color:var(--clubly-gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;">2022 — Expansion</div><h4 style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:6px;">3 New Branches + Olympic Pool</h4><p style="color:var(--muted);font-size:.88rem;line-height:1.7;">Opened 3 new branches across Cairo and Giza, introduced our Olympic-standard swimming pool, and crossed the milestone of 3,000 active members.</p></div>
+        </div>
+        <div style="position:relative;">
+          <div style="position:absolute;left:-52px;top:2px;width:22px;height:22px;border-radius:50%;background:#22c55e;border:4px solid var(--bg);box-shadow:0 0 0 3px #22c55e;"></div>
+          <div style="background:var(--card-bg);border-radius:14px;padding:22px 24px;border:2px solid rgba(232,93,47,.2);box-shadow:0 4px 20px rgba(232,93,47,.08);"><div style="font-size:.78rem;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;">2025 — Today</div><h4 style="font-size:1rem;font-weight:800;color:var(--text);margin-bottom:6px;">Egypt's #1 Sports Club Platform</h4><p style="color:var(--muted);font-size:.88rem;line-height:1.7;">Over 5,000 members, 80+ certified trainers, 30+ activities — and we're just getting started. Our AI-powered member experience sets a new standard for sports clubs across the region.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEET THE TEAM -->
+  <section style="padding:80px 24px;background:var(--card-bg);border-top:1px solid var(--border);">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:52px;"><h2 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:var(--text);">Meet the Leadership</h2><p style="color:var(--muted);margin-top:10px;font-size:.95rem;">The passionate team behind Clubly's vision.</p></div>
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-md-3"><div style="text-align:center;"><div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--clubly-accent),#c0392b);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;margin:0 auto 14px;border:4px solid rgba(232,93,47,.25);box-shadow:0 6px 20px rgba(232,93,47,.25);">MH</div><h4 style="font-size:.98rem;font-weight:800;color:var(--text);margin-bottom:2px;">Mohamed Hassan</h4><div style="font-size:.8rem;color:var(--clubly-accent);font-weight:700;margin-bottom:8px;">Founder & CEO</div><p style="font-size:.8rem;color:var(--muted);line-height:1.6;">Former national athlete with a passion for building communities through sport.</p></div></div>
+        <div class="col-6 col-md-3"><div style="text-align:center;"><div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;margin:0 auto 14px;border:4px solid rgba(46,196,182,.25);box-shadow:0 6px 20px rgba(46,196,182,.2);">NF</div><h4 style="font-size:.98rem;font-weight:800;color:var(--text);margin-bottom:2px;">Nour Farag</h4><div style="font-size:.8rem;color:var(--clubly-teal);font-weight:700;margin-bottom:8px;">Head of Training</div><p style="font-size:.8rem;color:var(--muted);line-height:1.6;">15+ years coaching elite athletes. Designed Clubly's core training philosophy.</p></div></div>
+        <div class="col-6 col-md-3"><div style="text-align:center;"><div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--clubly-gold),#b8860b);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;margin:0 auto 14px;border:4px solid rgba(212,168,67,.25);box-shadow:0 6px 20px rgba(212,168,67,.2);">SA</div><h4 style="font-size:.98rem;font-weight:800;color:var(--text);margin-bottom:2px;">Sara Adel</h4><div style="font-size:.8rem;color:var(--clubly-gold);font-weight:700;margin-bottom:8px;">Chief Experience Officer</div><p style="font-size:.8rem;color:var(--muted);line-height:1.6;">Obsessed with member happiness. Leads product design and member success.</p></div></div>
+        <div class="col-6 col-md-3"><div style="text-align:center;"><div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#1d4ed8);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;margin:0 auto 14px;border:4px solid rgba(59,130,246,.25);box-shadow:0 6px 20px rgba(59,130,246,.2);">KM</div><h4 style="font-size:.98rem;font-weight:800;color:var(--text);margin-bottom:2px;">Karim Mostafa</h4><div style="font-size:.8rem;color:#3b82f6;font-weight:700;margin-bottom:8px;">Head of Technology</div><p style="font-size:.8rem;color:var(--muted);line-height:1.6;">Built the Clubly platform from scratch. Drives our AI-powered features.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CLUBLY -->
+  <section style="padding:80px 24px;background:var(--bg);">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:52px;"><h2 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:var(--text);">Why Choose Clubly?</h2><p style="color:var(--muted);margin-top:10px;font-size:.95rem;">What makes us different from every other gym.</p></div>
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-4" style="display:flex;"><div style="background:var(--card-bg);border-radius:14px;padding:24px;border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;flex:1;transition:transform .2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"><div style="width:46px;height:46px;border-radius:12px;background:rgba(232,93,47,.12);color:var(--clubly-accent);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="bi bi-robot"></i></div><div><h4 style="font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:6px;">AI-Powered Programs</h4><p style="color:var(--muted);font-size:.84rem;line-height:1.7;">Personalized training plans that adapt to your progress, goals, and schedule in real time.</p></div></div></div>
+        <div class="col-md-6 col-lg-4" style="display:flex;"><div style="background:var(--card-bg);border-radius:14px;padding:24px;border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;flex:1;transition:transform .2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"><div style="width:46px;height:46px;border-radius:12px;background:rgba(46,196,182,.12);color:var(--clubly-teal);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="bi bi-people"></i></div><div><h4 style="font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:6px;">Expert Trainers</h4><p style="color:var(--muted);font-size:.84rem;line-height:1.7;">All our trainers are certified, background-checked, and regularly rated by members to ensure top quality.</p></div></div></div>
+        <div class="col-md-6 col-lg-4" style="display:flex;"><div style="background:var(--card-bg);border-radius:14px;padding:24px;border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;flex:1;transition:transform .2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"><div style="width:46px;height:46px;border-radius:12px;background:rgba(212,168,67,.12);color:var(--clubly-gold);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="bi bi-building"></i></div><div><h4 style="font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:6px;">World-Class Facilities</h4><p style="color:var(--muted);font-size:.84rem;line-height:1.7;">Olympic pool, cutting-edge gym equipment, multiple studios — all maintained to the highest standards.</p></div></div></div>
+        <div class="col-md-6 col-lg-4" style="display:flex;"><div style="background:var(--card-bg);border-radius:14px;padding:24px;border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;flex:1;transition:transform .2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"><div style="width:46px;height:46px;border-radius:12px;background:rgba(34,197,94,.12);color:#22c55e;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="bi bi-heart"></i></div><div><h4 style="font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:6px;">Family-Friendly</h4><p style="color:var(--muted);font-size:.84rem;line-height:1.7;">Special programs for kids, teenagers, and seniors — fitness for the whole family.</p></div></div></div>
+        <div class="col-md-6 col-lg-4" style="display:flex;"><div style="background:var(--card-bg);border-radius:14px;padding:24px;border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;flex:1;transition:transform .2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"><div style="width:46px;height:46px;border-radius:12px;background:rgba(59,130,246,.12);color:#3b82f6;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="bi bi-calendar-check"></i></div><div><h4 style="font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:6px;">Easy Booking</h4><p style="color:var(--muted);font-size:.84rem;line-height:1.7;">Book any class, trainer, or facility in seconds via our app or website — no waiting, no hassle.</p></div></div></div>
+        <div class="col-md-6 col-lg-4" style="display:flex;"><div style="background:var(--card-bg);border-radius:14px;padding:24px;border:1px solid var(--border);display:flex;gap:16px;align-items:flex-start;flex:1;transition:transform .2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''"><div style="width:46px;height:46px;border-radius:12px;background:rgba(232,93,47,.12);color:var(--clubly-accent);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;"><i class="bi bi-shield-check"></i></div><div><h4 style="font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:6px;">Safety First</h4><p style="color:var(--muted);font-size:.84rem;line-height:1.7;">Every trainer is CPR-certified. Our facilities meet international safety standards with 24/7 monitoring.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section style="padding:70px 24px;background:linear-gradient(135deg,var(--clubly-accent) 0%,#c0392b 100%);text-align:center;">
+    <div style="max-width:600px;margin:0 auto;">
+      <h2 style="font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;color:#fff;margin-bottom:14px;">Ready to Be Part of Our Story?</h2>
+      <p style="color:rgba(255,255,255,.8);font-size:1rem;margin-bottom:28px;line-height:1.7;">Join 5,000+ members who've already transformed their lives. Your journey starts with a single step.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="plans.html" style="background:#fff;color:var(--clubly-accent);border:none;padding:13px 32px;border-radius:50px;font-weight:900;font-size:.95rem;cursor:pointer;transition:all .2s;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="bi bi-lightning-charge-fill"></i>Join Now</a>
+        <a href="contact.html" style="background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.4);padding:13px 32px;border-radius:50px;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .2s;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><i class="bi bi-chat-dots"></i>Talk to Us</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="clubly-footer">
+  <div class="footer-inner">
+    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+    <div class="footer-col"><h5>Explore</h5><ul class="footer-links"><li><a href="../index.html">Home</a></li><li><a href="activities.html">Activities</a></li><li><a href="facilities.html">Facilities</a></li><li><a href="trainers.html">Trainers</a></li><li><a href="plans.html">Membership Plans</a></li><li><a href="about.html">About Us</a></li></ul></div>
+    <div class="footer-col"><h5>Help</h5><ul class="footer-links"><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="plans.html">Join Now</a></li></ul></div>
+    <div class="footer-col"><h5>Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
+  </div>
+  <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+</footer>
+
+<!-- AUTH MODAL (v3) -->
+<div class="modal fade" id="authModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width:500px;">
+<div class="modal-content" style="border-radius:24px;border:none;overflow:visible;background:#f0f4f8;">      <div style="position:absolute;top:12px;right:14px;z-index:20;">
+        <button type="button" data-bs-dismiss="modal" style="background:rgba(0,0,0,.07);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:#64748b;">✕</button>
+      </div>
+
+      <!-- AUTH INNER PAGES -->
+<div style="padding:0; overflow-y:auto; max-height:80vh;">
+        <!-- SIGN IN PAGE -->
+        <div id="authLoginPage" class="auth-inner-page" style="padding:30px 30px 24px;">
+          <div style="text-align:center;margin-bottom:20px;">
+            <div style="width:58px;height:58px;background:linear-gradient(135deg,#00d4aa,#00a896);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(0,212,170,0.22);">🏋️</div>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Welcome back 👋</h2>
+            <p style="color:#64748b;font-size:12.5px;">Select your role and enter your credentials</p>
+          </div>
+
+          <!-- Role Selector -->
+          <div class="auth-role-selector" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;">
+            <div class="auth-role-opt active" data-role="admin" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">👑</span><span style="font-size:10px;font-weight:700;color:#64748b;">Admin</span>
+            </div>
+            <div class="auth-role-opt" data-role="trainer" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🏆</span><span style="font-size:10px;font-weight:700;color:#64748b;">Trainer</span>
+            </div>
+            <div class="auth-role-opt" data-role="member" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🎯</span><span style="font-size:10px;font-weight:700;color:#64748b;">Member</span>
+            </div>
+            <div class="auth-role-opt" data-role="guest" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🌟</span><span style="font-size:10px;font-weight:700;color:#64748b;">Guest</span>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+            <input type="email" id="siEmail" placeholder="example@club.com"
+              oninput="authValidateEmail('siEmail','siEmailErr')" onblur="authValidateEmail('siEmail','siEmailErr')"
+              style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+            <div id="siEmailErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+          </div>
+
+          <!-- Password -->
+          <div style="margin-bottom:6px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Password</label>
+            <div style="position:relative;">
+              <input type="password" id="siPassword" placeholder="••••••••"
+                oninput="authValidateRequired('siPassword','siPassErr','Password is required')"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 42px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <button type="button" onclick="authToggleEye('siPassword',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div id="siPassErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+          </div>
+
+          <div style="text-align:right;margin-bottom:14px;">
+<a href="#" style="font-size:11.5px;color:#00a896;font-weight:600;text-decoration:none;">Forgot password?</a>          </div>
+
+          <button id="signinBtn" data-label="Sign In" onclick="authHandleLogin()"
+            style="width:100%;background:linear-gradient(135deg,#00d4aa,#00a896);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:2px;">
+            Sign In
+          </button>
+
+          <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:12px;margin:13px 0;">
+            <div style="flex:1;height:1px;background:#e2e8f0;"></div>or<div style="flex:1;height:1px;background:#e2e8f0;"></div>
+          </div>
+          <div style="text-align:center;font-size:12.5px;color:#64748b;">
+            Don't have an account? <a onclick="authShowPage('authSignupPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Register as Guest</a>
+          </div>
+        </div>
+
+        <!-- SIGN UP PAGE -->
+        <div id="authSignupPage" class="auth-inner-page" style="display:none;padding:24px 30px 24px;">
+          <div style="text-align:center;margin-bottom:18px;">
+            <div style="width:58px;height:58px;background:linear-gradient(135deg,#f59e0b,#b45309);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(245,158,11,0.22);">🌟</div>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Create an Account</h2>
+            <p style="color:#64748b;font-size:12px;">Guest Registration · Your request will be reviewed</p>
+          </div>
+
+          <!-- Name row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">First Name</label>
+              <input type="text" id="suFirst" placeholder="John"
+                oninput="authValidateMinLen('suFirst','suFirstErr','First name',2)"
+                onblur="authValidateMinLen('suFirst','suFirstErr','First name',2)"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <div id="suFirstErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Last Name</label>
+              <input type="text" id="suLast" placeholder="Doe"
+                oninput="authValidateMinLen('suLast','suLastErr','Last name',2)"
+                onblur="authValidateMinLen('suLast','suLastErr','Last name',2)"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <div id="suLastErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            </div>
+          </div>
+
+          <!-- National ID -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">National ID</label>
+            <div style="position:relative;">
+              <input type="text" id="suNID" placeholder="14-digit Egyptian National ID" maxlength="14"
+                oninput="authParseNationalId(this.value)"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 40px 10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <span id="nidStatus" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:15px;"></span>
+            </div>
+            <div id="suNIDErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            <div id="nidPills" style="display:none;gap:7px;flex-wrap:wrap;margin-top:6px;">
+              <span id="pillBirth" style="display:inline-flex;align-items:center;background:rgba(0,212,170,0.09);border:1px solid rgba(0,212,170,0.22);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;color:#00a896;">📅 —</span>
+              <span id="pillGender" style="display:inline-flex;align-items:center;background:rgba(0,212,170,0.09);border:1px solid rgba(0,212,170,0.22);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;color:#00a896;">⚧ —</span>
+            </div>
+          </div>
+
+          <!-- Birth & Gender auto -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Date of Birth <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
+              <input type="text" id="suBirth" placeholder="From National ID" readonly
+                style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Gender <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
+              <input type="text" id="suGender" placeholder="From National ID" readonly
+                style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+            <input type="email" id="suEmail" placeholder="example@gmail.com"
+              oninput="authValidateEmail('suEmail','suEmailErr')" onblur="authValidateEmail('suEmail','suEmailErr')"
+              style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+            <div id="suEmailErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+          </div>
+
+          <!-- Phone -->
+          <div style="margin-bottom:13px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Phone Number</label>
+            <input type="tel" id="suPhone" placeholder="01xxxxxxxxx"
+              oninput="authValidatePhone('suPhone','suPhoneErr')" onblur="authValidatePhone('suPhone','suPhoneErr')"
+              style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+            <div id="suPhoneErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+          </div>
+
+          <!-- Password + Strength -->
+          <div style="margin-bottom:6px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Password</label>
+            <div style="position:relative;">
+              <input type="password" id="suPassword" placeholder="Min. 8 chars, A-Z, 0-9, symbol"
+
+                oninput="authValidatePassword('suPassword','suPassErr'); authCheckStrength('suPassword')"
+                style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 40px 10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+              <button type="button" onclick="authToggleEye('suPassword',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div id="suPassErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
+            <!-- Strength bars -->
+            <div id="suStrengthWrap" style="display:none;margin-top:6px;">
+              <div style="display:flex;gap:4px;">
+                <div id="asb1" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+                <div id="asb2" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+                <div id="asb3" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+                <div id="asb4" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+              </div>
+              <div id="suStrengthLabel" style="font-size:11px;font-weight:600;color:#64748b;margin-top:3px;">Weak</div>
+            </div>
+          </div>
+
+          <button id="signupBtn" data-label="Create Account" onclick="authHandleSignup()"
+            style="width:100%;background:linear-gradient(135deg,#f59e0b,#b45309);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:12px;">
+            Create Account
+          </button>
+
+          <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:12px;margin:13px 0;">
+            <div style="flex:1;height:1px;background:#e2e8f0;"></div>or<div style="flex:1;height:1px;background:#e2e8f0;"></div>
+          </div>
+          <div style="text-align:center;font-size:12.5px;color:#64748b;">
+            Already have an account? <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Sign In</a>
+          </div>
+        </div>
+<!-- FORGOT PASSWORD PAGE -->
+<div id="authForgotPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="width:58px;height:58px;background:linear-gradient(135deg,#0d1b2a,#122236);border:1px solid rgba(255,255,255,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(59,130,246,0.25);">🔑</div>
+    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Forgot Password?</h2>
+    <p style="color:#64748b;font-size:12.5px;">Enter your email and we'll send you a reset code</p>
+  </div>
+  <div style="margin-bottom:16px;">
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+    <input type="email" id="fpEmail" placeholder="example@gmail.com"
+      oninput="authValidateEmail('fpEmail','fpEmailErr')"
+      onblur="authValidateEmail('fpEmail','fpEmailErr')"
+      style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+    <div id="fpEmailErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+  </div>
+  <button id="fpSendBtn" onclick="authHandleForgot()"
+   style="width:100%;background:linear-gradient(135deg,#0d1b2a,#1a3a5c);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;box-shadow:0 4px 15px rgba(13,27,42,.3);">
+    Send Reset Code
+  </button>
+  <div style="text-align:center;font-size:12.5px;color:#64748b;">
+    Remember your password? <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Sign In</a>
+  </div>
+</div>
+
+<!-- OTP PAGE -->
+<div id="authOtpPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="width:58px;height:58px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(139,92,246,0.25);">📨</div>
+    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Check Your Email</h2>
+    <p id="otpSubtitle" style="color:#64748b;font-size:12.5px;">We sent a 6-digit code to <strong id="otpEmailDisplay"></strong></p>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;" id="otpInputs">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,0)" onkeydown="otpHandleKey(event,0)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,1)" onkeydown="otpHandleKey(event,1)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,2)" onkeydown="otpHandleKey(event,2)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,3)" onkeydown="otpHandleKey(event,3)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,4)" onkeydown="otpHandleKey(event,4)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,5)" onkeydown="otpHandleKey(event,5)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+  </div>
+  <div id="otpErr" style="display:none;text-align:center;font-size:11px;font-weight:600;color:#e53e3e;margin-bottom:12px;"></div>
+  <button id="otpVerifyBtn" onclick="authHandleVerifyOtp()"
+    style="width:100%;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;">
+    Verify Code
+  </button>
+  <div style="text-align:center;font-size:12.5px;color:#64748b;">
+    Didn't receive it?
+    <span id="resendTimer" style="color:#94a3b8;font-weight:600;"></span>
+    <a id="resendLink" onclick="authResendOtp()" style="display:none;color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Resend Code</a>
+  </div>
+  <div style="text-align:center;margin-top:10px;">
+    <a onclick="authShowPage('authForgotPage')" style="font-size:12px;color:#94a3b8;cursor:pointer;text-decoration:none;">← Change Email</a>
+  </div>
+</div>
+
+<!-- RESET PASSWORD PAGE -->
+<div id="authResetPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="width:58px;height:58px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(34,197,94,0.25);">🔒</div>
+    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Set New Password</h2>
+    <p style="color:#64748b;font-size:12.5px;">Choose a strong password for your account</p>
+  </div>
+  <div style="margin-bottom:13px;">
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">New Password</label>
+    <div style="position:relative;">
+      <input type="password" id="rpNew" placeholder="Min. 8 characters"
+        oninput="authValidatePassword('rpNew','rpNewErr'); authCheckStrengthReset('rpNew')"
+        style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 40px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+      <button type="button" onclick="authToggleEye('rpNew',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div id="rpNewErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+    <div id="rpStrengthWrap" style="display:none;margin-top:6px;">
+      <div style="display:flex;gap:4px;">
+        <div id="rpsb1" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+        <div id="rpsb2" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+        <div id="rpsb3" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+        <div id="rpsb4" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
+      </div>
+      <div id="rpStrengthLabel" style="font-size:11px;font-weight:600;color:#64748b;margin-top:3px;"></div>
+    </div>
+  </div>
+  <div style="margin-bottom:16px;">
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Confirm Password</label>
+    <div style="position:relative;">
+      <input type="password" id="rpConfirm" placeholder="Repeat new password"
+        oninput="authValidateConfirm()"
+        style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 40px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
+      <button type="button" onclick="authToggleEye('rpConfirm',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <div id="rpConfirmErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+  </div>
+  <button id="rpSubmitBtn" onclick="authHandleResetPassword()"
+    style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;">
+    Reset Password
+  </button>
+</div>
+      </div><!-- end AUTH INNER PAGES -->
+    </div>
+  </div>
+</div>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let dark=false;
+document.addEventListener('click', e => {
+  if (e.target.closest('#themeBtn')) {
+    dark = !dark;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+    const btn = document.getElementById('themeBtn');
+    if (btn) btn.innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+  }
+});window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
+
+
+// ── Modal ────────────────────────────────────────────
+const API_BASE = 'https://clublywebsite.runasp.net/api/auth';
+let authModalInstance;
+function openModal(page){
+  if(!authModalInstance) authModalInstance=new bootstrap.Modal(document.getElementById('authModal'));
+  authShowPage(page==='register'?'authSignupPage':'authLoginPage');
+  authModalInstance.show();
+}
+
+// ── Page Switch ──────────────────────────────────────
+function authShowPage(id){
+  document.querySelectorAll('.auth-inner-page').forEach(p=>p.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+
+// ── Role Select ──────────────────────────────────────
+let authSelectedRole='admin';
+function authSelectRole(el){
+  document.querySelectorAll('.auth-role-opt').forEach(r=>{
+    r.style.border='2px solid #e2e8f0';
+    r.style.background='#f8fafc';
+    r.querySelector('span:last-child').style.color='#64748b';
+  });
+  const roleColors={admin:'#ff6b35',trainer:'#00d4aa',member:'#7c5cfc',guest:'#f59e0b'};
+  const role=el.dataset.role;
+  el.style.border=`2px solid ${roleColors[role]}`;
+  el.style.background=`rgba(${role==='admin'?'255,107,53':role==='trainer'?'0,212,170':role==='member'?'124,92,252':'245,158,11'},.06)`;
+  el.querySelector('span:last-child').style.color=roleColors[role];
+  authSelectedRole=role;
+}
+// init admin active styling
+document.addEventListener('DOMContentLoaded',()=>{
+  const adminEl=document.querySelector('.auth-role-opt[data-role="admin"]');
+  if(adminEl) authSelectRole(adminEl);
+});
+
+// ── Toast ────────────────────────────────────────────
+function authShowNotif(msg,type='success'){
+  const n=document.getElementById('authNotif');
+  n.textContent=(type==='success'?'✓  ':'✕  ')+msg;
+  n.style.background=type==='success'?'#00a896':'#e53e3e';
+  n.style.opacity='1';n.style.transform='translateY(0)';
+  setTimeout(()=>{n.style.opacity='0';n.style.transform='translateY(8px)';},3200);
+}
+
+// ── Field State ──────────────────────────────────────
+function authSetField(inputId,errId,isValid,errMsg){
+  const inp=document.getElementById(inputId);
+  const err=document.getElementById(errId);
+  inp.style.borderColor=isValid?'#00d4aa':'#e53e3e';
+  inp.style.background=isValid?'#f6fdfb':'#fff8f8';
+  if(!isValid&&errMsg){err.textContent='⚠ '+errMsg;err.style.display='block';}
+  else{err.style.display='none';}
+  return isValid;
+}
+
+// ── Validators ───────────────────────────────────────
+function authValidateEmail(iId,eId){
+  const v=document.getElementById(iId).value.trim();
+  if(!v) return authSetField(iId,eId,false,'Email is required');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return authSetField(iId,eId,false,'Enter a valid email');
+  return authSetField(iId,eId,true);
+}
+function authValidateRequired(iId,eId,msg){
+  const v=document.getElementById(iId).value;
+  if(!v) return authSetField(iId,eId,false,msg);
+  return authSetField(iId,eId,true);
+}
+function authValidateMinLen(iId,eId,label,min){
+  const v=document.getElementById(iId).value.trim();
+  if(!v) return authSetField(iId,eId,false,label+' is required');
+  if(v.length<min) return authSetField(iId,eId,false,label+' must be at least '+min+' characters');
+  return authSetField(iId,eId,true);
+}
+function authValidatePhone(iId,eId){
+  const v=document.getElementById(iId).value.trim();
+  if(!v) return authSetField(iId,eId,false,'Phone number is required');
+  if(!/^0\d{9,10}$/.test(v)) return authSetField(iId,eId,false,'Enter a valid number (e.g. 01012345678)');
+  return authSetField(iId,eId,true);
+}
+function authValidatePassword(iId,eId){
+  const v=document.getElementById(iId).value;
+  if(!v) return authSetField(iId,eId,false,'Password is required');
+  if(v.length<8) return authSetField(iId,eId,false,'Password must be at least 8 characters');
+  if(!/[A-Z]/.test(v)) return authSetField(iId,eId,false,'Must contain an uppercase letter (A-Z)');
+  if(!/[a-z]/.test(v)) return authSetField(iId,eId,false,'Must contain a lowercase letter (a-z)');
+  if(!/[0-9]/.test(v)) return authSetField(iId,eId,false,'Must contain a number (0-9)');
+  if(!/[^A-Za-z0-9]/.test(v)) return authSetField(iId,eId,false,'Must contain a special character (!@#$...)');
+  return authSetField(iId,eId,true);
+}
+
+// ── Eye Toggle ───────────────────────────────────────
+const EYE_OPEN=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const EYE_CLOSE=`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+function authToggleEye(iId,btn){
+  const inp=document.getElementById(iId);
+  const show=inp.type==='password';
+  inp.type=show?'text':'password';
+  btn.innerHTML=show?EYE_CLOSE:EYE_OPEN;
+}
+
+// ── Password Strength ────────────────────────────────
+function authCheckStrength(id){
+  const val=document.getElementById(id).value;
+  const wrap=document.getElementById('suStrengthWrap');
+  const lbl=document.getElementById('suStrengthLabel');
+  if(!val){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  let score=0;
+  if(val.length>=8)score++;
+  if(val.length>=12)score++;
+  if(/[A-Z]/.test(val)&&/[a-z]/.test(val))score++;
+  if(/[0-9]/.test(val)&&/[^A-Za-z0-9]/.test(val))score++;
+  const levels=[{color:'#e53e3e',label:'Weak'},{color:'#f59e0b',label:'Fair'},{color:'#00d4aa',label:'Good'},{color:'#00a896',label:'Strong'}];
+  const lvl=levels[score-1]||levels[0];
+  ['asb1','asb2','asb3','asb4'].forEach((bid,i)=>{document.getElementById(bid).style.background=i<score?lvl.color:'#e2e8f0';});
+  lbl.textContent=lvl.label;lbl.style.color=lvl.color;
+}
+
+// ── National ID Parser ───────────────────────────────
+function authParseNationalId(val){
+  const statusEl=document.getElementById('nidStatus');
+  const birthEl=document.getElementById('suBirth');
+  const genderEl=document.getElementById('suGender');
+  const pillsEl=document.getElementById('nidPills');
+  const errEl=document.getElementById('suNIDErr');
+  const nidInput=document.getElementById('suNID');
+  birthEl.value='';genderEl.value='';
+  pillsEl.style.display='none';
+  if(!val){statusEl.textContent='';errEl.style.display='none';nidInput.style.borderColor='#e2e8f0';return;}
+  if(!/^\d+$/.test(val)){statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'National ID must contain digits only');}
+  if(val.length<14){statusEl.textContent='⏳';nidInput.style.borderColor='#e2e8f0';errEl.style.display='none';return;}
+  const c=val[0];let century;
+  if(c==='2')century='19';
+  else if(c==='3')century='20';
+  else{statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'First digit must be 2 or 3');}
+  const yy=val.substring(1,3),mm=val.substring(3,5),dd=val.substring(5,7);
+  const mo=parseInt(mm),dy=parseInt(dd);
+  if(mo<1||mo>12||dy<1||dy>31){statusEl.textContent='❌';return authSetField('suNID','suNIDErr',false,'Invalid date in National ID');}
+  const seq=parseInt(val.substring(11,14));
+  const gender=seq%2!==0?'Male':'Female';
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const birth=`${String(dy).padStart(2,'0')} ${months[mo-1]} ${century}${yy}`;
+  birthEl.value=birth;genderEl.value=gender;
+  document.getElementById('pillBirth').textContent=`📅 ${birth}`;
+  document.getElementById('pillGender').textContent=`${gender==='Male'?'♂':'♀'} ${gender}`;
+  pillsEl.style.display='flex';
+  statusEl.textContent='✅';
+  authSetField('suNID','suNIDErr',true);
+}
+
+// ── Login ────────────────────────────────────────────
+async function authHandleLogin(){
+  const emailOk=authValidateEmail('siEmail','siEmailErr');
+  const passOk=authValidateRequired('siPassword','siPassErr','Password is required');
+  if(!emailOk||!passOk) return authShowNotif('Please fix the errors above','error');
+  const btn=document.getElementById('signinBtn');
+  btn.disabled=true;btn.textContent='Please wait…';
+  try{
+const res=await fetch(`${API_BASE}/login`,{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({email:document.getElementById('siEmail').value.trim(),password:document.getElementById('siPassword').value,role:authSelectedRole})});
+const json=await res.json();
+if(!res.ok){authShowNotif(json||'Invalid credentials','error');return;}
+localStorage.setItem('token',json.token);
+localStorage.setItem('role',json.role);
+localStorage.setItem('fullName',json.fullName);
+localStorage.setItem('userId',json.id);
+authShowNotif(`Welcome back, ${json.fullName}!`);
+const urls = {
+  admin:   'Admin.html',
+  member:  'Member dashboard.html',
+  trainer: 'trainer-dashboard.html',  // ← كده صح
+  guest:   'guest-dashboard.html'
+};setTimeout(()=>{window.location.href=urls[json.role?.toLowerCase()]||'../index.html';},1000);
+  }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
+  finally{btn.disabled=false;btn.textContent='Sign In';}
+}
+function convertBirthDate(birth) {
+  const months = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',
+                  Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+  const parts = birth.split(' ');
+  if (parts.length !== 3) return birth;
+  return `${parts[2]}-${months[parts[1]]}-${parts[0].padStart(2,'0')}`;
+}
+// ── Signup ───────────────────────────────────────────
+async function authHandleSignup(){
+  const firstOk=authValidateMinLen('suFirst','suFirstErr','First name',2);
+  const lastOk=authValidateMinLen('suLast','suLastErr','Last name',2);
+  const emailOk=authValidateEmail('suEmail','suEmailErr');
+  const phoneOk=authValidatePhone('suPhone','suPhoneErr');
+  const passOk=authValidatePassword('suPassword','suPassErr');
+  const nid=document.getElementById('suNID').value.trim();
+  const birth=document.getElementById('suBirth').value;
+  const gender=document.getElementById('suGender').value;
+  let nidOk=true;
+  if(!nid||!/^\d{14}$/.test(nid)){authSetField('suNID','suNIDErr',false,'National ID must be exactly 14 digits');nidOk=false;}
+  else if(!birth||!gender){authSetField('suNID','suNIDErr',false,'Could not parse ID — check the number');nidOk=false;}
+  if(!firstOk||!lastOk||!nidOk||!emailOk||!phoneOk||!passOk) return authShowNotif('Please fix the errors above','error');
+  const btn=document.getElementById('signupBtn');
+  btn.disabled=true;btn.textContent='Please wait…';
+  try{
+  const res=await fetch(`${API_BASE}/register`,{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({firstName:document.getElementById('suFirst').value.trim(),lastName:document.getElementById('suLast').value.trim(),nationalId:nid,dateOfBirth:convertBirthDate(birth),gender,email:document.getElementById('suEmail').value.trim(),phone:document.getElementById('suPhone').value.trim(),password:document.getElementById('suPassword').value})});
+const json=await res.json();
+if(!res.ok){authShowNotif(json||'Registration failed','error');return;}
+authShowNotif('Account created successfully! Please sign in to continue ✅');
+setTimeout(() => {
+  authShowPage('authLoginPage');
+  document.getElementById('siEmail').value = document.getElementById('suEmail').value;
+  document.getElementById('suFirst').value  = '';
+  document.getElementById('suLast').value   = '';
+  document.getElementById('suNID').value    = '';
+  document.getElementById('suBirth').value  = '';
+  document.getElementById('suGender').value = '';
+  document.getElementById('suEmail').value  = '';
+  document.getElementById('suPhone').value  = '';
+  document.getElementById('suPassword').value = '';
+  document.getElementById('suStrengthWrap').style.display = 'none';
+  document.getElementById('nidPills').style.display = 'none';
+  document.getElementById('nidStatus').textContent = '';
+}, 1500);
+  }catch{authShowNotif('Cannot reach the server. Please try again.','error');}
+  finally{btn.disabled=false;btn.textContent='Create Account';}
+}
+// ── Header Update Based on Role ──────────────────────
+function updateHeaderForRole() {
+  const role     = localStorage.getItem('role');
+  const fullName = localStorage.getItem('fullName');
+  const token    = localStorage.getItem('token');
+
+  // لو مفيش token → مفيش session حقيقي
+    if (!token || !role || !fullName) return;
+
+
+  const dashLink = document.querySelector('.header-nav a:first-child');
+  if (dashLink) {
+    const dashConfig = {
+      admin:   { label: '👑 Admin Dashboard',   href: 'Admin.html' },
+      member:  { label: '🎯 Member Dashboard',  href: 'Member dashboard.html' },
+      trainer: { label: '🏆 Trainer Dashboard', href: 'trainer-dashboard.html' },
+      guest:   { label: '🌟 Guest Dashboard',   href: 'guest-dashboard.html' },
+    };
+    if (role && dashConfig[role]) {
+      const cfg = dashConfig[role];
+      dashLink.innerHTML = `<i class="bi bi-speedometer2 me-1"></i>${cfg.label}`;
+      dashLink.href = cfg.href;
+      dashLink.style.cssText = 'color:var(--clubly-accent);font-weight:700;background:rgba(232,93,47,.1);border-radius:6px;';
+    }
+  }
+
+  const actionsEl = document.querySelector('.header-actions');
+  if (!actionsEl) return;
+
+  if (role && fullName) {
+    const initials = fullName.split(' ').slice(0,2).map(w=>w[0]?.toUpperCase()||'').join('');
+    const roleColors = {
+      admin:   { bg:'#e85d2f', label:'Admin'   },
+      member:  { bg:'#7c5cfc', label:'Member'  },
+      trainer: { bg:'#00a896', label:'Trainer' },
+      guest:   { bg:'#f59e0b', label:'Guest'   },
+    };
+    const rc = roleColors[role] || { bg:'#64748b', label:role };
+    const dashHref = document.querySelector('.header-nav a:first-child')?.href || '#';
+
+    actionsEl.innerHTML = `
+      <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
+      <div id="userChip" onclick="toggleUserDropdown()" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:6px 14px 6px 8px;border-radius:50px;cursor:pointer;transition:all .2s;">
+        <div style="width:32px;height:32px;border-radius:50%;background:${rc.bg};color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;flex-shrink:0;">${initials}</div>
+        <div style="line-height:1.2;">
+          <div style="color:#fff;font-weight:700;font-size:.85rem;white-space:nowrap;">${fullName}</div>
+          <div style="color:rgba(255,255,255,.5);font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;">${rc.label}</div>
+        </div>
+        <i class="bi bi-chevron-down" id="chipChevron" style="color:rgba(255,255,255,.5);font-size:.75rem;margin-left:2px;transition:transform .2s;"></i>
+      </div>
+      <div id="userDropdown" style="display:none;position:absolute;top:calc(var(--header-h) + 6px);right:20px;background:var(--clubly-dark);border:1px solid rgba(255,255,255,.1);border-radius:14px;min-width:200px;box-shadow:0 12px 40px rgba(0,0,0,.4);overflow:hidden;z-index:3000;">
+        <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.07);">
+          <div style="font-weight:700;color:#fff;font-size:.9rem;">${fullName}</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.45);">${rc.label}</div>
+        </div>
+        <a href="${dashHref}" style="display:flex;align-items:center;gap:10px;padding:11px 16px;color:rgba(255,255,255,.8);text-decoration:none;font-size:.88rem;font-weight:600;transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='transparent'">
+          <i class="bi bi-speedometer2" style="color:var(--clubly-accent);"></i> My Dashboard
+        </a>
+        <button onclick="handleSignOut()" style="display:flex;align-items:center;gap:10px;width:100%;padding:11px 16px;color:#ff6b6b;background:none;border:none;font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;border-top:1px solid rgba(255,255,255,.07);transition:background .15s;" onmouseover="this.style.background='rgba(255,0,0,.06)'" onmouseout="this.style.background='transparent'">
+          <i class="bi bi-box-arrow-right"></i> Sign Out
+        </button>
+      </div>
+    `;
+
+    document.getElementById('themeBtn')?.addEventListener('click', () => {
+      dark = !dark;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+      document.getElementById('themeBtn').innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+    });
+  }
+}
+
+function toggleUserDropdown() {
+  const dd  = document.getElementById('userDropdown');
+  const chv = document.getElementById('chipChevron');
+  if (!dd) return;
+  const isOpen = dd.style.display === 'block';
+  dd.style.display = isOpen ? 'none' : 'block';
+  if (chv) chv.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#userChip') && !e.target.closest('#userDropdown')) {
+    const dd  = document.getElementById('userDropdown');
+    const chv = document.getElementById('chipChevron');
+    if (dd)  dd.style.display = 'none';
+    if (chv) chv.style.transform = '';
+  }
+});
+
+function handleSignOut() {
+  localStorage.clear();
+  window.location.reload();
+}
+// ── Forgot Password State ─────────────────────────
+let _fpEmail = '';
+let _fpOtp   = '';
+let _resendInterval = null;
+
+async function authHandleForgot() {
+  const ok = authValidateEmail('fpEmail', 'fpEmailErr');
+  if (!ok) return;
+  const btn = document.getElementById('fpSendBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  _fpEmail = document.getElementById('fpEmail').value.trim();
+  try {
+    const res = await fetch(`${API_BASE}/forgot-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _fpEmail })
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      authShowNotif(j?.message || 'Email not found', 'error'); return;
+    }
+    document.getElementById('otpEmailDisplay').textContent = _fpEmail;
+    authShowPage('authOtpPage');
+    clearOtpInputs();
+    startResendTimer(60);
+    authShowNotif('Code sent! Check your inbox ✉️');
+  } catch {
+    authShowNotif('Cannot reach server. Try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Send Reset Code';
+  }
+}
+
+async function authHandleVerifyOtp() {
+  const boxes = document.querySelectorAll('.otp-box');
+  const otp   = [...boxes].map(b => b.value).join('');
+  const errEl = document.getElementById('otpErr');
+  if (otp.length < 6) {
+    errEl.textContent = '⚠ Please enter the full 6-digit code';
+    errEl.style.display = 'block';
+    boxes.forEach(b => b.style.borderColor = '#e53e3e');
+    return;
+  }
+  errEl.style.display = 'none';
+  const btn = document.getElementById('otpVerifyBtn');
+  btn.disabled = true; btn.textContent = 'Verifying…';
+  try {
+    const res = await fetch(`${API_BASE}/verify-otp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: _fpEmail, otp })
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      errEl.textContent = '⚠ ' + (j?.message || 'Invalid or expired code');
+      errEl.style.display = 'block';
+      boxes.forEach(b => { b.style.borderColor = '#e53e3e'; b.style.background = '#fff8f8'; });
+      return;
+    }
+    const json = await res.json();
+    _fpOtp = json.otp;
+    boxes.forEach(b => { b.style.borderColor = '#22c55e'; b.style.background = '#f6fdfb'; });
+    authShowNotif('Code verified! Set your new password ✅');
+    setTimeout(() => authShowPage('authResetPage'), 700);
+  } catch {
+    authShowNotif('Cannot reach server. Try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Verify Code';
+  }
+}
+
+async function authHandleResetPassword() {
+  const newOk  = authValidatePassword('rpNew', 'rpNewErr');
+  const confOk = authValidateConfirm();
+  if (!newOk || !confOk) return;
+  const btn = document.getElementById('rpSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try {
+    const newPassword = document.getElementById('rpNew').value;
+    const res = await fetch(`${API_BASE}/reset-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email:           _fpEmail,
+        otp:             _fpOtp,
+        newPassword:     newPassword,
+        confirmPassword: newPassword
+      })
+    });
+    if (!res.ok) {
+      const j = await res.json().catch(() => ({}));
+      authShowNotif(j?.message || 'Reset failed. Try again.', 'error'); return;
+    }
+    authShowNotif('Password reset successfully! Please sign in 🎉');
+    setTimeout(() => {
+      authShowPage('authLoginPage');
+      document.getElementById('siEmail').value = _fpEmail;
+      _fpEmail = ''; _fpOtp = '';
+    }, 1200);
+  } catch {
+    authShowNotif('Cannot reach server. Try again.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Reset Password';
+  }
+}
+
+function otpMoveNext(el, idx) {
+  el.value = el.value.replace(/\D/g, '');
+  el.style.borderColor = el.value ? '#8b5cf6' : '#e2e8f0';
+  el.style.background  = el.value ? 'rgba(139,92,246,.06)' : '#f8fafc';
+  if (el.value && idx < 5) document.querySelectorAll('.otp-box')[idx + 1].focus();
+}
+function otpHandleKey(e, idx) {
+  if (e.key === 'Backspace') {
+    const boxes = document.querySelectorAll('.otp-box');
+    if (!boxes[idx].value && idx > 0) boxes[idx - 1].focus();
+  }
+}
+function clearOtpInputs() {
+  document.querySelectorAll('.otp-box').forEach(b => {
+    b.value = ''; b.style.borderColor = '#e2e8f0'; b.style.background = '#f8fafc';
+  });
+  document.getElementById('otpErr').style.display = 'none';
+}
+function startResendTimer(seconds) {
+  clearInterval(_resendInterval);
+  const timerEl  = document.getElementById('resendTimer');
+  const resendEl = document.getElementById('resendLink');
+  resendEl.style.display = 'none';
+  let remaining = seconds;
+  timerEl.textContent = `Resend in ${remaining}s`;
+  _resendInterval = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(_resendInterval);
+      timerEl.textContent = '';
+      resendEl.style.display = 'inline';
+    } else {
+      timerEl.textContent = `Resend in ${remaining}s`;
+    }
+  }, 1000);
+}
+async function authResendOtp() {
+  const res = await fetch(`${API_BASE}/forgot-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: _fpEmail })
+  });
+  if (res.ok) { clearOtpInputs(); startResendTimer(60); authShowNotif('New code sent! ✉️'); }
+  else { authShowNotif('Could not resend. Try again.', 'error'); }
+}
+function authValidateConfirm() {
+  const np = document.getElementById('rpNew').value;
+  const cp = document.getElementById('rpConfirm').value;
+  if (!cp) return authSetField('rpConfirm', 'rpConfirmErr', false, 'Please confirm your password');
+  if (np !== cp) return authSetField('rpConfirm', 'rpConfirmErr', false, 'Passwords do not match');
+  return authSetField('rpConfirm', 'rpConfirmErr', true);
+}
+function authCheckStrengthReset(id) {
+  const val  = document.getElementById(id).value;
+  const wrap = document.getElementById('rpStrengthWrap');
+  const lbl  = document.getElementById('rpStrengthLabel');
+  if (!val) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  let score = 0;
+  if (val.length >= 8)  score++;
+  if (val.length >= 12) score++;
+  if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+  if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) score++;
+  const levels = [
+    { color:'#e53e3e', label:'Weak'   },
+    { color:'#f59e0b', label:'Fair'   },
+    { color:'#00d4aa', label:'Good'   },
+    { color:'#00a896', label:'Strong' },
+  ];
+  const lvl = levels[score - 1] || levels[0];
+  ['rpsb1','rpsb2','rpsb3','rpsb4'].forEach((bid, i) => {
+    document.getElementById(bid).style.background = i < score ? lvl.color : '#e2e8f0';
+  });
+  lbl.textContent = lvl.label;
+  lbl.style.color = lvl.color;
+}
+</script>
+<div id="authNotif" style="
+  position:fixed;
+  bottom:28px;
+  right:28px;
+  background:#00a896;
+  color:#fff;
+  padding:12px 24px;
+  border-radius:50px;
+  font-weight:700;
+  font-size:.88rem;
+  opacity:0;
+  transition:all .3s;
+  z-index:9999;
+  pointer-events:none;
+  white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+"></div>
+</body>
+</html>
