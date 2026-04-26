@@ -975,9 +975,16 @@ body {
   <i class="bi bi-bell-fill"></i>
   <span class="link-text">Notifications</span>
 </a>
-<a class="sidebar-link" onclick="showPage('my-notifications')" data-label="My Inbox">
+<a class="sidebar-link" onclick="showPage('my-notifications')" data-label="My Inbox"
+   style="position:relative;">
   <i class="bi bi-inbox-fill"></i>
   <span class="link-text">My Inbox</span>
+  <span id="sidebarAdminNotifBadge"
+    style="display:none; background:#e85d2f; color:#fff;
+           font-size:10px; font-weight:900;
+           min-width:18px; height:18px; border-radius:50px;
+           align-items:center; justify-content:center;
+           padding:0 5px; margin-left:auto; line-height:1;">0</span>
 </a>
   <a class="sidebar-link" onclick="showPage('contact-messages')" data-label="Contact Messages">
   <i class="bi bi-envelope-open-fill"></i>
@@ -4666,16 +4673,29 @@ let _myNotifsFiltered = [];
 let _myNotifPage      = 1;
 const _myNotifPageSize = 10;
 
-// ✅ IsRead من الـ DB مباشرة — مش localStorage
 function updateBellBadge() {
   const unread = _myNotifs.filter(n => !n.isRead).length;
-  const badge  = document.getElementById('notifBellBadge');
-  if (!badge) return;
-  if (unread > 0) {
-    badge.textContent = unread > 99 ? '99+' : unread;
-    badge.style.display = 'flex';
-  } else {
-    badge.style.display = 'none';
+
+  // Header bell badge
+  const badge = document.getElementById('notifBellBadge');
+  if (badge) {
+    if (unread > 0) {
+      badge.textContent = unread > 99 ? '99+' : unread;
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  // Sidebar badge
+  const sidebarBadge = document.getElementById('sidebarAdminNotifBadge');
+  if (sidebarBadge) {
+    if (unread > 0) {
+      sidebarBadge.style.display = 'flex';
+      sidebarBadge.textContent = unread > 99 ? '99+' : unread;
+    } else {
+      sidebarBadge.style.display = 'none';
+    }
   }
 }
 

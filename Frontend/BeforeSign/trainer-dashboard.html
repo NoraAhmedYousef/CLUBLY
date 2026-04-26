@@ -559,8 +559,22 @@ textarea.form-input{resize:vertical;min-height:90px;}
   <a href="../AfterSign/faq.html">FAQ</a>
   <a href="../AfterSign/contact.html">Contact</a>
 </nav>
-  <div class="header-actions">
-    <button class="btn-theme" id="themeBtn" title="Toggle Theme"><i class="bi bi-moon-stars"></i></button>
+<div class="header-actions">
+    <!-- Notification Bell -->
+    <div style="position:relative;display:inline-flex;">
+      <button class="btn-theme" onclick="showPage('notifications')" title="Notifications">
+        <i class="bi bi-bell-fill"></i>
+        <span id="trainerHeaderBellBadge"
+          style="display:none;position:absolute;top:-5px;right:-5px;
+                 background:#e85d2f;color:#fff;font-size:10px;font-weight:900;
+                 min-width:18px;height:18px;border-radius:50px;
+                 align-items:center;justify-content:center;
+                 padding:0 4px;border:2px solid #0d1b2a;
+                 line-height:1;pointer-events:none;">0</span>
+      </button>
+    </div>
+    <button class="btn-theme" id="themeBtn" title="Toggle Theme">
+      <i class="bi bi-moon-stars"></i></button>
     <div class="trainer-badge">
       <div class="trainer-avatar">AK</div>
       <div>
@@ -603,8 +617,16 @@ textarea.form-input{resize:vertical;min-height:90px;}
 </button>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section">Account</div>
-    <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications">
-      <i class="bi bi-bell"></i><span class="link-text">Notifications</span>
+<button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications"
+        data-label="Notifications" style="position:relative;">
+      <i class="bi bi-bell"></i>
+      <span class="link-text">Notifications</span>
+      <span id="trainerSidebarBadge"
+        style="display:none;background:#e85d2f;color:#fff;
+               font-size:10px;font-weight:900;
+               min-width:18px;height:18px;border-radius:50px;
+               align-items:center;justify-content:center;
+               padding:0 5px;margin-left:auto;line-height:1;">0</span>
     </button>
     <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile" data-label="Profile">
       <i class="bi bi-person-circle"></i><span class="link-text">Profile</span>
@@ -1980,15 +2002,38 @@ let _trainerNotifs = [];
 let _trainerNotifsFiltered = [];
 let _trainerNotifPage = 1;
 const _trainerNotifPageSize = 8;
-
 function updateTrainerUnreadBadge() {
   const unread = _trainerNotifs.filter(n => !n.isRead).length;
+
+  // Notifications page badge
   const badge = document.getElementById('trainerUnreadBadge');
   if (badge) {
     badge.textContent = `${unread} unread`;
-    badge.style.background   = unread > 0 ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
-    badge.style.color        = unread > 0 ? '#b45309' : 'var(--muted)';
-    badge.style.borderColor  = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
+    badge.style.background  = unread > 0 ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
+    badge.style.color       = unread > 0 ? '#b45309' : 'var(--muted)';
+    badge.style.borderColor = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
+  }
+
+  // Header bell badge
+  const headerBadge = document.getElementById('trainerHeaderBellBadge');
+  if (headerBadge) {
+    if (unread > 0) {
+      headerBadge.style.display = 'flex';
+      headerBadge.textContent = unread > 99 ? '99+' : unread;
+    } else {
+      headerBadge.style.display = 'none';
+    }
+  }
+
+  // Sidebar badge
+  const sidebarBadge = document.getElementById('trainerSidebarBadge');
+  if (sidebarBadge) {
+    if (unread > 0) {
+      sidebarBadge.style.display = 'flex';
+      sidebarBadge.textContent = unread > 99 ? '99+' : unread;
+    } else {
+      sidebarBadge.style.display = 'none';
+    }
   }
 }
 async function markTrainerAsRead(id) {

@@ -834,7 +834,20 @@ body {
   <a href="../AfterSign/contact.html">Contact</a>
 
   </nav>
-  <div class="header-actions">
+ <div class="header-actions">
+    <!-- Notification Bell -->
+    <div style="position:relative;display:inline-flex;">
+      <button class="btn-theme-header" onclick="showPage('notifications')" title="Notifications">
+        <i class="bi bi-bell-fill"></i>
+        <span id="guestHeaderBellBadge"
+          style="display:none;position:absolute;top:-5px;right:-5px;
+                 background:#e85d2f;color:#fff;font-size:10px;font-weight:900;
+                 min-width:18px;height:18px;border-radius:50px;
+                 align-items:center;justify-content:center;
+                 padding:0 4px;border:2px solid #0d1b2a;
+                 line-height:1;pointer-events:none;">0</span>
+      </button>
+    </div>
     <button class="btn-theme-header" id="themeToggle" title="Toggle Theme">
       <i class="bi bi-moon-stars"></i>
     </button>
@@ -1964,32 +1977,39 @@ async function markAllGuestRead() {
 }
 
 function updateGuestUnreadBadge() {
-   const unread = _guestNotifs.filter(n => !n.isRead).length;
+  const unread = _guestNotifs.filter(n => !n.isRead).length;
 
-  
-  // badge in notifications page
+  // Notifications page badge
   const badge = document.getElementById('guestUnreadBadge');
   if (badge) {
     badge.textContent = `${unread} unread`;
-    badge.style.background = unread > 0
-      ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
-    badge.style.color = unread > 0 ? '#b45309' : 'var(--muted)';
-    badge.style.borderColor = unread > 0
-      ? 'rgba(245,158,11,.3)' : 'var(--border)';
+    badge.style.background  = unread > 0 ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
+    badge.style.color       = unread > 0 ? '#b45309' : 'var(--muted)';
+    badge.style.borderColor = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
   }
 
-  // sidebar badge
+  // Header bell badge
+  const headerBadge = document.getElementById('guestHeaderBellBadge');
+  if (headerBadge) {
+    if (unread > 0) {
+      headerBadge.style.display = 'flex';
+      headerBadge.textContent = unread > 99 ? '99+' : unread;
+    } else {
+      headerBadge.style.display = 'none';
+    }
+  }
+
+  // Sidebar badge
   const sbBadge = document.getElementById('notifBadge');
   if (sbBadge) {
     sbBadge.textContent = unread;
     sbBadge.style.display = unread > 0 ? 'flex' : 'none';
   }
 
-  // dashboard stat
+  // Dashboard stat
   const dashEl = document.getElementById('dash-notifs');
   if (dashEl) dashEl.textContent = unread;
 }
-
 async function loadGuestNotifications() {
   const listEl = document.getElementById('guestNotifList');
   if (listEl) listEl.innerHTML = `
