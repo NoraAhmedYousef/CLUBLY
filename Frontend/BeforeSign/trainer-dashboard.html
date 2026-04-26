@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clubly — Trainer Portal</title>
@@ -1799,9 +1801,15 @@ document.getElementById('toggleBtn').addEventListener('click', () => {
 });
 
 // ===== THEME =====
-let dark = false;
+let dark = localStorage.getItem('clubly-theme') === 'dark';
+(function applyTheme() {
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  const btn = document.getElementById('themeBtn');
+  if (btn) btn.innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+})();
 document.getElementById('themeBtn').addEventListener('click', () => {
   dark = !dark;
+  localStorage.setItem('clubly-theme', dark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
   document.getElementById('themeBtn').innerHTML = dark
     ? '<i class="bi bi-sun"></i>'

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clubly — About Us</title>
@@ -505,10 +507,16 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-let dark=false;
+let dark = localStorage.getItem('clubly-theme') === 'dark';
+(function applyTheme() {
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+  const btn = document.getElementById('themeBtn');
+  if (btn) btn.innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
+})();
 document.addEventListener('click', e => {
   if (e.target.closest('#themeBtn')) {
     dark = !dark;
+    localStorage.setItem('clubly-theme', dark ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
     const btn = document.getElementById('themeBtn');
     if (btn) btn.innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
@@ -806,6 +814,7 @@ function updateHeaderForRole() {
 
     document.getElementById('themeBtn')?.addEventListener('click', () => {
       dark = !dark;
+      localStorage.setItem('clubly-theme', dark ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
       document.getElementById('themeBtn').innerHTML = dark ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon-stars"></i>';
     });

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clubly — Admin Dashboard</title>
@@ -3265,7 +3267,7 @@ function toggleSidebar() {
 // ===================================================
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
+  localStorage.setItem('clubly-theme', theme);
   const btn = document.getElementById('themeToggleHeader');
   btn.innerHTML = theme === 'dark' ? '<i class="bi bi-sun-fill"></i>' : '<i class="bi bi-moon-stars"></i>';
   // Sync all page-level themeToggles
@@ -3274,9 +3276,9 @@ function applyTheme(theme) {
   });
 }
 document.getElementById('themeToggleHeader').onclick = () => {
-  applyTheme(localStorage.getItem('theme') === 'dark' ? 'light' : 'dark');
+  applyTheme(localStorage.getItem('clubly-theme') === 'dark' ? 'light' : 'dark');
 };
-applyTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+applyTheme(localStorage.getItem('clubly-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
 // ===================================================
 // SHARED TOAST
