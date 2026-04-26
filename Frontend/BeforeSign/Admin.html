@@ -3662,12 +3662,7 @@ function renderCatPage(){
 const catModal=()=>bootstrap.Modal.getOrCreateInstance(document.getElementById('categoryModal'));
 document.getElementById('addBtn').onclick=()=>{document.getElementById('modalTitle').innerText='Add New Facility Category';document.getElementById('saveBtnText').innerText='Save';document.getElementById('categoryId').value='';document.getElementById('cat_name').value='';document.getElementById('cat_description').value='';document.getElementById('cat_status').value='Active';catModal().show();};
 async function openCatEditModal(id){const res=await fetch(`${catApiUrl}/${id}`);const cat=await res.json();document.getElementById('modalTitle').innerText='Edit Category';document.getElementById('saveBtnText').innerText='Update';document.getElementById('categoryId').value=cat.id;document.getElementById('cat_name').value=cat.name;document.getElementById('cat_description').value=cat.description||'';document.getElementById('cat_status').value=cat.status;catModal().show();}
-document.getElementById('saveCategoryBtn').onclick=async()=>{
-  const id=document.getElementById('categoryId').value, name=document.getElementById('cat_name').value.trim(), description=document.getElementById('cat_description').value.trim(), status=document.getElementById('cat_status').value;
-  if(!name||name.length<3){showAlertCat('Name min 3 chars','danger');return;}
-  const payload={name,description,status}; const url=id?`${catApiUrl}/${id}`:catApiUrl; const method=id?'PUT':'POST';
-  try{ await fetch(url,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); catModal().hide(); showAlertCat(id?'Updated':'Created'); fetchCategories(); }catch(e){showAlertCat('Failed','danger');}
-};
+
 async function deleteCat(id){if(!confirm('Delete this category?'))return;await fetch(`${catApiUrl}/${id}`,{method:'DELETE'});showAlertCat('Deleted');fetchCategories();}
 document.getElementById('searchInput_cat')?.addEventListener('input',e=>{searchCat=e.target.value.toLowerCase().trim();currentPageCat=1;applyCatFilters();});
 document.getElementById('sortBy_cat')?.addEventListener('change',e=>{sortCat=e.target.value;applyCatFilters();});
@@ -4057,7 +4052,14 @@ document.getElementById('editEndDate_g').value   = safeDate(g.endDate   || g.End
 // لو في startDate و duration بس مفيش endDate احسبه
 if (g.startDate && g.durationDays && !g.endDate) {
   recalcEditEndDate();
-}document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');trainerSel.innerHTML='<option value="">-- No Trainer --</option>';trainerSel.disabled=false;try{const tr=await fetch(`https://clublywebsite.runasp.net/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.fullName;if(t.id===g.trainerId)o.selected=true;trainerSel.appendChild(o);});}catch(e){}const container=document.getElementById('editSlotsContainer_g');container.innerHTML='';const slots=g.timeSlots||g.slots||[];if(slots.length){slots.forEach(s=>addEditSlot(container,s));}else{addEditSlot(container,null);}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>{if(!confirm('Delete this group?'))return;try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
+}document.getElementById('editActivity_g').value=g.activityId||'';const selOpt=document.getElementById('editActivity_g').selectedOptions[0];document.getElementById('editFacilityName_g').value=selOpt?.dataset?.facilityName||'';const trainerSel=document.getElementById('editTrainer_g');trainerSel.innerHTML='<option value="">-- No Trainer --</option>';trainerSel.disabled=false;try{const tr=await fetch(`https://clublywebsite.runasp.net/api/Trainers/byActivity/${g.activityId}`);const trainers=await tr.json();trainers.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.fullName;if(t.id===g.trainerId)o.selected=true;trainerSel.appendChild(o);});}catch(e){}const container=document.getElementById('editSlotsContainer_g');container.innerHTML='';const slots=g.timeSlots||g.slots||[];if(slots.length){slots.forEach(s=>addEditSlot(container,s));}else{addEditSlot(container,null);}new bootstrap.Modal(document.getElementById('editModal_g')).show();}catch(e){showToastG('Failed to load','error');}};});document.querySelectorAll('#groupsTbody .delete-btn-g').forEach(btn=>{btn.onclick=async()=>
+  {const r = await Swal.fire({
+  title: 'Delete this group?', icon: 'warning',
+  showCancelButton: true, confirmButtonColor: '#e85d2f',
+  confirmButtonText: 'Yes, delete'
+});
+if (!r.isConfirmed) return;
+try{const res=await fetch(`${groupsApi}/${btn.dataset.id}`,{method:'DELETE'});if(!res.ok)throw new Error();showToastG('Deleted');await loadGroups();}catch(e){showToastG('Delete failed','error');}};});}
 function addEditSlot(container, data) {
   const div = document.createElement('div');
   div.className = 'slot-row border rounded-3 p-3 mb-2';
@@ -4259,13 +4261,46 @@ document.getElementById('slotsContainer_g').addEventListener('change', (e) => {
 const msApiUrl='https://clublywebsite.runasp.net/api/MemberShips';
 const msModalEl=document.getElementById('membershipModal');
 const msModal=new bootstrap.Modal(msModalEl);
-function fetchMemberships(){document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>';fetch(msApiUrl).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(ms=>{document.getElementById('membershipTableBody').innerHTML='';ms.forEach(m=>{const tr=document.createElement('tr');tr.dataset.id=m.id;tr.innerHTML=`<td>${m.name}</td><td>${m.description??''}</td><td>${m.duration}</td><td>$${m.price}</td><td><span class="badge ${m.status==='Active'?'bg-success':'bg-secondary'}">${m.status}</span></td><td class="text-center"><button class=" btn btn-link text-primary edit-btn-ms"><i class="bi bi-pencil-square"></i></button><button class="btn btn-link text-danger  delete-btn-ms"><i class="bi bi-trash3-fill"></i></button></td>`;document.getElementById('membershipTableBody').appendChild(tr);});}).catch(e=>document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center text-danger py-4">Failed to load</td></tr>');}
-document.getElementById('membershipTableBody').addEventListener('click',async e=>{const btn=e.target.closest('button');if(!btn)return;const tr=btn.closest('tr');const id=tr?.dataset.id;if(btn.classList.contains('delete-btn-ms')){if(confirm('Delete this membership?')){await fetch(`${msApiUrl}/${id}`,{method:'DELETE'});fetchMemberships();}}else if(btn.classList.contains('edit-btn-ms')){const m=await(await fetch(`${msApiUrl}/${id}`)).json();document.getElementById('membershipIdHidden').value=m.id;document.getElementById('ms_name').value=m.name;document.getElementById('ms_description').value=m.description??'';document.getElementById('ms_duration').value=m.duration;document.getElementById('ms_price').value=m.price;document.getElementById('ms_status').value=m.status;document.getElementById('saveMembershipBtn').textContent='Update';msModal.show();}});
-document.getElementById('saveMembershipBtn').addEventListener('click',async()=>{const id=document.getElementById('membershipIdHidden').value;const data={name:document.getElementById('ms_name').value,description:document.getElementById('ms_description').value,duration:parseInt(document.getElementById('ms_duration').value),price:parseFloat(document.getElementById('ms_price').value),status:document.getElementById('ms_status').value};const method=id?'PUT':'POST';const url=id?`${msApiUrl}/${id}`:msApiUrl;try{const res=await fetch(url,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(!res.ok)throw new Error();msModal.hide();fetchMemberships();}catch(e){alert('Failed');}});
-msModalEl.addEventListener('hidden.bs.modal',()=>{document.getElementById('membershipIdHidden').value='';document.getElementById('ms_name').value='';document.getElementById('ms_description').value='';document.getElementById('ms_duration').value='';document.getElementById('ms_price').value='';document.getElementById('ms_status').value='';document.getElementById('saveMembershipBtn').textContent='Save';});
+
+msModalEl.addEventListener('hidden.bs.modal', () => {
+  document.getElementById('membershipIdHidden').value = '';
+  document.getElementById('ms_name').value = '';
+  document.getElementById('ms_description').value = '';
+  document.getElementById('ms_duration').value = '';
+  document.getElementById('ms_price').value = '';
+  document.getElementById('ms_status').value = '';
+  document.getElementById('saveMembershipBtn').textContent = 'Save';
+});
 let membershipsData=[], currentPageMs=1, pageSizeMs=10;
 function fetchMemberships(){document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">Loading...</td></tr>';fetch(msApiUrl).then(r=>{if(!r.ok)throw new Error();return r.json();}).then(ms=>{membershipsData=ms;currentPageMs=1;renderMembershipPage(currentPageMs);}).catch(()=>document.getElementById('membershipTableBody').innerHTML='<tr><td colspan="6" class="text-center text-danger py-4">Failed to load</td></tr>');}
 function renderMembershipPage(page){const tbody=document.getElementById('membershipTableBody');tbody.innerHTML='';const total=membershipsData.length,totalPages=Math.max(1,Math.ceil(total/pageSizeMs));if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageMs=page;const start=(page-1)*pageSizeMs,end=Math.min(start+pageSizeMs,total),items=membershipsData.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="6" class="text-center py-4 text-muted">No memberships found</td></tr>';}else{items.forEach(m=>{const tr=document.createElement('tr');tr.dataset.id=m.id;tr.innerHTML=`<td>${m.name}</td><td>${m.description??''}</td><td>${m.duration}</td><td>$${m.price}</td><td><span class="badge ${m.status==='Active'?'bg-success':'bg-secondary'}">${m.status}</span></td><td class="text-center"><button class="btn btn-sm btn-link text-primary edit-btn-ms"><i class="bi bi-pencil-square"></i></button><button class="btn btn-sm btn-link text-danger delete-btn-ms"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});}document.getElementById('itemsInfo_m').textContent=`Showing ${total===0?0:start+1}-${end} of ${total}`;makePagination('pagination_m',currentPageMs,totalPages,renderMembershipPage);}
+document.getElementById('membershipTableBody').addEventListener('click', async e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  const tr = btn.closest('tr');
+  const id = tr?.dataset.id;
+  if (btn.classList.contains('delete-btn-ms')) {
+    const r = await Swal.fire({
+      title: 'Delete this membership?', icon: 'warning',
+      showCancelButton: true, confirmButtonColor: '#e85d2f',
+      confirmButtonText: 'Yes, delete'
+    });
+    if (r.isConfirmed) {
+      await fetch(`${msApiUrl}/${id}`, { method: 'DELETE' });
+      fetchMemberships();
+    }
+  } else if (btn.classList.contains('edit-btn-ms')) {
+    const m = await (await fetch(`${msApiUrl}/${id}`)).json();
+    document.getElementById('membershipIdHidden').value = m.id;
+    document.getElementById('ms_name').value = m.name;
+    document.getElementById('ms_description').value = m.description ?? '';
+    document.getElementById('ms_duration').value = m.duration;
+    document.getElementById('ms_price').value = m.price;
+    document.getElementById('ms_status').value = m.status;
+    document.getElementById('saveMembershipBtn').textContent = 'Update';
+    msModal.show();
+  }
+});
 // ===================================================
 // ============== NOTIFICATIONS MODULE ===============
 // ===================================================
@@ -5659,22 +5694,19 @@ if (!f.password.value || f.password.value.length < 8) {
     valid = false;
   }
 
-  // ── Image ─────────────────────────────────────────
-  if (!f.image.files || !f.image.files[0]) {
-    showFieldError(f.image, 'Member photo is required');
+// ── Image (optional) ──────────────────────────────
+if (f.image.files && f.image.files[0]) {
+  const file    = f.image.files[0];
+  const maxSize = 5 * 1024 * 1024;
+  const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!allowed.includes(file.type)) {
+    showFieldError(f.image, 'Image must be JPG, PNG, or WebP');
     valid = false;
-  } else {
-    const file     = f.image.files[0];
-    const maxSize  = 5 * 1024 * 1024; // 5MB
-    const allowed  = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!allowed.includes(file.type)) {
-      showFieldError(f.image, 'Image must be JPG, PNG, or WebP');
-      valid = false;
-    } else if (file.size > maxSize) {
-      showFieldError(f.image, 'Image size must not exceed 5MB');
-      valid = false;
-    }
+  } else if (file.size > maxSize) {
+    showFieldError(f.image, 'Image size must not exceed 5MB');
+    valid = false;
   }
+}
 
   if (!valid) return;
 
@@ -5954,19 +5986,19 @@ if (!f.password.value || f.password.value.length < 8) {
     valid = false;
   }
 
-  // ── Image ─────────────────────────────────────────
-  if (f.image.files && f.image.files[0]) {
-    const file    = f.image.files[0];
-    const maxSize = 5 * 1024 * 1024;
-    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!allowed.includes(file.type)) {
-      showFieldError(f.image, 'Image must be JPG, PNG, or WebP');
-      valid = false;
-    } else if (file.size > maxSize) {
-      showFieldError(f.image, 'Image size must not exceed 5MB');
-      valid = false;
-    }
+// ── Image (optional) ──────────────────────────────
+if (f.image.files && f.image.files[0]) {
+  const file    = f.image.files[0];
+  const maxSize = 5 * 1024 * 1024;
+  const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+  if (!allowed.includes(file.type)) {
+    showFieldError(f.image, 'Image must be JPG, PNG, or WebP');
+    valid = false;
+  } else if (file.size > maxSize) {
+    showFieldError(f.image, 'Image size must not exceed 5MB');
+    valid = false;
   }
+}
 
   if (!valid) return;
 
@@ -6706,7 +6738,7 @@ let _adminAllGuestFac   = [];
 async function loadBookings() {
   const membershipSearch = (document.getElementById('searchMembership')?.value || '').trim();
 
-  // 1. Member Activity Bookings
+// Activity Bookings (members + guests في request واحد)
   try {
     const res = await fetch(`${API}/ActivityBookings`);
     const all = await res.json();
@@ -6714,9 +6746,11 @@ async function loadBookings() {
     if (membershipSearch)
       _adminAllActivity = _adminAllActivity.filter(b =>
         String(b.memberShipNumber || '').includes(membershipSearch));
-  } catch { _adminAllActivity = []; }
+    _adminAllGuestAct = membershipSearch ? []
+      : all.filter(b => b.guestId != null && b.memberId == null);
+  } catch { _adminAllActivity = []; _adminAllGuestAct = []; }
 
-  // 2. Member Facility Bookings
+// Facility Bookings (members + guests في request واحد)
   try {
     const res = await fetch(`${API}/FacilityBookings`);
     const all = await res.json();
@@ -6724,24 +6758,9 @@ async function loadBookings() {
     if (membershipSearch)
       _adminAllFacility = _adminAllFacility.filter(b =>
         String(b.memberShipNumber || '').includes(membershipSearch));
-  } catch { _adminAllFacility = []; }
-
-  // 3. Guest Activity Bookings
-  try {
-    const res = await fetch(`${API}/ActivityBookings`);
-    const all = await res.json();
-    _adminAllGuestAct = membershipSearch ? []
-      : all.filter(b => b.guestId != null && b.memberId == null);
-  } catch { _adminAllGuestAct = []; }
-
-  // 4. Guest Facility Bookings
-  try {
-    const res = await fetch(`${API}/FacilityBookings`);
-    const all = await res.json();
     _adminAllGuestFac = membershipSearch ? []
       : all.filter(b => b.memberId == null);
-  } catch { _adminAllGuestFac = []; }
-
+  } catch { _adminAllFacility = []; _adminAllGuestFac = []; }
   applyAdminBookingFilter();
 }
 
@@ -7198,8 +7217,9 @@ async function saveAdminProfile() {
     const res = await fetch(`${adminsApi}/${userId}`, { method: 'PUT', body: fd });
     if (!res.ok) throw new Error();
     // Update header name
-    const newName = document.getElementById('adminProfName').value;
-    localStorage.setItem('fullName', newName);
+const newName = (firstName + ' ' + lastName).trim();
+localStorage.setItem('fullName', newName);
+document.getElementById('adminProfileName').textContent = newName;    localStorage.setItem('fullName', newName);
     Swal.fire({ title: 'Updated!', icon: 'success', timer: 1500, showConfirmButton: false });
     await loadAdminProfile();
   } catch {
@@ -7232,10 +7252,12 @@ if (!newPass || newPass.length < 8) {
     return;
   }
 
-  const fd = new FormData();
-  fd.append('FullName',        document.getElementById('adminProfName').value);
-  fd.append('CurrentPassword', currPass);
-  fd.append('NewPassword',     newPass);
+const fd = new FormData();
+const profName = document.getElementById('adminProfileName').textContent;
+fd.append('FullName', profName);
+fd.append('Phone', document.getElementById('adminProfPhone').value);
+fd.append('CurrentPassword', currPass);
+fd.append('NewPassword', newPass);
 
   try {
     const res = await fetch(`${adminsApi}/${userId}`, { method: 'PUT', body: fd });
