@@ -6992,7 +6992,9 @@ function openFaqModal(id = null) {
   ['faqQuestion','faqAnswer'].forEach(elId => {
     document.getElementById(elId)?.classList.remove('is-invalid','is-valid');
   });
-  document.getElementById('faqAnswerErr').style.visibility = 'hidden';
+
+  const faqAnswerErr = document.getElementById('faqAnswerErr');
+  if (faqAnswerErr) faqAnswerErr.style.visibility = 'hidden';
 
   if (id) {
     const f = _faqs.find(x => x.id === id);
@@ -7051,8 +7053,14 @@ async function saveFaq() {
       },
       body: JSON.stringify(payload)
     });
-    if (!res.ok) throw new Error();
-    bootstrap.Modal.getInstance(document.getElementById('faqModal')).hide();
+if (!res.ok) throw new Error();
+    const modalEl = document.getElementById('faqModal');
+    const modalInst = bootstrap.Modal.getInstance(modalEl);
+    if (modalInst) modalInst.hide();
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('padding-right');
+    document.body.style.removeProperty('overflow');
     Swal.fire({
       title: id ? 'Updated!' : 'Added!',
       icon: 'success', timer: 1500, showConfirmButton: false
