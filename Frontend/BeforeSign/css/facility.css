@@ -171,3 +171,41 @@
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(0,0,0,.12);
 }
+
+/* ═══════════════════════════════════════════════
+   DARK MODE OVERRIDES
+   ═══════════════════════════════════════════════ */
+[data-theme="dark"] .filter-search-input {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] .filter-search-input::placeholder { color: var(--muted) !important; }
+[data-theme="dark"] .filter-search-icon { color: var(--muted) !important; }
+[data-theme="dark"] .filter-select {
+  background-color: var(--bg) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] .filter-select option { background: #0f1f35; color: #e2e8f0; }
+[data-theme="dark"] .filters-bar {
+  background: var(--card-bg) !important;
+  border-color: var(--border) !important;
+}
+[data-theme="dark"] .trainer-card-wrap { background: var(--card-bg) !important; border-color: var(--border) !important; }
+[data-theme="dark"] .facility-card { background: var(--card-bg) !important; border-color: var(--border) !important; }
+[data-theme="dark"] .trainer-name { color: var(--text) !important; }
+[data-theme="dark"] .trainer-bio,
+[data-theme="dark"] .trainer-meta { color: var(--muted) !important; }
+[data-theme="dark"] .facility-name { color: var(--text) !important; }
+[data-theme="dark"] .facility-description,
+[data-theme="dark"] .facility-capacity,
+[data-theme="dark"] .facility-status { color: var(--muted) !important; }
+[data-theme="dark"] .tpanel-title { color: var(--text) !important; }
+[data-theme="dark"] .trainers-slide-panel { background: var(--card-bg) !important; }
+[data-theme="dark"] #trainers-slide-panel { background: var(--card-bg) !important; }
+[data-theme="dark"] .tpanel-header { background: var(--card-bg) !important; border-color: var(--border) !important; }
+[data-theme="dark"] .trainer-panel-card { background: var(--bg) !important; border-color: var(--border) !important; }
+[data-theme="dark"] .tpi-name { color: var(--text) !important; }
+[data-theme="dark"] .tpi-meta { color: var(--muted) !important; }
+[data-theme="dark"] .tpanel-close { background: var(--bg) !important; color: var(--muted) !important; }
