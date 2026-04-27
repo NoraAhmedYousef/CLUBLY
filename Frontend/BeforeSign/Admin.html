@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");</script>
+<script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");
+function toggleEye(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (!inp) return;
+  const isText = inp.type === 'text';
+  inp.type = isText ? 'password' : 'text';
+  btn.querySelector('i').className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
+}
+</script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -3018,9 +3026,17 @@ body {
             <div class="col-md-6"><input name="FullName" id="addFullName_a" class="form-control" placeholder="Full Name" required></div>
             <div class="col-md-6"><input name="Email" id="addEmail_a" class="form-control" type="email" placeholder="Email" required></div>
             <div class="col-md-6"><input name="Phone" id="addPhone_a" class="form-control" placeholder="Phone Number" required></div>
-  <div class="col-md-6"><input name="Password" id="addPassword_a" class="form-control" type="password" placeholder="Password" required></div>
+  <div class="col-md-6">
+    <div class="input-group">
+      <input name="Password" id="addPassword_a" class="form-control" type="password" placeholder="Password" required>
+      <button class="btn btn-outline-secondary" type="button" tabindex="-1" onclick="toggleEye('addPassword_a',this)"><i class="bi bi-eye"></i></button>
+    </div>
+  </div>
 <div class="col-md-6">
-  <input type="password" id="addConfirmPassword" class="form-control" placeholder="Confirm Password">
+  <div class="input-group">
+    <input type="password" id="addConfirmPassword" class="form-control" placeholder="Confirm Password">
+    <button class="btn btn-outline-secondary" type="button" tabindex="-1" onclick="toggleEye('addConfirmPassword',this)"><i class="bi bi-eye"></i></button>
+  </div>
   <div id="addConfirmErr" style="display:none;font-size:11px;color:red;margin-top:4px;"></div>
 </div>
             <div class="col-md-6">
@@ -3061,10 +3077,16 @@ body {
             <div class="col-md-6"><input name="Email" id="editEmail_a" class="form-control" type="email" placeholder="Email" required></div>
             <div class="col-md-6"><input name="Phone" id="editPhone_a" class="form-control" placeholder="Phone Number"></div>
 <div class="col-md-6">
-  <input name="Password" id="editPassword_a" class="form-control" type="password" placeholder="New Password (leave blank to keep)">
+  <div class="input-group">
+    <input name="Password" id="editPassword_a" class="form-control" type="password" placeholder="New Password (leave blank to keep)">
+    <button class="btn btn-outline-secondary" type="button" tabindex="-1" onclick="toggleEye('editPassword_a',this)"><i class="bi bi-eye"></i></button>
+  </div>
 </div>
 <div class="col-md-6">
-  <input type="password" id="editConfirmPassword" class="form-control" placeholder="Confirm Password">
+  <div class="input-group">
+    <input type="password" id="editConfirmPassword" class="form-control" placeholder="Confirm Password">
+    <button class="btn btn-outline-secondary" type="button" tabindex="-1" onclick="toggleEye('editConfirmPassword',this)"><i class="bi bi-eye"></i></button>
+  </div>
   <div id="editConfirmErr" style="display:none;font-size:11px;color:red;margin-top:4px;"></div>
 </div>
             <div class="col-md-6">
@@ -3308,11 +3330,21 @@ body {
               <label class="form-label fw-semibold">New Password <span class="text-muted small">(optional)</span></label>
               <div class="input-group">
                 <input type="password" id="eg_password" class="form-control" placeholder="Leave blank to keep">
-                <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1">
+                <button class="btn btn-outline-secondary" type="button" tabindex="-1" onclick="toggleEye('eg_password',this)">
                   <i class="bi bi-eye"></i>
                 </button>
               </div>
-              <div class="invalid-feedback" id="eg_pwErr">Min 8 chars with uppercase, lowercase, number & symbol</div>
+              <div class="invalid-feedback" id="eg_pwErr">Min 8 chars with uppercase, lowercase, number &amp; symbol</div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">Confirm Password</label>
+              <div class="input-group">
+                <input type="password" id="eg_confirmPassword" class="form-control" placeholder="Repeat new password">
+                <button class="btn btn-outline-secondary" type="button" tabindex="-1" onclick="toggleEye('eg_confirmPassword',this)">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" id="eg_confirmErr">Passwords do not match</div>
             </div>
           </div>
         </form>
@@ -7964,6 +7996,10 @@ function openEditGuest(id) {
   document.getElementById('eg_password').value = '';
 
   // Clear validation
+  const cgEl = document.getElementById('eg_confirmPassword');
+  if (cgEl) { cgEl.value = ''; cgEl.classList.remove('is-invalid','is-valid'); }
+  const cgErrEl = document.getElementById('eg_confirmErr');
+  if (cgErrEl) cgErrEl.style.display = 'none';
   document.getElementById('editGuestForm').querySelectorAll('.is-invalid, .is-valid')
     .forEach(el => el.classList.remove('is-invalid', 'is-valid'));
 
@@ -8002,14 +8038,17 @@ async function saveEditGuest() {
   const gender   = document.getElementById('eg_gender').value;
   const dob      = document.getElementById('eg_dob').value;
   const password = document.getElementById('eg_password').value;
+  const confirmPassword = document.getElementById('eg_confirmPassword') ? document.getElementById('eg_confirmPassword').value : '';
 
-  const fnEl  = document.getElementById('eg_fullName');
-  const emEl  = document.getElementById('eg_email');
-  const phEl  = document.getElementById('eg_phone');
-  const nidEl = document.getElementById('eg_nid');
-  const dobEl = document.getElementById('eg_dob');
-  const pwEl  = document.getElementById('eg_password');
-  const pwErr = document.getElementById('eg_pwErr');
+  const fnEl      = document.getElementById('eg_fullName');
+  const emEl      = document.getElementById('eg_email');
+  const phEl      = document.getElementById('eg_phone');
+  const nidEl     = document.getElementById('eg_nid');
+  const dobEl     = document.getElementById('eg_dob');
+  const pwEl      = document.getElementById('eg_password');
+  const pwErr     = document.getElementById('eg_pwErr');
+  const confirmEl = document.getElementById('eg_confirmPassword');
+  const confirmErr= document.getElementById('eg_confirmErr');
 
   if (!fullName || fullName.length < 2) {
     fnEl.classList.add('is-invalid'); valid = false;
@@ -8048,6 +8087,19 @@ async function saveEditGuest() {
       pwEl.classList.add('is-valid');
       pwErr.style.display = 'none';
     }
+    // Confirm password check
+    if (confirmEl && confirmErr) {
+      if (confirmPassword !== password) {
+        confirmEl.classList.add('is-invalid');
+        confirmErr.style.display = 'block';
+        valid = false;
+      } else {
+        confirmEl.classList.add('is-valid');
+        confirmErr.style.display = 'none';
+      }
+    }
+  } else if (confirmEl) {
+    confirmEl.classList.remove('is-invalid', 'is-valid');
   }
 
   if (!valid) return;
