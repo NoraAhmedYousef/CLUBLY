@@ -7351,9 +7351,7 @@ function openFaqModal(id = null) {
   }
 
   new bootstrap.Modal(document.getElementById('faqModal')).show();
-}
-
-async function saveFaq() {
+}async function saveFaq() {
   const id       = document.getElementById('faqId').value;
   const question = document.getElementById('faqQuestion').value.trim();
   const answer   = document.getElementById('faqAnswer').value.trim();
@@ -7365,8 +7363,8 @@ async function saveFaq() {
   const aEl  = document.getElementById('faqAnswer');
   const aErr = document.getElementById('faqAnswerErr');
 
-  qEl.classList.remove('is-invalid','is-valid');
-  aEl.classList.remove('is-invalid','is-valid');
+  qEl.classList.remove('is-invalid', 'is-valid');
+  aEl.classList.remove('is-invalid', 'is-valid');
 
   if (!question || question.length < 5) {
     qEl.classList.add('is-invalid'); valid = false;
@@ -7374,20 +7372,35 @@ async function saveFaq() {
 
   if (!answer || answer.length < 10) {
     aEl.classList.add('is-invalid');
-    aErr.style.visibility = 'visible'; valid = false;
+    if (aErr) aErr.style.visibility = 'visible';
+    valid = false;
   } else {
     aEl.classList.add('is-valid');
-    aErr.style.visibility = 'hidden';
+    if (aErr) aErr.style.visibility = 'hidden';
   }
 
   if (!valid) return;
 
   const token = localStorage.getItem('token');
-  const payload = { question, answer, displayOrder: order, isActive };
+  if (!token) {
+    Swal.fire('Error', 'Not authenticated. Please sign in again.', 'error');
+    return;
+  }
+
+  // ✅ المشكلة كانت هنا — لازم تبعت Id في الـ PUT
+  const payload = {
+    id:           id ? parseInt(id) : 0,   // ✅ مهم للـ PUT
+    question:     question,
+    answer:       answer,
+    displayOrder: order,
+    isActive:     isActive,
+    createdAt:    new Date().toISOString()  // ✅ الـ model بيستنى CreatedAt
+  };
+
+  const url    = id ? `${faqApi}/${id}` : faqApi;
+  const method = id ? 'PUT' : 'POST';
 
   try {
-    const url    = id ? `${faqApi}/${id}` : faqApi;
-    const method = id ? 'PUT' : 'POST';
     const res = await fetch(url, {
       method,
       headers: {
@@ -7396,24 +7409,48 @@ async function saveFaq() {
       },
       body: JSON.stringify(payload)
     });
-if (!res.ok) throw new Error();
-    const modalEl = document.getElementById('faqModal');
+
+    // ✅ اقرأ الـ error response عشان تعرف السبب
+    if (!res.ok) {
+      let errMsg = 'Failed to save FAQ';
+      try {
+        const errData = await res.json();
+        // ASP.NET validation errors format
+        if (errData.errors) {
+          const msgs = Object.values(errData.errors).flat();
+          errMsg = msgs.join(' | ');
+        } else if (errData.title) {
+          errMsg = errData.title;
+        } else if (typeof errData === 'string') {
+          errMsg = errData;
+        }
+      } catch {
+        errMsg = await res.text() || errMsg;
+      }
+      throw new Error(`${res.status}: ${errMsg}`);
+    }
+
+    const modalEl   = document.getElementById('faqModal');
     const modalInst = bootstrap.Modal.getInstance(modalEl);
-    if (modalInst) modalInst.hide();
-    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-    document.body.classList.remove('modal-open');
-    document.body.style.removeProperty('padding-right');
-    document.body.style.removeProperty('overflow');
-    Swal.fire({
-      title: id ? 'Updated!' : 'Added!',
-      icon: 'success', timer: 1500, showConfirmButton: false
+
+    modalEl.addEventListener('hidden.bs.modal', async function handler() {
+      modalEl.removeEventListener('hidden.bs.modal', handler);
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      document.body.classList.remove('modal-open');
+      document.body.style.removeProperty('padding-right');
+      document.body.style.removeProperty('overflow');
+      Swal.fire({ title: id ? 'Updated!' : 'Added!', icon: 'success', timer: 1500, showConfirmButton: false });
+      await loadFaqsAdmin();
     });
-    await loadFaqsAdmin();
-  } catch {
-    showToast('Failed to save FAQ', 'error');
+
+    if (modalInst) modalInst.hide();
+    else bootstrap.Modal.getOrCreateInstance(modalEl).hide();
+
+  } catch (e) {
+    // ✅ اعرض الـ error الحقيقي
+    Swal.fire('Error', e.message || 'Failed to save FAQ', 'error');
   }
 }
-
 async function toggleFaqStatus(id) {
   const token = localStorage.getItem('token');
   try {
@@ -8143,6 +8180,16 @@ function closeMobileSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebarOverlay').classList.remove('active');
 }
+// ✅ Global cleanup لأي modal في الصفحة
+document.addEventListener('hidden.bs.modal', function () {
+  // لو مفيش modals مفتوحة، نضف كل حاجة
+  if (!document.querySelector('.modal.show')) {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('padding-right');
+    document.body.style.removeProperty('overflow');
+  }
+});
 </script>
 <!-- ===== ADMIN SIGN OUT MODAL ===== -->
 <div id="adminSignoutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
