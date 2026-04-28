@@ -36,8 +36,9 @@ async function loadActivities() {
     // ── Populate facility filter dynamically ─────────────────────────────────
     if (filterSelect) {
       const facilities = [...new Set(active.map(a => a.FacilityName || a.facilityName).filter(Boolean))].sort();
-      filterSelect.innerHTML = `<option value="">All Facilities</option>`;
-      facilities.forEach(f => {
+const lang = localStorage.getItem('clubly_lang') || 'en';
+const allFacLabel = lang === 'ar' ? 'جميع المرافق' : 'All Facilities';
+filterSelect.innerHTML = `<option value="">${allFacLabel}</option>`;      facilities.forEach(f => {
         filterSelect.innerHTML += `<option value="${f.toLowerCase()}">${f}</option>`;
       });
     }

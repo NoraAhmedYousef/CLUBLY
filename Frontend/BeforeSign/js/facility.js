@@ -37,6 +37,9 @@ async function loadFacilities() {
     if (catFilter) {
       const usedCatIds = new Set(active.map(f => f.FacilityCategoryId || f.facilityCategoryId));
       allCategories.filter(c => usedCatIds.has(c.Id || c.id)).forEach(c => {
+        const lang = localStorage.getItem('clubly_lang') || 'en';
+const allCatLabel = lang === 'ar' ? 'جميع الفئات' : 'All Categories';
+catFilter.innerHTML = `<option value="">${allCatLabel}</option>`;
         catFilter.innerHTML += `<option value="${(c.Name||c.name||'').toLowerCase()}">${c.Name || c.name}</option>`;
       });
     }

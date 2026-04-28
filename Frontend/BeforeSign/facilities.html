@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/facility.css">
 <link rel="stylesheet" href="css/trainer.css">
+<script src="../i18n.js"></script>
 <style>
 :root{--clubly-dark:#0d1b2a;--clubly-accent:#e85d2f;--clubly-teal:#2ec4b6;--clubly-gold:#d4a843;--header-h:64px;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--muted:#64748b;--border:#e2e8f0;}
 [data-theme="dark"]{--bg:#0a1628;--card-bg:#0f1f35;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;}
@@ -373,19 +374,19 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <header class="clubly-header" id="mainHeader">
   <a class="header-logo" href="../index.html"><i class="bi bi-lightning-charge-fill logo-icon"></i><span class="logo-text">Cl<span>u</span>bly</span></a>
   <nav class="header-nav">
-    <a href="../index.html">Home</a>
-    <a href="activities.html">Activities</a>
-    <a href="facilities.html" class="active">Facilities</a>
-    <a href="trainers.html">Trainers</a>
-    <a href="plans.html">Membership Plans</a>
-    <a href="about.html">About Us</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
+ <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="activities.html" data-i18n="nav_activities">Activities</a>
+    <a href="facilities.html" class="active" data-i18n="nav_facilities">Facilities</a>
+    <a href="trainers.html" data-i18n="nav_trainers">Trainers</a>
+    <a href="plans.html" data-i18n="nav_plans">Membership Plans</a>
+    <a href="about.html" data-i18n="nav_about">About Us</a>
+    <a href="faq.html" data-i18n="nav_faq">FAQ</a>
+    <a href="contact.html" data-i18n="nav_contact">Contact</a>
   </nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
-    <button class="btn-signin" onclick="openModal('signin')">Sign In</button>
-    <a href="plans.html" class="btn-join">Join Now <i class="bi bi-arrow-right ms-1"></i></a>
+<button class="btn-signin" onclick="openModal('signin')" data-i18n="nav_signin">Sign In</button>
+    <a href="plans.html" class="btn-join" data-i18n="nav_join">Join Now <i class="bi bi-arrow-right ms-1"></i></a>
   </div>
 </header>
 
@@ -394,8 +395,8 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
  <div class="container " style="margin-top: 90px;">
     <!-- Title -->
     <div class="text-center mb-4">
-      <h2 class="display-3 fw-bold mb-3 header-title">Our Facilities</h2>
-      <p class="text-muted" style="font-size: 18px;">Discover our world-class facilities designed to enhance your experience and meet all your recreational needs.</p>
+    <h2 class="display-3 fw-bold mb-3 header-title" data-i18n="fac_title">Our Facilities</h2>
+      <p class="text-muted" style="font-size: 18px;" data-i18n="fac_sub">Discover our world-class facilities designed to enhance your experience and meet all your recreational needs.</p>
     </div>
 
 
@@ -404,20 +405,20 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
   <div class="filters-bar mb-4">
     <div class="filter-search-wrap">
       <i class="bi bi-search filter-search-icon"></i>
-      <input type="text" id="searchInput" class="filter-search-input" placeholder="Search by name or description…">
+      <input type="text" id="searchInput" class="filter-search-input" placeholder="Search by name or description…" data-i18n-ph="fac_search">
     </div>
     <select id="categoryFilter" class="filter-select">
-      <option value="">All Categories</option>
+     <option value="" data-i18n="act_filter_cat">All Categories</option>
     </select>
     <select id="capacityFilter" class="filter-select">
-      <option value="">Any Capacity</option>
-      <option value="small">Small (&lt;50)</option>
-      <option value="medium">Medium (50–100)</option>
-      <option value="large">Large (&gt;100)</option>
+<option value="" data-i18n="act_filter_cap">Any Capacity</option>
+          <option value="small" data-i18n="act_cap_small">Small (&lt;50)</option>
+          <option value="medium" data-i18n="act_cap_medium">Medium (50–100)</option>
+          <option value="large" data-i18n="act_cap_large">Large (&gt;100)</option>
     </select>
-    <button class="filter-clear-btn" onclick="clearFacilityFilters()">
-      <i class="bi bi-x-circle me-1"></i>Clear
-    </button>
+<button class="filter-clear-btn" onclick="clearFacilityFilters()">
+          <i class="bi bi-x-circle me-1"></i><span data-i18n="act_clear">Clear</span>
+        </button>
   </div>
 
   <div id="error-msg" class="text-danger text-center mb-3"></div>
@@ -427,10 +428,10 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
 <footer class="clubly-footer text-light pt-5 pb-3">
   <div class="footer-inner">
-    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
-    <div class="footer-col"><h5>Explore</h5><ul class="footer-links"><li><a href="../index.html">Home</a></li><li><a href="activities.html">Activities</a></li><li><a href="facilities.html">Facilities</a></li><li><a href="trainers.html">Trainers</a></li><li><a href="plans.html">Membership Plans</a></li><li><a href="about.html">About Us</a></li></ul></div>
-    <div class="footer-col"><h5>Help</h5><ul class="footer-links"><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="plans.html">Join Now</a></li></ul></div>
-    <div class="footer-col"><h5>Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
+    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;" data-i18n="footer_tagline">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+<div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="../index.html" data-i18n="nav_home">Home</a></li><li><a href="activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="about.html" data-i18n="nav_about">About Us</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="faq.html" data-i18n="nav_faq">FAQ</a></li><li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li><li><a href="plans.html" data-i18n="nav_join">Join Now</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
   </div>
   <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
 </footer>
