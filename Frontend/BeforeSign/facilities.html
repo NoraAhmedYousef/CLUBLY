@@ -431,11 +431,10 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
     <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;" data-i18n="footer_tagline">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
   <div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="../index.html" data-i18n="nav_home">Home</a></li><li><a href="activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="about.html" data-i18n="nav_about">About Us</a></li></ul></div>
     <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="../index.html" data-i18n="nav_faq">FAQ</a></li><li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li><li><a href="plans.html" data-i18n="nav_join">Join Now</a></li></ul></div>
-    <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
+   <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i><span data-i18n="footer_address">123 Fitness St, Maadi, Cairo</span></div><div><i class="bi bi-telephone-fill"></i>20+ 10 18346974</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i><span data-i18n="footer_hours">Daily 6AM – 10PM</span></div></div></div>
   </div>
-  <div class="footer-bottom">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
+  <div class="footer-bottom" data-i18n="footer_rights">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
 </footer>
-
 
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
 
@@ -626,11 +625,11 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <div id="authForgotPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
   <div style="text-align:center;margin-bottom:20px;">
     <div style="width:58px;height:58px;background:linear-gradient(135deg,#0d1b2a,#122236);border:1px solid rgba(255,255,255,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(59,130,246,0.25);">🔑</div>
-    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Forgot Password?</h2>
-    <p style="color:#64748b;font-size:12.5px;">Enter your email and we'll send you a reset code</p>
+    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;" data-i18n="modal_forgot_title">Forgot Password?</h2>
+    <p style="color:#64748b;font-size:12.5px;" data-i18n="modal_forgot_sub">Enter your email and we'll send you a reset code</p>
   </div>
   <div style="margin-bottom:16px;">
-    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="modal_email">Email Address</label>
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;" data-i18n="modal_email">Email Address</label>
     <input type="email" id="fpEmail" placeholder="example@gmail.com"
       oninput="authValidateEmail('fpEmail','fpEmailErr')"
       onblur="authValidateEmail('fpEmail','fpEmailErr')"
@@ -638,11 +637,11 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
     <div id="fpEmailErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
   </div>
   <button id="fpSendBtn" onclick="authHandleForgot()"
-   style="width:100%;background:linear-gradient(135deg,#0d1b2a,#1a3a5c);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;box-shadow:0 4px 15px rgba(13,27,42,.3);">
-    Send Reset Code
-  </button>
+   style="width:100%;background:linear-gradient(135deg,#0d1b2a,#1a3a5c);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;box-shadow:0 4px 15px rgba(13,27,42,.3);"
+   data-i18n="auth_send_code">Send Reset Code</button>
   <div style="text-align:center;font-size:12.5px;color:#64748b;">
-    Remember your password? <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Sign In</a>
+    <span data-i18n="modal_remember">Remember your password?</span>
+    <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;" data-i18n="nav_signin">Sign In</a>
   </div>
 </div>
 
@@ -650,50 +649,62 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <div id="authOtpPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
   <div style="text-align:center;margin-bottom:20px;">
     <div style="width:58px;height:58px;background:linear-gradient(135deg,#8b5cf6,#6d28d9);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(139,92,246,0.25);">📨</div>
-    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Check Your Email</h2>
-    <p id="otpSubtitle" style="color:#64748b;font-size:12.5px;">We sent a 6-digit code to <strong id="otpEmailDisplay"></strong></p>
+<h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;" data-i18n="auth_check_email">Check Your Email</h2>
+<p id="otpSubtitle" style="color:#64748b;font-size:12.5px;"><span data-i18n="auth_sent_code">We sent a 6-digit code to</span> <strong id="otpEmailDisplay"></strong></p>
   </div>
+
+  <!-- 6-digit OTP inputs -->
   <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;" id="otpInputs">
-    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,0)" onkeydown="otpHandleKey(event,0)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
-    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,1)" onkeydown="otpHandleKey(event,1)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
-    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,2)" onkeydown="otpHandleKey(event,2)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
-    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,3)" onkeydown="otpHandleKey(event,3)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
-    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,4)" onkeydown="otpHandleKey(event,4)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
-    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,5)" onkeydown="otpHandleKey(event,5)" style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,0)" onkeydown="otpHandleKey(event,0)"
+      style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,1)" onkeydown="otpHandleKey(event,1)"
+      style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,2)" onkeydown="otpHandleKey(event,2)"
+      style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,3)" onkeydown="otpHandleKey(event,3)"
+      style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,4)" onkeydown="otpHandleKey(event,4)"
+      style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
+    <input type="text" maxlength="1" class="otp-box" oninput="otpMoveNext(this,5)" onkeydown="otpHandleKey(event,5)"
+      style="width:46px;height:52px;text-align:center;font-size:22px;font-weight:900;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;color:#1a2332;outline:none;font-family:'Cairo',sans-serif;transition:all .2s;">
   </div>
   <div id="otpErr" style="display:none;text-align:center;font-size:11px;font-weight:600;color:#e53e3e;margin-bottom:12px;"></div>
+
   <button id="otpVerifyBtn" onclick="authHandleVerifyOtp()"
-    style="width:100%;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;">
-    Verify Code
-  </button>
+    style="width:100%;background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-bottom:14px;"data-i18n="auth_verify">Verify Code</button>
+   
+
+  <!-- Resend timer -->
   <div style="text-align:center;font-size:12.5px;color:#64748b;">
-    Didn't receive it?
+<span data-i18n="auth_didnt_receive">Didn't receive it?</span>
     <span id="resendTimer" style="color:#94a3b8;font-weight:600;"></span>
-    <a id="resendLink" onclick="authResendOtp()" style="display:none;color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Resend Code</a>
+    <a id="resendLink" onclick="authResendOtp()" style="display:none;color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;"data-i18n="auth_resend">Resend Code</a>
   </div>
   <div style="text-align:center;margin-top:10px;">
-    <a onclick="authShowPage('authForgotPage')" style="font-size:12px;color:#94a3b8;cursor:pointer;text-decoration:none;">← Change Email</a>
-  </div>
+<a onclick="authShowPage('authForgotPage')" style="font-size:12px;color:#94a3b8;cursor:pointer;text-decoration:none;" data-i18n="auth_change_email">← Change Email</a>  </div>
 </div>
 
 <!-- RESET PASSWORD PAGE -->
 <div id="authResetPage" class="auth-inner-page" style="display:none;padding:30px 30px 24px;">
   <div style="text-align:center;margin-bottom:20px;">
     <div style="width:58px;height:58px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(34,197,94,0.25);">🔒</div>
-    <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Set New Password</h2>
-    <p style="color:#64748b;font-size:12.5px;">Choose a strong password for your account</p>
-  </div>
+<h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;" data-i18n="modal_new_password">Set New Password</h2>   
+<p style="color:#64748b;font-size:12.5px;" data-i18n="modal_new_password_sub">Choose a strong password for your account</p>  </div>
+
+  <!-- New Password -->
   <div style="margin-bottom:13px;">
-    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">New Password</label>
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="auth_new_pass">New Password</label>
     <div style="position:relative;">
       <input type="password" id="rpNew" placeholder="Min. 8 characters"
         oninput="authValidatePassword('rpNew','rpNewErr'); authCheckStrengthReset('rpNew')"
         style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 40px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
-      <button type="button" onclick="authToggleEye('rpNew',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+      <button type="button" onclick="authToggleEye('rpNew',this)" tabindex="-1"
+        style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
       </button>
     </div>
     <div id="rpNewErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
+    <!-- Strength -->
     <div id="rpStrengthWrap" style="display:none;margin-top:6px;">
       <div style="display:flex;gap:4px;">
         <div id="rpsb1" style="flex:1;height:4px;border-radius:99px;background:#e2e8f0;transition:background .3s;"></div>
@@ -704,24 +715,26 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
       <div id="rpStrengthLabel" style="font-size:11px;font-weight:600;color:#64748b;margin-top:3px;"></div>
     </div>
   </div>
+
+  <!-- Confirm Password -->
   <div style="margin-bottom:16px;">
-    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Confirm Password</label>
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="auth_confirm_pass">Confirm Password</label>
     <div style="position:relative;">
       <input type="password" id="rpConfirm" placeholder="Repeat new password"
         oninput="authValidateConfirm()"
         style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 40px 11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
-      <button type="button" onclick="authToggleEye('rpConfirm',this)" tabindex="-1" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
+      <button type="button" onclick="authToggleEye('rpConfirm',this)" tabindex="-1"
+        style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748b;display:flex;align-items:center;">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
       </button>
     </div>
     <div id="rpConfirmErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:4px;"></div>
   </div>
+
   <button id="rpSubmitBtn" onclick="authHandleResetPassword()"
-    style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;">
-    Reset Password
-  </button>
+    style="width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;" data-i18n="auth_set_pass">Reset Password</button>
 </div>
-      </div><!-- end AUTH INNER PAGES -->
+      
     </div>
   </div>
 </div>
