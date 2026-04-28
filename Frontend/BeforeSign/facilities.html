@@ -426,14 +426,14 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 </div>
 
 
-<footer class="clubly-footer text-light pt-5 pb-3">
+<footer class="clubly-footer text-light pt-5 pb-3" >
   <div class="footer-inner">
     <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;" data-i18n="footer_tagline">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
-<div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="../index.html" data-i18n="nav_home">Home</a></li><li><a href="activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="about.html" data-i18n="nav_about">About Us</a></li></ul></div>
-    <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="faq.html" data-i18n="nav_faq">FAQ</a></li><li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li><li><a href="plans.html" data-i18n="nav_join">Join Now</a></li></ul></div>
+  <div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="../index.html" data-i18n="nav_home">Home</a></li><li><a href="activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="about.html" data-i18n="nav_about">About Us</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="../index.html" data-i18n="nav_faq">FAQ</a></li><li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li><li><a href="plans.html" data-i18n="nav_join">Join Now</a></li></ul></div>
     <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
   </div>
-  <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+  <div class="footer-bottom">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
 </footer>
 
 
@@ -452,29 +452,29 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
         <div id="authLoginPage" class="auth-inner-page" style="padding:30px 30px 24px;">
           <div style="text-align:center;margin-bottom:20px;">
             <div style="width:58px;height:58px;background:linear-gradient(135deg,#00d4aa,#00a896);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(0,212,170,0.22);">🏋️</div>
-            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Welcome back 👋</h2>
-            <p style="color:#64748b;font-size:12.5px;">Select your role and enter your credentials</p>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;"data-i18n="modal_welcome">Welcome back 👋</h2>
+            <p style="color:#64748b;font-size:12.5px;"data-i18n="modal_select_role">Select your role and enter your credentials</p>
           </div>
 
           <!-- Role Selector -->
           <div class="auth-role-selector" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;">
             <div class="auth-role-opt active" data-role="admin" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
-              <span style="font-size:20px;display:block;margin-bottom:3px;">👑</span><span style="font-size:10px;font-weight:700;color:#64748b;">Admin</span>
+              <span style="font-size:20px;display:block;margin-bottom:3px;">👑</span><span style="font-size:10px;font-weight:700;color:#64748b;"data-i18n="auth_admin">Admin</span>
             </div>
             <div class="auth-role-opt" data-role="trainer" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
-              <span style="font-size:20px;display:block;margin-bottom:3px;">🏆</span><span style="font-size:10px;font-weight:700;color:#64748b;">Trainer</span>
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🏆</span><span style="font-size:10px;font-weight:700;color:#64748b;"data-i18n="auth_trainer">Trainer</span>
             </div>
             <div class="auth-role-opt" data-role="member" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
-              <span style="font-size:20px;display:block;margin-bottom:3px;">🎯</span><span style="font-size:10px;font-weight:700;color:#64748b;">Member</span>
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🎯</span><span style="font-size:10px;font-weight:700;color:#64748b;"data-i18n="auth_member">Member</span>
             </div>
             <div class="auth-role-opt" data-role="guest" onclick="authSelectRole(this)" style="border:2px solid #e2e8f0;border-radius:13px;padding:10px 5px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s;">
-              <span style="font-size:20px;display:block;margin-bottom:3px;">🌟</span><span style="font-size:10px;font-weight:700;color:#64748b;">Guest</span>
+              <span style="font-size:20px;display:block;margin-bottom:3px;">🌟</span><span style="font-size:10px;font-weight:700;color:#64748b;"data-i18n="auth_guest_label">Guest</span>
             </div>
           </div>
 
           <!-- Email -->
           <div style="margin-bottom:13px;">
-            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="modal_email">Email Address</label>
             <input type="email" id="siEmail" placeholder="example@club.com"
               oninput="authValidateEmail('siEmail','siEmailErr')" onblur="authValidateEmail('siEmail','siEmailErr')"
               style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:11px 13px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
@@ -483,7 +483,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
           <!-- Password -->
           <div style="margin-bottom:6px;">
-            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Password</label>
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="modal_password"data-i18n="auth_password">Password</label>
             <div style="position:relative;">
               <input type="password" id="siPassword" placeholder="••••••••"
                 oninput="authValidateRequired('siPassword','siPassErr','Password is required')"
@@ -496,42 +496,42 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
           </div>
 
           <div style="text-align:right;margin-bottom:14px;">
-<a onclick="authShowPage('authForgotPage')" style="font-size:11.5px;color:#00a896;font-weight:600;text-decoration:none;cursor:pointer;">Forgot password?</a>          </div>
+<a onclick="authShowPage('authForgotPage')" style="font-size:11.5px;color:#00a896;font-weight:600;text-decoration:none;cursor:pointer;" data-i18n="modal_forgot">Forgot password?</a>     </div>
 
           <button id="signinBtn" data-label="Sign In" onclick="authHandleLogin()"
-            style="width:100%;background:linear-gradient(135deg,#00d4aa,#00a896);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:2px;">
+            style="width:100%;background:linear-gradient(135deg,#00d4aa,#00a896);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:2px;" data-i18n="nav_signin">
             Sign In
           </button>
 
           <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:12px;margin:13px 0;">
-            <div style="flex:1;height:1px;background:#e2e8f0;"></div>or<div style="flex:1;height:1px;background:#e2e8f0;"></div>
+            <div style="flex:1;height:1px;background:#e2e8f0;"></div><span data-i18n="divider_or">or</span><div style="flex:1;height:1px;background:#e2e8f0;"></div>
           </div>
           <div style="text-align:center;font-size:12.5px;color:#64748b;">
-            Don't have an account? <a onclick="authShowPage('authSignupPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Register as Guest</a>
+          <span data-i18n="modal_no_account">Don't have an account?</span><a onclick="authShowPage('authSignupPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;"><span data-i18n="modal_register_guest">Register as Guest</span></a>
           </div>
         </div>
 
-        <!-- SIGN UP PAGE -->
+          <!-- SIGN UP PAGE -->
         <div id="authSignupPage" class="auth-inner-page" style="display:none;padding:24px 30px 24px;">
           <div style="text-align:center;margin-bottom:18px;">
             <div style="width:58px;height:58px;background:linear-gradient(135deg,#f59e0b,#b45309);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(245,158,11,0.22);">🌟</div>
-            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Create an Account</h2>
-            <p style="color:#64748b;font-size:12px;">Guest Registration · Your request will be reviewed</p>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;"data-i18n="modal_create_account">Create an Account</h2>
+            <p style="color:#64748b;font-size:12px;"data-i18n="modal_guest_reg">Guest Registration · Your request will be reviewed</p>
           </div>
 
-          <!-- Name row -->
+              <!-- Name row -->
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">First Name</label>
-              <input type="text" id="suFirst" placeholder="John"
+     <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;" data-i18n="modal_first_name">First Name</label>
+              <input type="text" id="suFirst" placeholder="John" data-i18n-ph="modal_ph_first"
                 oninput="authValidateMinLen('suFirst','suFirstErr','First name',2)"
                 onblur="authValidateMinLen('suFirst','suFirstErr','First name',2)"
                 style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
               <div id="suFirstErr" style="display:none;font-size:11px;font-weight:600;color:#e53e3e;margin-top:3px;"></div>
             </div>
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Last Name</label>
-              <input type="text" id="suLast" placeholder="Doe"
+             <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;" data-i18n="modal_last_name">Last Name</label>
+              <input type="text" id="suLast" placeholder="Doe" data-i18n-ph="modal_ph_last"
                 oninput="authValidateMinLen('suLast','suLastErr','Last name',2)"
                 onblur="authValidateMinLen('suLast','suLastErr','Last name',2)"
                 style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
@@ -541,9 +541,9 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
           <!-- National ID -->
           <div style="margin-bottom:13px;">
-            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">National ID</label>
+   <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;" data-i18n="modal_national_id">National ID</label>
             <div style="position:relative;">
-              <input type="text" id="suNID" placeholder="14-digit Egyptian National ID" maxlength="14"
+              <input type="text" id="suNID" placeholder="14-digit Egyptian National ID" data-i18n-ph="modal_nid_placeholder" maxlength="14"
                 oninput="authParseNationalId(this.value)"
                 style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 40px 10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
               <span id="nidStatus" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:15px;"></span>
@@ -558,20 +558,18 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
           <!-- Birth & Gender auto -->
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Date of Birth <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
-              <input type="text" id="suBirth" placeholder="From National ID" readonly
+<label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"><span data-i18n="modal_dob">Date of Birth</span> <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;"data-i18n="auth_auto">AUTO</span></label><input type="text" id="suBirth" placeholder="From National ID" data-i18n-ph="modal_from_nid" readonly
                 style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
             </div>
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Gender <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
-              <input type="text" id="suGender" placeholder="From National ID" readonly
+<label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"><span data-i18n="modal_gender">Gender</span> <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;"data-i18n="auth_auto">AUTO</span></label>          <input type="text" id="suBirth" placeholder="From National ID" data-i18n-ph="modal_from_nid" readonly
                 style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
             </div>
           </div>
 
           <!-- Email -->
           <div style="margin-bottom:13px;">
-            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="modal_email">Email Address</label>
             <input type="email" id="suEmail" placeholder="example@gmail.com"
               oninput="authValidateEmail('suEmail','suEmailErr')" onblur="authValidateEmail('suEmail','suEmailErr')"
               style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
@@ -580,7 +578,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
           <!-- Phone -->
           <div style="margin-bottom:13px;">
-            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Phone Number</label>
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="auth_phone">Phone Number</label>
             <input type="tel" id="suPhone" placeholder="01xxxxxxxxx"
               oninput="authValidatePhone('suPhone','suPhoneErr')" onblur="authValidatePhone('suPhone','suPhoneErr')"
               style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
@@ -589,9 +587,9 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
           <!-- Password + Strength -->
           <div style="margin-bottom:6px;">
-            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Password</label>
+            <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="auth_password">Password</label>
             <div style="position:relative;">
-              <input type="password" id="suPassword" placeholder="Min. 8 chars, A-Z, 0-9, symbol"
+              <input type="password" id="suPassword" placeholder="Min. 8 chars, A-Z, 0-9, symbol" data-i18n-ph="modal_min_pass"
 
                 oninput="authValidatePassword('suPassword','suPassErr'); authCheckStrength('suPassword')"
                 style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:11px;padding:10px 40px 10px 12px;font-family:'Cairo',sans-serif;font-size:13px;color:#1a2332;outline:none;transition:all .2s;">
@@ -612,16 +610,16 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
             </div>
           </div>
 
-          <button id="signupBtn" data-label="Create Account" onclick="authHandleSignup()"
-            style="width:100%;background:linear-gradient(135deg,#f59e0b,#b45309);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:12px;">
+      <button id="signupBtn" data-label="Create Account" onclick="authHandleSignup()"
+            style="width:100%;background:linear-gradient(135deg,#f59e0b,#b45309);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;transition:all .25s;margin-top:12px;" data-i18n="auth_create">
             Create Account
           </button>
 
           <div style="display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:12px;margin:13px 0;">
-            <div style="flex:1;height:1px;background:#e2e8f0;"></div>or<div style="flex:1;height:1px;background:#e2e8f0;"></div>
+           <div style="flex:1;height:1px;background:#e2e8f0;"></div><span data-i18n="divider_or">or</span><div style="flex:1;height:1px;background:#e2e8f0;"></div>
           </div>
           <div style="text-align:center;font-size:12.5px;color:#64748b;">
-            Already have an account? <a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;">Sign In</a>
+            <span data-i18n="modal_have_account">Already have an account?</span><a onclick="authShowPage('authLoginPage')" style="color:#00a896;font-weight:600;cursor:pointer;text-decoration:none;" data-i18n="nav_signin">Sign In</a>
           </div>
         </div>
 <!-- FORGOT PASSWORD PAGE -->
@@ -632,7 +630,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
     <p style="color:#64748b;font-size:12.5px;">Enter your email and we'll send you a reset code</p>
   </div>
   <div style="margin-bottom:16px;">
-    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Email Address</label>
+    <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"data-i18n="modal_email">Email Address</label>
     <input type="email" id="fpEmail" placeholder="example@gmail.com"
       oninput="authValidateEmail('fpEmail','fpEmailErr')"
       onblur="authValidateEmail('fpEmail','fpEmailErr')"

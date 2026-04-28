@@ -4,9 +4,11 @@ const ACTIVITY_API = 'https://clublywebsite.runasp.net/api/Activities';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadTrainers();
+  
   window.addEventListener('scroll', () => {
     document.getElementById('mainHeader')?.classList.toggle('scrolled', window.scrollY > 50);
     document.getElementById('backTop')?.classList.toggle('show', window.scrollY > 300);
+    
   });
 });
 

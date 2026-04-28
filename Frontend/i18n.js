@@ -4,8 +4,8 @@
 //   applyLang()  on DOMContentLoaded (already done below)
 // ============================================================
 
-const CLUBLY_TRANSLATIONS = {
-  en: {
+window.CLUBLY_TRANSLATIONS = {
+    en: {
     // ── Nav ───────────────────────────────────────────────
     nav_home: "Home",
     nav_activities: "Activities",
@@ -58,7 +58,7 @@ modal_nid_placeholder: "14-digit Egyptian National ID",
 divider_or: "or",
 modal_from_nid: "From National ID",
 auth_create: "Create Account",
-modal_min_pass: "Min. 6 characters",
+modal_min_pass: "Min. 8 chars, A-Z, 0-9, symbol",
 modal_ph_first: "John",
 modal_ph_last: "Doe",
 
@@ -193,6 +193,9 @@ sched_full: "Full",
     act_swim: "Swimming, Aqua Aerobics",
     act_zumba: "Zumba, Dance Fit",
 act_search: "Search for an activity…",
+act_book_now: "Book Now",
+act_signin_to_book: "Sign in to book an",
+
     // ── Facilities Page ───────────────────────────────────
     fac_title: "Our Facilities",
     fac_sub: "Discover our world-class facilities designed to enhance your experience and meet all your recreational needs.",
@@ -362,7 +365,7 @@ modal_nid_placeholder: "الرقم القومي المكون من 14 رقم",
 divider_or: "أو",
 modal_from_nid: "من الرقم القومي",
 auth_create: "إنشاء حساب",
-modal_min_pass: "٦ أحرف على الأقل",
+modal_min_pass: "الحد الأدنى 8 أحرف، من A إلى Z، من 0 إلى 9، رمز",
 modal_ph_first: "محمد",
 modal_ph_last: "أحمد",
 
@@ -497,6 +500,10 @@ sched_full: "مكتمل",
     act_swim: "سباحة، إيروبيك مائي",
     act_zumba: "زومبا، رقص لياقة",
 act_search: "ابحث عن نشاط...",
+act_book_now: "احجز الآن",
+act_signin_to_book: "سجل الدخول لحجز",
+
+
     // ── Facilities Page ───────────────────────────────────
     fac_title: "مرافقنا",
     fac_sub: "اكتشف مرافقنا العالمية المصممة لتعزيز تجربتك وتلبية جميع احتياجاتك الترفيهية.",
@@ -566,7 +573,7 @@ fac_search: "ابحث بالاسم أو الوصف...",
     auth_dob: "تاريخ الميلاد",
     auth_gender: "الجنس",
     auth_national_id: "الرقم القومي",
-    auth_phone: "الهاتف",
+    auth_phone: "رقم الهاتف",
     auth_confirm_pass: "تأكيد كلمة المرور",
     auth_already: "لديك حساب بالفعل؟",
     auth_forgot_title: "نسيت كلمة المرور؟",

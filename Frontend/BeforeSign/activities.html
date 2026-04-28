@@ -12,7 +12,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/activity.css">
 <link rel="stylesheet" href="css/trainer.css">
-<script src="../i18n.js"></script>
 <style>
 :root{--clubly-dark:#0d1b2a;--clubly-navy:#122236;--clubly-accent:#e85d2f;--clubly-teal:#2ec4b6;--clubly-gold:#d4a843;--header-h:64px;--bg:#f0f4f8;--card-bg:#ffffff;--text:#1a202c;--muted:#64748b;--border:#e2e8f0;}
 [data-theme="dark"]{--bg:#0a1628;--card-bg:#0f1f35;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;}
@@ -445,7 +444,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
     <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="../index.html" data-i18n="nav_faq">FAQ</a></li><li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li><li><a href="plans.html" data-i18n="nav_join">Join Now</a></li></ul></div>
     <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
   </div>
-  <div class="footer-bottom">© 2025 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
+  <div class="footer-bottom">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
 </footer>
 
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
@@ -464,8 +463,8 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
         <div id="authLoginPage" class="auth-inner-page" style="padding:30px 30px 24px;">
           <div style="text-align:center;margin-bottom:20px;">
             <div style="width:58px;height:58px;background:linear-gradient(135deg,#00d4aa,#00a896);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(0,212,170,0.22);">🏋️</div>
-            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Welcome back 👋</h2>
-            <p style="color:#64748b;font-size:12.5px;">Select your role and enter your credentials</p>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;"data-i18n="modal_welcome">Welcome back 👋</h2>
+            <p style="color:#64748b;font-size:12.5px;"data-i18n="modal_select_role">Select your role and enter your credentials</p>
           </div>
 
           <!-- Role Selector -->
@@ -527,8 +526,8 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
         <div id="authSignupPage" class="auth-inner-page" style="display:none;padding:24px 30px 24px;">
           <div style="text-align:center;margin-bottom:18px;">
             <div style="width:58px;height:58px;background:linear-gradient(135deg,#f59e0b,#b45309);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 10px;box-shadow:0 10px 30px rgba(245,158,11,0.22);">🌟</div>
-            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;">Create an Account</h2>
-            <p style="color:#64748b;font-size:12px;">Guest Registration · Your request will be reviewed</p>
+            <h2 style="font-size:18px;font-weight:700;color:#1a2332;margin-bottom:3px;"data-i18n="modal_create_account">Create an Account</h2>
+            <p style="color:#64748b;font-size:12px;"data-i18n="modal_guest_reg">Guest Registration · Your request will be reviewed</p>
           </div>
 
           <!-- Name row -->
@@ -570,13 +569,11 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
           <!-- Birth & Gender auto -->
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Date of Birth <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
-<input type="text" id="suBirth" placeholder="From National ID" data-i18n-ph="modal_from_nid" readonly
+<label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"><span data-i18n="modal_dob">Date of Birth</span> <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;"data-i18n="auth_auto">AUTO</span></label><input type="text" id="suBirth" placeholder="From National ID" data-i18n-ph="modal_from_nid" readonly
                 style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
             </div>
             <div>
-              <label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;">Gender <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;">AUTO</span></label>
-          <input type="text" id="suBirth" placeholder="From National ID" data-i18n-ph="modal_from_nid" readonly
+<label style="display:block;font-size:12px;font-weight:600;color:#64748b;margin-bottom:5px;"><span data-i18n="modal_gender">Gender</span> <span style="font-size:9px;font-weight:700;color:#00d4aa;background:rgba(0,212,170,0.1);border-radius:4px;padding:1px 5px;"data-i18n="auth_auto">AUTO</span></label>          <input type="text" id="suBirth" placeholder="From National ID" data-i18n-ph="modal_from_nid" readonly
                 style="width:100%;background:#f1f5f9;border:1.5px dashed #e2e8f0;border-radius:11px;padding:10px 12px;font-family:'Cairo',sans-serif;font-size:12.5px;color:#64748b;outline:none;">
             </div>
           </div>
@@ -1267,7 +1264,6 @@ function authCheckStrengthReset(id) {
   lbl.style.color = lvl.color;
 }
 </script>
- <script src="JS2/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -1280,7 +1276,9 @@ function authCheckStrengthReset(id) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../i18n.js"></script>
 <script src="js/activity.js"></script>
+
 <div id="authNotif" style="
   position:fixed;
   bottom:28px;

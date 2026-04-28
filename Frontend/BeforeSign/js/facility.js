@@ -147,9 +147,9 @@ function facilityCardHtml(fac, catName) {
             <i class="bi bi-grid-fill me-1"></i>${catName}
           </span>
         </div>
-        <button class="btn-book-facility mt-3" onclick="handleBookFacility(${fId})">
-          <i class="bi bi-calendar-plus me-1"></i>Book Now
-        </button>
+<button class="btn-book-facility mt-3" onclick="handleBookFacility(${fId})" data-i18n="act_book_now">
+  <i class="bi bi-calendar-plus me-1"></i>Book Now
+</button>
       </div>
     </div>
   </div>`;
@@ -245,31 +245,33 @@ function clearFacilityFilters() {
   applyFacilityFilters();
 }
 
-// ── Book ──────────────────────────────────────────────────────────────────────
+// بعد
 function handleBookFacility(id) {
-  if (!localStorage.getItem('token')) { showSignInToast('facility'); return; }
+  if (!localStorage.getItem('token')) { showSignInToast(); return; }
   window.location.href = `booking.html?facility=${id}`;
 }
 
-function showSignInToast(label) {
+// بعد
+function showSignInToast() {
   let t = document.getElementById('signin-toast');
-  if (!t) {
-    t = document.createElement('div');
-    t.id = 'signin-toast';
-    t.style.cssText = `position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(20px);
-      background:#0d1b2a;color:#fff;padding:16px 24px;border-radius:16px;
-      box-shadow:0 8px 32px rgba(0,0,0,.4);z-index:99999;display:flex;
-      align-items:center;gap:12px;font-family:'Cairo',sans-serif;font-size:.9rem;
-      font-weight:600;opacity:0;transition:all .35s;max-width:92vw;`;
-    document.body.appendChild(t);
-  }
+  if (t) t.remove();
+  t = document.createElement('div');
+  t.id = 'signin-toast';
+  t.style.cssText = `position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#0d1b2a;color:#fff;padding:16px 24px;border-radius:16px;
+    box-shadow:0 8px 32px rgba(0,0,0,.4);z-index:99999;display:flex;
+    align-items:center;gap:12px;font-family:'Cairo',sans-serif;font-size:.9rem;
+    font-weight:600;opacity:0;transition:all .35s;max-width:92vw;`;
+  document.body.appendChild(t);
+  const lang = localStorage.getItem('clubly_lang') || 'en';
+  const _t = window.CLUBLY_TRANSLATIONS?.[lang] || {};
   t.innerHTML = `
     <i class="bi bi-lock-fill" style="font-size:1.3rem;color:#e85d2f;"></i>
-    <span>Sign in to book a <strong style="color:#e85d2f;">${label}</strong></span>
+    <span>${_t.act_signin_to_book || 'Sign in to book a'} <strong style="color:#e85d2f;">${_t.nav_facilities || 'facility'}</strong></span>
     <button onclick="openModal('signin')"
       style="background:linear-gradient(135deg,#e85d2f,#c0392b);color:#fff;border:none;
              border-radius:50px;padding:7px 18px;font-family:'Cairo',sans-serif;
-             font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;">Sign In</button>
+             font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;">${_t.nav_signin || 'Sign In'}</button>
     <button onclick="document.getElementById('signin-toast').style.opacity='0'"
       style="background:rgba(255,255,255,.1);color:#fff;border:none;border-radius:50%;
              width:26px;height:26px;cursor:pointer;font-size:15px;">✕</button>`;

@@ -15,7 +15,7 @@ async function loadActivities() {
   try {
     const [actRes, trRes] = await Promise.all([
       fetch("https://clublywebsite.runasp.net/api/Activities"),
-      fetch("https//clublywebsite.runasp.net/api/Trainers")
+      fetch("https://clublywebsite.runasp.net/api/Trainers")
     ]);
 
     const data     = actRes.ok ? await actRes.json() : [];
@@ -36,9 +36,8 @@ async function loadActivities() {
     // ── Populate facility filter dynamically ─────────────────────────────────
     if (filterSelect) {
       const facilities = [...new Set(active.map(a => a.FacilityName || a.facilityName).filter(Boolean))].sort();
-const lang = localStorage.getItem('clubly_lang') || 'en';
-const allFacLabel = lang === 'ar' ? 'جميع المرافق' : 'All Facilities';
-filterSelect.innerHTML = `<option value="">${allFacLabel}</option>`;      facilities.forEach(f => {
+
+filterSelect.innerHTML = `<option value="" data-i18n="fac_filter_all">All Facilities</option>`;    facilities.forEach(f => {
         filterSelect.innerHTML += `<option value="${f.toLowerCase()}">${f}</option>`;
       });
     }
@@ -48,8 +47,9 @@ filterSelect.innerHTML = `<option value="">${allFacLabel}</option>`;      facili
       return;
     }
 
-    window._allActivities = active;
+  window._allActivities = active;
     renderActivities(active);
+    if (typeof applyLang === 'function') applyLang();
 
   } catch (err) {
     console.error("Error loading activities:", err);
@@ -104,15 +104,16 @@ function renderActivities(list) {
           <h3>${name}</h3>
           <p>${desc}</p>
           <div class="d-flex gap-2 flex-wrap">
-            <button class="btn-custom" onclick="handleBookActivity(${id})">
-              <i class="bi bi-calendar-plus"></i> Book Now
-            </button>
+     <button class="btn-custom" onclick="handleBookActivity(${id})" data-i18n="act_book_now">
+  <i class="bi bi-calendar-plus"></i> Book Now
+</button>
             ${viewBtn}
           </div>
         </div>
       </div>
     </div>`;
   }).join('');
+  if (typeof applyLang === 'function') applyLang();
 }
 
 // ── Match trainers by ActivityIds ─────────────────────────────────────────────
@@ -172,7 +173,7 @@ function clearActivityFilters() {
 
 // ── Book — requires sign-in ───────────────────────────────────────────────────
 function handleBookActivity(id) {
-  if (!localStorage.getItem('token')) { showSignInToast('activity'); return; }
+if (!localStorage.getItem('token')) { showSignInToast(); return; }
   window.location.href = `booking.html?activity=${id}`;
 }
 
@@ -184,26 +185,26 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById("priceFilter")?.addEventListener("change",  applyActivityFilters);
 });
 
-// ── Sign-in Toast ─────────────────────────────────────────────────────────────
-function showSignInToast(label) {
+function showSignInToast() {
   let t = document.getElementById('signin-toast');
-  if (!t) {
-    t = document.createElement('div');
-    t.id = 'signin-toast';
-    t.style.cssText = `position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(20px);
-      background:#0d1b2a;color:#fff;padding:16px 24px;border-radius:16px;
-      box-shadow:0 8px 32px rgba(0,0,0,.4);z-index:99999;display:flex;
-      align-items:center;gap:12px;font-family:'Cairo',sans-serif;font-size:.9rem;
-      font-weight:600;opacity:0;transition:all .35s;max-width:92vw;`;
-    document.body.appendChild(t);
-  }
+  if (t) t.remove(); // امسح القديم دايماً
+  t = document.createElement('div');
+  t.id = 'signin-toast';
+  t.style.cssText = `position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#0d1b2a;color:#fff;padding:16px 24px;border-radius:16px;
+    box-shadow:0 8px 32px rgba(0,0,0,.4);z-index:99999;display:flex;
+    align-items:center;gap:12px;font-family:'Cairo',sans-serif;font-size:.9rem;
+    font-weight:600;opacity:0;transition:all .35s;max-width:92vw;`;
+  document.body.appendChild(t);
+const lang = localStorage.getItem('clubly_lang') || document.documentElement.lang || 'en'; 
+ const _t = window.CLUBLY_TRANSLATIONS?.[lang] || {};
   t.innerHTML = `
     <i class="bi bi-lock-fill" style="font-size:1.3rem;color:#e85d2f;"></i>
-    <span>Sign in to book an <strong style="color:#e85d2f;">${label}</strong></span>
-    <button onclick="openModal('signin')"
+<span>${_t.act_signin_to_book || 'Sign in to book an'} <strong style="color:#e85d2f;">${_t.nav_activities || 'activity'}</strong></span>   
+ <button onclick="openModal('signin')"
       style="background:linear-gradient(135deg,#e85d2f,#c0392b);color:#fff;border:none;
              border-radius:50px;padding:7px 18px;font-family:'Cairo',sans-serif;
-             font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;">Sign In</button>
+             font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;">${_t.nav_signin || 'Sign In'}</button>
     <button onclick="document.getElementById('signin-toast').style.opacity='0'"
       style="background:rgba(255,255,255,.1);color:#fff;border:none;border-radius:50%;
              width:26px;height:26px;cursor:pointer;font-size:15px;">✕</button>`;
