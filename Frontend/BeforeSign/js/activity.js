@@ -84,17 +84,13 @@ function renderActivities(list) {
 
     const actTrainers  = getTrainersForActivity(id);
     const trainerCount = actTrainers.length;
-const lang = localStorage.getItem('clubly_lang') || 'en';
-const _t = window.CLUBLY_TRANSLATIONS?.[lang] || {};
-const trainerLabel = trainerCount > 1 ? (_t.tr_trainer_plural || 'Trainers') : (_t.tr_trainer_singular || 'Trainer');
+    const trainerBadge = trainerCount > 0
+      ? `<span class="activity-trainer-count"><i class="bi bi-person-fill me-1"></i>${trainerCount} Trainer${trainerCount>1?'s':''}</span>` : '';
 
-const trainerBadge = trainerCount > 0
-  ? `<span class="activity-trainer-count"><i class="bi bi-person-fill me-1"></i>${trainerCount} ${trainerLabel}</span>` : '';
-
-const viewBtn = trainerCount > 0
-  ? `<a class="btn-view-trainers" href="trainers.html#activity-${id}">
-       <i class="bi bi-people-fill"></i> ${_t.tr_view || 'View Trainers'}
-     </a>` : '';
+    const viewBtn = trainerCount > 0
+      ? `<a class="btn-view-trainers" href="trainers.html#activity-${id}">
+           <i class="bi bi-people-fill"></i> View Trainers
+         </a>` : '';
 
     return `
     <div class="col-md-6 col-lg-4 activity-item mb-4"
@@ -108,8 +104,8 @@ const viewBtn = trainerCount > 0
           <h3>${name}</h3>
           <p>${desc}</p>
           <div class="d-flex gap-2 flex-wrap">
-<button class="btn-custom" onclick="handleBookActivity(${id})">
-  <i class="bi bi-calendar-plus"></i> ${_t.act_book_now || 'Book Now'}
+     <button class="btn-custom" onclick="handleBookActivity(${id})" data-i18n="act_book_now">
+  <i class="bi bi-calendar-plus"></i> Book Now
 </button>
             ${viewBtn}
           </div>
