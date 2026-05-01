@@ -2,14 +2,8 @@
 <html lang="en">
 <head>
 <script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");
-function toggleEye(inputId, btn) {
-  const inp = document.getElementById(inputId);
-  if (!inp) return;
-  const isText = inp.type === 'text';
-  inp.type = isText ? 'password' : 'text';
-  btn.querySelector('i').className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
-}
 </script>
+<script src="../i18n.js"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1190,16 +1184,18 @@ body {
     <span class="logo-text">Cl<span>u</span>bly</span>
   </a>
 
- <nav class="header-nav">
-  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
-  <a href="../AfterSign/home.html">Home</a>
-  <a href="../AfterSign/activities.html">Activities</a>
-  <a href="../AfterSign/facilities.html">Facilities</a>
-  <a href="../AfterSign/trainers.html">Trainers</a>
-  <a href="../AfterSign/plans.html">Membership Plans</a>
-  <a href="../AfterSign/about.html">About Us</a>
-  <a href="../AfterSign/faq.html">FAQ</a>
-  <a href="../AfterSign/contact.html">Contact</a>
+<nav class="header-nav">
+  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;">
+    <i class="bi bi-speedometer2 me-1"></i><span data-i18n="sidebar_main_reports">Dashboard</span>
+  </a>
+  <a href="../AfterSign/home.html" data-i18n="nav_home">Home</a>
+  <a href="../AfterSign/activities.html" data-i18n="nav_activities">Activities</a>
+  <a href="../AfterSign/facilities.html" data-i18n="nav_facilities">Facilities</a>
+  <a href="../AfterSign/trainers.html" data-i18n="nav_trainers">Trainers</a>
+  <a href="../AfterSign/plans.html" data-i18n="nav_plans">Membership Plans</a>
+  <a href="../AfterSign/about.html" data-i18n="nav_about">About Us</a>
+  <a href="../AfterSign/faq.html" data-i18n="nav_faq">FAQ</a>
+  <a href="../AfterSign/contact.html" data-i18n="nav_contact">Contact</a>
 </nav>
 <!-- Notification Bell -->
 <div class="notif-bell-wrapper" style="position:relative;">
@@ -1210,12 +1206,15 @@ body {
     <span class="notif-badge-count" id="notifBellBadge" style="display:none">0</span>
   </button>
 </div>
-  <div class="header-actions">
+<div class="header-actions">
     <button class="btn-theme-header" id="themeToggleHeader" title="Toggle Theme">
       <i class="bi bi-moon-stars"></i>
     </button>
-    <button class="btn-signin" onclick="handleSignOut()"><i class="bi bi-box-arrow-right me-1"></i>Sign Out</button>
-  </div>
+    <button class="btn-theme-header clubly-lang-btn" 
+      onclick="clublySetLang(clublyGetLang()==='ar'?'en':'ar')"
+      style="font-size:.8rem;font-weight:700;letter-spacing:.5px;"
+      title="التبديل إلى العربية">عر</button>
+<button class="btn-signin" onclick="handleSignOut()"><i class="bi bi-box-arrow-right me-1"></i><span data-i18n="nav_signout">Sign Out</span></button>  </div>
 </header>
 
 <!-- ===== LAYOUT BODY ===== -->
@@ -1223,62 +1222,62 @@ body {
 
   <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-section">Overview</div>
+<div class="sidebar-section" data-i18n="sidebar_overview">Overview</div>
     <a class="sidebar-link active" onclick="showPage('main')" data-label="Main Reports">
       <i class="bi bi-bar-chart-line-fill"></i>
-      <span class="link-text">Main Reports</span>
+<span class="link-text" data-i18n="sidebar_main_reports">Main Reports</span>
     </a>
 
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">Management</div>
+<div class="sidebar-section" data-i18n="sidebar_management">Management</div>
 
     <a class="sidebar-link" onclick="showPage('member')" data-label="Members">
       <i class="bi bi-people-fill"></i>
-      <span class="link-text">Members</span>
+<span class="link-text" data-i18n="sidebar_members">Members</span>
     </a>
     <a class="sidebar-link" onclick="showPage('trainer')" data-label="Trainers">
       <i class="bi bi-person-badge-fill"></i>
-      <span class="link-text">Trainers</span>
+<span class="link-text" data-i18n="sidebar_trainers">Trainers</span>
     </a>
     <a class="sidebar-link" onclick="showPage('trainer-ratings')" data-label="Trainer Ratings">
   <i class="bi bi-star-fill"></i>
-  <span class="link-text">Trainer Ratings</span>
+<span class="link-text" data-i18n="sidebar_trainer_ratings">Trainer Ratings</span>
 </a>
     <a class="sidebar-link" onclick="showPage('membership')" data-label="Memberships">
       <i class="bi bi-card-checklist"></i>
-      <span class="link-text">Memberships</span>
+<span class="link-text" data-i18n="sidebar_memberships">Memberships</span>
     </a>
 
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">Facilities & Activities</div>
+<div class="sidebar-section" data-i18n="sidebar_fac_act">Facilities & Activities</div>
 
     <a class="sidebar-link" onclick="showPage('category')" data-label="Categories">
       <i class="bi bi-tags-fill"></i>
-      <span class="link-text">Facility Categories</span>
+<span class="link-text" data-i18n="sidebar_fac_categories">Facility Categories</span>
     </a>
     <a class="sidebar-link" onclick="showPage('facility')" data-label="Facilities">
       <i class="bi bi-building-fill"></i>
-      <span class="link-text">Facilities</span>
+<span class="link-text" data-i18n="sidebar_facilities">Facilities</span>
     </a>
     <a class="sidebar-link" onclick="showPage('activity')" data-label="Activities">
       <i class="bi bi-calendar-event-fill"></i>
-      <span class="link-text">Activities</span>
+<span class="link-text" data-i18n="sidebar_activities_link">Activities</span>
     </a>
     <a class="sidebar-link" onclick="showPage('group')" data-label="Groups">
       <i class="bi bi-diagram-3-fill"></i>
-      <span class="link-text">Activity Groups</span>
+<span class="link-text" data-i18n="sidebar_act_groups">Activity Groups</span>
     </a>
 
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">Communication</div>
+<div class="sidebar-section" data-i18n="sidebar_communication">Communication</div>
     <a class="sidebar-link" onclick="showPage('notifications')" data-label="Notifications">
   <i class="bi bi-bell-fill"></i>
-  <span class="link-text">Notifications</span>
+<span class="link-text" data-i18n="sidebar_notifications">Send Notifications</span>
 </a>
 <a class="sidebar-link" onclick="showPage('my-notifications')" data-label="My Inbox"
    style="position:relative;">
   <i class="bi bi-inbox-fill"></i>
-  <span class="link-text">My Inbox</span>
+<span class="link-text" data-i18n="sidebar_my_inbox">Notifications</span>
   <span id="sidebarAdminNotifBadge"
     style="display:none; background:#e85d2f; color:#fff;
            font-size:10px; font-weight:900;
@@ -1288,35 +1287,33 @@ body {
 </a>
   <a class="sidebar-link" onclick="showPage('contact-messages')" data-label="Contact Messages">
   <i class="bi bi-envelope-open-fill"></i>
-  <span class="link-text">Contact Messages</span>
+<span class="link-text" data-i18n="sidebar_contact_msgs">Contact Messages</span>
 </a>
 <div class="sidebar-divider"></div>
-<div class="sidebar-section">Content</div>
+<div class="sidebar-section" data-i18n="sidebar_content">Content</div>
 <a class="sidebar-link" onclick="showPage('faqs')" data-label="FAQ Management">
   <i class="bi bi-question-circle-fill"></i>
-  <span class="link-text">FAQ Management</span>
+<span class="link-text" data-i18n="sidebar_faq_mgmt">FAQ Management</span>
 </a>
     <div class="sidebar-divider"></div>
-<div class="sidebar-section">Bookings</div>
+<div class="sidebar-section" data-i18n="sidebar_bookings">Bookings</div>
 
 <a class="sidebar-link" onclick="showPage('bookings')" data-label="Bookings">
   <i class="bi bi-calendar-check-fill"></i>
-  <span class="link-text">Bookings</span>
-</a>
+<span class="link-text" data-i18n="sidebar_bookings_link">Bookings</span></a>
     <div class="sidebar-divider"></div>
-<div class="sidebar-section">System</div>
+<div class="sidebar-section" data-i18n="sidebar_system">System</div>
 
 <a class="sidebar-link" onclick="showPage('admins')" data-label="Admins">
-  <i class="bi bi-shield-lock"></i><span class="link-text">Admins</span>
+  <i class="bi bi-shield-lock"></i>
+<span class="link-text" data-i18n="sidebar_admins">Admins</span>
 </a>
 <a class="sidebar-link" onclick="showPage('guest')" data-label="Guests">
   <i class="bi bi-person-fill"></i>
-  <span class="link-text">Guests</span>
-</a>
+<span class="link-text" data-i18n="sidebar_guests">Guests</span></a>
 <a class="sidebar-link" onclick="showPage('profile')" data-label="My Profile">
   <i class="bi bi-person-circle"></i>
-  <span class="link-text">My Profile</span>
-</a>
+<span class="link-text" data-i18n="sidebar_my_profile">My Profile</span></a>
   </aside>
 
   <!-- ===== CONTENT AREA ===== -->
@@ -1330,8 +1327,9 @@ body {
     <!-- ╚══════════════════════════════════════════════════════════════╝ -->
     <div class="page active" id="page-main">
       <div class="welcome-banner" style="margin-bottom: 16px;">
-        <h1>Welcome back! 👋</h1>
-        <p>Here's what's happening at <span class="accent-text fw-bold">Clubly</span> today.</p>
+
+        <h1 data-i18n="welcome_title">Welcome back! 👋</h1>
+<p><span data-i18n="welcome_sub">Here's what's happening at</span> <span class="accent-text fw-bold">Clubly</span> <span data-i18n="welcome_today">today.</span></p>
       </div>
 
       <!-- 🟠 START: Clubly Dashboard iframe (HuggingFace Space) -->
@@ -1339,7 +1337,8 @@ body {
         <!-- Loading spinner -->
         <div id="dashboardLoader" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--card-bg);z-index:10;gap:16px;">
           <div style="width:54px;height:54px;border:4px solid rgba(232,93,47,.2);border-top-color:var(--clubly-accent);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
-          <span style="color:var(--muted);font-size:.9rem;font-weight:600;">Loading Dashboard...</span>
+<span style="color:var(--muted);font-size:.9rem;font-weight:600;" 
+  data-i18n="dash_loading">Loading Dashboard...</span>
         </div>
         <iframe
           id="clublyDashboardFrame"
@@ -1360,19 +1359,28 @@ body {
     <div class="page" id="page-member">
       <div class="page-header">
         <div>
-          <h2 class="fw-bold m-0">Members Management</h2>
-          <small class="text-muted">Manage members — Create / Update / Delete</small>
+        <h2 class="fw-bold m-0" data-i18n="page_members">Members Management</h2>
+<small class="text-muted" data-i18n="page_members_sub">Manage members — Create / Update / Delete</small>
         </div>
         <div class="d-flex gap-2">
-          <button id="openAddModalBtn" class="btn btn-primary rounded-pill px-4">+ Add Member</button>
+<button id="openAddModalBtn" class="btn btn-primary rounded-pill px-4">
+  <span data-i18n="mem_add_btn">Add Member</span>
+</button>
         </div>
       </div>
 
       <div class="clubly-card p-3 mb-3">
         <div class="row g-2 align-items-center controls">
-          <div class="col-auto"><input id="searchInput" class="form-control" placeholder="Search by name, email, phone..."/></div>
+          <div class="col-auto"><input id="searchInput" class="form-control" 
+  data-i18n-ph="mem_search_ph"
+  placeholder="Search by name, email, phone..."/></div>
           <div class="col-auto"><select id="membershipFilter" class="form-select"><option value="">All memberships</option></select></div>
-          <div class="col-auto"><select id="genderFilter" class="form-select"><option value="">Any gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+          <div class="col-auto"><select id="genderFilter" class="form-select">
+  <option value="" data-i18n="mem_filter_any_gender">Any gender</option>
+  <option value="Male" data-i18n="mem_filter_male">Male</option>
+  <option value="Female" data-i18n="mem_filter_female">Female</option>
+  <option value="Other" data-i18n="mem_filter_other">Other</option>
+</select></div>
           <div class="col-auto"><select id="sortBy" class="form-select"><option value="name_asc">Name ↑</option><option value="name_desc">Name ↓</option><option value="join_desc">Newest</option><option value="join_asc">Oldest</option></select></div>
           <div class="col-auto"><select id="pageSize" class="form-select"><option value="5">5 / page</option><option value="10" selected>10 / page</option><option value="25">25 / page</option></select></div>
           <div class="col-auto ms-auto"><button id="refreshBtn" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
@@ -1384,9 +1392,13 @@ body {
           <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
               <tr>
-                <th>Full name</th><th>Email / Phone</th>
-                <th class="text-center">Membership</th><th class="text-center">Member #</th>
-                <th class="text-center">Type</th><th class="text-center">Image</th><th class="text-center">Actions</th>
+           <th data-i18n="mem_col_name">Full name</th>
+<th data-i18n="mem_col_email_phone">Email / Phone</th>
+<th class="text-center" data-i18n="mem_col_membership">Membership</th>
+<th class="text-center" data-i18n="mem_col_member_num">Member #</th>
+<th class="text-center" data-i18n="mem_col_type">Type</th>
+<th class="text-center" data-i18n="mem_col_image">Image</th>
+<th class="text-center" data-i18n="mem_col_actions">Actions</th>
               </tr>
             </thead>
             <tbody id="membersTable"><tr><td colspan="7" class="text-center text-muted">Loading...</td></tr></tbody>
@@ -1402,7 +1414,8 @@ body {
       <div class="modal fade" id="addMemberModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content rounded-4">
-            <div class="modal-header border-0"><h5 class="modal-title">Add Member</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-header border-0"><h5 class="modal-title" data-i18n="mem_add_title">Add Member</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button></div>
             <div class="modal-body">
               <form id="addMemberForm" enctype="multipart/form-data" autocomplete="off">
                 <div class="row g-2">
@@ -1431,7 +1444,8 @@ body {
       <div class="modal fade" id="editMemberModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content rounded-4">
-            <div class="modal-header border-0"><h5 class="modal-title">Edit Member</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-header border-0"><h5 class="modal-title" data-i18n="mem_edit_title">Edit Member</h5>
+<button class="btn-close" data-bs-dismiss="modal"></button></div>
             <div class="modal-body">
               <form id="editMemberForm" enctype="multipart/form-data" autocomplete="off">
                 <input type="hidden" name="id">
@@ -1463,7 +1477,8 @@ body {
     <!-- =============================== TRAINERS =============================== -->
     <div class="page" id="page-trainer">
       <div class="page-header">
-        <div><h2 class="fw-bold m-0">Trainers Management</h2><small class="text-muted">Manage trainers — Create / Update / Delete</small></div>
+        <div><h2 class="fw-bold m-0" data-i18n="page_trainers">Trainers Management</h2>
+<small class="text-muted" data-i18n="page_trainers_sub">Manage trainers — Create / Update / Delete</small></div>
         <button id="openAddModalBtn_t" class="btn btn-primary rounded-pill px-4">+ Add Trainer</button>
       </div>
       <div class="clubly-card p-3 mb-3">
@@ -1552,10 +1567,10 @@ body {
 <div class="page" id="page-trainer-ratings">
   <div class="page-header">
     <div>
-      <h2 class="fw-bold m-0">
-        <i class="bi bi-star-fill me-2" style="color:var(--clubly-gold)"></i>Trainer Ratings
+     <h2 class="fw-bold m-0">
+        <i class="bi bi-star-fill me-2" style="color:var(--clubly-gold)"></i><span data-i18n="page_trainer_ratings">Trainer Ratings</span>
       </h2>
-      <small class="text-muted">Member reviews and ratings for all trainers</small>
+      <small class="text-muted" data-i18n="page_trainer_ratings_sub">Member reviews and ratings for all trainers</small>
     </div>
     <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="loadTrainerRatingsAdmin()">
       <i class="bi bi-arrow-clockwise"></i> Refresh
@@ -1624,7 +1639,8 @@ body {
     <!-- =============================== FACILITY CATEGORIES =============================== -->
     <div class="page" id="page-category">
       <div class="page-header">
-        <div><h2 class="fw-bold m-0">Facility Categories</h2><small class="text-muted">Manage categories — Create / Update / Delete</small></div>
+        <div><h2 class="fw-bold m-0" data-i18n="page_categories">Facility Categories</h2>
+<small class="text-muted" data-i18n="page_categories_sub">Manage categories — Create / Update / Delete</small></div>
         <button id="addBtn" class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="bi bi-plus-lg me-2"></i>Add Category</button>
       </div>
       <div class="clubly-card p-3 mb-3">
@@ -1671,7 +1687,8 @@ body {
     <!-- =============================== FACILITIES =============================== -->
     <div class="page" id="page-facility">
       <div class="page-header">
-        <div><h2 class="fw-bold m-0">Facilities Management</h2><small class="text-muted">Manage facilities — Create / Update / Delete</small></div>
+        <div><h2 class="fw-bold m-0" data-i18n="page_facilities">Facilities Management</h2>
+<small class="text-muted" data-i18n="page_facilities_sub">Manage facilities — Create / Update / Delete</small></div>
         <button id="openAddModalBtn_f" class="btn btn-primary rounded-pill px-4">+ Add Facility</button>
       </div>
       <div class="clubly-card p-3 mb-3">
@@ -1912,7 +1929,8 @@ body {
     <!-- =============================== ACTIVITIES =============================== -->
     <div class="page" id="page-activity">
       <div class="page-header">
-        <div><h2 class="fw-bold m-0">Activities Management</h2><small class="text-muted">Manage activities — Create / Update / Delete</small></div>
+        <div><h2 class="fw-bold m-0" data-i18n="page_activities">Activities Management</h2>
+<small class="text-muted" data-i18n="page_activities_sub">Manage activities — Create / Update / Delete</small></div>
         <button id="openAddModalBtn_a" class="btn btn-primary rounded-pill px-4">+ Add Activity</button>
       </div>
       <div class="clubly-card p-3 mb-3">
@@ -1977,7 +1995,8 @@ body {
     <!-- =============================== ACTIVITY GROUPS =============================== -->
     <div class="page" id="page-group">
       <div class="page-header">
-        <div><h2 class="fw-bold m-0">Activity Groups</h2><small class="text-muted">Manage activity groups — Create / Update / Delete</small></div>
+        <div><h2 class="fw-bold m-0" data-i18n="page_groups">Activity Groups</h2>
+<small class="text-muted" data-i18n="page_groups_sub">Manage activity groups — Create / Update / Delete</small></div>
         <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addModal_g" id="openAddBtn_g">+ Add Group</button>
       </div>
       <div class="clubly-card p-3 mb-3">
@@ -2149,7 +2168,8 @@ body {
     <!-- =============================== MEMBERSHIP =============================== -->
     <div class="page" id="page-membership">
       <div class="page-header">
-        <div><h2 class="fw-bold m-0">Membership Plans</h2><small class="text-muted">Manage membership plans — Create / Update / Delete</small></div>
+        <div><h2 class="fw-bold m-0" data-i18n="page_memberships">Membership Plans</h2>
+<small class="text-muted" data-i18n="page_memberships_sub">Manage membership plans — Create / Update / Delete</small></div>
         <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#membershipModal" id="addNewBtn">+ Add Membership</button>
       </div>
       <div class="clubly-card p-0">
@@ -2187,8 +2207,8 @@ body {
 <div class="page" id="page-notifications">
   <div class="page-header">
     <div>
-      <h2 class="fw-bold m-0">Notifications</h2>
-      <small class="text-muted">Send push notifications to members, trainers, admins or guests</small>
+ <h2 class="fw-bold m-0" data-i18n="page_notifications">Notifications</h2>
+<small class="text-muted" data-i18n="page_notifications_sub">Send push notifications to members, trainers, admins or guests</small>
     </div>
   </div>
 
@@ -2457,10 +2477,10 @@ body {
 <div class="page" id="page-contact-messages">
   <div class="page-header">
     <div>
-      <h2 class="fw-bold m-0">
-        <i class="bi bi-envelope-open-fill me-2" style="color:var(--clubly-accent)"></i>Contact Messages
+     <h2 class="fw-bold m-0">
+        <i class="bi bi-envelope-open-fill me-2" style="color:var(--clubly-accent)"></i><span data-i18n="page_contact">Contact Messages</span>
       </h2>
-      <small class="text-muted">Messages received from the contact form</small>
+      <small class="text-muted" data-i18n="page_contact_sub">Messages received from the contact form</small>
     </div>
     <div class="d-flex gap-2 align-items-center">
       <span class="badge bg-danger rounded-pill px-3 py-2" id="contactUnreadBadge" style="font-size:.85rem;display:none">0 unread</span>
@@ -2592,10 +2612,10 @@ body {
 
   <div class="page-header">
     <div>
-      <h2 class="fw-bold m-0">
-        <i class="bi bi-inbox-fill me-2" style="color:var(--clubly-accent)"></i>My Inbox
+<h2 class="fw-bold m-0">
+        <i class="bi bi-inbox-fill me-2" style="color:var(--clubly-accent)"></i><span data-i18n="page_inbox">My Inbox</span>
       </h2>
-      <small class="text-muted">Notifications sent to Admins</small>
+      <small class="text-muted" data-i18n="page_inbox_sub">Notifications sent to Admins</small>
     </div>
     <div class="d-flex gap-2 align-items-center">
       <span class="badge bg-secondary rounded-pill px-3 py-2" id="myNotifUnreadCount" style="font-size:.85rem;">
@@ -2657,10 +2677,10 @@ body {
 <div class="page" id="page-faqs">
   <div class="page-header">
     <div>
-      <h2 class="fw-bold m-0">
-        <i class="bi bi-question-circle-fill me-2" style="color:var(--clubly-accent)"></i>FAQ Management
+<h2 class="fw-bold m-0">
+        <i class="bi bi-question-circle-fill me-2" style="color:var(--clubly-accent)"></i><span data-i18n="page_faqs">FAQ Management</span>
       </h2>
-      <small class="text-muted">Add, edit, reorder and publish FAQs shown on the website</small>
+      <small class="text-muted" data-i18n="page_faqs_sub">Add, edit, reorder and publish FAQs shown on the website</small>
     </div>
     <button class="btn btn-primary rounded-pill px-4" onclick="openFaqModal()">
       <i class="bi bi-plus-lg me-1"></i> Add FAQ
@@ -2990,7 +3010,8 @@ body {
     <!-- =============================== Admins =============================== -->
 <div class="page" id="page-admins">
   <div class="page-header">
-    <div><h2 class="fw-bold m-0">Admins</h2><small class="text-muted">Manage Admins — Create / Update / Delete</small></div>
+    <div><h2 class="fw-bold m-0" data-i18n="page_admins">Admins</h2>
+<small class="text-muted" data-i18n="page_admins_sub">Manage Admins — Create / Update / Delete</small></div>
     <button class="btn btn-primary rounded-pill px-4" onclick="new bootstrap.Modal(document.getElementById('addAdminModal')).show()">
       <i class="bi bi-plus-lg"></i> Add Admin
     </button>
@@ -3117,8 +3138,8 @@ body {
 <div class="page" id="page-guest">
   <div class="page-header">
     <div>
-      <h2 class="fw-bold m-0">Guests Management</h2>
-      <small class="text-muted">Registered guests — View / Delete</small>
+ <h2 class="fw-bold m-0" data-i18n="page_guests">Guests Management</h2>
+<small class="text-muted" data-i18n="page_guests_sub">Registered guests — View / Delete</small>
     </div>
     <button class="btn btn-outline-primary rounded-pill px-3" onclick="loadGuests()">
       <i class="bi bi-arrow-clockwise"></i> Refresh
@@ -3361,7 +3382,8 @@ body {
 <!-- =============================== ADMIN PROFILE =============================== -->
 <div class="page" id="page-profile">
   <div class="page-header">
-    <div><h2 class="fw-bold m-0">My Profile</h2><small class="text-muted">View and update your account</small></div>
+    <div><h2 class="fw-bold m-0" data-i18n="page_profile">My Profile</h2>
+<small class="text-muted" data-i18n="page_profile_sub">View and update your account</small></div>
   </div>
  
   <div class="row g-4">
@@ -3509,42 +3531,13 @@ body {
 <!-- ===== FOOTER ===== -->
 <footer class="clubly-footer">
   <div class="footer-inner">
-    <div class="footer-col" style="max-width:220px">
-      <h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5>
-      <p style="font-size:.85rem; color:rgba(255,255,255,.55); line-height:1.7">Your family's fitness journey starts here. Modern sports club management with comprehensive safety features and AI-powered recommendations.</p>
-    </div>
-    <div class="footer-col">
-      <h5>Quick Links</h5>
-      <ul class="footer-links">
-        <li><a href="#" onclick="showPage('main')">Home</a></li>
-        <li><a href="#" onclick="showPage('activity')">Activities</a></li>
-        <li><a href="#" onclick="showPage('facility')">Facilities</a></li>
-        <li><a href="#" onclick="showPage('trainer')">Trainers</a></li>
-        <li><a href="#" onclick="showPage('main')">About Us</a></li>
-        <li><a href="#" onclick="showPage('announcement')">Contact Us</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Contact Us</h5>
-      <div class="footer-contact">
-        <div><i class="bi bi-geo-alt-fill"></i> 123 Fitness Street, City, State 12345</div>
-        <div><i class="bi bi-telephone-fill"></i> +1 (555) 123-4567</div>
-        <div><i class="bi bi-envelope-fill"></i> info@clubly.com</div>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Follow Us</h5>
-      <div class="footer-socials">
-        <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" title="Twitter"><i class="bi bi-twitter-x"></i></a>
-        <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
-      </div>
-    </div>
+    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;"><span data-i18n="footer_tagline">Your family's fitness journey starts here.</span></p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+    <div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="../AfterSign/home.html" data-i18n="nav_home">Home</a></li><li><a href="../AfterSign/activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="../AfterSign/facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="../AfterSign/trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="../AfterSign/plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="../AfterSign/about.html" data-i18n="nav_about">About Us</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="../AfterSign/faq.html" data-i18n="nav_faq">FAQ</a></li><li><a href="../AfterSign/contact.html" data-i18n="nav_contact">Contact Us</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i><span data-i18n="footer_address">123 Fitness St, Maadi, Cairo</span></div><div><i class="bi bi-telephone-fill"></i>20+ 10 18346974</div><div><i class="bi bi-envelope-fill"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="660f08000926050a13040a1f4805090b">info@clubly.com</a></div><div><i class="bi bi-clock-fill"></i><span data-i18n="footer_hours">Daily 6AM – 10PM</span></div></div></div>
   </div>
-  <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+  <div class="footer-bottom" data-i18n="footer_rights">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
 </footer>
-
 <!-- ===== SCRIPTS ===== -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -7351,7 +7344,16 @@ function openFaqModal(id = null) {
   }
 
   new bootstrap.Modal(document.getElementById('faqModal')).show();
-}async function saveFaq() {
+
+}
+function toggleEye(inputId, btn) {
+  const inp = document.getElementById(inputId);
+  if (!inp) return;
+  const isText = inp.type === 'text';
+  inp.type = isText ? 'password' : 'text';
+  btn.querySelector('i').className = isText ? 'bi bi-eye' : 'bi bi-eye-slash';
+}
+async function saveFaq() {
   const id       = document.getElementById('faqId').value;
   const question = document.getElementById('faqQuestion').value.trim();
   const answer   = document.getElementById('faqAnswer').value.trim();
