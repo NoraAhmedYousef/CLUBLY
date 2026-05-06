@@ -1419,23 +1419,34 @@ body {
             <div class="modal-body">
               <form id="addMemberForm" enctype="multipart/form-data" autocomplete="off">
                 <div class="row g-2">
-                  <div class="col-md-6"><input name="FullName" class="form-control" placeholder="Full name" required></div>
-                  <div class="col-md-6"><input name="Email" type="email" class="form-control" placeholder="Email"></div>
-                  <div class="col-md-4"><input name="Phone" class="form-control" placeholder="Phone"></div>
-                  <div class="col-md-4"><div class="input-group"><input name="NationalId" id="addNationalId_m" class="form-control" placeholder="National ID (14 digits)"><span class="input-group-text" title="Auto-fills birthday &amp; gender"><i class="bi bi-magic text-primary"></i></span></div></div>
-                  <div class="col-md-4"><select name="Gender" id="addGender_m" class="form-select"><option value="">Select gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+                  <div class="col-md-6"><input name="FullName" class="form-control" data-i18n-ph="mem_ph_fullname" placeholder="Full name" required></div>
+                  <div class="col-md-6"><input name="Email" type="email" class="form-control" data-i18n-ph="mem_ph_email" placeholder="Email"></div>
+                  <div class="col-md-4"><input name="Phone" class="form-control" data-i18n-ph="mem_ph_phone" placeholder="Phone"></div>
+                  <div class="col-md-4"><div class="input-group"><input name="NationalId" id="addNationalId_m" class="form-control" data-i18n-ph="mem_ph_nid" placeholder="National ID (14 digits)"><span class="input-group-text" title="Auto-fills birthday &amp; gender"><i class="bi bi-magic text-primary"></i></span></div></div>
+                  <div class="col-md-4"><select name="Gender" id="addGender_m" class="form-select">
+  <option value="" data-i18n="mem_select_gender">Select gender</option>
+  <option value="Male" data-i18n="mem_filter_male">Male</option>
+  <option value="Female" data-i18n="mem_filter_female">Female</option>
+  <option value="Other" data-i18n="mem_filter_other">Other</option>
+</select></div>
                   <div class="col-md-4"><input name="BirthDate" id="addBirthDate_m" type="date" class="form-control"></div>
-                  <div class="col-md-4"><input name="MemberShipNumber" type="number" class="form-control" placeholder="Member number"></div>
+                  <div class="col-md-4"><input name="MemberShipNumber" type="number" class="form-control" data-i18n-ph="mem_ph_member_num" placeholder="Membership number"></div>
                   <div class="col-md-4"><input name="JoinDate" type="date" class="form-control"></div>
                   <div class="col-md-6"><select name="MemberShipId" id="addMembershipSelect" class="form-select" required><option value="">Loading memberships...</option></select></div>
-                  <div class="col-md-4"><select name="MemberType" id="addType_m" class="form-select"><option value="">Select Member Type</option><option value="Main">Main</option><option value="Spouse">Spouse</option><option value="Child">Child</option></select></div>
-                  <div class="col-md-6"><label class="form-label small fw-semibold">Password</label><div class="input-group"><input name="Password" id="addMemberPassword" type="password" class="form-control" placeholder="Password" required><button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
-                  <div class="col-md-6"><label class="form-label small fw-semibold">Confirm Password</label><div class="input-group"><input name="ConfirmPassword" id="addMemberConfirmPw" type="password" class="form-control" placeholder="Confirm Password" required><button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
-                  <div class="col-12"><label class="form-label">Image</label><input type="file" name="Image" id="addImageInput" class="form-control" accept="image/*"><img id="addImagePreview" class="img-preview" alt="preview"/></div>
+                  <div class="col-md-4"><select name="MemberType" id="addType_m" class="form-select">
+  <option value="" data-i18n="mem_select_type">Select Member Type</option>
+  <option value="Main" data-i18n="mem_type_main">Main</option>
+  <option value="Spouse" data-i18n="mem_type_spouse">Spouse</option>
+  <option value="Child" data-i18n="mem_type_child">Child</option>
+</select></div>
+                  <div class="col-md-6"><label class="form-label small fw-semibold" data-i18n="mem_lbl_password">Password</label><div class="input-group"><input name="Password" id="addMemberPassword" type="password" class="form-control" data-i18n-ph="mem_ph_password" placeholder="Password" required><button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
+                  <div class="col-md-6"><label class="form-label small fw-semibold" data-i18n="mem_lbl_confirm_pw">Confirm Password</label><div class="input-group"><input name="ConfirmPassword" id="addMemberConfirmPw" type="password" class="form-control" data-i18n-ph="mem_ph_confirm_pw" placeholder="Confirm Password" required><button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
+                  <div class="col-12"><label class="form-label" data-i18n="mem_lbl_image">Image</label><input type="file" name="Image" id="addImageInput" class="form-control" accept="image/*"><img id="addImagePreview" class="img-preview" alt="preview"/></div>
                 </div>
               </form>
             </div>
-            <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="saveAddBtn" class="btn btn-success">Save</button></div>
+            <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal" data-i18n="mem_btn_cancel">Cancel</button>
+              <button id="saveAddBtn" class="btn btn-success" data-i18n="mem_btn_save">Save</button></div>
           </div>
         </div>
       </div>
@@ -1460,13 +1471,18 @@ body {
                   <div class="col-md-4"><input name="JoinDate" type="date" class="form-control"></div>
                   <div class="col-md-6"><select name="MemberShipId" id="editMembershipSelect" class="form-select" required><option value="">Loading memberships...</option></select></div>
                   <div class="col-md-4"><select name="MemberType" id="editType_m" class="form-select"><option value="">Select Member Type</option><option value="Main">Main</option><option value="Spouse">Spouse</option><option value="Child">Child</option></select></div>
-                  <div class="col-md-6"><label class="form-label small fw-semibold">New Password <span class="text-muted">(leave blank to keep)</span></label><div class="input-group"><input name="Password" id="editMemberPassword" type="password" class="form-control" placeholder="New password"><button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
-                  <div class="col-md-6"><label class="form-label small fw-semibold">Confirm Password</label><div class="input-group"><input name="ConfirmPassword" id="editMemberConfirmPw" type="password" class="form-control" placeholder="Confirm new password"><button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
+                  <div class="col-md-6"><label class="form-label small fw-semibold">
+  <span data-i18n="mem_lbl_new_pw">New Password</span>
+  <span class="text-muted" data-i18n="mem_lbl_new_pw_hint">(leave blank to keep)</span>
+</label><div class="input-group"><input name="Password" id="editMemberPassword" type="password" class="form-control" data-i18n-ph="mem_ph_new_pw" placeholder="New password">
+<button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
+                  <div class="col-md-6"><label class="form-label small fw-semibold">Confirm Password</label><div class="input-group"><input name="ConfirmPassword" id="editMemberConfirmPw" type="password" class="form-control" data-i18n-ph="mem_ph_confirm_new_pw" placeholder="Confirm new password">
+<button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button></div></div>
                   <div class="col-12"><label class="form-label">Image</label><input type="file" name="Image" id="editImageInput" class="form-control" accept="image/*"><img id="editImagePreview" class="img-preview" alt="preview"/></div>
                 </div>
               </form>
             </div>
-            <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="saveEditBtn" class="btn btn-warning text-white">Update</button></div>
+            <div class="modal-footer border-0"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button id="saveEditBtn" class="btn btn-warning text-white" data-i18n="mem_btn_update">Update</button></div>
           </div>
         </div>
       </div>
@@ -5491,6 +5507,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Load Members page data
   await loadMemberShips();
   await loadMembers();
+  applyLang(clublyGetLang());
+
   // Don't auto-load other pages — lazy-load them
  // حط ده
 if (adminId) {
@@ -8191,6 +8209,11 @@ document.addEventListener('hidden.bs.modal', function () {
     document.body.style.removeProperty('padding-right');
     document.body.style.removeProperty('overflow');
   }
+});
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('shown.bs.modal', () => {
+    if (typeof applyLang === 'function') applyLang(clublyGetLang());
+  });
 });
 </script>
 <!-- ===== ADMIN SIGN OUT MODAL ===== -->
