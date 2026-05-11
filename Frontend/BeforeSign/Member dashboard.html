@@ -2940,6 +2940,11 @@
             <h1 class="page-title-clubly">🩺 Medical <span style="color:var(--clubly-accent);">AI Assistant</span></h1>
             <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Your personal AI-powered medical advisor</p>
           </div>
+          <button class="btn-clubly-primary"
+            style="background:linear-gradient(135deg,#64748b,#475569);font-size:.82rem;"
+            onclick="if(confirm('Clear all medical chat history?')){clearMedHistory();document.getElementById('medChatHistory').innerHTML='';medWelcomeDone=false;initMedWelcome();}">
+            <i class="bi bi-trash3"></i> Clear History
+          </button>
         </div>
 
         <div class="content-card" style="padding:0; overflow:hidden;">
@@ -4422,9 +4427,34 @@ function updateMemberNotifUnreadCount() {
     // ===== MEDICAL AI CHAT =====
     const MEDICAL_API = 'https://mazinyaser0-medical.hf.space/medical-chat';
 
-    const MED_SESSION_ID = 'med_' + Math.random().toString(36).slice(2, 9);
+    const MED_SESSION_ID = 'med_user_' + (memberId || 'guest');
     let isMedLoading = false;
     let medWelcomeDone = false;
+
+    // ── Medical Chat History (localStorage) ──────────────────────────────────
+    const MED_STORAGE_KEY = 'clubly_med_history_' + (memberId || 'guest');
+    const MED_MAX_MESSAGES = 50;
+
+    function saveMedHistory(role, text) {
+      try {
+        const raw = localStorage.getItem(MED_STORAGE_KEY);
+        const history = raw ? JSON.parse(raw) : [];
+        history.push({ role, text, ts: Date.now() });
+        if (history.length > MED_MAX_MESSAGES) history.splice(0, history.length - MED_MAX_MESSAGES);
+        localStorage.setItem(MED_STORAGE_KEY, JSON.stringify(history));
+      } catch(e) {}
+    }
+
+    function loadMedHistory() {
+      try {
+        const raw = localStorage.getItem(MED_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch(e) { return []; }
+    }
+
+    function clearMedHistory() {
+      localStorage.removeItem(MED_STORAGE_KEY);
+    }
     let isLoadingMsg = false;
 
     function appendMsg(text, sender) {
@@ -4563,6 +4593,7 @@ function updateMemberNotifUnreadCount() {
 
       row.appendChild(avatar);
       row.appendChild(bubble);
+      saveMedHistory(sender, text);
       const hist = document.getElementById('medChatHistory');
       hist.appendChild(row);
       hist.scrollTop = 9999;
@@ -4608,7 +4639,14 @@ function updateMemberNotifUnreadCount() {
         const res = await fetch(MEDICAL_API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message, session_id: MED_SESSION_ID })
+          body: JSON.stringify({
+            message,
+            session_id: MED_SESSION_ID,
+            history: loadMedHistory().slice(-20).map(m => ({
+              role: m.role === 'user' ? 'user' : 'assistant',
+              content: m.text
+            }))
+          })
         });
         medRemoveTyping();
         if (!res.ok) throw new Error('Server error');
@@ -4649,9 +4687,30 @@ function updateMemberNotifUnreadCount() {
     function initMedWelcome() {
       if (!medWelcomeDone) {
         medWelcomeDone = true;
-        setTimeout(() => {
-          medAppendMsg('👋 Hello! I am your **Medical AI Advisor**. I can help you with general health questions, nutrition tips, workout recovery, and more. How can I assist you today?', 'assistant');
-        }, 300);
+        const hist = loadMedHistory();
+        if (hist.length > 0) {
+          // عرض الـ history القديم بدون حفظ مرة تانية
+          hist.forEach(m => {
+            const isUser = m.role === 'user';
+            const row = document.createElement('div');
+            row.className = 'msg-row ' + (isUser ? 'user-row' : 'bot-row');
+            const avatar = document.createElement('div');
+            avatar.className = 'msg-avatar ' + (isUser ? 'user-av' : 'bot-av med-bot-av');
+            avatar.textContent = isUser ? '👤' : '🩺';
+            const bubble = document.createElement('div');
+            bubble.className = 'msg-bubble ' + (isUser ? 'msg-user' : 'msg-assistant med-msg-assistant');
+            bubble.innerHTML = isUser ? escapeHtml(m.text) : formatBotText(m.text);
+            row.appendChild(avatar);
+            row.appendChild(bubble);
+            document.getElementById('medChatHistory').appendChild(row);
+          });
+          document.getElementById('medChatHistory').scrollTop = 9999;
+          hideMedQuickPrompts();
+        } else {
+          setTimeout(() => {
+            medAppendMsg('👋 Hello! I am your **Medical AI Advisor**. I can help you with general health questions, nutrition tips, workout recovery, and more. How can I assist you today?', 'assistant');
+          }, 300);
+        }
       }
     }
 
