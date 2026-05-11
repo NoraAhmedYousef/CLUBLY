@@ -824,6 +824,47 @@ textarea.form-input{resize:vertical;min-height:90px;}
 /* Scrollbars */
 [data-theme="dark"] ::-webkit-scrollbar-track { background: var(--bg); }
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+/* MOBILE FIXES */
+img{
+  max-width:100%;
+  height:auto;
+}
+
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+@media (max-width:768px){
+
+  .profile-hero{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .session-card{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .member-row{
+    flex-wrap:wrap;
+  }
+
+  .header-actions{
+    gap:5px;
+  }
+
+  .btn-signout{
+    padding:6px 10px;
+    font-size:.75rem;
+  }
+
+  table{
+    min-width:700px;
+  }
+}
 </style>
 </head>
 <body>
