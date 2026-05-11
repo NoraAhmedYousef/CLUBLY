@@ -1394,7 +1394,11 @@ input[type="file"]:lang(ar)::before {
 </select></div>
           <div class="col-auto"><select id="sortBy" class="form-select"><option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
 <option value="name_desc">Name ↓</option><option value="join_desc">Newest</option><option value="join_asc">Oldest</option></select></div>
-          <div class="col-auto"><select id="pageSize" class="form-select"><option value="5">5 / page</option><option value="10" selected>10 / page</option><option value="25">25 / page</option></select></div>
+          <div class="col-auto"><select id="pageSize" class="form-select">
+  <option value="5" data-i18n="mem_page_5">5 / page</option>
+  <option value="10" selected data-i18n="mem_page_10">10 / page</option>
+  <option value="25" data-i18n="mem_page_25">25 / page</option>
+</select></div>
           <div class="col-auto ms-auto"><button id="refreshBtn" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span></button></div>
         </div>
       </div>
@@ -1627,10 +1631,17 @@ input[type="file"]:lang(ar)::before {
           <div class="col-auto"><select id="statusFilter_t" class="form-select"><option value="" data-i18n="tr_filter_all_status">All status</option>
 <option value="true" data-i18n="tr_filter_active">Active</option>
 <option value="false" data-i18n="tr_filter_inactive">Inactive</option></select></div>
-          <div class="col-auto"><select id="sortBy_t" class="form-select"><option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
-<option value="name_desc">Name ↓</option><option value="exp_desc" data-i18n="tr_sort_exp_desc">Experience ↓</option>
-<option value="exp_asc" data-i18n="tr_sort_exp_asc">Experience ↑</option></select></div>
-          <div class="col-auto"><select id="pageSize_t" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="25">25</option></select></div>
+          <div class="col-auto"><select id="sortBy_t" class="form-select">
+  <option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
+  <option value="name_desc" data-i18n="mem_sort_name_desc">Name ↓</option>
+  <option value="exp_desc" data-i18n="tr_sort_exp_desc">Experience ↓</option>
+  <option value="exp_asc" data-i18n="tr_sort_exp_asc">Experience ↑</option>
+</select></div>
+          <div class="col-auto"><select id="pageSize_t" class="form-select">
+  <option value="5" data-i18n="mem_page_5">5</option>
+  <option value="10" selected data-i18n="mem_page_10">10</option>
+  <option value="25" data-i18n="mem_page_25">25</option>
+</select></div>
          <div class="col-auto ms-auto"><button id="refreshBtn_t" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span></button></div>
         </div>
       </div>
@@ -1823,7 +1834,7 @@ input[type="file"]:lang(ar)::before {
       <small class="text-muted" data-i18n="page_trainer_ratings_sub">Member reviews and ratings for all trainers</small>
     </div>
     <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="loadTrainerRatingsAdmin()">
-      <i class="bi bi-arrow-clockwise"></i> Refresh
+      <i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span>
     </button>
   </div>
 
@@ -1895,10 +1906,19 @@ input[type="file"]:lang(ar)::before {
       </div>
       <div class="clubly-card p-3 mb-3">
         <div class="row g-2 align-items-center controls">
-          <div class="col-auto"><input id="searchInput_cat" type="text" class="form-control" placeholder="Search by name or description..."></div>
-          <div class="col-auto"><select id="sortBy_cat" class="form-select"><option value="">Sort By</option><option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
-<option value="name_desc">Name ↓</option><option value="created_asc">Created ↑</option><option value="created_desc">Created ↓</option></select></div>
-          <div class="col-auto"><select id="pageSize_cat" class="form-select"><option value="5">5 rows</option><option value="10" selected>10 rows</option><option value="20">20 rows</option></select></div>
+          <div class="col-auto"><input id="searchInput_cat" type="text" class="form-control" data-i18n-ph="cat_search_ph" placeholder="Search by name or description..."></div>
+          <div class="col-auto"><select id="sortBy_cat" class="form-select">
+  <option value="" data-i18n="cat_sort_by">Sort By</option>
+  <option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
+  <option value="name_desc" data-i18n="mem_sort_name_desc">Name ↓</option>
+  <option value="created_asc" data-i18n="cat_sort_created_asc">Created ↑</option>
+  <option value="created_desc" data-i18n="cat_sort_created_desc">Created ↓</option>
+</select></div>
+          <div class="col-auto"><select id="pageSize_cat" class="form-select">
+  <option value="5" data-i18n="cat_rows_5">5 rows</option>
+  <option value="10" selected data-i18n="cat_rows_10">10 rows</option>
+  <option value="20" data-i18n="cat_rows_20">20 rows</option>
+</select></div>
           <div class="col-auto ms-auto"><button id="refreshBtn_cat" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span></button></div>
         </div>
       </div>
@@ -1956,12 +1976,27 @@ input[type="file"]:lang(ar)::before {
       </div>
       <div class="clubly-card p-3 mb-3">
         <div class="row g-2 align-items-center controls">
-          <div class="col-auto"><input id="searchInput_f" class="form-control" placeholder="Search by name, description or category..."/></div>
-          <div class="col-auto"><select id="categoryFilter_f" class="form-select"><option value="">All categories</option></select></div>
-          <div class="col-auto"><select id="statusFilter_f" class="form-select"><option value="">All status</option><option value="Active">Active</option><option value="Under Maintenance">Under Maintenance</option><option value="Closed">Closed</option></select></div>
-          <div class="col-auto"><select id="sortBy_f" class="form-select"><option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
-<option value="name_desc">Name ↓</option><option value="capacity_desc">Capacity ↓</option><option value="capacity_asc">Capacity ↑</option></select></div>
-          <div class="col-auto"><select id="pageSize_f" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div>
+          <div class="col-auto"><input id="searchInput_f" class="form-control" data-i18n-ph="fac_search_ph" placeholder="Search by name, description or category..."/></div>
+          <div class="col-auto"><select id="categoryFilter_f" class="form-select">
+  <option value="" data-i18n="fac_filter_all_cats">All categories</option>
+</select></div>
+          <div class="col-auto"><select id="statusFilter_f" class="form-select">
+  <option value="" data-i18n="fac_filter_all_status">All status</option>
+  <option value="Active" data-i18n="fac_status_active">Active</option>
+  <option value="Under Maintenance" data-i18n="fac_status_maintenance">Under Maintenance</option>
+  <option value="Closed" data-i18n="fac_status_closed">Closed</option>
+</select></div>
+          <div class="col-auto"><select id="sortBy_f" class="form-select">
+  <option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
+  <option value="name_desc" data-i18n="mem_sort_name_desc">Name ↓</option>
+  <option value="capacity_desc" data-i18n="fac_sort_capacity_desc">Capacity ↓</option>
+  <option value="capacity_asc" data-i18n="fac_sort_capacity_asc">Capacity ↑</option>
+</select></div>
+          <div class="col-auto"><select id="pageSize_f" class="form-select">
+  <option value="5" data-i18n="mem_page_5">5</option>
+  <option value="10" selected data-i18n="mem_page_10">10</option>
+  <option value="20" data-i18n="mem_page_25">20</option>
+</select></div>
           <div class="col-auto ms-auto"><button id="refreshBtn_f" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span></button></div>
         </div>
       </div>
@@ -2093,7 +2128,7 @@ input[type="file"]:lang(ar)::before {
           </div>
           <div class="col-auto ms-auto">
             <button class="btn btn-outline-primary" onclick="loadSchedules()">
-              <i class="bi bi-arrow-clockwise"></i> Refresh
+              <i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span>
             </button>
           </div>
         </div>
@@ -2249,11 +2284,21 @@ input[type="file"]:lang(ar)::before {
       </div>
       <div class="clubly-card p-3 mb-3">
         <div class="row g-2 align-items-center controls">
-          <div class="col-auto"><input id="searchInput_a" class="form-control" placeholder="Search by name or description..."/></div>
-          <div class="col-auto"><select id="facilityFilter_a" class="form-select"><option value="">All Facilities</option></select></div>
-          <div class="col-auto"><select id="statusFilter_a" class="form-select"><option value="">All Status</option><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
-          <div class="col-auto"><select id="sortBy_a" class="form-select"><option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
-<option value="name_desc">Name ↓</option><option value="price_asc">Price ↑</option><option value="price_desc">Price ↓</option></select></div>
+          <div class="col-auto"><input id="searchInput_a" class="form-control" data-i18n-ph="act_search_ph2" placeholder="Search by name or description..."/></div>
+          <div class="col-auto"><select id="facilityFilter_a" class="form-select">
+  <option value="" data-i18n="act_filter_all_fac">All Facilities</option>
+</select></div>
+          <div class="col-auto"><select id="statusFilter_a" class="form-select">
+  <option value="" data-i18n="act_filter_all_status">All Status</option>
+  <option value="Active" data-i18n="act_status_active">Active</option>
+  <option value="Inactive" data-i18n="act_status_inactive">Inactive</option>
+</select></div>
+          <div class="col-auto"><select id="sortBy_a" class="form-select">
+  <option value="name_asc" data-i18n="mem_sort_name_asc">Name ↑</option>
+  <option value="name_desc" data-i18n="mem_sort_name_desc">Name ↓</option>
+  <option value="price_asc" data-i18n="act_sort_price_asc">Price ↑</option>
+  <option value="price_desc" data-i18n="act_sort_price_desc">Price ↓</option>
+</select></div>
           <div class="col-auto"><select id="pageSize_a" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div>
           <div class="col-auto ms-auto"><button id="refreshBtn_a" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span></button></div>
         </div>
@@ -2358,10 +2403,25 @@ input[type="file"]:lang(ar)::before {
       </div>
       <div class="clubly-card p-3 mb-3">
         <div class="row g-2 align-items-center controls">
-          <div class="col-auto"><input id="searchInput_g" class="form-control" placeholder="Search by name / code / activity"/></div>
-          <div class="col-auto"><select id="filterActivity_g" class="form-select"><option value="">All Activities</option></select></div>
-          <div class="col-auto"><select id="filterDay_g" class="form-select"><option value="">All Days</option><option>Saturday</option><option>Sunday</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
-          <div class="col-auto"><select id="pageSize_g" class="form-select"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select></div>
+          <div class="col-auto"><input id="searchInput_g" class="form-control" data-i18n-ph="group_search_ph" placeholder="Search by name / code / activity"/></div>
+          <div class="col-auto"><select id="filterActivity_g" class="form-select">
+  <option value="" data-i18n="group_filter_all_acts">All Activities</option>
+</select></div>
+          <div class="col-auto"><select id="filterDay_g" class="form-select">
+  <option value="" data-i18n="group_filter_all_days">All Days</option>
+  <option data-i18n="day_sat">Saturday</option>
+  <option data-i18n="day_sun">Sunday</option>
+  <option data-i18n="day_mon">Monday</option>
+  <option data-i18n="day_tue">Tuesday</option>
+  <option data-i18n="day_wed">Wednesday</option>
+  <option data-i18n="day_thu">Thursday</option>
+  <option data-i18n="day_fri">Friday</option>
+</select></div>
+          <div class="col-auto"><select id="pageSize_g" class="form-select">
+  <option value="5" data-i18n="mem_page_5">5</option>
+  <option value="10" selected data-i18n="mem_page_10">10</option>
+  <option value="20" data-i18n="mem_page_25">20</option>
+</select></div>
           <div class="col-auto ms-auto"><button id="refreshBtn_g" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span></button></div>
         </div>
       </div>
@@ -2711,20 +2771,20 @@ input[type="file"]:lang(ar)::before {
       </div>
       <div class="d-flex gap-2 flex-wrap align-items-center">
        <input id="notifSearchInput" class="form-control form-control-sm" style="width:200px" data-i18n-ph="notif_search_ph" placeholder="Search title...">
-        <select id="notifFilterRecipient" class="form-select form-select-sm" style="width:140px">
-    <option value="" data-i18n="notif_filter_all_recip">All recipients</option>
-          <option value="Admins">Admins</option>
-          <option value="Trainers">Trainers</option>
-          <option value="Members">Members</option>
-          <option value="Guests">Guests</option>
-        </select>
-        <select id="notifFilterType" class="form-select form-select-sm" style="width:120px">
-       <option value="" data-i18n="notif_filter_all_types">All types</option>
-          <option value="Info">Info</option>
-          <option value="Warning">Warning</option>
-          <option value="Success">Success</option>
-          <option value="Urgent">Urgent</option>
-        </select>
+  <select id="notifFilterRecipient" class="form-select form-select-sm" style="width:140px">
+  <option value="" data-i18n="notif_filter_all_recip">All recipients</option>
+  <option value="Admins" data-i18n="admin_col_name">Admins</option>
+  <option value="Trainers" data-i18n="sidebar_trainers">Trainers</option>
+  <option value="Members" data-i18n="sidebar_members">Members</option>
+  <option value="Guests" data-i18n="sidebar_guests">Guests</option>
+</select>
+   <select id="notifFilterType" class="form-select form-select-sm" style="width:120px">
+  <option value="" data-i18n="notif_filter_all_types">All types</option>
+  <option value="Info" data-i18n="notif_type_info">Info</option>
+  <option value="Warning" data-i18n="notif_type_warning">Warning</option>
+  <option value="Success" data-i18n="notif_type_success">Success</option>
+  <option value="Urgent" data-i18n="notif_type_urgent">Urgent</option>
+</select>
         <button class="btn btn-outline-primary btn-sm" onclick="loadNotifications()">
           <i class="bi bi-arrow-clockwise"></i>
         </button>
@@ -2859,8 +2919,7 @@ input[type="file"]:lang(ar)::before {
       <small class="text-muted" data-i18n="page_contact_sub">Messages received from the contact form</small>
     </div>
     <div class="d-flex gap-2 align-items-center">
-      <span class="badge bg-danger rounded-pill px-3 py-2" id="contactUnreadBadge" style="font-size:.85rem;display:none">0 unread</span>
-      <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="markAllContactRead()">
+<span class="badge bg-danger rounded-pill px-3 py-2" id="contactUnreadBadge" style="font-size:.85rem;display:none">0 <span data-i18n="contact_unread_badge">unread</span></span>      <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="markAllContactRead()">
         <i class="bi bi-check2-all me-1"></i>Mark all read
       </button>
       <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="loadContactMessages()">
@@ -2876,33 +2935,32 @@ input[type="file"]:lang(ar)::before {
         <input id="contactSearch" class="form-control" data-i18n-ph="contact_search_ph" placeholder="Search by name, email, topic..." style="width:260px">
       </div>
       <div class="col-auto">
-        <select id="contactFilterRole" class="form-select" style="width:150px">
-<option value="" data-i18n="contact_filter_all_roles">All roles</option>
-          <option value="Admin">Admin</option>
-          <option value="Member">Member</option>
-          <option value="Trainer">Trainer</option>
-          <option value="Guest">Guest</option>
-          <option value="null">No account</option>
-        </select>
+   <select id="contactFilterRole" class="form-select" style="width:150px">
+  <option value="" data-i18n="contact_filter_all_roles">All roles</option>
+  <option value="Admin" data-i18n="contact_filter_role_admin">Admin</option>
+  <option value="Member" data-i18n="contact_filter_role_member">Member</option>
+  <option value="Trainer" data-i18n="contact_filter_role_trainer">Trainer</option>
+  <option value="Guest" data-i18n="contact_filter_role_guest">Guest</option>
+  <option value="null" data-i18n="contact_filter_no_account">No account</option>
+</select>
       </div>
       <div class="col-auto">
-        <select id="contactFilterRead" class="form-select" style="width:140px">
-    <option value="" data-i18n="contact_filter_all">All</option>
-          <option value="unread" data-i18n="contact_filter_unread">Unread</option>
-          <option value="read" data-i18n="contact_filter_read">Read</option>
-        </select>
+   <select id="contactFilterRead" class="form-select" style="width:140px">
+  <option value="" data-i18n="contact_filter_all">All</option>
+  <option value="unread" data-i18n="contact_filter_unread">Unread</option>
+  <option value="read" data-i18n="contact_filter_read">Read</option>
+</select>
       </div>
       <div class="col-auto">
-        <select id="contactFilterTopic" class="form-select" style="width:170px">
-<option value="" data-i18n="contact_filter_all_topics">All topics</option>
-          <option>General Inquiry</option>
-          <option>Membership Plans</option>
-          <option>Book a Tour</option>
-          <option>Personal Training</option>
-          <option>Technical Support</option>
-            <option>Other</option>
-
-        </select>
+       <select id="contactFilterTopic" class="form-select" style="width:170px">
+  <option value="" data-i18n="contact_filter_all_topics">All topics</option>
+  <option data-i18n="contact_topic_general">General Inquiry</option>
+  <option data-i18n="contact_topic_membership">Membership Plans</option>
+  <option data-i18n="contact_topic_tour">Book a Tour</option>
+  <option data-i18n="contact_topic_training">Personal Training</option>
+  <option data-i18n="contact_topic_support">Technical Support</option>
+  <option data-i18n="contact_topic_other">Other</option>
+</select>
       </div>
     </div>
   </div>
@@ -3013,13 +3071,13 @@ input[type="file"]:lang(ar)::before {
         <input id="myNotifSearch" class="form-control" data-i18n-ph="inbox_search_ph" placeholder="Search notifications..." style="width:240px">
       </div>
       <div class="col-auto">
-        <select id="myNotifFilterType" class="form-select" style="width:140px">
-   <option value="" data-i18n="inbox_filter_all_types">All types</option>
-          <option value="Info">ℹ️ Info</option>
-          <option value="Warning">⚠️ Warning</option>
-          <option value="Success">✅ Success</option>
-          <option value="Urgent">🔴 Urgent</option>
-        </select>
+     <select id="myNotifFilterType" class="form-select" style="width:140px">
+  <option value="" data-i18n="inbox_filter_all_types">All types</option>
+  <option value="Info" data-i18n="notif_type_info">ℹ️ Info</option>
+  <option value="Warning" data-i18n="notif_type_warning">⚠️ Warning</option>
+  <option value="Success" data-i18n="notif_type_success">✅ Success</option>
+  <option value="Urgent" data-i18n="notif_type_urgent">🔴 Urgent</option>
+</select>
       </div>
       <div class="col-auto">
         <select id="myNotifFilterStatus" class="form-select" style="width:140px">
@@ -3077,7 +3135,7 @@ input[type="file"]:lang(ar)::before {
       </div>
       <div class="col-auto ms-auto">
         <button class="btn btn-outline-primary btn-sm" onclick="loadFaqsAdmin()">
-          <i class="bi bi-arrow-clockwise"></i> Refresh
+          <i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span>
         </button>
       </div>
     </div>
@@ -3219,7 +3277,7 @@ input[type="file"]:lang(ar)::before {
     <span data-i18n="booking_title">Bookings Management</span>
   </h4>
   <button class="btn btn-outline-primary btn-sm" onclick="loadBookings()">
-    <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+    <i class="bi bi-arrow-clockwise me-1"></i> <span data-i18n="tr_refresh">Refresh</span>
   </button>
 </div>
 <div class="clubly-card p-3 mb-3">
@@ -3228,7 +3286,7 @@ input[type="file"]:lang(ar)::before {
 <input id="searchMembership" class="form-control" data-i18n-ph="booking_search_ph" placeholder="Search by membership #..." style="width:220px" oninput="loadBookings()">  </div>
     <div class="col-auto ms-auto">
       <button class="btn btn-outline-primary" onclick="loadBookings()">
-        <i class="bi bi-arrow-clockwise"></i> Refresh
+        <i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span>
       </button>
     </div>
   </div>
@@ -3389,7 +3447,7 @@ input[type="file"]:lang(ar)::before {
     <div class="row g-2 align-items-center controls">
       <div class="col-auto"><input id="searchInput_adm" class="form-control" data-i18n-ph="admin_search_ph" placeholder="Search by name or email..."></div>
       <div class="col-auto"><select id="genderFilter_adm" class="form-select"><option value="" data-i18n="admin_filter_any_gender">Any gender</option><option value="Male">Male</option><option value="Female">Female</option></select></div>
-      <div class="col-auto ms-auto"><button class="btn btn-outline-primary" onclick="loadAdmins()"><i class="bi bi-arrow-clockwise"></i> Refresh</button></div>
+      <div class="col-auto ms-auto"><button class="btn btn-outline-primary" onclick="loadAdmins()"><i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span></button></div>
     </div>
   </div>
   <!-- Table -->
@@ -3561,7 +3619,7 @@ input[type="file"]:lang(ar)::before {
 <small class="text-muted" data-i18n="page_guests_sub">Registered guests — View / Delete</small>
     </div>
     <button class="btn btn-outline-primary rounded-pill px-3" onclick="loadGuests()">
-      <i class="bi bi-arrow-clockwise"></i> Refresh
+      <i class="bi bi-arrow-clockwise"></i> <span data-i18n="tr_refresh">Refresh</span>
     </button>
   </div>
 
@@ -3619,12 +3677,11 @@ input[type="file"]:lang(ar)::before {
         </select>
       </div>
       <div class="col-auto">
-        <select id="pageSize_gst" class="form-select" onchange="applyGuestFilters()">
-          <option value="5">5 / page</option>
-         <option value="10" selected data-i18n="mem_page_10">10 / page</option>
-
-          <option value="25">25 / page</option>
-        </select>
+     <select id="pageSize_gst" class="form-select" onchange="applyGuestFilters()">
+  <option value="5" data-i18n="mem_page_5">5 / page</option>
+  <option value="10" selected data-i18n="mem_page_10">10 / page</option>
+  <option value="25" data-i18n="mem_page_25">25 / page</option>
+</select>
       </div>
     </div>
   </div>
@@ -3962,7 +4019,9 @@ input[type="file"]:lang(ar)::before {
 // NAVIGATION
 // ===================================================
 
-const pages = ['main','member','trainer','trainer-ratings','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs','guest'];function showPage(name) {
+const pages = ['main','member','trainer','trainer-ratings','category','facility','activity','group','membership','notifications','my-notifications','admins','profile','bookings','contact-messages','faqs','guest'];
+window.updateGlobalT = function(newT) { T = newT; };
+function showPage(name) {
   pages.forEach(p => {
     document.getElementById('page-' + p)?.classList.remove('active');
     const nav = document.getElementById('nav-' + p);
@@ -4030,6 +4089,11 @@ function showToastIn(containerId, msg, type='success') {
 // HELPER FUNCTIONS
 // ===================================================
 function fixUrl(url) { if(!url) return ''; return url.startsWith('http') ? url : 'https://clublywebsite.runasp.net' + url; }
+function getT() {
+  return CLUBLY_TRANSLATIONS[clublyGetLang()] || CLUBLY_TRANSLATIONS['en'];
+}
+let T = getT();
+window.updateGlobalT = function(newT) { T = newT; };
 function escapeHtml(s) { if(!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function extractFromNationalId(nid) {
   if(!/^\d{14}$/.test(nid)) return null;
@@ -4130,8 +4194,9 @@ function populateMemberShipDropdowns() {
     `<option value="">${placeholder}</option>` + opts;
   document.getElementById('editMembershipSelect').innerHTML = 
     `<option value="">${placeholder}</option>` + opts;
-  document.getElementById('membershipFilter').innerHTML = '<option value="">All memberships</option>' + memberShipsData.map(m=>`<option value="${m.id}">${escapeHtml(m.name)}</option>`).join('');
-}
+document.getElementById('membershipFilter').innerHTML = 
+  `<option value="">${getT().mem_filter_all_memberships || 'All memberships'}</option>` + 
+  memberShipsData.map(m=>`<option value="${m.id}">${escapeHtml(m.name)}</option>`).join('');}
 async function loadMembers() {
   renderSkeletonRows('membersTable',7); currentPageM=1;
   try { const res=await fetch(membersApiUrl); if(!res.ok) throw new Error(); members=await res.json(); applyMemberFilters(); } catch(e) { document.getElementById('membersTable').innerHTML='<tr><td colspan="7" class="text-center text-danger">Failed to load</td></tr>'; showToast('Failed to load members','error'); }
@@ -4203,9 +4268,9 @@ async function loadActivitiesForTrainers(force=false){
 function populateTrainerActivityOpts(){
   const opts=activitiesListT.map(a=>`<option value="${a.id}">${escapeHtml(a.name)}</option>`).join('');
   document.getElementById('addActivitiesSelect').innerHTML=opts;
-  document.getElementById('editActivitiesSelect').innerHTML=opts;
-  document.getElementById('activityFilter_t').innerHTML=
-  '<option value="">All activities</option>'+
+document.getElementById('editActivitiesSelect').innerHTML=opts;
+document.getElementById('activityFilter_t').innerHTML=
+  `<option value="">${getT().tr_filter_all_acts || 'All Activities'}</option>`+
   activitiesListT.map(a=>`<option value="${a.id}">${escapeHtml(a.name)}</option>`).join('');
 }
 
@@ -4435,7 +4500,9 @@ const facApiUrl='https://clublywebsite.runasp.net/api/Facilities'; const facCats
 let facilitiesData=[], filteredFacilities=[], facilityCategories=[], currentPageF=1, pageSizeF=10;
 function showToastF(msg,type='success'){showToastIn('toastContainer_f',msg,type);}
 async function loadFacilityCategories(force=false){if(facilityCategories.length>0&&!force){populateFacilityCatOpts();return;}try{const res=await fetch(facCatsApi);if(!res.ok)throw new Error();facilityCategories=await res.json();populateFacilityCatOpts();}catch(e){showToastF('Failed loading categories','error');}}
-function populateFacilityCatOpts(){const opts=facilityCategories.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');document.getElementById('addCategorySelect').innerHTML='<option value="">Select category</option>'+opts;document.getElementById('editCategorySelect').innerHTML='<option value="">Select category</option>'+opts;document.getElementById('categoryFilter_f').innerHTML='<option value="">All categories</option>'+opts;}
+function populateFacilityCatOpts(){const opts=facilityCategories.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');document.getElementById('addCategorySelect').innerHTML='<option value="">Select category</option>'+opts;document.getElementById('editCategorySelect').innerHTML='<option value="">Select category</option>'+opts;
+document.getElementById('categoryFilter_f').innerHTML=
+  `<option value="">${getT().fac_filter_all_cats || 'All categories'}</option>`+opts;}
 async function loadFacilities(){renderSkeletonRows('facilitiesTable',7);currentPageF=1;try{const res=await fetch(facApiUrl);if(!res.ok)throw new Error();facilitiesData=await res.json();applyFacilityFilters();}catch(e){document.getElementById('facilitiesTable').innerHTML='<tr><td colspan="7" class="text-center text-danger">Failed to load</td></tr>';showToastF('Failed','error');}}
 function applyFacilityFilters(){const q=document.getElementById('searchInput_f')?.value.trim().toLowerCase()||'';const cat=document.getElementById('categoryFilter_f')?.value||'';const status=document.getElementById('statusFilter_f')?.value||'';pageSizeF=parseInt(document.getElementById('pageSize_f')?.value||'10');const sortBy=document.getElementById('sortBy_f')?.value||'name_asc';filteredFacilities=facilitiesData.filter(f=>(!q||[f.name,f.description,f.facilityCategoryName].some(t=>t&&t.toLowerCase().includes(q)))&&(!cat||String(f.facilityCategoryId)===cat)&&(!status||f.status===status));filteredFacilities.sort((a,b)=>{switch(sortBy){case'name_asc':return(a.name||'').localeCompare(b.name||'');case'name_desc':return(b.name||'').localeCompare(a.name||'');case'capacity_asc':return(a.capacity||0)-(b.capacity||0);case'capacity_desc':return(b.capacity||0)-(a.capacity||0);default:return 0;}});renderFacilityPage(currentPageF);}
 function renderFacilityPage(page){const tbody=document.getElementById('facilitiesTable');tbody.innerHTML='';const total=filteredFacilities.length,totalPages=Math.max(1,Math.ceil(total/pageSizeF));if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageF=page;const start=(page-1)*pageSizeF,end=Math.min(start+pageSizeF,total),items=filteredFacilities.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="7" class="text-center" data-i18n="mem_no_results">No results</td></tr>';}else items.forEach(f=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(f.name)}</td><td>${escapeHtml(f.description||'')}</td><td>${escapeHtml(f.facilityCategoryName||'')}</td><td class="text-center">${f.capacity??''}</td><td class="text-center"><span class="badge ${f.status==='Active'?'bg-success':'bg-warning text-dark'}">${escapeHtml(f.status||'')}</span></td><td class="text-center">${f.imageUrl?`<img src="${fixUrl(f.imageUrl)}" class="facility-img">`:'<span class="text-muted" data-i18n="mem_no_image">No image</span>'}</td><td class="text-center"><button class="btn btn-link text-primary edit-btn-f" data-id="${f.id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-link text-danger delete-btn-f" data-id="${f.id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_f').textContent=`Showing ${total===0?0:start+1}-${end} of ${total}`;makePagination('pagination_f',currentPageF,totalPages,renderFacilityPage);attachFacilityEvents();}
@@ -4766,7 +4833,9 @@ const actApiUrl='https://clublywebsite.runasp.net/api/Activities'; const actFaci
 let activitiesData=[], filteredActivities=[], facilitiesForAct=[], currentPageA=1, pageSizeA=10;
 function showToastA(msg,type='success'){showToastIn('toastContainer_a',msg,type);}
 async function loadFacilitiesForAct(force=false){if(facilitiesForAct.length>0&&!force){populateActFacilityOpts();return;}try{const res=await fetch(actFacilitiesUrl);if(!res.ok)throw new Error();facilitiesForAct=await res.json();populateActFacilityOpts();}catch(e){showToastA('Failed loading facilities','error');}}
-function populateActFacilityOpts(){const opts=facilitiesForAct.map(f=>`<option value="${f.id}">${escapeHtml(f.name)}</option>`).join('');document.getElementById('addFacilitySelect').innerHTML='<option value="">Select facility</option>'+opts;document.getElementById('editFacilitySelect').innerHTML='<option value="">Select facility</option>'+opts;document.getElementById('facilityFilter_a').innerHTML='<option value="">All Facilities</option>'+opts;}
+function populateActFacilityOpts(){const opts=facilitiesForAct.map(f=>`<option value="${f.id}">${escapeHtml(f.name)}</option>`).join('');document.getElementById('addFacilitySelect').innerHTML='<option value="">Select facility</option>'+opts;document.getElementById('editFacilitySelect').innerHTML='<option value="">Select facility</option>'+opts;
+document.getElementById('facilityFilter_a').innerHTML=
+  `<option value="">${getT().act_filter_all_fac || 'All Facilities'}</option>`+opts;}
 async function loadActivities(){renderSkeletonRows('activitiesTable',7);currentPageA=1;try{const res=await fetch(actApiUrl);if(!res.ok)throw new Error();activitiesData=await res.json();applyActivityFilters();}catch(e){document.getElementById('activitiesTable').innerHTML='<tr><td colspan="7" class="text-center text-danger">Failed to load</td></tr>';showToastA('Failed','error');}}
 function applyActivityFilters(){const q=document.getElementById('searchInput_a')?.value.trim().toLowerCase()||'';const facF=document.getElementById('facilityFilter_a')?.value||'';const statusF=document.getElementById('statusFilter_a')?.value||'';pageSizeA=parseInt(document.getElementById('pageSize_a')?.value||'10');const sortBy=document.getElementById('sortBy_a')?.value||'name_asc';filteredActivities=activitiesData.filter(a=>(!q||(a.name&&a.name.toLowerCase().includes(q))||(a.description&&a.description.toLowerCase().includes(q)))&&(!facF||String(a.facilityId)===facF)&&(!statusF||a.status===statusF));filteredActivities.sort((a,b)=>{switch(sortBy){case'name_asc':return(a.name||'').localeCompare(b.name||'');case'name_desc':return(b.name||'').localeCompare(a.name||'');case'price_asc':return(Number(a.price)||0)-(Number(b.price)||0);case'price_desc':return(Number(b.price)||0)-(Number(a.price)||0);default:return 0;}});renderActivityPage(currentPageA);}
 function renderActivityPage(page){const tbody=document.getElementById('activitiesTable');tbody.innerHTML='';const total=filteredActivities.length,totalPages=Math.max(1,Math.ceil(total/pageSizeA));if(page<1)page=1;if(page>totalPages)page=totalPages;currentPageA=page;const start=(page-1)*pageSizeA,end=Math.min(start+pageSizeA,total),items=filteredActivities.slice(start,end);if(!items.length){tbody.innerHTML='<tr><td colspan="7" class="text-center" data-i18n="mem_no_results">No results</td></tr>';}else items.forEach(act=>{const facName=facilitiesForAct.find(f=>f.id===act.facilityId)?.name||'';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(act.name)}</td><td>${escapeHtml(act.description||'')}</td><td class="text-center">${escapeHtml(facName)}</td><td class="text-center"><span class="badge bg-secondary">${escapeHtml(act.status||'')}</span></td><td class="text-center">${act.imageUrl?`<img src="${fixUrl(act.imageUrl)}" class="activity-img">`:'<span class="text-muted" data-i18n="mem_no_image">No image</span>'}</td><td class="text-center"><button class="btn btn-link text-primary edit-btn-a" data-id="${act.id}"><i class="bi bi-pencil-square"></i></button><button class="btn btn-link text-danger delete-btn-a" data-id="${act.id}"><i class="bi bi-trash3-fill"></i></button></td>`;tbody.appendChild(tr);});document.getElementById('itemsInfo_a').textContent=`Showing ${total===0?0:start+1}-${end} of ${total}`;makePagination('pagination_a',currentPageA,totalPages,renderActivityPage);attachActivityEvents();}
@@ -4787,7 +4856,9 @@ document.getElementById('refreshBtn_a')?.addEventListener('click',async()=>{awai
 const groupsApi='https://clublywebsite.runasp.net/api/ActivityGroups'; const activitiesForGroupApi='https://clublywebsite.runasp.net/api/Activities';
 let groupsCache=[], filteredGroups=[], activitiesForGroup=[], currentPageG=1, pageSizeG=10, sortFieldG=null, sortDirG='asc';
 function showToastG(msg,type='success'){showToastIn('toastContainer_g',msg,type);}
-async function loadActivitiesForGroups(){try{const res=await fetch(activitiesForGroupApi);if(!res.ok)throw new Error();activitiesForGroup=await res.json();['addActivity_g','editActivity_g','filterActivity_g'].forEach(id=>{const sel=document.getElementById(id);if(!sel)return;sel.innerHTML=`<option value="">${id.startsWith('filter')?'All Activities':'Select activity'}</option>`;activitiesForGroup.forEach(a=>{const o=document.createElement('option');o.value=a.id??a.Id;o.textContent=a.name??a.Name;if(a.facilityName)o.dataset.facilityName=a.facilityName;sel.appendChild(o);});});}catch(e){showToastG('Failed to load activities','error');}}
+async function loadActivitiesForGroups(){try{const res=await fetch(activitiesForGroupApi);if(!res.ok)throw new Error();activitiesForGroup=await res.json();['addActivity_g','editActivity_g','filterActivity_g'].forEach(id=>{const sel=document.getElementById(id);if(!sel)return;
+const T = getT();
+sel.innerHTML=`<option value="">${id.startsWith('filter') ? T.group_filter_all_acts : T.group_select_activity}</option>`;  activitiesForGroup.forEach(a=>{const o=document.createElement('option');o.value=a.id??a.Id;o.textContent=a.name??a.Name;if(a.facilityName)o.dataset.facilityName=a.facilityName;sel.appendChild(o);});});}catch(e){showToastG('Failed to load activities','error');}}
 async function loadGroups(){const tbody=document.getElementById('groupsTbody');tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">Loading...</td></tr>';try{const res=await fetch(groupsApi);if(!res.ok)throw new Error();groupsCache=await res.json();currentPageG=1;applyGroupFilters();}catch(e){tbody.innerHTML='<tr><td colspan="9" class="text-center text-danger py-4">Failed to load groups</td></tr>';showToastG('Failed','error');}}
 function applyGroupFilters(){const q=(document.getElementById('searchInput_g')?.value||'').trim().toLowerCase();const act=document.getElementById('filterActivity_g')?.value||'';const day=document.getElementById('filterDay_g')?.value||'';pageSizeG=parseInt(document.getElementById('pageSize_g')?.value||'10');filteredGroups=groupsCache.filter(g=>{const name=(g.name||'').toLowerCase();const actId=g.activityId||(g.activity?.id);const dayVal=g.day||'';return(!q||name.includes(q))&&(!act||String(actId)===String(act))&&(!day||dayVal===day);});renderGroupTable();}
 function renderGroupTable(){const tbody=document.getElementById('groupsTbody');if(!filteredGroups.length){tbody.innerHTML='<tr><td colspan="9" class="text-center py-4 text-muted">No groups</td></tr>';document.getElementById('itemsInfo_g').textContent='';makePagination('pagination_g',1,1,()=>{});return;}let list=[...filteredGroups];if(sortFieldG){const dir=sortDirG==='asc'?1:-1;list.sort((a,b)=>{const aV=(a[sortFieldG]||'').toString().toLowerCase();const bV=(b[sortFieldG]||'').toString().toLowerCase();return aV<bV?-dir:aV>bV?dir:0;});}const total=list.length,totalPages=Math.max(1,Math.ceil(total/pageSizeG));if(currentPageG>totalPages)currentPageG=totalPages;const start=(currentPageG-1)*pageSizeG,end=Math.min(start+pageSizeG,total);tbody.innerHTML='';list.slice(start,end).forEach(g=>{const id=g.id,name=g.name||'',cap=g.capacity||'',price=g.price||'',trainerName=g.trainerName||'—',actName=(g.activity?.name||g.activityName||''),facName=(g.facility?.name||g.facilityName||'');const slots=g.timeSlots||[];if(slots.length)console.log('slot sample:',JSON.stringify(slots[0]));const slotsHtml=slots.length?slots.map(s=>{const d=s.day||s.Day||s.dayOfWeek||s.DayOfWeek||'';const st=s.startTime||s.StartTime||'';const et=s.endTime||s.EndTime||'';return`<div class="small mb-1">${d?`<span class="badge bg-secondary me-1">${d}</span>`:''} ${st}${et?' - '+et:''}</div>`;}).join(''):'—';const tr=document.createElement('tr');tr.innerHTML=`<td>${escapeHtml(name)}</td><td>${escapeHtml(actName)}</td><td>${escapeHtml(facName)}</td><td class="text-center">${cap}</td><td class="text-center">${escapeHtml(trainerName)}</td><td class="text-center">${price} EGP</td>
