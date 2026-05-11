@@ -2942,7 +2942,7 @@
           </div>
           <button class="btn-clubly-primary"
             style="background:linear-gradient(135deg,#64748b,#475569);font-size:.82rem;"
-            onclick="if(confirm('Clear all medical chat history?')){clearMedHistory();document.getElementById('medChatHistory').innerHTML='';medWelcomeDone=false;initMedWelcome();}">
+            onclick="if(confirm('Clear all medical chat history?')){clearMedHistory();document.getElementById('medChatHistory').innerHTML='';medWelcomeDone=false;const qp=document.getElementById('medQuickPrompts');if(qp){qp.style.display='flex';qp.style.height='';qp.style.padding='12px 0';}initMedWelcome();}">
             <i class="bi bi-trash3"></i> Clear History
           </button>
         </div>
@@ -3882,7 +3882,13 @@ try {
       if (name === 'schedule') loadMemberSchedule();
       if (name === 'payments') loadMemberPayments();
       if (name === 'attendance') loadMemberAttendance();
-      if (name === 'medical-ai') initMedWelcome();
+      if (name === 'medical-ai') {
+        medWelcomeDone = false;
+        document.getElementById('medChatHistory').innerHTML = '';
+        const qp = document.getElementById('medQuickPrompts');
+        if (qp) { qp.style.display = 'flex'; qp.style.height = ''; qp.style.padding = '12px 0'; }
+        initMedWelcome();
+      }
 
       state.currentPage = name;
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4689,7 +4695,7 @@ function updateMemberNotifUnreadCount() {
         medWelcomeDone = true;
         const hist = loadMedHistory();
         if (hist.length > 0) {
-          // عرض الـ history القديم بدون حفظ مرة تانية
+          // عرض الـ history القديم
           hist.forEach(m => {
             const isUser = m.role === 'user';
             const row = document.createElement('div');
@@ -4705,8 +4711,12 @@ function updateMemberNotifUnreadCount() {
             document.getElementById('medChatHistory').appendChild(row);
           });
           document.getElementById('medChatHistory').scrollTop = 9999;
+          // في حالة وجود history — أخفي الـ suggestions
           hideMedQuickPrompts();
         } else {
+          // مفيش history — أظهر الـ suggestions والرسالة الترحيبية
+          const qp = document.getElementById('medQuickPrompts');
+          if (qp) { qp.style.display = 'flex'; qp.style.height = ''; qp.style.padding = '12px 0'; }
           setTimeout(() => {
             medAppendMsg('👋 Hello! I am your **Medical AI Advisor**. I can help you with general health questions, nutrition tips, workout recovery, and more. How can I assist you today?', 'assistant');
           }, 300);
