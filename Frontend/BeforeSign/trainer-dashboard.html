@@ -57,6 +57,8 @@ body{
   padding:0 20px;
   z-index:2000;
   box-shadow:0 2px 24px rgba(0,0,0,.45);
+    gap:10px;
+  flex-wrap:nowrap;
 }
 .toggle-btn{
   background:none;border:none;color:#fff;
@@ -70,6 +72,7 @@ body{
   display:flex;align-items:center;gap:8px;
   text-decoration:none;min-width:200px;
   transition:min-width .3s;
+    flex-shrink:0;
 }
 .logo-icon{font-size:26px;color:var(--clubly-accent);}
 .logo-text{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:.5px;}
@@ -82,7 +85,7 @@ body{
   border:none;background:none;
 }
 .header-nav a:hover,.header-nav a.active{color:#fff;background:rgba(255,255,255,.1);}
-.header-actions{display:flex;align-items:center;gap:10px;margin-left:auto;}
+.header-actions{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0;}
 .trainer-badge{
   display:flex;align-items:center;gap:8px;
   background:rgba(255,255,255,.07);
@@ -855,7 +858,27 @@ img{
   .header-actions{
     gap:5px;
   }
+ .clubly-header{
+    padding:0 12px;
+    gap:8px;
+  }
 
+  .header-nav{
+    display:none;
+  }
+
+  .logo-text{
+    font-size:1.1rem;
+  }
+
+  .trainer-name,
+  .trainer-role{
+    display:none;
+  }
+
+  .trainer-badge{
+    padding:4px 6px;
+  }
   .btn-signout{
     padding:6px 10px;
     font-size:.75rem;
@@ -863,6 +886,20 @@ img{
 
   table{
     min-width:700px;
+  }
+}
+@media (max-width:480px){
+
+  .logo-text{
+    display:none;
+  }
+
+  .btn-signout{
+    display:none;
+  }
+
+  .clubly-header{
+    padding:0 8px;
   }
 }
 </style>

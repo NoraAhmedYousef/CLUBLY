@@ -213,23 +213,32 @@
     }
 
     /* ===== SIDEBAR ===== */
-    .sidebar {
-      width: var(--sidebar-w);
-      min-width: var(--sidebar-w);
-      background: linear-gradient(180deg, #0d1b2a 0%, #091423 100%);
-      position: fixed;
-      top: var(--header-h);
-      left: 0;
-      bottom: 0;
-      overflow-y: auto;
-      overflow-x: hidden;
-      transition: width .3s ease, min-width .3s ease;
-      z-index: 1000;
-      padding: 16px 0 20px;
-      border-right: 1px solid rgba(255, 255, 255, .06);
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255, 255, 255, .1) transparent;
-    }
+  .sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: linear-gradient(180deg, #0d1b2a 0%, #091423 100%);
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width .3s ease, min-width .3s ease;
+  z-index: 1000;
+  padding: 16px 0 20px;
+  border-right: 1px solid rgba(255, 255, 255, .06);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, .1) transparent;
+}
+.sidebar.closed {
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.content-area.expanded {
+  margin-left: 0;
+}
 
     .sidebar-section {
       padding: 8px 12px 4px;
@@ -2539,10 +2548,13 @@
 
   <!-- ===== HEADER ===== -->
   <header class="clubly-header">
-    <a class="header-logo" href="#">
-      <i class="bi bi-lightning-charge-fill logo-icon"></i>
-      <span class="logo-text">Cl<span>u</span>bly</span>
-    </a>
+  <button class="btn-theme-header" onclick="toggleSidebar()" title="Toggle Sidebar" style="margin-right:8px;">
+  <i class="bi bi-list"></i>
+</button>
+<a class="header-logo" href="#">
+  <i class="bi bi-lightning-charge-fill logo-icon"></i>
+  <span class="logo-text">Cl<span>u</span>bly</span>
+</a>
 
     <nav class="header-nav">
       <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i
@@ -5917,8 +5929,16 @@ ${b.bookingDate
         submitBtn.innerHTML = `<i class="bi bi-star-fill"></i> Submit Rating`;
       }
     }
-    // ===== INIT =====
-    generateCalendar();
+  // ===== SIDEBAR TOGGLE =====
+let sidebarOpen = true;
+function toggleSidebar() {
+  sidebarOpen = !sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('closed', !sidebarOpen);
+  document.getElementById('contentArea').classList.toggle('expanded', !sidebarOpen);
+}
+
+// ===== INIT =====
+generateCalendar();
     renderUpcoming();
     renderSchedule();
     renderMembership();
