@@ -198,6 +198,7 @@ about_team_cxo: "Chief Experience Officer",
 about_team_cxo_bio: "Obsessed with member happiness. Leads product design and member success.",
 about_team_cto: "Head of Technology",
 about_team_cto_bio: "Built the Clubly platform from scratch. Drives our AI-powered features.",
+rating_no_ratings: "No ratings found",
 
     // ── Activities Page ───────────────────────────────────
     act_title: "Sports Activities",
@@ -457,7 +458,24 @@ mem_col_actions: "Actions",
 mem_no_image: "No image",
 mem_no_results: "No results",
 mem_loading: "Loading...",
-
+cat_sort_by: "Sort By",
+cat_rows_5: "5 rows",
+cat_rows_10: "10 rows",
+cat_rows_20: "20 rows",
+notif_type_info: "Info",
+notif_type_warning: "Warning",
+notif_type_success: "Success",
+notif_type_urgent: "Urgent",
+contact_topic_membership: "Membership Plans",
+contact_topic_tour: "Book a Tour",
+contact_topic_training: "Personal Training",
+day_sat: "Saturday",
+day_sun: "Sunday",
+day_mon: "Monday",
+day_tue: "Tuesday",
+day_wed: "Wednesday",
+day_thu: "Thursday",
+day_fri: "Friday",
 // ── Add Member Modal ──────────────────────────────────
 
 mem_lbl_new_pw: "New Password",
@@ -568,6 +586,8 @@ mem_of: "of",
   cat_col_actions: "Actions",
   cat_refresh: "Refresh",
   cat_modal_add: "Add New Facility Category",
+  ms_modal_title_add:  "Add Membership Plan",
+ms_modal_title_edit: "Edit Membership Plan",
   cat_modal_edit: "Edit Category",
   cat_lbl_name: "Category Name",
   cat_lbl_desc: "Description",
@@ -579,8 +599,10 @@ mem_of: "of",
   cat_btn_update: "Update",
   cat_desc_ph: "Description (optional)",
   cat_no_found: "No categories found",
-  
   fac_add_btn: "Add Facility",
+  ms_modal_title: "Membership Plan" ,
+  notif_title_ph: "Notification title..." ,
+  notif_desc_ph: "Write your notification message..." ,
   fac_search_ph: "Search by name, description or category...",
   fac_filter_all_cats: "All categories",
   fac_filter_all_status: "All status",
@@ -897,7 +919,7 @@ mem_of: "of",
   booking_btn_yes_approve: "Yes, Approve",
   booking_btn_yes_cancel: "Yes, Cancel",
   booking_guest_label: "Guest",
-
+notif_desc_err: "Description required (min 10 chars)",
   admin_add_btn: "Add Admin",
   admin_search_ph: "Search by name or email...",
   admin_filter_any_gender: "Any gender",
@@ -1034,10 +1056,11 @@ swal_faq_added: "Added!",
 swal_faq_updated: "Updated!",
 swal_faq_deleted: "FAQ deleted",
 swal_faq_fail_delete: "Failed to delete",
-
+notif_title_err: "Title is required (min 3 chars)" ,
 // Contact
 swal_contact_delete: "Delete this message?",
-
+notif_recip_admins: "Admins", notif_recip_trainers: "Trainers",
+notif_recip_members: "Members", notif_recip_guests: "Guests",
 // Notif
 swal_notif_sent_html: "Notification sent to:",
 swal_notif_delete: "Delete notification?",
@@ -1054,6 +1077,27 @@ free_label: "Free",
 err_required_fields: "Please fill in all required fields.",
 err_add_slot: "Please add at least one time slot with start and end time.",
 err_end_after_start: "End time must be after start time",
+// ── Members Pagination / Table ──
+mem_add_title: "Add Member",
+mem_edit_title: "Edit Member",
+mem_ph_fullname: "Full name",
+mem_ph_email: "Email",
+mem_ph_phone: "Phone",
+mem_ph_nid: "National ID (14 digits)",
+mem_ph_member_num: "Membership number",
+mem_ph_password: "Password",
+mem_ph_confirm_pw: "Confirm Password",
+mem_ph_new_pw: "New password",
+mem_ph_confirm_new_pw: "Confirm new password",
+mem_lbl_image: "Image",
+mem_lbl_password: "Password",
+mem_lbl_confirm_pw: "Confirm Password",
+mem_loading_memberships: "Loading memberships...",
+
+// ── Notif Booking Render ──
+no_receipt: "No receipt",
+no_actions: "No actions",
+booking_guest_label: "Guest",
   },
   ar: {
     // ── Nav ───────────────────────────────────────────────
@@ -1069,7 +1113,9 @@ err_end_after_start: "End time must be after start time",
     nav_join: "انضم الآن",
     nav_signout: "تسجيل الخروج",
     nav_pricing: "الأسعار",
-
+ms_modal_title: "خطة العضوية" ,
+notif_title_ph: "عنوان الإشعار...",
+notif_desc_ph: "اكتب رسالة الإشعار..." ,
     // ── Hero / Index ──────────────────────────────────────
     hero_tag: "منصة النادي الرياضي #1 في مصر",
     hero_title1: "رحلتك نحو اللياقة",
@@ -1318,10 +1364,12 @@ tr_label_activity: "نشاط",
 tr_label_general: "عام",
 tr_other_trainers: " مدربون أخرون ",
 tr_view:"أعرض المدربون ",
-
+notif_recip_admins: "المشرفون", notif_recip_trainers: "المدربون",
+notif_recip_members: "الأعضاء", notif_recip_guests: "الضيوف",
+notif_desc_err: "الوصف مطلوب (10 أحرف على الأقل)",
     // ── Plans Page ───────────────────────────────────────
         plans:"الأسعار",
-
+notif_title_err: "العنوان مطلوب (3 أحرف على الأقل)" ,
     plans_title: "اختر خطتك",
     plans_sub: "عضويات مرنة مصممة لتناسب أسلوب حياتك وميزانيتك. إلغاء في أي وقت.",
     plans_cta: "انضم إلى أكثر من 2400 عضو في رحلتهم الرياضية.",
@@ -1333,6 +1381,7 @@ plans_membership: "عضوية",
 plans_loading: "جارٍ تحميل الخطط…",
 plans_no_plans: "لا توجد خطط متاحة الآن.",
 plans_error: "فشل تحميل الخطط.",
+rating_no_ratings: "لا توجد تقييمات",
     // ── Contact Page ─────────────────────────────────────
     contact_title: "تواصل معنا",
     contact_sub: "لديك أسئلة؟ فريقنا هنا للمساعدة 7 أيام في الأسبوع.",
@@ -1533,6 +1582,24 @@ mem_select_membership: "اختر العضوية",
 mem_type_main: "رئيسي",
 mem_type_spouse: "زوج/زوجة",
 mem_type_child: "طفل",
+cat_sort_by: "ترتيب حسب",
+cat_rows_5: "5 صفوف",
+cat_rows_10: "10 صفوف",
+cat_rows_20: "20 صفوف",
+notif_type_info: "معلومات",
+notif_type_warning: "تحذير",
+notif_type_success: "نجاح",
+notif_type_urgent: "عاجل",
+contact_topic_membership: "خطط العضوية",
+contact_topic_tour: "حجز جولة",
+contact_topic_training: "تدريب شخصي",
+day_sat: "السبت",
+day_sun: "الأحد",
+day_mon: "الاثنين",
+day_tue: "الثلاثاء",
+day_wed: "الأربعاء",
+day_thu: "الخميس",
+day_fri: "الجمعة",
 // ── Add Member Modal ──────────────────────────────────
 mem_add_title: "إضافة عضو",
 mem_ph_fullname: "الاسم الكامل",
@@ -1582,6 +1649,8 @@ mem_ph_phone: "الهاتف",
 mem_ph_nid: "الرقم القومي (14 رقم)",
 mem_ph_member_num: "رقم العضوية",
 mem_ph_password: "كلمة المرور",
+ms_modal_title_add:  "إضافة خطة عضوية",
+ms_modal_title_edit: "تعديل خطة العضوية",
 mem_ph_confirm_pw: "تأكيد كلمة المرور",
 mem_ph_new_pw: "كلمة المرور الجديدة",
 mem_ph_confirm_new_pw: "تأكيد كلمة المرور الجديدة",
@@ -2171,6 +2240,24 @@ guest_lbl_confirm_pw: "تأكيد كلمة المرور",
 err_required_fields: "يرجى ملء جميع الحقول المطلوبة.",
 err_add_slot: "يرجى إضافة موعد واحد على الأقل بوقت بداية ونهاية.",
 err_end_after_start: "وقت الانتهاء يجب أن يكون بعد وقت البداية",
+mem_add_title: "إضافة عضو",
+mem_edit_title: "تعديل العضو",
+mem_ph_fullname: "الاسم الكامل",
+mem_ph_email: "البريد الإلكتروني",
+mem_ph_phone: "الهاتف",
+mem_ph_nid: "الرقم القومي (14 رقم)",
+mem_ph_member_num: "رقم العضوية",
+mem_ph_password: "كلمة المرور",
+mem_ph_confirm_pw: "تأكيد كلمة المرور",
+mem_ph_new_pw: "كلمة المرور الجديدة",
+mem_ph_confirm_new_pw: "تأكيد كلمة المرور الجديدة",
+mem_lbl_image: "الصورة",
+mem_lbl_password: "كلمة المرور",
+mem_lbl_confirm_pw: "تأكيد كلمة المرور",
+mem_loading_memberships: "جارٍ تحميل العضويات...",
+no_receipt: "لا يوجد إيصال",
+no_actions: "لا إجراءات",
+booking_guest_label: "ضيف",
   }
 };
 
@@ -2185,9 +2272,26 @@ function clublySetLang(lang) {
 }
 function applyLang(lang) {
   lang = lang || clublyGetLang();
-  const T = CLUBLY_TRANSLATIONS[lang];
-  if (!T) return;
-  if (typeof window !== 'undefined') window.T = T;
+const T = CLUBLY_TRANSLATIONS[lang];
+if (!T) return;
+if (typeof window !== 'undefined') {
+  window.T = T;
+  // Update the global T variable in dashboard
+  if (typeof window.updateGlobalT === 'function') window.updateGlobalT(T);
+  // Re-populate dynamic dropdowns with translated first option
+try {
+  if (typeof populateMemberShipDropdowns === 'function' && memberShipsData?.length)
+    populateMemberShipDropdowns();
+  if (typeof populateTrainerActivityOpts === 'function' && activitiesListT?.length)
+    populateTrainerActivityOpts();
+  if (typeof populateFacilityCatOpts === 'function' && facilityCategories?.length)
+    populateFacilityCatOpts();
+  if (typeof populateActFacilityOpts === 'function' && facilitiesForAct?.length)
+    populateActFacilityOpts();
+  if (typeof loadActivitiesForGroups === 'function' && activitiesForGroup?.length)
+    loadActivitiesForGroups();
+} catch(e) {}
+}
 
   const isAr = lang === 'ar';
 
