@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");</script>
+<script src="../i18n.js"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -919,15 +920,15 @@ img{
     <span class="logo-text">Cl<span>u</span>bly</span>
   </a>
   <nav class="header-nav">
-  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
-  <a href="../AfterSign/home.html">Home</a>
-  <a href="../AfterSign/activities.html">Activities</a>
-  <a href="../AfterSign/facilities.html">Facilities</a>
-  <a href="../AfterSign/trainers.html">Trainers</a>
-  <a href="../AfterSign/plans.html">Membership Plans</a>
-  <a href="../AfterSign/about.html">About Us</a>
-  <a href="../AfterSign/faq.html">FAQ</a>
-  <a href="../AfterSign/contact.html">Contact</a>
+<a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i><span data-i18n="sidebar_main_reports">Dashboard</span></a>
+  <a href="../AfterSign/home.html" data-i18n="nav_home">Home</a>
+  <a href="../AfterSign/activities.html" data-i18n="nav_activities">Activities</a>
+  <a href="../AfterSign/facilities.html" data-i18n="nav_facilities">Facilities</a>
+  <a href="../AfterSign/trainers.html" data-i18n="nav_trainers">Trainers</a>
+  <a href="../AfterSign/plans.html" data-i18n="nav_plans">Membership Plans</a>
+  <a href="../AfterSign/about.html" data-i18n="nav_about">About Us</a>
+  <a href="../AfterSign/faq.html" data-i18n="nav_faq">FAQ</a>
+  <a href="../AfterSign/contact.html" data-i18n="nav_contact">Contact</a>
 </nav>
 <div class="header-actions">
     <!-- Notification Bell -->
@@ -945,13 +946,12 @@ img{
     </div>
     <button class="btn-theme" id="themeBtn" title="Toggle Theme">
       <i class="bi bi-moon-stars"></i></button>
-    <div class="trainer-badge">
-      <div class="trainer-avatar">AK</div>
-      <div>
-        <div class="trainer-name">Ahmed Karim</div>
-      </div>
-    </div>
-    <button class="btn-signout" onclick="showPage('signout')">Sign Out</button>
+      <button class="btn-theme-header clubly-lang-btn" 
+      onclick="clublySetLang(clublyGetLang()==='ar'?'en':'ar')"
+style="font-size:.8rem;font-weight:700;letter-spacing:.5px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"
+      title="التبديل إلى العربية">عر</button>
+<div class="trainer-avatar" onclick="showPage('profile')" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;color:#fff;border:2px solid rgba(46,196,182,.4);flex-shrink:0;cursor:pointer;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">AK</div>
+<button class="btn-signout" onclick="showPage('signout')" data-i18n="nav_signout">Sign Out</button>
   </div>
 </header>
 
@@ -960,37 +960,37 @@ img{
 
   <!-- ======= SIDEBAR ======= -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-section">Overview</div>
+<div class="sidebar-section" data-i18n="sidebar_overview">Overview</div>
     <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard" data-label="Dashboard">
-      <i class="bi bi-speedometer2"></i><span class="link-text">Dashboard</span>
+      <i class="bi bi-speedometer2"></i><span class="link-text" data-i18n="sidebar_main_reports">Dashboard</span>
     </button>
   <button class="sidebar-link" onclick="showPage('schedule-new')" id="sb-schedule-new" data-label="My Schedule">
-  <i class="bi bi-calendar-week"></i><span class="link-text">My Schedule</span>
+  <i class="bi bi-calendar-week"></i><span class="link-text" data-i18n="sched_title">My Schedule</span>
 </button>
 
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">Management</div>
+<div class="sidebar-section" data-i18n="sidebar_management">Management</div>
     <button class="sidebar-link" onclick="showPage('members')" id="sb-members" data-label="My Members">
-      <i class="bi bi-people"></i><span class="link-text">My Members</span>
+      <i class="bi bi-people"></i><span class="link-text" data-i18n="sidebar_members">My Members</span>
     </button>
  <button class="sidebar-link" onclick="showPage('groups')" id="sb-groups" data-label="My Groups">
-  <i class="bi bi-diagram-3"></i><span class="link-text">My Groups</span>
+  <i class="bi bi-diagram-3"></i><span class="link-text" data-i18n="sidebar_act_groups">My Groups</span>
 </button>
 <button class="sidebar-link" onclick="showPage('attendance')" 
   id="sb-attendance" data-label="Attendance">
   <i class="bi bi-person-check"></i>
-  <span class="link-text">Attendance</span>
+<span class="link-text" data-i18n="booking_col_actions">Attendance</span>
 </button>
 <button class="sidebar-link" onclick="showPage('ratings')" id="sb-ratings" data-label="Member Ratings">
   <i class="bi bi-star-fill" style="color:var(--clubly-gold);"></i>
-  <span class="link-text">Member Ratings</span>
+<span class="link-text" data-i18n="sidebar_trainer_ratings">Member Ratings</span>
 </button>
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">Account</div>
+<div class="sidebar-section" data-i18n="sidebar_system">Account</div>
 <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications"
         data-label="Notifications" style="position:relative;">
       <i class="bi bi-bell"></i>
-      <span class="link-text">Notifications</span>
+<span class="link-text" data-i18n="sidebar_my_inbox">Notifications</span>
       <span id="trainerSidebarBadge"
         style="display:none;background:#e85d2f;color:#fff;
                font-size:10px;font-weight:900;
@@ -999,11 +999,11 @@ img{
                padding:0 5px;margin-left:auto;line-height:1;">0</span>
     </button>
     <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile" data-label="Profile">
-      <i class="bi bi-person-circle"></i><span class="link-text">Profile</span>
+      <i class="bi bi-person-circle"></i><span class="link-text" data-i18n="sidebar_my_profile">Profile</span>
     </button>
     <div class="sidebar-divider"></div>
     <button class="sidebar-link" onclick="showPage('signout')" id="sb-signout" style="color:rgba(239,68,68,.8);" data-label="Sign Out">
-      <i class="bi bi-box-arrow-right"></i><span class="link-text">Sign Out</span>
+      <i class="bi bi-box-arrow-right"></i><span class="link-text" data-i18n="nav_signout">Sign Out</span>
     </button>
   </aside>
 
@@ -1014,12 +1014,10 @@ img{
     <div class="page active" id="page-dashboard">
       <div class="page-header">
         <div>
-          <h1 class="page-title">Good morning, <span style="color:var(--clubly-accent)">Ahmed!</span></h1>
-          <p class="page-subtitle">Here's your training overview for today.</p>
-        </div>
-        <button class="btn-primary-cl" onclick="openAddSession()">
-          <i class="bi bi-plus-lg"></i> Add Session
-        </button>
+<h1 class="page-title"><span data-i18n="trainer_greeting">Good morning,</span> <span style="color:var(--clubly-accent)" id="trainerGreetingName">Ahmed!</span></h1>
+<p class="page-subtitle" data-i18n="trainer_dash_sub">Here's your training overview for today.</p>
+     </div>
+
       </div>
 
       <!-- Stats -->
@@ -1027,49 +1025,49 @@ img{
 <div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-orange"><i class="bi bi-calendar-check"></i></div>
-      <div class="stat-label">Today's Sessions</div>
+<div class="stat-label" data-i18n="stat_today_sessions">Today's Sessions</div>
       <div class="stat-val" id="stat-today">—</div>
     </div>
   </div>
 <div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-teal"><i class="bi bi-person-check"></i></div>
-      <div class="stat-label">Active Members</div>
+<div class="stat-label" data-i18n="stat_active_members">Active Members</div>
       <div class="stat-val" id="stat-members">—</div>
     </div>
   </div>
 <div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-blue"><i class="bi bi-person"></i></div>
-      <div class="stat-label">Active Guests</div>
+<div class="stat-label" data-i18n="stat_active_guests">Active Guests</div>
       <div class="stat-val" id="stat-guests">—</div>
     </div>
   </div>
 <div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-gold"><i class="bi bi-star-fill"></i></div>
-      <div class="stat-label">Rating</div>
+<div class="stat-label" data-i18n="stat_rating">Rating</div>
       <div class="stat-val" id="stat-rating">—</div>
     </div>
   </div>
 <div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-blue"><i class="bi bi-receipt"></i></div>
-      <div class="stat-label">Total Bookings</div>
+<div class="stat-label" data-i18n="stat_total_bookings">Total Bookings</div>
       <div class="stat-val" id="stat-total">—</div>
     </div>
   </div>
 <div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-green"><i class="bi bi-check2-circle"></i></div>
-      <div class="stat-label">Approved</div>
+<div class="stat-label" data-i18n="stat_approved">Approved</div>
       <div class="stat-val" id="stat-approved">—</div>
     </div>
   </div>
 <div class="col-6 col-xl">
     <div class="stat-card">
       <div class="stat-icon si-red"><i class="bi bi-clock"></i></div>
-      <div class="stat-label">Pending</div>
+<div class="stat-label" data-i18n="stat_pending">Pending</div>
       <div class="stat-val" id="stat-pending">—</div>
     </div>
   </div>
@@ -1080,7 +1078,7 @@ img{
         <div class="col-lg-7">
           <div class="card-clubly">
             <div class="card-title">
-              <span><i class="bi bi-calendar-day me-2" style="color:var(--clubly-accent)"></i>Today's Schedule</span>
+<span><i class="bi bi-calendar-day me-2" style="color:var(--clubly-accent)"></i><span data-i18n="sched_label">Today's Schedule</span></span>
               <span style="font-size:.78rem;color:var(--muted);" id="todayDate"></span>
             </div>
             <div id="todaySchedule"></div>
@@ -1089,8 +1087,8 @@ img{
         <div class="col-lg-5">
           <div class="card-clubly">
             <div class="card-title">
-              <span><i class="bi bi-trophy me-2" style="color:var(--clubly-gold)"></i>Top Members</span>
-              <button class="btn-secondary-cl" onclick="showPage('members')" style="font-size:.75rem;padding:4px 12px;">View All</button>
+<span><i class="bi bi-trophy me-2" style="color:var(--clubly-gold)"></i><span data-i18n="rating_top_trainer">Top Members</span></span>
+<button class="btn-secondary-cl" onclick="showPage('members')" style="font-size:.75rem;padding:4px 12px;" data-i18n="tr_view">View All</button>
             </div>
             <div id="topMembersList"></div>
           </div>
@@ -1101,7 +1099,7 @@ img{
   <div class="col-12">
     <div class="card-clubly">
       <div class="card-title">
-        <span><i class="bi bi-star-fill me-2" style="color:var(--clubly-gold)"></i>Member Ratings</span>
+<span><i class="bi bi-star-fill me-2" style="color:var(--clubly-gold)"></i><span data-i18n="sidebar_trainer_ratings">Member Ratings</span></span>
         <span style="font-size:.78rem;color:var(--muted);" id="ratingsSubtitle"></span>
       </div>
       <div id="trainerRatingsList">
@@ -1126,7 +1124,6 @@ img{
           <span id="weekLabel" style="display:flex;align-items:center;font-weight:700;color:var(--text);padding:0 10px;"></span>
           <button class="btn-secondary-cl" id="nextWeekBtn"><i class="bi bi-chevron-right"></i></button>
         </div>
-        <button class="btn-primary-cl" onclick="openAddSession()"><i class="bi bi-plus-lg"></i> Add Session</button>
       </div>
       <div class="card-clubly" style="overflow-x:auto;">
         <div id="weekScheduleGrid"></div>
@@ -1137,12 +1134,12 @@ img{
 <div class="page" id="page-members">
   <div class="page-header">
     <div>
-      <h1 class="page-title">My Members</h1>
+<h1 class="page-title" data-i18n="sidebar_members">My Members</h1>
       <p class="page-subtitle" id="membersSubtitle">Loading...</p>
     </div>
     <div class="search-bar">
       <i class="bi bi-search" style="color:var(--muted);"></i>
-      <input type="text" id="memberSearch" placeholder="Search by name..." oninput="filterMembers()">
+<input type="text" id="memberSearch" data-i18n-ph="mem_search_ph" placeholder="Search by name..." oninput="filterMembers()">
     </div>
   </div>
 
@@ -1150,22 +1147,22 @@ img{
   <ul class="nav nav-tabs mb-3" id="memberTypeTabs">
     <li class="nav-item">
       <button class="nav-link active" onclick="switchMemberTab('member', this)">
-        <i class="bi bi-person-check me-1"></i> Member Bookings
+<i class="bi bi-person-check me-1"></i> <span data-i18n="booking_tab_activity">Member Bookings</span>
       </button>
     </li>
     <li class="nav-item">
       <button class="nav-link" onclick="switchMemberTab('guest', this)">
-        <i class="bi bi-person me-1"></i> Guest Bookings
+<i class="bi bi-person me-1"></i> <span data-i18n="booking_tab_guest_act">Guest Bookings</span>
       </button>
     </li>
   </ul>
 
   <!-- Status Filter -->
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
-    <button class="day-filter-btn active" onclick="filterMemberStatus('all', this)">All</button>
-    <button class="day-filter-btn" onclick="filterMemberStatus('approved', this)">Approved</button>
-    <button class="day-filter-btn" onclick="filterMemberStatus('pending', this)">Pending</button>
-    <button class="day-filter-btn" onclick="filterMemberStatus('cancelled', this)">Cancelled</button>
+<button class="day-filter-btn active" onclick="filterMemberStatus('all', this)" data-i18n="booking_filter_all">All</button>
+<button class="day-filter-btn" onclick="filterMemberStatus('approved', this)" data-i18n="booking_filter_approved">Approved</button>
+<button class="day-filter-btn" onclick="filterMemberStatus('pending', this)" data-i18n="booking_filter_pending">Pending</button>
+<button class="day-filter-btn" onclick="filterMemberStatus('cancelled', this)" data-i18n="booking_filter_cancelled">Cancelled</button>
   </div>
 
   <!-- Table -->
@@ -1174,17 +1171,17 @@ img{
       <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Full Name</th>
+        <th data-i18n="rating_col_num">#</th>
+            <th data-i18n="mem_col_name">Full Name</th>
             
-            <th>Type</th>
-            <th>Activity</th>
-            <th>Group</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Status</th>
+            <th data-i18n="mem_col_type">Type</th>
+            <th data-i18n="act_col_name">Activity</th>
+            <th data-i18n="group_col_name">Group</th>
+            <th data-i18n="booking_col_date">Start Date</th>
+            <th data-i18n="booking_col_end_date">End Date</th>
+            <th data-i18n="sched_slot_start">Start Time</th>
+            <th data-i18n="sched_slot_end">End Time</th>
+            <th data-i18n="mem_col_membership">Status</th>
           </tr>
         </thead>
         <tbody id="membersTable"></tbody>
@@ -1300,11 +1297,10 @@ img{
   <div class="page-header">
     <div>
       <h1 class="page-title">
-        <i class="bi bi-bell-fill me-2" style="color:var(--clubly-accent);"></i>
-        Notifications
+     <i class="bi bi-bell-fill me-2" style="color:var(--clubly-accent);"></i>
+        <span data-i18n="sidebar_my_inbox">Notifications</span>
       </h1>
-      <p class="page-subtitle">Messages sent to trainers</p>
-    </div>
+<p class="page-subtitle" data-i18n="page_notifications_sub">Messages sent to trainers</p>    </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
       <span id="trainerUnreadBadge"
         style="background:rgba(245,158,11,.12);color:#b45309;
@@ -1313,11 +1309,11 @@ img{
                font-size:.82rem;font-weight:700;">
         0 unread
       </span>
-      <button class="btn-teal-cl" onclick="markAllTrainerRead()">
-        <i class="bi bi-check2-all"></i> Mark all read
+    <button class="btn-teal-cl" onclick="markAllTrainerRead()">
+        <i class="bi bi-check2-all"></i> <span data-i18n="inbox_mark_all">Mark all read</span>
       </button>
       <button class="btn-secondary-cl" onclick="loadTrainerNotifications()">
-        <i class="bi bi-arrow-clockwise"></i> Refresh
+        <i class="bi bi-arrow-clockwise"></i> <span data-i18n="inbox_refresh">Refresh</span>
       </button>
     </div>
   </div>
@@ -1327,7 +1323,8 @@ img{
     <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
       <div class="search-bar" style="flex:1;min-width:200px;max-width:300px;">
         <i class="bi bi-search" style="color:var(--muted);"></i>
-        <input type="text" id="trainerNotifSearch"
+      <input type="text" id="trainerNotifSearch"
+          data-i18n-ph="inbox_search_ph"
           placeholder="Search notifications…"
           oninput="applyTrainerNotifFilters()">
       </div>
@@ -1335,19 +1332,19 @@ img{
         style="background:var(--bg);border:1px solid var(--border);
                border-radius:9px;padding:9px 14px;color:var(--text);
                font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
-        <option value="">All types</option>
-        <option value="Info">ℹ️ Info</option>
-        <option value="Warning">⚠️ Warning</option>
-        <option value="Success">✅ Success</option>
-        <option value="Urgent">🔴 Urgent</option>
+     <option value="" data-i18n="inbox_filter_all_types">All types</option>
+        <option value="Info">ℹ️ <span data-i18n="notif_type_info">Info</span></option>
+        <option value="Warning">⚠️ <span data-i18n="notif_type_warning">Warning</span></option>
+        <option value="Success">✅ <span data-i18n="notif_type_success">Success</span></option>
+        <option value="Urgent">🔴 <span data-i18n="notif_type_urgent">Urgent</span></option>
       </select>
       <select id="trainerNotifStatus" onchange="applyTrainerNotifFilters()"
         style="background:var(--bg);border:1px solid var(--border);
                border-radius:9px;padding:9px 14px;color:var(--text);
                font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
-        <option value="">All</option>
-        <option value="unread">Unread</option>
-        <option value="read">Read</option>
+      <option value="" data-i18n="inbox_filter_all_status">All</option>
+        <option value="unread" data-i18n="inbox_filter_unread">Unread</option>
+        <option value="read" data-i18n="inbox_filter_read">Read</option>
       </select>
       <small id="trainerNotifInfo"
         style="color:var(--muted);margin-left:auto;"></small>
@@ -1375,7 +1372,7 @@ img{
    <!-- ====== PAGE: PROFILE ====== -->
 <div class="page" id="page-profile">
   <div class="page-header">
-    <h1 class="page-title">My Profile</h1>
+<h1 class="page-title" data-i18n="sidebar_my_profile">My Profile</h1>
   </div>
 
   <div class="row g-3">
@@ -1390,7 +1387,7 @@ img{
         <p style="color:var(--muted); font-size:.85rem; margin-bottom:10px;" id="profileEmailDisplay"></p>
         <span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);
                      padding:4px 14px;border-radius:20px;font-size:.82rem;font-weight:600;">
-          <i class="bi bi-shield-check me-1"></i>Trainer
+<i class="bi bi-shield-check me-1"></i><span data-i18n="auth_trainer">Trainer</span>
         </span>
         <div id="profileSpecTags" style="margin-top:10px;"></div>
         <div style="margin-top:14px;">
@@ -1399,7 +1396,7 @@ img{
             style="background:none;border:1px solid var(--clubly-teal);color:var(--clubly-teal);
                    padding:6px 18px;border-radius:20px;cursor:pointer;font-family:inherit;
                    font-weight:600;font-size:.85rem;">
-            <i class="bi bi-camera me-1"></i> Edit Photo
+<i class="bi bi-camera me-1"></i> <span data-i18n="profile_edit_photo">Edit Photo</span>
           </button>
         </div>
       </div>
@@ -1411,47 +1408,47 @@ img{
       <!-- Personal Information Card -->
       <div class="card-clubly mb-3">
         <div class="card-title">
-          <span><i class="bi bi-person-fill me-2" style="color:#3b82f6;"></i>Personal Information</span>
+<span><i class="bi bi-person-fill me-2" style="color:#3b82f6;"></i><span data-i18n="profile_personal_title">Personal Information</span></span>
         </div>
         <form id="profileForm">
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label">First Name</label>
+<label class="form-label" data-i18n="profile_lbl_firstname">First Name</label>
               <input class="form-input" type="text" id="pfFirstName" placeholder="First Name">
             </div>
             <div class="col-md-6">
-              <label class="form-label">Last Name</label>
+<label class="form-label" data-i18n="profile_lbl_lastname">Last Name</label>
               <input class="form-input" type="text" id="pfLastName" placeholder="Last Name">
             </div>
             <div class="col-md-6">
-              <label class="form-label">Email</label>
+<label class="form-label" data-i18n="profile_lbl_email">Email</label>
               <input class="form-input" type="email" id="pfEmail" disabled>
-              <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed here.</div>
+<div style="font-size:.75rem;color:var(--muted);margin-top:4px;" data-i18n="profile_email_hint">Cannot be changed here.</div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Phone</label>
+<label class="form-label" data-i18n="profile_lbl_phone">Phone</label>
               <input class="form-input" type="tel" id="pfPhone" placeholder="Phone Number">
             </div>
             <div class="col-md-6">
-              <label class="form-label">National ID</label>
+<label class="form-label" data-i18n="profile_lbl_nid">National ID</label>
               <input class="form-input" type="text" id="pfNationalId" disabled>
-              <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Cannot be changed.</div>
+<div style="font-size:.75rem;color:var(--muted);margin-top:4px;" data-i18n="profile_nid_hint">Cannot be changed.</div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Gender</label>
+<label class="form-label" data-i18n="profile_lbl_gender">Gender</label>
               <input class="form-input" type="text" id="pfGender" disabled>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Date of Birth</label>
+<label class="form-label" data-i18n="profile_lbl_dob">Date of Birth</label>
               <input class="form-input" type="date" id="pfDob">
             </div>
             <div class="col-md-6">
-              <label class="form-label">Years of Experience</label>
+<label class="form-label" data-i18n="tr_lbl_years_exp">Years of Experience</label>
               <input class="form-input" type="number" id="pfExp" min="0" placeholder="e.g. 5">
             </div>
           </div>
-          <button type="submit" class="btn-primary-cl mt-3">
-            <i class="bi bi-check-lg"></i> Save Changes
+       <button type="submit" class="btn-primary-cl mt-3">
+            <i class="bi bi-check-lg"></i> <span data-i18n="profile_btn_save">Save Changes</span>
           </button>
         </form>
       </div>
@@ -1459,16 +1456,16 @@ img{
       <!-- Change Password Card -->
       <div class="card-clubly">
         <div class="card-title">
-          <span><i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i>Change Password</span>
+<span><i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i><span data-i18n="profile_change_pass_title">Change Password</span></span>
         </div>
-        <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px;">
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px;" data-i18n="profile_change_pass_sub">
           Keep your account secure by updating your password regularly.
         </p>
         <button data-bs-toggle="modal" data-bs-target="#trainerPassModal"
           style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
                  color:#fff;border:none;padding:9px 24px;border-radius:50px;
                  font-weight:700;cursor:pointer;font-family:inherit;">
-          <i class="bi bi-shield-lock me-1"></i> Change Password
+<i class="bi bi-shield-lock me-1"></i> <span data-i18n="profile_btn_change_pass">Change Password</span>
         </button>
       </div>
 
@@ -1483,9 +1480,9 @@ img{
       <div class="modal-header border-0"
         style="background:linear-gradient(135deg,#0d1b2a,#122236);
                border-radius:16px 16px 0 0 !important;padding:18px 22px 12px;">
-        <h5 style="color:#fff;font-weight:700;font-size:1.05rem;margin:0;">
+   <h5 style="color:#fff;font-weight:700;font-size:1.05rem;margin:0;">
           <i class="bi bi-shield-lock me-2" style="color:var(--clubly-teal);"></i>
-          Change Password
+          <span data-i18n="profile_pass_modal_title">Change Password</span>
         </h5>
         <button class="btn-close" data-bs-dismiss="modal"
           style="filter:invert(1);opacity:.7;"></button>
@@ -1496,7 +1493,7 @@ img{
 
           <div class="mb-3">
             <label style="font-weight:600;font-size:.84rem;color:var(--muted);
-                          display:block;margin-bottom:6px;">Current Password</label>
+                          display:block;margin-bottom:6px;" data-i18n="profile_lbl_curr_pass">Current Password</label>
             <div style="display:flex;">
               <input type="password" id="currPass" class="form-input"
                 placeholder="Enter current password"
@@ -1511,8 +1508,8 @@ img{
           </div>
 
           <div class="mb-3">
-            <label style="font-weight:600;font-size:.84rem;color:var(--muted);
-                          display:block;margin-bottom:6px;">New Password</label>
+         <label style="font-weight:600;font-size:.84rem;color:var(--muted);
+                          display:block;margin-bottom:6px;" data-i18n="profile_lbl_new_pass">New Password</label>
             <div style="display:flex;">
               <input type="password" id="newPass" class="form-input"
                 placeholder="Min 8 chars — upper, lower, number, symbol"
@@ -1527,8 +1524,8 @@ img{
           </div>
 
           <div class="mb-3">
-            <label style="font-weight:600;font-size:.84rem;color:var(--muted);
-                          display:block;margin-bottom:6px;">Confirm New Password</label>
+           <label style="font-weight:600;font-size:.84rem;color:var(--muted);
+                          display:block;margin-bottom:6px;" data-i18n="profile_lbl_confirm_pass">Confirm New Password</label>
             <div style="display:flex;">
               <input type="password" id="confPass" class="form-input"
                 placeholder="Repeat new password"
@@ -1548,9 +1545,9 @@ img{
 
       <div class="modal-footer border-0"
         style="background:var(--bg);border-radius:0 0 16px 16px;padding:14px 22px;">
-        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+    <button class="btn-secondary-cl" data-bs-dismiss="modal" data-i18n="profile_btn_cancel">Cancel</button>
         <button type="submit" form="passForm" class="btn-teal-cl">
-          <i class="bi bi-check-lg me-1"></i> Save Password
+          <i class="bi bi-check-lg me-1"></i> <span data-i18n="profile_btn_save_pass">Save Password</span>
         </button>
       </div>
 
@@ -1561,19 +1558,19 @@ img{
 <div class="page" id="page-schedule-new">
   <div class="page-header">
     <div>
-      <h1 class="page-title">My Schedule</h1>
-      <p class="page-subtitle">Weekly sessions from all your groups</p>
+     <h1 class="page-title" data-i18n="sched_title">My Schedule</h1>
+          <p class="page-subtitle" data-i18n="page_groups_sub">Weekly sessions from all your groups</p>
     </div>
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
-    <button class="day-filter-btn active" onclick="filterScheduleDay('all',this)">All Days</button>
-    <button class="day-filter-btn" onclick="filterScheduleDay('Saturday',this)">Sat</button>
-    <button class="day-filter-btn" onclick="filterScheduleDay('Sunday',this)">Sun</button>
-    <button class="day-filter-btn" onclick="filterScheduleDay('Monday',this)">Mon</button>
-    <button class="day-filter-btn" onclick="filterScheduleDay('Tuesday',this)">Tue</button>
-    <button class="day-filter-btn" onclick="filterScheduleDay('Wednesday',this)">Wed</button>
-    <button class="day-filter-btn" onclick="filterScheduleDay('Thursday',this)">Thu</button>
-    <button class="day-filter-btn" onclick="filterScheduleDay('Friday',this)">Fri</button>
+   <button class="day-filter-btn active" onclick="filterScheduleDay('all',this)" data-i18n="group_filter_all_days">All Days</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Saturday',this)" data-i18n="day_sat">Sat</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Sunday',this)" data-i18n="day_sun">Sun</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Monday',this)" data-i18n="day_mon">Mon</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Tuesday',this)" data-i18n="day_tue">Tue</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Wednesday',this)" data-i18n="day_wed">Wed</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Thursday',this)" data-i18n="day_thu">Thu</button>
+    <button class="day-filter-btn" onclick="filterScheduleDay('Friday',this)" data-i18n="day_fri">Fri</button>
   </div>
   <div id="scheduleGroupsList"></div>
 </div>
@@ -1583,15 +1580,15 @@ img{
 <div class="page" id="page-groups">
   <div class="page-header">
     <div>
-      <h1 class="page-title">My Groups</h1>
-      <p class="page-subtitle">Your activity groups</p>
+    <h1 class="page-title" data-i18n="page_groups">My Groups</h1>
+      <p class="page-subtitle" data-i18n="page_groups_sub">Your activity groups</p>
     </div>
     <div style="display:flex;gap:10px;">
-      <button class="btn-teal-cl" onclick="loadTrainerGroups()">
-        <i class="bi bi-arrow-clockwise"></i> Refresh
+ <button class="btn-teal-cl" onclick="loadTrainerGroups()">
+        <i class="bi bi-arrow-clockwise"></i> <span data-i18n="group_refresh">Refresh</span>
       </button>
       <button class="btn-primary-cl" onclick="openAddTrainerGroupModal()">
-        <i class="bi bi-plus-lg"></i> Add Group
+        <i class="bi bi-plus-lg"></i> <span data-i18n="group_add_btn">Add Group</span>
       </button>
     </div>
   </div>
@@ -1599,17 +1596,22 @@ img{
     <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
       <div class="search-bar" style="flex:1;min-width:200px;max-width:280px;">
         <i class="bi bi-search" style="color:var(--muted);"></i>
-        <input type="text" id="groupSearch" placeholder="Search..." oninput="renderGroupsPage()">
+<input type="text" id="groupSearch" data-i18n-ph="group_search_ph" placeholder="Search..." oninput="renderGroupsPage()">
       </div>
       <select id="groupActivityFilter" onchange="renderGroupsPage()"
         class="form-input" style="width:auto;border-radius:50px;padding:8px 16px;">
-        <option value="">All Activities</option>
+<option value="" data-i18n="group_filter_all_acts">All Activities</option>
       </select>
       <select id="groupDayFilter" onchange="renderGroupsPage()"
         class="form-input" style="width:auto;border-radius:50px;padding:8px 16px;">
-        <option value="">All Days</option>
-        <option>Saturday</option><option>Sunday</option><option>Monday</option>
-        <option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option>
+     <option value="" data-i18n="group_filter_all_days">All Days</option>
+        <option data-i18n="day_sat">Saturday</option>
+        <option data-i18n="day_sun">Sunday</option>
+        <option data-i18n="day_mon">Monday</option>
+        <option data-i18n="day_tue">Tuesday</option>
+        <option data-i18n="day_wed">Wednesday</option>
+        <option data-i18n="day_thu">Thursday</option>
+        <option data-i18n="day_fri">Friday</option>
       </select>
     </div>
   </div>
@@ -1620,12 +1622,12 @@ img{
       <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
         <div class="card-clubly text-center" style="max-width:420px;width:100%;">
           <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
-          <h4 style="font-weight:900;color:var(--text);margin-bottom:8px;">Confirm Sign Out</h4>
-          <p style="color:var(--muted);margin-bottom:24px;">You will need to sign in again to access your trainer portal.</p>
+   <h4 style="font-weight:900;color:var(--text);margin-bottom:8px;" data-i18n="signout_title">Confirm Sign Out</h4>
+          <p style="color:var(--muted);margin-bottom:24px;" data-i18n="signout_sub">You will need to sign in again to access your trainer portal.</p>
           <div class="d-flex gap-3 justify-content-center">
-            <button class="btn-secondary-cl" onclick="showPage('dashboard')">Cancel</button>
+            <button class="btn-secondary-cl" onclick="showPage('dashboard')" data-i18n="signout_btn_cancel">Cancel</button>
             <button class="btn-primary-cl" style="background:linear-gradient(135deg,#ef4444,#dc2626);"onclick="handleSignOut()">
-              <i class="bi bi-box-arrow-right"></i> Sign Out
+              <i class="bi bi-box-arrow-right"></i> <span data-i18n="signout_btn_confirm">Sign Out</span>
             </button>
           </div>
         </div>
@@ -1636,12 +1638,12 @@ img{
   <div class="page-header">
     <div>
       <h1 class="page-title">
-        <i class="bi bi-star-fill me-2" style="color:var(--clubly-gold);"></i>Member Ratings
+   <i class="bi bi-star-fill me-2" style="color:var(--clubly-gold);"></i><span data-i18n="sidebar_trainer_ratings">Member Ratings</span>
       </h1>
-      <p class="page-subtitle" id="ratingsPageSubtitle">All reviews from your members</p>
+<p class="page-subtitle" id="ratingsPageSubtitle" data-i18n="page_trainer_ratings_sub">All reviews from your members</p>
     </div>
-    <button class="btn-secondary-cl" onclick="loadRatingsPage()">
-      <i class="bi bi-arrow-clockwise"></i> Refresh
+<button class="btn-secondary-cl" onclick="loadRatingsPage()">
+      <i class="bi bi-arrow-clockwise"></i> <span data-i18n="rating_refresh">Refresh</span>
     </button>
   </div>
 
@@ -1653,13 +1655,13 @@ img{
     <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
       <div class="search-bar" style="flex:1;min-width:200px;max-width:300px;">
         <i class="bi bi-search" style="color:var(--muted);"></i>
-        <input type="text" id="ratingsSearch" placeholder="Search by member or comment..."
+    <input type="text" id="ratingsSearch" data-i18n-ph="rating_search_ph" placeholder="Search by member or comment..."
           oninput="applyRatingsFilter()">
       </div>
       <select id="ratingsStarFilter" onchange="applyRatingsFilter()"
         style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
                padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
-        <option value="">All Ratings</option>
+     <option value="" data-i18n="rating_filter_all_ratings">All Ratings</option>
         <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
         <option value="4">⭐⭐⭐⭐ 4 Stars</option>
         <option value="3">⭐⭐⭐ 3 Stars</option>
@@ -1669,7 +1671,7 @@ img{
       <select id="ratingsActivityFilter" onchange="applyRatingsFilter()"
         style="background:var(--bg);border:1px solid var(--border);border-radius:9px;
                padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
-        <option value="">All Activities</option>
+<option value="" data-i18n="group_filter_all_acts">All Activities</option>
       </select>
       <small id="ratingsPageInfo" style="color:var(--muted);margin-left:auto;"></small>
     </div>
@@ -1692,10 +1694,10 @@ img{
   <div class="page-header">
     <div>
       <h1 class="page-title">
-        <i class="bi bi-person-check-fill me-2" style="color:var(--clubly-teal);"></i>
-        Attendance
+      <i class="bi bi-person-check-fill me-2" style="color:var(--clubly-teal);"></i>
+        <span data-i18n="sidebar_attendance">Attendance</span>
       </h1>
-      <p class="page-subtitle" id="attSubtitle">Select a group and date to take attendance</p>
+<p class="page-subtitle" id="attSubtitle" data-i18n="sched_add_btn">Select a group and date to take attendance</p>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
       <button class="btn-teal-cl" onclick="saveAllAttendance()" id="saveAllBtn" style="display:none;">
@@ -1710,27 +1712,27 @@ img{
   <div class="card-clubly mb-4" style="padding:20px 24px;">
     <div class="row g-3 align-items-end">
       <div class="col-md-4">
-        <label class="form-label">Group</label>
+<label class="form-label" data-i18n="att_group">Group</label>
         <select class="form-input" id="attGroupSelect" onchange="onAttGroupChange()">
-          <option value="">— Select Group —</option>
+<option value="" data-i18n="att_select_group">— Select Group —</option>
         </select>
       </div>
       <div class="col-md-3">
-        <label class="form-label">Date</label>
+<label class="form-label" data-i18n="att_date">Date</label>
         <input type="date" class="form-input" id="attDate" onchange="loadAttendanceList()">
       </div>
       <div class="col-md-3">
-        <label class="form-label">Filter</label>
+<label class="form-label" data-i18n="att_filter">Filter</label>
         <select class="form-input" id="attFilter" onchange="renderAttendanceList()">
-          <option value="all">All Members</option>
-          <option value="present">Present Only</option>
-          <option value="absent">Absent Only</option>
-          <option value="unmarked">Not Marked Yet</option>
+         <option value="all" data-i18n="att_all_members">All Members</option>
+          <option value="present" data-i18n="att_present_only">Present Only</option>
+          <option value="absent" data-i18n="att_absent_only">Absent Only</option>
+          <option value="unmarked" data-i18n="att_not_marked">Not Marked Yet</option>
         </select>
       </div>
       <div class="col-md-2">
-        <button class="btn-primary-cl" style="width:100%;justify-content:center;" onclick="loadAttendanceList()">
-          <i class="bi bi-search"></i> Load
+  <button class="btn-primary-cl" style="width:100%;justify-content:center;" onclick="loadAttendanceList()">
+          <i class="bi bi-search"></i> <span data-i18n="att_load">Load</span>
         </button>
       </div>
     </div>
@@ -1741,43 +1743,39 @@ img{
       <div class="col-6 col-md-3">
         <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;">
           <div style="font-size:2rem;font-weight:900;color:var(--text);" id="attTotalCount">0</div>
-          <div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;">Total</div>
-        </div>
+<div style="font-size:.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;" data-i18n="att_total">Total</div>        </div>
       </div>
       <div class="col-6 col-md-3">
         <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:16px;text-align:center;">
           <div style="font-size:2rem;font-weight:900;color:#22c55e;" id="attPresentCount">0</div>
-          <div style="font-size:.75rem;color:#22c55e;font-weight:600;text-transform:uppercase;">Present</div>
-        </div>
+<div style="font-size:.75rem;color:#22c55e;font-weight:600;text-transform:uppercase;" data-i18n="att_present">Present</div>        </div>
       </div>
       <div class="col-6 col-md-3">
         <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:12px;padding:16px;text-align:center;">
           <div style="font-size:2rem;font-weight:900;color:#ef4444;" id="attAbsentCount">0</div>
-          <div style="font-size:.75rem;color:#ef4444;font-weight:600;text-transform:uppercase;">Absent</div>
-        </div>
+<div style="font-size:.75rem;color:#ef4444;font-weight:600;text-transform:uppercase;" data-i18n="att_absent">Absent</div>        </div>
       </div>
       <div class="col-6 col-md-3">
         <div style="background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.2);border-radius:12px;padding:16px;text-align:center;">
           <div style="font-size:2rem;font-weight:900;color:var(--clubly-gold);" id="attUnmarkedCount">0</div>
-          <div style="font-size:.75rem;color:var(--clubly-gold);font-weight:600;text-transform:uppercase;">Not Marked</div>
-        </div>
+<div style="font-size:.75rem;color:var(--clubly-gold);font-weight:600;text-transform:uppercase;" data-i18n="att_not_marked_short">Not Marked</div>        </div>
       </div>
     </div>
   </div>
 
   <div id="attQuickActions" style="display:none;margin-bottom:16px;">
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-      <button onclick="markAll(true)"
+  <button onclick="markAll(true)"
         style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#16a34a;
                padding:7px 18px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;
                font-weight:700;font-size:.85rem;transition:all .2s;">
-        <i class="bi bi-check-all me-1"></i> Mark All Present
+        <i class="bi bi-check-all me-1"></i> <span data-i18n="att_mark_all_present">Mark All Present</span>
       </button>
       <button onclick="markAll(false)"
         style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#dc2626;
                padding:7px 18px;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;
                font-weight:700;font-size:.85rem;transition:all .2s;">
-        <i class="bi bi-x-lg me-1"></i> Mark All Absent
+        <i class="bi bi-x-lg me-1"></i> <span data-i18n="att_mark_all_absent">Mark All Absent</span>
       </button>
       <span id="attDayInfo" style="font-size:.82rem;color:var(--muted);margin-left:8px;"></span>
     </div>
@@ -1786,7 +1784,7 @@ img{
   <div class="card-clubly" style="padding:0;" id="attListCard">
     <div id="attList" style="padding:60px 20px;text-align:center;color:var(--muted);">
       <i class="bi bi-calendar-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
-      <p style="font-weight:700;">Select a group and date to start</p>
+<p style="font-weight:700;" data-i18n="att_select_group">Select a group and date to start</p>
     </div>
   </div>
 
@@ -1794,9 +1792,9 @@ img{
     <div class="card-clubly">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--border);">
         <span style="font-weight:800;font-size:1rem;">
-          <i class="bi bi-bar-chart-fill me-2" style="color:var(--clubly-accent);"></i>Member Summary
+     <i class="bi bi-bar-chart-fill me-2" style="color:var(--clubly-accent);"></i><span data-i18n="att_member_summary">Member Summary</span>
         </span>
-        <small style="color:var(--muted);">Click a member to see full history</small>
+        <small style="color:var(--muted);" data-i18n="att_click_history">Click a member to see full history</small>
       </div>
       <div id="attSummaryList"></div>
     </div>
@@ -1808,7 +1806,7 @@ img{
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content modal-content-cl">
       <div class="modal-header-cl d-flex justify-content-between align-items-center">
-        <h5 style="font-weight:800;color:var(--text);" id="histModalTitle">Attendance History</h5>
+<h5 style="font-weight:800;color:var(--text);" id="histModalTitle" data-i18n="att_member_summary">Attendance History</h5>
         <button data-bs-dismiss="modal" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
           <i class="bi bi-x-lg"></i>
         </button>
@@ -1832,7 +1830,7 @@ img{
         </div>
       </div>
       <div class="modal-footer-cl">
-        <button data-bs-dismiss="modal" class="btn-secondary-cl">Close</button>
+<button data-bs-dismiss="modal" class="btn-secondary-cl" data-i18n="inbox_btn_close">Close</button>
       </div>
     </div>
   </div>
@@ -1843,7 +1841,8 @@ img{
 <!-- ===== FOOTER ===== -->
 <footer class="clubly-footer">
   <div class="footer-inner">
-    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;"><span data-i18n="footer_tagline">Your family's fitness journey starts here.</span></p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5>
+      <p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;"><span data-i18n="footer_tagline">Your family's fitness journey starts here.</span></p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
     <div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="../AfterSign/home.html" data-i18n="nav_home">Home</a></li><li><a href="../AfterSign/activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="../AfterSign/facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="../AfterSign/trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="../AfterSign/plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="../AfterSign/about.html" data-i18n="nav_about">About Us</a></li></ul></div>
     <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="../AfterSign/faq.html" data-i18n="nav_faq">FAQ</a></li><li><a href="../AfterSign/contact.html" data-i18n="nav_contact">Contact Us</a></li></ul></div>
     <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i><span data-i18n="footer_address">123 Fitness St, Maadi, Cairo</span></div><div><i class="bi bi-telephone-fill"></i>20+ 10 18346974</div><div><i class="bi bi-envelope-fill"></i><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="660f08000926050a13040a1f4805090b">info@clubly.com</a></div><div><i class="bi bi-clock-fill"></i><span data-i18n="footer_hours">Daily 6AM – 10PM</span></div></div></div>
@@ -1851,92 +1850,12 @@ img{
   <div class="footer-bottom" data-i18n="footer_rights">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
 </footer>
 
-<!-- ADD SESSION MODAL -->
-<div class="modal fade" id="addSessionModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content modal-content-cl">
-      <div class="modal-header-cl d-flex justify-content-between align-items-center">
-        <h5 style="font-weight:800;color:var(--text);" id="sessionModalTitle">Add New Session</h5>
-        <button type="button" data-bs-dismiss="modal" style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;"><i class="bi bi-x-lg"></i></button>
-      </div>
-      <div class="modal-body-cl">
-        <div class="row g-3">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="form-label">Session Name</label>
-              <input class="form-input" type="text" id="sessName" placeholder="e.g. Morning Yoga">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="form-label">Type</label>
-              <select class="form-input" id="sessType">
-                <option value="yoga">Yoga</option>
-                <option value="crossfit">CrossFit</option>
-                <option value="pilates">Pilates</option>
-                <option value="swim">Swimming</option>
-                <option value="zumba">Zumba</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="form-label">Date</label>
-              <input class="form-input" type="date" id="sessDate">
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label class="form-label">Start Time</label>
-              <input class="form-input" type="time" id="sessStart" value="09:00">
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label class="form-label">End Time</label>
-              <input class="form-input" type="time" id="sessEnd" value="10:00">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="form-label">Location</label>
-              <select class="form-input" id="sessLocation">
-                <option>Studio A</option>
-                <option>Studio B</option>
-                <option>Main Hall</option>
-                <option>Olympic Pool</option>
-                <option>Gym Floor</option>
-                <option>Outdoor Court</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="form-label">Max Capacity</label>
-              <input class="form-input" type="number" id="sessCap" value="15" min="1">
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="form-group">
-              <label class="form-label">Notes</label>
-              <textarea class="form-input" id="sessNotes" placeholder="Any special instructions or requirements..."></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer-cl">
-        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn-primary-cl" onclick="saveSession()"><i class="bi bi-check-lg"></i> Save Session</button>
-      </div>
-    </div>
-  </div>
-</div>
 <!-- ====== ADD GROUP MODAL (TRAINER) ====== -->
 <div class="modal fade" id="addTrainerGroupModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content modal-content-cl">
       <div class="modal-header-cl d-flex justify-content-between align-items-center">
-        <h5 style="font-weight:800;color:var(--text);">Add Activity Group</h5>
+<h5 style="font-weight:800;color:var(--text);" data-i18n="group_add_title">Add Activity Group</h5>
         <button type="button" data-bs-dismiss="modal"
           style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
           <i class="bi bi-x-lg"></i>
@@ -1946,58 +1865,58 @@ img{
         <div class="row g-3">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Group Name *</label>
-              <input class="form-input" type="text" id="tg_name" placeholder="e.g. Swimming G1">
+             <label class="form-label" data-i18n="group_lbl_name">Group Name *</label>
+              <input class="form-input" type="text" id="tg_name" data-i18n-ph="group_lbl_name" placeholder="e.g. Swimming G1">
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label class="form-label">Capacity *</label>
+<label class="form-label" data-i18n="group_lbl_capacity">Capacity *</label>
               <input class="form-input" type="number" id="tg_capacity" min="1" placeholder="e.g. 10">
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label class="form-label">Group Code</label>
+<label class="form-label" data-i18n="group_lbl_code">Group Code</label>
               <input class="form-input" type="text" id="tg_code" placeholder="e.g. G1">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Activity *</label>
+            <label class="form-label" data-i18n="group_lbl_activity">Activity *</label>
               <select class="form-input" id="tg_activity" onchange="onTrainerGroupActivityChange('add')">
-                <option value="">Select activity...</option>
+                <option value="" data-i18n="group_select_activity">Select activity...</option>
               </select>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Facility (auto)</label>
+              <label class="form-label" data-i18n="group_lbl_facility">Facility (auto)</label>
               <input class="form-input" type="text" id="tg_facility" readonly
                 style="background:var(--bg);opacity:.8;">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">Price (EGP)</label>
+              <label class="form-label" data-i18n="group_lbl_price">Price (EGP)</label>
               <input class="form-input" type="number" id="tg_price" min="0" placeholder="e.g. 500">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">Duration (days)</label>
+          <label class="form-label" data-i18n="group_lbl_duration">Duration (days)</label>
               <input class="form-input" type="number" id="tg_duration" min="1" placeholder="e.g. 30">
             </div>
           </div>
           <div class="col-md-4" style="display:flex;align-items:flex-end;padding-bottom:18px;">
-            <span id="tg_activityInfo"
-              style="font-size:.78rem;color:var(--muted);font-style:italic;">
-              Select an activity first
-            </span>
+       <span id="tg_activityInfo"
+  style="font-size:.78rem;color:var(--muted);font-style:italic;">
+  Select an activity first
+</span>
           </div>
           <!-- Time Slots -->
           <div class="col-12">
-            <label class="form-label" style="color:var(--clubly-accent);">
+       <label class="form-label" style="color:var(--clubly-accent);" data-i18n="group_lbl_slots">
               Available Time Slots *
             </label>
             <div id="tg_slotsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
@@ -2008,16 +1927,16 @@ img{
                      font-size:.85rem;transition:all .2s;"
               onmouseover="this.style.background='rgba(46,196,182,.1)'"
               onmouseout="this.style.background='none'">
-              <i class="bi bi-plus-circle me-1"></i> Add Time Slot
+            <i class="bi bi-plus-circle me-1"></i> <span data-i18n="group_add_slot">Add Time Slot</span>
             </button>
             <div id="tg_err" style="color:#ef4444;font-size:.82rem;margin-top:8px;display:none;"></div>
           </div>
         </div>
       </div>
       <div class="modal-footer-cl">
-        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+     <button class="btn-secondary-cl" data-bs-dismiss="modal" data-i18n="group_btn_cancel">Cancel</button>
         <button class="btn-primary-cl" onclick="saveTrainerGroup()">
-          <i class="bi bi-check-lg"></i> Save Group
+          <i class="bi bi-check-lg"></i> <span data-i18n="group_btn_save">Save Group</span>
         </button>
       </div>
     </div>
@@ -2029,7 +1948,7 @@ img{
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content modal-content-cl">
       <div class="modal-header-cl d-flex justify-content-between align-items-center">
-        <h5 style="font-weight:800;color:var(--text);">Edit Activity Group</h5>
+<h5 style="font-weight:800;color:var(--text);" data-i18n="group_edit_title">Edit Activity Group</h5>
         <button type="button" data-bs-dismiss="modal"
           style="background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">
           <i class="bi bi-x-lg"></i>
@@ -2040,52 +1959,52 @@ img{
         <div class="row g-3">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Group Name *</label>
+           <label class="form-label" data-i18n="group_lbl_name">Group Name *</label>
               <input class="form-input" type="text" id="etg_name">
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label class="form-label">Capacity *</label>
+            <label class="form-label" data-i18n="group_lbl_capacity">Capacity *</label>
               <input class="form-input" type="number" id="etg_capacity" min="1">
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label class="form-label">Group Code</label>
+         <label class="form-label" data-i18n="group_lbl_code">Group Code</label>
               <input class="form-input" type="text" id="etg_code">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Activity *</label>
+              <label class="form-label" data-i18n="group_lbl_activity">Activity *</label>
               <select class="form-input" id="etg_activity" onchange="onTrainerGroupActivityChange('edit')">
-                <option value="">Select activity...</option>
+                <option value="" data-i18n="group_select_activity">Select activity...</option>
               </select>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="form-label">Facility (auto)</label>
+         <label class="form-label" data-i18n="group_lbl_facility">Facility (auto)</label>
               <input class="form-input" type="text" id="etg_facility" readonly
                 style="background:var(--bg);opacity:.8;">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">Price (EGP)</label>
+            <label class="form-label" data-i18n="group_lbl_price">Price (EGP)</label>
               <input class="form-input" type="number" id="etg_price" min="0">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label class="form-label">Duration (days)</label>
+             <label class="form-label" data-i18n="group_lbl_duration">Duration (days)</label>
               <input class="form-input" type="number" id="etg_duration" min="1">
             </div>
           </div>
           <!-- Time Slots -->
           <div class="col-12">
-            <label class="form-label" style="color:var(--clubly-accent);">
+         <label class="form-label" style="color:var(--clubly-accent);" data-i18n="group_lbl_slots">
               Available Time Slots *
             </label>
             <div id="etg_slotsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
@@ -2096,16 +2015,16 @@ img{
                      font-size:.85rem;transition:all .2s;"
               onmouseover="this.style.background='rgba(46,196,182,.1)'"
               onmouseout="this.style.background='none'">
-              <i class="bi bi-plus-circle me-1"></i> Add Time Slot
+          <i class="bi bi-plus-circle me-1"></i> <span data-i18n="group_add_slot">Add Time Slot</span>
             </button>
             <div id="etg_err" style="color:#ef4444;font-size:.82rem;margin-top:8px;display:none;"></div>
           </div>
         </div>
       </div>
       <div class="modal-footer-cl">
-        <button class="btn-secondary-cl" data-bs-dismiss="modal">Cancel</button>
+  <button class="btn-secondary-cl" data-bs-dismiss="modal" data-i18n="group_btn_cancel">Cancel</button>
         <button class="btn-teal-cl" onclick="updateTrainerGroup()">
-          <i class="bi bi-check-lg"></i> Update Group
+          <i class="bi bi-check-lg"></i> <span data-i18n="group_btn_update">Update Group</span>
         </button>
       </div>
     </div>
@@ -2357,7 +2276,7 @@ function updateTrainerUnreadBadge() {
   // Notifications page badge
   const badge = document.getElementById('trainerUnreadBadge');
   if (badge) {
-    badge.textContent = `${unread} unread`;
+badge.textContent = `${unread} ${(window.T||{}).inbox_unread_count||'unread'}`;
     badge.style.background  = unread > 0 ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
     badge.style.color       = unread > 0 ? '#b45309' : 'var(--muted)';
     badge.style.borderColor = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
@@ -2469,8 +2388,8 @@ function renderTrainerNotifList() {
     listEl.innerHTML = `
       <div style="text-align:center;padding:60px 20px;color:var(--muted);">
         <i class="bi bi-bell-slash" style="font-size:2.5rem;opacity:.35;display:block;margin-bottom:12px;"></i>
-        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">No notifications</p>
-        <p style="font-size:.88rem;">Notifications sent to trainers will appear here</p>
+       <p style="font-weight:700;color:var(--text);margin-bottom:4px;">${(window.T||{}).inbox_empty_title||'No notifications'}</p>
+<p style="font-size:.88rem;">${(window.T||{}).inbox_empty_sub||'Notifications sent to trainers will appear here'}</p>
       </div>`;
     document.getElementById('trainerNotifPagination').innerHTML = '';
     return;
@@ -2661,18 +2580,7 @@ modal.innerHTML = `
   new bootstrap.Modal(modal).show();
 }
 
-// ===== ADD SESSION MODAL =====
-function openAddSession() {
-  document.getElementById('sessDate').value = new Date().toISOString().slice(0,10);
-  new bootstrap.Modal(document.getElementById('addSessionModal')).show();
-}
-function saveSession() {
-  const name = document.getElementById('sessName').value.trim();
-  if (!name) { alert('Please enter a session name.'); return; }
-  bootstrap.Modal.getInstance(document.getElementById('addSessionModal')).hide();
-  document.getElementById('sessName').value = '';
-  alert('Session saved locally. Connect to API to persist.');
-}
+
 
 // ===== PROFILE =====
 document.getElementById('profileForm').addEventListener('submit', async e => {
@@ -2756,18 +2664,16 @@ async function loadTrainerProfile() {
     const ini   = getInitials(t.fullName || trainerName);
 
     // Header
-    document.querySelector('.trainer-name').textContent   = t.fullName || trainerName;
-    document.querySelector('.trainer-avatar').textContent = ini;
+   const headerAvatar = document.querySelector('.header-actions .trainer-avatar');
+if (headerAvatar) headerAvatar.textContent = ini;
+const greetEl = document.getElementById('trainerGreetingName');
+if (greetEl) greetEl.textContent = (parts[0] || 'Trainer') + '!';
 
     // Welcome
-    document.querySelector('#page-dashboard .page-title span').textContent =
-      (parts[0] || 'Trainer') + '!';
+  const nameEl = document.getElementById('trainerGreetingName');
+if (nameEl) nameEl.textContent = (parts[0] || 'Trainer') + '!';
 
-    // Profile hero
-    // ✅ خليها كده بس
-document.querySelector('.trainer-name').textContent = t.fullName || trainerName;
-document.querySelector('.trainer-avatar').textContent = ini;
-document.querySelector('#page-dashboard .page-title span').textContent = (parts[0] || 'Trainer') + '!';
+
 document.getElementById('profileInitials').textContent = ini;
 document.getElementById('profileNameDisplay').textContent = t.fullName || trainerName;
 document.getElementById('profileEmailDisplay').textContent = t.email || '';
@@ -2895,9 +2801,7 @@ document.getElementById('stat-pending').textContent  = pending;
             <div class="session-time">${(b.startDate||'').split('T')[0]}</div>
           </div>
         </div>`).join('')
-    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions today.</p>';
-
-  // Top members
+: `<p style="color:var(--muted);text-align:center;padding:20px;">${(window.T||{}).sched_no_schedules||'No sessions today.'}</p>`;  // Top members
   const memberMap = {};
   _allBookings.forEach(b => {
     if (!b.memberId) return;
@@ -2917,8 +2821,8 @@ document.getElementById('stat-pending').textContent  = pending;
             <div class="m-detail">${m.count} bookings</div>
           </div>
         </div>`).join('')
-    : '<p style="color:var(--muted);text-align:center;padding:20px;">No members yet.</p>';
-}
+: `<p style="color:var(--muted);text-align:center;padding:20px;">${(window.T||{}).mem_no_results||'No members yet.'}</p>`
+;}
 
 // ===== MEMBERS PAGE =====
 // ===== MEMBERS PAGE =====
@@ -2983,15 +2887,17 @@ function renderTrainerMembers() {
   const uniqueCount = new Set(list.map(b => b.memberId || b.guestId)).size;
   const subtitleEl = document.getElementById('membersSubtitle');
   if (subtitleEl) {
-    subtitleEl.textContent = `${uniqueCount} ${_memberCurrentTab === 'member' ? 'members' : 'guests'} under your training`;
-  }
+const T = window.T || {};
+const typeLabel = _memberCurrentTab === 'member'
+  ? (T.sidebar_members || 'members')
+  : (T.guest_label_guest || 'guests');
+subtitleEl.textContent = `${uniqueCount} ${typeLabel} ${T.tr_certified ? '' : 'under your training'}`;  }
 
   const tbody = document.getElementById('membersTable');
 
   if (!list.length) {
     tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--muted);">
-      No ${_memberCurrentTab === 'member' ? 'members' : 'guests'} found.
-    </td></tr>`;
+${(window.T||{}).mem_no_results||'No members found.'}    </td></tr>`;
     return;
   }
 
@@ -3067,7 +2973,7 @@ function renderTrainerSessions(list) {
             </div>
           </div>`;
       }).join('')
-    : '<p style="color:var(--muted);text-align:center;padding:20px;">No sessions found.</p>';
+    : `<p style="color:var(--muted);text-align:center;padding:20px;">${(window.T||{}).sched_no_schedules||'No sessions today.'}</p>`
 }
 
 function filterSessions(q) {
@@ -3110,11 +3016,12 @@ function renderSchedulePage() {
     );
   }
 
-  if (!groups.length) {
+if (!groups.length) {
+    const T = window.T || {};
     container.innerHTML = `
       <div style="text-align:center;padding:80px 20px;color:var(--muted);">
         <i class="bi bi-calendar-x" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
-        <p style="font-weight:700;font-size:1rem;">No sessions found.</p>
+        <p style="font-weight:700;font-size:1rem;">${T.group_no_groups||'No sessions found.'}</p>
       </div>`;
     return;
   }
@@ -3152,6 +3059,8 @@ function renderSchedulePage() {
 }
 
 function renderGroupsPage() {
+    const T = window.T || {};
+
   const q    = (document.getElementById('groupSearch')?.value||'').toLowerCase();
   const actF = document.getElementById('groupActivityFilter')?.value||'';
   const dayF = document.getElementById('groupDayFilter')?.value||'';
@@ -3182,9 +3091,9 @@ function renderGroupsPage() {
     container.innerHTML = `
       <div style="text-align:center;padding:80px 20px;color:var(--muted);">
         <i class="bi bi-diagram-3" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
-        <p style="font-weight:700;">No groups found.</p>
+     <p style="font-weight:700;">${T.group_no_groups||'No groups found.'}</p>
         <button class="btn-primary-cl" style="margin-top:10px;" onclick="openAddTrainerGroupModal()">
-          <i class="bi bi-plus-lg"></i> Add Your First Group
+          <i class="bi bi-plus-lg"></i> ${T.group_add_btn||'Add Your First Group'}
         </button>
       </div>`;
     return;
@@ -3196,14 +3105,14 @@ function renderGroupsPage() {
         <table>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Group Name</th>
-              <th>Activity</th>
-              <th>Facility</th>
-              <th style="text-align:center;">Capacity</th>
-              <th style="text-align:center;">Price</th>
-              <th>Time Slots</th>
-              <th style="text-align:center;">Actions</th>
+           <th>${T.rating_col_num||'#'}</th>
+              <th>${T.group_col_name||'Group Name'}</th>
+              <th>${T.group_col_activity||'Activity'}</th>
+              <th>${T.group_col_facility||'Facility'}</th>
+              <th style="text-align:center;">${T.group_col_capacity||'Capacity'}</th>
+              <th style="text-align:center;">${T.group_col_price||'Price'}</th>
+              <th>${T.group_col_slots||'Time Slots'}</th>
+              <th style="text-align:center;">${T.group_col_actions||'Actions'}</th>
             </tr>
           </thead>
           <tbody>
@@ -3286,7 +3195,7 @@ function populateTrainerGroupActivitySelects() {
     const sel = document.getElementById(id);
     if (!sel) return;
     const current = sel.value;
-    sel.innerHTML = '<option value="">Select activity...</option>' +
+    sel.innerHTML = `<option value="">${(window.T||{}).group_select_activity||'Select activity...'}</option>` +
       _trainerOwnActivities.map(a =>
         `<option value="${a.id}" data-facility="${a.facilityName||''}"
           ${String(a.id) === String(current) ? 'selected' : ''}>
@@ -3318,25 +3227,25 @@ function addTrainerGroupSlot(containerId, data = null) {
   div.innerHTML = `
     <div class="row g-2 align-items-end">
       <div class="col-md-3">
-        <label class="form-label">Duration (hrs)</label>
+<label class="form-label">${(window.T||{}).group_slot_duration||'Duration (hrs)'}</label>
         <input type="number" name="durationHrs" class="form-input"
           placeholder="e.g. 2" value="${data?.durationHrs||''}">
       </div>
       <div class="col-md-3">
-        <label class="form-label">Start Time</label>
+<label class="form-label">${(window.T||{}).group_slot_start||'Start Time'}</label>
         <input type="time" name="startTime" class="form-input"
           value="${data?.startTime ? data.startTime.substring(0,5) : ''}">
       </div>
       <div class="col-md-3">
-        <label class="form-label">End Time (auto)</label>
+<label class="form-label">${(window.T||{}).group_slot_end||'End Time (auto)'}</label>
         <input type="time" name="endTime" class="form-input" readonly
           style="opacity:.7;"
           value="${data?.endTime ? data.endTime.substring(0,5) : ''}">
       </div>
       <div class="col-md-2">
-        <label class="form-label">Day</label>
+<label class="form-label">${(window.T||{}).group_slot_day||'Day'}</label>
         <select name="day" class="form-input">
-          <option value="">Select day</option>
+<option value="">${(window.T||{}).group_select_day||'Select day'}</option>
           ${['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday']
             .map(d => `<option ${d===(data?.day||'')?'selected':''} >${d}</option>`).join('')}
         </select>
@@ -3602,7 +3511,8 @@ async function loadAttendancePage() {
     _attGroups = res.ok ? await res.json() : [];
     const sel = document.getElementById('attGroupSelect');
     if (!sel) return;
-    sel.innerHTML = '<option value="">— Select Group —</option>' +
+const T = window.T || {};
+sel.innerHTML = `<option value="">${T.att_select_group || '— Select Group —'}</option>` +
       _attGroups.map(g =>
         `<option value="${g.id}">${g.name} · ${g.activityName}</option>`
       ).join('');
@@ -3620,12 +3530,13 @@ function onAttGroupChange() {
     document.getElementById('saveAllBtn').style.display       = 'none';
     document.getElementById('attSummarySection').style.display = 'none';
     document.getElementById('attDayInfo').textContent         = '';
-    document.getElementById('attSubtitle').textContent        = 'Select a group and date to take attendance';
+const T = window.T || {};
+document.getElementById('attSubtitle').textContent = T.att_select_group || 'Select a group and date to take attendance';
     document.getElementById('attDate').value                  = '';
-    document.getElementById('attList').innerHTML = `
+document.getElementById('attList').innerHTML = `
       <div style="padding:60px 20px;text-align:center;color:var(--muted);">
         <i class="bi bi-calendar-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
-        <p style="font-weight:700;">Select a group and date to start</p>
+        <p style="font-weight:700;">${T.att_select_group || 'Select a group and date to start'}</p>
       </div>`;
     return;
   }
@@ -3997,7 +3908,7 @@ const total = data.totalRatings;
       listEl.innerHTML = `
         <div style="text-align:center;padding:40px;color:var(--muted);">
           <i class="bi bi-star" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:10px;"></i>
-          <p style="font-weight:700;">No ratings yet from members.</p>
+<p style="font-weight:700;">${(window.T||{}).trainer_no_ratings||'No ratings yet from members.'}</p>
         </div>`;
       return;
     }
@@ -4087,19 +3998,19 @@ async function loadRatingsPage() {
 
     // Subtitle
     const sub = document.getElementById('ratingsPageSubtitle');
-    if (sub) sub.textContent = `${total} review${total !== 1 ? 's' : ''} · Average ${avg}/5`;
-
+const T = window.T || {};
+if (sub) sub.textContent = `${total} ${T.rating_total_reviews||'reviews'} · ${T.rating_overall_avg||'Average'} ${avg}/5`;
     // Summary cards
     const fiveStars  = _allRatingsData.filter(r => r.rating === 5).length;
     const fourPlus   = _allRatingsData.filter(r => r.rating >= 4).length;
     const withComment = _allRatingsData.filter(r => r.comment?.trim()).length;
 
     document.getElementById('ratingsPageSummary').innerHTML = [
-      { label:'Total Reviews',    val: total,       icon:'bi-chat-square-text-fill', color:'var(--clubly-accent)' },
-      { label:'Average Rating',   val: avg + ' / 5',icon:'bi-star-fill',             color:'var(--clubly-gold)'   },
-      { label:'5-Star Reviews',   val: fiveStars,   icon:'bi-award-fill',            color:'#22c55e'              },
-      { label:'4★ and Above',    val: fourPlus,    icon:'bi-hand-thumbs-up-fill',   color:'#3b82f6'              },
-      { label:'With Comments',    val: withComment, icon:'bi-chat-left-text-fill',   color:'#9333ea'              },
+      { label:T.rating_total_reviews||'Total Reviews',    val: total,       icon:'bi-chat-square-text-fill', color:'var(--clubly-accent)' },
+      { label:T.rating_overall_avg||'Average Rating',   val: avg + ' / 5',icon:'bi-star-fill',             color:'var(--clubly-gold)'   },
+      { label:T.rating_total_reviews||'5-Star Reviews',   val: fiveStars,   icon:'bi-award-fill',            color:'#22c55e'              },
+      { label:(T.rating_four_plus||'4★ and Above'),    val: fourPlus,    icon:'bi-hand-thumbs-up-fill',   color:'#3b82f6'              },
+      { label:(T.rating_with_comments||'With Comments'),    val: withComment, icon:'bi-chat-left-text-fill',   color:'#9333ea'              },
     ].map(item => `
       <div class="col-6 col-xl">
         <div class="stat-card">
@@ -4116,7 +4027,7 @@ async function loadRatingsPage() {
     const uniqueActivities = [...new Set(
       _allRatingsData.map(r => r.activityName).filter(Boolean)
     )];
-    actSel.innerHTML = '<option value="">All Activities</option>' +
+actSel.innerHTML = `<option value="">${(window.T||{}).group_filter_all_acts||'All Activities'}</option>` +
       uniqueActivities.map(a => `<option value="${a}">${a}</option>`).join('');
 
     applyRatingsFilter();
@@ -4167,8 +4078,8 @@ function renderRatingsPage() {
     listEl.innerHTML = `
       <div style="text-align:center;padding:80px 20px;color:var(--muted);">
         <i class="bi bi-star-slash" style="font-size:3rem;opacity:.3;display:block;margin-bottom:12px;"></i>
-        <p style="font-weight:700;font-size:1rem;color:var(--text);">No ratings found</p>
-        <p style="font-size:.88rem;">Try adjusting your filters</p>
+       <p style="font-weight:700;font-size:1rem;color:var(--text);">${(window.T||{}).rating_no_ratings||'No ratings found'}</p>
+<p style="font-size:.88rem;">${(window.T||{}).rating_adjust_filters||'Try adjusting your filters'}</p>
       </div>`;
     document.getElementById('ratingsPagination').innerHTML = '';
     return;
@@ -4297,10 +4208,10 @@ function closeMobileSidebar() {
 document.addEventListener('DOMContentLoaded', async () => {
   const parts = trainerName.split(' ');
   const ini   = getInitials(trainerName);
-  document.querySelector('.trainer-name').textContent    = trainerName;
-  document.querySelector('.trainer-avatar').textContent  = ini;
-  document.querySelector('.page-title span').textContent = (parts[0]||'Trainer') + '!';
-
+const headerAvatar = document.querySelector('.header-actions .trainer-avatar');
+if (headerAvatar) headerAvatar.textContent = ini;
+const greetEl = document.getElementById('trainerGreetingName');
+if (greetEl) greetEl.textContent = (parts[0]||'Trainer') + '!';
   await loadTrainerProfile();
   await loadTrainerBookings();
   await loadTrainerGroups(); 
