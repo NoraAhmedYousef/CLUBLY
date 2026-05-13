@@ -384,18 +384,18 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 <header class="clubly-header" id="mainHeader">
   <a class="header-logo" href="home.html"><i class="bi bi-lightning-charge-fill logo-icon"></i><span class="logo-text">Cl<span>u</span>bly</span></a>
   <nav class="header-nav">
-    <a href="home.html">Home</a>
-    <a href="activities.html" class="active">Activities</a>
-    <a href="facilities.html">Facilities</a>
-    <a href="trainers.html">Trainers</a>
-    <a href="plans.html">Membership Plans</a>
-    <a href="about.html">About Us</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
+<a href="home.html" data-i18n="nav_home">Home</a>
+    <a href="activities.html" class="active" data-i18n="nav_activities">Activities</a>
+    <a href="facilities.html" data-i18n="nav_facilities">Facilities</a>
+    <a href="trainers.html" data-i18n="nav_trainers">Trainers</a>
+    <a href="plans.html" data-i18n="nav_plans">Membership Plans</a>
+    <a href="about.html" data-i18n="nav_about">About Us</a>
+    <a href="faq.html" data-i18n="nav_faq">FAQ</a>
+    <a href="contact.html" data-i18n="nav_contact">Contact</a>
   </nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
-<button class="btn-join" onclick="handleSignOut()"><i class="bi bi-box-arrow-right me-1"></i>Sign Out</button>
+<button class="btn-join" onclick="handleSignOut()"><i class="bi bi-box-arrow-right me-1"></i><span data-i18n="nav_signout">Sign Out</span></button>
   </div>
 </header>
 <!----------------------------------------content-------------------->
@@ -404,10 +404,10 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
     <!-- header -->
     <div class="container " style="margin-top: 90px;">
         <div class="text-center mb-4">
-            <h1 class="display-3 fw-bold mb-3 header-title">Sports Activities</h1>
-            <p class="text-muted" style="font-size: 18px;">
-                Discover a variety of exciting activities designed for fun, fitness, and unforgettable moments.
-            </p>
+<h1 class="display-3 fw-bold mb-3 header-title" data-i18n="act_title">Sports Activities</h1>
+          <p class="text-muted" style="font-size: 18px;" data-i18n="act_sub">
+    Discover a variety of exciting activities designed for fun, fitness, and unforgettable moments.
+</p>
         </div>
    
 
@@ -416,20 +416,20 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
       <div class="filters-bar mb-4">
         <div class="filter-search-wrap">
           <i class="bi bi-search filter-search-icon"></i>
-          <input type="text" id="searchInput" class="filter-search-input" placeholder="Search for an activity…">
+<input type="text" id="searchInput" class="filter-search-input" placeholder="Search for an activity…" data-i18n-ph="act_search">
         </div>
         <select id="filterSelect" class="filter-select">
-          <option value="">All Facilities</option>
+<option value="" data-i18n="fac_filter_all">All Facilities</option>      
         </select>
         
         <select id="priceFilter" class="filter-select">
-          <option value="">Any Price</option>
-          <option value="low">Budget (≤100 EGP)</option>
-          <option value="mid">Mid (101–300 EGP)</option>
-          <option value="high">Premium (300+ EGP)</option>
+     <option value="" data-i18n="act_filter_price">Any Price</option>
+<option value="low" data-i18n="act_price_budget">Budget (≤100 EGP)</option>
+<option value="mid" data-i18n="act_price_mid">Mid (101–300 EGP)</option>
+<option value="high" data-i18n="act_price_premium">Premium (300+ EGP)</option>
         </select>
         <button class="filter-clear-btn" onclick="clearActivityFilters()">
-          <i class="bi bi-x-circle me-1"></i>Clear
+<i class="bi bi-x-circle me-1"></i><span data-i18n="act_clear">Clear</span>
         </button>
       </div>
 
@@ -443,12 +443,12 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 
 <footer class="clubly-footer text-light pt-5 pb-3" >
   <div class="footer-inner">
-    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
-    <div class="footer-col"><h5>Explore</h5><ul class="footer-links"><li><a href="home.html">Home</a></li><li><a href="activities.html">Activities</a></li><li><a href="facilities.html">Facilities</a></li><li><a href="trainers.html">Trainers</a></li><li><a href="plans.html">Membership Plans</a></li><li><a href="about.html">About Us</a></li></ul></div>
-    <div class="footer-col"><h5>Help</h5><ul class="footer-links"><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="plans.html">Join Now</a></li></ul></div>
-    <div class="footer-col"><h5>Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
+    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;" data-i18n="footer_tagline">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+  <div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="home.html" data-i18n="nav_home">Home</a></li><li><a href="activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="about.html" data-i18n="nav_about">About Us</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="home.html" data-i18n="nav_faq">FAQ</a></li><li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li><li><a href="plans.html" data-i18n="nav_join">Join Now</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i><span data-i18n="footer_address">123 Fitness St, Maadi, Cairo</span></div><div><i class="bi bi-telephone-fill"></i>20+ 10 18346974</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i><span data-i18n="footer_hours">Daily 6AM – 10PM</span></div></div></div>
   </div>
-  <div class="footer-bottom">© 2025 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
+  <div class="footer-bottom" data-i18n="footer_rights">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
 </footer>
 
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
@@ -480,14 +480,14 @@ window.addEventListener('scroll',()=>{document.getElementById('mainHeader').clas
 
 function handleSignOut() {
   Swal.fire({
-    title: 'Sign Out?',
-    text: 'Are you sure you want to sign out of Clubly?',
+title: T?.signout_title || 'Sign Out?',
+text: T?.signout_sub || 'Are you sure you want to sign out of Clubly?',
     icon: 'question',
     showCancelButton: true,
     confirmButtonColor: '#e85d2f',
     cancelButtonColor: '#6c757d',
-    confirmButtonText: '<i class="bi bi-box-arrow-right me-1"></i>Yes, Sign Out',
-    cancelButtonText: 'Cancel'
+confirmButtonText: '<i class="bi bi-box-arrow-right me-1"></i>' + (T?.signout_btn_confirm || 'Sign Out'),
+cancelButtonText: T?.signout_btn_cancel || 'Cancel'
   }).then(result => {
     if (result.isConfirmed) {
       localStorage.removeItem('token');
@@ -513,6 +513,7 @@ function handleSignOut() {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/booking-modal.js"></script>
+<script src="../i18n.js"></script>
 <script src="js/activity.js"></script>
 <!-- Activity Group Picker Modal -->
 <div class="modal fade" id="actPickerModal" tabindex="-1">

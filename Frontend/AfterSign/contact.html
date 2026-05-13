@@ -375,7 +375,14 @@ textarea.contact-input{resize:vertical;min-height:120px;}
 <header class="clubly-header" id="mainHeader">
   <a class="header-logo" href="home.html"><i class="bi bi-lightning-charge-fill logo-icon"></i><span class="logo-text">Cl<span>u</span>bly</span></a>
   <nav class="header-nav">
-    <a href="home.html">Home</a><a href="activities.html">Activities</a><a href="facilities.html">Facilities</a><a href="trainers.html">Trainers</a><a href="plans.html">Membership Plans</a><a href="about.html">About Us</a><a href="faq.html">FAQ</a><a href="contact.html" class="active">Contact</a>
+ <a href="home.html" data-i18n="nav_home">Home</a>
+    <a href="activities.html" data-i18n="nav_activities">Activities</a>
+    <a href="facilities.html" data-i18n="nav_facilities">Facilities</a>
+    <a href="trainers.html"  data-i18n="nav_trainers">Trainers</a>
+    <a href="plans.html" data-i18n="nav_plans">Membership Plans</a>
+    <a href="about.html"  data-i18n="nav_about">About Us</a>
+    <a href="faq.html" data-i18n="nav_faq">FAQ</a>
+    <a href="contact.html" class="active" data-i18n="nav_contact">Contact</a>
   </nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
@@ -387,25 +394,39 @@ textarea.contact-input{resize:vertical;min-height:120px;}
   <section style="padding:80px 0;background:var(--clubly-dark);">
     <div class="container-cl">
       <div style="text-align:center;margin-bottom:48px;">
-        <div class="section-label"><i class="bi bi-envelope"></i> Get In Touch</div>
-        <h2 class="section-title">We'd Love to Hear From You</h2>
-        <p class="section-sub" style="margin:0 auto;">Have questions? Our team is here to help, 7 days a week.</p>
+        <div class="section-label"><i class="bi bi-envelope"></i> <span data-i18n="contact_title">Get In Touch</span></div>
+        <h2 class="section-title"data-i18n="contact_love">We'd Love to Hear From You</h2>
+        <p class="section-sub" style="margin:0 auto;"data-i18n="contact_team">Have questions? Our team is here to help, 7 days a week.</p>
       </div>
       <div class="row g-4">
         <div class="col-lg-5">
-          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(232,93,47,.15);color:var(--clubly-accent);"><i class="bi bi-geo-alt-fill"></i></div><div><div class="contact-info-label">Address</div><div class="contact-info-val">123 Fitness Street, Maadi, Cairo, Egypt</div></div></div>
-          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(46,196,182,.15);color:var(--clubly-teal);"><i class="bi bi-telephone-fill"></i></div><div><div class="contact-info-label">Phone</div><div class="contact-info-val">+20 2 1234 5678</div></div></div>
-          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(212,168,67,.15);color:var(--clubly-gold);"><i class="bi bi-envelope-fill"></i></div><div><div class="contact-info-label">Email</div><div class="contact-info-val">info@clubly.com</div></div></div>
-          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(59,130,246,.15);color:#3b82f6;"><i class="bi bi-clock-fill"></i></div><div><div class="contact-info-label">Working Hours</div><div class="contact-info-val">Daily 6:00 AM – 10:00 PM</div></div></div>
-          <div style="margin-top:20px;"><div style="font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:10px;">Follow Us</div><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(232,93,47,.15);color:var(--clubly-accent);"><i class="bi bi-geo-alt-fill"></i></div><div>
+<div class="contact-info-label" data-i18n="contact_location">Address</div>
+            <div class="contact-info-val" data-i18n="footer_address">123 Fitness Street, Maadi, Cairo, Egypt</div></div></div>
+          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(46,196,182,.15);color:var(--clubly-teal);"><i class="bi bi-telephone-fill"></i></div><div>
+<div class="contact-info-label" data-i18n="contact_phone_label">Phone</div>
+            <div class="contact-info-val">20+ 10 18346974</div></div></div>
+          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(212,168,67,.15);color:var(--clubly-gold);"><i class="bi bi-envelope-fill"></i></div><div>
+<div class="contact-info-label" data-i18n="contact_email_label">Email</div>
+          <div class="contact-info-val">info@clubly.com</div></div></div>
+          <div class="contact-info-item"><div class="contact-icon" style="background:rgba(59,130,246,.15);color:#3b82f6;"><i class="bi bi-clock-fill"></i></div><div>
+<div class="contact-info-label" data-i18n="fac_hours">Working Hours</div>
+            <div class="contact-info-val" data-i18n="footer_hours">Daily 6:00 AM – 10:00 PM</div></div></div>
+          <div style="margin-top:20px;">
+<div style="font-size:.82rem;color:rgba(255,255,255,.5);margin-bottom:10px;" data-i18n="footer_follow">Follow Us</div>
+            <div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
         </div>
         <div class="col-lg-7">
           <div class="card-dark" style="padding:32px;">
-            <h4 style="font-weight:900;color:#fff;margin-bottom:24px;">Send Us a Message</h4>
+<h4 style="font-weight:900;color:#fff;margin-bottom:24px;" data-i18n="contact_msg">Send Us a Message</h4>
             <form class="contact-form" id="contactForm">
-<select class="contact-input" style="color:var(--muted);"><option value="" disabled selected>Topic</option><option>General Inquiry</option><option>Membership Plans</option><option>Book a Tour</option><option>Personal Training</option><option>Technical Support</option><option>Other</option></select>              <textarea class="contact-input" placeholder="Your message..."></textarea>
-              <button type="submit" class="btn-form-submit">Send Message <i class="bi bi-send-fill ms-2"></i></button>
-              <div id="contactSuccess" style="display:none;margin-top:12px;color:#22c55e;font-weight:700;text-align:center;"><i class="bi bi-check-circle me-1"></i> Message sent! We'll get back to you within 24 hours.</div>
+<select class="contact-input" style="color:var(--muted);"><option value="" disabled selected data-i18n="contact_topic">Topic</option>
+<option data-i18n="contact_topic_general">General Inquiry</option>
+<option>Membership Plans</option><option>Book a Tour</option><option>Personal Training</option><option data-i18n="contact_topic_support">Technical Support</option>
+<option data-i18n="contact_topic_other">Other</option>
+</select>             <textarea class="contact-input" placeholder="Your message..."data-i18n-ph="contact_ph_msg"></textarea>
+              <button type="submit" class="btn-form-submit"><span data-i18n="contact_send">Send Message</span> <i class="bi bi-send-fill ms-2"></i></button>
+              <div id="contactSuccess" style="display:none;margin-top:12px;color:#22c55e;font-weight:700;text-align:center;"><i class="bi bi-check-circle me-1"></i> <span data-i18n="contact_success">Message sent! We'll get back to you within 24 hours.</span></div>
             </form>
           </div>
         </div>
@@ -414,19 +435,22 @@ textarea.contact-input{resize:vertical;min-height:120px;}
   </section>
 </div>
 
-<footer class="clubly-footer">
+
+<footer class="clubly-footer text-light pt-5 pb-3" >
   <div class="footer-inner">
-    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
-    <div class="footer-col"><h5>Explore</h5><ul class="footer-links"><li><a href="home.html">Home</a></li><li><a href="activities.html">Activities</a></li><li><a href="facilities.html">Facilities</a></li><li><a href="trainers.html">Trainers</a></li><li><a href="plans.html">Membership Plans</a></li><li><a href="about.html">About Us</a></li></ul></div>
-    <div class="footer-col"><h5>Help</h5><ul class="footer-links"><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="plans.html">Join Now</a></li></ul></div>
-    <div class="footer-col"><h5>Contact</h5><div class="footer-contact-info"><div><i class="bi bi-geo-alt-fill"></i>123 Fitness St, Maadi, Cairo</div><div><i class="bi bi-telephone-fill"></i>+20 2 1234 5678</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i>Daily 6AM – 10PM</div></div></div>
+    <div class="footer-col" style="max-width:240px"><h5><i class="bi bi-lightning-charge-fill" style="color:var(--clubly-accent)"></i> Clubly</h5><p style="font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:14px;" data-i18n="footer_tagline">Your family's fitness journey starts here.</p><div class="footer-socials"><a href="#"><i class="bi bi-facebook"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-instagram"></i></a><a href="#"><i class="bi bi-whatsapp"></i></a></div></div>
+  <div class="footer-col"><h5 data-i18n="footer_explore">Explore</h5><ul class="footer-links"><li><a href="home.html" data-i18n="nav_home">Home</a></li><li><a href="activities.html" data-i18n="nav_activities">Activities</a></li><li><a href="facilities.html" data-i18n="nav_facilities">Facilities</a></li><li><a href="trainers.html" data-i18n="nav_trainers">Trainers</a></li><li><a href="plans.html" data-i18n="nav_plans">Membership Plans</a></li><li><a href="about.html" data-i18n="nav_about">About Us</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_help">Help</h5><ul class="footer-links"><li><a href="home.html" data-i18n="nav_faq">FAQ</a></li><li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li><li><a href="plans.html" data-i18n="nav_join">Join Now</a></li></ul></div>
+    <div class="footer-col"><h5 data-i18n="footer_contact">Contact</h5><div class="footer-contact"><div><i class="bi bi-geo-alt-fill"></i><span data-i18n="footer_address">123 Fitness St, Maadi, Cairo</span></div><div><i class="bi bi-telephone-fill"></i>20+ 10 18346974</div><div><i class="bi bi-envelope-fill"></i>info@clubly.com</div><div><i class="bi bi-clock-fill"></i><span data-i18n="footer_hours">Daily 6AM – 10PM</span></div></div></div>
   </div>
-  <div class="footer-bottom">© 2025 Clubly. All rights reserved.</div>
+  <div class="footer-bottom" data-i18n="footer_rights">© 2026 Clubly. All rights reserved. · Privacy Policy · Terms of Service</div>
 </footer>
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-chevron-up"></i></button>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../i18n.js"></script>
+
 <script>
 const userRole = localStorage.getItem('role');
 const dashboardUrls = {
