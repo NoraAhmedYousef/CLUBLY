@@ -121,7 +121,112 @@ html{scroll-behavior:smooth;}
 .role-option span{display:block;font-size:10.5px;font-weight:700;color:var(--muted);}
 .role-option.active{border-color:var(--clubly-accent);background:rgba(232,93,47,.06);}
 .role-option.active span{color:var(--clubly-accent);}
-@media(max-width:768px){.header-nav{display:none;}.clubly-header{padding:0 16px;}.hero-divider{display:none;}.footer-inner{gap:30px;padding:30px 20px;}.features-strip{flex-direction:column;}.feature-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.07);}}
+/* ==========================
+   MOBILE & TABLET HEADER
+   ========================== */
+@media (max-width:1024px){
+
+  .clubly-header{
+    padding:0 10px;
+    height:var(--header-h);
+
+    display:flex;
+    align-items:center;
+    flex-wrap:nowrap;
+
+    gap:8px;
+
+    overflow:hidden;
+  }
+
+  /* Logo */
+  .header-logo{
+    flex-shrink:0;
+  }
+
+
+  /* NAVBAR SLIDER */
+  .header-nav{
+    flex:1;
+
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+
+    gap:6px;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    white-space:nowrap;
+
+    padding:0 8px;
+
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+
+  .header-nav::-webkit-scrollbar{
+    display:none;
+  }
+
+  .header-nav a{
+    flex:0 0 auto;
+
+        flex:0 0 auto;
+    padding:7px 14px;
+
+    border-radius:20px;
+  }
+
+  /* Right Side Actions */
+  .header-actions{
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+
+    gap:5px;
+  }
+
+  .btn-theme{
+    width:34px;
+    height:34px;
+    /* font-size:14px; */
+  }
+
+  .btn-signin{
+    padding:6px 10px;
+    /* font-size:.75rem; */
+    white-space:nowrap;
+  }
+
+  .btn-join{
+    padding:6px 10px;
+    /* font-size:.75rem; */
+    white-space:nowrap;
+  }
+
+}
+
+
+/* Small phones */
+@media (max-width:768px){
+
+  .clubly-header{
+    gap:6px;
+    padding:0 6px;
+  }
+
+  .header-nav a{
+      padding:7px 14px;
+      }
+
+  .btn-theme{
+    width:30px;
+    height:30px;
+  }
+}
 
 /* ── Dark Mode: inline color overrides ─────────────────── */
 [data-theme="dark"] {
@@ -571,12 +676,17 @@ const dashboardUrls = {
   trainer: '../BeforeSign/trainer-dashboard.html',
   guest:   '../BeforeSign/guest-dashboard.html',
 };
-if (userRole && dashboardUrls[userRole]) {
-  const navEl = document.querySelector('.header-nav a[href="home.html"]');
-  if (navEl) navEl.insertAdjacentHTML('beforebegin',
-    `<a href="${dashboardUrls[userRole]}" id="dashboardNavLink" style="color:var(--clubly-accent);font-weight:700;">
-      <i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
-}
+document.addEventListener('DOMContentLoaded', () => {
+  if (userRole && dashboardUrls[userRole]) {
+    const navEl = document.querySelector('.header-nav a[href="home.html"]');
+    if (navEl) {
+      const label = (window.T && window.T.nav_dashboard) || 'Dashboard';
+      navEl.insertAdjacentHTML('beforebegin',
+        `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;">
+          <i class="bi bi-speedometer2 me-1"></i>${label}</a>`);
+    }
+  }
+});
 // ── Theme & Scroll ───────────────────────────────────
 let dark = localStorage.getItem('clubly-theme') === 'dark';
 (function applyTheme() {
