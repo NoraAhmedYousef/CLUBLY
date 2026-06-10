@@ -177,9 +177,9 @@ window.closeBookingModal = function () {
 
   function setHeader(type, name) {
     const cfg = {
-      activity: { icon:'🏃', label:'Activity Booking', bg:'rgba(232,93,47,.2)' },
-      facility: { icon:'🏟️',  label:'Facility Booking', bg:'rgba(46,196,182,.2)' },
-      trainer:  { icon:'🏆', label:'Trainer Session',   bg:'rgba(124,92,252,.2)' },
+      activity: { icon:'🏃', label: (window.T?.bp_activity_label||'Activity Booking'), bg:'rgba(232,93,47,.2)' },
+      facility: { icon:'🏟️', label: (window.T?.bp_facility_label||'Facility Booking'), bg:'rgba(46,196,182,.2)' },
+      trainer:  { icon:'🏆', label: (window.T?.bp_trainer_label||'Trainer Session'),   bg:'rgba(124,92,252,.2)' },
     };
     const c = cfg[type] || cfg.activity;
     document.getElementById('bpHdrIcon').textContent      = c.icon;
