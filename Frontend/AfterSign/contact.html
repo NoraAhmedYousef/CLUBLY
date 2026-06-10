@@ -386,8 +386,10 @@ textarea.contact-input{resize:vertical;min-height:120px;}
   </nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
-<button class="btn-join" onclick="handleSignOut()"><i class="bi bi-box-arrow-right me-1"></i>Sign Out</button>
-  </div>
+<button class="btn-join" onclick="handleSignOut()">
+  <i class="bi bi-box-arrow-right me-1"></i>
+  <span data-i18n="nav_signout">Sign Out</span>
+</button>  </div>
 </header>
 
 <div style="margin-top:var(--header-h);">
@@ -459,11 +461,17 @@ const dashboardUrls = {
   trainer: '../BeforeSign/trainer-dashboard.html',
   guest:   '../BeforeSign/guest-dashboard.html',
 };
-if (userRole && dashboardUrls[userRole]) {
-  const navEl = document.querySelector('.header-nav a[href="home.html"]');
-  if (navEl) navEl.insertAdjacentHTML('beforebegin',
-    `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
-}
+document.addEventListener('DOMContentLoaded', () => {
+  if (userRole && dashboardUrls[userRole]) {
+    const navEl = document.querySelector('.header-nav a[href="home.html"]');
+    if (navEl) {
+      const label = (window.T && window.T.nav_dashboard) || 'Dashboard';
+      navEl.insertAdjacentHTML('beforebegin',
+        `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;">
+          <i class="bi bi-speedometer2 me-1"></i>${label}</a>`);
+    }
+  }
+});
 document.getElementById('contactForm').addEventListener('submit', async e => {
   e.preventDefault();
 

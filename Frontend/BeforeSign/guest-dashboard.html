@@ -1002,9 +1002,7 @@ body {
   backdrop-filter: blur(2px);
 }
 .sidebar-overlay.active { display: block; }
-@media (max-width: 992px) {
-  .header-nav { display: none; }
-}
+
 @media (max-width: 768px) {
   .hamburger-btn { display: flex; }
   .sidebar {
@@ -1025,8 +1023,31 @@ body {
   .page-header-clubly { flex-direction: column; align-items: flex-start; }
   .upgrade-banner { flex-direction: column; }
 }
-@media (max-width: 360px) {
+/* @media (max-width: 360px) {
   .logo-text { display: none; }
+} */
+@media (min-width:769px) and (max-width:1024px){
+
+  .header-nav{
+    display:flex !important;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    white-space:nowrap;
+    flex-wrap:nowrap;
+
+    scrollbar-width:none;
+  }
+
+  .header-nav::-webkit-scrollbar{
+    display:none;
+  }
+
+  .header-nav a{
+    flex-shrink:0;
+  }
+
 }
 
 /* ── Dark Mode: inline color overrides ─────────────────── */

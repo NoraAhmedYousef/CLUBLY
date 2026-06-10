@@ -393,8 +393,10 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
   </nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
-<button class="btn-join" onclick="handleSignOut()"><i class="bi bi-box-arrow-right me-1"></i>Sign Out</button>
-  </div>
+<button class="btn-join" onclick="handleSignOut()">
+  <i class="bi bi-box-arrow-right me-1"></i>
+  <span data-i18n="nav_signout">Sign Out</span>
+</button>  </div>
 </header>
 
 <div style="margin-top:var(--header-h);">
@@ -436,11 +438,17 @@ const dashboardUrls = {
   trainer: '../BeforeSign/trainer-dashboard.html',
   guest:   '../BeforeSign/guest-dashboard.html',
 };
-if (userRole && dashboardUrls[userRole]) {
-  const navEl = document.querySelector('.header-nav a[href="home.html"]');
-  if (navEl) navEl.insertAdjacentHTML('beforebegin',
-    `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
-}
+document.addEventListener('DOMContentLoaded', () => {
+  if (userRole && dashboardUrls[userRole]) {
+    const navEl = document.querySelector('.header-nav a[href="home.html"]');
+    if (navEl) {
+      const label = (window.T && window.T.nav_dashboard) || 'Dashboard';
+      navEl.insertAdjacentHTML('beforebegin',
+        `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;">
+          <i class="bi bi-speedometer2 me-1"></i>${label}</a>`);
+    }
+  }
+});
 const MS_API = 'https://clublywebsite.runasp.net/api/MemberShips';
 const PLAN_ICONS = ['🥉','🥈','🥇','💎','🏅','⭐'];
 const PLAN_COLORS = ['#cd7f32','#94a3b8','#d4a843','#e85d2f','#7c5cfc','#2ec4b6'];
@@ -451,10 +459,10 @@ let _plans = [];
 
 async function loadPlans() {
   const grid = document.getElementById('plansGrid');
-  grid.innerHTML = `<div class="col-12 text-center py-5">
-    <div class="spinner-border" style="color:var(--clubly-accent)"></div>
-    <p class="mt-3 text-muted">Loading plans…</p>
-  </div>`;
+ grid.innerHTML = `<div class="col-12 text-center py-5">
+  <div class="spinner-border" style="color:var(--clubly-accent)"></div>
+  <p class="mt-3 text-muted">${(window.T && window.T.plans_loading) || 'Loading plans…'}</p>
+</div>`;
 
   try {
     const res = await fetch(MS_API);
@@ -462,8 +470,9 @@ async function loadPlans() {
     _plans = data.filter(p => (p.status || p.Status || '').toLowerCase() === 'active');
 
     if (!_plans.length) {
-      grid.innerHTML = `<div class="col-12 text-center py-5 text-muted">No plans available right now.</div>`;
-      return;
+grid.innerHTML = `<div class="col-12 text-center py-5 text-muted">${(window.T && window.T.plans_no_plans) || 'No plans available right now.'}</div>`;
+
+return;
     }
     renderPlans();
   } catch(e) {
@@ -488,14 +497,15 @@ const featured = i === 0;
     return `
     <div class="col-sm-6 col-lg-3">
       <div class="plan-card card-cl${featured ? ' featured' : ''}" style="background:${bg};">
-        ${featured ? '<div class="plan-badge">🏆 Most Popular</div>' : ''}
+${featured ? `<div class="plan-badge">🏆 ${(window.T && window.T.plans_most_popular) || 'Most Popular'}</div>` : ''}
         <div class="plan-icon" style="background:rgba(255,255,255,0.15);color:${color};font-size:1.5rem;">${icon}</div>
         <div class="plan-name">${name}</div>
         <div class="plan-price" style="color:${color};">
           ${displayPrice} <span style="font-size:1rem;">EGP</span>
         </div>
 <div style="margin-bottom:12px;"></div>
-        <div style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">${duration} month${duration > 1 ? 's' : ''} membership
+   <div style="font-size:.82rem;color:var(--muted);margin-bottom:12px;">
+  ${duration} ${duration > 1 ? ((window.T && window.T.plans_months) || 'months') : ((window.T && window.T.plans_month) || 'month')} ${(window.T && window.T.plans_membership) || 'membership'}
 </div>
         ${desc ? `<div class="plan-feature"><i class="bi bi-info-circle-fill" style="color:${color}"></i>${desc}</div>` : ''}
    
@@ -519,15 +529,16 @@ window.addEventListener('scroll',()=>{document.getElementById('mainHeader').clas
 
 
 function handleSignOut() {
-  Swal.fire({
-    title: 'Sign Out?',
-    text: 'Are you sure you want to sign out of Clubly?',
+ const T = window.T || {};
+Swal.fire({
+  title: T.signout_title || 'Sign Out?',
+  text: T.signout_sub || 'Are you sure you want to sign out of Clubly?',
     icon: 'question',
     showCancelButton: true,
     confirmButtonColor: '#e85d2f',
     cancelButtonColor: '#6c757d',
-    confirmButtonText: '<i class="bi bi-box-arrow-right me-1"></i>Yes, Sign Out',
-    cancelButtonText: 'Cancel'
+    confirmButtonText: `<i class="bi bi-box-arrow-right me-1"></i>${T.signout_btn_confirm || 'Yes, Sign Out'}`,
+  cancelButtonText: T.signout_btn_cancel || 'Cancel'
   }).then(result => {
     if (result.isConfirmed) {
       localStorage.removeItem('token');

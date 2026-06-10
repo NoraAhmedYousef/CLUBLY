@@ -2096,6 +2096,31 @@
   background: rgba(255,255,255,.2);
 }
 
+@media (min-width:769px) and (max-width:1024px){
+
+
+  .header-nav{
+    display:flex !important;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    white-space:nowrap;
+    flex-wrap:nowrap;
+
+    scrollbar-width:none;
+  }
+
+  .header-nav::-webkit-scrollbar{
+    display:none;
+  }
+
+  .header-nav a{
+    flex-shrink:0;
+  }
+
+}
+
     /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
 
@@ -2917,28 +2942,28 @@
 
         <!-- Stats -->
         <div class="row g-3 mb-4">
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-blue"><i class="fas fa-book-open"></i></div>
               <div class="stat-label">My Bookings</div>
               <div class="stat-value" id="dash-bookings">5</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-green"><i class="fas fa-running"></i></div>
               <div class="stat-label">Activities Joined</div>
               <div class="stat-value" id="dash-activities">12</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-orange"><i class="fas fa-clock"></i></div>
               <div class="stat-label">Membership Days Left</div>
               <div class="stat-value" id="dash-days">156 <span class="stat-unit">days</span></div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-teal"><i class="fas fa-hourglass-half"></i></div>
               <div class="stat-label">Hours This Month</div>
@@ -3554,28 +3579,28 @@
 
         <!-- Summary Cards -->
         <div class="row g-3 mb-4" id="attSummaryCards">
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-blue"><i class="bi bi-calendar3"></i></div>
               <div class="stat-label">Total Sessions</div>
               <div class="stat-value" id="mem-att-total">—</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-green"><i class="bi bi-check-circle-fill"></i></div>
               <div class="stat-label">Present</div>
               <div class="stat-value" id="mem-att-present" style="color:#22c55e;">—</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 col-md-6 col-lg-3">
             <div class="stat-card">
               <div class="stat-icon-box icon-orange"><i class="bi bi-x-circle-fill"></i></div>
               <div class="stat-label">Absent</div>
               <div class="stat-value" id="mem-att-absent" style="color:#ef4444;">—</div>
             </div>
           </div>
-          <div class="col-6 col-lg-3">
+          <div class="col-6 col-md-6 col-md-6 col-lg-3">
             <div class="stat-card">
               <div class="stat-icon-box icon-teal"><i class="bi bi-percent"></i></div>
               <div class="stat-label">Attendance Rate</div>

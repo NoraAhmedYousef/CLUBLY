@@ -36,8 +36,7 @@ async function loadActivities() {
     // ── Populate facility filter dynamically ─────────────────────────────────
     if (filterSelect) {
       const facilities = [...new Set(active.map(a => a.FacilityName || a.facilityName).filter(Boolean))].sort();
-      filterSelect.innerHTML = `<option value="">All Facilities</option>`;
-      facilities.forEach(f => {
+filterSelect.innerHTML = `<option value="">${T?.fac_filter_all || 'All Facilities'}</option>`;      facilities.forEach(f => {
         filterSelect.innerHTML += `<option value="${f.toLowerCase()}">${f}</option>`;
       });
     }
@@ -87,11 +86,12 @@ function renderActivities(list) {
     const actTrainers  = getTrainersForActivity(id);
     const trainerCount = actTrainers.length;
     const trainerBadge = trainerCount > 0
-      ? `<span class="activity-trainer-count"><i class="bi bi-person-fill me-1"></i>${trainerCount} Trainer${trainerCount>1?'s':''}</span>` : '';
+      ?
+`<span class="activity-trainer-count"><i class="bi bi-person-fill me-1"></i>${trainerCount} ${trainerCount>1 ? (T?.tr_trainer_plural||'Trainers') : (T?.tr_trainer_singular||'Trainer')}</span>`      : '';
 
     const viewBtn = trainerCount > 0
       ? `<a class="btn-view-trainers" href="trainers.html#activity-${id}">
-           <i class="bi bi-people-fill"></i> View Trainers
+<i class="bi bi-people-fill"></i> ${T?.tr_view || 'View Trainers'}
          </a>` : '';
 
     return `
@@ -105,12 +105,12 @@ function renderActivities(list) {
           <div class="activity-badges">${priceBadge}${facBadge}${trainerBadge}</div>
           <h3>${name}</h3>
           <p>${desc}</p>
-          <div class="d-flex gap-2 flex-wrap">
-            <button class="btn-custom" onclick="handleBookActivity(${id})">
-              <i class="bi bi-calendar-plus"></i> Book Now
-            </button>
-            ${viewBtn}
-          </div>
+     <div class="d-flex gap-2 flex-wrap">
+  <button class="btn-custom" onclick="handleBookActivity(${id})">
+    <i class="bi bi-calendar-plus"></i> ${T?.act_book_now || 'Book Now'}
+  </button>
+  ${viewBtn}
+</div>
         </div>
       </div>
     </div>`;

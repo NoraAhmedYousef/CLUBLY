@@ -18,7 +18,7 @@ async function loadTrainers() {
   container.innerHTML = `
     <div class="text-center py-5">
       <div class="spinner-border" style="color:var(--clubly-accent)" role="status"></div>
-      <p class="mt-3 text-muted">Loading trainers…</p>
+<p class="mt-3 text-muted">${(window.T && window.T.tr_loading) || 'Loading trainers…'}</p>
     </div>`;
 
   try {
@@ -36,7 +36,7 @@ async function loadTrainers() {
     });
 
     if (activeTrainers.length === 0) {
-      container.innerHTML = `<p class="text-center text-muted py-5">No trainers available right now.</p>`;
+container.innerHTML = `<p class="text-center text-muted py-5">${(window.T && window.T.tr_no_trainers) || 'No trainers available right now.'}</p>`;
       return;
     }
  // ✅ جلب الـ ratings هنا — جوه loadTrainers اللي هي async
@@ -129,13 +129,15 @@ function renderSections(activities, trainers, filtered = null) {
 
   let html = '';
 
+const T = window.T || {};
+
   sections.forEach((sec, si) => {
-    const isOpen = si === 0; // first section open by default
+    const isOpen = si === 0;
     html += buildSection(
       `activity-${sec.actId}`,
       sec.actName,
       'bi-lightning-charge-fill',
-      'Activity',
+      T.tr_label_activity || 'Activity',
       sec.trainers,
       palette,
       isOpen
@@ -145,9 +147,9 @@ function renderSections(activities, trainers, filtered = null) {
   if (unassigned.length > 0) {
     html += buildSection(
       'activity-unassigned',
-      'Other Trainers',
+      T.tr_other_trainers || 'Other Trainers',
       'bi-person-fill',
-      'General',
+      T.tr_label_general || 'General',
       unassigned,
       palette,
       sections.length === 0,
@@ -157,7 +159,7 @@ function renderSections(activities, trainers, filtered = null) {
   }
 
   if (!html) {
-    container.innerHTML = `<p class="text-center text-muted py-5">No trainers found.</p>`;
+container.innerHTML = `<p class="text-center text-muted py-5">${(window.T && window.T.tr_no_found) || 'No trainers found.'}</p>`;
     return;
   }
 
@@ -180,7 +182,8 @@ function buildSection(id, title, icon, label, trainers, palette, open = false,
         <div class="trainer-section-title">${title}</div>
       </div>
       <div class="trainer-section-count">
-        <i class="bi bi-person-fill me-1"></i>${trainers.length} Trainer${trainers.length > 1 ? 's' : ''}
+        <i class="bi bi-person-fill me-1"></i>
+${trainers.length} ${trainers.length > 1 ? (window.T?.tr_trainer_plural || 'Trainers') : (window.T?.tr_trainer_singular || 'Trainer')}
       </div>
       <i class="bi bi-chevron-down section-chevron" style="transition:transform .3s;${open ? 'transform:rotate(180deg)' : ''}"></i>
     </button>
@@ -257,12 +260,14 @@ const rating = ratingRaw !== null && ratingRaw !== '' ? parseFloat(ratingRaw) : 
       <div class="trainer-card-body">
         <div class="trainer-name">${fullName}</div>
         ${rating !== null ? `<div class="trainer-rating">${renderStars(rating)}<span class="rating-num">${rating.toFixed(1)}</span></div>` : ''}
-        ${exp !== null ? `<div class="trainer-info-row"><i class="bi bi-clock-history"></i><span>${exp} years experience</span></div>` : ''}
+        ${exp !== null ? `<div class="trainer-info-row"><i class="bi bi-clock-history"></i>
+<span>${exp} ${(window.T && window.T.tr_years_exp) || 'years experience'}</span>
+          </div>` : ''}
         ${email ? `<div class="trainer-info-row"><i class="bi bi-envelope-fill"></i><span>${email}</span></div>` : ''}
         ${phone ? `<div class="trainer-info-row"><i class="bi bi-telephone-fill"></i><span>${phone}</span></div>` : ''}
-        <button class="btn-book-trainer" onclick="handleBookTrainer('${id}')">
-          <i class="bi bi-calendar-plus me-1"></i>Book Session
-        </button>
+      <button class="btn-book-trainer" onclick="handleBookTrainer('${id}')">
+  <i class="bi bi-calendar-plus me-1"></i>${(window.T && window.T.tr_book_session) || 'Book Session'}
+</button>
       </div>
     </div>
   </div>`;

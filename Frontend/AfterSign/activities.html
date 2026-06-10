@@ -466,8 +466,15 @@ const dashboardUrls = {
 if (userRole && dashboardUrls[userRole]) {
   const navEl = document.querySelector('.header-nav a[href="home.html"]');
   if (navEl) navEl.insertAdjacentHTML('beforebegin',
-    `<a href="${dashboardUrls[userRole]}" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
+    `<a href="${dashboardUrls[userRole]}" id="dashboardNavLink" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dashLink = document.getElementById('dashboardNavLink');
+  if (dashLink && typeof T !== 'undefined') {
+    dashLink.innerHTML = `<i class="bi bi-speedometer2 me-1"></i>${T?.nav_dashboard || 'Dashboard'}`;
+  }
+});
 function filterActivities(f,btn){document.querySelectorAll('.activity-filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderActivities(f);}
 let dark = localStorage.getItem('clubly-theme') === 'dark';
 (function applyTheme() {
@@ -521,7 +528,7 @@ cancelButtonText: T?.signout_btn_cancel || 'Cancel'
     <div class="modal-content" style="border-radius:20px;border:none;">
       <div class="modal-header" style="background:linear-gradient(135deg,#0d1b2a,#1a2f4a);border-radius:20px 20px 0 0;padding:20px 24px;">
         <div>
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.5);">Choose a Time Slot</div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.5);"data-i18n="auth_confirm_slot" id="pickerSlotLabel">Choose a Time Slot</div>
           <div id="actPickerTitle" style="color:#fff;font-size:1.05rem;font-weight:900;"></div>
         </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>

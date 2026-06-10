@@ -157,6 +157,8 @@ sched_full: "Full",
     about_stat4: "Years of Excellence",
     about_stat5: "Average Rating",
     about_journey_label: "Our Journey",
+    nav_dashboard: "Dashboard",
+
     about_journey_sub: "From a small vision to Egypt's premier fitness destination.",
     about_2018_label: "2018 — The Beginning",
     about_2018_title: "Clubly Opens Its Doors",
@@ -879,7 +881,18 @@ trainer_no_ratings: "No ratings yet from members.",
   inbox_mins_ago: "m ago",
   inbox_hours_ago: "h ago",
   inbox_days_ago: "d ago",
-
+bp_activity_label: "Activity Booking",
+bp_facility_label: "Facility Booking",
+bp_trainer_label: "Trainer Session",
+bp_booking_details: "Booking Details",
+bp_cancel: "Cancel",
+bp_proceed: "Proceed to payment",
+bp_back: "← Back",
+bp_complete: "Complete Payment",
+bp_processing: "⏳ Processing…",
+bp_success_title: "Booking Submitted!",
+bp_success_sub: "Your booking is pending approval. We'll confirm once payment is verified.",
+bp_close: "Close",
   faq_add_btn: "Add FAQ",
   faq_search_ph: "Search questions...",
   faq_filter_all: "All",
@@ -1393,7 +1406,7 @@ tr_book_session: "احجز جلسة",
 tr_trainer_singular: "مدرب",
 trainer_members_subtitle: "عضو تحت تدريبك",
 trainer_guests_subtitle: "ضيف تحت تدريبك",
-tr_trainer_plural: "مدرب",
+tr_trainer_plural: "مدربون",
 tr_label_activity: "نشاط",
 tr_label_general: "عام",
 tr_other_trainers: " مدربون أخرون ",
@@ -1496,7 +1509,18 @@ faq_error: "فشل تحميل الأسئلة.",
     dash_sports: "الأنشطة الرياضية",
     dash_ai: "خطط الذكاء الاصطناعي",
     dash_pricing: "الأسعار",
-
+bp_activity_label: "حجز نشاط",
+bp_facility_label: "حجز مرفق",
+bp_trainer_label: "جلسة مدرب",
+bp_booking_details: "تفاصيل الحجز",
+bp_cancel: "إلغاء",
+bp_proceed: "المتابعة للدفع",
+bp_back: "← رجوع",
+bp_complete: "إتمام الدفع",
+bp_processing: "⏳ جارٍ المعالجة…",
+bp_success_title: "تم إرسال الحجز!",
+bp_success_sub: "حجزك قيد الانتظار. سنؤكده بعد التحقق من الدفع.",
+bp_close: "إغلاق",
     // ── Footer ───────────────────────────────────────────
     footer_explore: "استكشف",
     footer_help: "المساعدة",
@@ -1836,6 +1860,7 @@ trainer_no_ratings: "لا توجد تقييمات من الأعضاء بعد.",
   cat_btn_update: "تحديث",
   cat_desc_ph: "الوصف (اختياري)",
   cat_no_found: "لا توجد فئات",
+nav_dashboard: "لوحة التحكم",
 
   
   fac_add_btn: "إضافة مرفق",
@@ -2472,8 +2497,14 @@ try {
     if (typeof updateMyNotifUnreadCount === 'function')
       updateMyNotifUnreadCount();
 
-  } catch(e) {
+} catch(e) {
     // silent fail — لو أي function مش موجودة في الصفحة دي
+  }
+
+  // Dashboard nav link translation
+  const dashLink = document.getElementById('dashboardNavLink');
+  if (dashLink) {
+    dashLink.innerHTML = `<i class="bi bi-speedometer2 me-1"></i>${T.nav_dashboard || 'Dashboard'}`;
   }
 }
 // ── Inject lang button into .header-actions ───────────────────

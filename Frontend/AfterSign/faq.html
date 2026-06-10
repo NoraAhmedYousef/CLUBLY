@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <script>if(localStorage.getItem("clubly-theme")==="dark")document.documentElement.setAttribute("data-theme","dark");</script>
 
@@ -365,7 +365,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
   </nav>
   <div class="header-actions">
     <button class="btn-theme" id="themeBtn"><i class="bi bi-moon-stars"></i></button>
-    <a href="plans.html" class="btn-join">Join Now <i class="bi bi-arrow-right ms-1"></i></a>
+<a href="plans.html" class="btn-join"><span data-i18n="nav_join">Join Now</span> <i class="bi bi-arrow-right ms-1"></i></a>
   </div>
 </header>
 
@@ -412,7 +412,7 @@ async function loadFAQs() {
     const list = document.getElementById('faqList');
 
     if (!faqs.length) {
-      list.innerHTML = '<p class="text-center text-muted">No FAQs available yet.</p>';
+list.innerHTML = `<p class="text-center text-muted">${(window.T && window.T.faq_no_items) || 'No FAQs available yet.'}</p>`;
       return;
     }
 
@@ -429,7 +429,7 @@ async function loadFAQs() {
 
   } catch(e) {
     document.getElementById('faqList').innerHTML =
-      '<p class="text-center text-muted">Failed to load FAQs.</p>';
+`<p class="text-center text-muted">${(window.T && window.T.faq_error) || 'Failed to load FAQs.'}</p>`;
   }
 }
 
@@ -443,7 +443,18 @@ let dark = localStorage.getItem('clubly-theme') === 'dark';
 })();
 document.getElementById('themeBtn').addEventListener('click',()=>{dark=!dark;localStorage.setItem('clubly-theme',dark?'dark':'light');document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('themeBtn').innerHTML=dark?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';});
 window.addEventListener('scroll',()=>{document.getElementById('mainHeader').classList.toggle('scrolled',window.scrollY>50);document.getElementById('backTop').classList.toggle('show',window.scrollY>300);});
-
+const userRole = localStorage.getItem('role');
+const dashboardUrls = {
+  admin:   '../BeforeSign/Admin.html',
+  member:  '../BeforeSign/Member dashboard.html',
+  trainer: '../BeforeSign/trainer-dashboard.html',
+  guest:   '../BeforeSign/guest-dashboard.html',
+};
+if (userRole && dashboardUrls[userRole]) {
+  const navEl = document.querySelector('.header-nav a[href="home.html"]');
+  if (navEl) navEl.insertAdjacentHTML('beforebegin',
+    `<a href="${dashboardUrls[userRole]}" id="dashboardNavLink" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>`);
+}
 
 
 </script>
