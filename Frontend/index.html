@@ -1236,6 +1236,7 @@ if (!res.ok) {
     localStorage.setItem('role',     json.role);
     localStorage.setItem('fullName', json.fullName);
     localStorage.setItem('userId',   json.id);
+    localStorage.setItem('email',    document.getElementById('siEmail').value.trim().toLowerCase());
     authShowNotif(`Welcome back, ${json.fullName}!`);
      const urls = {
   admin:   'BeforeSign/Admin.html',
@@ -1332,9 +1333,20 @@ document.addEventListener('DOMContentLoaded', () => {
 async function authHandleForgot() {
   const ok = authValidateEmail('fpEmail', 'fpEmailErr');
   if (!ok) return;
+
+  const typedEmail = document.getElementById('fpEmail').value.trim().toLowerCase();
+  const savedEmail = (localStorage.getItem('email') || '').toLowerCase();
+
+if (!savedEmail || typedEmail !== savedEmail) {
+    const errEl = document.getElementById('fpEmailErr');
+    errEl.textContent = '⚠ This email does not match your registered account';
+    errEl.style.display = 'block';
+    return;
+  }
+
   const btn = document.getElementById('fpSendBtn');
   btn.disabled = true; btn.textContent = 'Sending…';
-  _fpEmail = document.getElementById('fpEmail').value.trim();
+  _fpEmail = typedEmail;
   try {
     const res = await fetch(`${API_BASE}/forgot-password`, {
       method: 'POST',
