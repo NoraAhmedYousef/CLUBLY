@@ -129,6 +129,7 @@ namespace SignUp
             builder.Services.AddScoped<IAdminBookingRepository, AdminBookingRepository>();
             builder.Services.AddScoped<IGuestRepository, GuestRepository>();
             builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+            builder.Services.AddScoped<IMembershipRenewalRequestRepository, MembershipRenewalRequestRepository>();
 
 
             // ????????????????? SERVICES ?????????????????
@@ -149,6 +150,8 @@ namespace SignUp
 
             builder.Services.AddScoped<IGuestService, GuestService>();
             builder.Services.AddScoped<INotificationService, NotificationService>();
+            builder.Services.AddScoped<IMembershipRenewalRequestService, MembershipRenewalRequestService>();
+
 
             // ????????????????? BUILD ?????????????????
             var app = builder.Build();

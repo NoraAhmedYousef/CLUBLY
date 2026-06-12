@@ -33,6 +33,7 @@ namespace SignUp.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<TrainerRating> TrainerRatings { get; set; }
         public DbSet<NotificationRead> NotificationReads { get; set; }
+        public DbSet<MembershipRenewalRequest> MembershipRenewalRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -74,6 +75,17 @@ namespace SignUp.Data
     .WithOne(t => t.Schedule)
     .HasForeignKey(t => t.FacilityScheduleId)
     .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<MembershipRenewalRequest>()
+    .HasOne(r => r.Member)
+    .WithMany()
+    .HasForeignKey(r => r.MemberId)
+    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<MembershipRenewalRequest>()
+                .HasOne(r => r.MemberShip)
+                .WithMany()
+                .HasForeignKey(r => r.MemberShipId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
     }
