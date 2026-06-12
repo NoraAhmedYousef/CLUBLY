@@ -60,15 +60,15 @@ body{
   box-shadow:0 2px 24px rgba(0,0,0,.45);
     gap:10px;
   flex-wrap:nowrap;
-}
-.toggle-btn{
+ }
+ /* .toggle-btn{ 
   background:none;border:none;color:#fff;
   font-size:22px;cursor:pointer;
   padding:4px 8px;border-radius:6px;
   transition:background .2s;margin-right:8px;
   flex-shrink:0;
 }
-.toggle-btn:hover{background:rgba(255,255,255,.1);}
+.toggle-btn:hover{background:rgba(255,255,255,.1);}  */
 .header-logo{
   display:flex;align-items:center;gap:8px;
   text-decoration:none;min-width:200px;
@@ -478,65 +478,231 @@ textarea.form-input{resize:vertical;min-height:90px;}
 }
 .sidebar-overlay.active { display: block; }
 
-/* ══ TABLET 992px ══ */
-@media (max-width: 992px) {
-  .header-nav { display: none; }
-  .content-area { padding: 20px; }
-}
+@media (min-width:769px) and (max-width:1024px){
 
-/* ══ MOBILE 768px ══ */
-@media (max-width: 768px) {
-  .hamburger-btn { display: flex; }
-  .toggle-btn { display: none; }
 
-  .sidebar {
-    display: block !important;
-    transform: translateX(-100%);
-    transition: transform .3s ease;
-    z-index: 1100;
-    width: var(--sidebar-w) !important;
-    min-width: var(--sidebar-w) !important;
+  .header-nav{
+    display:flex !important;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    white-space:nowrap;
+    flex-wrap:nowrap;
+
+    scrollbar-width:none;
   }
-  .sidebar.open { transform: translateX(0); }
-  .sidebar.collapsed { transform: translateX(-100%); }
 
-  .content-area {
-    margin-left: 0 !important;
-    padding: 16px;
+  .header-nav::-webkit-scrollbar{
+    display:none;
   }
-  .content-area.expanded { margin-left: 0 !important; }
 
-  .trainer-name, .trainer-role { display: none; }
-  .trainer-badge { padding: 4px 8px 4px 6px; }
+  .header-nav a{
+    flex-shrink:0;
+  }
 
-  .page-title { font-size: 1.25rem; }
-  .page-header { flex-direction: column; align-items: flex-start; }
-
-  .stat-card { padding: 14px; }
-  .stat-val { font-size: 1.5rem; }
-
-  .session-card { flex-wrap: wrap; gap: 10px; }
-  .session-right { text-align: left !important; }
-
-  .week-grid { min-width: 500px; }
-
-  .footer-inner { gap: 30px; padding: 20px 24px; }
 }
 
-/* ══ SMALL MOBILE 480px ══ */
-@media (max-width: 480px) {
-  .content-area { padding: 12px; }
-  .card-clubly { padding: 14px; border-radius: 10px; }
-  .logo-text { font-size: 1.1rem; }
-  .btn-signout { padding: 6px 12px; font-size: .8rem; }
-  .modal-body-cl { padding: 16px; }
-  .tbl-wrap { font-size: .78rem; }
+    /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+
+
+    .layout-body{
+  flex-direction:column;
 }
 
-/* ══ VERY SMALL 360px ══ */
-@media (max-width: 360px) {
-  .logo-text { display: none; }
-  .btn-signout { display: none; }
+  .clubly-header{
+    padding: 0 10px;
+    min-height: var(--header-h);
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    overflow: visible;
+  }
+
+  .header-logo{
+    min-width: fit-content;
+    flex-shrink: 0;
+    gap: 4px;
+
+    order: 2;
+  }
+
+  .logo-icon{
+    font-size: 22px;
+  }
+
+  .logo-text{
+    font-size: 1.1rem;
+  }
+
+  /* زرار السايد بار */
+.hamburger-btn{
+  /* display:flex !important; */
+  display:flex;
+  width:38px;
+  height:38px;
+
+  border:none;
+  border-radius:10px;
+
+  background:rgba(255,255,255,.08);
+
+  color:#fff;
+
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+  order:1;
+
+  flex-shrink:0;
+}
+
+.hamburger-btn:hover{
+  background:rgba(255,255,255,.15);
+}
+
+  /* الناف بار السكرول */
+  .header-nav{
+
+    display: flex !important;
+
+    order: 3;
+
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    white-space: nowrap;
+    flex-wrap: nowrap;
+
+    gap: 4px;
+
+    padding: 8px 0 10px;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .header-nav::-webkit-scrollbar{
+    display: none;
+  }
+
+  .header-nav a{
+    flex-shrink: 0;
+
+    font-size: .78rem;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: rgba(255,255,255,.06);
+  }
+
+  /* الجرس + الدارك مود */
+  .header-actions{
+
+    order: 4;
+
+    margin-left: auto;
+
+    gap: 6px;
+
+    flex-shrink: 0;
+  }
+
+  .header-user{
+    display: none;
+  }
+
+  .btn-theme-header{
+    width: 34px;
+    height: 34px;
+
+    font-size: 14px;
+  }
+
+  .btn-signout{
+    display: none;
+  }
+
+  /* السايد بار */
+.sidebar{
+  position: fixed;
+
+  top: var(--header-h);
+  left: 0;
+
+  width: var(--sidebar-w);
+  height: calc(100vh - var(--header-h));
+
+  transform: translateX(-100%);
+  transition: transform .3s ease;
+
+  z-index: 2000;
+}
+
+/* لما يفتح */
+.sidebar.open{
+  transform: translateX(0);
+}
+
+.content-area > *{
+  width:100%;
+  max-width:100%;
+}
+
+.content-area{
+  width:100%;
+
+  padding:16px;
+
+  margin:0;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.content-area > *{
+  width:100%;
+  max-width:100%;
+}
+
+  .page-title-clubly{
+    font-size: 1.3rem;
+  }
+
+  .page-header-clubly{
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .upgrade-banner{
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 20px;
+  }
+
+  .upgrade-banner-btn{
+    width: 100%;
+
+    justify-content: center;
+  }
+
 }
 
 /* ── Dark Mode: inline color overrides ─────────────────── */
@@ -909,9 +1075,9 @@ img{
 
 <!-- ======= HEADER ======= -->
 <header class="clubly-header">
-  <button class="toggle-btn" id="toggleBtn" title="Toggle Sidebar">
+  <!-- <button class="toggle-btn" id="toggleBtn" title="Toggle Sidebar">
     <i class="bi bi-list"></i>
-  </button>
+  </button> -->
   <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileSidebar()">
   <i class="bi bi-list"></i>
 </button>
@@ -2053,12 +2219,12 @@ function getInitials(name) {
 }
 
 // ===== SIDEBAR TOGGLE =====
-let sidebarOpen = true;
-document.getElementById('toggleBtn').addEventListener('click', () => {
-  sidebarOpen = !sidebarOpen;
-  document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
-  document.getElementById('contentArea').classList.toggle('expanded', !sidebarOpen);
-});
+// let sidebarOpen = true;
+// document.getElementById('toggleBtn').addEventListener('click', () => {
+//   sidebarOpen = !sidebarOpen;
+//   document.getElementById('sidebar').classList.toggle('collapsed', !sidebarOpen);
+//   document.getElementById('contentArea').classList.toggle('expanded', !sidebarOpen);
+// });
 
 // ===== THEME =====
 let dark = localStorage.getItem('clubly-theme') === 'dark';
