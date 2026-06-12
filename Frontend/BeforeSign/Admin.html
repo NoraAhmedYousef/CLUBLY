@@ -1269,6 +1269,7 @@ input[type="file"]:lang(ar)::before {
 /* Scrollbars */
 [data-theme="dark"] ::-webkit-scrollbar-track { background: var(--bg); }
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
 </style>
 </head>
 <body>
@@ -1278,9 +1279,7 @@ input[type="file"]:lang(ar)::before {
   <button class="toggle-sidebar-btn me-2" onclick="toggleSidebar()" title="Toggle Sidebar">
     <i class="bi bi-list"></i>
   </button>
-<button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileSidebar()">
-  <i class="bi bi-list"></i>
-</button>
+
   <a class="header-logo" href="#">
     <i class="bi bi-lightning-charge-fill logo-icon"></i>
     <span class="logo-text">Cl<span>u</span>bly</span>
@@ -3407,6 +3406,11 @@ input[type="file"]:lang(ar)::before {
   <i class="bi bi-building me-1"></i><span data-i18n="booking_tab_guest_fac">Guest Facility Bookings</span>
   </button>
 </li>
+<li class="nav-item">
+<button class="nav-link" onclick="switchBookingTab('renewals')">
+  <i class="bi bi-arrow-repeat me-1"></i><span data-i18n="booking_tab_renewals">Membership Renewals</span>
+</button>
+</li>
 </ul>
 <!-- فلاتر الحالة -->
 <div class="notif-tabs mb-3" id="adminBookingStatusTabs">
@@ -3526,6 +3530,32 @@ input[type="file"]:lang(ar)::before {
     </div>
   </div>
 </div><!-- end tab-facility-bookings -->
+<!-- Membership Renewal Requests Table -->
+<div id="tab-renewals-bookings" style="display:none">
+  <div class="card p-3">
+    <div class="table-responsive" style="overflow-x:auto;">
+      <table class="table table-hover align-middle" style="min-width:1600px;font-size:.82rem;">
+        <thead style="background:var(--table-head)">
+          <tr>
+            <th data-i18n="booking_col_num">#</th>
+            <th data-i18n="booking_col_membership">Membership #</th>
+            <th data-i18n="booking_col_member">Member</th>
+            <th data-i18n="renewal_col_plan">Requested Plan</th>
+            <th data-i18n="renewal_col_duration">Duration</th>
+            <th data-i18n="booking_col_price">Price</th>
+            <th data-i18n="booking_col_payment">Payment Method</th>
+            <th data-i18n="booking_col_transaction">Transaction ID</th>
+            <th data-i18n="booking_col_receipt">Receipt</th>
+            <th data-i18n="renewal_col_request_date">Request Date</th>
+            <th data-i18n="booking_col_status">Status</th>
+            <th data-i18n="booking_col_actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="renewalBookingsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- end tab-renewals-bookings -->
 </div><!-- end page-bookings -->
 
     <!-- =============================== Admins =============================== -->
@@ -7562,17 +7592,18 @@ function switchBookingTab(tab) {
   document.getElementById('tab-facility-bookings').style.display      = tab === 'facility'      ? '' : 'none';
   document.getElementById('tab-guest-bookings').style.display         = tab === 'guest'         ? '' : 'none';
   document.getElementById('tab-guestfacility-bookings').style.display = tab === 'guestfacility' ? '' : 'none';
+  document.getElementById('tab-renewals-bookings').style.display      = tab === 'renewals'      ? '' : 'none';
 
   document.querySelectorAll('#bookingTabs .nav-link').forEach((btn, i) => {
     btn.classList.toggle('active',
       (tab === 'activity'      && i === 0) ||
       (tab === 'facility'      && i === 1) ||
       (tab === 'guest'         && i === 2) ||
-      (tab === 'guestfacility' && i === 3)
+      (tab === 'guestfacility' && i === 3) ||
+      (tab === 'renewals'      && i === 4)
     );
   });
 
-  // Reset filter tabs
   document.querySelectorAll('#adminBookingStatusTabs .notif-tab').forEach(b => b.classList.remove('active'));
   document.querySelector('#adminBookingStatusTabs .notif-tab')?.classList.add('active');
 
@@ -7608,7 +7639,11 @@ function applyAdminBookingFilter() {
     const filtered = s === 'all' ? _adminAllGuestFac
       : _adminAllGuestFac.filter(b => (b.status || '').toLowerCase() === s);
     renderAdminGuestFacTable(filtered);
-  }
+  } else if (_adminCurrentTab === 'renewals') {
+  const filtered = s === 'all' ? _adminAllRenewals
+    : _adminAllRenewals.filter(b => (b.status || '').toLowerCase() === s);
+  renderAdminRenewalsTable(filtered);
+}
 }
 // ===== BOOKING FILTER STATE =====
 let _adminCurrentTab    = 'activity';
@@ -7617,6 +7652,8 @@ let _adminAllActivity   = [];
 let _adminAllFacility   = [];
 let _adminAllGuestAct   = [];
 let _adminAllGuestFac   = [];
+let _adminAllRenewals = [];
+
 async function loadBookings() {
   const membershipSearch = (document.getElementById('searchMembership')?.value || '').trim();
 
@@ -7643,6 +7680,14 @@ async function loadBookings() {
     _adminAllGuestFac = membershipSearch ? []
       : all.filter(b => b.memberId == null);
   } catch { _adminAllFacility = []; _adminAllGuestFac = []; }
+  // Membership Renewal Requests
+try {
+  const res = await fetch(`${API}/MembershipRenewals`);
+  const all = await res.json();
+  _adminAllRenewals = membershipSearch
+    ? all.filter(b => String(b.memberShipNumber || '').includes(membershipSearch))
+    : all;
+} catch { _adminAllRenewals = []; }
   applyAdminBookingFilter();
 }
 
@@ -7743,6 +7788,75 @@ function renderAdminGuestFacTable(data) {
         <td class="sticky-col">${getActionButtons(b.id, b.status, 'facility')}</td>
       </tr>`).join('')
     : '<tr><td colspan="12" class="text-center text-muted py-4">No bookings found</td></tr>';
+}
+function renderAdminRenewalsTable(data) {
+  const T = CLUBLY_TRANSLATIONS[clublyGetLang()];
+  document.getElementById('renewalBookingsBody').innerHTML = data.length
+    ? data.map((b, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td>${b.memberShipNumber || '—'}</td>
+        <td>${b.memberName}</td>
+        <td>${b.memberShipName}</td>
+        <td>${b.memberShipDuration} ${T.renewal_days || 'days'}</td>
+        <td>${b.price} EGP</td>
+        <td>${b.paymentMethod ? `<span class="badge bg-info text-dark">${b.paymentMethod}</span>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.transactionId ? `<code style="font-size:.8rem;background:var(--table-head);padding:2px 6px;border-radius:4px;">${b.transactionId}</code>` : '<span class="text-muted small">—</span>'}</td>
+        <td>${b.receiptImageUrl ? `<a href="https://clublywebsite.runasp.net${b.receiptImageUrl}" target="_blank"><img src="https://clublywebsite.runasp.net${b.receiptImageUrl}" style="width:50px;height:40px;object-fit:cover;border-radius:6px;cursor:pointer;"></a>` : `<span class="text-muted small">${T.no_receipt}</span>`}</td>
+        <td>${b.requestDate ? new Date(b.requestDate).toLocaleDateString() : '—'}</td>
+        <td>${getRenewalStatusBadge(b.status)}</td>
+        <td>${getRenewalActionButtons(b.id, b.status)}</td>
+      </tr>`).join('')
+    : `<tr><td colspan="12" class="text-center text-muted py-4">${T.booking_no_bookings}</td></tr>`;
+}
+
+function getRenewalStatusBadge(status) {
+  const T = CLUBLY_TRANSLATIONS[clublyGetLang()];
+  const s = (status || '').toLowerCase();
+  if (s === 'pending')  return `<span class="badge bg-warning text-dark">${T.booking_status_pending}</span>`;
+  if (s === 'approved') return `<span class="badge bg-success">${T.booking_status_approved}</span>`;
+  if (s === 'rejected') return `<span class="badge bg-danger">${T.renewal_status_rejected || 'Rejected'}</span>`;
+  return `<span class="badge bg-secondary">${T.booking_status_unknown}</span>`;
+}
+
+function getRenewalActionButtons(id, status) {
+  const T = CLUBLY_TRANSLATIONS[clublyGetLang()];
+  if ((status || '').toLowerCase() !== 'pending')
+    return `<span class="text-muted small">${T.no_actions}</span>`;
+  return `
+    <button class="btn btn-sm btn-success me-1" onclick="updateRenewal(${id},'approve')">
+      <i class="bi bi-check-lg"></i> ${T.booking_btn_approve}
+    </button>
+    <button class="btn btn-sm btn-danger" onclick="updateRenewal(${id},'reject')">
+      <i class="bi bi-x-lg"></i> ${T.renewal_btn_reject || 'Reject'}
+    </button>`;
+}
+
+async function updateRenewal(id, action) {
+  const T = CLUBLY_TRANSLATIONS[clublyGetLang()];
+  const confirmed = await Swal.fire({
+    title: action === 'approve' ? T.swal_approve_title : T.swal_cancel_booking_title,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: action === 'approve' ? '#22c55e' : '#ef4444',
+    confirmButtonText: action === 'approve' ? T.swal_yes_approve : T.swal_yes_cancel
+  });
+  if (!confirmed.isConfirmed) return;
+
+  const status = action === 'approve' ? 'Approved' : 'Rejected';
+
+  try {
+    const res = await fetch(`${API}/MembershipRenewals/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+    if (!res.ok) throw new Error();
+    Swal.fire({ title: 'Done!', icon: 'success', timer: 1200, showConfirmButton: false });
+    loadBookings();
+  } catch {
+    Swal.fire('Error', 'Something went wrong!', 'error');
+  }
 }
 // ─────────────────────────────────────────────────
 function getStatusBadge(status) {

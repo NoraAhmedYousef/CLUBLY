@@ -1224,13 +1224,11 @@ async function authHandleForgot() {
   if (!ok) return;
 
   const typedEmail = document.getElementById('fpEmail').value.trim().toLowerCase();
-  const savedEmail = (localStorage.getItem('email') || '').toLowerCase();
-
-  if (savedEmail && typedEmail !== savedEmail) {
-    const errEl = document.getElementById('fpEmailErr');
-    errEl.textContent = '⚠ This email does not match your registered account';
-    errEl.style.display = 'block';
-    return;
+  
+  // ── تحقق من الإيميل المكتوب في Sign In فقط لو فيه قيمة ──
+  const siEmail = document.getElementById('siEmail')?.value.trim().toLowerCase();
+  if (siEmail && typedEmail !== siEmail) {
+    return authSetField('fpEmail', 'fpEmailErr', false, 'Email does not match the one you entered on Sign In');
   }
 
   const btn = document.getElementById('fpSendBtn');

@@ -3157,7 +3157,7 @@
                   <div class="membership-value" id="mem-id">CBM-7890</div>
                 </div>
               </div>
-            <button class="renew-btn-clubly" data-bs-toggle="modal" data-bs-target="#renewModal" data-i18n="mb_renew_btn">Renew Membership</button>
+<button class="renew-btn-clubly" onclick="openRenewModal()" data-i18n="mb_renew_btn">Renew Membership</button>
             </div>
 
             <div class="content-card">
@@ -3165,14 +3165,25 @@
               <div id="benefitsList"></div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <div class="content-card">
-<div class="card-title-clubly" data-i18n="mb_payment_history">Payment History</div>
-              <div id="paymentList"></div>
-              <div class="text-center mt-3">
-              </div>
-            </div>
-          </div>
+      <div class="col-lg-4">
+  <div class="content-card">
+    <div class="card-title-clubly" data-i18n="mb_payment_history">Payment History</div>
+    <div id="paymentList"></div>
+  </div>
+
+  <!-- Renewal Requests History -->
+  <div class="content-card mt-3">
+    <div class="card-title-clubly">
+      <i class="bi bi-arrow-repeat me-2" style="color:var(--clubly-accent);"></i>
+      Renewal Requests
+    </div>
+    <div id="renewalHistoryList">
+      <div class="text-center py-3" style="color:var(--muted);">
+        <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+      </div>
+    </div>
+  </div>
+</div>
         </div>
       </div>
       <!-- ======== PAGE: NOTIFICATIONS ======== -->
@@ -3832,24 +3843,86 @@
       Service</div>
   </footer>
   <!-- ===== RENEW MODAL ===== -->
+<!-- ===== RENEW MODAL ===== -->
   <div class="modal fade" id="renewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-content-clubly">
         <div class="modal-header-clubly">
-<h5 style="font-weight:800; color:var(--text);" data-i18n="mb_renew_title">Renew Membership</h5>        </div>
+<h5 style="font-weight:800; color:var(--text);" id="renewModalTitle" data-i18n="mb_renew_title">Renew Membership</h5>        </div>
         <div class="modal-body-clubly">
-          <p style="color:var(--muted); margin-bottom:16px;">Select your renewal period for <strong
-              id="renewTierName">Platinum Tier</strong>:</p>
-          <!-- بعد -->
-          <div id="renewPlansList">
-            <div class="text-center py-3" style="color:var(--muted);">
-              <i class="bi bi-arrow-repeat"></i> Loading plans...
+
+          <!-- STEP 1: choose plan -->
+          <div id="renewStep1">
+            <p style="color:var(--muted); margin-bottom:16px;">Select your renewal period for <strong
+                id="renewTierName">Platinum Tier</strong>:</p>
+            <div id="renewPlansList">
+              <div class="text-center py-3" style="color:var(--muted);">
+                <i class="bi bi-arrow-repeat"></i> Loading plans...
+              </div>
             </div>
           </div>
+
+          <!-- STEP 2: payment -->
+          <div id="renewStep2" style="display:none;">
+            <div class="bp-pay-info" style="background:var(--bg);border:1px solid var(--border);
+                 border-radius:10px;padding:12px 14px;margin-bottom:14px;">
+              <div style="display:flex;justify-content:space-between;font-size:.88rem;margin-bottom:4px;">
+                <span style="color:var(--muted);">Plan:</span>
+                <strong id="renewPaySummaryPlan" style="color:var(--text);">—</strong>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:.88rem;">
+                <span style="color:var(--muted);">Total Price:</span>
+                <strong id="renewPaySummaryPrice" style="color:var(--clubly-accent);">—</strong>
+              </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="d-flex gap-2 mb-3">
+              <button type="button" class="btn-cancel flex-1" id="renewTabI"
+                style="border-color:var(--clubly-accent);color:var(--clubly-accent);font-weight:700;"
+                onclick="renewSwitchTab('I')">InstaPay</button>
+              <button type="button" class="btn-cancel flex-1" id="renewTabW"
+                onclick="renewSwitchTab('W')">E-Wallets</button>
+            </div>
+
+            <div id="renewPanelI">
+              <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);
+                   border-radius:8px;padding:10px;font-size:.85rem;color:#3b82f6;margin-bottom:12px;">
+                📱 Receiver InstaPay Number: <strong>01012345678</strong><br>
+                🏦 Receiver Account: <strong>clubly@instapay</strong>
+              </div>
+            </div>
+            <div id="renewPanelW" style="display:none;">
+              <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);
+                   border-radius:8px;padding:10px;font-size:.85rem;color:#16a34a;margin-bottom:12px;">
+                📱 Vodafone Cash: <strong>01012345678</strong><br>
+                📱 Orange Cash: <strong>01112345678</strong><br>
+                📱 Etisalat Cash: <strong>01512345678</strong>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label-clubly">Transaction ID</label>
+              <input class="form-control-clubly" id="renewTxId" placeholder="Transaction ID">
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label-clubly">Upload Receipt <span style="color:#e53e3e">*</span></label>
+              <label for="renewReceiptFile" style="display:flex;align-items:center;justify-content:center;
+                   gap:8px;border:2px dashed var(--border);border-radius:10px;padding:18px;
+                   cursor:pointer;color:var(--muted);font-size:.88rem;" id="renewUploadLabel">
+                <i class="bi bi-paperclip"></i>
+                <span id="renewUploadText">Click to upload receipt</span>
+              </label>
+              <input type="file" id="renewReceiptFile" accept="image/*,application/pdf" style="display:none;">
+            </div>
+          </div>
+
           <div id="renewMsg" class="mt-3"></div>
         </div>
         <div class="modal-footer-clubly">
      <button class="btn-cancel" data-bs-dismiss="modal" data-i18n="signout_btn_cancel">Cancel</button>
+          <button class="btn-cancel" id="renewBackBtn" style="display:none;" onclick="renewBackToStep1()">← Back</button>
           <button class="btn-clubly-primary" id="confirmRenewBtn" data-i18n="bp_proceed">Proceed to Payment</button>
         </div>
       </div>
@@ -4080,6 +4153,7 @@ if (hamburgerBtn && sidebar) {
           document.getElementById('mem-tier').textContent = m.membershipName;
           document.getElementById('renewTierName').textContent = m.membershipName;
           state.membership.tier = m.membershipName;
+          state.membership.planId = m.memberShipId ?? null;
         }
         if (m.memberShipNumber) {
           document.getElementById('mem-id').textContent = 'CBM-' + m.memberShipNumber;
@@ -4161,10 +4235,62 @@ if (hamburgerBtn && sidebar) {
               });
 
             // ── Status بناءً على التاريخ ──
-            const isActive = expiry > new Date();
-            const statusEl = document.getElementById('mem-status');
-            statusEl.textContent = isActive ? 'Active' : 'Expired';
-            statusEl.style.color = isActive ? '#22c55e' : '#ef4444';
+      // ── Status بناءً على التاريخ ──
+const now = new Date();
+const daysLeft = Math.ceil((expiry - now) / 86400000);
+const isActive = expiry > now;
+const statusEl = document.getElementById('mem-status');
+statusEl.textContent = isActive ? 'Active' : 'Expired';
+statusEl.style.color = isActive ? '#22c55e' : '#ef4444';
+
+// ── إظهار أو إخفاء زرار التجديد ──
+// ── إظهار أو إخفاء زرار التجديد ──
+const renewBtn = document.querySelector('.renew-btn-clubly');
+if (renewBtn) {
+  if (daysLeft <= 7) {
+    // تحقق هل فيه pending request
+    try {
+      const rRes = await fetch(`${API_BASE_URL}/MembershipRenewals/by-member/${memberId}`);
+      if (rRes.ok) {
+        const requests = await rRes.json();
+        const hasPending = requests.some(r => r.status === 'Pending');
+        if (hasPending) {
+          renewBtn.style.display = 'none';
+          // أظهر رسالة الانتظار
+          const existing = document.getElementById('renewPendingMsg');
+          if (!existing) {
+            const msg = document.createElement('div');
+            msg.id = 'renewPendingMsg';
+            msg.innerHTML = `
+              <div style="margin-top:14px;background:rgba(245,158,11,.1);
+                          border:1px solid rgba(245,158,11,.4);border-radius:10px;
+                          padding:12px 16px;display:flex;align-items:center;gap:10px;">
+                <span style="font-size:1.2rem;">⏳</span>
+                <div>
+                  <div style="font-weight:700;color:#f59e0b;font-size:.9rem;">
+                    Renewal Request Pending
+                  </div>
+                  <div style="font-size:.8rem;color:rgba(255,255,255,.7);margin-top:2px;">
+                    Your renewal request is awaiting admin approval.
+                  </div>
+                </div>
+              </div>`;
+            renewBtn.parentNode.insertBefore(msg, renewBtn.nextSibling);
+          }
+        } else {
+          renewBtn.style.display = '';
+          renewBtn.textContent = daysLeft <= 0
+            ? 'Renew Membership — Expired'
+            : `Renew Membership (${daysLeft} days left)`;
+        }
+      }
+    } catch {
+      renewBtn.style.display = '';
+    }
+  } else {
+    renewBtn.style.display = 'none';
+  }
+}
           }
 
           // ── Benefits من description ──
@@ -4208,31 +4334,33 @@ if (hamburgerBtn && sidebar) {
         console.warn('Could not load membership data:', e);
       }
     }
-    async function loadRenewPlans(currentPlanId) {
+async function loadRenewPlans(currentPlanId) {
       const container = document.getElementById('renewPlansList');
       try {
         const res = await fetch(`${API_BASE_URL}/MemberShips`);
         if (!res.ok) throw new Error();
         const plans = await res.json();
 
-        const activePlans = plans.filter(p => p.status === 'Active');
+       const memberPlan = currentPlanId
+          ? plans.find(p => p.id === currentPlanId && p.status === 'Active')
+          : plans.find(p => p.status === 'Active');
 
-        if (!activePlans.length) {
+        if (!memberPlan) {
           container.innerHTML = '<p style="color:var(--muted);font-size:.88rem;">No plans available.</p>';
           return;
         }
 
-        container.innerHTML = activePlans.map((p, i) => `
+        const activePlans = [memberPlan];
+
+        container.innerHTML = activePlans.map((p) => `
       <label class="radio-option">
         <input type="radio" name="renewPlan" value="${p.id}"
                data-name="${p.name}" data-price="${p.price}" data-duration="${p.duration}"
-               ${p.id === currentPlanId || i === 0 ? 'checked' : ''}>
+               checked>
         <div>
           <div style="font-weight:700; color:var(--text);">
             ${p.name} — ${p.price} EGP
-            ${p.id === currentPlanId
-            ? '<span style="background:rgba(232,93,47,.1);color:var(--clubly-accent);padding:2px 8px;border-radius:10px;font-size:.75rem;margin-left:8px;">Current</span>'
-            : ''}
+            <span style="background:rgba(232,93,47,.1);color:var(--clubly-accent);padding:2px 8px;border-radius:10px;font-size:.75rem;margin-left:8px;">Current</span>
           </div>
           <div style="font-size:.8rem; color:var(--muted);">
             ${p.duration} month${p.duration > 1 ? 's' : ''}
@@ -4244,6 +4372,43 @@ if (hamburgerBtn && sidebar) {
       } catch (e) {
         container.innerHTML = '<p style="color:#ef4444;font-size:.88rem;">Failed to load plans.</p>';
       }
+    }
+
+    // ===== RENEW MODAL — STEP 2 (PAYMENT) HELPERS =====
+    let _renewPaymentMethod = 'InstaPay';
+    let _renewReceiptFile = null;
+
+    function renewSwitchTab(suf) {
+      _renewPaymentMethod = suf === 'I' ? 'InstaPay' : 'EWallet';
+      document.getElementById('renewPanelI').style.display = suf === 'I' ? '' : 'none';
+      document.getElementById('renewPanelW').style.display = suf === 'W' ? '' : 'none';
+
+      const tabI = document.getElementById('renewTabI');
+      const tabW = document.getElementById('renewTabW');
+      if (suf === 'I') {
+        tabI.style.borderColor = 'var(--clubly-accent)'; tabI.style.color = 'var(--clubly-accent)'; tabI.style.fontWeight = '700';
+        tabW.style.borderColor = 'var(--border)'; tabW.style.color = 'var(--text)'; tabW.style.fontWeight = '600';
+      } else {
+        tabW.style.borderColor = 'var(--clubly-accent)'; tabW.style.color = 'var(--clubly-accent)'; tabW.style.fontWeight = '700';
+        tabI.style.borderColor = 'var(--border)'; tabI.style.color = 'var(--text)'; tabI.style.fontWeight = '600';
+      }
+    }
+
+    document.getElementById('renewReceiptFile').addEventListener('change', function () {
+      if (this.files && this.files[0]) {
+        _renewReceiptFile = this.files[0];
+        document.getElementById('renewUploadText').textContent = '✅ ' + this.files[0].name;
+        document.getElementById('renewUploadLabel').style.borderColor = '#22c55e';
+        document.getElementById('renewUploadLabel').style.color = '#22c55e';
+      }
+    });
+
+    function renewBackToStep1() {
+      document.getElementById('renewStep1').style.display = '';
+      document.getElementById('renewStep2').style.display = 'none';
+      document.getElementById('renewBackBtn').style.display = 'none';
+      document.getElementById('confirmRenewBtn').textContent = 'Proceed to Payment';
+      document.getElementById('renewMsg').innerHTML = '';
     }
     async function loadMemberBookings() {
       if (!memberId) return;
@@ -4522,14 +4687,75 @@ if (hamburgerBtn && sidebar) {
     </div>
   `).join('');
     }
-    document.getElementById('confirmRenewBtn').addEventListener('click', () => {
+function openRenewModal() {
+  // reset step 1
+  document.getElementById('renewStep1').style.display = '';
+  document.getElementById('renewStep2').style.display = 'none';
+  document.getElementById('renewBackBtn').style.display = 'none';
+  document.getElementById('confirmRenewBtn').textContent = 'Proceed to Payment';
+
+  document.getElementById('renewPlansList').innerHTML =
+    '<div class="text-center py-3" style="color:var(--muted);"><i class="bi bi-arrow-repeat"></i> Loading plans...</div>';
+  document.getElementById('renewMsg').innerHTML = '';
+
+  // reset step 2
+  document.getElementById('renewTxId').value = '';
+  document.getElementById('renewReceiptFile').value = '';
+  document.getElementById('renewUploadText').textContent = 'Click to upload receipt';
+  document.getElementById('renewUploadLabel').style.borderColor = 'var(--border)';
+  document.getElementById('renewUploadLabel').style.color = 'var(--muted)';
+  _renewReceiptFile = null;
+  renewSwitchTab('I');
+
+  const currentPlanId = state.membership?.planId ?? null;
+  loadRenewPlans(currentPlanId);
+
+  bootstrap.Modal.getOrCreateInstance(document.getElementById('renewModal')).show();
+}
+   document.getElementById('confirmRenewBtn').addEventListener('click', async () => {
+      const msg = document.getElementById('renewMsg');
+      msg.innerHTML = '';
+
+      // ===== STEP 1 -> STEP 2: move to payment screen =====
+      if (document.getElementById('renewStep1').style.display !== 'none') {
+        const selected = document.querySelector('input[name="renewPlan"]:checked');
+        if (!selected) return;
+
+        document.getElementById('renewPaySummaryPlan').textContent =
+          `${selected.dataset.name} (${selected.dataset.duration} month${selected.dataset.duration > 1 ? 's' : ''})`;
+        document.getElementById('renewPaySummaryPrice').textContent = `${selected.dataset.price} EGP`;
+
+        document.getElementById('renewStep1').style.display = 'none';
+        document.getElementById('renewStep2').style.display = '';
+        document.getElementById('renewBackBtn').style.display = '';
+        document.getElementById('confirmRenewBtn').textContent = 'Complete Payment';
+        return;
+      }
+
+      // ===== STEP 2: submit renewal request =====
       const selected = document.querySelector('input[name="renewPlan"]:checked');
       if (!selected) return;
 
+      const txId = document.getElementById('renewTxId').value.trim();
       const planName = selected.dataset.name;
-      const planPrice = selected.dataset.price;
-      const planDuration = selected.dataset.duration;
-      const msg = document.getElementById('renewMsg');
+      const planId = selected.value;
+
+      if (!txId) {
+        msg.innerHTML = `<div style="background:rgba(239,68,68,.1);border:1px solid #ef4444;border-radius:8px;padding:10px;color:#ef4444;font-size:.85rem;">⚠ Please enter the Transaction ID.</div>`;
+        return;
+      }
+      if (!_renewReceiptFile) {
+        msg.innerHTML = `<div style="background:rgba(239,68,68,.1);border:1px solid #ef4444;border-radius:8px;padding:10px;color:#ef4444;font-size:.85rem;">⚠ Please upload the receipt.</div>`;
+        return;
+      }
+      if (!memberId) {
+        msg.innerHTML = `<div style="background:rgba(239,68,68,.1);border:1px solid #ef4444;border-radius:8px;padding:10px;color:#ef4444;font-size:.85rem;">⚠ Please sign in first.</div>`;
+        return;
+      }
+
+      const btn = document.getElementById('confirmRenewBtn');
+      btn.disabled = true;
+      btn.textContent = '⏳ Processing…';
 
       msg.innerHTML = `
     <div style="background:rgba(59,130,246,.1);border:1px solid #3b82f6;
@@ -4537,17 +4763,45 @@ if (hamburgerBtn && sidebar) {
       Processing renewal for <strong>${planName}</strong>...
     </div>`;
 
-      setTimeout(() => {
+      try {
+        const fd = new FormData();
+        fd.append('memberId', memberId);
+        fd.append('memberShipId', planId);
+        fd.append('paymentMethod', _renewPaymentMethod);
+        fd.append('transactionId', txId);
+        fd.append('receiptImage', _renewReceiptFile);
+
+        const res = await fetch(`${API_BASE_URL}/MembershipRenewals`, {
+          method: 'POST',
+          body: fd
+        });
+
+        if (!res.ok) {
+          const err = await res.text();
+          msg.innerHTML = `<div style="background:rgba(239,68,68,.1);border:1px solid #ef4444;border-radius:8px;padding:10px;color:#ef4444;font-size:.85rem;">${err || 'Renewal request failed.'}</div>`;
+          btn.disabled = false;
+          btn.textContent = 'Complete Payment';
+          return;
+        }
+
         msg.innerHTML = `
       <div style="background:rgba(34,197,94,.1);border:1px solid #22c55e;
                   border-radius:8px;padding:10px;color:#16a34a;font-size:.85rem;">
-        ✓ Renewal request submitted for <strong>${planName}</strong> — ${planPrice} EGP
+        ✓ Renewal request submitted for <strong>${planName}</strong> — pending approval.
       </div>`;
+
         setTimeout(() => {
           bootstrap.Modal.getInstance(document.getElementById('renewModal')).hide();
           msg.innerHTML = '';
+          btn.disabled = false;
+          btn.textContent = 'Proceed to Payment';
         }, 2000);
-      }, 1500);
+
+      } catch (e) {
+        msg.innerHTML = `<div style="background:rgba(239,68,68,.1);border:1px solid #ef4444;border-radius:8px;padding:10px;color:#ef4444;font-size:.85rem;">Connection error. Please try again.</div>`;
+        btn.disabled = false;
+        btn.textContent = 'Complete Payment';
+      }
     });
 
     // ===================================================
@@ -4560,8 +4814,63 @@ if (hamburgerBtn && sidebar) {
     let _memberNotifPage = 1;
     const _memberNotifPageSize = 8;
 
+async function loadRenewalHistory() {
+  if (!memberId) return;
+  const el = document.getElementById('renewalHistoryList');
+  if (!el) return;
 
+  try {
+    const res = await fetch(`${API_BASE_URL}/MembershipRenewals/by-member/${memberId}`);
+    if (!res.ok) throw new Error();
+    const requests = await res.json();
 
+    if (!requests.length) {
+      el.innerHTML = `
+        <div style="text-align:center;padding:20px;color:var(--muted);font-size:.85rem;">
+          <i class="bi bi-inbox" style="font-size:2rem;opacity:.3;display:block;margin-bottom:8px;"></i>
+          No renewal requests yet.
+        </div>`;
+      return;
+    }
+
+    const statusConfig = {
+      'Pending':  { cls: 'badge-pending',   icon: 'bi-clock-history',      color: '#f59e0b' },
+      'Approved': { cls: 'badge-confirmed',  icon: 'bi-check-circle-fill',  color: '#22c55e' },
+      'Rejected': { cls: 'badge-completed',  icon: 'bi-x-circle-fill',      color: '#ef4444' },
+    };
+
+    el.innerHTML = requests.map(r => {
+      const cfg = statusConfig[r.status] || statusConfig['Pending'];
+      const date = r.requestDate
+        ? new Date(r.requestDate).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' })
+        : '—';
+      return `
+        <div style="padding:12px 0;border-bottom:1px solid var(--border);display:flex;
+                    align-items:center;gap:12px;">
+          <div style="width:38px;height:38px;border-radius:10px;flex-shrink:0;
+                      background:rgba(232,93,47,.1);color:var(--clubly-accent);
+                      display:flex;align-items:center;justify-content:center;">
+            <i class="bi bi-arrow-repeat"></i>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:.88rem;color:var(--text);">
+              ${r.memberShipName || '—'}
+            </div>
+            <div style="font-size:.75rem;color:var(--muted);margin-top:2px;">
+              ${date} · ${r.price ?? '—'} EGP
+            </div>
+          </div>
+          <span class="sched-badge ${cfg.cls}" style="font-size:.75rem;flex-shrink:0;">
+            <i class="bi ${cfg.icon} me-1"></i>${r.status}
+          </span>
+        </div>`;
+    }).join('');
+
+  } catch {
+    el.innerHTML = `<div style="color:#ef4444;font-size:.85rem;padding:10px;">Failed to load.</div>`;
+  }
+}
+        loadRenewalHistory();
     // وفي أول استخدام، حمّلها
     async function markMemberAsRead(id) {
       const notif = _memberNotifs.find(n => n.id === id);
@@ -6204,7 +6513,6 @@ function toggleSidebar() {
 // ===== INIT =====
 generateCalendar();
     renderUpcoming();
-    renderSchedule();
     renderMembership();
     // تهيئة الـ Sports AI Chat عشان يحمّل الـ history من أول ما الصفحة تفتح
     initSportsChat();

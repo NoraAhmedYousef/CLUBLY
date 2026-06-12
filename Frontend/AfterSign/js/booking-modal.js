@@ -157,7 +157,32 @@
   /* ══════════════════════════════════════════════════════════════════════════
      PUBLIC API
   ══════════════════════════════════════════════════════════════════════════ */
+  function showBpToast(msg) {
+  let t = document.getElementById('bpToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'bpToast';
+  t.style.cssText = `
+  position:fixed;top:80px;left:50%;transform:translateX(-50%);
+  background:#fff8f8;color:#e53e3e;border:1.5px solid #fecaca;
+  padding:13px 22px;border-radius:14px;
+  font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:999999;
+  opacity:0;transition:opacity .3s;text-align:center;max-width:90%;
+`;
+    document.body.appendChild(t);
+  }
+  t.textContent = '⚠ ' + msg;
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.style.opacity = '0', 3000);
+}
 window.openBookingModal = function (type, id, name, slotPrice = 0, slots = [], trainerGroups = [], scheduleId = 0) {
+  const userRole = (localStorage.getItem('role') || 'guest').toLowerCase();
+  if (userRole === 'admin' || userRole === 'trainer') {
+  showBpToast(window.T?.bp_err_not_allowed || 'Booking is available for members and guests only.');
+return;
+  }
   ensureModal();
   _ctx = { type, id, name, slotPrice, slots, trainerGroups, scheduleId };
     _formData = {};
