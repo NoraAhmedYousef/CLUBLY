@@ -10,7 +10,7 @@ async function loadFacilities() {
   container.innerHTML = `
     <div class="text-center py-5">
       <div class="spinner-border" style="color:var(--clubly-accent)" role="status"></div>
-      <p class="mt-3 text-muted">Loading facilities…</p>
+      <p class="mt-3 text-muted">${window.T?.fac_loading || 'Loading facilities…'}</p>
     </div>`;
 
   try {
@@ -50,9 +50,9 @@ async function loadFacilities() {
     container.innerHTML = '';
     if (errorMsg) {
       const isNet = err instanceof TypeError && err.message.includes('fetch');
-      errorMsg.innerHTML = isNet
-        ? '⚠️ Could not connect to the server. Make sure the backend is running on <strong>localhost:7132</strong>.'
-        : `⚠️ Failed to load facilities: ${err.message}`;
+ errorMsg.innerHTML = isNet
+  ? (window.T?.fac_conn_error || '⚠️ Could not connect to the server. Make sure the backend is running on <strong>localhost:7132</strong>.')
+  : `${window.T?.fac_load_failed || '⚠️ Failed to load facilities'}: ${err.message}`;
     }
   }
 }
@@ -66,7 +66,7 @@ function renderFacilitySections(categories, facilities) {
   const visibleCats = categories.filter(c => usedCatIds.has(c.Id || c.id));
 
   if (visibleCats.length === 0) {
-    container.innerHTML = `<p class="text-center text-muted py-5">No facilities available right now.</p>`;
+    container.innerHTML = `<p class="text-center text-muted py-5">${window.T?.fac_none_available || 'No facilities available right now.'}</p>`;
     return;
   }
 
@@ -101,11 +101,11 @@ function renderFacilitySections(categories, facilities) {
           <i class="bi ${icon}"></i>
         </div>
         <div class="section-titles">
-          <div class="trainer-section-label">Category</div>
+          <div class="trainer-section-label">${window.T?.fac_col_category || 'Category'}</div>
           <div class="trainer-section-title">${catName}</div>
         </div>
         <div class="trainer-section-count">
-          <i class="bi bi-building me-1"></i>${facInCat.length} Facilit${facInCat.length > 1 ? 'ies' : 'y'}
+          <i class="bi bi-building me-1"></i>${facInCat.length} ${facInCat.length === 1 ? (window.T?.fac_count_singular||'Facility') : (window.T?.fac_count_plural||'Facilities')}
         </div>
         <i class="bi bi-chevron-down section-chevron"
            style="transition:transform .3s;${isOpen ? 'transform:rotate(180deg)' : ''}"></i>
@@ -144,14 +144,14 @@ function facilityCardHtml(fac, catName) {
         <p class="facility-description">${fDesc}</p>
         <div class="facility-meta-row">
           <span class="facility-meta-badge capacity-badge">
-            <i class="bi bi-people-fill me-1"></i>Capacity: ${fCap}
+            <i class="bi bi-people-fill me-1"></i>${window.T?.fac_col_capacity || 'Capacity'}: ${fCap}
           </span>
           <span class="facility-meta-badge category-badge">
             <i class="bi bi-grid-fill me-1"></i>${catName}
           </span>
         </div>
         <button class="btn-book-facility mt-3" onclick="handleBookFacility(${fId})">
-          <i class="bi bi-calendar-plus me-1"></i>Book Now
+          <i class="bi bi-calendar-plus me-1"></i>${window.T?.act_book_now || 'Book Now'}
         </button>
       </div>
     </div>
@@ -257,7 +257,7 @@ function buildScheduleModal() {
       <div class="modal-content" style="border-radius:20px;border:none;overflow:hidden;background:var(--card-bg,#fff);color:var(--text,#1a202c);">
         <div style="background:linear-gradient(135deg,#0d1b2a,#122236);padding:20px 24px 16px;display:flex;align-items:center;justify-content:space-between;">
           <div>
-            <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);margin-bottom:3px;"><i class="bi bi-calendar3 me-1"></i>Choose a Time Slot</div>
+            <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.5);margin-bottom:3px;"><i class="bi bi-calendar3 me-1"></i>${window.T?.sched_picker_title || 'Choose a Time Slot'}</div>
             <h5 id="schedPickerTitle" style="margin:0;font-weight:900;color:#fff;font-size:1.1rem;"></h5>
           </div>
           <button type="button" data-bs-dismiss="modal" style="background:rgba(255,255,255,.1);border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;">✕</button>
@@ -271,7 +271,7 @@ function buildScheduleModal() {
           <span id="schedPickerSelected" style="font-size:.82rem;color:var(--muted,#64748b);"></span>
           <button id="schedPickerConfirm" onclick="schedPickerConfirm()"
             style="background:linear-gradient(135deg,#e85d2f,#c0392b);color:#fff;border:none;border-radius:50px;padding:9px 28px;font-weight:700;font-family:'Cairo',sans-serif;font-size:.88rem;cursor:pointer;opacity:.4;pointer-events:none;transition:opacity .2s;">
-            <i class="bi bi-calendar-check me-1"></i>Confirm Slot
+            <i class="bi bi-calendar-check me-1"></i>${window.T?.sched_confirm_slot || 'Confirm Slot'}
           </button>
         </div>
       </div>
@@ -293,7 +293,7 @@ async function openSchedulePicker(facilityId, facilityName) {
   document.getElementById('schedPickerBody').innerHTML = `
     <div class="text-center py-4">
       <div class="spinner-border spinner-border-sm" style="color:#e85d2f"></div>
-      <p class="mt-2 small" style="color:var(--muted,#64748b)">Loading available slots…</p>
+      <p class="mt-2 small" style="color:var(--muted,#64748b)">${window.T?.sched_loading_slots || 'Loading available slots…'}</p>
     </div>`;
 
   const modal = new bootstrap.Modal(document.getElementById('schedPickerModal'));
@@ -313,7 +313,7 @@ async function openSchedulePicker(facilityId, facilityName) {
       document.getElementById('schedPickerBody').innerHTML = `
         <div class="text-center py-5">
           <i class="bi bi-calendar-x" style="font-size:2.5rem;color:var(--muted,#94a3b8)"></i>
-          <p class="mt-3" style="color:var(--muted,#64748b)">No available schedules for this facility right now.</p>
+          <p class="mt-3" style="color:var(--muted,#64748b)">${window.T?.sched_none_available || 'No available schedules for this facility right now.'}</p>
         </div>`;
       return;
     }
@@ -350,7 +350,7 @@ async function openSchedulePicker(facilityId, facilityName) {
           ${dateLabel}
           ${isExpired ? `<span style="font-size:.68rem;font-weight:800;background:#fee2e2;color:#e53e3e;
             padding:2px 8px;border-radius:20px;margin-left:6px;">
-            <i class="bi bi-clock-history"></i> Expired
+            <i class="bi bi-clock-history"></i> ${window.T?.ms_status_expired || 'Expired'}
           </span>` : ''}
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:8px;">`;
@@ -383,7 +383,7 @@ async function openSchedulePicker(facilityId, facilityName) {
             ${day ? `<span style="font-size:.68rem;font-weight:600;color:${isExpired ? '#e53e3e' : 'var(--muted,#64748b)'}">${day}</span>` : ''}
             ${price > 0
               ? `<span style="font-size:.72rem;font-weight:800;color:${isExpired ? '#94a3b8' : '#2ec4b6'};margin-left:4px;">${price} EGP</span>`
-              : `<span style="font-size:.68rem;color:#94a3b8">Free</span>`}
+              : `<span style="font-size:.68rem;color:#94a3b8">${window.T?.free_label || 'Free'}</span>`}
           </button>`;
         });
       });
@@ -396,7 +396,7 @@ async function openSchedulePicker(facilityId, facilityName) {
   } catch(e) {
     document.getElementById('schedPickerBody').innerHTML = `
       <div class="text-center py-4" style="color:#e53e3e">
-        <i class="bi bi-exclamation-triangle me-1"></i>Failed to load schedules. Please try again.
+        <i class="bi bi-exclamation-triangle me-1"></i>${window.T?.sched_load_failed || 'Failed to load schedules. Please try again.'}
       </div>`;
   }
 }
@@ -412,7 +412,7 @@ window.schedShowExpiredMsg = function(slotId, date) {
   document.getElementById('schedPickerSelected').innerHTML =
     `<i class="bi bi-x-circle-fill" style="color:#e53e3e"></i>
      <span style="color:#e53e3e;font-weight:700;">
-       This slot (${date}) has already passed — booking unavailable.
+       (${date}) ${window.T?.sched_slot_passed || 'This slot has already passed — booking unavailable.'}
      </span>`;
 
   // Confirm يفضل معطل
@@ -463,7 +463,7 @@ function addLockBadge(el) {
   if (!parent || parent.querySelector('.slot-lock-badge')) return;
   const badge = document.createElement('div');
   badge.className = 'slot-lock-badge';
-  badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> Fixed from schedule`;
+  badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> ${window.T?.sched_fixed_badge || 'Fixed from schedule'}`;
   badge.style.cssText = 'font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;display:flex;align-items:center;gap:3px;';
   parent.appendChild(badge);
 }

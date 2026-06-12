@@ -9,7 +9,7 @@ async function loadActivities() {
   container.innerHTML = `
     <div class="col-12 text-center py-5">
       <div class="spinner-border" style="color:var(--clubly-accent)" role="status"></div>
-      <p class="mt-3 text-muted">Loading activities…</p>
+      <p class="mt-3 text-muted">${T?.act_loading || 'Loading activities…'}</p>
     </div>`;
 
   try {
@@ -42,7 +42,7 @@ filterSelect.innerHTML = `<option value="">${T?.fac_filter_all || 'All Facilitie
     }
 
     if (active.length === 0) {
-      container.innerHTML = `<p class="col-12 text-center text-muted py-5">No activities available right now.</p>`;
+      container.innerHTML = `<p class="col-12 text-center text-muted py-5">${T?.act_none_available || 'No activities available right now.'}</p>`;
       return;
     }
 
@@ -52,9 +52,9 @@ filterSelect.innerHTML = `<option value="">${T?.fac_filter_all || 'All Facilitie
   } catch (err) {
     console.error("Error loading activities:", err);
     const isNet = err instanceof TypeError && err.message.includes('fetch');
-    container.innerHTML = `<p class="col-12 text-center text-danger py-4">${isNet
-      ? '⚠️ Could not connect to the server. Make sure the backend is running on localhost:7132.'
-      : '⚠️ Failed to load activities: ' + err.message}</p>`;
+   container.innerHTML = `<p class="col-12 text-center text-danger py-4">${isNet
+  ? (T?.act_conn_error || '⚠️ Could not connect to the server. Make sure the backend is running on localhost:7132.')
+  : (T?.act_load_failed || '⚠️ Failed to load activities') + ': ' + err.message}</p>`;
   }
 }
 
@@ -62,7 +62,7 @@ filterSelect.innerHTML = `<option value="">${T?.fac_filter_all || 'All Facilitie
 function renderActivities(list) {
   const container = document.getElementById("activities");
   if (!list || list.length === 0) {
-    container.innerHTML = `<p class="col-12 text-center text-muted py-4">No activities found.</p>`;
+    container.innerHTML = `<p class="col-12 text-center text-muted py-4">${T?.act_none_found || 'No activities found.'}</p>`;
     return;
   }
 
@@ -158,7 +158,7 @@ function applyActivityFilters() {
       noMsg.className = 'col-12 text-center text-muted py-5';
       grid.appendChild(noMsg);
     }
-    if (noMsg) noMsg.innerHTML = `<i class="bi bi-search me-2"></i>No activities found.`;
+    if (noMsg) noMsg.innerHTML = `<i class="bi bi-search me-2"></i>${T?.act_none_found || 'No activities found.'}`;
   } else {
     noMsg?.remove();
   }
@@ -184,7 +184,7 @@ async function openActivityGroupPicker(activityId, activityName) {
   document.getElementById('actPickerBody').innerHTML = `
     <div class="text-center py-4">
       <div class="spinner-border spinner-border-sm" style="color:#e85d2f"></div>
-      <p class="mt-2 small text-muted">Loading groups…</p>
+      <p class="mt-2 small text-muted">${T?.act_loading_groups || 'Loading groups…'}</p>
     </div>`;
 
   const confirmBtn = document.getElementById('actPickerConfirm');
@@ -211,7 +211,7 @@ async function openActivityGroupPicker(activityId, activityName) {
       document.getElementById('actPickerBody').innerHTML = `
         <div class="text-center py-5">
           <i class="bi bi-calendar-x" style="font-size:2.5rem;color:#94a3b8"></i>
-          <p class="mt-3 text-muted">No available groups for this activity right now.</p>
+          <p class="mt-3 text-muted">${T?.act_none_groups || 'No available groups for this activity right now.'}</p>
         </div>`;
       return;
     }
@@ -272,22 +272,22 @@ const hasStarted = (g.startDate || fromDate)
       ${gname}
       ${isExpired ? `<span style="font-size:.72rem;font-weight:800;background:#fee2e2;color:#e53e3e;
         padding:2px 8px;border-radius:20px;margin-left:6px;">
-        <i class="bi bi-clock-history"></i> Expired
+        <i class="bi bi-clock-history"></i> ${T?.ms_status_expired || 'Expired'}
       </span>` : ''}
     </span>
     ${price > 0
       ? `<span style="font-size:.82rem;font-weight:800;color:#fff;
            background:${isExpired ? '#94a3b8' : '#2ec4b6'};
            padding:3px 12px;border-radius:20px;">${price} EGP</span>`
-      : `<span style="font-size:.78rem;color:#94a3b8;font-weight:700;">Free</span>`}
+      : `<span style="font-size:.78rem;color:#94a3b8;font-weight:700;">${T?.free_label || 'Free'}</span>`}
   </div>
 
   <div style="font-size:.78rem;color:var(--muted,#64748b);display:flex;flex-wrap:wrap;gap:10px;">
     ${trainer  ? `<span><i class="bi bi-person-fill" style="color:#e85d2f"></i> ${trainer}</span>` : ''}
-    ${capacity ? `<span><i class="bi bi-people-fill" style="color:#2ec4b6"></i> Capacity: ${capacity}</span>` : ''}
-${g.durationDays ? `<span><i class="bi bi-hourglass-split" style="color:#7c3aed"></i> ${g.durationDays} days</span>` : ''}
-${g.startDate ? `<span><i class="bi bi-calendar-check" style="color:#2ec4b6"></i> From: ${new Date(g.startDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}
-${g.endDate ? `<span><i class="bi bi-calendar-x" style="color:#e85d2f"></i> To: ${new Date(g.endDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}  </div>
+    ${capacity ? `<span><i class="bi bi-people-fill" style="color:#2ec4b6"></i> ${T?.fac_col_capacity || 'Capacity'}: ${capacity}</span>` : ''}
+${g.durationDays ? `<span><i class="bi bi-hourglass-split" style="color:#7c3aed"></i> ${g.durationDays} ${T?.group_days_label || 'days'}</span>` : ''}
+${g.startDate ? `<span><i class="bi bi-calendar-check" style="color:#2ec4b6"></i> ${T?.group_from_label || 'From'}: ${new Date(g.startDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}
+${g.endDate ? `<span><i class="bi bi-calendar-x" style="color:#e85d2f"></i> ${T?.group_to_label || 'To'}: ${new Date(g.endDate).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}</span>` : ''}  </div>
 
   ${slots.length ? `
   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
@@ -309,14 +309,14 @@ ${g.endDate ? `<span><i class="bi bi-calendar-x" style="color:#e85d2f"></i> To: 
   <div style="margin-top:10px;font-size:.78rem;font-weight:700;color:#e53e3e;
     background:rgba(229,62,62,.06);border-radius:8px;padding:6px 10px;">
     <i class="bi bi-x-circle-fill me-1"></i>
-    This group has already ended — booking is no longer available.
+${T?.group_ended_msg || 'This group has already ended — booking is no longer available.'}
   </div>` : ''}
 ${!isExpired && hasStarted ? `
   <div style="margin-top:8px;font-size:.75rem;font-weight:700;color:#f59e0b;
     background:rgba(245,158,11,.08);border-radius:8px;padding:5px 10px;
     border:1px solid rgba(245,158,11,.2);">
     <i class="bi bi-info-circle-fill me-1"></i>
-    Group already started — you can still join!
+${T?.group_started_msg || 'Group already started — you can still join!'}
   </div>` : ''}
 </button>`;
     });
@@ -326,7 +326,7 @@ ${!isExpired && hasStarted ? `
   } catch(e) {
     document.getElementById('actPickerBody').innerHTML = `
       <div class="text-center py-4 text-danger">
-        <i class="bi bi-exclamation-triangle me-1"></i>Failed to load groups.
+        <i class="bi bi-exclamation-triangle me-1"></i>${T?.act_load_groups_failed || 'Failed to load groups.'}
       </div>`;
   }
 }
@@ -342,7 +342,7 @@ window.bpShowExpiredMsg = function(btnId) {
   document.getElementById('actPickerSelected').innerHTML =
     `<i class="bi bi-x-circle-fill" style="color:#e53e3e"></i>
      <span style="color:#e53e3e;font-weight:700;">
-       This group has already ended — booking is no longer available.
+${T?.group_ended_msg || 'This group has already ended — booking is no longer available.'}
      </span>`;
 
   // Confirm يفضل معطل
@@ -376,7 +376,7 @@ const checkDate = (endDate && endDate !== 'undefined' && endDate !== '') ? endDa
       document.getElementById('actPickerSelected').innerHTML =
         `<i class="bi bi-x-circle-fill" style="color:#e53e3e"></i>
          <span style="color:#e53e3e;font-weight:700;">
-           This group has already ended — booking unavailable.
+${T?.group_ended_msg || 'This group has already ended — booking is no longer available.'}
          </span>`;
       const confirmBtn = document.getElementById('actPickerConfirm');
       confirmBtn.style.opacity       = '.4';
@@ -458,7 +458,7 @@ if (endDateEl && endDateWrap) {
   if (parent && !parent.querySelector('.slot-lock-badge')) {
     const badge = document.createElement('div');
     badge.className = 'slot-lock-badge';
-    badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> Calculated from duration (${c.durationDays} days)`;
+    badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> ${T?.group_calc_duration || 'Calculated from duration'} (${c.durationDays} ${T?.group_days_label || 'days'})`;
     badge.style.cssText = 'font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;display:flex;align-items:center;gap:3px;';
     parent.appendChild(badge);
   }
@@ -477,8 +477,7 @@ if (endDateEl && endDateWrap) {
       if (parent && !parent.querySelector('.slot-lock-badge')) {
         const badge = document.createElement('div');
         badge.className = 'slot-lock-badge';
-        badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> Fixed from group`;
-        badge.style.cssText = 'font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;display:flex;align-items:center;gap:3px;';
+badge.innerHTML = `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> ${window.T?.sched_fixed_badge || 'Fixed from group'}`;        badge.style.cssText = 'font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;display:flex;align-items:center;gap:3px;';
         parent.appendChild(badge);
       }
     });

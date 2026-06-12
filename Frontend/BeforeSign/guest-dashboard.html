@@ -1357,22 +1357,21 @@ body {
 </a>
 
   <nav class="header-nav">
-  <a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i>Dashboard</a>
-  <a href="../AfterSign/home.html">Home</a>
-  <a href="../AfterSign/activities.html">Activities</a>
-  <a href="../AfterSign/facilities.html">Facilities</a>
-  <a href="../AfterSign/trainers.html">Trainers</a>
-  <a href="../AfterSign/plans.html">Membership Plans</a>
-  <a href="../AfterSign/about.html">About Us</a>
-  <a href="../AfterSign/faq.html">FAQ</a>
-  <a href="../AfterSign/contact.html">Contact</a>
+<a href="#" onclick="showPage('main')" style="color:var(--clubly-accent);font-weight:700;"><i class="bi bi-speedometer2 me-1"></i><span data-i18n="nav_dashboard">Dashboard</span></a>
+  <a href="../AfterSign/home.html" data-i18n="nav_home">Home</a>
+  <a href="../AfterSign/activities.html" data-i18n="nav_activities">Activities</a>
+  <a href="../AfterSign/facilities.html" data-i18n="nav_facilities">Facilities</a>
+  <a href="../AfterSign/trainers.html" data-i18n="nav_trainers">Trainers</a>
+  <a href="../AfterSign/plans.html" data-i18n="nav_plans">Membership Plans</a>
+  <a href="../AfterSign/about.html" data-i18n="nav_about">About Us</a>
+  <a href="../AfterSign/faq.html" data-i18n="nav_faq">FAQ</a>
+  <a href="../AfterSign/contact.html" data-i18n="nav_contact">Contact</a>
 
   </nav>
  <div class="header-actions">
     <!-- Notification Bell -->
     <div style="position:relative;display:inline-flex;">
-      <button class="btn-theme-header" onclick="showPage('notifications')" title="Notifications">
-        <i class="bi bi-bell-fill"></i>
+<button class="btn-theme-header" onclick="showPage('notifications')" title="Notifications" data-i18n-title="sidebar_my_inbox">        <i class="bi bi-bell-fill"></i>
         <span id="guestHeaderBellBadge"
           style="display:none;position:absolute;top:-5px;right:-5px;
                  background:#e85d2f;color:#fff;font-size:10px;font-weight:900;
@@ -1387,8 +1386,7 @@ body {
     </button>
   <div class="header-user">
 <div class="user-avatar" id="headerAvatar" onclick="showPage('profile')" style="cursor:pointer;">AG</div></div>
-    <button class="btn-signout" onclick="document.getElementById('signoutModal').style.display='flex'">Sign Out</button>
-  </div>
+<button class="btn-signout" onclick="document.getElementById('signoutModal').style.display='flex'" data-i18n="nav_signout">Sign Out</button>  </div>
 </header>
 
 <!-- ===== LAYOUT BODY ===== -->
@@ -1398,51 +1396,50 @@ body {
 <aside class="sidebar" id="sidebar">
     <!-- Guest card -->
     <div class="sidebar-guest-card">
-      <div class="guest-card-title">Guest Account</div>
+<div class="guest-card-title" data-i18n="guest_account_label">Guest Account</div>
       <div class="guest-card-name" id="sidebarName">Ahmed Guest</div>
       <div class="guest-card-status">
       </div>
     </div>
-    <button class="sidebar-upgrade-btn" onclick="showPage('upgrade')">⭐ Upgrade to Member</button>
-
+<button class="sidebar-upgrade-btn" onclick="showPage('upgrade')">⭐ <span data-i18n="upgrade_to_member">Upgrade to Member</span></button>
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">My Portal</div>
+  <div class="sidebar-section" data-i18n="sidebar_my_portal">My Portal</div>
 
     <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard">
-      <i class="bi bi-speedometer2"></i><span>Dashboard</span>
+      <i class="bi bi-speedometer2"></i><span data-i18n="nav_dashboard">Dashboard</span>
     </button>
     <button class="sidebar-link" onclick="showPage('bookings')" id="sb-bookings">
-      <i class="bi bi-calendar-check"></i><span>My Bookings</span>
+      <i class="bi bi-calendar-check"></i><span data-i18n="sidebar_my_bookings">My Bookings</span>
     </button>
     <button class="sidebar-link" onclick="showPage('schedule')" id="sb-schedule">
-      <i class="bi bi-clock-history"></i><span>Schedule</span>
+      <i class="bi bi-clock-history"></i><span data-i18n="sidebar_schedule">Schedule</span>
     </button>
 
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">Finance</div>
+    <div class="sidebar-section" data-i18n="sidebar_finance">Finance</div>
 
     <button class="sidebar-link" onclick="showPage('payments')" id="sb-payments">
-      <i class="bi bi-credit-card"></i><span>Payments</span>
+      <i class="bi bi-credit-card"></i><span data-i18n="dash_pricing_payments">Payments</span>
     </button>
 
     <div class="sidebar-divider"></div>
-    <div class="sidebar-section">Account</div>
+    <div class="sidebar-section" data-i18n="sidebar_account">Account</div>
 
     <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications">
-      <i class="bi bi-bell"></i><span>Notifications</span>
+      <i class="bi bi-bell"></i><span data-i18n="sidebar_my_inbox">Notifications</span>
       <span class="notif-badge" id="notifBadge">3</span>
     </button>
     <button class="sidebar-link" onclick="showPage('upgrade')" id="sb-upgrade" style="color:rgba(46,196,182,.9);">
-      <i class="bi bi-star-fill"></i><span>Upgrade Plan</span>
+      <i class="bi bi-star-fill"></i><span data-i18n="sidebar_upgrade_plan">Upgrade Plan</span>
     </button>
 
     <div class="sidebar-divider"></div>
     <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile">
-  <i class="bi bi-person-circle"></i><span>Profile</span>
+  <i class="bi bi-person-circle"></i><span data-i18n="sidebar_my_profile">Profile</span>
 </button>
     <button class="sidebar-link" onclick="document.getElementById('signoutModal').style.display='flex'"
             style="color:rgba(239,68,68,.8);">
-      <i class="bi bi-box-arrow-right"></i><span>Sign Out</span>
+      <i class="bi bi-box-arrow-right"></i><span data-i18n="nav_signout">Sign Out</span>
     </button>
   </aside>
 
@@ -1455,16 +1452,16 @@ body {
       <!-- Upgrade banner -->
       <div class="upgrade-banner">
         <div class="upgrade-banner-text">
-          <div class="upgrade-banner-title">🌟 You're on a Guest Account</div>
-          <div class="upgrade-banner-sub">Upgrade to Member to unlock full access — unlimited bookings, sessions & more.</div>
+         <div class="upgrade-banner-title">🌟 <span data-i18n="guest_banner_title">You're on a Guest Account</span></div>
+          <div class="upgrade-banner-sub" data-i18n="guest_banner_sub">Upgrade to Member to unlock full access — unlimited bookings, sessions & more.</div>
         </div>
-        <button class="upgrade-banner-btn" onclick="showPage('upgrade')">Upgrade Now →</button>
+        <button class="upgrade-banner-btn" onclick="showPage('upgrade')" data-i18n="guest_upgrade_now">Upgrade Now →</button>
       </div>
 
       <div class="page-header-clubly">
         <div>
-          <h1 class="page-title-clubly">Welcome, <span style="color:var(--clubly-accent)" id="dashName">Ahmed!</span></h1>
-          <p style="color:var(--muted); margin-top:4px; font-size:.9rem;">Here's a summary of your guest activity.</p>
+        <h1 class="page-title-clubly"><span data-i18n="guest_welcome">Welcome</span>, <span style="color:var(--clubly-accent)" id="dashName">Ahmed!</span></h1>
+          <p style="color:var(--muted); margin-top:4px; font-size:.9rem;" data-i18n="guest_summary_sub">Here's a summary of your guest activity.</p>
         </div>
       </div>
 
@@ -1473,28 +1470,28 @@ body {
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon-box icon-orange"><i class="bi bi-calendar-check"></i></div>
-            <div class="stat-label">Total Bookings</div>
+<div class="stat-label" data-i18n="stat_total_bookings">Total Bookings</div>
             <div class="stat-value" id="dash-bookings">4</div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon-box icon-teal"><i class="bi bi-clock-history"></i></div>
-            <div class="stat-label">Upcoming Sessions</div>
+<div class="stat-label" data-i18n="guest_upcoming_sessions">Upcoming Sessions</div>
             <div class="stat-value" id="dash-upcoming">2</div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon-box icon-amber"><i class="bi bi-credit-card"></i></div>
-            <div class="stat-label">Pending Payment</div>
+<div class="stat-label" data-i18n="guest_pending_payment">Pending Payment</div>
             <div class="stat-value" id="dash-pending" style="font-size:1.4rem;">700 <span class="stat-unit">EGP</span></div>
           </div>
         </div>
         <div class="col-6 col-lg-3">
           <div class="stat-card">
             <div class="stat-icon-box icon-purple"><i class="bi bi-bell"></i></div>
-            <div class="stat-label">Unread Notifications</div>
+<div class="stat-label" data-i18n="guest_unread_notifs">Unread Notifications</div>
             <div class="stat-value" id="dash-notifs">3</div>
           </div>
         </div>
@@ -1505,7 +1502,7 @@ body {
         <div class="col-lg-7">
           <div class="content-card h-100">
             <div class="card-title-clubly">
-              <span>Booking Calendar</span>
+<span data-i18n="guest_booking_calendar">Booking Calendar</span>
               <div class="d-flex align-items-center gap-2">
                 <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button>
                 <span id="calMonthLabel" style="font-weight:700; font-size:.92rem; color:var(--text); min-width:110px; text-align:center;"></span>
@@ -1517,7 +1514,7 @@ body {
         </div>
         <div class="col-lg-5">
           <div class="content-card h-100">
-            <div class="card-title-clubly">Upcoming Bookings</div>
+<div class="card-title-clubly" data-i18n="guest_upcoming_bookings">Upcoming Bookings</div>
             <div id="upcomingList"></div>
           </div>
         </div>
@@ -1528,8 +1525,8 @@ body {
    <div class="page" id="page-bookings">
   <div class="page-header-clubly">
     <div>
-      <h1 class="page-title-clubly">My Bookings</h1>
-      <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your activity and facility reservations</p>
+   <h1 class="page-title-clubly" data-i18n="sidebar_my_bookings">My Bookings</h1>
+      <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="guest_bookings_sub">All your activity and facility reservations</p>
     </div>
    
   </div>
@@ -1537,13 +1534,13 @@ body {
   <!-- تاب Activity / Facility -->
 <ul class="nav nav-tabs mb-3" id="bookingTypeTabs">
   <li class="nav-item">
-    <button class="nav-link active" onclick="switchBookingType('activity', this)">
-      <i class="bi bi-calendar-check me-1"></i>Activity Bookings
+ <button class="nav-link active" onclick="switchBookingType('activity', this)">
+      <i class="bi bi-calendar-check me-1"></i><span data-i18n="guest_activity_bookings_tab">Activity Bookings</span>
     </button>
   </li>
   <li class="nav-item">
     <button class="nav-link" onclick="switchBookingType('facility', this)">
-      <i class="bi bi-building me-1"></i>Facility Bookings
+      <i class="bi bi-building me-1"></i><span data-i18n="guest_facility_bookings_tab">Facility Bookings</span>
     </button>
   </li>
 </ul>
@@ -1551,38 +1548,38 @@ body {
   <!-- Activity Bookings -->
   <div id="activityBookingsSection">
     <div class="notif-tabs mb-3">
-      <button class="notif-tab active" onclick="filterBookings('all', this)">All</button>
-      <button class="notif-tab" onclick="filterBookings('confirmed', this)">Confirmed</button>
-      <button class="notif-tab" onclick="filterBookings('pending', this)">Pending</button>
-      <button class="notif-tab" onclick="filterBookings('completed', this)">Completed</button>
-      <button class="notif-tab" onclick="filterBookings('cancelled', this)">Cancelled</button>
+    <button class="notif-tab active" onclick="filterBookings('all', this)" data-i18n="booking_filter_all">All</button>
+      <button class="notif-tab" onclick="filterBookings('confirmed', this)" data-i18n="guest_confirmed">Confirmed</button>
+      <button class="notif-tab" onclick="filterBookings('pending', this)" data-i18n="booking_filter_pending">Pending</button>
+      <button class="notif-tab" onclick="filterBookings('completed', this)" data-i18n="guest_completed">Completed</button>
+      <button class="notif-tab" onclick="filterBookings('cancelled', this)" data-i18n="booking_filter_cancelled">Cancelled</button>
     </div>
     <div class="content-card">
       <div class="table-responsive">
         <table class="bookings-table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Activity / Facility</th>
-              <th>Trainer</th>
-              <th>Group</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Start Time</th>
-              <th>End Time</th>
-              <th>Price</th>
-              <th>Payment</th>
-              <th>Transaction ID</th>
-              <th>Receipt</th>
-              <th>Status</th>
+           <th data-i18n="booking_col_num">#</th>
+              <th data-i18n="guest_col_act_fac">Activity / Facility</th>
+              <th data-i18n="booking_col_trainer">Trainer</th>
+              <th data-i18n="booking_col_group">Group</th>
+              <th data-i18n="guest_col_start_date">Start Date</th>
+              <th data-i18n="booking_col_end_date">End Date</th>
+              <th data-i18n="guest_col_start_time">Start Time</th>
+              <th data-i18n="guest_col_end_time">End Time</th>
+              <th data-i18n="booking_col_price">Price</th>
+              <th data-i18n="booking_col_payment">Payment</th>
+              <th data-i18n="booking_col_transaction">Transaction ID</th>
+              <th data-i18n="booking_col_receipt">Receipt</th>
+              <th data-i18n="booking_col_status">Status</th>
             </tr>
           </thead>
           <tbody id="bookingsTbody"></tbody>
         </table>
       </div>
       <div class="empty-state" id="bookingsEmpty" style="display:none;">
-        <i class="bi bi-calendar-x"></i>
-        <p>No bookings found.</p>
+      <i class="bi bi-calendar-x"></i>
+        <p data-i18n="booking_no_bookings">No bookings found.</p>
       </div>
     </div>
   </div>
@@ -1590,34 +1587,34 @@ body {
   <!-- Facility Bookings -->
   <div id="facilityBookingsSection" style="display:none;">
     <div class="notif-tabs mb-3">
-      <button class="notif-tab active" onclick="filterFacilityBookings('all', this)">All</button>
-      <button class="notif-tab" onclick="filterFacilityBookings('approved', this)">Approved</button>
-      <button class="notif-tab" onclick="filterFacilityBookings('pending', this)">Pending</button>
-      <button class="notif-tab" onclick="filterFacilityBookings('cancelled', this)">Cancelled</button>
+<button class="notif-tab active" onclick="filterFacilityBookings('all', this)" data-i18n="booking_filter_all">All</button>
+    <button class="notif-tab" onclick="filterFacilityBookings('approved', this)" data-i18n="booking_filter_approved">Approved</button>
+    <button class="notif-tab" onclick="filterFacilityBookings('pending', this)" data-i18n="booking_filter_pending">Pending</button>
+    <button class="notif-tab" onclick="filterFacilityBookings('cancelled', this)" data-i18n="booking_filter_cancelled">Cancelled</button>
     </div>
     <div class="content-card">
       <div class="table-responsive">
         <table class="bookings-table">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Facility</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Participants</th>
-              <th>Price</th>
-              <th>Payment</th>
-              <th>Transaction ID</th>
-              <th>Receipt</th>
-              <th>Status</th>
+         <th data-i18n="booking_col_num">#</th>
+              <th data-i18n="bp_facility">Facility</th>
+              <th data-i18n="bp_date">Date</th>
+              <th data-i18n="bp_time">Time</th>
+              <th data-i18n="booking_col_participants">Participants</th>
+              <th data-i18n="booking_col_price">Price</th>
+              <th data-i18n="booking_col_payment">Payment</th>
+              <th data-i18n="booking_col_transaction">Transaction ID</th>
+              <th data-i18n="booking_col_receipt">Receipt</th>
+              <th data-i18n="booking_col_status">Status</th>
             </tr>
           </thead>
           <tbody id="facilityBookingsTbody"></tbody>
         </table>
       </div>
       <div class="empty-state" id="facilityBookingsEmpty" style="display:none;">
-        <i class="bi bi-building"></i>
-        <p>No facility bookings found.</p>
+     <i class="bi bi-building"></i>
+        <p data-i18n="guest_no_fac_bookings">No facility bookings found.</p>
       </div>
     </div>
   </div>
@@ -1626,8 +1623,8 @@ body {
     <div class="page" id="page-schedule">
       <div class="page-header-clubly">
         <div>
-          <h1 class="page-title-clubly">My Schedule</h1>
-          <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your upcoming sessions</p>
+         <h1 class="page-title-clubly" data-i18n="sidebar_schedule">My Schedule</h1>
+          <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="guest_schedule_sub">All your upcoming sessions</p>
         </div>
       </div>
 
@@ -1635,13 +1632,13 @@ body {
        <!-- Switch Tabs -->
 <ul class="nav nav-tabs mb-3" id="scheduleTypeTabs">
   <li class="nav-item">
-    <button class="nav-link active" onclick="switchScheduleType('activity', this)">
-      <i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i>Activity Sessions
+<button class="nav-link active" onclick="switchScheduleType('activity', this)">
+      <i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i><span data-i18n="guest_activity_sessions_tab">Activity Sessions</span>
     </button>
   </li>
   <li class="nav-item">
     <button class="nav-link" onclick="switchScheduleType('facility', this)">
-      <i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i>Facility Bookings
+      <i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i><span data-i18n="guest_facility_bookings_tab">Facility Bookings</span>
     </button>
   </li>
 </ul>
@@ -1651,8 +1648,8 @@ body {
   <div class="content-card">
     <div id="scheduleList"></div>
     <div class="empty-state" id="schedEmpty" style="display:none;">
-      <i class="bi bi-calendar-check"></i>
-      <p>No activity sessions.</p>
+<i class="bi bi-calendar-check"></i>
+      <p data-i18n="guest_no_activity_sessions">No activity sessions.</p>
     </div>
   </div>
 </div>
@@ -1661,8 +1658,8 @@ body {
   <div class="content-card">
     <div id="facilityScheduleList"></div>
     <div class="empty-state" id="facilitySchedEmpty" style="display:none;">
-      <i class="bi bi-building"></i>
-      <p>No facility bookings.</p>
+    <i class="bi bi-building"></i>
+      <p data-i18n="guest_no_fac_bookings2">No facility bookings.</p>
     </div>
   </div>
 </div>
@@ -1673,27 +1670,27 @@ body {
     <!-- ======== PAGE: PAYMENTS ======== -->
     <div class="page" id="page-payments">
       <div class="page-header-clubly">
-        <h1 class="page-title-clubly">Payments</h1>
+<h1 class="page-title-clubly" data-i18n="dash_pricing_payments">Payments</h1>
       </div>
 
       <div class="row g-3 mb-3">
         <div class="col-md-4">
           <div class="payment-card">
-            <div class="payment-card-label">Total Paid</div>
+<div class="payment-card-label" data-i18n="guest_total_paid">Total Paid</div>
             <div class="payment-card-value" id="pay-total">600 EGP</div>
           </div>
           <div class="payment-card" style="background:linear-gradient(135deg,#4a1010,#7c2d12);">
-            <div class="payment-card-label">Pending Amount</div>
+<div class="payment-card-label" data-i18n="guest_pending_amount">Pending Amount</div>
             <div class="payment-card-value" id="pay-pending">700 EGP</div>
             <div style="margin-top:10px; position:relative; z-index:1;">
-              <span class="payment-status-badge"><div class="payment-status-dot"></div> Awaiting Payment</span>
+<span class="payment-status-badge"><div class="payment-status-dot"></div> <span data-i18n="guest_awaiting_payment">Awaiting Payment</span></span>
             </div>
           </div>
         </div>
         <div class="col-md-8">
           <div class="content-card">
             <div class="card-title-clubly">
-              <span>Invoice History</span>
+<span data-i18n="guest_invoice_history">Invoice History</span>
               <span style="font-size:.78rem; color:var(--muted); font-weight:400;" id="invoiceCount"></span>
             </div>
             <div id="invoiceList"></div>
@@ -1707,11 +1704,11 @@ body {
 
   <div class="page-header-clubly">
     <div>
-      <h1 class="page-title-clubly">
+    <h1 class="page-title-clubly">
         <i class="bi bi-bell-fill me-2" style="color:var(--clubly-accent);"></i>
-        Notifications
+        <span data-i18n="sidebar_my_inbox">Notifications</span>
       </h1>
-      <p style="color:var(--muted);font-size:.9rem;margin-top:4px;">
+      <p style="color:var(--muted);font-size:.9rem;margin-top:4px;" data-i18n="guest_notifs_sub">
         Messages sent to guest accounts
       </p>
     </div>
@@ -1723,13 +1720,13 @@ body {
                font-size:.82rem;font-weight:700;">
         0 unread
       </span>
-      <button class="btn-clubly-primary"
+  <button class="btn-clubly-primary"
         style="background:linear-gradient(135deg,#22c55e,#16a34a);"
         onclick="markAllGuestRead()">
-        <i class="bi bi-check2-all"></i> Mark all read
+        <i class="bi bi-check2-all"></i> <span data-i18n="inbox_mark_all">Mark all read</span>
       </button>
       <button class="btn-clubly-primary" onclick="loadGuestNotifications()">
-        <i class="bi bi-arrow-clockwise"></i> Refresh
+        <i class="bi bi-arrow-clockwise"></i> <span data-i18n="inbox_refresh">Refresh</span>
       </button>
     </div>
   </div>
@@ -1739,25 +1736,25 @@ body {
     <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
       <div class="search-bar-clubly" style="flex:1;min-width:200px;max-width:300px;">
         <i class="bi bi-search" style="color:var(--muted);"></i>
-        <input type="text" id="guestNotifSearch" placeholder="Search notifications…"/>
+<input type="text" id="guestNotifSearch" data-i18n-ph="inbox_search_ph" placeholder="Search notifications…"/>
       </div>
       <select id="guestNotifType"
         style="background:var(--card-bg);border:1px solid var(--border);
                border-radius:9px;padding:9px 14px;color:var(--text);
                font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
-        <option value="">All types</option>
-        <option value="Info">ℹ️ Info</option>
-        <option value="Warning">⚠️ Warning</option>
-        <option value="Success">✅ Success</option>
-        <option value="Urgent">🔴 Urgent</option>
+      <option value="" data-i18n="inbox_filter_all_types">All types</option>
+        <option value="Info" data-i18n="notif_opt_info">ℹ️ Info</option>
+        <option value="Warning" data-i18n="notif_opt_warning">⚠️ Warning</option>
+        <option value="Success" data-i18n="notif_opt_success">✅ Success</option>
+        <option value="Urgent" data-i18n="notif_opt_urgent">🔴 Urgent</option>
       </select>
       <select id="guestNotifStatus"
         style="background:var(--card-bg);border:1px solid var(--border);
                border-radius:9px;padding:9px 14px;color:var(--text);
                font-family:'Cairo',sans-serif;font-size:.87rem;cursor:pointer;">
-        <option value="">All</option>
-        <option value="unread">Unread</option>
-        <option value="read">Read</option>
+   <option value="" data-i18n="inbox_filter_all_status">All</option>
+        <option value="unread" data-i18n="inbox_filter_unread">Unread</option>
+        <option value="read" data-i18n="inbox_filter_read">Read</option>
       </select>
       <small id="guestNotifInfo" style="color:var(--muted);margin-left:auto;"></small>
     </div>
@@ -1767,8 +1764,8 @@ body {
   <div class="content-card" style="padding:0;">
     <div id="guestNotifList">
       <div style="text-align:center;padding:50px;color:var(--muted);">
-        <i class="bi bi-bell" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:12px;"></i>
-        <p>Loading…</p>
+     <i class="bi bi-bell" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:12px;"></i>
+        <p data-i18n="tr_loading_generic">Loading…</p>
       </div>
     </div>
   </div>
@@ -1783,20 +1780,20 @@ body {
    <!-- ======== PAGE: UPGRADE ======== -->
 <div class="page" id="page-upgrade">
   <div class="page-header-clubly">
-    <h1 class="page-title-clubly">Upgrade Your Plan</h1>
-    <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Choose a membership plan to unlock full access.</p>
+<h1 class="page-title-clubly" data-i18n="guest_upgrade_title">Upgrade Your Plan</h1>
+  <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="guest_upgrade_sub">Choose a membership plan to unlock full access.</p>
   </div>
   <div class="row g-4" id="upgradePlansGrid">
     <div class="col-12 text-center py-5">
       <div class="spinner-border" style="color:var(--clubly-accent);"></div>
-      <p class="mt-3" style="color:var(--muted);">Loading plans…</p>
+<p class="mt-3" style="color:var(--muted);" data-i18n="plans_loading">Loading plans…</p>
     </div>
   </div>
 </div>
 <!-- ======== PAGE: PROFILE ======== -->
 <div class="page" id="page-profile">
   <div class="page-header-clubly">
-    <h1 class="page-title-clubly">My Profile</h1>
+<h1 class="page-title-clubly" data-i18n="sidebar_my_profile">My Profile</h1>
   </div>
   <div class="row g-4">
     <!-- Avatar card -->
@@ -1809,18 +1806,18 @@ body {
           margin:0 auto 14px;border:4px solid var(--clubly-teal);">
           <span id="guestProfileInitials">AG</span>
         </div>
-        <h5 class="fw-bold mb-1" id="guestProfileName">Guest</h5>
+<h5 class="fw-bold mb-1" id="guestProfileName" data-i18n="guest_label">Guest</h5>
         <p style="color:var(--muted);font-size:.85rem;" id="guestProfileEmail">—</p>
-        <span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);
+     <span style="background:rgba(46,196,182,.1);color:var(--clubly-teal);
           padding:4px 14px;border-radius:20px;font-size:.82rem;font-weight:700;">
-          🌟 Guest Account
+          🌟 <span data-i18n="guest_account_label">Guest Account</span>
         </span>
         <div class="mt-3">
-          <button onclick="showPage('upgrade')"
+   <button onclick="showPage('upgrade')"
             style="background:linear-gradient(135deg,var(--clubly-teal),#1a9e94);
             color:#fff;border:none;padding:8px 20px;border-radius:50px;
             font-weight:700;cursor:pointer;font-family:inherit;">
-            ⭐ Upgrade to Member
+            ⭐ <span data-i18n="upgrade_to_member">Upgrade to Member</span>
           </button>
         </div>
       </div>
@@ -1830,59 +1827,58 @@ body {
     <div class="col-lg-8">
       <!-- Personal Info -->
       <div class="content-card mb-3">
-        <h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
+    <h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
           <i class="bi bi-person-fill me-2" style="color:var(--clubly-teal);"></i>
-          Personal Information
+          <span data-i18n="profile_personal_title">Personal Information</span>
         </h6>
         <div class="row g-3">
           <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Full Name</label>
-            <input type="text" id="guestProfName" class="form-control" placeholder="Full Name">
+           <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;" data-i18n="mem_col_name">Full Name</label>
+            <input type="text" id="guestProfName" class="form-control" data-i18n-ph="mem_ph_fullname" placeholder="Full Name">
           </div>
           <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Email</label>
-            <input type="email" id="guestProfEmail" class="form-control" disabled>
+<label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;" data-i18n="profile_lbl_email">Email</label>            <input type="email" id="guestProfEmail" class="form-control" disabled>
           </div>
           <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Phone</label>
-            <input type="tel" id="guestProfPhone" class="form-control" placeholder="Phone">
+        <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;" data-i18n="profile_lbl_phone">Phone</label>
+            <input type="tel" id="guestProfPhone" class="form-control" data-i18n-ph="profile_lbl_phone" placeholder="Phone">
           </div>
           <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">National ID</label>
+<label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;" data-i18n="profile_lbl_nid">National ID</label>
             <input type="text" id="guestProfNID" class="form-control" disabled>
           </div>
           <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Gender</label>
+<label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;" data-i18n="profile_lbl_gender">Gender</label>
             <input type="text" id="guestProfGender" class="form-control" disabled>
           </div>
           <div class="col-md-6">
-            <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;">Date of Birth</label>
+<label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;" data-i18n="profile_lbl_dob">Date of Birth</label>
             <input type="text" id="guestProfDOB" class="form-control" disabled>
           </div>
         </div>
         <div class="mt-3">
-          <button onclick="saveGuestProfile()"
+        <button onclick="saveGuestProfile()"
             style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
             border:none;padding:9px 24px;border-radius:50px;font-weight:700;
             cursor:pointer;font-family:inherit;">
-            <i class="bi bi-check-lg me-1"></i> Save Changes
+            <i class="bi bi-check-lg me-1"></i> <span data-i18n="profile_btn_save">Save Changes</span>
           </button>
         </div>
       </div>
 
 <!-- Change Password -->
 <div class="content-card">
-  <h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
+<h6 class="fw-bold mb-3 pb-2" style="border-bottom:2px solid var(--border);">
     <i class="bi bi-lock-fill me-2" style="color:#ef4444;"></i>
-    Change Password
+    <span data-i18n="profile_change_pass_title">Change Password</span>
   </h6>
-  <p style="color:var(--muted); font-size:.88rem; margin-bottom:16px;">
+  <p style="color:var(--muted); font-size:.88rem; margin-bottom:16px;" data-i18n="profile_change_pass_sub">
     Keep your account secure by updating your password regularly.
   </p>
   <button data-bs-toggle="modal" data-bs-target="#guestPassModal"
     style="background:linear-gradient(135deg,var(--clubly-accent),#c0392b);color:#fff;border:none;
     padding:9px 24px;border-radius:50px;font-weight:700;cursor:pointer;font-family:inherit;">
-    <i class="bi bi-shield-lock me-1"></i> Change Password
+    <i class="bi bi-shield-lock me-1"></i> <span data-i18n="profile_btn_change_pass">Change Password</span>
   </button>
 </div>
 
@@ -1905,17 +1901,18 @@ body {
 <div id="signoutModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px);">
   <div style="background:var(--card-bg); border-radius:16px; padding:32px; max-width:380px; width:90%; text-align:center; border:1px solid var(--border);">
     <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
-    <h5 style="font-weight:900; font-size:1.1rem; color:var(--text); margin-bottom:8px;">Sign Out?</h5>
-    <p style="color:var(--muted); font-size:.88rem; margin-bottom:24px;">Are you sure you want to sign out of your guest account?</p>
+   <h5 style="font-weight:900; font-size:1.1rem; color:var(--text); margin-bottom:8px;" data-i18n="signout_title">Sign Out?</h5>
+    <p style="color:var(--muted); font-size:.88rem; margin-bottom:24px;" data-i18n="guest_signout_sub">Are you sure you want to sign out of your guest account?</p>
     <div style="display:flex; gap:10px; justify-content:center;">
-      <button class="btn-cancel" onclick="document.getElementById('signoutModal').style.display='none'">Cancel</button>
-      <button style="background:linear-gradient(135deg,#ef4444,#b91c1c); color:#fff; border:none; padding:8px 24px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif;" onclick="handleGuestSignOut()">Sign Out</button>
+      <button class="btn-cancel" onclick="document.getElementById('signoutModal').style.display='none'" data-i18n="signout_btn_cancel">Cancel</button>
+      <button style="background:linear-gradient(135deg,#ef4444,#b91c1c); color:#fff; border:none; padding:8px 24px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'Cairo',sans-serif;" onclick="handleGuestSignOut()" data-i18n="signout_btn_confirm">Sign Out</button>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../AfterSign/booking-modal.js"></script>
+<script src="../i18n.js"></script>
 
 <script>
 // ===== STATE =====
@@ -1926,7 +1923,10 @@ const initials   = guestName.split(' ').map(w => w[0]).slice(0,2).join('').toUpp
 document.getElementById('headerAvatar').textContent = initials;
 document.getElementById('sidebarName').textContent  = guestName;
 document.getElementById('dashName').textContent     = firstName + '!';
-
+function translateStatus(s) {
+  const key = 'booking_status_' + (s || '').toLowerCase();
+  return window.T?.[key] || (s ? s.charAt(0).toUpperCase() + s.slice(1) : '');
+}
 // ===== MOCK DATA =====
 const state = {
    facilityBookings: [],
@@ -2006,10 +2006,9 @@ document.getElementById('themeToggle').addEventListener('click', () => {
 function generateCalendar() {
   const { month, year } = state.calendar;
   const today = new Date();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('calMonthLabel').textContent = months[month] + ' ' + year;
+const months = window.T?.month_names || ['January','February','March','April','May','June','July','August','September','October','November','December'];  document.getElementById('calMonthLabel').textContent = months[month] + ' ' + year;
 
-  const days = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+const days = window.T?.day_short_names || ['Su','Mo','Tu','We','Th','Fr','Sa'];
   let html = `<div class="calendar-grid-days mb-2">`;
   days.forEach(d => html += `<div class="cal-day-name">${d}</div>`);
   html += '</div><div class="calendar-grid-days">';
@@ -2041,8 +2040,7 @@ function renderUpcoming() {
   const upcoming = state.bookings.filter(b => b.status === 'confirmed' || b.status === 'pending');
   const el = document.getElementById('upcomingList');
   if (!upcoming.length) {
-    el.innerHTML = '<div class="empty-state"><i class="bi bi-calendar"></i><p>No upcoming bookings.</p></div>';
-    return;
+el.innerHTML = `<div class="empty-state"><i class="bi bi-calendar"></i><p>${window.T?.guest_no_upcoming_bookings || 'No upcoming bookings.'}</p></div>`;    return;
   }
   el.innerHTML = upcoming.map((b, i) => `
     <div class="upcoming-item">
@@ -2052,7 +2050,7 @@ function renderUpcoming() {
         <div class="upcoming-time">${b.date} — ${b.time}</div>
       </div>
       <span class="status-pill ${b.status === 'confirmed' ? 'pill-confirmed' : 'pill-pending'}" style="margin-left:auto;">
-        ${b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+${translateStatus(b.status)}
       </span>
     </div>`).join('');
 }
@@ -2122,7 +2120,7 @@ function renderFacilityBookings(filter) {
                <img src="https://clublywebsite.runasp.net${b.receiptImageUrl}"
                  style="width:48px;height:36px;object-fit:cover;border-radius:6px;cursor:pointer;">
              </a>`
-          : '<span style="color:var(--muted);font-size:.8rem;">No receipt</span>'}
+         : `<span style="color:var(--muted);font-size:.8rem;">${window.T?.no_receipt || 'No receipt'}</span>`}
       </td>
       <td style="padding:12px 16px;">
         <span class="status-pill ${statusMap[b.status?.toLowerCase()] || 'pill-pending'}">
@@ -2214,7 +2212,7 @@ function renderBookings(filter) {
       </td>
       <td style="padding:12px 16px;">
         <span class="status-pill ${statusMap[b.status]}">
-          ${b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+${translateStatus(b.status)}
         </span>
       </td>
 
@@ -2229,7 +2227,9 @@ function filterBookings(filter, el) {
 
 function payBooking(id) {
   const b = state.bookings.find(x => x.id === id);
-  if (b && confirm(`Pay ${b.price} EGP for "${b.name}"?`)) {
+  const msg = (window.T?.guest_confirm_pay || 'Pay {price} EGP for "{name}"?')
+    .replace('{price}', b.price).replace('{name}', b.name);
+  if (b && confirm(msg)) {
     b.status = 'confirmed';
     renderBookings();
     renderPayments();
@@ -2238,7 +2238,8 @@ function payBooking(id) {
 }
 function cancelBooking(id) {
   const b = state.bookings.find(x => x.id === id);
-  if (b && confirm(`Cancel "${b.name}" booking?`)) {
+  const msg = (window.T?.guest_confirm_cancel || 'Cancel "{name}" booking?').replace('{name}', b.name);
+  if (b && confirm(msg)) {
     b.status = 'cancelled';
     renderBookings();
     updateStats();
@@ -2300,8 +2301,8 @@ function renderSchedule() {
                       display:flex;align-items:center;gap:4px;justify-content:flex-end;">
             <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>${r.time}
           </div>
-          <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
-                style="margin-top:6px;display:inline-block;">${r.status}</span>
+        <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">${translateStatus(r.status)}</span>
         </div>
       </div>`).join('');
   }
@@ -2324,9 +2325,9 @@ function renderSchedule() {
         <div class="sched-details">
           <div class="sched-name">${r.name}</div>
           <div class="sched-info" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
-            ${r.participants
+       ${r.participants
               ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
-                   <i class="bi bi-people-fill" style="color:var(--clubly-teal);"></i>${r.participants} participants
+                   <i class="bi bi-people-fill" style="color:var(--clubly-teal);"></i>${r.participants} ${window.T?.booking_col_participants?.toLowerCase() || 'participants'}
                  </span>` : ''}
             ${r.price
               ? `<span style="display:inline-flex;align-items:center;gap:3px;font-size:.78rem;color:var(--muted);">
@@ -2339,8 +2340,8 @@ function renderSchedule() {
                       display:flex;align-items:center;gap:4px;justify-content:flex-end;">
             <i class="bi bi-clock" style="font-size:.8rem;color:var(--muted);"></i>${r.time}
           </div>
-          <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
-                style="margin-top:6px;display:inline-block;">${r.status}</span>
+      <span class="sched-badge ${badgeMap[r.status] || 'badge-pending'}"
+                style="margin-top:6px;display:inline-block;">${translateStatus(r.status)}</span>
         </div>
       </div>`).join('');
   }
@@ -2363,13 +2364,13 @@ function renderPayments() {
   const pending = allInvoices.filter(i => !i.paid).reduce((s, i) => s + i.amount, 0);
   document.getElementById('pay-total').textContent    = paid    + ' EGP';
   document.getElementById('pay-pending').textContent  = pending + ' EGP';
-  document.getElementById('invoiceCount').textContent = allInvoices.length + ' invoices';
+document.getElementById('invoiceCount').textContent = allInvoices.length + ' ' + (window.T?.guest_invoices_label || 'invoices');
 
   if (!allInvoices.length) {
-    document.getElementById('invoiceList').innerHTML = `
+document.getElementById('invoiceList').innerHTML = `
       <div class="empty-state">
         <i class="bi bi-receipt"></i>
-        <p>No invoices yet.</p>
+        <p>${window.T?.guest_no_invoices || 'No invoices yet.'}</p>
       </div>`;
     return;
   }
@@ -2381,27 +2382,27 @@ function renderPayments() {
       </div>
       <div class="invoice-info">
         <div class="invoice-name">
-          ${inv.type === 'facility'
+        ${inv.type === 'facility'
             ? `<span style="font-size:.7rem;background:rgba(46,196,182,.1);color:var(--clubly-teal);
-                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">Facility</span>`
+                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">${window.T?.bp_facility || 'Facility'}</span>`
             : `<span style="font-size:.7rem;background:rgba(232,93,47,.1);color:var(--clubly-accent);
-                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">Activity</span>`}
+                            padding:1px 7px;border-radius:10px;margin-right:6px;font-weight:700;">${window.T?.bp_activity || 'Activity'}</span>`}
           ${inv.name}
         </div>
         <div class="invoice-date">${inv.id} · ${inv.date}</div>
       </div>
       <div style="display:flex; align-items:center; gap:10px;">
         <div class="invoice-amount ${inv.paid ? 'paid' : 'pending'}">${inv.amount} EGP</div>
-     ${inv.paid
+${inv.paid
           ? `<span style="font-size:.78rem;color:#22c55e;font-weight:700;
                           display:inline-flex;align-items:center;gap:4px;">
-               <i class="bi bi-check-circle-fill"></i>Paid
+               <i class="bi bi-check-circle-fill"></i>${window.T?.guest_paid_label || 'Paid'}
              </span>`
           : `<span style="font-size:.78rem;color:#f59e0b;font-weight:700;
                           display:inline-flex;align-items:center;gap:4px;
                           background:rgba(245,158,11,.1);padding:3px 10px;
                           border-radius:20px;border:1px solid rgba(245,158,11,.3);">
-               <i class="bi bi-clock-history"></i>Awaiting Approval
+               <i class="bi bi-clock-history"></i>${window.T?.guest_awaiting_approval || 'Awaiting Approval'}
              </span>`}
       </div>
     </div>`).join('');
@@ -2416,8 +2417,9 @@ function payInvoice(invId) {
     paid: (b.status||'').toLowerCase() === 'approved', type: 'facility', _idx: i
   }));
   const inv = [...actInvoices, ...facInvoices].find(i => i.id === invId);
-if (inv && confirm(`Pay ${inv.amount} EGP for "${inv.name}"?`)) {
-    if (inv.type === 'facility') {
+const payMsg = (window.T?.guest_confirm_pay || 'Pay {price} EGP for "{name}"?')
+    .replace('{price}', inv.amount).replace('{name}', inv.name);
+  if (inv && confirm(payMsg)) {    if (inv.type === 'facility') {
       // حدث الـ facility booking
       const fb = state.facilityBookings[inv._idx];
       if (fb) fb.status = 'Approved';
@@ -2492,7 +2494,7 @@ function updateGuestUnreadBadge() {
   // Notifications page badge
   const badge = document.getElementById('guestUnreadBadge');
   if (badge) {
-    badge.textContent = `${unread} unread`;
+badge.textContent = `${unread} ${window.T?.inbox_unread_count || 'unread'}`;
     badge.style.background  = unread > 0 ? 'rgba(245,158,11,.12)' : 'rgba(100,116,139,.1)';
     badge.style.color       = unread > 0 ? '#b45309' : 'var(--muted)';
     badge.style.borderColor = unread > 0 ? 'rgba(245,158,11,.3)' : 'var(--border)';
@@ -2522,9 +2524,9 @@ function updateGuestUnreadBadge() {
 }
 async function loadGuestNotifications() {
   const listEl = document.getElementById('guestNotifList');
-  if (listEl) listEl.innerHTML = `
+if (listEl) listEl.innerHTML = `
     <div style="text-align:center;padding:50px;color:var(--muted);">
-      <div class="spinner-border spinner-border-sm me-2"></div>Loading…
+      <div class="spinner-border spinner-border-sm me-2"></div>${window.T?.tr_loading_generic || 'Loading…'}
     </div>`;
 
   try {
@@ -2538,7 +2540,7 @@ _guestNotifs = data; // جاهز مع IsRead
     if (listEl) listEl.innerHTML = `
       <div style="text-align:center;padding:50px;color:#ef4444;">
         <i class="bi bi-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:10px;"></i>
-        Failed to load notifications
+        ${window.T?.guest_load_notifs_failed || 'Failed to load notifications'}
       </div>`;
   }
 }
@@ -2577,16 +2579,16 @@ function renderGuestNotifList() {
   const items = _guestNotifsFiltered.slice(start, start + _guestNotifPageSize);
 
   const infoEl = document.getElementById('guestNotifInfo');
-  if (infoEl) infoEl.textContent = total
-    ? `Showing ${start+1}–${Math.min(start+_guestNotifPageSize,total)} of ${total}`
+if (infoEl) infoEl.textContent = total
+    ? `${window.T?.mem_showing || 'Showing'} ${start+1}–${Math.min(start+_guestNotifPageSize,total)} ${window.T?.mem_of || 'of'} ${total}`
     : '';
 
   if (!items.length) {
-    listEl.innerHTML = `
+listEl.innerHTML = `
       <div style="text-align:center;padding:60px 20px;color:var(--muted);">
         <i class="bi bi-bell-slash" style="font-size:2.5rem;opacity:.35;display:block;margin-bottom:12px;"></i>
-        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">No notifications</p>
-        <p style="font-size:.88rem;">Notifications sent to guests will appear here</p>
+        <p style="font-weight:700;color:var(--text);margin-bottom:4px;">${window.T?.inbox_empty_title || 'No notifications'}</p>
+        <p style="font-size:.88rem;">${window.T?.guest_empty_notifs_sub || 'Notifications sent to guests will appear here'}</p>
       </div>`;
     document.getElementById('guestNotifPagination').innerHTML = '';
     return;
@@ -2600,9 +2602,11 @@ function renderGuestNotifList() {
     'default': { icon:'bi-bell-fill',                 bg:'rgba(100,116,139,.12)', color:'#64748b',  pill:'rgba(100,116,139,.15)', pillColor:'#64748b'  },
   };
 
-  const typeLabels = {
-    'Info':'ℹ Info', 'Warning':'⚠ Warning',
-    'Success':'✓ Success', 'Urgent':'🔴 Urgent'
+const typeLabels = {
+    'Info':    'ℹ ' + (window.T?.notif_type_info    || 'Info'),
+    'Warning': '⚠ ' + (window.T?.notif_type_warning || 'Warning'),
+    'Success': '✓ ' + (window.T?.notif_type_success || 'Success'),
+    'Urgent':  '🔴 ' + (window.T?.notif_type_urgent  || 'Urgent')
   };
 
   listEl.innerHTML = items.map(n => {
@@ -2617,10 +2621,10 @@ const d = n.sentAt
       const mins  = Math.floor(diff / 60000);
       const hours = Math.floor(diff / 3600000);
       const days  = Math.floor(diff / 86400000);
-      if      (mins  < 1)  timeStr = 'Just now';
-      else if (mins  < 60) timeStr = `${mins}m ago`;
-      else if (hours < 24) timeStr = `${hours}h ago`;
-      else if (days  < 7)  timeStr = `${days}d ago`;
+  if      (mins  < 1)  timeStr = window.T?.inbox_just_now || 'Just now';
+      else if (mins  < 60) timeStr = `${mins}${window.T?.inbox_mins_ago || 'm ago'}`;
+      else if (hours < 24) timeStr = `${hours}${window.T?.inbox_hours_ago || 'h ago'}`;
+      else if (days  < 7)  timeStr = `${days}${window.T?.inbox_days_ago || 'd ago'}`;
       else timeStr = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
     }
 
@@ -2686,14 +2690,14 @@ const d = n.sentAt
                          padding:3px 10px;border-radius:50px;font-size:.72rem;
                          font-weight:700;background:${cfg.pill};color:${cfg.pillColor};">
               <i class="bi ${cfg.icon}" style="font-size:11px;"></i>
-              ${typeLabels[n.type] || n.type || 'Notification'}
+${typeLabels[n.type] || n.type || window.T?.notif_singular || 'Notification'}
             </span>
-            ${isRead
+        ${isRead
               ? `<span style="font-size:.72rem;color:var(--muted);">
-                   <i class="bi bi-check2-all me-1"></i>Read
+                   <i class="bi bi-check2-all me-1"></i>${window.T?.inbox_status_read || 'Read'}
                  </span>`
               : `<span style="font-size:.72rem;color:var(--clubly-accent);font-weight:700;">
-                   <i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>New
+                   <i class="bi bi-circle-fill me-1" style="font-size:7px;"></i>${window.T?.inbox_status_new || 'New'}
                  </span>`}
           </div>
         </div>
@@ -2790,7 +2794,7 @@ modal.innerHTML = `
             <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 16px;
                          border-radius:50px;font-size:.88rem;font-weight:700;
                          background:${cfg.bg};color:${cfg.color};">
-              <i class="bi ${cfg.icon}"></i>${n.type||'Notification'}
+              <i class="bi ${cfg.icon}"></i>${n.type || window.T?.notif_singular || 'Notification'}
             </span>
           </div>
           <div style="background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);margin-bottom:16px;">
@@ -2805,15 +2809,15 @@ modal.innerHTML = `
           </div>`:''}
           <div style="display:flex;align-items:center;gap:8px;">
             <i class="bi bi-clock" style="color:var(--muted);"></i>
-            <small style="color:var(--muted);">Sent:</small>
+<small style="color:var(--muted);">${window.T?.inbox_detail_sent || 'Sent:'}</small>
             <span style="background:#d4edda;color:#155724;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:600;">${fullDate}</span>
           </div>
         </div>
         <div style="padding:14px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;">
-          <button data-bs-dismiss="modal"
+       <button data-bs-dismiss="modal"
             style="background:var(--bg);border:1px solid var(--border);color:var(--text);
                    padding:8px 20px;border-radius:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;">
-            Close
+            ${window.T?.inbox_btn_close || 'Close'}
           </button>
         </div>
       </div>
@@ -2889,10 +2893,10 @@ async function saveGuestProfile() {
   try {
     const res = await fetch(`${guestApiUrl}/${guestId}`, { method:'PUT', body:fd });
     if (!res.ok) throw new Error();
-    alert('Profile updated!');
+alert(window.T?.guest_profile_updated || 'Profile updated!');
     loadGuestProfile();
   } catch {
-    alert('Failed to save.');
+    alert(window.T?.toast_failed || 'Failed to save.');
   }
 }
 
@@ -2903,20 +2907,20 @@ async function saveGuestPasswordModal() {
   const msgEl    = document.getElementById('guestPassModalMsg');
   msgEl.innerHTML = '';
 
-  if (!currPass) {
-    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Current password is required.</span>';
+if (!currPass) {
+    msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${window.T?.guest_curr_pass_required || 'Current password is required.'}</span>`;
     return;
   }
   if (!newPass || newPass.length < 8) {
-    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">New password must be at least 8 characters.</span>';
+    msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${window.T?.err_pass_length || 'New password must be at least 8 characters.'}</span>`;
     return;
   }
   if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9])/.test(newPass)) {
-    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%).</span>';
+    msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${window.T?.err_pass_complexity || 'Password must contain uppercase, lowercase, number, and symbol (e.g. @#$%).'}</span>`;
     return;
   }
   if (newPass !== confPass) {
-    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Passwords do not match.</span>';
+    msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${window.T?.err_pass_match || 'Passwords do not match.'}</span>`;
     return;
   }
 
@@ -2924,13 +2928,13 @@ async function saveGuestPasswordModal() {
     const fd = new FormData();
     fd.append('CurrentPassword', currPass);
     fd.append('NewPassword', newPass);
-    const res = await fetch(`${guestApiUrl}/${guestId}`, { method: 'PUT', body: fd });
+const res = await fetch(`${guestApiUrl}/${guestId}`, { method: 'PUT', body: fd });
     if (!res.ok) {
       const err = await res.text();
-      msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${err || 'Failed to update password.'}</span>`;
+      msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${err || window.T?.guest_pass_update_failed || 'Failed to update password.'}</span>`;
       return;
     }
-    msgEl.innerHTML = '<span style="color:#22c55e;font-size:.85rem;">✓ Password updated successfully!</span>';
+    msgEl.innerHTML = `<span style="color:#22c55e;font-size:.85rem;">${window.T?.profile_pass_updated || '✓ Password updated successfully!'}</span>`;
     document.getElementById('guestCurrPass').value        = '';
     document.getElementById('guestNewPassModal').value    = '';
     document.getElementById('guestConfirmPassModal').value = '';
@@ -2938,8 +2942,8 @@ async function saveGuestPasswordModal() {
       bootstrap.Modal.getInstance(document.getElementById('guestPassModal')).hide();
       msgEl.innerHTML = '';
     }, 1500);
-  } catch {
-    msgEl.innerHTML = '<span style="color:#ef4444;font-size:.85rem;">Failed to update password.</span>';
+ } catch {
+    msgEl.innerHTML = `<span style="color:#ef4444;font-size:.85rem;">${window.T?.guest_pass_update_failed || 'Failed to update password.'}</span>`;
   }
 }
 // ===== LOAD GUEST DATA FROM API =====
@@ -3127,8 +3131,7 @@ async function loadUpgradePlans() {
     const plans = data.filter(p => (p.status || '').toLowerCase() === 'active');
 
     if (!plans.length) {
-      grid.innerHTML = `<div class="col-12 text-center py-5" style="color:var(--muted);">No plans available right now.</div>`;
-      return;
+grid.innerHTML = `<div class="col-12 text-center py-5" style="color:var(--muted);">${window.T?.plans_no_plans || 'No plans available right now.'}</div>`;      return;
     }
 
     grid.innerHTML = plans.map((p, i) => {
@@ -3149,9 +3152,9 @@ async function loadUpgradePlans() {
                     box-shadow:${featured ? '0 12px 40px rgba(232,93,47,.2)' : '0 2px 12px rgba(0,0,0,.06)'};
                     transform:${featured ? 'translateY(-6px)' : 'none'};">
 
-          ${featured ? `<div style="position:absolute;top:14px;right:14px;
+        ${featured ? `<div style="position:absolute;top:14px;right:14px;
             background:${color};color:#fff;padding:3px 12px;
-            border-radius:20px;font-size:.72rem;font-weight:700;">🏆 Popular</div>` : ''}
+            border-radius:20px;font-size:.72rem;font-weight:700;">🏆 ${window.T?.plans_most_popular || 'Popular'}</div>` : ''}
 
           <div style="width:50px;height:50px;border-radius:12px;
                       background:rgba(255,255,255,0.15);color:${color};
@@ -3165,7 +3168,7 @@ async function loadUpgradePlans() {
           </div>
 
           <div style="font-size:.82rem;color:var(--muted);margin-bottom:14px;">
-            ${duration} month${duration > 1 ? 's' : ''} membership
+${duration} ${duration > 1 ? (window.T?.plans_months || 'months') : (window.T?.plans_month || 'month')} ${window.T?.plans_membership || 'membership'}
           </div>
 
           ${desc ? `
@@ -3184,20 +3187,21 @@ async function loadUpgradePlans() {
                    border:${featured ? 'none' : `2px solid ${color}`};"
             onmouseover="this.style.opacity='.85'"
             onmouseout="this.style.opacity='1'">
-            Get Started ${featured ? '🚀' : '→'}
-          </button>
+${window.T?.plans_get_started || 'Get Started'} ${featured ? '🚀' : '→'}          </button>
         </div>
       </div>`;
     }).join('');
 
   } catch(e) {
-    grid.innerHTML = `<div class="col-12 text-center py-5" style="color:#ef4444;">Failed to load plans.</div>`;
+    grid.innerHTML = `<div class="col-12 text-center py-5" style="color:#ef4444;">${window.T?.plans_error || 'Failed to load plans.'}</div>`;
   }
 }
 
 function requestUpgrade(planId, planName) {
-  if (confirm(`Request upgrade to "${planName}"?\nAdmin will review your request.`)) {
-    alert(`✅ Upgrade request sent for "${planName}"!\nAdmin will contact you soon.`);
+  const confirmMsg = (window.T?.guest_upgrade_confirm || 'Request upgrade to "{name}"?\nAdmin will review your request.').replace('{name}', planName);
+  if (confirm(confirmMsg)) {
+    const successMsg = (window.T?.guest_upgrade_success || '✅ Upgrade request sent for "{name}"!\nAdmin will contact you soon.').replace('{name}', planName);
+    alert(successMsg);
   }
 }
 document.addEventListener('click', function(e) {
@@ -3242,29 +3246,29 @@ initGuestPortal();
       <div style="display:flex;justify-content:space-between;align-items:center;
                   padding:18px 22px 12px;background:linear-gradient(135deg,#0d1b2a,#122236);
                   border-radius:16px 16px 0 0;">
-        <h5 style="margin:0;color:#fff;font-weight:700;">Change Password</h5>
+<h5 style="margin:0;color:#fff;font-weight:700;" data-i18n="profile_change_pass_title">Change Password</h5>
         <button class="btn-close" data-bs-dismiss="modal" style="filter:invert(1);"></button>
       </div>
       <div style="padding:20px 22px;">
         <form id="guestPassForm">
           <div class="mb-3">
-            <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;">Current Password</label>
+           <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;" data-i18n="profile_lbl_curr_pass">Current Password</label>
             <div class="input-group">
-              <input type="password" id="guestCurrPass" class="form-control" placeholder="Current password">
+              <input type="password" id="guestCurrPass" class="form-control" data-i18n-ph="profile_lbl_curr_pass" placeholder="Current password">
               <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button>
             </div>
           </div>
           <div class="mb-3">
-            <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;">New Password</label>
+            <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;" data-i18n="profile_lbl_new_pass">New Password</label>
             <div class="input-group">
-              <input type="password" id="guestNewPassModal" class="form-control" placeholder="New password (min 8 chars)">
+              <input type="password" id="guestNewPassModal" class="form-control" data-i18n-ph="guest_new_pass_ph" placeholder="New password (min 8 chars)">
               <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button>
             </div>
           </div>
           <div class="mb-3">
-            <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;">Confirm New Password</label>
+           <label style="font-weight:600;font-size:.84rem;color:var(--muted);margin-bottom:4px;display:block;" data-i18n="profile_lbl_confirm_pass">Confirm New Password</label>
             <div class="input-group">
-              <input type="password" id="guestConfirmPassModal" class="form-control" placeholder="Confirm new password">
+              <input type="password" id="guestConfirmPassModal" class="form-control" data-i18n-ph="guest_confirm_pass_ph" placeholder="Confirm new password">
               <button class="btn btn-outline-secondary toggle-pw" type="button" tabindex="-1"><i class="bi bi-eye"></i></button>
             </div>
           </div>
@@ -3273,9 +3277,9 @@ initGuestPortal();
       </div>
       <div style="padding:14px 22px;background:var(--bg);border-radius:0 0 16px 16px;
                   border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;">
-        <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+   <button class="btn btn-light" data-bs-dismiss="modal" data-i18n="profile_btn_cancel">Cancel</button>
         <button class="btn btn-success rounded-pill px-4" onclick="saveGuestPasswordModal()">
-          <i class="bi bi-check-lg me-1"></i> Save Password
+          <i class="bi bi-check-lg me-1"></i> <span data-i18n="profile_btn_save_pass">Save Password</span>
         </button>
       </div>
     </div>

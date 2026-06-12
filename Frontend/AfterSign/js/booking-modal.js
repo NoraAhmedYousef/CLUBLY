@@ -131,8 +131,8 @@
           <div class="bp-header">
             <div class="bp-header-icon" id="bpHdrIcon">📅</div>
             <div>
-              <div class="bp-header-label" id="bpHdrLabel">Booking</div>
-              <div class="bp-header-title"  id="bpHdrTitle">Book Now</div>
+  <div class="bp-header-label" id="bpHdrLabel">Booking</div>
+<div class="bp-header-title"  id="bpHdrTitle">${window.T?.bp_book_now || 'Book Now'}</div>
             </div>
             <button class="bp-close" onclick="closeBookingModal()">✕</button>
           </div>
@@ -185,8 +185,7 @@ window.closeBookingModal = function () {
     document.getElementById('bpHdrIcon').textContent      = c.icon;
     document.getElementById('bpHdrIcon').style.background = c.bg;
     document.getElementById('bpHdrLabel').textContent     = c.label;
-    document.getElementById('bpHdrTitle').textContent     = name || 'Book Now';
-  }
+document.getElementById('bpHdrTitle').textContent     = name || (window.T?.bp_book_now || 'Book Now');  }
 
   /* ══════════════════════════════════════════════════════════════════════════
      STEP 1 — BOOKING FORM
@@ -198,12 +197,12 @@ window.closeBookingModal = function () {
                    : trainerForm();
 
     body.innerHTML = `
-      <div class="bp-section-title">Booking Details</div>
+<div class="bp-section-title">${window.T?.bp_booking_details || 'Booking Details'}</div>
       <div id="bpErr" class="bp-error"></div>
       ${formHtml}
       <div class="bp-btn-row">
-        <button class="bp-btn-cancel" onclick="closeBookingModal()">Cancel</button>
-        <button class="bp-btn-primary" onclick="bpStep1Next()">Proceed to payment</button>
+     <button class="bp-btn-cancel" onclick="closeBookingModal()">${window.T?.bp_cancel || 'Cancel'}</button>
+<button class="bp-btn-primary" onclick="bpStep1Next()">${window.T?.bp_proceed || 'Proceed to payment'}</button>
       </div>`;
 
     // Restore values if user hit "Back"
@@ -223,12 +222,11 @@ function activityForm() {
   return `
   <div class="bp-grid">
     <div class="bp-field">
-      <label class="bp-label">Activity</label>
+<label class="bp-label">${window.T?.bp_activity || 'Activity'}</label>
       <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
     </div>
     <div class="bp-field">
-      <label class="bp-label">Number of Participants</label>
-      <div class="bp-number-wrap">
+<label class="bp-label">${window.T?.bp_participants || 'Number of Participants'}</label>      <div class="bp-number-wrap">
         <input type="number" class="bp-input" id="bpParticipants" value="1" min="1" max="200" style="padding-right:36px;">
         <div class="bp-number-arrows">
           <button class="bp-arr" onclick="bpAdj('bpParticipants',1)">▲</button>
@@ -239,16 +237,13 @@ function activityForm() {
   </div>
   <div class="bp-grid bp-grid-1">
     <div class="bp-field">
-      <label class="bp-label">Select Date</label>
-      <input type="date" class="bp-input" id="bpDate" min="${todayStr()}">
-    </div>
+<label class="bp-label">${window.T?.bp_select_date || 'Select Date'}</label>      <input type="date" class="bp-input" id="bpDate" min="${todayStr()}">    </div>
   </div>
   <input type="hidden" id="bpTime" value="">
   <input type="hidden" id="bpEndTime" value="">
   <div class="bp-grid bp-grid-1" id="bpEndDateWrap" style="display:none;">
     <div class="bp-field">
-      <label class="bp-label">End Date</label>
-      <input type="date" class="bp-input" id="bpEndDate" readonly
+<label class="bp-label">${window.T?.bp_end_date || 'End Date'}</label>      <input type="date" class="bp-input" id="bpEndDate" readonly
         style="background:var(--bg,#f0f4f8);color:var(--muted,#64748b);cursor:not-allowed;pointer-events:none;">
     </div>
   </div>`;
@@ -261,29 +256,23 @@ function activityForm() {
     return `
     <div class="bp-grid">
       <div class="bp-field">
-        <label class="bp-label">Facility</label>
+<label class="bp-label">${window.T?.bp_facility || 'Facility'}</label>
         <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
       </div>
       <div class="bp-field">
-        <label class="bp-label">Number of Participants</label>
-        <input type="number" class="bp-input" id="bpParticipants"
-               placeholder="Number of participants" min="1">
-      </div>
+<label class="bp-label">${window.T?.bp_participants || 'Number of Participants'}</label>        <input type="number" class="bp-input" id="bpParticipants"
+placeholder="${window.T?.bp_participants || 'Number of participants'}" min="1">      </div>
     </div>
     <div class="bp-grid">
       <div class="bp-field">
-        <label class="bp-label">Select Date</label>
-        <input type="date" class="bp-input" id="bpDate" min="${todayStr()}">
-      </div>
+<label class="bp-label">${window.T?.bp_select_date || 'Select Date'}</label>        <input type="date" class="bp-input" id="bpDate" min="${todayStr()}">      </div>
       <div class="bp-field">
-        <label class="bp-label">Select Time</label>
-        <input type="time" class="bp-input" id="bpTime">
+<label class="bp-label">${window.T?.bp_select_time || 'Select Time'}</label>        <input type="time" class="bp-input" id="bpTime">
       </div>
     </div>
     <div class="bp-grid bp-grid-1">
       <div class="bp-field">
-        <label class="bp-label">End Time</label>
-        <input type="time" class="bp-input" id="bpEndTime"
+<label class="bp-label">${window.T?.bp_end_time || 'End Time'}</label>        <input type="time" class="bp-input" id="bpEndTime"
                style="color:#94a3b8;cursor:not-allowed;" readonly>
       </div>
     </div>`;
@@ -310,19 +299,17 @@ function trainerForm() {
       data-name="${esc(g.name || '')}"
       data-expired="${isExpired}"
       ${isExpired ? 'disabled style="color:#94a3b8;"' : ''}>
-      ${isExpired ? '🔒 ' : ''}${g.name}${g.price ? ' — ' + g.price + ' EGP' : ''}${isExpired ? ' (Expired)' : ''}
+      ${isExpired ? '🔒 ' : ''}${g.name}${g.price ? ' — ' + g.price + ' EGP' : ''}${isExpired ? ' (' + (window.T?.bp_expired || 'Expired') + ')' : ''}
     </option>`;
   }).join('');
 
   return `
   <div class="bp-grid">
     <div class="bp-field">
-      <label class="bp-label">Trainer</label>
-      <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
+<label class="bp-label">${window.T?.bp_trainer_label2 || 'Trainer'}</label>      <input class="bp-input" value="${esc(_ctx.name)}" readonly style="color:#94a3b8;">
     </div>
     <div class="bp-field">
-      <label class="bp-label">Number of Participants</label>
-      <div class="bp-number-wrap">
+<label class="bp-label">${window.T?.bp_participants || 'Number of Participants'}</label>      <div class="bp-number-wrap">
         <input type="number" class="bp-input" id="bpParticipants" value="1" min="1" max="20" style="padding-right:36px;">
         <div class="bp-number-arrows">
           <button class="bp-arr" onclick="bpAdj('bpParticipants',1)">▲</button>
@@ -333,31 +320,25 @@ function trainerForm() {
   </div>
   <div class="bp-grid bp-grid-1">
     <div class="bp-field">
-      <label class="bp-label">Select Group</label>
-      <div class="bp-select-wrap">
+<label class="bp-label">${window.T?.bp_select_group || 'Select Group'}</label>      <div class="bp-select-wrap">
         <select class="bp-select" id="bpTrainerGroup" onchange="bpTrainerGroupChange()">
-          <option value="">Select a group...</option>
-          ${groupOptions}
+<option value="">${window.T?.bp_select_group_ph || 'Select a group...'}</option>          ${groupOptions}
         </select>
       </div>
     </div>
   </div>
   <div id="bpSlotsDisplay" style="display:none;margin-bottom:12px;">
-    <div style="font-size:.75rem;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">Available Time Slots</div>
-    <div id="bpSlotsInner"></div>
+<div style="font-size:.75rem;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">${window.T?.bp_available_slots || 'Available Time Slots'}</div>    <div id="bpSlotsInner"></div>
   </div>
   <div class="bp-grid">
     <div class="bp-field">
-      <label class="bp-label">Start Date</label>
-      <input type="date" class="bp-input" id="bpDate" value="${todayStr()}" readonly
+<label class="bp-label">${window.T?.bp_start_date || 'Start Date'}</label>      <input type="date" class="bp-input" id="bpDate" value="${todayStr()}" readonly
         style="background:#f0f4f8;color:#64748b;cursor:not-allowed;pointer-events:none;">
       <div style="font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;">
-        <i class="bi bi-lock-fill" style="font-size:.6rem"></i> Today's date
-      </div>
+<i class="bi bi-lock-fill" style="font-size:.6rem"></i> ${window.T?.bp_today_date || "Today's date"}      </div>
     </div>
     <div class="bp-field">
-      <label class="bp-label">End Date</label>
-      <input type="date" class="bp-input" id="bpEndDate" readonly
+<label class="bp-label">${window.T?.bp_end_date || 'End Date'}</label>      <input type="date" class="bp-input" id="bpEndDate" readonly
         style="background:#f0f4f8;color:#64748b;cursor:not-allowed;pointer-events:none;">
       <div id="bpEndDateNote" style="font-size:.68rem;font-weight:700;color:#e85d2f;margin-top:3px;"></div>
     </div>
@@ -383,8 +364,8 @@ window.bpTrainerGroupChange = function() {
     // إظهار رسالة خطأ
     const errEl = document.getElementById('bpErr');
     if (errEl) {
-      errEl.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i>
-        This group has already ended — booking is no longer available.`;
+    errEl.innerHTML = `<i class="bi bi-x-circle-fill me-1"></i>
+        ${window.T?.group_ended_msg || 'This group has already ended — booking is no longer available.'}`;
       errEl.style.display = 'block';
     }
     // إخفاء الـ slots display
@@ -432,8 +413,7 @@ window.bpTrainerGroupChange = function() {
     d.setDate(d.getDate() + parseInt(duration));
     endDateEl.value = d.toISOString().split('T')[0];
     if (endDateNote) endDateNote.innerHTML =
-      `<i class="bi bi-lock-fill" style="font-size:.6rem"></i> Calculated from duration (${duration} days)`;
-  }
+`<i class="bi bi-lock-fill" style="font-size:.6rem"></i> ${(window.T?.group_calc_duration || 'Calculated from duration')} (${duration} ${window.T?.group_days_label || 'days'})`;  }
 
   _ctx.slotPrice  = parseFloat(price) || 0;
   _ctx.groupName  = gname;
@@ -444,16 +424,15 @@ window.bpTrainerGroupChange = function() {
   window.bpStep1Next = function () {
     const date = v('bpDate');
     const time = v('bpTime');
-   if (!date) { showErr('Please select a date.'); return; }
-if (_ctx.type === 'trainer' && !v('bpTrainerGroup')) { showErr('Please select a group.'); return; }
-if (_ctx.type !== 'activity' && _ctx.type !== 'trainer' && !time) { showErr('Please select a time.'); return; }
+  if (!date) { showErr(window.T?.bp_err_select_date || 'Please select a date.'); return; }
+if (_ctx.type === 'trainer' && !v('bpTrainerGroup')) { showErr(window.T?.bp_err_select_group || 'Please select a group.'); return; }
+if (_ctx.type !== 'activity' && _ctx.type !== 'trainer' && !time) { showErr(window.T?.bp_err_select_time || 'Please select a time.'); return; }
 const isFacility = _ctx.type === 'facility';
 const isActivity = _ctx.type === 'activity';
 const dur     = (isFacility || isActivity) ? '' : v('bpDuration');
 const endTime = isFacility ? v('bpEndTime') : '';
 
-if (!isFacility && !isActivity && !dur) { showErr('Please select a duration.'); return; }
-
+if (!isFacility && !isActivity && !dur) { showErr(window.T?.bp_err_select_duration || 'Please select a duration.'); return; }
     const base = { activity:150, facility:200, trainer:300 };
     // For facility, calculate mins from start→end; fallback 60
     let mins = 60;
@@ -489,11 +468,14 @@ if (!isFacility && !isActivity && !dur) { showErr('Please select a duration.'); 
   function renderPayment() {
     document.getElementById('bpHdrIcon').textContent      = '💳';
     document.getElementById('bpHdrIcon').style.background = 'rgba(232,93,47,.18)';
-    document.getElementById('bpHdrLabel').textContent     = 'Payment';
-    document.getElementById('bpHdrTitle').textContent     = 'Payment Details';
+   document.getElementById('bpHdrLabel').textContent     = window.T?.bp_payment_label || 'Payment';
+document.getElementById('bpHdrTitle').textContent     = window.T?.bp_payment_details || 'Payment Details';
 
-    const typeLabel = { activity:'Activity', facility:'Facility', trainer:'Trainer' };
-    const durLabel  = fmtDur(_formData.duration);
+const typeLabel = {
+  activity: window.T?.bp_activity || 'Activity',
+  facility: window.T?.bp_facility || 'Facility',
+  trainer:  window.T?.bp_trainer  || 'Trainer'
+};    const durLabel  = fmtDur(_formData.duration);
 
   const endDateEl = document.getElementById('bpEndDate');
 const endDateVal = endDateEl ? endDateEl.value : '';
@@ -506,48 +488,48 @@ const trainerSlots = window.bpTrainerGroupChange
 
 const rows = [
   [typeLabel[_formData.type]||'Item', _formData.name],
-  ...(_formData.groupName ? [['Group', _formData.groupName]] : []),
-  ['Date', fmtDate(_formData.date)],
-  ...(_formData.endDate ? [['End Date', fmtDate(_formData.endDate)]] : []),
+  ...(_formData.groupName ? [[window.T?.bp_group || 'Group', _formData.groupName]] : []),
+  [window.T?.bp_date || 'Date', fmtDate(_formData.date)],
+  ...(_formData.endDate ? [[window.T?.bp_end_date || 'End Date', fmtDate(_formData.endDate)]] : []),
   ...(_formData.type === 'facility'
-    ? [['Time', fmtTime(_formData.time)], ['End Time', fmtTime(_formData.endTime)]]
+    ? [[window.T?.bp_time || 'Time', fmtTime(_formData.time)], [window.T?.bp_end_time || 'End Time', fmtTime(_formData.endTime)]]
     : []),
   ...(_formData.type === 'trainer' && trainerSlots.length
-    ? trainerSlots.map(s => [s.day ? `Slot (${s.day})` : 'Slot', `${s.start} → ${s.end}`])
+    ? trainerSlots.map(s => [s.day ? `${window.T?.bp_slot || 'Slot'} (${s.day})` : (window.T?.bp_slot || 'Slot'), `${s.start} → ${s.end}`])
     : []),
-  ['Participants', _formData.participants],
-  ...(_ctx.slotPrice > 0 ? [['Price per person', `${_ctx.slotPrice} EGP`]] : []),
+  [window.T?.bp_participants || 'Participants', _formData.participants],
+  ...(_ctx.slotPrice > 0 ? [[window.T?.bp_price_per_person || 'Price per person', `${_ctx.slotPrice} EGP`]] : []),
 ];
-    if (_formData.trainer && _formData.trainer !== '')
-      rows.push(['Trainer', trainerName(_formData.trainer)]);
+  if (_formData.trainer && _formData.trainer !== '')
+      rows.push([window.T?.bp_trainer_label2 || 'Trainer', trainerName(_formData.trainer)]);
     if (_formData.sessionType)
-      rows.push(['Session', cap(_formData.sessionType)]);
+      rows.push([window.T?.bp_session || 'Session', cap(_formData.sessionType)]);
 
     const rowsHtml = rows.map(([l, val]) =>
       `<div class="bp-pay-row"><span>${l}:</span><span>${val||'—'}</span></div>`
     ).join('');
 
-    document.getElementById('bpBody').innerHTML = `
-      <div class="bp-section-title" style="color:#e85d2f;">Payment Details</div>
+document.getElementById('bpBody').innerHTML = `
+      <div class="bp-section-title" style="color:#e85d2f;">${window.T?.bp_payment_details || 'Payment Details'}</div>
 
       <div class="bp-pay-info">
-        <div class="bp-pay-info-title">Booking Information</div>
+        <div class="bp-pay-info-title">${window.T?.bp_booking_info || 'Booking Information'}</div>
         ${rowsHtml}
         <div class="bp-total-row">
-          <span>Total Price :</span>
+          <span>${window.T?.bp_total_price || 'Total Price'} :</span>
           <span class="bp-total-price">${_formData.price.toFixed(0)} EGP</span>
         </div>
       </div>
 
       <div class="bp-tabs">
-        <button class="bp-tab active" id="tabI" onclick="bpTab('I')">InstaPay</button>
-        <button class="bp-tab"        id="tabW" onclick="bpTab('W')">E-Wallets</button>
+        <button class="bp-tab active" id="tabI" onclick="bpTab('I')">${window.T?.bp_instapay || 'InstaPay'}</button>
+        <button class="bp-tab"        id="tabW" onclick="bpTab('W')">${window.T?.bp_ewallets || 'E-Wallets'}</button>
       </div>
 
       <div id="panelI">
         <div class="bp-info-box" style="background:#f0f9ff;color:#0369a1;">
-          📱 Receiver InstaPay Number: <strong>01012345678</strong><br>
-          🏦 Receiver Account: <strong>clubly@instapay</strong>
+          📱 ${window.T?.bp_receiver_instapay || 'Receiver InstaPay Number'}: <strong>01012345678</strong><br>
+          🏦 ${window.T?.bp_receiver_account || 'Receiver Account'}: <strong>clubly@instapay</strong>
         </div>
         ${payFields('I', _formData.price)}
       </div>
@@ -563,10 +545,10 @@ const rows = [
 
       <div id="bpErr" class="bp-error" style="margin-top:14px;"></div>
 
-      <div class="bp-btn-row">
-        <button class="bp-btn-cancel" onclick="bpBack()">← Back</button>
+    <div class="bp-btn-row">
+        <button class="bp-btn-cancel" onclick="bpBack()">${window.T?.bp_back || '← Back'}</button>
         <button class="bp-btn-primary" id="bpPayBtn" onclick="bpPay()">
-          Complete Payment
+          ${window.T?.bp_complete || 'Complete Payment'}
         </button>
       </div>`;
   }
@@ -575,22 +557,22 @@ const rows = [
     return `
     <div class="bp-grid">
       <div class="bp-field">
-        <label class="bp-label">Amount (EGP)</label>
-        <input class="bp-input" id="bpAmt${suf}" type="number"
-               value="${price.toFixed(0)}" placeholder="Amount">
+<label class="bp-label">${window.T?.bp_amount || 'Amount (EGP)'}</label>
+  <input class="bp-input" id="bpAmt${suf}" type="number"
+               value="${price.toFixed(0)}" placeholder="${window.T?.bp_amount || 'Amount'}" readonly>
       </div>
       <div class="bp-field">
-        <label class="bp-label">Transaction ID</label>
-        <input class="bp-input" id="bpTx${suf}" placeholder="Transaction ID">
+        <label class="bp-label">${window.T?.bp_transaction_id || 'Transaction ID'}</label>
+        <input class="bp-input" id="bpTx${suf}" placeholder="${window.T?.bp_transaction_id || 'Transaction ID'}">
       </div>
     </div>
     <div class="bp-field" style="margin-bottom:4px;">
-<label class="bp-label">Upload Receipt <span style="color:#e53e3e">*</span></label>
+<label class="bp-label">${window.T?.bp_upload_receipt || 'Upload Receipt'} <span style="color:#e53e3e">*</span></label>
       <label class="bp-upload" id="bpUL${suf}">
         <input type="file" accept="image/*,application/pdf"
                onchange="bpFile(this,'${suf}')">
         <div class="bp-upload-icon">📎</div>
-        <div class="bp-upload-text" id="bpUT${suf}">Click to upload receipt</div>
+        <div class="bp-upload-text" id="bpUT${suf}">${window.T?.bp_click_upload || 'Click to upload receipt'}</div>
       </label>
     </div>`;
   }
@@ -630,20 +612,19 @@ function formatTime(t) {
 }
 window.bpPay = async function () {
     const suf = document.getElementById('tabI').classList.contains('active') ? 'I' : 'W';
-    if (!v('bpAmt' + suf)) { showErr('Please enter the amount.');         return; }
-    if (!v('bpTx'  + suf)) { showErr('Please enter the Transaction ID.'); return; }
+  if (!v('bpAmt' + suf)) { showErr(window.T?.bp_err_enter_amount || 'Please enter the amount.');         return; }
+    if (!v('bpTx'  + suf)) { showErr(window.T?.bp_err_enter_txid || 'Please enter the Transaction ID.'); return; }
 if (!window._bpReceiptFile) { 
-  showErr('Please upload the receipt.'); 
+  showErr(window.T?.bp_err_upload_receipt || 'Please upload the receipt.'); 
   return; 
 }
     const btn = document.getElementById('bpPayBtn');
     btn.disabled  = true;
-    btn.innerHTML = '⏳ Processing…';
+    btn.innerHTML = window.T?.bp_processing || '⏳ Processing…';
 
     try {
       const memberId = localStorage.getItem('userId');
-      if (!memberId) { showErr('Please sign in first.'); btn.disabled=false; btn.innerHTML='Complete Payment'; return; }
-
+if (!memberId) { showErr(window.T?.bp_err_signin || 'Please sign in first.'); btn.disabled=false; btn.innerHTML=window.T?.bp_complete || 'Complete Payment'; return; }
  if (_formData.type === 'facility') {
         const facPayload = {
           facilityId:         _ctx.id,
@@ -657,7 +638,7 @@ endTime:   formatTime(_formData.endTime),
           participants:       parseInt(_formData.participants) || 1,
           paymentMethod:      suf === 'I' ? 'InstaPay' : 'E-Wallet',
           transactionId:      v('bpTx' + suf),
-          price:              parseFloat(v('bpAmt' + suf)) || _formData.price,
+price: _formData.price,
           // السطر المهم اللي كان ناقص:
           receiptImageUrl:    window._bpReceiptBase64 || "" 
         };
@@ -678,7 +659,7 @@ fd2.append('endTime',            formatTime(_formData.endTime));
 fd2.append('participants',       parseInt(_formData.participants) || 1);
 fd2.append('paymentMethod',      suf === 'I' ? 'InstaPay' : 'E-Wallet');
 fd2.append('transactionId',      v('bpTx' + suf));
-fd2.append('price',              parseFloat(v('bpAmt' + suf)) || _formData.price);
+price: _formData.price,
 fd2.append('receiptImage', window._bpReceiptFile);
 const facRes = await fetch('https://clublywebsite.runasp.net/api/FacilityBookings', {
   method: 'POST',
@@ -688,10 +669,9 @@ const facRes = await fetch('https://clublywebsite.runasp.net/api/FacilityBooking
   const err = await facRes.text(); // ← غير json لـ text
   console.log('ERROR:', err);      // ← هتشوف المشكلة بالظبط
   showErr(err);
-  btn.disabled = false; btn.innerHTML = 'Complete Payment';
+ btn.disabled = false; btn.innerHTML = window.T?.bp_complete || 'Complete Payment';
   return;
 }
-
     // ... داخل ميثود bpPay ...
 } else {
 const fd = new FormData();
@@ -722,33 +702,32 @@ if (window._bpReceiptFile) fd.append('receiptImage', window._bpReceiptFile);
 if (!res.ok) {
   const errText = await res.text();
   console.log('Booking error:', errText);
-  showErr(errText || 'Booking failed. Please try again.');
-          btn.disabled = false; btn.innerHTML = 'Complete Payment';
+showErr(errText || window.T?.bp_err_booking_failed || 'Booking failed. Please try again.');
+          btn.disabled = false; btn.innerHTML = window.T?.bp_complete || 'Complete Payment';
           return;
         }
       }
 
       // Success
-      document.getElementById('bpBody').innerHTML = `
+     document.getElementById('bpBody').innerHTML = `
         <div style="text-align:center;padding:36px 20px;">
           <div style="font-size:3.5rem;margin-bottom:14px;">✅</div>
           <div style="font-size:1.1rem;font-weight:900;color:#1a2332;margin-bottom:8px;">
-            Booking Submitted!
+            ${window.T?.bp_success_title || 'Booking Submitted!'}
           </div>
           <div style="color:#64748b;font-size:.88rem;line-height:1.7;margin-bottom:24px;">
-            Your booking is <strong style="color:#f59e0b;">Pending</strong> approval.<br>
-            We'll confirm once payment is verified.
+            ${(window.T?.bp_success_sub || "Your booking is pending approval. We'll confirm once payment is verified.")
+              .replace(window.T?.bp_pending_label || 'pending', `<strong style="color:#f59e0b;">${window.T?.bp_pending_label || 'Pending'}</strong>`)}
           </div>
           <button class="bp-btn-primary" onclick="closeBookingModal()"
                   style="width:100%;max-width:180px;margin:0 auto;display:block;">
-            Close
+            ${window.T?.bp_close || 'Close'}
           </button>
         </div>`;
-
-    } catch(e) {
-      showErr('Connection error. Please try again.');
+} catch(e) {
+      showErr(window.T?.bp_err_connection || 'Connection error. Please try again.');
       btn.disabled = false;
-      btn.innerHTML = 'Complete Payment';
+      btn.innerHTML = window.T?.bp_complete || 'Complete Payment';
     }
   };
 
@@ -788,10 +767,22 @@ if (!res.ok) {
     const m = +d;
     return m >= 60 ? `${m/60} hour${m>60?'s':''}` : `${m} min`;
   }
-  function trainerName(id) {
+ function trainerName(id) {
     const all = window._allTrainersData || window._trainersData || [];
     const t = all.find(t => (t.Id||t.id) == id);
     return t ? (t.FullName||t.fullName||id) : id;
   }
+
+  window._bpRerender = function () {
+    if (!_ctx) return;
+    const overlay = document.getElementById('bpOverlay');
+    if (overlay && overlay.style.display === 'flex') {
+      if (document.getElementById('bpPayBtn')) {
+        renderPayment();
+      } else {
+        renderStep1();
+      }
+    }
+  };
 
 })();
