@@ -2854,7 +2854,7 @@
       </button>
       <div class="header-user">
 <div class="user-avatar" id="headerAvatar" onclick="showPage('profile')" style="cursor:pointer;">AG</div>      </div>
-      <button class="btn-signout" onclick="showPage('signout')">Sign Out</button>
+<button class="btn-signout" onclick="showPage('signout')" data-i18n="nav_signout">Sign Out</button>
     </div>
   </header>
 
@@ -2863,40 +2863,40 @@
 
     <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-section">My Portal</div>
+<div class="sidebar-section" data-i18n="sidebar_my_portal">My Portal</div>
       <button class="sidebar-link active" onclick="showPage('dashboard')" id="sb-dashboard" data-label="Dashboard">
         <i class="bi bi-speedometer2"></i>
-        <span>Dashboard</span>
+<span data-i18n="nav_dashboard">Dashboard</span>
       </button>
       <button class="sidebar-link" onclick="showPage('reservations')" id="sb-reservations" data-label="Reservations">
         <i class="bi bi-calendar-check"></i>
-        <span>Reservations</span>
+<span data-i18n="sidebar_my_bookings">My Bookings</span>
       </button>
       <button class="sidebar-link" onclick="showPage('schedule')" id="sb-schedule" data-label="Schedule">
         <i class="bi bi-clock-history"></i>
-        <span>Schedule</span>
+<span data-i18n="sidebar_schedule">Schedule</span>
       </button>
       <button class="sidebar-link" onclick="showPage('attendance')" id="sb-attendance" data-label="Attendance">
         <i class="bi bi-person-check"></i>
-        <span>Attendance</span>
+<span data-i18n="mb_attendance">My Attendance</span>
       </button>
       <button class="sidebar-link" onclick="showPage('payments')" id="sb-payments" data-label="Payments">
         <i class="bi bi-receipt"></i>
-        <span>Payments</span>
+<span data-i18n="dash_pricing_payments">Payments</span>
       </button>
 
       <div class="sidebar-divider"></div>
-      <div class="sidebar-section">Account</div>
+<div class="sidebar-section" data-i18n="sidebar_account">Account</div>
       <button class="sidebar-link" onclick="showPage('membership')" id="sb-membership" data-label="Membership">
         <i class="bi bi-credit-card"></i>
-        <span>Membership</span>
+<span data-i18n="mb_membership">Membership</span>
       </button>
 
 
       <button class="sidebar-link" onclick="showPage('notifications')" id="sb-notifications" data-label="Notifications"
         style="position:relative;">
         <i class="bi bi-bell"></i>
-        <span>Notifications</span>
+<span data-i18n="sidebar_my_inbox">Notifications</span>
         <span id="sidebarNotifBadge" style="display:none; background:#e85d2f; color:#fff;
                  font-size:10px; font-weight:900;
                  min-width:18px; height:18px; border-radius:50px;
@@ -2905,25 +2905,25 @@
       </button>
       <button class="sidebar-link" onclick="showPage('ai')" id="sb-ai" data-label="AI Assistant">
         <i class="bi bi-robot"></i>
-        <span>AI Assistant</span>
+<span data-i18n="mb_ai_assistant">AI Assistant</span>
       </button>
       <button class="sidebar-link" onclick="showPage('sports-ai')" id="sb-sports-ai" data-label="Sports AI">
         <i class="bi bi-trophy"></i>
-        <span>AI Recommendation System</span>
+<span data-i18n="mb_sports_ai">AI Recommendation System</span>
       </button>
       <button class="sidebar-link" onclick="showPage('medical-ai')" id="sb-medical-ai" data-label="Medical AI">
         <i class="bi bi-heart-pulse-fill" style="color:#10b981;"></i>
-        <span>Medical AI</span>
+<span data-i18n="mb_medical_ai">Medical AI</span>
       </button>
       <button class="sidebar-link" onclick="showPage('profile')" id="sb-profile" data-label="Profile">
         <i class="bi bi-person-circle"></i>
-        <span>Profile</span>
+<span data-i18n="sidebar_my_profile">Profile</span>
       </button>
       <div class="sidebar-divider"></div>
       <button class="sidebar-link" onclick="showPage('signout')" id="sb-signout" style="color:rgba(239,68,68,.8);"
         data-label="Sign Out">
         <i class="bi bi-box-arrow-right"></i>
-        <span>Sign Out</span>
+<span data-i18n="nav_signout">Sign Out</span>
       </button>
     </aside>
 
@@ -2934,7 +2934,7 @@
       <div class="page active" id="page-dashboard">
         <div class="page-header-clubly">
           <div>
-            <h1 class="page-title-clubly">Welcome back, <span style="color:var(--clubly-accent)">Sara!</span></h1>
+<h1 class="page-title-clubly"><span data-i18n="guest_welcome">Welcome</span> back, <span style="color:var(--clubly-accent)">Sara!</span></h1>
             <p style="color:var(--muted); margin-top:4px; font-size:.9rem;">Here's what's happening with your
               membership.</p>
           </div>
@@ -2945,28 +2945,28 @@
           <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-blue"><i class="fas fa-book-open"></i></div>
-              <div class="stat-label">My Bookings</div>
+<div class="stat-label" data-i18n="mb_stat_bookings">My Bookings</div>
               <div class="stat-value" id="dash-bookings">5</div>
             </div>
           </div>
           <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-green"><i class="fas fa-running"></i></div>
-              <div class="stat-label">Activities Joined</div>
+<div class="stat-label" data-i18n="mb_stat_activities">Activities Joined</div>
               <div class="stat-value" id="dash-activities">12</div>
             </div>
           </div>
           <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-orange"><i class="fas fa-clock"></i></div>
-              <div class="stat-label">Membership Days Left</div>
+<div class="stat-label" data-i18n="mb_stat_days">Membership Days Left</div>
               <div class="stat-value" id="dash-days">156 <span class="stat-unit">days</span></div>
             </div>
           </div>
           <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-teal"><i class="fas fa-hourglass-half"></i></div>
-              <div class="stat-label">Hours This Month</div>
+<div class="stat-label" data-i18n="mb_stat_hours">Hours This Month</div>
               <div class="stat-value" id="dash-hours">24 <span class="stat-unit">hrs</span></div>
             </div>
           </div>
@@ -2977,7 +2977,7 @@
           <div class="col-lg-8">
             <div class="content-card h-100">
               <div class="card-title-clubly d-flex justify-content-between align-items-center">
-                <span>Monthly Activity Calendar</span>
+<span data-i18n="mb_cal_title">Monthly Activity Calendar</span>
                 <div class="d-flex align-items-center gap-2">
                   <button class="cal-nav-btn" onclick="changeMonth(-1)"><i class="bi bi-chevron-left"></i></button>
                   <span id="calMonthLabel"
@@ -2990,7 +2990,7 @@
           </div>
           <div class="col-lg-4">
             <div class="content-card h-100">
-              <div class="card-title-clubly">Upcoming Reservations</div>
+<div class="card-title-clubly" data-i18n="mb_upcoming_res">Upcoming Reservations</div>
               <div id="upcomingResList"></div>
             </div>
           </div>
@@ -3001,12 +3001,11 @@
       <div class="page" id="page-reservations">
         <div class="page-header-clubly">
           <div>
-            <h1 class="page-title-clubly">My Bookings</h1>
-            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">View all your activity and facility
-              reservations</p>
+<h1 class="page-title-clubly" data-i18n="sidebar_my_bookings">My Bookings</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="guest_bookings_sub">All your activity and facility reservations</p>
           </div>
           <button class="btn-clubly-primary" onclick="loadMemberBookings()">
-            <i class="bi bi-arrow-clockwise"></i> Refresh
+<i class="bi bi-arrow-clockwise"></i> <span data-i18n="mb_refresh">Refresh</span>
           </button>
         </div>
 
@@ -3014,21 +3013,21 @@
         <ul class="nav nav-tabs mb-3" id="memberBookingTabs">
           <li class="nav-item">
             <button class="nav-link active" onclick="switchMemberTab('activity')">
-              <i class="bi bi-calendar-check me-1"></i> Activity Bookings
+<i class="bi bi-calendar-check me-1"></i> <span data-i18n="guest_activity_bookings_tab">Activity Bookings</span>
             </button>
           </li>
           <li class="nav-item">
             <button class="nav-link" onclick="switchMemberTab('facility')">
-              <i class="bi bi-building me-1"></i> Facility Bookings
+<i class="bi bi-building me-1"></i> <span data-i18n="guest_facility_bookings_tab">Facility Bookings</span>
             </button>
           </li>
         </ul>
         <!-- فلاتر الحالة -->
         <div class="notif-tabs mb-3" id="memberStatusTabs">
-          <button class="notif-tab active" onclick="filterMemberStatus('all', this)">All</button>
-          <button class="notif-tab" onclick="filterMemberStatus('approved', this)">Approved</button>
-          <button class="notif-tab" onclick="filterMemberStatus('pending', this)">Pending</button>
-          <button class="notif-tab" onclick="filterMemberStatus('cancelled', this)">Cancelled</button>
+         <button class="notif-tab active" onclick="filterMemberStatus('all', this)" data-i18n="booking_filter_all">All</button>
+          <button class="notif-tab" onclick="filterMemberStatus('approved', this)" data-i18n="booking_filter_approved">Approved</button>
+          <button class="notif-tab" onclick="filterMemberStatus('pending', this)" data-i18n="booking_filter_pending">Pending</button>
+          <button class="notif-tab" onclick="filterMemberStatus('cancelled', this)" data-i18n="booking_filter_cancelled">Cancelled</button>
         </div>
         <!-- Activity Bookings -->
         <div id="mem-tab-activity">
@@ -3036,20 +3035,20 @@
             <div style="overflow-x:auto;">
               <table class="table table-hover align-middle mb-0" style="min-width:900px; font-size:.88rem;">
                 <thead style="background:var(--table-head);">
-                  <tr>
-                    <th style="padding:12px 16px;">#</th>
-                    <th style="padding:12px 16px;">Activity</th>
-                    <th>Trainer</th>
-                    <th style="padding:12px 16px;">Group</th>
-                    <th style="padding:12px 16px;">Start Date</th>
-                    <th style="padding:12px 16px;">End Date</th>
-                    <th style="padding:12px 16px;">Start Time</th>
-                    <th style="padding:12px 16px;">End Time</th>
-                    <th style="padding:12px 16px;">Price</th>
-                    <th style="padding:12px 16px;">Payment</th>
-                    <th style="padding:12px 16px;">Transaction ID</th>
-                    <th style="padding:12px 16px;">Receipt</th>
-                    <th style="padding:12px 16px;">Status</th>
+              <tr>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_num">#</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_activity">Activity</th>
+                    <th data-i18n="booking_col_trainer">Trainer</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_group">Group</th>
+                    <th style="padding:12px 16px;" data-i18n="guest_col_start_date">Start Date</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_end_date">End Date</th>
+                    <th style="padding:12px 16px;" data-i18n="guest_col_start_time">Start Time</th>
+                    <th style="padding:12px 16px;" data-i18n="guest_col_end_time">End Time</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_price">Price</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_payment">Payment</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_transaction">Transaction ID</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_receipt">Receipt</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_status">Status</th>
                   </tr>
                 </thead>
                 <tbody id="mem-activity-body">
@@ -3068,18 +3067,17 @@
             <div style="overflow-x:auto;">
               <table class="table table-hover align-middle mb-0" style="min-width:900px; font-size:.88rem;">
                 <thead style="background:var(--table-head);">
-                  <tr>
-                    <th style="padding:12px 16px;">#</th>
-                    <th style="padding:12px 16px;">Facility</th>
-                    <th style="padding:12px 16px;">Date</th>
-                    <th style="padding:12px 16px;">Time</th>
-                    <th style="padding:12px 16px;">Participants</th>
-                    <th style="padding:12px 16px;">Price</th>
-                    <th style="padding:12px 16px;">Payment</th>
-                    <th style="padding:12px 16px;">Transaction ID</th>
-
-                    <th style="padding:12px 16px;">Receipt</th>
-                    <th style="padding:12px 16px;">Status</th>
+                <tr>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_num">#</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_facility">Facility</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_date">Date</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_time">Time</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_participants">Participants</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_price">Price</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_payment">Payment</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_transaction">Transaction ID</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_receipt">Receipt</th>
+                    <th style="padding:12px 16px;" data-i18n="booking_col_status">Status</th>
                   </tr>
                 </thead>
                 <tbody id="mem-facility-body">
@@ -3096,20 +3094,20 @@
       <div class="page" id="page-schedule">
         <div class="page-header-clubly">
           <div>
-            <h1 class="page-title-clubly">My Schedule</h1>
-            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">All your upcoming sessions</p>
+           <h1 class="page-title-clubly" data-i18n="sidebar_schedule">My Schedule</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="guest_schedule_sub">All your upcoming sessions</p>
           </div>
         </div>
 
         <ul class="nav nav-tabs mb-3" id="memberScheduleTabs">
           <li class="nav-item">
             <button class="nav-link active" onclick="switchMemberScheduleType('activity', this)">
-              <i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i>Activity Sessions
+<i class="bi bi-calendar-check-fill me-1" style="color:var(--clubly-accent);"></i><span data-i18n="guest_activity_sessions_tab">Activity Sessions</span>
             </button>
           </li>
           <li class="nav-item">
             <button class="nav-link" onclick="switchMemberScheduleType('facility', this)">
-              <i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i>Facility Bookings
+<i class="bi bi-building-fill me-1" style="color:var(--clubly-teal);"></i><span data-i18n="guest_facility_bookings_tab">Facility Bookings</span>
             </button>
           </li>
         </ul>
@@ -3120,7 +3118,7 @@
             <div id="memberActivityScheduleList"></div>
             <div class="empty-state" id="memberActivitySchedEmpty" style="display:none;">
               <i class="bi bi-calendar-check"></i>
-              <p>No activity sessions found.</p>
+<p data-i18n="guest_no_activity_sessions">No activity sessions found.</p>
             </div>
           </div>
         </div>
@@ -3131,7 +3129,7 @@
             <div id="memberFacilityScheduleList"></div>
             <div class="empty-state" id="memberFacilitySchedEmpty" style="display:none;">
               <i class="bi bi-building"></i>
-              <p>No facility bookings found.</p>
+<p data-i18n="guest_no_fac_bookings">No facility bookings found.</p>
             </div>
           </div>
         </div>
@@ -3139,7 +3137,7 @@
       <!-- ======== PAGE: MEMBERSHIP ======== -->
       <div class="page" id="page-membership">
         <div class="page-header-clubly">
-          <h1 class="page-title-clubly">Membership Status</h1>
+<h1 class="page-title-clubly" data-i18n="mb_membership_status">Membership Status</h1>
         </div>
         <div class="row g-3">
           <div class="col-lg-8">
@@ -3147,30 +3145,29 @@
               <div class="membership-tier" id="mem-tier">Platinum Tier</div>
               <div class="row">
                 <div class="col-4">
-                  <div class="membership-meta">Status</div>
+<div class="membership-meta" data-i18n="mb_mem_status_lbl">Status</div>
                   <div class="membership-value" id="mem-status">Active</div>
                 </div>
                 <div class="col-4">
-                  <div class="membership-meta">Expires On</div>
+<div class="membership-meta" data-i18n="mb_mem_expires">Expires On</div>
                   <div class="membership-value" id="mem-expiry">12/25/2024</div>
                 </div>
                 <div class="col-4">
-                  <div class="membership-meta">Member ID</div>
+<div class="membership-meta" data-i18n="mb_mem_id">Member ID</div>
                   <div class="membership-value" id="mem-id">CBM-7890</div>
                 </div>
               </div>
-              <button class="renew-btn-clubly" data-bs-toggle="modal" data-bs-target="#renewModal">Renew
-                Membership</button>
+            <button class="renew-btn-clubly" data-bs-toggle="modal" data-bs-target="#renewModal" data-i18n="mb_renew_btn">Renew Membership</button>
             </div>
 
             <div class="content-card">
-              <div class="card-title-clubly">Your Benefits</div>
+<div class="card-title-clubly" data-i18n="mb_benefits_title">Your Benefits</div>
               <div id="benefitsList"></div>
             </div>
           </div>
           <div class="col-lg-4">
             <div class="content-card">
-              <div class="card-title-clubly">Payment History</div>
+<div class="card-title-clubly" data-i18n="mb_payment_history">Payment History</div>
               <div id="paymentList"></div>
               <div class="text-center mt-3">
               </div>
@@ -3182,20 +3179,17 @@
       <div class="page" id="page-notifications">
         <div class="page-header-clubly">
           <div>
-            <h1 class="page-title-clubly">Notifications</h1>
-            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">
-              Notifications sent to members
-            </p>
+          <h1 class="page-title-clubly" data-i18n="sidebar_my_inbox">Notifications</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="mb_notif_sub">Notifications sent to members</p>
           </div>
           <div class="d-flex gap-2 align-items-center">
             <span id="memberNotifUnreadCount" class="sched-badge badge-pending"
               style="font-size:.85rem; padding:6px 14px;">0 unread</span>
             <button class="btn-clubly-primary" style="background:linear-gradient(135deg,#22c55e,#16a34a);"
               onclick="markAllMemberNotifsRead()">
-              <i class="bi bi-check2-all"></i> Mark all read
-            </button>
+<i class="bi bi-check2-all"></i> <span data-i18n="inbox_mark_all">Mark all read</span>            </button>
             <button class="btn-clubly-primary" onclick="loadMemberNotifications()">
-              <i class="bi bi-arrow-clockwise"></i> Refresh
+<i class="bi bi-arrow-clockwise"></i> <span data-i18n="mb_refresh">Refresh</span>
             </button>
           </div>
         </div>
@@ -3205,23 +3199,23 @@
           <div class="d-flex flex-wrap gap-3 align-items-center">
             <div class="search-bar-clubly" style="flex:1; min-width:200px; max-width:320px;">
               <i class="bi bi-search" style="color:var(--muted);"></i>
-              <input type="text" id="memberNotifSearch" placeholder="Search notifications..." />
+<input type="text" id="memberNotifSearch" data-i18n-ph="inbox_search_ph" placeholder="Search notifications..." />
             </div>
             <select id="memberNotifFilterType" style="background:var(--card-bg);border:1px solid var(--border);
                border-radius:8px;padding:9px 14px;color:var(--text);
                font-family:inherit;font-size:.88rem;cursor:pointer;">
-              <option value="">All types</option>
-              <option value="Info">ℹ️ Info</option>
-              <option value="Warning">⚠️ Warning</option>
-              <option value="Success">✅ Success</option>
-              <option value="Urgent">🔴 Urgent</option>
+             <option value="" data-i18n="inbox_filter_all_types">All types</option>
+              <option value="Info" data-i18n="notif_opt_info">ℹ️ Info</option>
+              <option value="Warning" data-i18n="notif_opt_warning">⚠️ Warning</option>
+              <option value="Success" data-i18n="notif_opt_success">✅ Success</option>
+              <option value="Urgent" data-i18n="notif_opt_urgent">🔴 Urgent</option>
             </select>
             <select id="memberNotifFilterStatus" style="background:var(--card-bg);border:1px solid var(--border);
                border-radius:8px;padding:9px 14px;color:var(--text);
                font-family:inherit;font-size:.88rem;cursor:pointer;">
-              <option value="">All</option>
-              <option value="unread">Unread</option>
-              <option value="read">Read</option>
+             <option value="" data-i18n="inbox_filter_all_status">All</option>
+              <option value="unread" data-i18n="inbox_filter_unread">Unread</option>
+              <option value="read" data-i18n="inbox_filter_read">Read</option>
             </select>
             <small id="memberNotifInfo" style="color:var(--muted);"></small>
           </div>
@@ -3308,7 +3302,7 @@
       <!-- ======== PAGE: PAYMENTS ======== -->
       <div class="page" id="page-payments">
         <div class="page-header-clubly">
-          <h1 class="page-title-clubly">Payments</h1>
+<h1 class="page-title-clubly" data-i18n="dash_pricing_payments">Payments</h1>
         </div>
 
         <div class="row g-3 mb-3">
@@ -3318,8 +3312,7 @@
                overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);margin-bottom:20px;">
               <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;
                     background:rgba(46,196,182,.12);border-radius:50%;"></div>
-              <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
-                    opacity:.65;margin-bottom:4px;">Total Paid</div>
+            <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;opacity:.65;margin-bottom:4px;" data-i18n="guest_total_paid">Total Paid</div>
               <div style="font-size:1.5rem;font-weight:900;position:relative;z-index:1;" id="mem-pay-total">— EGP</div>
             </div>
 
@@ -3328,8 +3321,7 @@
                   overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.2);">
               <div style="position:absolute;bottom:-50px;left:-20px;width:140px;height:140px;
                     background:rgba(232,93,47,.08);border-radius:50%;"></div>
-              <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;
-                    opacity:.65;margin-bottom:4px;">Pending Amount</div>
+             <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;opacity:.65;margin-bottom:4px;" data-i18n="guest_pending_amount">Pending Amount</div>
               <div style="font-size:1.5rem;font-weight:900;position:relative;z-index:1;" id="mem-pay-pending">— EGP
               </div>
               <div style="margin-top:10px;position:relative;z-index:1;">
@@ -3339,8 +3331,7 @@
                        padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;">
                   <span style="width:7px;height:7px;border-radius:50%;background:#f59e0b;
                          display:inline-block;"></span>
-                  Awaiting Payment
-                </span>
+<span data-i18n="guest_awaiting_payment">Awaiting Payment</span>                </span>
               </div>
             </div>
           </div>
@@ -3349,8 +3340,7 @@
             <div class="content-card">
               <div class="card-title-clubly" style="display:flex;align-items:center;
              justify-content:space-between;">
-                <span>Invoice History</span>
-                <span style="font-size:.78rem;color:var(--muted);font-weight:400;" id="mem-invoice-count"></span>
+<span data-i18n="guest_invoice_history">Invoice History</span>                <span style="font-size:.78rem;color:var(--muted);font-weight:400;" id="mem-invoice-count"></span>
               </div>
               <div id="mem-invoice-list">
                 <div class="text-center py-4" style="color:var(--muted);">
@@ -3365,9 +3355,8 @@
       <div class="page" id="page-ai">
         <div class="page-header-clubly">
           <div>
-            <h1 class="page-title-clubly">AI Assistant</h1>
-            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Ask anything about your membership or
-              activities</p>
+           <h1 class="page-title-clubly" data-i18n="mb_ai_assistant">AI Assistant</h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="mb_ai_sub">Ask anything about your membership or activities</p>
           </div>
           <button class="btn-clubly-primary"
             style="background:linear-gradient(135deg,#64748b,#475569);font-size:.82rem;"
@@ -3385,10 +3374,8 @@
               <button class="quick-prompt" data-prompt="أفضل رياضة لخسارة الوزن؟">خسارة الوزن</button>
             </div>
             <div class="chat-input-bar">
-              <input type="text" id="chatInput" placeholder="Ask the assistant anything..." />
-              <button class="send-btn" id="sendBtn">
-                <i class="bi bi-send-fill"></i> Send
-              </button>
+<input type="text" id="chatInput" data-i18n-ph="mb_ai_input_ph" placeholder="Ask the assistant anything..." />              <button class="send-btn" id="sendBtn">
+<i class="bi bi-send-fill"></i> <span data-i18n="mb_send">Send</span>              </button>
             </div>
           </div>
         </div>
@@ -3398,8 +3385,8 @@
       <div class="page" id="page-medical-ai">
         <div class="page-header-clubly">
           <div>
-            <h1 class="page-title-clubly">🩺 Medical <span style="color:var(--clubly-accent);">AI Assistant</span></h1>
-            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">Your personal AI-powered medical advisor</p>
+          <h1 class="page-title-clubly">🩺 <span data-i18n="mb_medical_ai">Medical AI</span> <span style="color:var(--clubly-accent);" data-i18n="mb_medical_ai_sub_title">Assistant</span></h1>
+            <p style="color:var(--muted); font-size:.9rem; margin-top:4px;" data-i18n="mb_medical_ai_sub">Your personal AI-powered medical advisor</p>
           </div>
           <button class="btn-clubly-primary"
             style="background:linear-gradient(135deg,#64748b,#475569);font-size:.82rem;"
@@ -3444,10 +3431,9 @@
 
               <!-- Input Bar -->
               <div class="chat-input-bar">
-                <input type="text" id="medChatInput" placeholder="Ask your medical question..." />
+<input type="text" id="medChatInput" data-i18n-ph="mb_med_input_ph" placeholder="Ask your medical question..." />
                 <button class="med-send-btn" id="medSendBtn">
-                  <i class="bi bi-send-fill"></i> Send
-                </button>
+<i class="bi bi-send-fill"></i> <span data-i18n="mb_send">Send</span>                </button>
               </div>
             </div>
           </div>
@@ -3457,7 +3443,7 @@
       <!-- ======== PAGE: PROFILE ======== -->
       <div class="page" id="page-profile">
         <div class="page-header-clubly">
-          <h1 class="page-title-clubly">Profile & Settings</h1>
+<h1 class="page-title-clubly" data-i18n="mb_profile_title">Profile & Settings</h1>
         </div>
         <div class="row g-3">
           <div class="col-lg-4">
@@ -3473,25 +3459,25 @@
               <span class="member-since-tag">Member Since <span id="memberSinceDisplay">Jan 2022</span></span>
               <div class="mt-3">
                 <input type="file" id="fileInput" accept="image/*" style="display:none;">
-                <button onclick="document.getElementById('fileInput').click()"
+           <button onclick="document.getElementById('fileInput').click()"
                   style="background:none; border:1px solid var(--clubly-accent); color:var(--clubly-accent); padding:6px 18px; border-radius:20px; cursor:pointer; font-family:inherit; font-weight:600; font-size:.85rem;">
-                  <i class="bi bi-camera"></i> Edit Photo
+                  <i class="bi bi-camera"></i> <span data-i18n="mb_edit_photo">Edit Photo</span>
                 </button>
               </div>
             </div>
           </div>
           <div class="col-lg-8">
             <div class="content-card">
-              <div class="card-title-clubly">Personal Information</div>
+<div class="card-title-clubly" data-i18n="profile_personal_title">Personal Information</div>
               <form id="profileForm">
                 <!-- Row 1: First + Last Name -->
                 <div class="row g-3 mb-3">
                   <div class="col-6">
-                    <label class="form-label-clubly">First Name</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_firstname">First Name</label>
                     <input class="form-control-clubly" type="text" id="firstName" value="Sara">
                   </div>
                   <div class="col-6">
-                    <label class="form-label-clubly">Last Name</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_lastname">Last Name</label>
                     <input class="form-control-clubly" type="text" id="lastName" value="Ali">
                   </div>
                 </div>
@@ -3499,14 +3485,14 @@
                 <!-- Row 2: Email + Phone -->
                 <div class="row g-3 mb-3">
                   <div class="col-6">
-                    <label class="form-label-clubly">Email Address</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_email">Email Address</label>
                     <input class="form-control-clubly" type="email" id="emailAddress" value="sara.ali@example.com"
                       disabled>
                     <div style="font-size:.78rem; color:var(--muted); margin-top:4px;">Email cannot be changed here.
                     </div>
                   </div>
                   <div class="col-6">
-                    <label class="form-label-clubly">Phone Number</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_phone">Phone Number</label>
                     <input class="form-control-clubly" type="tel" id="phoneNumber" value="+20 01234567890">
                   </div>
                 </div>
@@ -3514,12 +3500,12 @@
                 <!-- Row 3: National ID + Gender -->
                 <div class="row g-3 mb-3">
                   <div class="col-6">
-                    <label class="form-label-clubly">National ID</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_nid">National ID</label>
                     <input class="form-control-clubly" type="text" id="nationalId" disabled>
                     <div style="font-size:.78rem; color:var(--muted); margin-top:4px;">Cannot be changed.</div>
                   </div>
                   <div class="col-6">
-                    <label class="form-label-clubly">Gender</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_gender">Gender</label>
                     <input class="form-control-clubly" type="text" id="gender" disabled>
                   </div>
                 </div>
@@ -3527,11 +3513,11 @@
                 <!-- Row 4: Date of Birth + Member Type -->
                 <div class="row g-3 mb-3">
                   <div class="col-6">
-                    <label class="form-label-clubly">Date of Birth</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_dob">Date of Birth</label>
                     <input class="form-control-clubly" type="date" id="dateOfBirth" value="1995-05-20">
                   </div>
                   <div class="col-6">
-                    <label class="form-label-clubly">Member Type</label>
+<label class="form-label-clubly" data-i18n="mb_lbl_member_type">Member Type</label>
                     <input class="form-control-clubly" type="text" id="memberType" disabled>
                   </div>
                 </div>
@@ -3539,20 +3525,20 @@
                 <!-- Row 5: Membership Name + Membership Number -->
                 <div class="row g-3 mb-4">
                   <div class="col-6">
-                    <label class="form-label-clubly">Membership Plan</label>
+<label class="form-label-clubly" data-i18n="mb_lbl_membership_plan">Membership Plan</label>
                     <input class="form-control-clubly" type="text" id="membershipPlan" disabled>
                   </div>
                   <div class="col-6">
-                    <label class="form-label-clubly">Membership Number</label>
+<label class="form-label-clubly" data-i18n="mb_lbl_membership_num">Membership Number</label>
                     <input class="form-control-clubly" type="text" id="membershipNumber" disabled>
                   </div>
                 </div>
 
                 <div class="d-flex gap-3 align-items-center flex-wrap">
-                  <button type="submit" class="save-btn-clubly">Save Changes</button>
+<button type="submit" class="save-btn-clubly" data-i18n="profile_btn_save">Save Changes</button>
                   <button type="button" data-bs-toggle="modal" data-bs-target="#passModal"
                     style="background:none; border:none; color:#ef4444; font-weight:700; cursor:pointer; font-family:inherit;">
-                    Change Password
+<span data-i18n="profile_btn_change_pass">Change Password</span>
                   </button>
                 </div>
               </form>
@@ -3566,7 +3552,7 @@
           <div>
             <h1 class="page-title-clubly">
               <i class="bi bi-person-check-fill me-2" style="color:var(--clubly-teal);"></i>
-              My Attendance
+<span data-i18n="mb_attendance">My Attendance</span>
             </h1>
             <p style="color:var(--muted); font-size:.9rem; margin-top:4px;">
               Track your attendance across all your groups
@@ -3582,29 +3568,28 @@
           <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-blue"><i class="bi bi-calendar3"></i></div>
-              <div class="stat-label">Total Sessions</div>
+<div class="stat-label" data-i18n="mb_att_total">Total Sessions</div>
               <div class="stat-value" id="mem-att-total">—</div>
             </div>
           </div>
           <div class="col-6 col-md-6 ">
             <div class="stat-card">
               <div class="stat-icon-box icon-green"><i class="bi bi-check-circle-fill"></i></div>
-              <div class="stat-label">Present</div>
+<div class="stat-label" data-i18n="mb_att_present">Present</div>
               <div class="stat-value" id="mem-att-present" style="color:#22c55e;">—</div>
             </div>
           </div>
           <div class="col-6 col-md-6 col-md-6 col-lg-3">
             <div class="stat-card">
               <div class="stat-icon-box icon-orange"><i class="bi bi-x-circle-fill"></i></div>
-              <div class="stat-label">Absent</div>
+<div class="stat-label" data-i18n="mb_att_absent">Absent</div>
               <div class="stat-value" id="mem-att-absent" style="color:#ef4444;">—</div>
             </div>
           </div>
           <div class="col-6 col-md-6 col-md-6 col-lg-3">
             <div class="stat-card">
               <div class="stat-icon-box icon-teal"><i class="bi bi-percent"></i></div>
-              <div class="stat-label">Attendance Rate</div>
-              <div class="stat-value" id="mem-att-rate" style="color:var(--clubly-teal);">—</div>
+<div class="stat-label" data-i18n="mb_att_rate">Attendance Rate</div>              <div class="stat-value" id="mem-att-rate" style="color:var(--clubly-teal);">—</div>
             </div>
           </div>
         </div>
@@ -3623,10 +3608,10 @@
               <option value="">All Months</option>
             </select>
             <div style="display:flex;gap:6px;flex-wrap:wrap;">
-              <button class="notif-tab active" onclick="setMemAttStatus('all',this)">All</button>
-              <button class="notif-tab" onclick="setMemAttStatus('present',this)">Present</button>
-              <button class="notif-tab" onclick="setMemAttStatus('absent',this)">Absent</button>
-              <button class="notif-tab" onclick="setMemAttStatus('unmarked',this)">Not Marked</button>
+           <button class="notif-tab active" onclick="setMemAttStatus('all',this)" data-i18n="booking_filter_all">All</button>
+              <button class="notif-tab" onclick="setMemAttStatus('present',this)" data-i18n="mb_att_present">Present</button>
+              <button class="notif-tab" onclick="setMemAttStatus('absent',this)" data-i18n="mb_att_absent">Absent</button>
+              <button class="notif-tab" onclick="setMemAttStatus('unmarked',this)" data-i18n="mb_att_not_marked">Not Marked</button>
             </div>
             <small id="memAttInfo" style="color:var(--muted);margin-left:auto;font-size:.8rem;"></small>
           </div>
@@ -3661,14 +3646,12 @@
         <div class="content-card" style="padding:0;">
           <div style="padding:14px 20px;border-bottom:1px solid var(--border);
                 display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-weight:700;font-size:.95rem;">Session Records</span>
-            <span id="memAttRecsCount" style="font-size:.8rem;color:var(--muted);"></span>
+<span style="font-weight:700;font-size:.95rem;" data-i18n="mb_att_session_records">Session Records</span>            <span id="memAttRecsCount" style="font-size:.8rem;color:var(--muted);"></span>
           </div>
           <div id="memAttList">
             <div style="text-align:center;padding:60px 20px;color:var(--muted);">
               <i class="bi bi-person-check" style="font-size:3rem;opacity:.25;display:block;margin-bottom:12px;"></i>
-              <p style="font-weight:700;">Select a group to view your attendance</p>
-            </div>
+<p style="font-weight:700;" data-i18n="mb_att_select_group">Select a group to view your attendance</p>            </div>
           </div>
         </div>
       </div>
@@ -3677,13 +3660,13 @@
         <div class="d-flex align-items-center justify-content-center" style="min-height:60vh;">
           <div class="content-card text-center" style="max-width:420px; width:100%;">
             <div class="signout-icon"><i class="bi bi-box-arrow-right"></i></div>
-            <h4 style="font-weight:900; color:var(--text); margin-bottom:8px;">Confirm Sign Out</h4>
-            <p style="color:var(--muted); margin-bottom:24px;">You will need to sign in again to access your dashboard
-              and reservations.</p>
+            <h4 style="font-weight:900; color:var(--text); margin-bottom:8px;" data-i18n="signout_title">Confirm Sign Out</h4>
+            <p style="color:var(--muted); margin-bottom:24px;" data-i18n="mb_signout_sub">You will need to sign in again to access your dashboard and reservations.</p>
             <div class="d-flex gap-3 justify-content-center">
-              <button class="btn-cancel" onclick="showPage('dashboard')">Cancel</button>
-              <button class="btn-clubly-primary" style="background:linear-gradient(135deg,#ef4444,#dc2626);"
-                onclick="handleSignOut()"> <i class="bi bi-box-arrow-right"></i> Sign Out
+                           <button class="btn-cancel" onclick="showPage('dashboard')" data-i18n="signout_btn_cancel">Cancel</button>
+
+            <button class="btn-clubly-primary" style="background:linear-gradient(135deg,#ef4444,#dc2626);"
+                onclick="handleSignOut()"> <i class="bi bi-box-arrow-right"></i> <span data-i18n="signout_btn_confirm">Sign Out</span>
               </button>
             </div>
           </div>
@@ -3853,8 +3836,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-content-clubly">
         <div class="modal-header-clubly">
-          <h5 style="font-weight:800; color:var(--text);">Renew Membership</h5>
-        </div>
+<h5 style="font-weight:800; color:var(--text);" data-i18n="mb_renew_title">Renew Membership</h5>        </div>
         <div class="modal-body-clubly">
           <p style="color:var(--muted); margin-bottom:16px;">Select your renewal period for <strong
               id="renewTierName">Platinum Tier</strong>:</p>
@@ -3867,8 +3849,8 @@
           <div id="renewMsg" class="mt-3"></div>
         </div>
         <div class="modal-footer-clubly">
-          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn-clubly-primary" id="confirmRenewBtn">Proceed to Payment</button>
+     <button class="btn-cancel" data-bs-dismiss="modal" data-i18n="signout_btn_cancel">Cancel</button>
+          <button class="btn-clubly-primary" id="confirmRenewBtn" data-i18n="bp_proceed">Proceed to Payment</button>
         </div>
       </div>
     </div>
@@ -3879,37 +3861,39 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content modal-content-clubly">
         <div class="modal-header-clubly">
-          <h5 style="font-weight:800; color:var(--text);">Change Password</h5>
+<h5 style="font-weight:800; color:var(--text);" data-i18n="profile_btn_change_pass">Change Password</h5>
         </div>
         <div class="modal-body-clubly">
           <form id="passForm">
             <div class="mb-3">
-              <label class="form-label-clubly">Current Password</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_curr_pass">Current Password</label>
               <input class="form-control-clubly" type="password" id="currPass" required>
             </div>
             <div class="mb-3">
-              <label class="form-label-clubly">New Password</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_new_pass">New Password</label>
               <input class="form-control-clubly" type="password" id="newPass" required>
             </div>
             <div class="mb-3">
-              <label class="form-label-clubly">Confirm New Password</label>
+<label class="form-label-clubly" data-i18n="profile_lbl_confirm_pass">Confirm New Password</label>
               <input class="form-control-clubly" type="password" id="confirmPass" required>
             </div>
             <div id="passMsg" class="mt-2"></div>
           </form>
         </div>
         <div class="modal-footer-clubly">
-          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-          <button class="save-btn-clubly" type="submit" form="passForm">Save Password</button>
+        <button class="btn-cancel" data-bs-dismiss="modal" data-i18n="profile_btn_cancel">Cancel</button>
+          <button class="save-btn-clubly" type="submit" form="passForm" data-i18n="profile_btn_save_pass">Save Password</button>
         </div>
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-   
-const hamburgerBtn = document.getElementById("hamburgerBtn");
+  <script src="../i18n.js"></script>
+ <script>
+if (typeof applyLang === 'function') applyLang();
+
+const hamburgerBtn= document.getElementById("hamburgerBtn");
 const sidebar = document.getElementById("sidebar");
 
 if (hamburgerBtn && sidebar) {
@@ -6299,7 +6283,6 @@ generateCalendar();
       </div>
     </div>
   </div>
-  <script src="js/lang.js"></script>
 
 </body>
 
