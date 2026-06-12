@@ -86,8 +86,113 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);overf
 .role-option span{display:block;font-size:10.5px;font-weight:700;color:var(--muted);}
 .role-option.active{border-color:var(--clubly-accent);background:rgba(232,93,47,.06);}
 .role-option.active span{color:var(--clubly-accent);}
-@media(max-width:768px){.header-nav{display:none;}.clubly-header{padding:0 16px;}.footer-inner{gap:30px;padding:30px 20px;}}
+/* ==========================
+   MOBILE & TABLET HEADER
+   ========================== */
 
+@media (max-width:1024px){
+
+  .clubly-header{
+    padding:0 10px;
+    height:var(--header-h);
+
+    display:flex;
+    align-items:center;
+    flex-wrap:nowrap;
+
+    gap:8px;
+
+    overflow:hidden;
+  }
+
+  /* Logo */
+  .header-logo{
+    flex-shrink:0;
+  }
+
+
+  /* NAVBAR SLIDER */
+  .header-nav{
+    flex:1;
+
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+
+    gap:6px;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    white-space:nowrap;
+
+    padding:0 8px;
+
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+
+  .header-nav::-webkit-scrollbar{
+    display:none;
+  }
+
+  .header-nav a{
+    flex:0 0 auto;
+
+        flex:0 0 auto;
+    padding:7px 14px;
+
+    border-radius:20px;
+  }
+
+  /* Right Side Actions */
+  .header-actions{
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+
+    gap:5px;
+  }
+
+  .btn-theme{
+    width:34px;
+    height:34px;
+    /* font-size:14px; */
+  }
+
+  .btn-signin{
+    padding:6px 10px;
+    /* font-size:.75rem; */
+    white-space:nowrap;
+  }
+
+  .btn-join{
+    padding:6px 10px;
+    /* font-size:.75rem; */
+    white-space:nowrap;
+  }
+
+}
+
+
+/* Small phones */
+@media (max-width:768px){
+
+  .clubly-header{
+    gap:6px;
+    padding:0 6px;
+  }
+
+  .header-nav a{
+      padding:7px 14px;
+      }
+
+  .btn-theme{
+    width:30px;
+    height:30px;
+  }
+}
 /* ── Dark Mode: inline color overrides ─────────────────── */
 [data-theme="dark"] {
   --inline-text: #e2e8f0;
