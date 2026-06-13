@@ -452,21 +452,24 @@ textarea.form-input{resize:vertical;min-height:90px;}
 
 /* ══ HAMBURGER ══ */
 .hamburger-btn {
-  display: none;
-  background: rgba(255,255,255,.1);
+  background: none;
   border: none;
   color: #fff;
-  width: 38px; height: 38px;
-  border-radius: 8px;
-  cursor: pointer;
+font-size: 20px; /* تصغير حجم الأيقونة من 24 إلى 20 */  cursor: pointer;
+  display: flex !important; /* يضمن ظهوره في كل الشاشات */
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
+  width: 35px;  /* تصغير العرض الإجمالي للزرار */
+  height: 35px; /* تصغير الارتفاع الإجمالي للزرار */
+  border-radius: 4px; /* جعل الحواف حادة وانسيابية أكثر */
+  /* transition: background 0.2s ease; */
+  padding: 0;   /* إزالة أي مسافات داخلية زائدة تكبر حجمه */
+  border-radius: 6px;
   transition: background .2s;
 }
-.hamburger-btn:hover { background: rgba(255,255,255,.2); }
-
+.hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
 /* ══ OVERLAY ══ */
 .sidebar-overlay {
   display: none;
@@ -525,6 +528,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
   }
 
   .header-logo{
+    order: 2;
     min-width: fit-content;
     flex-shrink: 0;
     gap: 4px;
@@ -543,14 +547,15 @@ textarea.form-input{resize:vertical;min-height:90px;}
   /* زرار السايد بار */
 .hamburger-btn{
   /* display:flex !important; */
-  display:flex;
+  display:flex !important;
+  order: 1;
   width:38px;
   height:38px;
 
   border:none;
-  border-radius:10px;
+  /* border-radius:10px; */
 
-  background:rgba(255,255,255,.08);
+  /* background:rgba(255,255,255,.08); */
 
   color:#fff;
 
@@ -561,7 +566,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
 
   transition:.2s;
 
-  order:1;
+  /* order:1; */
 
   flex-shrink:0;
 }
@@ -1078,7 +1083,7 @@ img{
   <!-- <button class="toggle-btn" id="toggleBtn" title="Toggle Sidebar">
     <i class="bi bi-list"></i>
   </button> -->
-  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileSidebar()">
+<button class="hamburger-btn" id="hamburgerBtn" onclick="window.innerWidth <= 768 ? toggleMobileSidebar() : toggleSidebar()">
   <i class="bi bi-list"></i>
 </button>
   <a class="header-logo" href="#">
@@ -2198,6 +2203,27 @@ style="font-size:.8rem;font-weight:700;letter-spacing:.5px;width:36px;height:36p
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+  // دالة الـ Toggle للشاشات الكبيرة (التي ستقوم بإضافتها)
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const content = document.querySelector('.content-area');
+    
+    if (sidebar && content) {
+        sidebar.classList.toggle('collapsed');
+        content.classList.toggle('expanded');
+    }
+}
+
+// دالة الموبايل (الموجودة لديك بالفعل)
+function toggleMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    if (sidebar && overlay) {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+    }
+}ذ
   
 // ===== CONFIG =====
 const API = 'https://clublywebsite.runasp.net/api';
