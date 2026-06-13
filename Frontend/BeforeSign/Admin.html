@@ -7246,8 +7246,8 @@ document.getElementById('saveMembershipBtn').onclick = async () => {
   }
 
   // ── Description (optional) ────────────────────────
-  if (descEl.value.trim().length > 500) {
-    msErr(descEl, 'Description cannot exceed 500 characters');
+  if (descEl.value.trim().length > 1000) {
+    msErr(descEl, 'Description cannot exceed 1000 characters');
   }
 
   // ── Duration ──────────────────────────────────────
