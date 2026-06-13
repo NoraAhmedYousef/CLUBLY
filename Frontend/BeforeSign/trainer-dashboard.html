@@ -96,7 +96,7 @@ body{
 }
 .trainer-avatar{
   width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
   display:flex;align-items:center;justify-content:center;
   font-weight:900;font-size:.82rem;color:#fff;
   border:2px solid rgba(46,196,182,.4);
@@ -183,21 +183,36 @@ body{
   z-index:3000;box-shadow:0 4px 12px rgba(0,0,0,.3);
 }
 .sidebar-divider{height:1px;background:rgba(255,255,255,.06);margin:10px 16px;}
-
 /* ======= CONTENT ======= */
 .content-area{
   margin-left:var(--sidebar-w);
+  margin-right:0;
   flex:1;padding:28px;
   min-height:calc(100vh - var(--header-h));
-  transition:margin-left .3s;
+  transition:margin-left .3s, margin-right .3s;
 }
-.content-area.expanded{margin-left:var(--sidebar-mini);}
+.content-area.expanded{
+  margin-left:var(--sidebar-mini);
+  margin-right:0;
+}
+
+[dir="rtl"] .content-area{
+  margin-right:var(--sidebar-w);
+  margin-left:0;
+}
+[dir="rtl"] .content-area.expanded{
+  margin-right:var(--sidebar-mini);
+  margin-left:0;
+}
+[dir="rtl"] .sidebar{
+  left:auto;
+  right:0;
+}
 
 /* ======= PAGES ======= */
 .page{display:none;animation:fadeIn .2s ease;}
 .page.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-
 /* ======= FOOTER ======= */
 .clubly-footer{
   background:var(--clubly-dark);color:rgba(255,255,255,.65);
@@ -277,7 +292,7 @@ body{
 }
 .btn-secondary-cl:hover{border-color:var(--clubly-accent);color:var(--clubly-accent);}
 .btn-teal-cl{
-  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
   color:#fff;border:none;padding:8px 20px;border-radius:50px;
   font-weight:700;font-size:.88rem;cursor:pointer;transition:all .2s;
   display:inline-flex;align-items:center;gap:6px;font-family:inherit;
@@ -388,7 +403,7 @@ textarea.form-input{resize:vertical;min-height:90px;}
 .profile-hero::after{content:'';position:absolute;bottom:-60px;left:60px;width:180px;height:180px;background:rgba(232,93,47,.08);border-radius:50%;}
 .trainer-avatar-big{
   width:90px;height:90px;border-radius:50%;
-  background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);
+  background:linear-gradient(135deg,var(--clubly-accent),#c0392b);
   display:flex;align-items:center;justify-content:center;
   font-size:2.2rem;font-weight:900;color:#fff;
   border:4px solid rgba(46,196,182,.4);flex-shrink:0;
@@ -1121,7 +1136,7 @@ img{
       onclick="clublySetLang(clublyGetLang()==='ar'?'en':'ar')"
 style="font-size:.8rem;font-weight:700;letter-spacing:.5px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;"
       title="التبديل إلى العربية">عر</button>
-<div class="trainer-avatar" onclick="showPage('profile')" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--clubly-teal),#1a9e93);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;color:#fff;border:2px solid rgba(46,196,182,.4);flex-shrink:0;cursor:pointer;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">AK</div>
+<div class="trainer-avatar" onclick="showPage('profile')" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--clubly-accent),#c0392b);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.82rem;color:#fff;border:2px solid rgba(232,93,47,.4);flex-shrink:0;cursor:pointer;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">AK</div>
 <button class="btn-signout" onclick="showPage('signout')" data-i18n="nav_signout">Sign Out</button>
   </div>
 </header>

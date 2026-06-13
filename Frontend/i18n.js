@@ -2918,17 +2918,23 @@ function clublyInjectLangBtn() {
   if (!actions || document.querySelector('.clubly-lang-btn')) return;
 
   const btn = document.createElement('button');
-  btn.className = 'btn-theme clubly-lang-btn';
-  btn.style.cssText = 'font-size:.8rem;font-weight:700;width:38px;height:38px;letter-spacing:.5px;font-family:inherit;';
+ btn.className = 'btn-theme-header clubly-lang-btn';
+btn.style.cssText = 'font-size:.8rem;font-weight:700;letter-spacing:.5px;font-family:inherit;';
   const lang = clublyGetLang();
   btn.textContent = lang === 'ar' ? 'EN' : 'عر';
   btn.title = lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية';
   btn.onclick = () => clublySetLang(clublyGetLang() === 'ar' ? 'en' : 'ar');
 
-  // Insert before the first button (theme toggle)
-  const themeBtn = actions.querySelector('.btn-theme');
-  if (themeBtn) actions.insertBefore(btn, themeBtn);
-  else actions.prepend(btn);
+
+const userAvatar = actions.querySelector('.user-avatar, .header-user');
+if (userAvatar) {
+  const parent = userAvatar.closest('.header-user') || userAvatar;
+  actions.insertBefore(btn, parent);
+} else {
+  const signOutBtn = actions.querySelector('.btn-signout');
+  if (signOutBtn) actions.insertBefore(btn, signOutBtn);
+  else actions.appendChild(btn);
+}
 }
 
 // ── Auto-init ─────────────────────────────────────────────────
