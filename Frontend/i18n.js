@@ -2918,7 +2918,7 @@ function clublyInjectLangBtn() {
   if (!actions || document.querySelector('.clubly-lang-btn')) return;
 
   const btn = document.createElement('button');
- btn.className = 'btn-theme-header clubly-lang-btn';
+btn.className = 'btn-theme-header btn-theme clubly-lang-btn';
 btn.style.cssText = 'font-size:.8rem;font-weight:700;letter-spacing:.5px;font-family:inherit;';
   const lang = clublyGetLang();
   btn.textContent = lang === 'ar' ? 'EN' : 'عر';
@@ -2931,9 +2931,9 @@ if (userAvatar) {
   const parent = userAvatar.closest('.header-user') || userAvatar;
   actions.insertBefore(btn, parent);
 } else {
-  const signOutBtn = actions.querySelector('.btn-signout');
-  if (signOutBtn) actions.insertBefore(btn, signOutBtn);
-  else actions.appendChild(btn);
+const signOutBtn = actions.querySelector('.btn-signout, .btn-signin, .btn-join');
+if (signOutBtn) actions.insertBefore(btn, signOutBtn);
+else actions.appendChild(btn);
 }
 }
 
