@@ -6179,6 +6179,8 @@ window.addEventListener('DOMContentLoaded', async () => {  // Load Members page 
   // Don't auto-load other pages — lazy-load them
  // حط ده
 if (adminId) {
+      loadAdminProfile();
+
   fetch(`${myNotifApi}/for-admin/${adminId}`)
     .then(r => r.ok ? r.json() : [])
     .then(all => {

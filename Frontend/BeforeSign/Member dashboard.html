@@ -2935,7 +2935,10 @@
       <div class="page active" id="page-dashboard">
         <div class="page-header-clubly">
           <div>
-<h1 class="page-title-clubly"><span data-i18n="guest_welcome">Welcome</span> back, <span style="color:var(--clubly-accent)">Sara!</span></h1>
+<h1 class="page-title-clubly">
+  <span data-i18n="guest_welcome">Welcome</span> 
+  <span id="dashWelcomeName" style="color:var(--clubly-accent)">Sara!</span>
+</h1>
             <p style="color:var(--muted); margin-top:4px; font-size:.9rem;">Here's what's happening with your
               membership.</p>
           </div>
@@ -4055,8 +4058,7 @@ if (hamburgerBtn && sidebar) {
       document.getElementById('profileEmailDisplay').textContent = '';
 
       // Welcome message
-      document.querySelector('.page-title-clubly span').textContent = firstName + '!';
-
+document.getElementById('dashWelcomeName').textContent = firstName + '!';
       if (!memberId) return;
 
       try {
@@ -4115,8 +4117,8 @@ if (hamburgerBtn && sidebar) {
         document.querySelector('.user-avatar').textContent = ini;
 
         // Welcome
-        document.querySelector('#page-dashboard .page-title-clubly span').textContent =
-          (parts[0] || 'Member') + '!';
+document.getElementById('dashWelcomeName').textContent =
+  (parts[0] || 'Member') + '!';
 
         // Profile page
         document.getElementById('profileNameDisplay').textContent = m.fullName || '';
