@@ -684,7 +684,8 @@ fd2.append('endTime',            formatTime(_formData.endTime));
 fd2.append('participants',       parseInt(_formData.participants) || 1);
 fd2.append('paymentMethod',      suf === 'I' ? 'InstaPay' : 'E-Wallet');
 fd2.append('transactionId',      v('bpTx' + suf));
-price: _formData.price,
+// ✅ صح
+fd2.append('price', _formData.price);
 fd2.append('receiptImage', window._bpReceiptFile);
 const facRes = await fetch('https://clublywebsite.runasp.net/api/FacilityBookings', {
   method: 'POST',
