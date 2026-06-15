@@ -2088,12 +2088,24 @@ style="font-size:.8rem;font-weight:700;letter-spacing:.5px;width:36px;height:36p
               <input class="form-input" type="number" id="tg_price" min="0" placeholder="e.g. 500">
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-          <label class="form-label" data-i18n="group_lbl_duration">Duration (days)</label>
-              <input class="form-input" type="number" id="tg_duration" min="1" placeholder="e.g. 30">
-            </div>
-          </div>
+       <div class="col-md-4">
+  <div class="form-group">
+    <label class="form-label" data-i18n="group_lbl_duration">Duration (days)</label>
+    <input class="form-input" type="number" id="tg_duration" min="1" placeholder="e.g. 30">
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+    <label class="form-label">Start Date *</label>
+    <input class="form-input" type="date" id="tg_startDate">
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+    <label class="form-label">End Date (auto)</label>
+    <input class="form-input" type="date" id="tg_endDate" readonly style="opacity:.7;">
+  </div>
+</div>
           <div class="col-md-4" style="display:flex;align-items:flex-end;padding-bottom:18px;">
        <span id="tg_activityInfo"
   style="font-size:.78rem;color:var(--muted);font-style:italic;">
@@ -2182,12 +2194,24 @@ style="font-size:.8rem;font-weight:700;letter-spacing:.5px;width:36px;height:36p
               <input class="form-input" type="number" id="etg_price" min="0">
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-             <label class="form-label" data-i18n="group_lbl_duration">Duration (days)</label>
-              <input class="form-input" type="number" id="etg_duration" min="1">
-            </div>
-          </div>
+       <div class="col-md-4">
+  <div class="form-group">
+    <label class="form-label" data-i18n="group_lbl_duration">Duration (days)</label>
+    <input class="form-input" type="number" id="etg_duration" min="1">
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+    <label class="form-label">Start Date *</label>
+    <input class="form-input" type="date" id="etg_startDate">
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="form-group">
+    <label class="form-label">End Date (auto)</label>
+    <input class="form-input" type="date" id="etg_endDate" readonly style="opacity:.7;">
+  </div>
+</div>
           <!-- Time Slots -->
           <div class="col-12">
          <label class="form-label" style="color:var(--clubly-accent);" data-i18n="group_lbl_slots">
@@ -2238,7 +2262,7 @@ function toggleMobileSidebar() {
         sidebar.classList.toggle('open');
         overlay.classList.toggle('active');
     }
-}ذ
+}
   
 // ===== CONFIG =====
 const API = 'https://clublywebsite.runasp.net/api';
@@ -3318,6 +3342,8 @@ function renderGroupsPage() {
               <th>${T.group_col_facility||'Facility'}</th>
               <th style="text-align:center;">${T.group_col_capacity||'Capacity'}</th>
               <th style="text-align:center;">${T.group_col_price||'Price'}</th>
+              <th>Start Date</th>   
+<th>End Date</th>
               <th>${T.group_col_slots||'Time Slots'}</th>
               <th style="text-align:center;">${T.group_col_actions||'Actions'}</th>
             </tr>
@@ -3342,9 +3368,15 @@ function renderGroupsPage() {
                   <td>${g.facilityName||'—'}</td>
                   <td style="text-align:center;font-weight:700;">${g.capacity||'—'}</td>
                   <td style="text-align:center;font-weight:700;color:var(--clubly-accent);">
-                    ${g.price||0} EGP
-                  </td>
-                  <td>${slots||'—'}</td>
+  ${g.price||0} EGP
+</td>
+<td style="font-size:.85rem;color:var(--muted);">
+  ${g.startDate ? g.startDate.split('T')[0] : '—'}
+</td>
+<td style="font-size:.85rem;color:var(--muted);">
+  ${g.endDate ? g.endDate.split('T')[0] : '—'}
+</td>
+<td>${slots||'—'}</td>
                   <td style="text-align:center;">
                     <button onclick="openEditTrainerGroupModal(${g.id})"
                       style="background:rgba(59,130,246,.1);border:none;color:#3b82f6;
@@ -3540,8 +3572,7 @@ async function saveTrainerGroup() {
     errEl.textContent = 'Please add at least one time slot.';
     errEl.style.display = 'block'; return;
   }
-
-  const payload = {
+const payload = {
     Name:       name,
     Capacity:   capacity,
     Code:       document.getElementById('tg_code').value.trim() || null,
@@ -3549,6 +3580,8 @@ async function saveTrainerGroup() {
     TrainerId:  parseInt(trainerId),
     Price:      parseFloat(document.getElementById('tg_price').value) || 0,
     DurationDays: parseInt(document.getElementById('tg_duration').value) || null,
+    StartDate:  document.getElementById('tg_startDate').value || null,
+    EndDate:    document.getElementById('tg_endDate').value   || null,
     Status:     'Active',
     TimeSlots:  slots,
   };
@@ -3636,7 +3669,7 @@ async function updateTrainerGroup() {
     errEl.style.display = 'block'; return;
   }
 
-  const payload = {
+const payload = {
     Name:       name,
     Capacity:   capacity,
     Code:       document.getElementById('etg_code').value.trim() || null,
@@ -3644,10 +3677,11 @@ async function updateTrainerGroup() {
     TrainerId:  parseInt(trainerId),
     Price:      parseFloat(document.getElementById('etg_price').value) || 0,
     DurationDays: parseInt(document.getElementById('etg_duration').value) || null,
+    StartDate:  document.getElementById('etg_startDate').value || null,
+    EndDate:    document.getElementById('etg_endDate').value   || null,
     Status:     'Active',
     TimeSlots:  slots,
   };
-
   try {
     const res = await fetch(`${groupsApiUrl}/${id}`, {
       method: 'PUT',
@@ -3757,7 +3791,25 @@ document.getElementById('attList').innerHTML = `
   }
   loadAttendanceList();
 }
+function autoCalcEndDate(startId, durationId, endId) {
+  const start = document.getElementById(startId)?.value;
+  const dur   = parseInt(document.getElementById(durationId)?.value);
+  if (start && dur) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + dur);
+    document.getElementById(endId).value = d.toISOString().split('T')[0];
+  }
+}
 
+document.getElementById('tg_startDate')?.addEventListener('change', () =>
+  autoCalcEndDate('tg_startDate', 'tg_duration', 'tg_endDate'));
+document.getElementById('tg_duration')?.addEventListener('change', () =>
+  autoCalcEndDate('tg_startDate', 'tg_duration', 'tg_endDate'));
+
+document.getElementById('etg_startDate')?.addEventListener('change', () =>
+  autoCalcEndDate('etg_startDate', 'etg_duration', 'etg_endDate'));
+document.getElementById('etg_duration')?.addEventListener('change', () =>
+  autoCalcEndDate('etg_startDate', 'etg_duration', 'etg_endDate'));
 async function loadAttendanceList() {
   const groupId = document.getElementById('attGroupSelect').value;
   const date    = document.getElementById('attDate').value;
@@ -3773,20 +3825,18 @@ async function loadAttendanceList() {
   let isValidDay = true;
   let validDays  = [];
   if (group?.timeSlots?.length) {
-    const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
-    validDays  = group.timeSlots.map(s => s.day);
-    isValidDay = validDays.includes(dayName);
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const [y, m, d] = date.split('-').map(Number);
+const dayName = days[new Date(y, m - 1, d).getDay()];
+validDays  = group.timeSlots.map(s => s.day);
+isValidDay = validDays.includes(dayName);
   }
 
 try {
     const res = await fetch(`${ATT_API}?groupId=${groupId}&date=${date}`);
     const allData = res.ok ? await res.json() : [];
     
-    // ✅ فلتر: شيل الـ members اللي خلصت subscriptions بتاعتهم
-    _attData = allData.filter(m => {
-      if (!m.endDate) return true; // لو مفيش endDate خليه
-      return new Date(m.endDate) >= new Date(date);
-    });
+ _attData = allData;
 
     const d = new Date(date);
     document.getElementById('attSubtitle').textContent =
