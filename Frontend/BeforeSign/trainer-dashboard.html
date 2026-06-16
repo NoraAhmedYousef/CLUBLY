@@ -3930,9 +3930,50 @@ try {
       return;
     }
 
-    // ── يوم صح: عادي ──
+// ── يوم صح: info banner + عادي ──
     document.getElementById('attQuickActions').style.display  = '';
     document.getElementById('saveAllBtn').style.display       = '';
+
+    // Info banner
+    const selDateObj = new Date(date + 'T12:00:00');
+    const dayNamesAll = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const selDayName  = dayNamesAll[selDateObj.getDay()];
+    const formattedDate = selDateObj.toLocaleDateString('en-GB', {
+      weekday:'long', day:'2-digit', month:'long', year:'numeric'
+    });
+
+    document.getElementById('attList').innerHTML = `
+      <div style="background:rgba(46,196,182,.06);border-bottom:1px solid rgba(46,196,182,.2);
+                  padding:14px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <div style="width:42px;height:42px;border-radius:50%;flex-shrink:0;
+                    background:rgba(46,196,182,.15);color:var(--clubly-teal);font-size:1.2rem;
+                    display:flex;align-items:center;justify-content:center;">
+          <i class="bi bi-calendar-check-fill"></i>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-weight:800;color:var(--text);font-size:.95rem;">
+            Recording attendance for:
+            <span style="color:var(--clubly-teal);">${formattedDate}</span>
+          </div>
+          <div style="font-size:.82rem;color:var(--muted);margin-top:4px;">
+            Session days:
+            ${validDays.map(d =>
+              `<span style="background:${d===selDayName?'rgba(46,196,182,.25)':'rgba(46,196,182,.08)'};
+                            color:var(--clubly-teal);padding:2px 10px;border-radius:20px;
+                            font-weight:700;font-size:.76rem;margin:0 2px;
+                            ${d===selDayName?'border:1px solid var(--clubly-teal);':''}">
+                ${d===selDayName?'✓ ':''}${d}
+              </span>`
+            ).join('')}
+          </div>
+        </div>
+        <div style="background:var(--card-bg);border:1px solid var(--border);
+                    border-radius:10px;padding:8px 18px;text-align:center;flex-shrink:0;">
+          <div style="font-size:1.3rem;font-weight:900;color:var(--clubly-accent);">${selDayName}</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;">Session Day</div>
+        </div>
+      </div>`;
+
     renderAttendanceList();
 
   } catch {
@@ -3958,7 +3999,7 @@ function renderAttendanceList() {
     return;
   }
 
-  document.getElementById('attList').innerHTML = list.map((m, i) => {
+ document.getElementById('attList').innerHTML += list.map((m, i) => {
     const initials  = getInitials(m.name || '?');
     const color     = AVATAR_COLORS[i % AVATAR_COLORS.length];
     const isPresent = m._localPresent !== undefined ? m._localPresent : m.isPresent;
