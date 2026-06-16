@@ -3820,17 +3820,32 @@ async function loadAttendanceList() {
       <div class="spinner-border spinner-border-sm me-2"></div>Loading…
     </div>`;
 
-  // Check valid day
-  const group = _attGroups.find(g => String(g.id) === String(groupId));
+// Check valid day — 3 days window
   let isValidDay = true;
   let validDays  = [];
-  if (group?.timeSlots?.length) {
-const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const [y, m, d] = date.split('-').map(Number);
-const dayName = days[new Date(y, m - 1, d).getDay()];
-validDays  = group.timeSlots.map(s => s.day);
-isValidDay = validDays.includes(dayName);
-  }
+  try {
+    const gRes = await fetch(`${API}/ActivityGroups/${groupId}`);
+    if (gRes.ok) {
+      const gData = await gRes.json();
+      const slots = gData.timeSlots || [];
+      if (slots.length) {
+        validDays = slots.map(s => s.day);
+        const dayNames = ['Sunday','Monday','Tuesday','Wednesday',
+                          'Thursday','Friday','Saturday'];
+        const selectedDate = new Date(date + 'T12:00:00');
+        let found = false;
+        for (let i = 0; i <= 3; i++) {
+          const checkDate = new Date(selectedDate);
+          checkDate.setDate(checkDate.getDate() - i);
+          if (validDays.includes(dayNames[checkDate.getDay()])) {
+            found = true;
+            break;
+          }
+        }
+        isValidDay = found;
+      }
+    }
+  } catch { isValidDay = true; }
 
 try {
     const res = await fetch(`${ATT_API}?groupId=${groupId}&date=${date}`);
