@@ -1914,91 +1914,7 @@
       background: var(--border);
       border-radius: 99px;
     }
-    .hamburger-btn {
-  display: flex;
-  background: none;
-  border: none;
-  color: #fff;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-  transition: background .2s;
-}
-.hamburger-btn:hover {
-  background: rgba(255,255,255,.2);
-}
 
-@media (max-width: 768px) {
-  .clubly-header {
-    padding: 0 10px;
-    min-height: var(--header-h);
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    overflow: visible;
-  }
-  .header-logo {
-    min-width: fit-content;
-    flex-shrink: 0;
-    gap: 4px;
-    order: 2;
-  }
-  .hamburger-btn {
-    order: 1;
-    flex-shrink: 0;
-  }
-  .header-nav {
-    display: flex !important;
-    order: 3;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    flex-wrap: nowrap;
-    gap: 4px;
-    padding: 8px 0 10px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .header-nav::-webkit-scrollbar { display: none; }
-  .header-nav a {
-    flex-shrink: 0;
-    font-size: .78rem;
-    padding: 6px 10px;
-    border-radius: 20px;
-    background: rgba(255,255,255,.06);
-  }
-  .header-actions {
-    order: 4;
-    margin-left: auto;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-  .btn-signin { display: none; }
-  .toggle-sidebar-btn { display: none !important; }
-  .sidebar {
-    position: fixed;
-    top: var(--header-h);
-    left: 0;
-    width: var(--sidebar-w);
-    height: calc(100vh - var(--header-h));
-    transform: translateX(-100%);
-    transition: transform .3s ease;
-    z-index: 2000;
-  }
-  .sidebar.open { transform: translateX(0); }
-  .content-area {
-    width: 100%;
-    padding: 16px;
-    margin: 0 !important;
-  }
-}
   </style>
 </head>
 
@@ -2027,17 +1943,17 @@
       <a href="../AfterSign/about.html" data-i18n="nav_about">About Us</a>
       <a href="../AfterSign/faq.html" data-i18n="nav_faq">FAQ</a>
       <a href="../AfterSign/contact.html" data-i18n="nav_contact">Contact</a>
-    </nav>
-    <!-- Notification Bell -->
-    <div class="notif-bell-wrapper" style="position:relative;">
-      <button class="btn-theme-header" id="notifBellBtn" title="My Notifications" onclick="showPage('my-notifications')"
-        style="position:relative;">
-        <i class="bi bi-bell-fill"></i>
-        <span class="notif-badge-count" id="notifBellBadge" style="display:none">0</span>
-      </button>
-    </div>
+ </nav>
 
     <div class="header-actions">
+      <!-- Notification Bell -->
+      <div class="notif-bell-wrapper" style="position:relative;">
+        <button class="btn-theme-header" id="notifBellBtn" title="My Notifications" onclick="showPage('my-notifications')"
+          style="position:relative;">
+          <i class="bi bi-bell-fill"></i>
+          <span class="notif-badge-count" id="notifBellBadge" style="display:none">0</span>
+        </button>
+      </div>
       <button class="btn-theme-header" id="themeToggleHeader" title="Toggle Theme">
         <i class="bi bi-moon-stars"></i>
       </button>
@@ -2147,9 +2063,15 @@
       <a class="sidebar-link" onclick="showPage('guest')" data-label="Guests">
         <i class="bi bi-person-fill"></i>
         <span class="link-text" data-i18n="sidebar_guests">Guests</span></a>
-      <a class="sidebar-link" onclick="showPage('profile')" data-label="My Profile">
+   <a class="sidebar-link" onclick="showPage('profile')" data-label="My Profile">
         <i class="bi bi-person-circle"></i>
         <span class="link-text" data-i18n="sidebar_my_profile">My Profile</span></a>
+
+      <div class="sidebar-divider"></div>
+      <a class="sidebar-link" onclick="handleSignOut()" data-label="Sign Out" style="color:rgba(239,68,68,.8);">
+        <i class="bi bi-box-arrow-right"></i>
+        <span class="link-text" data-i18n="nav_signout">Sign Out</span>
+      </a>
     </aside>
 
     <!-- ===== CONTENT AREA ===== -->
@@ -10240,8 +10162,7 @@ function toggleSidebar() {
       </div>
     </div>
   </div>
-  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
-
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
 </body>
 
 </html>
