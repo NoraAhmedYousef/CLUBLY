@@ -28,7 +28,7 @@
 | **File Format** | CSV |
 | **File Name** | `sports_data_strict_v2.csv` |
 | **Language** | English |
-| **Source** | Synthetically generated |
+| **Source** | Kaggle & GitHub |
 
 The dataset was carefully designed to reflect **realistic demographic distributions** and **medically sound constraints**, making it suitable for building hybrid recommendation systems that combine Content-Based Filtering and Collaborative Filtering.
 
