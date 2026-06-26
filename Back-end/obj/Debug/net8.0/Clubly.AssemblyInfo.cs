@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Clubly")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d27dad0e351899cf1579342a1a206eaa196a9c1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5df718dfaccf3238426010340dd6ce062b18d980")]
 [assembly: System.Reflection.AssemblyProductAttribute("Clubly")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Clubly")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
