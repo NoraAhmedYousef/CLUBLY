@@ -90,15 +90,24 @@ The development followed a structured software engineering approach:
 
 ##  Team
 
- Name 
+ Names:
+ 
  Nora Ahmed Yousef 
+ 
  Nada Ramadan Shaban 
+ 
  Aya Mahmoud Saeed
+ 
  Fatma Abdel-Nasser Salah 
+ 
  Reem Ayman Ahmed 
+ 
  Shaza Hatem Ahmed 
+ 
  Mohamed Mahmoud Amin
+ 
  Mazin Yaser Hamdi 
+ 
  Amar Eid Salah 
 
 **Supervised by:** Dr. Mayar Ali, TA. Raghda Mahmoud
