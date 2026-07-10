@@ -90,25 +90,26 @@ The development followed a structured software engineering approach:
 
 ##  Team
 
- Names:
+ Names:                                              Tracks:
  
- Nora Ahmed Yousef 
+ Nora Ahmed Yousef                                   Full Stack
  
- Nada Ramadan Shaban 
+ Mohamed Mahmoud Amin                                Full Stack
  
- Aya Mahmoud Saeed
+ Mazin Yaser Hamdi                                   AI
+
+ Aya Mahmoud Saeed                                   AI
  
- Fatma Abdel-Nasser Salah 
+ Fatma Abdel-Nasser Salah                            Data Analysis
  
- Reem Ayman Ahmed 
+ Reem Ayman Ahmed                                    Frontend
+  
+ Nada Ramadan Shaban                                 Frontend 
+  
+ Amar Eid Salah                                      Frontend
  
- Shaza Hatem Ahmed 
- 
- Mohamed Mahmoud Amin
- 
- Mazin Yaser Hamdi 
- 
- Amar Eid Salah 
+ Shaza Hatem Ahmed                                   Frontend
+
 
 **Supervised by:** Dr. Mayar Ali, TA. Raghda Mahmoud
 
