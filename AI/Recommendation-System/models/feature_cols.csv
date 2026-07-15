@@ -1,0 +1,52 @@
+0
+age
+weight_kg
+height_cm
+bmi
+hours_available_per_week
+monthly_budget_usd
+prefers_team_sport
+prefers_outdoor
+prefers_contact_sport
+risk_tolerance
+competitive_level
+coordination_level
+striking_preference
+grappling_preference
+speed_agility
+endurance_level
+preferred_distance
+bmi_score
+age_score
+activity_score
+fitness_score
+hours_score
+budget_score
+health_score
+bmi_x_activity
+age_x_fitness
+hours_x_fitness
+budget_x_location
+intensity_score
+activity_encoded
+fitness_encoded
+gender_Female
+gender_Male
+goal_Build Muscle
+goal_Compete Professionally
+goal_Have Fun
+goal_Improve Endurance
+goal_Lose Weight
+goal_Reduce Stress
+goal_Social / Meet People
+goal_Stay Healthy
+personality_Ambivert
+personality_Extrovert
+personality_Introvert
+location_Rural
+location_Suburban
+location_Urban
+health_issue_Asthma
+health_issue_Back Pain
+health_issue_Heart Condition
+health_issue_Knee Pain

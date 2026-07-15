@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Coach AI — Sports Chatbot Widget</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet"/>
+
+<!--
+  ══════════════════════════════════════════════════
+  طريقة التضمين في موقعك:
+  انسخ كل CSS من <style> وحطه في ملف CSS بتاعك
+  وانسخ كل JS من <script> وحطه في ملف JS بتاعك
+  وانسخ الـ HTML div#coach-widget وحطه في أي صفحة
+  ══════════════════════════════════════════════════
+-->
+
+<style>
+/* ════════════════════════════════════
+   COACH AI WIDGET — Embeddable CSS
+   ════════════════════════════════════ */
+:root {
+  --cw-accent:   #00c896;
+  --cw-accent2:  #007a5e;
+  --cw-dark:     #0d1117;
+  --cw-surface:  #161b22;
+  --cw-surface2: #21262d;
+  --cw-border:   #30363d;
+  --cw-text:     #e6edf3;
+  --cw-dim:      #7d8590;
+  --cw-shadow:   0 8px 40px rgba(0,0,0,.5);
+}
+
+/* ── Floating Button ── */
+#coach-fab {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  width: 58px;
+  height: 58px;
+  background: linear-gradient(135deg, var(--cw-accent), var(--cw-accent2));
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 20px rgba(0,200,150,.4);
+  z-index: 9998;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
+  animation: fabIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+#coach-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(0,200,150,.55);
+}
+@keyframes fabIn {
+  from { transform: scale(0) rotate(-180deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0);       opacity: 1; }
+}
+
+/* ── Unread Badge ── */
+#coach-badge {
+  position: absolute;
+  top: 2px; right: 2px;
+  width: 18px; height: 18px;
+  background: #e85d3a;
+  border-radius: 50%;
+  font-size: 10px;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  opacity: 0;
+  transform: scale(0);
+  transition: all .3s cubic-bezier(.34,1.56,.64,1);
+}
+#coach-badge.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Chat Window ── */
+#coach-window {
+  position: fixed;
+  bottom: 100px;
+  left: 28px;
+  width: 360px;
+  height: 520px;
+  background: var(--cw-dark);
+  border: 1px solid var(--cw-border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+  box-shadow: var(--cw-shadow);
+  font-family: 'Tajawal', sans-serif;
+  transform-origin: bottom left;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+}
+#coach-window.hidden {
+  transform: scale(.85) translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Header ── */
+#cw-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--cw-surface);
+  border-bottom: 1px solid var(--cw-border);
+  flex-shrink: 0;
+}
+.cw-avatar {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--cw-accent), var(--cw-accent2));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.cw-title { flex: 1; }
+.cw-title h4 {
+  font-size: 14px; font-weight: 700;
+  color: var(--cw-text); margin: 0; line-height: 1;
+}
+.cw-title span {
+  font-size: 11px; color: var(--cw-accent);
+  display: flex; align-items: center; gap: 4px; margin-top: 2px;
+}
+.cw-title span::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--cw-accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.4;transform:scale(1.5)}
+}
+#cw-close {
+  background: none; border: none; cursor: pointer;
+  color: var(--cw-dim); font-size: 18px; padding: 4px;
+  border-radius: 6px; transition: all .2s; line-height: 1;
+}
+#cw-close:hover { background: var(--cw-surface2); color: var(--cw-text); }
+
+/* ── Messages ── */
+#cw-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+#cw-messages::-webkit-scrollbar { width: 3px; }
+#cw-messages::-webkit-scrollbar-thumb {
+  background: var(--cw-border); border-radius: 3px;
+}
+
+.cw-msg {
+  display: flex;
+  gap: 8px;
+  max-width: 88%;
+  animation: cwMsgIn .3s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes cwMsgIn {
+  from { opacity: 0; transform: translateY(10px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cw-msg.bot  { align-self: flex-start; }
+.cw-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+.cw-msg-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0; margin-top: 2px;
+}
+.cw-msg.bot  .cw-msg-avatar { background: var(--cw-surface2); }
+.cw-msg.user .cw-msg-avatar {
+  background: linear-gradient(135deg,#1a3a2a,#0d2a1a);
+}
+
+.cw-bubble {
+  padding: 9px 13px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.65;
+  max-width: 100%;
+}
+.cw-msg.bot  .cw-bubble {
+  background: var(--cw-surface);
+  border: 1px solid var(--cw-border);
+  border-radius: 4px 14px 14px 14px;
+  color: var(--cw-text);
+}
+.cw-msg.user .cw-bubble {
+  background: linear-gradient(135deg, #0d2a1a, #0a1f14);
+  border: 1px solid rgba(0,200,150,.2);
+  border-radius: 14px 4px 14px 14px;
+  color: var(--cw-text);
+}
+.cw-bubble strong { color: var(--cw-accent); }
+
+/* ── Suggestions ── */
+#cw-suggestions {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 6px 12px;
+  flex-shrink: 0;
+  scrollbar-width: none;
+  border-top: 1px solid var(--cw-border);
+}
+#cw-suggestions::-webkit-scrollbar { display: none; }
+
+.cw-sug {
+  background: var(--cw-surface2);
+  border: 1px solid var(--cw-border);
+  color: var(--cw-dim);
+  padding: 5px 11px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 11px;
+  white-space: nowrap;
+  font-family: 'Tajawal', sans-serif;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.cw-sug:hover {
+  border-color: var(--cw-accent);
+  color: var(--cw-accent);
+  background: rgba(0,200,150,.06);
+}
+
+/* ── Input ── */
+#cw-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--cw-surface);
+  border-top: 1px solid var(--cw-border);
+  flex-shrink: 0;
+}
+#cw-input {
+  flex: 1;
+  background: var(--cw-surface2);
+  border: 1px solid var(--cw-border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  color: var(--cw-text);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  outline: none;
+  resize: none;
+  max-height: 80px;
+  line-height: 1.5;
+  transition: border-color .2s;
+}
+#cw-input:focus { border-color: var(--cw-accent); }
+#cw-input::placeholder { color: var(--cw-dim); }
+
+#cw-send {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--cw-accent), var(--cw-accent2));
+  border: none; border-radius: 10px;
+  cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+  box-shadow: 0 2px 10px rgba(0,200,150,.3);
+  align-self: flex-end;
+}
+#cw-send:hover { transform: scale(1.07); }
+#cw-send:active { transform: scale(.94); }
+#cw-send svg { width: 15px; height: 15px; fill: #000; }
+
+/* ── Typing ── */
+.cw-typing { display: flex; gap: 4px; padding: 3px 0; }
+.cw-typing span {
+  width: 6px; height: 6px;
+  background: var(--cw-dim); border-radius: 50%;
+  animation: cwBounce 1.2s infinite;
+}
+.cw-typing span:nth-child(2) { animation-delay: .2s; }
+.cw-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes cwBounce {
+  0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)}
+}
+
+/* ── Mobile ── */
+@media (max-width: 420px) {
+  #coach-window {
+    left: 10px; right: 10px; bottom: 90px;
+    width: auto;
+  }
+  #coach-fab { left: 20px; bottom: 20px; }
+}
+</style>
+</head>
+<body style="background:#111; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+
+<!-- محتوى الموقع (مثال) -->
+<div style="text-align:center; color:#666; font-family:'Tajawal',sans-serif;">
+  <div style="font-size:48px; margin-bottom:16px;">🏆</div>
+  <p style="font-size:16px;">موقعك هنا — الويدجت شغّال في الكورنر</p>
+  <p style="font-size:13px; margin-top:8px; color:#444;">اضغط على الزر الأخضر في الكورنر 👇</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     COACH AI WIDGET
+     انسخ من هنا لآخر </div> وحطه في موقعك
+     ══════════════════════════════════════ -->
+
+<!-- Floating Button -->
+<button id="coach-fab" onclick="cwToggle()">
+  🏋️
+  <div id="coach-badge">1</div>
+</button>
+
+<!-- Chat Window -->
+<div id="coach-window" class="hidden">
+
+  <!-- Header -->
+  <div id="cw-header">
+    <div class="cw-avatar">🏋️</div>
+    <div class="cw-title">
+      <h4>Coach AI</h4>
+      <span>متصل دايماً</span>
+    </div>
+    <button id="cw-close" onclick="cwToggle()">✕</button>
+  </div>
+
+  <!-- Messages -->
+  <div id="cw-messages">
+    <div class="cw-msg bot">
+      <div class="cw-msg-avatar">🤖</div>
+      <div class="cw-bubble">
+        أهلاً! أنا <strong>Coach AI</strong> 💪<br>
+        اسألني عن أي رياضة، تمرين، تغذية، أو نصيحة صحية!
+      </div>
+    </div>
+  </div>
+
+  <!-- Suggested Questions -->
+  <div id="cw-suggestions">
+    <button class="cw-sug" onclick="cwSuggest(this)">أفضل رياضة لخسارة الوزن؟</button>
+    <button class="cw-sug" onclick="cwSuggest(this)">كيف أبدأ الجيم؟</button>
+    <button class="cw-sug" onclick="cwSuggest(this)">رياضة للمبتدئين</button>
+    <button class="cw-sug" onclick="cwSuggest(this)">ألم في الركبة</button>
+    <button class="cw-sug" onclick="cwSuggest(this)">تمارين في البيت</button>
+  </div>
+
+  <!-- Input -->
+  <div id="cw-input-row">
+    <textarea id="cw-input" rows="1" placeholder="اسأل عن أي رياضة..."></textarea>
+    <button id="cw-send" onclick="cwSend()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     COACH AI WIDGET — JavaScript
+     ══════════════════════════════════════ -->
+<script>
+(function() {
+
+  // ── Config ─────────────────────────────
+  const API_URL    = "http://localhost:5000/sports-chat"; // ← غير للـ URL بتاعك
+  const SESSION_ID = "cw_" + Math.random().toString(36).slice(2, 9);
+
+  // ── State ───────────────────────────────
+  let isOpen    = false;
+  let isLoading = false;
+  let hasGreeted= false;
+
+  // ── Elements ────────────────────────────
+  const win   = document.getElementById('coach-window');
+  const msgs  = document.getElementById('cw-messages');
+  const input = document.getElementById('cw-input');
+  const badge = document.getElementById('coach-badge');
+
+  // ── Toggle ──────────────────────────────
+  window.cwToggle = function() {
+    isOpen = !isOpen;
+    win.classList.toggle('hidden', !isOpen);
+    if (isOpen) {
+      badge.classList.remove('show');
+      setTimeout(() => input.focus(), 300);
+      scrollBottom();
+    }
+    document.getElementById('coach-fab').textContent = isOpen ? '✕' : '🏋️';
+    if (isOpen) document.getElementById('coach-fab').appendChild(badge);
+  };
+
+  // Show badge after 3s to encourage interaction
+  setTimeout(() => {
+    if (!isOpen) badge.classList.add('show');
+  }, 3000);
+
+  // ── Scroll ──────────────────────────────
+  function scrollBottom() {
+    setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 80);
+  }
+
+  // ── Add message ─────────────────────────
+  function addMsg(role, html) {
+    const wrap   = document.createElement('div');
+    wrap.className = `cw-msg ${role}`;
+    const av     = document.createElement('div');
+    av.className = 'cw-msg-avatar';
+    av.textContent = role === 'bot' ? '🤖' : '👤';
+    const bubble = document.createElement('div');
+    bubble.className = 'cw-bubble';
+    bubble.innerHTML = html;
+    wrap.appendChild(av);
+    wrap.appendChild(bubble);
+    msgs.appendChild(wrap);
+    scrollBottom();
+  }
+
+  // ── Typing indicator ────────────────────
+  function showTyping() {
+    const w = document.createElement('div');
+    w.className = 'cw-msg bot'; w.id = 'cw-typing';
+    w.innerHTML = `<div class="cw-msg-avatar">🤖</div>
+      <div class="cw-bubble">
+        <div class="cw-typing"><span></span><span></span><span></span></div>
+      </div>`;
+    msgs.appendChild(w);
+    scrollBottom();
+  }
+  function removeTyping() {
+    document.getElementById('cw-typing')?.remove();
+  }
+
+  // ── Format reply ────────────────────────
+  function fmt(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+  }
+
+  // ── Send ────────────────────────────────
+  window.cwSend = async function() {
+    const text = input.value.trim();
+    if (!text || isLoading) return;
+
+    isLoading = true;
+    input.value = '';
+    input.style.height = 'auto';
+
+    // إخفاء الـ suggestions بعد أول رسالة
+    if (!hasGreeted) {
+      document.getElementById('cw-suggestions').style.display = 'none';
+      hasGreeted = true;
+    }
+
+    addMsg('user', text);
+    showTyping();
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, session_id: SESSION_ID })
+      });
+
+      removeTyping();
+
+      if (!res.ok) {
+        const err = await res.json();
+        addMsg('bot', `⚠️ ${err.error || 'حصل خطأ، حاول تاني'}`);
+      } else {
+        const data = await res.json();
+        addMsg('bot', fmt(data.reply));
+
+        // لو الويدجت مغلق، أظهر الـ badge
+        if (!isOpen) badge.classList.add('show');
+      }
+    } catch(e) {
+      removeTyping();
+      addMsg('bot', '⚠️ مش قادر أتصل بالسيرفر. تأكد إن Flask شغّال.');
+    }
+
+    isLoading = false;
+  };
+
+  // ── Suggestions ─────────────────────────
+  window.cwSuggest = function(btn) {
+    if (!isOpen) cwToggle();
+    input.value = btn.textContent;
+    cwSend();
+  };
+
+  // ── Auto-resize textarea ─────────────────
+  input.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      cwSend();
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

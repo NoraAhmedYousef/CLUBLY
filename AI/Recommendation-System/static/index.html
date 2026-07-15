@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sports AI — Find Your Sport</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,300&family=Cairo:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --card: #18181f; --border: #2a2a38;
+      --accent: #ff5f1f; --accent2: #ffb347; --text: #f0ede8; --muted: #7a7890;
+      --success: #4cde9c; --radius: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1000; opacity: 0.4;
+    }
+
+    /* Header */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: var(--text); display: flex; align-items: center; gap: 10px; }
+    .logo span { color: var(--accent); }
+    .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:0.6} }
+
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .api-badge { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); border: 1px solid var(--accent2); padding: 4px 12px; border-radius: 20px; opacity: 0.8; }
+
+    /* Language Toggle */
+    .lang-toggle { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 3px; gap: 2px; }
+    .lang-btn { padding: 4px 14px; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--muted); background: transparent; border: none; border-radius: 16px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; user-select: none; }
+    .lang-btn.active { background: var(--accent); color: #fff; }
+
+    /* Hero */
+    .hero { padding: 80px 48px 60px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(56px,7vw,96px); line-height: 0.95; letter-spacing: 2px; }
+    .hero-title .line2 { color: var(--accent); }
+    .hero-title .line3 { color: var(--muted); font-size: 0.55em; letter-spacing: 6px; display: block; margin-top: 12px; }
+    .hero-sub { margin-top: 20px; color: var(--muted); font-size: 16px; line-height: 1.7; font-weight: 300; max-width: 400px; }
+    .hero-stats { display: flex; gap: 32px; margin-top: 36px; }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--accent); display: block; }
+    .stat-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+    .orbit { width: 320px; height: 320px; border: 1px solid var(--border); border-radius: 50%; position: relative; animation: spin 20s linear infinite; }
+    .orbit-inner { width: 200px; height: 200px; border: 1px solid var(--border); border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: spin 12s linear infinite reverse; }
+    .orbit-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 56px; z-index: 2; animation: spin 20s linear infinite reverse; }
+    .orbit-dot { position: absolute; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; top: -5px; left: 50%; margin-left: -5px; }
+    .orbit-dot2 { position: absolute; width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; top: -3px; left: 50%; margin-left: -3px; }
+    @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+    /* Container */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 48px 80px; }
+    .section-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 700; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* Form Cards */
+    .form-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; margin-bottom: 20px; transition: border-color 0.3s; }
+    .form-card:hover { border-color: #3a3a50; }
+    .form-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; color: var(--text); }
+    .form-card-title .icon { width: 34px; height: 34px; background: rgba(255,95,31,0.15); border: 1px solid rgba(255,95,31,0.3); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 20px; }
+    .form-grid.wide { grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text); font-weight: 700; }
+    .field input, .field select { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 12px 16px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 15px; transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; }
+    .field input:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,95,31,0.12); }
+    .field input::placeholder { color: var(--muted); opacity: 0.5; }
+
+    /* Sliders */
+    .slider-field { display: flex; flex-direction: column; gap: 8px; }
+    .slider-field label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+    .slider-val { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--accent); min-width: 30px; text-align: right; }
+    input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; background: var(--border); border-radius: 4px; outline: none; cursor: pointer; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--accent); border-radius: 50%; border: 3px solid var(--card); transition: transform 0.2s; }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    /* Toggles */
+    .toggle-field { display: flex; flex-direction: column; gap: 10px; }
+    .toggle-field label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text); font-weight: 700; }
+    .toggle-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .toggle-btn { padding: 8px 18px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); border-radius: 8px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.2s; user-select: none; }
+    .toggle-btn:hover { border-color: var(--accent); color: var(--text); }
+    .toggle-btn.active { background: rgba(255,95,31,0.15); border-color: var(--accent); color: var(--accent); }
+
+    /* Submit */
+    .submit-section { margin-top: 40px; display: flex; justify-content: center; }
+    .btn-submit { position: relative; overflow: hidden; background: var(--accent); color: white; border: none; cursor: pointer; padding: 18px 60px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 30px rgba(255,95,31,0.35); }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(255,95,31,0.5); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent); pointer-events: none; }
+    .btn-submit .loading { display: none; }
+    .btn-submit.loading .text { display: none; }
+    .btn-submit.loading .loading { display: inline; }
+
+    /* Results */
+    #results { margin-top: 60px; }
+    .results-header { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 2px; text-align: center; margin-bottom: 40px; }
+    .results-header span { color: var(--accent); }
+
+    /* Health Card */
+    .health-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 40px; margin-bottom: 32px; display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: start; }
+    .health-score-ring { width: 100px; height: 100px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .health-score-ring svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+    .health-score-ring .score-num { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--accent); position: relative; z-index: 1; }
+    .health-details { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px; }
+    .health-tag { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 12px; }
+    .health-tag .key { color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-size: 10px; }
+    .health-tag .val { color: var(--text); font-weight: 600; margin-top: 2px; }
+    .health-warn { background: rgba(255,80,80,0.08); border: 1px solid rgba(255,80,80,0.25); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #ff8080; margin-top: 12px; display: flex; gap: 8px; align-items: flex-start; }
+    .health-pref { background: rgba(76,222,156,0.08); border: 1px solid rgba(76,222,156,0.2); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--success); margin-top: 8px; display: flex; gap: 8px; align-items: flex-start; }
+
+    /* Rec Cards */
+    .recs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 20px; }
+    .rec-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; position: relative; overflow: hidden; cursor: pointer; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; animation: fadeUp 0.4s ease both; }
+    .rec-card:hover { transform: translateY(-4px); border-color: rgba(255,95,31,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+    .rec-card.rank-1 { border-color: rgba(255,95,31,0.5); }
+    .rec-card.rank-1::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .rec-card:nth-child(1){animation-delay:0.05s} .rec-card:nth-child(2){animation-delay:0.1s} .rec-card:nth-child(3){animation-delay:0.15s} .rec-card:nth-child(4){animation-delay:0.2s} .rec-card:nth-child(5){animation-delay:0.25s}
+
+    /* ── Rank number: always LTR, always top-right corner visually */
+    .rec-rank {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      left: auto;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      line-height: 1;
+      color: var(--border);
+      letter-spacing: 0;
+      /* Force LTR rendering regardless of page direction */
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+    .rank-1 .rec-rank { color: rgba(255,95,31,0.25); }
+
+    /* ── Emoji: always LTR, never flipped */
+    .rec-emoji {
+      font-size: 44px;
+      margin-bottom: 16px;
+      display: block;
+      line-height: 1;
+      /* Always render LTR so emoji never mirrors or reorders */
+      direction: ltr;
+      unicode-bidi: isolate;
+      text-align: left; /* keep left even in RTL page */
+    }
+
+    .rec-name { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 1px; margin-bottom: 8px; color: var(--text); }
+    .rank-1 .rec-name { color: var(--accent); }
+    .rec-meta { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .meta-pill { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+    .meta-category { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+    .meta-intensity { background: rgba(255,179,71,0.12); color: var(--accent2); border: 1px solid rgba(255,179,71,0.2); }
+    .meta-preferred { background: rgba(76,222,156,0.12); color: var(--success); border: 1px solid rgba(76,222,156,0.25); }
+    .rec-score-bar { margin-top: 8px; }
+    .score-label { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .score-val { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--text); }
+    .rank-1 .score-val { color: var(--accent); }
+    .bar-track { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.8s cubic-bezier(0.23,1,0.32,1); width: 0; }
+
+    /* Toast */
+    .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px); background: #ff3b30; color: white; padding: 14px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; z-index: 9999; transition: transform 0.4s; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── RTL layout */
+    html[dir="rtl"] .section-label::after  { display: none; }
+    html[dir="rtl"] .section-label::before { content: ''; flex: 1; height: 1px; background: var(--border); }
+    html[dir="rtl"] .form-card-title       { flex-direction: row-reverse; }
+    html[dir="rtl"] .health-card           { direction: rtl; }
+    html[dir="rtl"] .health-details        { direction: rtl; }
+    html[dir="rtl"] .score-label           { flex-direction: row-reverse; }
+    html[dir="rtl"] .rec-meta              { direction: rtl; }
+    html[dir="rtl"] .rec-card              { direction: rtl; }
+
+    /* RTL rec-card overrides — keep rank & emoji in their correct spots */
+    html[dir="rtl"] .rec-rank {
+      right: 24px;   /* stay top-right visually */
+      left: auto;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+    html[dir="rtl"] .rec-emoji {
+      direction: ltr;
+      unicode-bidi: isolate;
+      text-align: left;
+    }
+
+    html[dir="rtl"] .rec-name              { font-family: 'Cairo', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 0; }
+    html[dir="rtl"] .health-warn,
+    html[dir="rtl"] .health-pref           { direction: rtl; }
+
+    /* ── Arabic typography: Cairo font */
+    html[lang="ar"] .field label,
+    html[lang="ar"] .slider-field label,
+    html[lang="ar"] .toggle-field label,
+    html[lang="ar"] .section-label         { font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: none; }
+    html[lang="ar"] .form-card-title       { font-family: 'Cairo', sans-serif; font-size: 19px; font-weight: 900; letter-spacing: 0; }
+    html[lang="ar"] .field input,
+    html[lang="ar"] .field select          { font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600; text-align: right; }
+    html[lang="ar"] .toggle-btn            { font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0; }
+    html[lang="ar"] .btn-submit .text,
+    html[lang="ar"] .btn-submit .loading   { font-family: 'Cairo', sans-serif; font-size: 18px; font-weight: 900; letter-spacing: 0; }
+    html[lang="ar"] .health-tag .key       { font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0; text-transform: none; }
+    html[lang="ar"] .health-tag .val       { font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    html[lang="ar"] .meta-pill             { font-family: 'Cairo', sans-serif; font-size: 11px; letter-spacing: 0; text-transform: none; }
+    html[lang="ar"] .score-label           { font-family: 'Cairo', sans-serif; font-size: 12px; letter-spacing: 0; text-transform: none; }
+    html[lang="ar"] .results-header        { font-family: 'Cairo', sans-serif; font-weight: 900; letter-spacing: 0; }
+    html[lang="ar"] .health-warn,
+    html[lang="ar"] .health-pref           { font-family: 'Cairo', sans-serif; font-size: 14px; letter-spacing: 0; }
+    html[lang="ar"] .hero-sub              { font-family: 'Cairo', sans-serif; font-size: 15px; font-weight: 500; line-height: 1.9; }
+    html[lang="ar"] .stat-label            { font-family: 'Cairo', sans-serif; font-size: 12px; letter-spacing: 0; text-transform: none; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      header { padding: 14px 20px; }
+      .hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 20px; }
+      .hero-visual { display: none; }
+      .container { padding: 0 20px 60px; }
+      .form-card { padding: 24px; }
+      .health-card { grid-template-columns: 1fr; }
+      .recs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <div class="logo-dot"></div>
+      SPORTS<span>AI</span>
+    </div>
+    <div class="header-right">
+      <div class="api-badge" id="badge-text">Hybrid AI Engine</div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn"        id="btn-ar" onclick="setLang('ar')">ع</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1 class="hero-title">
+        <span id="hero-line1">FIND YOUR</span><br/>
+        <span class="line2" id="hero-line2">PERFECT</span><br/>
+        <span id="hero-line3">SPORT</span>
+        <span class="line3" id="hero-line4">AI-POWERED RECOMMENDATION</span>
+      </h1>
+      <p class="hero-sub" id="hero-sub">
+        Our hybrid AI combines content-based filtering with collaborative intelligence
+        to match you with sports that fit your body, goals, and lifestyle.
+      </p>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit">
+        <div class="orbit-dot"></div>
+        <div class="orbit-inner"><div class="orbit-dot2"></div></div>
+        <div class="orbit-center">🏆</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <div class="container">
+    <div class="section-label" id="lbl-01">01 — Your Profile</div>
+
+    <!-- Personal Info -->
+    <div class="form-card">
+      <div class="form-card-title">
+        <div class="icon">👤</div>
+        <span id="card-personal">Personal Information</span>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label id="lbl-age">Age</label>
+          <input type="number" id="age" placeholder="25" min="10" max="80" value="25" />
+        </div>
+        <div class="field">
+          <label id="lbl-gender">Gender</label>
+          <select id="gender">
+            <option value="Male"   data-ar="ذكر">Male</option>
+            <option value="Female" data-ar="أنثى">Female</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="lbl-weight">Weight (kg)</label>
+          <input type="number" id="weight_kg" placeholder="70" min="30" max="200" value="75" />
+        </div>
+        <div class="field">
+          <label id="lbl-height">Height (cm)</label>
+          <input type="number" id="height_cm" placeholder="175" min="100" max="230" value="178" />
+        </div>
+        <div class="field">
+          <label id="lbl-health">Health Issue</label>
+          <select id="health_issue">
+            <option value="None"            data-ar="لا يوجد">None</option>
+            <option value="Knee Pain"       data-ar="ألم الركبة">Knee Pain</option>
+            <option value="Back Pain"       data-ar="ألم الظهر">Back Pain</option>
+            <option value="Asthma"          data-ar="الربو">Asthma</option>
+            <option value="Heart Condition" data-ar="مشكلة قلبية">Heart Condition</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fitness & Lifestyle -->
+    <div class="form-card">
+      <div class="form-card-title">
+        <div class="icon">⚡</div>
+        <span id="card-fitness">Fitness &amp; Lifestyle</span>
+      </div>
+      <div class="form-grid wide">
+        <div class="field">
+          <label id="lbl-activity">Activity Level</label>
+          <select id="activity_level">
+            <option value="Sedentary"         data-ar="خامل">Sedentary</option>
+            <option value="Lightly Active"    data-ar="نشيط قليلاً">Lightly Active</option>
+            <option value="Moderately Active" data-ar="نشيط معتدل" selected>Moderately Active</option>
+            <option value="Very Active"       data-ar="نشيط جداً">Very Active</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="lbl-fitness">Fitness Level</label>
+          <select id="fitness_level">
+            <option value="Beginner"     data-ar="مبتدئ">Beginner</option>
+            <option value="Intermediate" data-ar="متوسط" selected>Intermediate</option>
+            <option value="Advanced"     data-ar="متقدم">Advanced</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="lbl-goal">Goal</label>
+          <select id="goal">
+            <option value="Have Fun"               data-ar="الاستمتاع">Have Fun</option>
+            <option value="Get Fit"                data-ar="اللياقة البدنية">Get Fit</option>
+            <option value="Lose Weight"            data-ar="إنقاص الوزن">Lose Weight</option>
+            <option value="Reduce Stress"          data-ar="تقليل التوتر">Reduce Stress</option>
+            <option value="Build Muscle"           data-ar="بناء العضلات">Build Muscle</option>
+            <option value="Compete Professionally" data-ar="المنافسة الاحترافية" selected>Compete Professionally</option>
+            <option value="Social Interaction"     data-ar="التفاعل الاجتماعي">Social Interaction</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="lbl-personality">Personality</label>
+          <select id="personality">
+            <option value="Introvert" data-ar="انطوائي">Introvert</option>
+            <option value="Extrovert" data-ar="اجتماعي" selected>Extrovert</option>
+            <option value="Ambivert"  data-ar="متوازن">Ambivert</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="lbl-hours">Hours / Week</label>
+          <input type="number" id="hours_per_week" placeholder="5" min="0.5" max="30" step="0.5" value="8" />
+        </div>
+        <div class="field">
+          <label id="lbl-budget">Monthly Budget (USD)</label>
+          <input type="number" id="budget" placeholder="50" min="0" max="500" value="80" />
+        </div>
+      </div>
+      <div style="margin-top:28px; display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div class="toggle-field">
+          <label id="lbl-team">Prefers Team Sport?</label>
+          <div class="toggle-row">
+            <div class="toggle-btn active" data-group="team" data-val="1" id="tog-team-yes">Yes</div>
+            <div class="toggle-btn"        data-group="team" data-val="0" id="tog-team-no">No</div>
+          </div>
+        </div>
+        <div class="toggle-field">
+          <label id="lbl-outdoor">Prefers Outdoor?</label>
+          <div class="toggle-row">
+            <div class="toggle-btn"        data-group="outdoor" data-val="1" id="tog-out-yes">Yes</div>
+            <div class="toggle-btn active" data-group="outdoor" data-val="0" id="tog-out-no">No</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced Sliders -->
+    <div class="form-card">
+      <div class="form-card-title">
+        <div class="icon">🎛️</div>
+        <span id="card-advanced">Advanced Preferences</span>
+        <span id="slider-hint" style="font-size:14px; color:var(--muted); letter-spacing:0; font-family:'DM Sans',sans-serif; font-weight:400;">(1 = Low · 5 = High)</span>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 28px;">
+        <div class="slider-field">
+          <label><span id="lbl-contact">Contact Sport Preference</span> <span class="slider-val" id="v-contact">3</span></label>
+          <input type="range" id="prefers_contact"     min="1" max="5" value="3" oninput="document.getElementById('v-contact').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-risk">Risk Tolerance</span> <span class="slider-val" id="v-risk">3</span></label>
+          <input type="range" id="risk_tolerance"      min="1" max="5" value="3" oninput="document.getElementById('v-risk').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-comp">Competitive Level</span> <span class="slider-val" id="v-comp">4</span></label>
+          <input type="range" id="competitive_level"   min="1" max="5" value="4" oninput="document.getElementById('v-comp').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-coord">Coordination</span> <span class="slider-val" id="v-coord">3</span></label>
+          <input type="range" id="coordination_level"  min="1" max="5" value="3" oninput="document.getElementById('v-coord').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-strike">Striking Preference</span> <span class="slider-val" id="v-strike">3</span></label>
+          <input type="range" id="striking_preference" min="1" max="5" value="3" oninput="document.getElementById('v-strike').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-grapple">Grappling Preference</span> <span class="slider-val" id="v-grapple">2</span></label>
+          <input type="range" id="grappling_preference" min="1" max="5" value="2" oninput="document.getElementById('v-grapple').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-speed">Speed &amp; Agility</span> <span class="slider-val" id="v-speed">4</span></label>
+          <input type="range" id="speed_agility"       min="1" max="5" value="4" oninput="document.getElementById('v-speed').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-endurance">Endurance Level</span> <span class="slider-val" id="v-endurance">3</span></label>
+          <input type="range" id="endurance_level"     min="1" max="5" value="3" oninput="document.getElementById('v-endurance').textContent=this.value" />
+        </div>
+        <div class="slider-field">
+          <label><span id="lbl-dist">Preferred Distance</span> <span class="slider-val" id="v-dist">3</span></label>
+          <input type="range" id="preferred_distance"  min="1" max="5" value="3" oninput="document.getElementById('v-dist').textContent=this.value" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-section">
+      <button class="btn-submit" onclick="submitForm()">
+        <span class="text"    id="btn-text">⚡ GET MY RECOMMENDATIONS</span>
+        <span class="loading" id="btn-loading">ANALYZING...</span>
+      </button>
+    </div>
+
+    <div id="results"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let currentLang = 'en';
+
+    const STRINGS = {
+      en: {
+        badge: 'Hybrid AI Engine',
+        heroLine1: 'FIND YOUR', heroLine2: 'PERFECT', heroLine3: 'SPORT',
+        heroLine4: 'AI-POWERED RECOMMENDATION',
+        heroSub: 'Our hybrid AI combines content-based filtering with collaborative intelligence to match you with sports that fit your body, goals, and lifestyle.',
+        statSports: 'Sports', statUsers: 'Users', statAcc: 'Accuracy',
+        lbl01: '01 — Your Profile',
+        cardPersonal: 'Personal Information',
+        lblAge: 'Age', lblGender: 'Gender', lblWeight: 'Weight (kg)',
+        lblHeight: 'Height (cm)', lblLocation: 'Location', lblHealth: 'Health Issue',
+        cardFitness: 'Fitness & Lifestyle',
+        lblActivity: 'Activity Level', lblFitness: 'Fitness Level', lblGoal: 'Goal',
+        lblPersonality: 'Personality', lblHours: 'Hours / Week', lblBudget: 'Monthly Budget (USD)',
+        lblTeam: 'Prefers Team Sport?', lblOutdoor: 'Prefers Outdoor?',
+        togYes: 'Yes', togNo: 'No',
+        cardAdvanced: 'Advanced Preferences', sliderHint: '(1 = Low · 5 = High)',
+        lblContact: 'Contact Sport Preference', lblRisk: 'Risk Tolerance',
+        lblComp: 'Competitive Level', lblCoord: 'Coordination',
+        lblStrike: 'Striking Preference', lblGrapple: 'Grappling Preference',
+        lblSpeed: 'Speed & Agility', lblEndurance: 'Endurance Level', lblDist: 'Preferred Distance',
+        btnText: '⚡ GET MY RECOMMENDATIONS', btnLoading: 'ANALYZING...',
+      },
+      ar: {
+        badge: 'محرك الذكاء الاصطناعي',
+        heroLine1: 'اكتشف', heroLine2: 'رياضتك', heroLine3: 'المثالية',
+        heroLine4: 'توصية بالذكاء الاصطناعي',
+        heroSub: 'يجمع نظامنا بين الفلترة المبنية على المحتوى والذكاء التعاوني لمطابقتك مع الرياضة الأنسب لجسمك وأهدافك وأسلوب حياتك.',
+        statSports: 'رياضة', statUsers: 'مستخدم', statAcc: 'دقة',
+        lbl01: '01 — ملفك الشخصي',
+        cardPersonal: 'المعلومات الشخصية',
+        lblAge: 'العمر', lblGender: 'الجنس', lblWeight: 'الوزن (كجم)',
+        lblHeight: 'الطول (سم)', lblLocation: 'الموقع', lblHealth: 'المشكلة الصحية',
+        cardFitness: 'اللياقة ونمط الحياة',
+        lblActivity: 'مستوى النشاط', lblFitness: 'مستوى اللياقة', lblGoal: 'الهدف',
+        lblPersonality: 'الشخصية', lblHours: 'ساعات / أسبوع', lblBudget: 'الميزانية الشهرية (دولار)',
+        lblTeam: 'يفضل الرياضة الجماعية؟', lblOutdoor: 'يفضل الأنشطة الخارجية؟',
+        togYes: 'نعم', togNo: 'لا',
+        cardAdvanced: 'التفضيلات المتقدمة', sliderHint: '(١ = منخفض · ٥ = مرتفع)',
+        lblContact: 'تفضيل الرياضة التماسية', lblRisk: 'تحمل المخاطر',
+        lblComp: 'مستوى التنافسية', lblCoord: 'التنسيق الحركي',
+        lblStrike: 'تفضيل الضربات', lblGrapple: 'تفضيل المصارعة',
+        lblSpeed: 'السرعة والرشاقة', lblEndurance: 'مستوى التحمل', lblDist: 'المسافة المفضلة',
+        btnText: '⚡ احصل على توصياتي', btnLoading: 'جاري التحليل...',
+      }
+    };
+
+    const SPORTS_AR = {
+      'Football':'كرة القدم', 'Basketball':'كرة السلة', 'Swimming':'السباحة',
+      'Tennis':'التنس', 'Boxing':'الملاكمة', 'MMA':'فنون القتال المختلطة',
+      'Wrestling':'المصارعة', 'Judo':'الجودو', 'Running':'الجري',
+      'Cycling':'ركوب الدراجات', 'Yoga':'اليوغا', 'Volleyball':'الكرة الطائرة',
+      'Baseball':'البيسبول', 'Golf':'الغولف', 'Rock Climbing':'تسلق الجبال',
+      'Gymnastics':'الجمباز', 'Rowing':'التجديف', 'Badminton':'الريشة الطائرة',
+      'Table Tennis':'تنس الطاولة', 'Martial Arts':'فنون الدفاع عن النفس',
+      'Hockey':'الهوكي', 'Rugby':'الرغبي', 'Skiing':'التزلج على الجليد',
+      'Surfing':'ركوب الأمواج', 'CrossFit':'كروس فت', 'Weightlifting':'رفع الأثقال',
+      'Archery':'الرماية', 'Fencing':'المبارزة', 'Handball':'كرة اليد',
+      'Water Polo':'كرة الماء', 'Skateboarding':'ركوب الزلاجة',
+      'Hiking':'المشي في الطبيعة', 'Dancing':'الرقص', 'Pilates':'البيلاتس',
+      'American Football':'كرة القدم الأمريكية', 'Cricket':'الكريكيت',
+      'Squash':'الإسكواش', 'Paddle Tennis':'تنس المضرب',
+      'Kickboxing':'الكيك بوكسينج', 'Taekwondo':'التايكواندو',
+      'Karate':'الكاراتيه', 'Brazilian Jiu-Jitsu':'جيو جيتسو البرازيلي',
+      'Muay Thai':'المواي تاي', 'Track & Field':'ألعاب القوى', 'Triathlon':'الترياثلون',
+    };
+
+    const CATEGORY_AR = { 'Team':'جماعية', 'Individual':'فردية', 'Combat':'قتالية' };
+    const INTENSITY_AR = { 'High':'مرتفعة', 'Medium':'متوسطة', 'Low':'منخفضة' };
+
+    const SELECT_AR = {
+      gender:        { 'Male':'ذكر', 'Female':'أنثى' },
+      location:      { 'Urban':'حضري', 'Suburban':'ضاحية', 'Rural':'ريفي' },
+      health_issue:  { 'None':'لا يوجد', 'Knee Pain':'ألم الركبة', 'Back Pain':'ألم الظهر', 'Asthma':'الربو', 'Heart Condition':'مشكلة قلبية' },
+      activity_level:{ 'Sedentary':'خامل', 'Lightly Active':'نشيط قليلاً', 'Moderately Active':'نشيط معتدل', 'Very Active':'نشيط جداً' },
+      fitness_level: { 'Beginner':'مبتدئ', 'Intermediate':'متوسط', 'Advanced':'متقدم' },
+      goal:          { 'Have Fun':'الاستمتاع', 'Get Fit':'اللياقة البدنية', 'Lose Weight':'إنقاص الوزن', 'Reduce Stress':'تقليل التوتر', 'Build Muscle':'بناء العضلات', 'Compete Professionally':'المنافسة الاحترافية', 'Social Interaction':'التفاعل الاجتماعي' },
+      personality:   { 'Introvert':'انطوائي', 'Extrovert':'اجتماعي', 'Ambivert':'متوازن' },
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      const isAr = lang === 'ar';
+      document.documentElement.lang = lang;
+      document.documentElement.dir  = isAr ? 'rtl' : 'ltr';
+      document.getElementById('btn-en').classList.toggle('active', !isAr);
+      document.getElementById('btn-ar').classList.toggle('active',  isAr);
+
+      const S = STRINGS[lang];
+      const map = {
+        'badge-text': S.badge, 'hero-line1': S.heroLine1, 'hero-line2': S.heroLine2,
+        'hero-line3': S.heroLine3, 'hero-line4': S.heroLine4, 'hero-sub': S.heroSub,
+        'stat-sports': S.statSports, 'stat-users': S.statUsers, 'stat-acc': S.statAcc,
+        'lbl-01': S.lbl01, 'card-personal': S.cardPersonal,
+        'lbl-age': S.lblAge, 'lbl-gender': S.lblGender, 'lbl-weight': S.lblWeight,
+        'lbl-height': S.lblHeight, 'lbl-health': S.lblHealth,
+        'card-fitness': S.cardFitness,
+        'lbl-activity': S.lblActivity, 'lbl-fitness': S.lblFitness, 'lbl-goal': S.lblGoal,
+        'lbl-personality': S.lblPersonality, 'lbl-hours': S.lblHours, 'lbl-budget': S.lblBudget,
+        'lbl-team': S.lblTeam, 'lbl-outdoor': S.lblOutdoor,
+        'tog-team-yes': S.togYes, 'tog-team-no': S.togNo,
+        'tog-out-yes': S.togYes, 'tog-out-no': S.togNo,
+        'card-advanced': S.cardAdvanced, 'slider-hint': S.sliderHint,
+        'lbl-contact': S.lblContact, 'lbl-risk': S.lblRisk, 'lbl-comp': S.lblComp,
+        'lbl-coord': S.lblCoord, 'lbl-strike': S.lblStrike, 'lbl-grapple': S.lblGrapple,
+        'lbl-speed': S.lblSpeed, 'lbl-endurance': S.lblEndurance, 'lbl-dist': S.lblDist,
+        'btn-text': S.btnText, 'btn-loading': S.btnLoading,
+      };
+      for (const [id, txt] of Object.entries(map)) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = txt;
+      }
+
+      const hint = document.getElementById('slider-hint');
+      hint.style.fontFamily = isAr ? "'Cairo', sans-serif" : "'DM Sans', sans-serif";
+
+      for (const [selId, dict] of Object.entries(SELECT_AR)) {
+        const sel = document.getElementById(selId);
+        if (!sel) continue;
+        const curVal = sel.value;
+        sel.querySelectorAll('option').forEach(opt => {
+          opt.textContent = isAr ? (dict[opt.value] || opt.value) : opt.value;
+        });
+        sel.value = curVal;
+      }
+
+      [['v-contact','prefers_contact'],['v-risk','risk_tolerance'],['v-comp','competitive_level'],
+       ['v-coord','coordination_level'],['v-strike','striking_preference'],['v-grapple','grappling_preference'],
+       ['v-speed','speed_agility'],['v-endurance','endurance_level'],['v-dist','preferred_distance']
+      ].forEach(([vid,rid]) => {
+        document.getElementById(vid).textContent = document.getElementById(rid).value;
+      });
+    }
+
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll(`[data-group="${btn.dataset.group}"]`).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    function getToggleVal(group) {
+      const a = document.querySelector(`[data-group="${group}"].active`);
+      return a ? parseInt(a.dataset.val) : 0;
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    // ─── Static Recommendation Engine ───────────────────────────────────────
+    const SPORTS_DB = [
+      { sport:'Football',       emoji:'⚽', category:'Team',       intensity:'High',   contact:3, risk:3, team:1, outdoor:1, budget:20,  coordination:4, striking:2, grappling:1, speed:4, endurance:4, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Compete Professionally','Social Interaction'] },
+      { sport:'Basketball',     emoji:'🏀', category:'Team',       intensity:'High',   contact:2, risk:2, team:1, outdoor:0, budget:30,  coordination:4, striking:1, grappling:1, speed:5, endurance:4, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Compete Professionally','Social Interaction'] },
+      { sport:'Swimming',       emoji:'🏊', category:'Individual', intensity:'Medium', contact:1, risk:1, team:0, outdoor:0, budget:40,  coordination:3, striking:1, grappling:1, speed:3, endurance:5, distance:3, health_ok:['None','Knee Pain','Back Pain','Asthma','Heart Condition'], goal_fit:['Get Fit','Lose Weight','Reduce Stress','Build Muscle'] },
+      { sport:'Tennis',         emoji:'🎾', category:'Individual', intensity:'Medium', contact:1, risk:1, team:0, outdoor:1, budget:60,  coordination:5, striking:4, grappling:1, speed:4, endurance:3, distance:4, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Compete Professionally','Reduce Stress'] },
+      { sport:'Boxing',         emoji:'🥊', category:'Combat',     intensity:'High',   contact:5, risk:4, team:0, outdoor:0, budget:50,  coordination:4, striking:5, grappling:2, speed:4, endurance:5, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Lose Weight','Build Muscle','Compete Professionally'] },
+      { sport:'MMA',            emoji:'🥋', category:'Combat',     intensity:'High',   contact:5, risk:5, team:0, outdoor:0, budget:60,  coordination:5, striking:5, grappling:5, speed:4, endurance:5, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally'] },
+      { sport:'Wrestling',      emoji:'🤼', category:'Combat',     intensity:'High',   contact:5, risk:3, team:0, outdoor:0, budget:30,  coordination:4, striking:1, grappling:5, speed:3, endurance:5, distance:1, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally'] },
+      { sport:'Judo',           emoji:'🥋', category:'Combat',     intensity:'High',   contact:5, risk:3, team:0, outdoor:0, budget:40,  coordination:5, striking:1, grappling:5, speed:3, endurance:4, distance:1, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally','Social Interaction'] },
+      { sport:'Running',        emoji:'🏃', category:'Individual', intensity:'Medium', contact:1, risk:1, team:0, outdoor:1, budget:10,  coordination:2, striking:1, grappling:1, speed:4, endurance:5, distance:5, health_ok:['None','Asthma'],                          goal_fit:['Get Fit','Lose Weight','Reduce Stress'] },
+      { sport:'Cycling',        emoji:'🚴', category:'Individual', intensity:'Medium', contact:1, risk:2, team:0, outdoor:1, budget:80,  coordination:3, striking:1, grappling:1, speed:4, endurance:5, distance:5, health_ok:['None','Knee Pain','Asthma','Heart Condition'], goal_fit:['Get Fit','Lose Weight','Reduce Stress'] },
+      { sport:'Yoga',           emoji:'🧘', category:'Individual', intensity:'Low',    contact:1, risk:1, team:0, outdoor:0, budget:20,  coordination:3, striking:1, grappling:1, speed:1, endurance:2, distance:1, health_ok:['None','Knee Pain','Back Pain','Asthma','Heart Condition'], goal_fit:['Reduce Stress','Get Fit','Lose Weight'] },
+      { sport:'Volleyball',     emoji:'🏐', category:'Team',       intensity:'Medium', contact:1, risk:1, team:1, outdoor:1, budget:15,  coordination:4, striking:3, grappling:1, speed:4, endurance:3, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Social Interaction','Compete Professionally'] },
+      { sport:'Baseball',       emoji:'⚾', category:'Team',       intensity:'Medium', contact:1, risk:1, team:1, outdoor:1, budget:40,  coordination:4, striking:4, grappling:1, speed:3, endurance:2, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Social Interaction','Compete Professionally'] },
+      { sport:'Golf',           emoji:'⛳', category:'Individual', intensity:'Low',    contact:1, risk:1, team:0, outdoor:1, budget:150, coordination:5, striking:4, grappling:1, speed:1, endurance:1, distance:4, health_ok:['None','Knee Pain','Back Pain','Asthma','Heart Condition'], goal_fit:['Have Fun','Reduce Stress','Social Interaction'] },
+      { sport:'Rock Climbing',  emoji:'🧗', category:'Individual', intensity:'High',   contact:1, risk:4, team:0, outdoor:1, budget:70,  coordination:5, striking:1, grappling:3, speed:2, endurance:4, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Reduce Stress'] },
+      { sport:'Gymnastics',     emoji:'🤸', category:'Individual', intensity:'High',   contact:1, risk:3, team:0, outdoor:0, budget:60,  coordination:5, striking:1, grappling:2, speed:3, endurance:4, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally'] },
+      { sport:'Rowing',         emoji:'🚣', category:'Team',       intensity:'High',   contact:1, risk:2, team:1, outdoor:1, budget:80,  coordination:4, striking:1, grappling:1, speed:3, endurance:5, distance:5, health_ok:['None','Asthma'],                          goal_fit:['Get Fit','Build Muscle','Compete Professionally'] },
+      { sport:'Badminton',      emoji:'🏸', category:'Individual', intensity:'Medium', contact:1, risk:1, team:0, outdoor:0, budget:20,  coordination:5, striking:4, grappling:1, speed:5, endurance:3, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Social Interaction'] },
+      { sport:'Table Tennis',   emoji:'🏓', category:'Individual', intensity:'Low',    contact:1, risk:1, team:0, outdoor:0, budget:15,  coordination:5, striking:4, grappling:1, speed:4, endurance:2, distance:2, health_ok:['None','Knee Pain','Back Pain','Asthma','Heart Condition'], goal_fit:['Have Fun','Get Fit','Social Interaction'] },
+      { sport:'Martial Arts',   emoji:'🥷', category:'Combat',     intensity:'High',   contact:4, risk:3, team:0, outdoor:0, budget:50,  coordination:5, striking:5, grappling:4, speed:4, endurance:4, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Reduce Stress','Compete Professionally'] },
+      { sport:'Hockey',         emoji:'🏒', category:'Team',       intensity:'High',   contact:3, risk:3, team:1, outdoor:0, budget:100, coordination:4, striking:3, grappling:2, speed:5, endurance:4, distance:4, health_ok:['None'],                                   goal_fit:['Have Fun','Get Fit','Compete Professionally','Social Interaction'] },
+      { sport:'Rugby',          emoji:'🏉', category:'Team',       intensity:'High',   contact:5, risk:4, team:1, outdoor:1, budget:30,  coordination:3, striking:3, grappling:4, speed:4, endurance:5, distance:3, health_ok:['None'],                                   goal_fit:['Have Fun','Build Muscle','Compete Professionally','Social Interaction'] },
+      { sport:'Skiing',         emoji:'⛷️', category:'Individual', intensity:'High',   contact:1, risk:4, team:0, outdoor:1, budget:200, coordination:4, striking:1, grappling:1, speed:5, endurance:3, distance:5, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Reduce Stress'] },
+      { sport:'Surfing',        emoji:'🏄', category:'Individual', intensity:'Medium', contact:1, risk:3, team:0, outdoor:1, budget:80,  coordination:5, striking:1, grappling:1, speed:3, endurance:3, distance:4, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Reduce Stress'] },
+      { sport:'CrossFit',       emoji:'🏋️', category:'Individual', intensity:'High',   contact:1, risk:3, team:0, outdoor:0, budget:70,  coordination:4, striking:2, grappling:2, speed:3, endurance:5, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Lose Weight','Build Muscle'] },
+      { sport:'Weightlifting',  emoji:'🏋️', category:'Individual', intensity:'High',   contact:1, risk:2, team:0, outdoor:0, budget:40,  coordination:4, striking:1, grappling:2, speed:1, endurance:3, distance:1, health_ok:['None'],                                   goal_fit:['Build Muscle','Get Fit','Compete Professionally'] },
+      { sport:'Archery',        emoji:'🏹', category:'Individual', intensity:'Low',    contact:1, risk:1, team:0, outdoor:1, budget:60,  coordination:5, striking:3, grappling:1, speed:1, endurance:1, distance:5, health_ok:['None','Knee Pain','Back Pain','Asthma','Heart Condition'], goal_fit:['Have Fun','Reduce Stress','Compete Professionally'] },
+      { sport:'Fencing',        emoji:'🤺', category:'Combat',     intensity:'Medium', contact:3, risk:2, team:0, outdoor:0, budget:80,  coordination:5, striking:5, grappling:1, speed:4, endurance:3, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Compete Professionally'] },
+      { sport:'Handball',       emoji:'🤾', category:'Team',       intensity:'High',   contact:2, risk:2, team:1, outdoor:0, budget:20,  coordination:4, striking:3, grappling:1, speed:4, endurance:4, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Compete Professionally','Social Interaction'] },
+      { sport:'Water Polo',     emoji:'🤽', category:'Team',       intensity:'High',   contact:3, risk:2, team:1, outdoor:0, budget:50,  coordination:4, striking:2, grappling:3, speed:4, endurance:5, distance:4, health_ok:['None','Asthma'],                          goal_fit:['Get Fit','Build Muscle','Compete Professionally','Social Interaction'] },
+      { sport:'Skateboarding',  emoji:'🛹', category:'Individual', intensity:'Medium', contact:1, risk:4, team:0, outdoor:1, budget:50,  coordination:5, striking:1, grappling:1, speed:3, endurance:2, distance:3, health_ok:['None'],                                   goal_fit:['Have Fun','Get Fit','Reduce Stress'] },
+      { sport:'Hiking',         emoji:'🥾', category:'Individual', intensity:'Low',    contact:1, risk:1, team:0, outdoor:1, budget:10,  coordination:2, striking:1, grappling:1, speed:1, endurance:3, distance:5, health_ok:['None','Knee Pain','Asthma','Heart Condition'], goal_fit:['Have Fun','Reduce Stress','Get Fit'] },
+      { sport:'Dancing',        emoji:'💃', category:'Individual', intensity:'Medium', contact:2, risk:1, team:0, outdoor:0, budget:30,  coordination:5, striking:2, grappling:1, speed:3, endurance:3, distance:2, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Lose Weight','Reduce Stress','Social Interaction'] },
+      { sport:'Pilates',        emoji:'🧗', category:'Individual', intensity:'Low',    contact:1, risk:1, team:0, outdoor:0, budget:40,  coordination:4, striking:1, grappling:1, speed:1, endurance:2, distance:1, health_ok:['None','Knee Pain','Back Pain','Asthma','Heart Condition'], goal_fit:['Reduce Stress','Get Fit','Lose Weight','Build Muscle'] },
+      { sport:'American Football',emoji:'🏈',category:'Team',      intensity:'High',   contact:5, risk:4, team:1, outdoor:1, budget:60,  coordination:4, striking:3, grappling:4, speed:4, endurance:4, distance:3, health_ok:['None'],                                   goal_fit:['Have Fun','Build Muscle','Compete Professionally','Social Interaction'] },
+      { sport:'Cricket',        emoji:'🏏', category:'Team',       intensity:'Medium', contact:1, risk:1, team:1, outdoor:1, budget:30,  coordination:4, striking:4, grappling:1, speed:3, endurance:3, distance:4, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Social Interaction','Compete Professionally'] },
+      { sport:'Squash',         emoji:'🎾', category:'Individual', intensity:'High',   contact:1, risk:1, team:0, outdoor:0, budget:40,  coordination:5, striking:4, grappling:1, speed:5, endurance:5, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Get Fit','Lose Weight','Compete Professionally'] },
+      { sport:'Paddle Tennis',  emoji:'🏓', category:'Individual', intensity:'Medium', contact:1, risk:1, team:0, outdoor:1, budget:30,  coordination:4, striking:4, grappling:1, speed:3, endurance:3, distance:3, health_ok:['None','Asthma'],                          goal_fit:['Have Fun','Get Fit','Social Interaction'] },
+      { sport:'Kickboxing',     emoji:'🥊', category:'Combat',     intensity:'High',   contact:4, risk:3, team:0, outdoor:0, budget:50,  coordination:4, striking:5, grappling:2, speed:4, endurance:5, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Lose Weight','Build Muscle','Compete Professionally'] },
+      { sport:'Taekwondo',      emoji:'🦵', category:'Combat',     intensity:'High',   contact:4, risk:3, team:0, outdoor:0, budget:40,  coordination:5, striking:5, grappling:1, speed:5, endurance:4, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally','Reduce Stress'] },
+      { sport:'Karate',         emoji:'🥋', category:'Combat',     intensity:'High',   contact:3, risk:2, team:0, outdoor:0, budget:40,  coordination:5, striking:5, grappling:2, speed:4, endurance:3, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally','Reduce Stress'] },
+      { sport:'Brazilian Jiu-Jitsu',emoji:'🤼',category:'Combat',  intensity:'High',   contact:5, risk:3, team:0, outdoor:0, budget:60,  coordination:5, striking:1, grappling:5, speed:2, endurance:4, distance:1, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally'] },
+      { sport:'Muay Thai',      emoji:'🥊', category:'Combat',     intensity:'High',   contact:5, risk:4, team:0, outdoor:0, budget:50,  coordination:4, striking:5, grappling:3, speed:3, endurance:5, distance:2, health_ok:['None'],                                   goal_fit:['Get Fit','Build Muscle','Compete Professionally','Lose Weight'] },
+      { sport:'Track & Field',  emoji:'🏟️', category:'Individual', intensity:'High',   contact:1, risk:1, team:0, outdoor:1, budget:15,  coordination:3, striking:1, grappling:1, speed:5, endurance:5, distance:5, health_ok:['None','Asthma'],                          goal_fit:['Get Fit','Compete Professionally','Lose Weight'] },
+      { sport:'Triathlon',      emoji:'🏅', category:'Individual', intensity:'High',   contact:1, risk:2, team:0, outdoor:1, budget:200, coordination:3, striking:1, grappling:1, speed:4, endurance:5, distance:5, health_ok:['None','Asthma'],                          goal_fit:['Get Fit','Compete Professionally','Lose Weight'] },
+    ];
+
+    function recommendStatic(p) {
+      const bmi = p.weight_kg / ((p.height_cm / 100) ** 2);
+      const bmi_r = bmi < 18.5 ? 'underweight' : bmi < 25 ? 'normal' : bmi < 30 ? 'overweight' : 'obese';
+
+      const actMap = { 'Sedentary': 10, 'Lightly Active': 30, 'Moderately Active': 55, 'Very Active': 80 };
+      const fitMap = { 'Beginner': 10, 'Intermediate': 40, 'Advanced': 80 };
+      const bmiScore = bmi_r === 'normal' ? 30 : bmi_r === 'overweight' ? 18 : bmi_r === 'underweight' ? 15 : 5;
+      const actScore = (actMap[p.activity_level] || 30) * 0.35;
+      const fitScore = (fitMap[p.fitness_level] || 30) * 0.25;
+      const health_score = Math.round(Math.min(100, bmiScore + actScore + fitScore));
+
+      const ageG = p.age < 18 ? 'Youth' : p.age < 30 ? 'Young Adult' : p.age < 50 ? 'Adult' : 'Senior';
+      const ageI = p.age < 18 ? 'age_appropriate' : p.age < 50 ? 'full_intensity' : 'moderate_intensity';
+
+      const AVOID = {
+        'Knee Pain':       ['Running','Skiing','Basketball','Football','Rugby','American Football'],
+        'Back Pain':       ['Weightlifting','Rowing','Wrestling','MMA','CrossFit','Rugby'],
+        'Heart Condition': ['Boxing','MMA','Triathlon','CrossFit','Rugby','American Football','Muay Thai','Kickboxing'],
+        'Asthma':          ['Boxing','MMA','Muay Thai','Kickboxing','CrossFit'],
+        'None':            [],
+      };
+      const PREFER = {
+        'Knee Pain':       ['Swimming','Cycling','Yoga','Pilates','Table Tennis','Archery'],
+        'Back Pain':       ['Swimming','Yoga','Pilates','Walking','Cycling'],
+        'Heart Condition': ['Yoga','Walking','Table Tennis','Golf','Pilates'],
+        'Asthma':          ['Swimming','Yoga','Table Tennis','Pilates'],
+        'None':            [],
+      };
+
+      const health_assessment = {
+        health_score,
+        bmi: bmi.toFixed(1),
+        bmi_status: bmi_r,
+        age_group: ageG,
+        age_intensity: ageI,
+        activity_status: p.activity_level.toLowerCase().replace(/ /g,'_'),
+        fitness_status: p.fitness_level,
+        avoid_sports: AVOID[p.health_issue] || [],
+        prefer_sports: PREFER[p.health_issue] || [],
+      };
+
+      const scored = SPORTS_DB.map(s => {
+        let score = 0;
+        if ((AVOID[p.health_issue]||[]).includes(s.sport)) score -= 60;
+        if ((PREFER[p.health_issue]||[]).includes(s.sport)) score += 15;
+        if (s.goal_fit.includes(p.goal)) score += 25;
+        const diff = (a, b) => 5 - Math.abs(a - b);
+        score += diff(s.contact,      p.prefers_contact)      * 2.5;
+        score += diff(s.risk,         p.risk_tolerance)        * 2.0;
+        score += diff(s.coordination, p.coordination_level)    * 1.5;
+        score += diff(s.striking,     p.striking_preference)   * 2.0;
+        score += diff(s.grappling,    p.grappling_preference)  * 2.0;
+        score += diff(s.speed,        p.speed_agility)          * 1.5;
+        score += diff(s.endurance,    p.endurance_level)        * 1.5;
+        score += diff(s.distance,     p.preferred_distance)     * 1.0;
+        if (s.team    === p.prefers_team)    score += 10;
+        if (s.outdoor === p.prefers_outdoor) score += 10;
+        if (s.budget <= p.budget) score += 8;
+        if (p.age > 50 && s.intensity === 'High' && s.contact >= 4) score -= 15;
+        if (p.age < 18 && s.contact >= 5) score -= 10;
+        if (p.personality === 'Introvert' && s.team === 0)  score += 5;
+        if (p.personality === 'Extrovert' && s.team === 1)  score += 5;
+        if (p.activity_level === 'Sedentary' && s.intensity === 'Low')    score += 8;
+        if (p.activity_level === 'Very Active' && s.intensity === 'High') score += 8;
+        const preferred = (PREFER[p.health_issue]||[]).includes(s.sport);
+        return { ...s, raw_score: score, preferred };
+      });
+
+      const top = scored.sort((a,b) => b.raw_score - a.raw_score).slice(0, p.top_n);
+      const maxRaw = top[0].raw_score || 1;
+      const recommendations = top.map((s, i) => ({
+        rank: i + 1,
+        sport: s.sport,
+        emoji: s.emoji,
+        category: s.category,
+        intensity: s.intensity,
+        score: Math.max(0, Math.round((s.raw_score / maxRaw) * 100 * 10) / 10),
+        preferred: s.preferred,
+      }));
+
+      return { health_assessment, recommendations };
+    }
+
+    function submitForm() {
+      const btn = document.querySelector('.btn-submit');
+      btn.classList.add('loading');
+
+      function selVal(id) { const s = document.getElementById(id); return s.options[s.selectedIndex].value; }
+
+      const payload = {
+        age:                  parseInt(document.getElementById('age').value),
+        gender:               selVal('gender'),
+        weight_kg:            parseFloat(document.getElementById('weight_kg').value),
+        height_cm:            parseFloat(document.getElementById('height_cm').value),
+        activity_level:       selVal('activity_level'),
+        fitness_level:        selVal('fitness_level'),
+        goal:                 selVal('goal'),
+        personality:          selVal('personality'),
+        location:             'Urban',
+        hours_per_week:       parseFloat(document.getElementById('hours_per_week').value),
+        budget:               parseFloat(document.getElementById('budget').value),
+        health_issue:         selVal('health_issue'),
+        prefers_team:         getToggleVal('team'),
+        prefers_outdoor:      getToggleVal('outdoor'),
+        prefers_contact:      parseInt(document.getElementById('prefers_contact').value),
+        risk_tolerance:       parseInt(document.getElementById('risk_tolerance').value),
+        competitive_level:    parseInt(document.getElementById('competitive_level').value),
+        coordination_level:   parseInt(document.getElementById('coordination_level').value),
+        striking_preference:  parseInt(document.getElementById('striking_preference').value),
+        grappling_preference: parseInt(document.getElementById('grappling_preference').value),
+        speed_agility:        parseInt(document.getElementById('speed_agility').value),
+        endurance_level:      parseInt(document.getElementById('endurance_level').value),
+        preferred_distance:   parseInt(document.getElementById('preferred_distance').value),
+        top_n: 5
+      };
+
+      try {
+        const data = recommendStatic(payload);
+        renderResults(data);
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {
+        showToast((currentLang === 'ar' ? 'خطأ: ' : 'Error: ') + err.message);
+      } finally {
+        btn.classList.remove('loading');
+      }
+    }
+
+    function renderResults(data) {
+      const h    = data.health_assessment;
+      const recs = data.recommendations;
+      const isAr = currentLang === 'ar';
+
+      const bmiColor   = { normal:'#4cde9c', underweight:'#ffb347', overweight:'#ff8c42', obese:'#ff5050' };
+      const scoreColor = h.health_score >= 70 ? '#4cde9c' : h.health_score >= 45 ? '#ffb347' : '#ff5050';
+      const circ = 2 * Math.PI * 42;
+      const dash = circ * (1 - h.health_score / 100);
+
+      const T = isAr ? {
+        heading: 'نتائجك', headingPre: '',
+        sec2: '02 — تقييم الصحة', healthScore: 'درجة الصحة',
+        great: '— ممتاز', fair: '— مقبول', bad: '— يحتاج تحسين',
+        bmi: 'مؤشر الكتلة', ageGrp: 'الفئة العمرية', act: 'النشاط', fit: 'اللياقة',
+        avoid: '⚠️ تجنب:', pref: '✅ موصى به لحالتك:',
+        sec3: '03 — الرياضات الموصى بها', match: 'نسبة التطابق', rec: '✓ موصى به',
+        headingFont: "'Cairo', sans-serif", headingStyle: 'font-size:40px; font-weight:900; letter-spacing:0;',
+        scoreFont: "'Cairo', sans-serif", scoreFontStyle: 'font-size:17px; font-weight:900; letter-spacing:0;',
+      } : {
+        heading: 'RESULTS', headingPre: 'YOUR ',
+        sec2: '02 — Health Assessment', healthScore: 'Health Score',
+        great: '— GREAT', fair: '— FAIR', bad: '— NEEDS WORK',
+        bmi: 'BMI', ageGrp: 'Age Group', act: 'Activity', fit: 'Fitness',
+        avoid: '⚠️ Avoid:', pref: '✅ Recommended for your condition:',
+        sec3: '03 — Recommended Sports', match: 'Match Score', rec: '✓ Recommended',
+        headingFont: "'Bebas Neue', sans-serif", headingStyle: 'font-size:48px; letter-spacing:2px;',
+        scoreFont: "'Bebas Neue', sans-serif", scoreFontStyle: 'font-size:18px; letter-spacing:2px;',
+      };
+
+      const lbl = h.health_score >= 70 ? T.great : h.health_score >= 45 ? T.fair : T.bad;
+
+      const healthHTML = `
+        <div class="results-header" style="font-family:${T.headingFont}; ${T.headingStyle}">${T.headingPre}<span>${T.heading}</span></div>
+        <div class="section-label">${T.sec2}</div>
+        <div class="health-card">
+          <div class="health-score-ring">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#2a2a38" stroke-width="8"/>
+              <circle cx="50" cy="50" r="42" fill="none" stroke="${scoreColor}" stroke-width="8"
+                stroke-dasharray="${circ}" stroke-dashoffset="${dash}" stroke-linecap="round"/>
+            </svg>
+            <span class="score-num">${h.health_score}</span>
+          </div>
+          <div>
+            <div style="font-family:${T.scoreFont}; ${T.scoreFontStyle} margin-bottom:12px;">
+              ${T.healthScore} <span style="color:${scoreColor}">${lbl}</span>
+            </div>
+            <div class="health-details">
+              <div class="health-tag"><div class="key">${T.bmi}</div><div class="val" style="color:${bmiColor[h.bmi_status]||'#f0ede8'}">${h.bmi} — ${h.bmi_status.replace('_',' ')}</div></div>
+              <div class="health-tag"><div class="key">${T.ageGrp}</div><div class="val">${h.age_group} · ${h.age_intensity.replace('_',' ')}</div></div>
+              <div class="health-tag"><div class="key">${T.act}</div><div class="val">${h.activity_status.replace('_',' ')}</div></div>
+              <div class="health-tag"><div class="key">${T.fit}</div><div class="val">${h.fitness_status}</div></div>
+            </div>
+            ${h.avoid_sports.length  ? `<div class="health-warn"><span>${T.avoid} <strong>${h.avoid_sports.join(', ')}</strong></span></div>` : ''}
+            ${h.prefer_sports.length ? `<div class="health-pref"><span>${T.pref} <strong>${h.prefer_sports.join(', ')}</strong></span></div>` : ''}
+          </div>
+        </div>`;
+
+      const maxScore = recs[0]?.score || 1;
+
+      // Rank number rendered inside an isolated LTR span to prevent RTL reordering
+      const recsHTML = `
+        <div class="section-label">${T.sec3}</div>
+        <div class="recs-grid">
+          ${recs.map(r => `
+            <div class="rec-card rank-${r.rank}">
+              <div class="rec-rank"><bdi>${String(r.rank).padStart(2,'0')}</bdi></div>
+              <span class="rec-emoji">${r.emoji}</span>
+              <div class="rec-name">${isAr ? (SPORTS_AR[r.sport] || r.sport) : r.sport}</div>
+              <div class="rec-meta">
+                <span class="meta-pill meta-category">${isAr ? (CATEGORY_AR[r.category] || r.category) : r.category}</span>
+                <span class="meta-pill meta-intensity">${isAr ? (INTENSITY_AR[r.intensity] || r.intensity) : r.intensity}</span>
+                ${r.preferred ? `<span class="meta-pill meta-preferred">${T.rec}</span>` : ''}
+              </div>
+              <div class="rec-score-bar">
+                <div class="score-label"><span>${T.match}</span><span class="score-val">${r.score.toFixed(1)}%</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:${(r.score/maxScore*100)}%"></div></div>
+              </div>
+            </div>`).join('')}
+        </div>`;
+
+      document.getElementById('results').innerHTML = healthHTML + recsHTML;
+      setTimeout(() => document.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.style.width; }), 50);
+    }
+  </script>
+</body>
+</html>
